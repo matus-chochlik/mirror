@@ -10,7 +10,6 @@
 #ifndef MIRE_CT_OR_1011291729_HPP
 #define MIRE_CT_OR_1011291729_HPP
 
-
 #include <mire/ct/int_const.hpp>
 
 namespace mire {

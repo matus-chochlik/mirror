@@ -38,6 +38,7 @@
 #include <mire/ct/starts_with.hpp>
 #include <mire/ct/string.hpp>
 #include <mire/ct/tail.hpp>
+#include <mire/ct/traits.hpp>
 
 #endif // include guard
 

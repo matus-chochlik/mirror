@@ -18,6 +18,33 @@
 namespace mire {
 namespace ct {
 
+template <typename X>
+struct evaluate;
+
+template <typename X>
+struct has_type
+{
+	template <typename Y>
+	static true_type _has(Y*, typename Y::type* = nullptr);
+	static false_type _has(...);
+
+	typedef decltype(_has((X*)nullptr)) type;
+};
+
+template <typename X, typename HasType>
+struct do_evaluate;
+
+template <typename X>
+struct do_evaluate<X, true_type>
+ : evaluate<typename X::type>
+{ };
+
+template <typename X>
+struct do_evaluate<X, false_type>
+{
+	typedef nil_t type;
+};
+
 /// Meta-function evaluates a compile-time string expression
 /**
  *  @see basic_string
@@ -28,7 +55,7 @@ namespace ct {
 template <typename X>
 struct evaluate
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : evaluate<typename X::type>
+ : do_evaluate<X, typename has_type<X>::type>
 #endif
 { };
 
@@ -52,7 +79,7 @@ struct evaluate<integral_constant<bool, B>>
 template <>
 struct evaluate<nil_t>
 {
-	typedef empty_range type;
+	typedef nil_t type;
 };
 
 } // namespace ct

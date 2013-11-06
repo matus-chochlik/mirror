@@ -43,6 +43,23 @@ struct basic_string
 template <typename Char, Char ... C>
 constexpr char basic_string<Char, C...>::c_str[];
 
+#ifdef MIRROR_DOCUMENTATION_ONLY
+/// This trait meta-function can be used to check if the passed type is a string
+template <typename T>
+struct is_string  : BooleanConstant
+{ };
+#else
+template <typename T>
+struct is_string
+ : false_type
+{ };
+
+template <typename Char, Char ... C>
+struct is_string<basic_string<Char, C...>>
+ : true_type
+{ };
+#endif
+
 /// A specialization of the basic compile-time string using @c char type
 /**
  *  @see basic_string
