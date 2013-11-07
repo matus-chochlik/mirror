@@ -13,6 +13,7 @@
 #include <mire/ct/range.hpp>
 #include <mire/ct/string.hpp>
 #include <mire/ct/optional.hpp>
+#include <mire/ct/identity.hpp>
 #include <mire/ct/nil_type.hpp>
 #include <mire/ct/int_const.hpp>
 
@@ -88,6 +89,11 @@ struct evaluate<optional<T>>
 template <typename T, T C>
 struct evaluate<integral_constant<T, C>>
  : integral_constant<T, C>
+{ };
+
+template <typename T>
+struct evaluate<identity<T>>
+ : identity<T>
 { };
 
 template <>

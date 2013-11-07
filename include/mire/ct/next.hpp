@@ -19,15 +19,23 @@ namespace ct {
 
 template <typename Char, Char C, Char ... Cn>
 struct next<basic_string<Char, C, Cn...> >
-{
-	typedef basic_string<Char, Cn...> type;
-};
+ : basic_string<Char, Cn...>
+{ };
 
 template <typename Char>
 struct next<basic_string<Char> >
-{
-	typedef basic_string<Char> type;
-};
+ : basic_string<Char>
+{ };
+
+template <typename T, typename ... P>
+struct next<range<T, P...> >
+ : range<P...>
+{ };
+
+template <>
+struct next<range<> >
+ : range<>
+{ };
 
 #endif
 

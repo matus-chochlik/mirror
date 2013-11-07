@@ -54,6 +54,37 @@ struct tail<
 	basic_string<Char, Tn...>
 > { };
 
+template <size_t N, typename ... P>
+struct tail<
+	integral_constant<size_t, N>,
+	false_type,
+	range<P...>,
+	range<>
+>: range<>
+{ };
+
+template <size_t N, typename ... H, typename ... T>
+struct tail<
+	integral_constant<size_t, N>,
+	true_type,
+	range<H...>,
+	range<T...>
+>: range<T...>
+{ };
+
+template <size_t N, typename C, typename ... H, typename ... T>
+struct tail<
+	integral_constant<size_t, N>,
+	false_type,
+	range<H...>,
+	range<C, T...>
+> : tail<
+	integral_constant<size_t, N - 1>,
+	integral_constant<bool, N - 1 == 0>,
+	range<H..., C>,
+	range<T...>
+> { };
+
 } // namespace aux
 
 template <typename Size, typename Char, Char ... C>
@@ -61,18 +92,21 @@ struct tail<
 	basic_string<Char, C...>,
 	Size
 > : aux::tail<
-	integral_constant<
-		size_t,
-		size<basic_string<Char, C...> >::value -
-		Size::value
-	>,
-	integral_constant<
-		bool,
-		size<basic_string<Char, C...> >::value <=
-		Size::value
-	>,
+	integral_constant<size_t, sizeof...(C) -  Size::value>,
+	integral_constant<bool,   sizeof...(C) <= Size::value>,
 	basic_string<Char>,
 	basic_string<Char, C...>
+> { };
+
+template <typename Size, typename ... P>
+struct tail<
+	range<P...>,
+	Size
+> : aux::tail<
+	integral_constant<size_t, sizeof...(P) -  Size::value>,
+	integral_constant<bool,   sizeof...(P) <= Size::value>,
+	range<>,
+	range<P...>
 > { };
 
 template <typename Range, size_t Size>

@@ -63,6 +63,20 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_string1)
 		>,
 		string<'a','b','c','d','e','f','g','h','i','j','k','l'>
 	>, true>();
+
+	mire_ct_test_bool<equal<
+		concat<
+			concat<
+				string<'a','b','c'>,
+				string<'d','e','f'>
+			>,
+			concat<
+				string<'g','h','i'>,
+				string<'j','k','l'>
+			>
+		>,
+		string<'a','b','c','d','e','f','g','h','i','j','k','l'>
+	>, true>();
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_concat_string2)
@@ -126,6 +140,20 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_range)
 			range<short, int, long>,
 			range<unsigned>,
 			range<float, double>
+		>,
+		range<bool, char, wchar_t, short, int, long, unsigned, float, double>
+	>, true>();
+
+	mire_ct_test_bool<equal<
+		concat<
+			concat<
+				range<bool, char, wchar_t>,
+				range<short, int, long>
+			>,
+			concat<
+				range<unsigned>,
+				range<float, double>
+			>
 		>,
 		range<bool, char, wchar_t, short, int, long, unsigned, float, double>
 	>, true>();

@@ -315,8 +315,8 @@ struct head
 > { };
 #else
 {
-	/// The head of the original compile-time string
-	typedef CompileTimeString type;
+	/// The head of the original range
+	typedef Range type;
 };
 #endif
 
