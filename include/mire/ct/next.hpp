@@ -7,8 +7,8 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRE_CT_STEP_FRONT_1105240825_HPP
-#define MIRE_CT_STEP_FRONT_1105240825_HPP
+#ifndef MIRE_CT_NEXT_1105240825_HPP
+#define MIRE_CT_NEXT_1105240825_HPP
 
 #include <mire/ct/default.hpp>
 

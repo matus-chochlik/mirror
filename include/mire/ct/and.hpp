@@ -38,7 +38,7 @@ struct and_<Bool, Bools...>
 /**
  *  @tparam BooleanConstants the boolean constants to be AND-ed
  *
- *  @ingroup meta_programming
+ *  @ingroup ct_utils
  */
 template <typename ... BooleanConstants>
 struct and_ : public BooleanConstant

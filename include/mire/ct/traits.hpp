@@ -21,19 +21,47 @@ template <typename T>
 struct is_range : BooleanConstant
 { };
 #else
+
+namespace aux {
 template <typename T>
 struct is_range
- : is_range<typename evaluate<T>::type>
-{ };
-
-template <>
-struct is_range<nil_t>
  : false_type
 { };
 
 template <typename ... P>
 struct is_range<range<P...>>
  : true_type
+{ };
+} // namespace aux
+
+template <typename T>
+struct is_range
+ : aux::is_range<typename evaluate<T>::type>
+{ };
+#endif
+
+#ifdef MIRROR_DOCUMENTATION_ONLY
+/// This trait meta-function can be used to check if the passed type is a string
+template <typename T>
+struct is_string : BooleanConstant
+{ };
+#else
+
+namespace aux {
+template <typename T>
+struct is_string
+ : false_type
+{ };
+
+template <typename Char, Char ... C>
+struct is_string<basic_string<Char, C...>>
+ : true_type
+{ };
+} // namespace aux
+
+template <typename T>
+struct is_string
+ : aux::is_string<typename evaluate<T>::type>
 { };
 #endif
 

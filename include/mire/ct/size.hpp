@@ -26,6 +26,16 @@ struct size<basic_string<Char, C...> >
  : integral_constant<size_t, sizeof ... (C)>
 { };
 
+template <typename T>
+struct size<optional<T>>
+ : integral_constant<size_t, 1>
+{ };
+
+template <>
+struct size<optional<nil_t>>
+ : integral_constant<size_t, 0>
+{ };
+
 template <typename Char, Char ... C>
 struct length<basic_string<Char, C...> >
  : integral_constant<size_t, sizeof ... (C)>

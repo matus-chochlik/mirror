@@ -25,11 +25,13 @@
 #include <mire/ct/evaluate.hpp>
 #include <mire/ct/find.hpp>
 #include <mire/ct/front.hpp>
+#include <mire/ct/get.hpp>
 #include <mire/ct/head.hpp>
 #include <mire/ct/int_const.hpp>
 #include <mire/ct/next.hpp>
 #include <mire/ct/nil_type.hpp>
 #include <mire/ct/not.hpp>
+#include <mire/ct/optional.hpp>
 #include <mire/ct/or.hpp>
 #include <mire/ct/range.hpp>
 #include <mire/ct/size.hpp>

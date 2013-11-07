@@ -1,24 +1,29 @@
 /**
- * @file mire/ct/int_const.hpp
- * @brief Integral constant types
+ * @file mire/ct/get.hpp
+ * @brief Implementation of the get meta-function
  *
  *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRE_CT_INT_CONST_1105240825_HPP
-#define MIRE_CT_INT_CONST_1105240825_HPP
+#ifndef MIRE_CT_GET_1105240825_HPP
+#define MIRE_CT_GET_1105240825_HPP
 
-#include <type_traits>
+#include <mire/ct/default.hpp>
 
 namespace mire {
 namespace ct {
 
-using ::std::integral_constant;
-using ::std::true_type;
-using ::std::false_type;
-using ::std::is_same;
+#ifndef MIRROR_DOCUMENTATION_ONLY
+
+template <typename T>
+struct get<optional<T> >
+{
+	typedef T type;
+};
+
+#endif
 
 } // namespace ct
 } // namespace mire

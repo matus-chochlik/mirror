@@ -12,6 +12,7 @@
 
 #include <mire/ct/range.hpp>
 #include <mire/ct/string.hpp>
+#include <mire/ct/optional.hpp>
 #include <mire/ct/nil_type.hpp>
 #include <mire/ct/int_const.hpp>
 
@@ -22,16 +23,26 @@ template <typename X>
 struct evaluate;
 
 template <typename X>
-struct has_type
+struct can_evaluate
 {
 	template <typename Y>
-	static true_type _has(Y*, typename Y::type* = nullptr);
-	static false_type _has(...);
+	static false_type _can_hlp(Y*, Y*);
 
-	typedef decltype(_has((X*)nullptr)) type;
+	template <typename Y, typename Z>
+	static true_type _can_hlp(Y*, Z*);
+
+	template <typename Y>
+	static auto _can(Y* a, typename Y::type* b = nullptr) ->
+	decltype(_can_hlp(a, b));
+
+	static false_type _can(...);
+
+	static X* _ptr(void);
+
+	typedef decltype(_can(_ptr())) type;
 };
 
-template <typename X, typename HasType>
+template <typename X, typename CanEvaluate>
 struct do_evaluate;
 
 template <typename X>
@@ -55,32 +66,34 @@ struct do_evaluate<X, false_type>
 template <typename X>
 struct evaluate
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : do_evaluate<X, typename has_type<X>::type>
+ : do_evaluate<X, typename can_evaluate<X>::type>
 #endif
 { };
 
 template <typename Char, Char ... C>
 struct evaluate<basic_string<Char, C...>>
-{
-	typedef basic_string<Char, C...> type;
-};
+ : basic_string<Char, C...>
+{ };
 
 template <typename ... P>
 struct evaluate<range<P...>>
-{
-	typedef range<P...> type;
-};
+ : range<P...>
+{ };
 
-template <bool B>
-struct evaluate<integral_constant<bool, B>>
- : integral_constant<bool, B>
+template <typename T>
+struct evaluate<optional<T>>
+ : optional<T>
+{ };
+
+template <typename T, T C>
+struct evaluate<integral_constant<T, C>>
+ : integral_constant<T, C>
 { };
 
 template <>
 struct evaluate<nil_t>
-{
-	typedef nil_t type;
-};
+ : nil_t
+{ };
 
 } // namespace ct
 } // namespace mire

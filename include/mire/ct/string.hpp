@@ -10,6 +10,8 @@
 #ifndef MIRE_CT_STRING_1105240825_HPP
 #define MIRE_CT_STRING_1105240825_HPP
 
+#include <mire/ct/stddef.hpp>
+
 namespace mire {
 namespace ct {
 
@@ -37,32 +39,16 @@ template <typename Char, Char ... C>
 struct basic_string
 {
 	typedef basic_string<Char, C...> type;
-	static constexpr char c_str[] = { C..., '\0' };
+	static constexpr Char c_str[] = { C..., '\0' };
 	static constexpr size_t size = sizeof...(C);
 };
 template <typename Char, Char ... C>
-constexpr char basic_string<Char, C...>::c_str[];
-
-#ifdef MIRROR_DOCUMENTATION_ONLY
-/// This trait meta-function can be used to check if the passed type is a string
-template <typename T>
-struct is_string  : BooleanConstant
-{ };
-#else
-template <typename T>
-struct is_string
- : false_type
-{ };
-
-template <typename Char, Char ... C>
-struct is_string<basic_string<Char, C...>>
- : true_type
-{ };
-#endif
+constexpr Char basic_string<Char, C...>::c_str[];
 
 /// A specialization of the basic compile-time string using @c char type
 /**
  *  @see basic_string
+ *  @see empty_string
  *
  *  @ingroup ct_utils
  */
@@ -70,6 +56,15 @@ template <char ... C>
 struct string
  : basic_string<char, C...>
 { };
+
+/// An empty string
+/**
+ *  @see basic_string
+ *  @see string
+ *
+ *  @ingroup ct_utils
+ */
+typedef string<> empty_string;
 
 } // namespace ct
 } // namespace mire

@@ -36,6 +36,26 @@ struct nonempty<basic_string<Char, C...>>
  : integral_constant<bool, sizeof ... (C) != 0>
 { };
 
+template <typename T>
+struct empty<optional<T>>
+ : false_type
+{ };
+
+template <>
+struct empty<optional<nil_t>>
+ : true_type
+{ };
+
+template <typename T>
+struct nonempty<optional<T>>
+ : true_type
+{ };
+
+template <>
+struct nonempty<optional<nil_t>>
+ : false_type
+{ };
+
 } // namespace ct
 } // namespace mire
 

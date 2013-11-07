@@ -22,37 +22,33 @@ template <
 	typename Done,
 	typename Head,
 	typename Tail
-> struct head_hlp;
+> struct head;
 
 template <size_t N, typename Char, Char ... C>
-struct head_hlp<
+struct head<
 	integral_constant<size_t, N>,
 	false_type,
 	basic_string<Char, C...>,
 	basic_string<Char>
->
-{
-	typedef basic_string<Char, C...> type;
-};
+>: basic_string<Char, C...>
+{ };
 
 template <typename Char, Char ... Hn, Char ... Tn>
-struct head_hlp<
+struct head<
 	integral_constant<size_t, 0>,
 	true_type,
 	basic_string<Char, Hn...>,
 	basic_string<Char, Tn...>
->
-{
-	typedef basic_string<Char, Hn...> type;
-};
+>: basic_string<Char, Hn...>
+{ };
 
 template <size_t N, typename Char, Char C, Char ... Hn, Char ... Tn>
-struct head_hlp<
+struct head<
 	integral_constant<size_t, N>,
 	false_type,
 	basic_string<Char, Hn...>,
 	basic_string<Char, C, Tn...>
-> : head_hlp<
+> : head<
 	integral_constant<size_t, N - 1>,
 	integral_constant<bool, N - 1 == 0>,
 	basic_string<Char, Hn..., C>,
@@ -65,7 +61,7 @@ template <typename Length, typename Char, Char ... C>
 struct head<
 	basic_string<Char, C...>,
 	Length
-> : aux::head_hlp<
+> : aux::head<
 	integral_constant<size_t, Length::value>,
 	integral_constant<bool, Length::value == 0>,
 	basic_string<Char>,

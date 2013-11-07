@@ -13,6 +13,7 @@
 #include <mire/config.hpp>
 #include <mire/ct/range.hpp>
 #include <mire/ct/string.hpp>
+#include <mire/ct/optional.hpp>
 #include <mire/ct/evaluate.hpp>
 
 namespace mire {
@@ -90,6 +91,22 @@ struct nonempty
 #endif
 { };
 
+/// Nil intrinsic meta-function for optionals
+/**
+ *  @tparam Optional the optional to be examined
+ *  @see optional
+ *  @see get
+ *  @ingroup ct_utils
+ */
+template <typename Optional>
+struct nil
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : nil<typename evaluate<Optional>::type>
+#else
+ : BooleanConstantType
+#endif
+{ };
+
 /// Meta-function returning the length of a compile-time string
 /**
  *  This meta-function is equivalent to the @c length meta-function.
@@ -127,6 +144,27 @@ struct length
  : IntegralConstantType
 #endif
 { };
+
+/// Returns the element of the optional passed as argument
+/**
+ *  This operation may be invoked only on non-nil optionals.
+ *
+ *  @tparam Optional the optional the item of which is to be returned
+ *  @see optional
+ *  @see nil
+ *  @ingroup ct_utils
+ */
+template <typename Optional>
+struct get
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : get<typename evaluate<Optional>::type>
+{ };
+#else
+{
+	/// The type in the optional passed as argument
+	typedef unspecified_type type;
+};
+#endif
 
 /// Equality comparison meta-function for compile-time strings
 /**

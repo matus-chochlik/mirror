@@ -13,7 +13,10 @@
 namespace mire {
 namespace ct {
 
-struct nil_t { };
+struct nil_t
+{
+	typedef nil_t type;
+};
 
 } // namespace ct
 } // namesace mire

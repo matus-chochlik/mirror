@@ -27,29 +27,36 @@ struct concat<basic_string<Char, C1...>, basic_string<Char, C2...> >
 	typedef basic_string<Char, C1..., C2...> type;
 };
 
+template <typename ... P>
+struct concat<range<P...>>
+{
+	typedef range<P...> type;
+};
+
+template <typename ... P1, typename ... P2>
+struct concat<range<P1...>, range<P2...>>
+{
+	typedef range<P1..., P2...> type;
+};
+
 template <
-	typename String1,
-	typename String2,
-	typename String3,
-	typename ... Strings
+	typename Range1,
+	typename Range2,
+	typename Range3,
+	typename ... Ranges
 > struct concat<
-	String1,
-	String2,
-	String3,
-	Strings...
+	Range1,
+	Range2,
+	Range3,
+	Ranges...
 >
 {
 	typedef typename concat<
-		typename concat<String1, String2>::type,
-		String3,
-		Strings...
+		typename concat<Range1, Range2>::type,
+		Range3,
+		Ranges...
 	>::type type;
 };
-
-template <typename ... Strings>
-struct concat<range<Strings...>>
- : concat<Strings...>
-{ };
 
 } // namespace ct
 } // namespace mire
