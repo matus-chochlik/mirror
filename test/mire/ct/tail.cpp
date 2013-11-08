@@ -106,6 +106,11 @@ BOOST_AUTO_TEST_CASE(mire_ct_tail_range)
 		tail<range<bool, char, short, int, long, float>, five>,
 		range<char, short, int, long, float>
 	>, true>();
+
+	mire_ct_test_bool<equal<
+		tail<tail<range<bool, char, short, int, long, float>, four>, two>,
+		range<long, float>
+	>, true>();
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_tail_string)

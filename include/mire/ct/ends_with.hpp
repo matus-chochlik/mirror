@@ -23,7 +23,7 @@ namespace ct {
 template <typename Range1, typename Range2>
 struct ends_with
  : equal<
-	tail<Range1, length<Range2> >,
+	tail<Range1, size<Range2> >,
 	Range2
 > { };
 

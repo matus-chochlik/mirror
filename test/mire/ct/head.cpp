@@ -106,6 +106,11 @@ BOOST_AUTO_TEST_CASE(mire_ct_head_range)
 		head<range<bool, char, short, int, long, float>, five>,
 		range<bool, char, short, int, long>
 	>, true>();
+
+	mire_ct_test_bool<equal<
+		head<head<range<bool, char, short, int, long, float>, four>, two>,
+		range<bool, char>
+	>, true>();
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_head_string)
