@@ -33,6 +33,7 @@
 #include <mire/ct/not.hpp>
 #include <mire/ct/optional.hpp>
 #include <mire/ct/or.hpp>
+#include <mire/ct/prepend.hpp>
 #include <mire/ct/range.hpp>
 #include <mire/ct/size.hpp>
 #include <mire/ct/skip_front.hpp>

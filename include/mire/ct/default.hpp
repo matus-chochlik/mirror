@@ -260,7 +260,7 @@ struct concat
 };
 #endif
 
-/// Returns a range having the passed item appended.
+/// Returns a range having the passed item(s) appended.
 /**
  *  @tparam Range the range to be modified
  *  @tparam T the type(s) to be appended to the range
@@ -279,7 +279,7 @@ struct append
 };
 #endif
 
-/// Returns a string having the passed item appended.
+/// Returns a string having the passed item(s) appended.
 /**
  *  @tparam String the range to be modified
  *  @tparam T the character(s) to be appended to the range
@@ -290,6 +290,44 @@ template <class String, char ... T>
 struct append_char
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : append_char<typename evaluate<String>::type, T...>
+{ };
+#else
+{
+	/// The string with the character(s) added
+	typedef String type;
+};
+#endif
+
+/// Returns a range having the passed item(s) prepended.
+/**
+ *  @tparam Range the range to be modified
+ *  @tparam T the type(s) to be prepended to the range
+ *
+ *  @ingroup ct_utils
+ */
+template <class Range, typename ... T>
+struct prepend
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : prepend<typename evaluate<Range>::type, T...>
+{ };
+#else
+{
+	/// The range with the types added
+	typedef Range type;
+};
+#endif
+
+/// Returns a string having the passed item(s) prepended.
+/**
+ *  @tparam String the range to be modified
+ *  @tparam T the character(s) to be prepended to the range
+ *
+ *  @ingroup ct_utils
+ */
+template <class String, char ... T>
+struct prepend_char
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : prepend_char<typename evaluate<String>::type, T...>
 { };
 #else
 {
