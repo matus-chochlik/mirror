@@ -8,6 +8,8 @@ add_mire_exec_test("ct" string)
 add_mire_exec_test("ct" range)
 add_mire_exec_test("ct" optional)
 
+add_mire_exec_test("ct" if)
+
 add_mire_exec_test("ct" empty)
 add_mire_exec_test("ct" size)
 add_mire_exec_test("ct" c_str)
@@ -27,3 +29,4 @@ add_mire_exec_test("ct" contains)
 add_mire_exec_test("ct" concat)
 add_mire_exec_test("ct" append)
 add_mire_exec_test("ct" prepend)
+add_mire_exec_test("ct" unique)

@@ -9,13 +9,13 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE MIRE_CT_empty
+#define BOOST_TEST_MODULE MIRE_CT_c_str
 #include <boost/test/unit_test.hpp>
 
 #include <mire/ct/c_str.hpp>
 #include <cstring>
 
-BOOST_AUTO_TEST_SUITE(mire_ct_empty)
+BOOST_AUTO_TEST_SUITE(mire_ct_c_str)
 
 BOOST_AUTO_TEST_CASE(mire_ct_string_c_str)
 {

@@ -27,6 +27,8 @@
 #include <mire/ct/front.hpp>
 #include <mire/ct/get.hpp>
 #include <mire/ct/head.hpp>
+#include <mire/ct/identity.hpp>
+#include <mire/ct/if.hpp>
 #include <mire/ct/int_const.hpp>
 #include <mire/ct/next.hpp>
 #include <mire/ct/nil_type.hpp>

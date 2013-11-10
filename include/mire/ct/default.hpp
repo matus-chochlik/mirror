@@ -19,6 +19,37 @@
 namespace mire {
 namespace ct {
 
+/// Returns the IfTrue or the IfFalse type based on the passed Boolean type
+/**
+ *  @tparam BooleanConstant the boolean constant type determining the result
+ *  @tparam IfTrue the type returned if the BooleanConstant has the true value
+ *  @tparam IfFalse the type returned if the BooleanConstant has false value
+ *
+ *  @ingroup ct_utils
+ */
+template <class BooleanConstant, class IfTrue, class IfFalse>
+struct if_
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : if_<typename evaluate<BooleanConstant>::type, IfTrue, IfFalse>
+{ };
+#else
+{
+	/// The @a IfTrue or @a IfFalse type based on @a BooleanConstant
+	typedef unspecified type;
+};
+#endif
+
+/// Returns the IfTrue or the IfFalse type based on the passed boolean value
+/**
+ *  @tparam BooleanConstant the boolean constant value determining the result
+ *  @tparam IfTrue the type returned if the BooleanConstant has the true value
+ *  @tparam IfFalse the type returned if the BooleanConstant has false value
+ *
+ *  @ingroup ct_utils
+ */
+template <bool BooleanConstant, class IfTrue, class IfFalse>
+struct if_c;
+
 /// Meta-function returning a null terminated C-string literal from a String
 /**
  *  @see basic_string
@@ -588,6 +619,24 @@ struct lacks
 #else
  : BooleanConstantType
 { };
+#endif
+
+/// Returns a range with the duplicities removed
+/**
+ *  @tparam Range the range to be filtered
+ *
+ *  @ingroup ct_utils
+ */
+template <class Range>
+struct unique
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : unique<typename evaluate<Range>::type>
+{ };
+#else
+{
+	/// The range containing only the unique elements
+	typedef UniqueRange type;
+};
 #endif
 
 } // namespace ct
