@@ -474,7 +474,28 @@ struct find
 > { };
 #else
 {
-	/// Sub-string starting with the searched string or empty string
+	/// Sub-range starting with the searched range or empty range
+	typedef CompileTimeString type;
+};
+#endif
+
+/// Returns a sub-range ending before the first occurence of the searched range
+/**
+ *  @tparam Range1 the range to search in.
+ *  @tparam Range2 the range searched for
+ *
+ *  @ingroup meta_programming
+ */
+template <typename Range1, typename Range2>
+struct before
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : before<
+	typename evaluate<Range1>::type,
+	typename evaluate<Range2>::type
+> { };
+#else
+{
+	/// Sub-range ending before the searched ranges
 	typedef CompileTimeString type;
 };
 #endif
