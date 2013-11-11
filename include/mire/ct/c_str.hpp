@@ -17,17 +17,6 @@
 namespace mire {
 namespace ct {
 
-/// A meta-function returning a C-null-terminated-string for a CT string
-/** This function returns a null-terminated C-string for the compile-time
- *  string, passed as the @a String template parameter.
- *
- *  @see basic_string
- *
- *  @ingroup ct_utils
- */
-template <typename String>
-struct c_str;
-
 template <typename Char, Char ... C>
 struct c_str<basic_string<Char, C...>>
 {

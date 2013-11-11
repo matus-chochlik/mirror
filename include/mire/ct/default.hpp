@@ -51,7 +51,9 @@ template <bool BooleanConstant, class IfTrue, class IfFalse>
 struct if_c;
 
 /// Meta-function returning a null terminated C-string literal from a String
-/**
+/** This function returns a null-terminated C-string for the compile-time
+ *  string, passed as the @a String template parameter.
+ *
  *  @see basic_string
  *
  *  @ingroup ct_utils
@@ -83,6 +85,23 @@ struct char_type
 {
 	/// The character type use by the examined compile-time string
 	typedef unspecified_char_type type;
+};
+#endif
+
+/// A meta-function returning string from a StringLiteralClass
+/**
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename StringLiteralClass>
+struct to_string
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+{
+	/// String equal to the compile-time string literal passed as argument
+	typedef String type;
 };
 #endif
 
@@ -636,6 +655,72 @@ struct unique
 {
 	/// The range containing only the unique elements
 	typedef UniqueRange type;
+};
+#endif
+
+/// Calls a nested meta-function with a pack <0,1,2, ... N-1> of ints
+/** This template assembles a pack of integral non-type template parameters
+ *  which form a sequence of 0, 1, 2, ... , N-1 and calls the meta-function
+ *  called apply nested in the MetaFunctionClass, passing the pack as
+ *  parameters.
+ *
+ *  @tparam MetaFunctionClass a class containing a nested template called
+ *  apply which can take @a N integral template parameters having
+ *  typedef called "type".
+ *  @param N the count of arguments for the meta-function.
+ *
+ *  @see apply_on_seq_pack
+ *  @ingroup meta_programming
+ */
+template <typename MetaFunctionClass, unsigned N>
+struct apply_on_seq_pack_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+{
+	/// The result of the meta-function with the <0,1,2,...,N-1> params
+	/** This type is the result of the following expression
+	 *  @verbatim
+	 *  typename MetaFunctionClass:: template apply<
+	 *      0, 1, 2, ..., N-1
+	 *  >::type
+	 *  @endverbatim
+	 */
+	typedef unspecified_type type;
+};
+#endif
+
+/// Calls a nested meta-function with a pack <0,1,2, ... N-1> of ints
+/** This template assembles a pack of integral non-type template parameters
+ *  which form a sequence of 0, 1, 2, ... , N-1 and calls the meta-function
+ *  called apply nested in the MetaFunctionClass, passing the pack as
+ *  parameters.
+ *
+ *  @tparam MetaFunctionClass a class containing a nested template called
+ *  apply which can take @a N integral template parameters having
+ *  typedef called "type".
+ *  @param N an integral constant type providing the count of arguments for
+ *  the meta-function.
+ *
+ *  @see apply_on_seq_pack
+ *  @ingroup meta_programming
+ */
+template <typename MetaFunctionClass, class N>
+struct apply_on_seq_pack
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : public apply_on_seq_pack_c<MetaFunctionClass, N::value>
+{ };
+#else
+{
+	/// The result of the meta-function with the <0,1,2,...,N-1> params
+	/** This type is the result of the following expression
+	 *  @verbatim
+	 *  typename MetaFunctionClass:: template apply<
+	 *      0, 1, 2, ..., N-1
+	 *  >::type
+	 *  @endverbatim
+	 */
+	typedef unspecified_type type;
 };
 #endif
 

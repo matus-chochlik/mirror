@@ -37,12 +37,14 @@
 #include <mire/ct/or.hpp>
 #include <mire/ct/prepend.hpp>
 #include <mire/ct/range.hpp>
+#include <mire/ct/seq_pack.hpp>
 #include <mire/ct/size.hpp>
 #include <mire/ct/skip_front.hpp>
 #include <mire/ct/slice.hpp>
 #include <mire/ct/starts_with.hpp>
 #include <mire/ct/string.hpp>
 #include <mire/ct/tail.hpp>
+#include <mire/ct/to_string.hpp>
 #include <mire/ct/traits.hpp>
 
 #endif // include guard

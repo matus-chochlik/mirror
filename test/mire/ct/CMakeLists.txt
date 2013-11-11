@@ -9,11 +9,13 @@ add_mire_exec_test("ct" range)
 add_mire_exec_test("ct" optional)
 
 add_mire_exec_test("ct" if)
+add_mire_exec_test("ct" seq_pack)
 
 add_mire_exec_test("ct" empty)
 add_mire_exec_test("ct" size)
 add_mire_exec_test("ct" c_str)
 add_mire_exec_test("ct" compare)
+add_mire_exec_test("ct" to_string)
 add_mire_exec_test("ct" get)
 add_mire_exec_test("ct" front)
 add_mire_exec_test("ct" at)
