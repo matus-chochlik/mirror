@@ -13,6 +13,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mire/ct/at.hpp>
+#include <mire/ct/compare.hpp>
 
 BOOST_AUTO_TEST_SUITE(mire_ct_at)
 
@@ -45,83 +46,83 @@ BOOST_AUTO_TEST_CASE(mire_ct_at_range)
 	typedef integral_constant<size_t, 4> four;
 	typedef integral_constant<size_t, 5> five;
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, zero>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, zero>,
 		bool
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, zero>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, zero>,
 		short
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, one>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, one>,
 		short
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, one>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, one>,
 		bool
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, one>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, one>,
 		int
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, two>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, two>,
 		int
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, two>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, two>,
 		short
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, two>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, two>,
 		long
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, three>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, three>,
 		long
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, three>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, three>,
 		int
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, three>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, three>,
 		unsigned
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, four>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, four>,
 		unsigned
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, four>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, four>,
 		long
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, four>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, four>,
 		float
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, five>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, five>,
 		float
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		at<range<bool, short, int, long, unsigned, float>, five>::type,
+	mire_ct_test_bool<equal_types<
+		at<range<bool, short, int, long, unsigned, float>, five>,
 		unsigned
 	>,false>();
 }

@@ -54,10 +54,10 @@ struct do_evaluate<X, true_type>
 template <typename X>
 struct do_evaluate<X, false_type>
 {
-	typedef nil_t type;
+	typedef X type;
 };
 
-/// Meta-function evaluates a compile-time string expression
+/// Meta-function evaluates a compile-time expression
 /**
  *  @see basic_string
  *  @see range

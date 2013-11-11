@@ -13,6 +13,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mire/ct/front.hpp>
+#include <mire/ct/compare.hpp>
 
 BOOST_AUTO_TEST_SUITE(mire_ct_front)
 
@@ -38,33 +39,33 @@ BOOST_AUTO_TEST_CASE(mire_ct_front_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<is_same<
-		front<range<long>>::type,
+	mire_ct_test_bool<equal_types<
+		front<range<long>>,
 		long
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		front<range<char>>::type,
+	mire_ct_test_bool<equal_types<
+		front<range<char>>,
 		bool
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		front<range<short, int, long>>::type,
+	mire_ct_test_bool<equal_types<
+		front<range<short, int, long>>,
 		short
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		front<range<short, int, long>>::type,
+	mire_ct_test_bool<equal_types<
+		front<range<short, int, long>>,
 		int
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		front<range<short, int, long>>::type,
+	mire_ct_test_bool<equal_types<
+		front<range<short, int, long>>,
 		long
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		front<range<bool, short, int, long, unsigned, float>>::type,
+	mire_ct_test_bool<equal_types<
+		front<range<bool, short, int, long, unsigned, float>>,
 		char
 	>,false>();
 }

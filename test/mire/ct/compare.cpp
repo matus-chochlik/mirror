@@ -245,5 +245,18 @@ BOOST_AUTO_TEST_CASE(mire_ct_nonequal_string)
 	>, true>();
 }
 
+BOOST_AUTO_TEST_CASE(mire_ct_equal_types_test)
+{
+	using namespace mire::ct;
+
+	mire_ct_test_bool<equal_types<int, int>, true>();
+	mire_ct_test_bool<equal_types<int, int, int, int, int>, true>();
+	mire_ct_test_bool<equal_types<float, float, float, float>, true>();
+	mire_ct_test_bool<equal_types<char, short, long, unsigned>, false>();
+	mire_ct_test_bool<equal_types<bool, int, int, int, int>,false>();
+	mire_ct_test_bool<equal_types<int, int, bool, int, int>,false>();
+	mire_ct_test_bool<equal_types<int, int, int, int, bool>,false>();
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 

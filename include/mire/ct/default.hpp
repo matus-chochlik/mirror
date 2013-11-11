@@ -216,9 +216,10 @@ struct get
 };
 #endif
 
-/// Equality comparison meta-function for compile-time strings
+/// Equality comparison meta-function for compile-time ranges
 /**
  *  @see basic_string
+ *  @see range
  *
  *  @ingroup ct_utils
  */
@@ -234,9 +235,10 @@ struct equal
 #endif
 { };
 
-/// Non-equality comparison meta-function for compile-time strings
+/// Non-equality comparison meta-function for compile-time ranges
 /**
  *  @see basic_string
+ *  @see range
  *
  *  @ingroup ct_utils
  */
@@ -251,6 +253,19 @@ struct nonequal
  : BooleanConstantType
 #endif
 { };
+
+/// Equality comparison meta-function for arbitrary types
+/**
+ *  @ingroup ct_utils
+ */
+template <typename T, typename ... P>
+struct equal_types
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : BooleanConstantType
+{ };
+#endif
 
 /// Meta-function returning the first character in the compile-time string
 /**
@@ -693,7 +708,7 @@ struct unique
  *  @see apply_on_seq_pack
  *  @ingroup meta_programming
  */
-template <typename MetaFunctionClass, unsigned N>
+template <typename MetaFunctionClass, size_t N>
 struct apply_on_seq_pack_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
 ;
@@ -742,6 +757,26 @@ struct apply_on_seq_pack
 	 *  @endverbatim
 	 */
 	typedef unspecified_type type;
+};
+#endif
+
+/// Invokes a meta-function-class or placeholder lambda expression.
+/**
+ *
+ *  @tparam LambdaExpression the expression to be "called"
+ *  @tparam Params the pack of params passed to the lambda expression
+ *
+ *  @ingroup ct_utils
+ */
+template <typename LambdaExpression, typename ... Params>
+struct apply
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : LambdaExpression::template apply<Params...>
+{ };
+#else
+{
+	/// The result of the invocation of the expression with the params
+	typedef unspecified type;
 };
 #endif
 

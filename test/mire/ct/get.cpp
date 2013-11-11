@@ -13,6 +13,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mire/ct/get.hpp>
+#include <mire/ct/compare.hpp>
 
 BOOST_AUTO_TEST_SUITE(mire_ct_get)
 
@@ -29,18 +30,18 @@ BOOST_AUTO_TEST_CASE(mire_ct_get_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<is_same<
-		get<optional<long>>::type,
+	mire_ct_test_bool<equal_types<
+		get<optional<long>>,
 		long
 	>, true>();
 
-	mire_ct_test_bool<is_same<
-		get<optional<int>>::type,
+	mire_ct_test_bool<equal_types<
+		get<optional<int>>,
 		long
 	>,false>();
 
-	mire_ct_test_bool<is_same<
-		get<optional<int>>::type,
+	mire_ct_test_bool<equal_types<
+		get<optional<int>>,
 		int
 	>, true>();
 }

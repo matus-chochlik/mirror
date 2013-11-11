@@ -12,6 +12,7 @@
 
 #include <mire/ct/default.hpp>
 #include <mire/ct/int_const.hpp>
+#include <mire/ct/and.hpp>
 
 namespace mire {
 namespace ct {
@@ -77,6 +78,15 @@ struct nonequal<optional<T>, optional<T>>
 template <typename T1, typename T2>
 struct nonequal<optional<T1>, optional<T2>>
  : true_type
+{ };
+
+// other
+template <typename T, typename ... P>
+struct equal_types
+ : and_<is_same<
+	typename evaluate<T>::type,
+	typename evaluate<P>::type>...
+>
 { };
 
 } // namespace ct

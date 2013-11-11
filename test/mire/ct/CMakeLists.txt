@@ -10,6 +10,7 @@ add_mire_exec_test("ct" optional)
 
 add_mire_exec_test("ct" if)
 add_mire_exec_test("ct" seq_pack)
+add_mire_exec_test("ct" lambda)
 
 add_mire_exec_test("ct" empty)
 add_mire_exec_test("ct" size)

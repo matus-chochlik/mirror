@@ -13,6 +13,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mire/ct/if.hpp>
+#include <mire/ct/compare.hpp>
 #include <cstring>
 
 BOOST_AUTO_TEST_SUITE(mire_ct_if)
@@ -21,23 +22,23 @@ BOOST_AUTO_TEST_CASE(mire_ct_if1)
 {
 	using namespace mire::ct;
 
-	BOOST_CHECK((is_same<
-		if_<true_type, char, double>::type,
+	BOOST_CHECK((equal_types<
+		if_<true_type, char, double>,
 		char
 	>::value));
 
-	BOOST_CHECK((is_same<
-		if_<false_type, char, double>::type,
+	BOOST_CHECK((equal_types<
+		if_<false_type, char, double>,
 		double
 	>::value));
 
-	BOOST_CHECK((is_same<
-		if_<true_type, double, char>::type,
+	BOOST_CHECK((equal_types<
+		if_<true_type, double, char>,
 		double
 	>::value));
 
-	BOOST_CHECK((is_same<
-		if_<false_type, double, char>::type,
+	BOOST_CHECK((equal_types<
+		if_<false_type, double, char>,
 		char
 	>::value));
 }
@@ -46,23 +47,23 @@ BOOST_AUTO_TEST_CASE(mire_ct_if_c1)
 {
 	using namespace mire::ct;
 
-	BOOST_CHECK((is_same<
-		if_c<true, char, double>::type,
+	BOOST_CHECK((equal_types<
+		if_c<true, char, double>,
 		char
 	>::value));
 
-	BOOST_CHECK((is_same<
-		if_c<false, char, double>::type,
+	BOOST_CHECK((equal_types<
+		if_c<false, char, double>,
 		double
 	>::value));
 
-	BOOST_CHECK((is_same<
-		if_c<true, double, char>::type,
+	BOOST_CHECK((equal_types<
+		if_c<true, double, char>,
 		double
 	>::value));
 
-	BOOST_CHECK((is_same<
-		if_c<false, double, char>::type,
+	BOOST_CHECK((equal_types<
+		if_c<false, double, char>,
 		char
 	>::value));
 }
