@@ -33,6 +33,15 @@ struct arg
 	{ };
 };
 
+template <size_t Number>
+struct arg_c
+{
+	template <typename Char, Char ... Params>
+	struct apply_c
+	 : at_c<basic_string<Char, Params...>, Number>
+	{ };
+};
+
 /// Returns the N-th Param or the @a Expr expression
 /** This template returns either one of the @a Params if the @a Expr
  *  type is an instantiation of the arg<N> template or the @a Expr
@@ -56,6 +65,12 @@ struct use_arg
 };
 #endif
 
+template <typename Expr, typename Char, Char ... Params>
+struct use_arg_c
+{
+	typedef Expr type;
+};
+
 /// Protects the @a PlaceholderExpression from being expanded
 /** This meta-function can be used to protect nested placeholder
  *  expressions from immediate expansion.
@@ -74,6 +89,12 @@ struct use_arg<arg<Number>, Params...>
  : at_c<range<Params...>, Number>
 { };
 
+template <size_t Number, typename Char, Char ... Params>
+struct use_arg_c<arg<Number>, Char, Params...>
+ : at_c<basic_string<Char, Params...>, Number>
+{ };
+
+//
 template <
 	template <class> class Expr,
 	size_t Number,
@@ -83,12 +104,24 @@ struct use_arg<Expr<arg<Number> >, Params...>
  : Expr<typename at_c<range<Params...>, Number>::type>
 { };
 
+template <
+	template <class> class Expr,
+	size_t Number,
+	typename Char,
+	Char ... Params
+>
+struct use_arg_c<Expr<arg<Number> >, Char, Params...>
+ : Expr<typename at_c<basic_string<Char, Params...>, Number>::type>
+{ };
+
+//
 template <typename Expr, typename ... Params>
 struct use_arg<protect<Expr>, Params...>
 {
 	typedef Expr type;
 };
 
+//
 template <
 	template <class...> class Expr,
 	typename ... SubExprs,
@@ -99,6 +132,17 @@ struct use_arg<Expr<SubExprs...>, Params...>
 { };
 
 template <
+	template <class...> class Expr,
+	typename ... SubExprs,
+	typename Char,
+	Char ... Params
+>
+struct use_arg_c<Expr<SubExprs...>, Char, Params...>
+ : Expr<typename use_arg_c<SubExprs, Char, Params...>::type...>
+{ };
+
+//
+template <
 	template <typename ...> class Expr,
 	typename ... ExprArgs,
 	typename ... Params
@@ -107,9 +151,25 @@ struct apply<Expr<ExprArgs...>, Params...>
  : Expr<typename use_arg<ExprArgs, Params...>::type...>
 { };
 
+template <
+	template <typename ...> class Expr,
+	typename ... ExprArgs,
+	typename Char,
+	Char ... Params
+>
+struct apply_c<Expr<ExprArgs...>, Char, Params...>
+ : Expr<typename use_arg_c<ExprArgs, Char, Params...>::type...>
+{ };
+
+//
 template <size_t Number, typename ... Params>
 struct apply<arg<Number>, Params...>
  : arg<Number>::template apply<Params...>
+{ };
+
+template <size_t Number, typename Char, Char ... Params>
+struct apply_c<arg<Number>, Char, Params...>
+ : arg_c<Number>::template apply_c<Char, Params...>
 { };
 
 } // namespace ct

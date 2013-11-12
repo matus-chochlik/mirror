@@ -351,10 +351,10 @@ struct append
  *
  *  @ingroup ct_utils
  */
-template <class String, char ... T>
-struct append_char
+template <class String, typename Char, Char ... T>
+struct append_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : append_char<typename evaluate<String>::type, T...>
+ : append_c<typename evaluate<String>::type, Char, T...>
 { };
 #else
 {
@@ -389,10 +389,10 @@ struct prepend
  *
  *  @ingroup ct_utils
  */
-template <class String, char ... T>
-struct prepend_char
+template <class String, typename Char, Char ... T>
+struct prepend_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : prepend_char<typename evaluate<String>::type, T...>
+ : prepend_c<typename evaluate<String>::type, Char, T...>
 { };
 #else
 {
@@ -777,6 +777,44 @@ struct apply
 {
 	/// The result of the invocation of the expression with the params
 	typedef unspecified type;
+};
+#endif
+
+/// Invokes a meta-function-class or placeholder lambda expression.
+/**
+ *
+ *  @tparam LambdaExpression the expression to be "called"
+ *  @tparam Params the pack of params passed to the lambda expression
+ *
+ *  @ingroup ct_utils
+ */
+template <typename LambdaExpression, typename Char, Char ... Params>
+struct apply_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : LambdaExpression::template apply_c<Char, Params...>
+{ };
+#else
+{
+	/// The result of the invocation of the expression with the params
+	typedef unspecified type;
+};
+#endif
+
+/// Returns a sub-range containing only elements satisfying a predicate
+/**
+ *  @tparam Range the range to be filtered
+ *  @tparam Predicate a unary lambda expression returning a boolean type
+ *
+ *  @ingroup meta_programming
+ */
+template <class Range, class Predicate>
+struct only_if
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : only_if<typename evaluate<Range>::type, Predicate>
+{ };
+#else
+{
+	typedef Range type;
 };
 #endif
 

@@ -26,7 +26,7 @@ struct prepend<range<P...>, T...>
 { };
 
 template <typename Char, Char ... C, Char ... T>
-struct prepend_char<basic_string<Char, C...>, T...>
+struct prepend_c<basic_string<Char, C...>, Char, T...>
  : basic_string<Char, T..., C...>
 { };
 

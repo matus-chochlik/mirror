@@ -9,6 +9,8 @@ project(mirror CXX)
 # we need C++11
 if(${CMAKE_COMPILER_IS_GNUCXX})
 	add_definitions(-std=c++0x)
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	add_definitions(-std=c++0x)
 endif()
 
 

@@ -32,32 +32,32 @@ BOOST_AUTO_TEST_CASE(mire_ct_prepend_string)
 	using namespace mire::ct;
 
 	mire_ct_test_bool<equal<
-		prepend_char<string<'a','b','c'>>,
+		prepend_c<string<'a','b','c'>, char>,
 		string<'a','b','c'>
 	>, true>();
 
 	mire_ct_test_bool<equal<
-		prepend_char<string<'b','c','d'>,'a'>,
+		prepend_c<string<'b','c','d'>, char,'a'>,
 		string<'a','b','c','d'>
 	>, true>();
 
 	mire_ct_test_bool<equal<
-		prepend_char<string<'d','e','f'>, 'a','b','c'>,
+		prepend_c<string<'d','e','f'>, char, 'a','b','c'>,
 		string<'a','b','c','d','e','f'>
 	>, true>();
 
 	mire_ct_test_bool<equal<
-		prepend_char<string<'e','f','g','h','i'>,'a','b','c','d'>,
+		prepend_c<string<'e','f','g','h','i'>, char,'a','b','c','d'>,
 		string<'a','b','c','d','e','f','g','h','i'>
 	>, true>();
 
 	mire_ct_test_bool<equal<
-		prepend_char<string<'g','h','i','j','k','l'>,'a','b','c','d','e','f'>,
+		prepend_c<string<'g','h','i','j','k','l'>, char,'a','b','c','d','e','f'>,
 		string<'a','b','c','d','e','f','g','h','i','j','k','l'>
 	>, true>();
 
 	mire_ct_test_bool<equal<
-		prepend_char<prepend_char<string<'g','h','i'>,'d','e','f'>,'a','b','c'>,
+		prepend_c<prepend_c<string<'g','h','i'>, char,'d','e','f'>, char,'a','b','c'>,
 		string<'a','b','c','d','e','f','g','h','i'>
 	>, true>();
 }
