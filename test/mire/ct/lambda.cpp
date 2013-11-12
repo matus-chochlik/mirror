@@ -15,6 +15,7 @@
 #include <mire/ct/lambda.hpp>
 #include <mire/ct/compare.hpp>
 #include <mire/ct/and.hpp>
+#include <mire/ct/not.hpp>
 
 #include <type_traits>
 
@@ -143,6 +144,104 @@ BOOST_AUTO_TEST_CASE(mire_ct_lambda_test5)
 		long* const,
 		long&,
 		long volatile
+	>::value));
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_lambda_test6)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((
+		apply_c<arg<0>, char, 'A', 'B', 'C', 'D', 'E', 'F'>::value == 'A'
+	));
+
+	BOOST_CHECK((
+		apply_c<arg<1>, char, 'A', 'B', 'C', 'D', 'E', 'F'>::value == 'B'
+	));
+
+	BOOST_CHECK((
+		apply_c<arg<2>, char, 'A', 'B', 'C', 'D', 'E', 'F'>::value == 'C'
+	));
+
+	BOOST_CHECK((
+		apply_c<arg<3>, char, 'A', 'B', 'C', 'D', 'E', 'F'>::value == 'D'
+	));
+
+	BOOST_CHECK((
+		apply_c<arg<4>, char, 'A', 'B', 'C', 'D', 'E', 'F'>::value == 'E'
+	));
+
+	BOOST_CHECK((
+		apply_c<arg<5>, char, 'A', 'B', 'C', 'D', 'E', 'F'>::value == 'F'
+	));
+}
+
+template <int Shift>
+struct mire_ct_lambda_test7_func
+{
+	template <typename Char, Char C>
+	struct apply_c
+	 : mire::ct::integral_constant<Char, Char(C+Shift)>
+	{ };
+};
+
+BOOST_AUTO_TEST_CASE(mire_ct_lambda_test7)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((
+		apply_c<mire_ct_lambda_test7_func< 0>, char, 'A'>::value == 'A'
+	));
+
+	BOOST_CHECK((
+		apply_c<mire_ct_lambda_test7_func< 1>, char, 'A'>::value == 'B'
+	));
+
+	BOOST_CHECK((
+		apply_c<mire_ct_lambda_test7_func<-1>, char, 'B'>::value == 'A'
+	));
+}
+
+struct mire_ct_lambda_test8_func
+{
+	template <typename Char, Char C1, Char C2>
+	struct apply_c
+	 : mire::ct::integral_constant<bool, C1 == C2>
+	{ };
+};
+
+BOOST_AUTO_TEST_CASE(mire_ct_lambda_test8)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((apply_c<mire_ct_lambda_test8_func, char, 'A', 'A'>::value));
+
+	typedef integral_constant<char, 'X'> _X;
+	typedef integral_constant<char, 'Y'> _Y;
+	typedef integral_constant<char, 'Z'> _Z;
+
+	BOOST_CHECK((apply_c<
+		bind_c<mire_ct_lambda_test8_func, arg<0>, _X>, char, 'X'
+	>::value));
+
+	BOOST_CHECK((apply_c<
+		not_<bind_c<mire_ct_lambda_test8_func, arg<0>, _X>>, char, 'Y'
+	>::value));
+
+	BOOST_CHECK((apply_c<
+		and_<
+			bind_c<mire_ct_lambda_test8_func, arg<0>, _X>,
+			bind_c<mire_ct_lambda_test8_func, arg<1>, _Y>,
+			bind_c<mire_ct_lambda_test8_func, arg<2>, _Z>
+		>, char, 'X', 'Y', 'Z'
+	>::value));
+
+	BOOST_CHECK((apply_c<
+		and_<
+			not_<bind_c<mire_ct_lambda_test8_func, arg<0>, _X>>,
+			not_<bind_c<mire_ct_lambda_test8_func, arg<1>, _Y>>,
+			not_<bind_c<mire_ct_lambda_test8_func, arg<2>, _Z>>
+		>, char, 'A', 'B', 'C'
 	>::value));
 }
 

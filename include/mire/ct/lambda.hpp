@@ -71,6 +71,36 @@ struct use_arg_c
 	typedef Expr type;
 };
 
+template <typename Char, Char C, Char ... Params>
+struct use_arg_c<integral_constant<Char, C>, Char, Params...>
+ : integral_constant<Char, C>
+{ };
+
+/// Binds the arguments of a MetafunctionClass
+/**
+ *  @ingroup ct_utils
+ */
+template <typename MetafunctionClass, typename ... Params>
+struct bind
+{
+	template <typename ... Params2>
+	struct apply
+	 : MetafunctionClass::template apply<use_arg<Params, Params2...>...>
+	{ };
+};
+
+template <typename MetafunctionClass, typename ... Params>
+struct bind_c
+{
+	template <typename Char, Char ... Params2>
+	struct apply_c
+	 : MetafunctionClass::template apply_c<
+		Char,
+		use_arg_c<Params, Char, Params2...>::value...
+	>
+	{ };
+};
+
 /// Protects the @a PlaceholderExpression from being expanded
 /** This meta-function can be used to protect nested placeholder
  *  expressions from immediate expansion.
@@ -142,6 +172,22 @@ struct use_arg_c<Expr<SubExprs...>, Char, Params...>
 { };
 
 //
+template <typename MetafunctionClass, typename ... Params, typename ... Params2>
+struct use_arg<bind<MetafunctionClass, Params...>, Params2...>
+ : bind<MetafunctionClass, Params...>::template apply<Params2...>
+{ };
+
+template <
+	typename MetafunctionClass,
+	typename Char,
+	typename ... Params,
+	Char ... Params2
+>
+struct use_arg_c<bind_c<MetafunctionClass, Params...>, Char, Params2...>
+ : bind_c<MetafunctionClass, Params...>::template apply_c<Char, Params2...>
+{ };
+
+//
 template <
 	template <typename ...> class Expr,
 	typename ... ExprArgs,
@@ -170,6 +216,21 @@ struct apply<arg<Number>, Params...>
 template <size_t Number, typename Char, Char ... Params>
 struct apply_c<arg<Number>, Char, Params...>
  : arg_c<Number>::template apply_c<Char, Params...>
+{ };
+
+//
+template <typename MetafunctionClass, typename ... Params, typename ... Params2>
+struct apply<bind<MetafunctionClass, Params...>, Params2...>
+ : bind<MetafunctionClass, Params...>::template apply<Params2...>
+{ };
+
+template <
+	typename MetafunctionClass,
+	typename Char,
+	typename ... Params,
+	Char ... Params2>
+struct apply_c<bind_c<MetafunctionClass, Params...>, Char, Params2...>
+ : bind_c<MetafunctionClass, Params...>::template apply_c<Char, Params2...>
 { };
 
 } // namespace ct

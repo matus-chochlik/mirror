@@ -59,9 +59,9 @@ BOOST_AUTO_TEST_CASE(mire_ct_only_if1)
 
 struct mire_ct_only_if2_func
 {
-	template <typename Char, Char C>
-	struct apply_c
-	 : mire::ct::integral_constant<bool, C != ' '>
+	template <typename T>
+	struct apply
+	 : mire::ct::equal_types<T, double>
 	{ };
 };
 
@@ -71,8 +71,94 @@ BOOST_AUTO_TEST_CASE(mire_ct_only_if2)
 
 	BOOST_CHECK((equal<
 		only_if<
-			string<'S',' ','t',' ','r',' ','i',' ','n',' ','g'>,
+			range<bool, char, short, float, double, int>,
 			mire_ct_only_if2_func
+		>,
+		range<double>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			range<bool, char, short, float, double, int>,
+			bind<mire_ct_only_if2_func, arg<0>>
+		>,
+		range<double>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			range<bool, char, short, float, double, int>,
+			not_<bind<mire_ct_only_if2_func, arg<0>>>
+		>,
+		range<bool, char, short, float, int>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			range<bool, char, short, float, double, int>,
+			equal_types<arg<0>, float>
+		>,
+		range<float>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			range<bool, char, short, float, double, int>,
+			equal_types<arg<0>, long double>
+		>,
+		range<>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			range<bool, char, short, float, double, int>,
+			not_<equal_types<arg<0>, float>>
+		>,
+		range<bool, char, short, double, int>
+	>::value));
+};
+
+template <bool Cmp>
+struct mire_ct_only_if_c1_func
+{
+	template <typename Char, Char C>
+	struct apply_c
+	 : mire::ct::integral_constant<bool, (C == ' ') == Cmp>
+	{ };
+};
+
+BOOST_AUTO_TEST_CASE(mire_ct_only_if_c1)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((equal<
+		only_if<
+			string<'S',' ','t',' ','r',' ','i',' ','n',' ','g'>,
+			mire_ct_only_if_c1_func<false>
+		>,
+		string<'S','t','r','i','n','g'>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			string<'S',' ','t',' ','r',' ','i',' ','n',' ','g'>,
+			bind_c<mire_ct_only_if_c1_func<false>, arg<0>>
+		>,
+		string<'S','t','r','i','n','g'>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			string<'S',' ','t',' ','r',' ','i',' ','n',' ','g'>,
+			not_<bind_c<mire_ct_only_if_c1_func<true>, arg<0>>>
+		>,
+		string<'S','t','r','i','n','g'>
+	>::value));
+
+	BOOST_CHECK((equal<
+		only_if<
+			string<'S',' ','t',' ','r',' ','i',' ','n',' ','g'>,
+			not_<not_<bind_c<mire_ct_only_if_c1_func<false>, arg<0>>>>
 		>,
 		string<'S','t','r','i','n','g'>
 	>::value));
