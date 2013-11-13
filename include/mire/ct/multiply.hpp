@@ -1,14 +1,14 @@
 /**
- * @file mire/ct/add.hpp
- * @brief The add metafunction for boolean constant type
+ * @file mire/ct/multiply.hpp
+ * @brief The multiply metafunction for boolean constant type
  *
  *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRE_CT_ADD_1011291729_HPP
-#define MIRE_CT_ADD_1011291729_HPP
+#ifndef MIRE_CT_MULTIPLY_1011291729_HPP
+#define MIRE_CT_MULTIPLY_1011291729_HPP
 
 #include <mire/ct/int_const.hpp>
 
@@ -16,20 +16,20 @@ namespace mire {
 namespace ct {
 
 template <class ... Integers>
-struct add;
+struct multiply;
 
-// Single-parameter add meta function specialization
+// Single-parameter multiply meta function specialization
 template <class Integer>
-struct add<Integer>
+struct multiply<Integer>
  : integral_constant<decltype(Integer::value), Integer::value>
 { };
 
-// Multi-parameter add meta function specialization
+// Multi-parameter multiply meta function specialization
 template <class Integer, class ... Integers>
-struct add<Integer, Integers...>
+struct multiply<Integer, Integers...>
  : integral_constant<
-	decltype(Integer::value + add<Integers...>::value),
-	Integer::value + add<Integers...>::value
+	decltype(Integer::value * multiply<Integers...>::value),
+	Integer::value * multiply<Integers...>::value
 >{ };
 
 #ifdef MIRROR_DOCUMENTATION_ONLY
@@ -40,7 +40,7 @@ struct add<Integer, Integers...>
  *  @ingroup ct_utils
  */
 template <typename ... IntegralConstants>
-struct add : public IntegralConstant
+struct multiply : public IntegralConstant
 { };
 #endif
 

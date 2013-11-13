@@ -16,17 +16,17 @@ namespace mire {
 namespace ct {
 
 template <class ... Integers>
-struct subtract_;
+struct subtract;
 
-// Single-parameter subtract_ meta function specialization
+// Single-parameter subtract meta function specialization
 template <class Integer>
-struct subtract_<Integer>
+struct subtract<Integer>
  : integral_constant<decltype(Integer::value), Integer::value>
 { };
 
-// Multi-parameter subtract_ meta function specialization
+// Multi-parameter subtract meta function specialization
 template <class Integer1, class Integer2>
-struct subtract_<Integer1, Integer2>
+struct subtract<Integer1, Integer2>
  : integral_constant<
 	decltype(Integer1::value - Integer2::value),
 	Integer1::value - Integer2::value
@@ -40,7 +40,7 @@ struct subtract_<Integer1, Integer2>
  *  @ingroup ct_utils
  */
 template <typename ... IntegralConstants>
-struct subtract_ : public IntegralConstant
+struct subtract : public IntegralConstant
 { };
 #endif
 

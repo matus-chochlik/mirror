@@ -17,6 +17,7 @@
 #include <mire/ct/or.hpp>
 #include <mire/ct/add.hpp>
 #include <mire/ct/subtract.hpp>
+#include <mire/ct/multiply.hpp>
 
 BOOST_AUTO_TEST_SUITE(mire_ct_math)
 
@@ -156,42 +157,42 @@ BOOST_AUTO_TEST_CASE(mire_ct_math_add)
 	typedef integral_constant<int, 8> _8;
 	typedef integral_constant<int, 9> _9;
 
-	BOOST_CHECK((add_<_0>::value == 0));
-	BOOST_CHECK((add_<_4>::value == 4));
-	BOOST_CHECK((add_<_5>::value == 5));
-	BOOST_CHECK((add_<_1>::value == 1));
+	BOOST_CHECK((add<_0>::value == 0));
+	BOOST_CHECK((add<_4>::value == 4));
+	BOOST_CHECK((add<_5>::value == 5));
+	BOOST_CHECK((add<_1>::value == 1));
 
-	BOOST_CHECK((add_<_0,_0>::value == 0));
-	BOOST_CHECK((add_<_1,_0>::value == 1));
-	BOOST_CHECK((add_<_1,_1>::value == 2));
-	BOOST_CHECK((add_<_1,_2>::value == 3));
-	BOOST_CHECK((add_<_2,_2>::value == 4));
-	BOOST_CHECK((add_<_1,_4>::value == 5));
-	BOOST_CHECK((add_<_3,_3>::value == 6));
-	BOOST_CHECK((add_<_4,_3>::value == 7));
-	BOOST_CHECK((add_<_4,_4>::value == 8));
-	BOOST_CHECK((add_<_3,_6>::value == 9));
-	BOOST_CHECK((add_<_5,_5>::value ==10));
-	BOOST_CHECK((add_<_4,_7>::value ==11));
-	BOOST_CHECK((add_<_6,_6>::value ==12));
-	BOOST_CHECK((add_<_9,_4>::value ==13));
-	BOOST_CHECK((add_<_7,_7>::value ==14));
-	BOOST_CHECK((add_<_9,_5>::value ==14));
-	BOOST_CHECK((add_<_8,_8>::value ==16));
-	BOOST_CHECK((add_<_8,_9>::value ==17));
-	BOOST_CHECK((add_<_9,_9>::value ==18));
+	BOOST_CHECK((add<_0,_0>::value == 0));
+	BOOST_CHECK((add<_1,_0>::value == 1));
+	BOOST_CHECK((add<_1,_1>::value == 2));
+	BOOST_CHECK((add<_1,_2>::value == 3));
+	BOOST_CHECK((add<_2,_2>::value == 4));
+	BOOST_CHECK((add<_1,_4>::value == 5));
+	BOOST_CHECK((add<_3,_3>::value == 6));
+	BOOST_CHECK((add<_4,_3>::value == 7));
+	BOOST_CHECK((add<_4,_4>::value == 8));
+	BOOST_CHECK((add<_3,_6>::value == 9));
+	BOOST_CHECK((add<_5,_5>::value ==10));
+	BOOST_CHECK((add<_4,_7>::value ==11));
+	BOOST_CHECK((add<_6,_6>::value ==12));
+	BOOST_CHECK((add<_9,_4>::value ==13));
+	BOOST_CHECK((add<_7,_7>::value ==14));
+	BOOST_CHECK((add<_9,_5>::value ==14));
+	BOOST_CHECK((add<_8,_8>::value ==16));
+	BOOST_CHECK((add<_8,_9>::value ==17));
+	BOOST_CHECK((add<_9,_9>::value ==18));
 
-	BOOST_CHECK((add_<_0,_0,_0>::value == 0));
-	BOOST_CHECK((add_<_1,_1,_1>::value == 3));
-	BOOST_CHECK((add_<_0,_1,_2>::value == 3));
-	BOOST_CHECK((add_<_1,_2,_3>::value == 6));
+	BOOST_CHECK((add<_0,_0,_0>::value == 0));
+	BOOST_CHECK((add<_1,_1,_1>::value == 3));
+	BOOST_CHECK((add<_0,_1,_2>::value == 3));
+	BOOST_CHECK((add<_1,_2,_3>::value == 6));
 
-	BOOST_CHECK((add_<_1,_2,_3,_4>::value == 10));
-	BOOST_CHECK((add_<_1,_2,_3,_4,_5>::value == 15));
-	BOOST_CHECK((add_<_1,_2,_3,_4,_5,_6>::value == 21));
-	BOOST_CHECK((add_<_1,_2,_3,_4,_5,_6,_7>::value == 28));
-	BOOST_CHECK((add_<_1,_2,_3,_4,_5,_6,_7,_8>::value == 36));
-	BOOST_CHECK((add_<_1,_2,_3,_4,_5,_6,_7,_8,_9>::value == 45));
+	BOOST_CHECK((add<_1,_2,_3,_4>::value == 10));
+	BOOST_CHECK((add<_1,_2,_3,_4,_5>::value == 15));
+	BOOST_CHECK((add<_1,_2,_3,_4,_5,_6>::value == 21));
+	BOOST_CHECK((add<_1,_2,_3,_4,_5,_6,_7>::value == 28));
+	BOOST_CHECK((add<_1,_2,_3,_4,_5,_6,_7,_8>::value == 36));
+	BOOST_CHECK((add<_1,_2,_3,_4,_5,_6,_7,_8,_9>::value == 45));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_math_subtract)
@@ -209,19 +210,69 @@ BOOST_AUTO_TEST_CASE(mire_ct_math_subtract)
 	typedef integral_constant<int, 8> _8;
 	typedef integral_constant<int, 9> _9;
 
-	BOOST_CHECK((subtract_<_0>::value == 0));
-	BOOST_CHECK((subtract_<_4>::value == 4));
-	BOOST_CHECK((subtract_<_5>::value == 5));
-	BOOST_CHECK((subtract_<_1>::value == 1));
+	BOOST_CHECK((subtract<_0>::value == 0));
+	BOOST_CHECK((subtract<_4>::value == 4));
+	BOOST_CHECK((subtract<_5>::value == 5));
+	BOOST_CHECK((subtract<_1>::value == 1));
 
-	BOOST_CHECK((subtract_<_0,_0>::value == 0));
-	BOOST_CHECK((subtract_<_1,_0>::value == 1));
-	BOOST_CHECK((subtract_<_0,_1>::value ==-1));
-	BOOST_CHECK((subtract_<_1,_1>::value == 0));
-	BOOST_CHECK((subtract_<_9,_1>::value == 8));
-	BOOST_CHECK((subtract_<_2,_8>::value ==-6));
-	BOOST_CHECK((subtract_<_3,_7>::value ==-4));
-	BOOST_CHECK((subtract_<_4,_6>::value ==-2));
+	BOOST_CHECK((subtract<_0,_0>::value == 0));
+	BOOST_CHECK((subtract<_1,_0>::value == 1));
+	BOOST_CHECK((subtract<_0,_1>::value ==-1));
+	BOOST_CHECK((subtract<_1,_1>::value == 0));
+	BOOST_CHECK((subtract<_9,_1>::value == 8));
+	BOOST_CHECK((subtract<_2,_8>::value ==-6));
+	BOOST_CHECK((subtract<_3,_7>::value ==-4));
+	BOOST_CHECK((subtract<_4,_6>::value ==-2));
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_math_multiply)
+{
+	using namespace mire::ct;
+
+	typedef integral_constant<int, 0> _0;
+	typedef integral_constant<int, 1> _1;
+	typedef integral_constant<int, 2> _2;
+	typedef integral_constant<int, 3> _3;
+	typedef integral_constant<int, 4> _4;
+	typedef integral_constant<int, 5> _5;
+	typedef integral_constant<int, 6> _6;
+	typedef integral_constant<int, 7> _7;
+	typedef integral_constant<int, 8> _8;
+	typedef integral_constant<int, 9> _9;
+
+	BOOST_CHECK((multiply<_0,_0>::value ==  0));
+	BOOST_CHECK((multiply<_4,_0>::value ==  0));
+	BOOST_CHECK((multiply<_5,_0>::value ==  0));
+	BOOST_CHECK((multiply<_1,_0>::value ==  0));
+
+	BOOST_CHECK((multiply<_0,_1>::value ==  0));
+	BOOST_CHECK((multiply<_4,_1>::value ==  4));
+	BOOST_CHECK((multiply<_5,_1>::value ==  5));
+	BOOST_CHECK((multiply<_1,_1>::value ==  1));
+
+	BOOST_CHECK((multiply<_2,_2>::value ==  4));
+	BOOST_CHECK((multiply<_2,_3>::value ==  6));
+	BOOST_CHECK((multiply<_2,_6>::value == 12));
+	BOOST_CHECK((multiply<_2,_7>::value == 14));
+
+	BOOST_CHECK((multiply<_1,_3>::value ==  3));
+	BOOST_CHECK((multiply<_3,_3>::value ==  9));
+	BOOST_CHECK((multiply<_4,_3>::value == 12));
+	BOOST_CHECK((multiply<_8,_3>::value == 24));
+
+	BOOST_CHECK((multiply<_4,_2>::value ==  8));
+	BOOST_CHECK((multiply<_4,_5>::value == 20));
+	BOOST_CHECK((multiply<_4,_8>::value == 32));
+	BOOST_CHECK((multiply<_4,_9>::value == 36));
+
+	BOOST_CHECK((multiply<_2,_5>::value == 10));
+	BOOST_CHECK((multiply<_3,_5>::value == 15));
+	BOOST_CHECK((multiply<_7,_5>::value == 35));
+	BOOST_CHECK((multiply<_8,_5>::value == 40));
+
+	BOOST_CHECK((multiply<_1,_1,_1,_1>::value ==  1));
+	BOOST_CHECK((multiply<_2,_2,_2,_2,_2>::value == 32));
+	BOOST_CHECK((multiply<_1,_2,_3,_4,_5,_6>::value == 720));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
