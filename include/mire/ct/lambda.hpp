@@ -11,36 +11,13 @@
 #define MIRE_CT_LAMBDA_1011291729_HPP
 
 #include <mire/ct/default.hpp>
+#include <mire/ct/protect.hpp>
+#include <mire/ct/arg.hpp>
 #include <mire/ct/at.hpp>
 #include <mire/ct/stddef.hpp>
 
 namespace mire {
 namespace ct {
-
-/// Meta-function class returning the @a Number -th of its arguments
-/** This template is used in two different ways. First it wraps a meta-function
- *  returning the N-th of its arguments. Second it is used as a placeholder
- *  for the N-th argument in placeholder lambda expressions.
- *
- *  @ingroup ct_utils
- */
-template <size_t Number>
-struct arg
-{
-	template <typename ... Params>
-	struct apply
-	 : at_c<range<Params...>, Number>
-	{ };
-};
-
-template <size_t Number>
-struct arg_c
-{
-	template <typename Char, Char ... Params>
-	struct apply_c
-	 : at_c<basic_string<Char, Params...>, Number>
-	{ };
-};
 
 /// Returns the N-th Param or the @a Expr expression
 /** This template returns either one of the @a Params if the @a Expr
@@ -85,7 +62,9 @@ struct bind
 {
 	template <typename ... Params2>
 	struct apply
-	 : MetafunctionClass::template apply<use_arg<Params, Params2...>...>
+	 : MetafunctionClass::template apply<
+		typename use_arg<Params, Params2...>::type
+	...>
 	{ };
 };
 
@@ -99,19 +78,6 @@ struct bind_c
 		use_arg_c<Params, Char, Params2...>::value...
 	>
 	{ };
-};
-
-/// Protects the @a PlaceholderExpression from being expanded
-/** This meta-function can be used to protect nested placeholder
- *  expressions from immediate expansion.
- *
- *  @ingroup ct_utils
- */
-template <typename PlaceholderExpression>
-struct protect
-{
-	/// The protected expression
-	typedef PlaceholderExpression type;
 };
 
 template <size_t Number, typename ... Params>

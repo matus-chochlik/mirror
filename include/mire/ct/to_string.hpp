@@ -42,6 +42,11 @@ struct to_string
  : to_basic_string<char, StringLiteralClass>
 { };
 
+template <typename Char, Char ... C>
+struct to_string<basic_string<Char, C...>>
+ : basic_string<Char, C...>
+{ };
+
 } // namespace ct
 } // namespace mire
 

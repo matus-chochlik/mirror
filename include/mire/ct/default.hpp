@@ -27,7 +27,7 @@ namespace ct {
  *
  *  @ingroup ct_utils
  */
-template <class BooleanConstant, class IfTrue, class IfFalse>
+template <typename BooleanConstant, typename IfTrue, typename IfFalse>
 struct if_
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : if_<typename evaluate<BooleanConstant>::type, IfTrue, IfFalse>
@@ -47,7 +47,7 @@ struct if_
  *
  *  @ingroup ct_utils
  */
-template <bool BooleanConstant, class IfTrue, class IfFalse>
+template <bool BooleanConstant, typename IfTrue, typename IfFalse>
 struct if_c;
 
 /// Meta-function returning a null terminated C-string literal from a String
@@ -332,7 +332,7 @@ struct concat
  *
  *  @ingroup ct_utils
  */
-template <class Range, typename ... T>
+template <typename Range, typename ... T>
 struct append
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : append<typename evaluate<Range>::type, T...>
@@ -351,7 +351,7 @@ struct append
  *
  *  @ingroup ct_utils
  */
-template <class String, typename Char, Char ... T>
+template <typename String, typename Char, Char ... T>
 struct append_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : append_c<typename evaluate<String>::type, Char, T...>
@@ -370,7 +370,7 @@ struct append_c
  *
  *  @ingroup ct_utils
  */
-template <class Range, typename ... T>
+template <typename Range, typename ... T>
 struct prepend
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : prepend<typename evaluate<Range>::type, T...>
@@ -389,7 +389,7 @@ struct prepend
  *
  *  @ingroup ct_utils
  */
-template <class String, typename Char, Char ... T>
+template <typename String, typename Char, Char ... T>
 struct prepend_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : prepend_c<typename evaluate<String>::type, Char, T...>
@@ -499,7 +499,7 @@ struct find
  *  @tparam Range1 the range to search in.
  *  @tparam Range2 the range searched for
  *
- *  @ingroup meta_programming
+ *  @ingroup ct_utils
  */
 template <typename Range1, typename Range2>
 struct before
@@ -682,7 +682,7 @@ struct lacks
  *
  *  @ingroup ct_utils
  */
-template <class Range>
+template <typename Range>
 struct unique
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : unique<typename evaluate<Range>::type>
@@ -706,7 +706,7 @@ struct unique
  *  @param N the count of arguments for the meta-function.
  *
  *  @see apply_on_seq_pack
- *  @ingroup meta_programming
+ *  @ingroup ct_utils
  */
 template <typename MetaFunctionClass, size_t N>
 struct apply_on_seq_pack_c
@@ -739,9 +739,9 @@ struct apply_on_seq_pack_c
  *  the meta-function.
  *
  *  @see apply_on_seq_pack
- *  @ingroup meta_programming
+ *  @ingroup ct_utils
  */
-template <typename MetaFunctionClass, class N>
+template <typename MetaFunctionClass, typename N>
 struct apply_on_seq_pack
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : public apply_on_seq_pack_c<MetaFunctionClass, N::value>
@@ -805,9 +805,9 @@ struct apply_c
  *  @tparam Range the range to be filtered
  *  @tparam Predicate a unary lambda expression returning a boolean type
  *
- *  @ingroup meta_programming
+ *  @ingroup ct_utils
  */
-template <class Range, class Predicate>
+template <typename Range, typename Predicate>
 struct only_if
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : only_if<typename evaluate<Range>::type, Predicate>
@@ -815,6 +815,71 @@ struct only_if
 #else
 {
 	typedef Range type;
+};
+#endif
+
+/// Returns a range containing elements transformed by a unary function
+/**
+ *  @tparam Range the range to be transformed
+ *  @tparam UnaryMetaFnClass the meta-function class transforming the elements
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range, typename UnaryMetaFnClass>
+struct transform
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : transform<typename evaluate<Range>::type, UnaryMetaFnClass>
+{ };
+#else
+{
+	/// Range containing elements transformed ty the UnaryMetaFnClass
+	typedef Range type;
+};
+#endif
+
+/// Returns a range containing elements transformed by a unary function
+/**
+ *  @tparam String the string to be transformed
+ *  @tparam UnaryMetaFnClass the meta-function class transforming the elements
+ *
+ *  @ingroup ct_utils
+ */
+template <typename String, typename UnaryMetaFnClass>
+struct transform_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : transform_c<typename evaluate<String>::type, UnaryMetaFnClass>
+{ };
+#else
+{
+	/// String containing characters transformed by the UnaryMetaFnClass
+	typedef String type;
+};
+#endif
+
+/// Returns the result of successive application of ForwardOp on the range
+/** This meta-function returns the result of successive application
+ *  of the binary forward operation on the status and all the items
+ *  in the range passed as argument.
+ *
+ *  @tparam Range the range to traverse
+ *  @tparam Status the initial status for the first call of the @a ForwardOp
+ *  @tparam ForwardOp the operation to be executed during the traversal
+ *
+ *  @see for_each
+ *  @ingroup meta_programming
+ */
+template <
+	typename Range,
+	typename Status,
+	typename ForwardOp
+> struct fold
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : fold<typename evaluate<Range>::type, Status, ForwardOp>
+{ };
+#else
+{
+	/// The result of the operation
+	typedef unspecified_type type;
 };
 #endif
 

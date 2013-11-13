@@ -11,9 +11,11 @@
 #ifndef MIRE_CT_1310291537_HPP
 #define MIRE_CT_1310291537_HPP
 
+#include <mire/ct/add.hpp>
 #include <mire/ct/and.hpp>
 #include <mire/ct/at.hpp>
 #include <mire/ct/append.hpp>
+#include <mire/ct/arg.hpp>
 #include <mire/ct/char_type.hpp>
 #include <mire/ct/compare.hpp>
 #include <mire/ct/concat.hpp>
@@ -36,6 +38,7 @@
 #include <mire/ct/optional.hpp>
 #include <mire/ct/or.hpp>
 #include <mire/ct/prepend.hpp>
+#include <mire/ct/quote.hpp>
 #include <mire/ct/range.hpp>
 #include <mire/ct/seq_pack.hpp>
 #include <mire/ct/size.hpp>
@@ -43,6 +46,7 @@
 #include <mire/ct/slice.hpp>
 #include <mire/ct/starts_with.hpp>
 #include <mire/ct/string.hpp>
+#include <mire/ct/subtract.hpp>
 #include <mire/ct/tail.hpp>
 #include <mire/ct/to_string.hpp>
 #include <mire/ct/traits.hpp>
