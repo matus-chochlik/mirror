@@ -461,6 +461,7 @@ struct tail
 
 /// Meta-function returning a string containing the last N characters
 /**
+ *  @see range
  *  @see basic_string
  *  @see head
  *  @see tail
@@ -471,11 +472,12 @@ struct tail
 template <typename Range, size_t Size>
 struct tail_c;
 
-/// Meta-function returning a string starting with the searched sub-string
-/** This meta-function template returns a substring of the original
- *  compile-time string, that starts with the searched string (in case
- *  the original contains it) or an empty string (otherwise).
+/// Meta-function returning a range starting with the searched sub-range
+/** This meta-function template returns a sub-range of the original
+ *  compile-time range, that starts with the searched range (in case
+ *  the original contains it) or an empty range (otherwise).
  *
+ *  @see range
  *  @see basic_string
  *
  *  @ingroup ct_utils
@@ -490,8 +492,30 @@ struct find
 #else
 {
 	/// Sub-range starting with the searched range or empty range
-	typedef CompileTimeString type;
+	typedef Range type;
 };
+#endif
+
+/// Meta-function returning the position of sub-range in a range
+/** This meta-function template returns the position of a sub-range
+ *  in the original compile-time range, or nil_t if the sub-range
+ *  is not present in the original range.
+ *
+ *  @see range
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range1, typename Range2>
+struct position
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : position<
+	typename evaluate<Range1>::type,
+	typename evaluate<Range2>::type
+> { };
+#else
+ : IntegralConstantOrNil
+{ };
 #endif
 
 /// Returns a sub-range ending before the first occurence of the searched range
@@ -642,8 +666,9 @@ struct ends_with
 { };
 #endif
 
-/// Meta-function returns true_type if the string contains another string
+/// Meta-function returns true_type if the a Range contains another Range
 /**
+ *  @see range
  *  @see basic_string
  *  @see equal
  *  @see lacks
@@ -657,6 +682,25 @@ struct contains
 #else
  : BooleanConstantType
 { };
+#endif
+
+/// Meta-function that reverses the elements in a Range
+/**
+ *  @see range
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range>
+struct reverse
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : reverse<typename evaluate<Range>::type>
+{ };
+#else
+{
+	/// The reversed range
+	typedef Range type;
+};
 #endif
 
 /// Meta-function returns true_type if the string does not contain another string
@@ -856,7 +900,7 @@ struct transform_c
 };
 #endif
 
-/// Returns the result of successive application of ForwardOp on the range
+/// Returns the result of successive application of ForwardOp on a range
 /** This meta-function returns the result of successive application
  *  of the binary forward operation on the status and all the items
  *  in the range passed as argument.

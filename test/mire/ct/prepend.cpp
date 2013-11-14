@@ -62,6 +62,41 @@ BOOST_AUTO_TEST_CASE(mire_ct_prepend_string)
 	>, true>();
 }
 
+BOOST_AUTO_TEST_CASE(mire_ct_prepend_string2)
+{
+	using namespace mire::ct;
+
+	typedef integral_constant<char, 'a'> _a;
+	typedef integral_constant<char, 'b'> _b;
+	typedef integral_constant<char, 'c'> _c;
+	typedef integral_constant<char, 'd'> _d;
+	typedef integral_constant<char, 'e'> _e;
+	typedef integral_constant<char, 'f'> _f;
+	typedef integral_constant<char, 'g'> _g;
+	typedef integral_constant<char, 'h'> _h;
+	typedef integral_constant<char, 'i'> _i;
+
+	mire_ct_test_bool<equal<
+		prepend<string<'b','c','d'>, _a>,
+		string<'a','b','c','d'>
+	>, true>();
+
+	mire_ct_test_bool<equal<
+		prepend<string<'d','e','f'>, _a,_b,_c>,
+		string<'a','b','c','d','e','f'>
+	>, true>();
+
+	mire_ct_test_bool<equal<
+		prepend<string<'e','f','g','h','i'>, _a,_b,_c,_d>,
+		string<'a','b','c','d','e','f','g','h','i'>
+	>, true>();
+
+	mire_ct_test_bool<equal<
+		prepend<prepend<string<'g','h','i'>, _d,_e,_f>, _a,_b,_c>,
+		string<'a','b','c','d','e','f','g','h','i'>
+	>, true>();
+}
+
 BOOST_AUTO_TEST_CASE(mire_ct_prepend_range)
 {
 	using namespace mire::ct;

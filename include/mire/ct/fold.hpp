@@ -16,7 +16,8 @@
 namespace mire {
 namespace ct {
 
-template <typename Status, class ForwardOp>
+// range
+template <typename Status, typename ForwardOp>
 struct fold<range<>, Status, ForwardOp>
 {
 	typedef Status type;
@@ -25,7 +26,7 @@ struct fold<range<>, Status, ForwardOp>
 template <
 	typename T,
 	typename Status,
-	class ForwardOp
+	typename ForwardOp
 > struct fold<range<T>, Status, ForwardOp>
  : apply<ForwardOp, Status, T>
 { };
@@ -34,7 +35,7 @@ template <
 	typename T,
 	typename ... P,
 	typename Status,
-	class ForwardOp
+	typename ForwardOp
 > struct fold<range<T, P...>, Status, ForwardOp>
  : fold<
 	range<P...>,
@@ -42,6 +43,40 @@ template <
 		ForwardOp,
 		Status,
 		T
+	>::type,
+	ForwardOp
+>
+{ };
+
+// string
+template <typename Status, typename Char, typename ForwardOp>
+struct fold<basic_string<Char>, Status, ForwardOp>
+{
+	typedef Status type;
+};
+
+template <
+	typename Char,
+	Char C,
+	typename Status,
+	typename ForwardOp
+> struct fold<basic_string<Char, C>, Status, ForwardOp>
+ : apply<ForwardOp, Status, integral_constant<Char, C>>
+{ };
+
+template <
+	typename Char,
+	Char C,
+	Char ... P,
+	typename Status,
+	typename ForwardOp
+> struct fold<basic_string<Char, C, P...>, Status, ForwardOp>
+ : fold<
+	basic_string<Char, P...>,
+	typename apply<
+		ForwardOp,
+		Status,
+		integral_constant<Char, C>
 	>::type,
 	ForwardOp
 >

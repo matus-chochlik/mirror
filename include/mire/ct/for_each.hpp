@@ -12,6 +12,7 @@
 #define MIRE_CT_FOR_EACH_1011291729_HPP
 
 #include <mire/ct/evaluate.hpp>
+#include <mire/ct/iter_info.hpp>
 #include <mire/ct/int_const.hpp>
 #include <mire/ct/stddef.hpp>
 
@@ -19,36 +20,6 @@ namespace mire {
 namespace ct {
 namespace aux {
 
-template <
-	typename T,
-	typename IsFirst,
-	typename IsLast,
-	typename Position
->
-struct iteration_info
-{
-	typedef T type;
-
-	typedef IsFirst is_first;
-	static constexpr bool first(void)
-	{
-		return is_first::value;
-	}
-
-	typedef IsLast is_last;
-	static constexpr bool last(void)
-	{
-		return is_last::value;
-	}
-
-	typedef Position position;
-	static constexpr size_t pos(void)
-	{
-		return position::value;
-	}
-};
-
-// Implementation of for_each for empty ranges
 template <
 	typename Functor,
 	typename IsFirst,

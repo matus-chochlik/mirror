@@ -26,6 +26,11 @@ struct append<range<P...>, T...>
 { };
 
 template <typename Char, Char ... C, Char ... T>
+struct append<basic_string<Char, C...>, integral_constant<Char, T>...>
+ : basic_string<Char, C..., T...>
+{ };
+
+template <typename Char, Char ... C, Char ... T>
 struct append_c<basic_string<Char, C...>, Char, T...>
  : basic_string<Char, C..., T...>
 { };

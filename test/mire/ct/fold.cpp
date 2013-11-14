@@ -77,5 +77,29 @@ BOOST_AUTO_TEST_CASE(mire_ct_fold_range2)
 	>::value));
 }
 
+BOOST_AUTO_TEST_CASE(mire_ct_fold_string1)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((equal<
+		fold<
+			string<'A','B','C','D','E','F'>,
+			empty_string,
+			append<arg<0>, arg<1>>
+		>,
+		string<'A','B','C','D','E','F'>
+	>::value));
+
+	BOOST_CHECK((equal<
+		fold<
+			string<'A','B','C','D','E','F'>,
+			empty_string,
+			prepend<arg<0>, arg<1>>
+		>,
+		string<'F','E','D','C','B','A'>
+	>::value));
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
