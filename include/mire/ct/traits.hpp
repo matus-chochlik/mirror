@@ -14,15 +14,8 @@
 
 namespace mire {
 namespace ct {
-
-#ifdef MIRROR_DOCUMENTATION_ONLY
-/// This trait meta-function can be used to check if the passed type is a range
-template <typename T>
-struct is_range : BooleanConstant
-{ };
-#else
-
 namespace aux {
+
 template <typename T>
 struct is_range
  : false_type
@@ -32,22 +25,24 @@ template <typename ... P>
 struct is_range<range<P...>>
  : true_type
 { };
+
 } // namespace aux
 
+/// This trait meta-function can be used to check if the passed type is a range
+/**
+ *  @ingroup ct_utils
+ */
 template <typename T>
 struct is_range
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : aux::is_range<typename evaluate<T>::type>
-{ };
-#endif
-
-#ifdef MIRROR_DOCUMENTATION_ONLY
-/// This trait meta-function can be used to check if the passed type is a string
-template <typename T>
-struct is_string : BooleanConstant
-{ };
 #else
+ : BooleanConstant
+#endif
+{ };
 
 namespace aux {
+
 template <typename T>
 struct is_string
  : false_type
@@ -57,13 +52,76 @@ template <typename Char, Char ... C>
 struct is_string<basic_string<Char, C...>>
  : true_type
 { };
+
 } // namespace aux
 
+/// This trait meta-function can be used to check if the passed type is a string
+/**
+ *  @ingroup ct_utils
+ */
 template <typename T>
 struct is_string
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : aux::is_string<typename evaluate<T>::type>
-{ };
+#else
+ : BooleanConstant
 #endif
+{ };
+
+
+namespace aux {
+
+template <typename T>
+struct is_optional
+ : false_type
+{ };
+
+template <typename T>
+struct is_optional<optional<T>>
+ : true_type
+{ };
+
+} // namespace aux
+
+/// This trait meta-function can be used to check if the passed type is optional
+/**
+ *  @ingroup ct_utils
+ */
+template <typename T>
+struct is_optional
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : aux::is_optional<typename evaluate<T>::type>
+#else
+ : BooleanConstant
+#endif
+{ };
+
+namespace aux {
+
+template <typename T>
+struct is_nil_t
+ : false_type
+{ };
+
+template <>
+struct is_nil_t<nil_t>
+ : true_type
+{ };
+
+} // namespace aux
+
+/// This trait meta-function can be used to check if the passed type is a nil_t
+/**
+ *  @ingroup ct_utils
+ */
+template <typename T>
+struct is_nil_t
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : aux::is_nil_t<typename evaluate<T>::type>
+#else
+ : BooleanConstant
+#endif
+{ };
 
 } // namespace ct
 } // namespace mire

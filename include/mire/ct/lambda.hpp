@@ -13,6 +13,7 @@
 #include <mire/ct/default.hpp>
 #include <mire/ct/protect.hpp>
 #include <mire/ct/arg.hpp>
+#include <mire/ct/unpack_args.hpp>
 #include <mire/ct/at.hpp>
 #include <mire/ct/stddef.hpp>
 
@@ -194,9 +195,25 @@ template <
 	typename MetafunctionClass,
 	typename Char,
 	typename ... Params,
-	Char ... Params2>
+	Char ... Params2
+>
 struct apply_c<bind_c<MetafunctionClass, Params...>, Char, Params2...>
  : bind_c<MetafunctionClass, Params...>::template apply_c<Char, Params2...>
+{ };
+
+//
+template <typename LambdaExpression, typename Range>
+struct apply<unpack_args<LambdaExpression>, Range>
+ : unpack_args<LambdaExpression>::template apply<
+	typename evaluate<Range>::type
+>
+{ };
+
+template <typename LambdaExpression, typename String>
+struct apply_c<unpack_args_c<LambdaExpression>, String>
+ : unpack_args_c<LambdaExpression>::template apply_c<
+	typename evaluate<String>::type
+>
 { };
 
 } // namespace ct

@@ -30,7 +30,7 @@ struct mire_ct_test_string_ghijklmnopqrstu
 	static constexpr size_t size = 15;
 };
 
-BOOST_AUTO_TEST_CASE(mire_ct_string_to_string)
+BOOST_AUTO_TEST_CASE(mire_ct_strlit_to_string)
 {
 	using namespace mire::ct;
 
@@ -42,6 +42,21 @@ BOOST_AUTO_TEST_CASE(mire_ct_string_to_string)
 	BOOST_CHECK((equal<
 		to_string<mire_ct_test_string_ghijklmnopqrstu>,
 		string<'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u'>
+	>::value));
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_string_to_string)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((equal<
+		to_string<basic_string<char, 'a','b','c','d','e','f'>>,
+		string<'a','b','c','d','e','f'>
+	>::value));
+
+	BOOST_CHECK((equal<
+		to_string<string<'g','h','i','j','k','l','m','n','o','p','q'>>,
+		basic_string<char,'g','h','i','j','k','l','m','n','o','p','q'>
 	>::value));
 }
 

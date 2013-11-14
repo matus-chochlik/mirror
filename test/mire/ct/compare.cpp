@@ -245,6 +245,94 @@ BOOST_AUTO_TEST_CASE(mire_ct_nonequal_string)
 	>, true>();
 }
 
+BOOST_AUTO_TEST_CASE(mire_ct_equal_int_const)
+{
+	using namespace mire::ct;
+
+	mire_ct_test_bool<equal<
+		integral_constant<int, 0>,
+		integral_constant<int, 0>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<long, 1>,
+		integral_constant<long, 1>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<int, 5>,
+		integral_constant<int, 5>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<int, 1>,
+		integral_constant<int, 3>
+	>,false>();
+	mire_ct_test_bool<equal<
+		integral_constant<short, 5>,
+		integral_constant<long, 5>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<short, 4>,
+		integral_constant<unsigned, 5>
+	>,false>();
+	mire_ct_test_bool<equal<
+		integral_constant<int, 1>,
+		integral_constant<bool,true>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<int, 2>,
+		integral_constant<bool,false>
+	>,false>();
+	mire_ct_test_bool<equal<
+		integral_constant<unsigned, 0>,
+		integral_constant<bool,false>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<bool, true>,
+		integral_constant<bool, true>
+	>, true>();
+	mire_ct_test_bool<equal<
+		integral_constant<bool,false>,
+		integral_constant<bool, true>
+	>,false>();
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_nonequal_int_const)
+{
+	using namespace mire::ct;
+
+	mire_ct_test_bool<nonequal<
+		integral_constant<int, 0>,
+		integral_constant<int, 0>
+	>,false>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<int, 2>,
+		integral_constant<int, 3>
+	>, true>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<long, 1>,
+		integral_constant<long, 1>
+	>,false>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<long, 5>,
+		integral_constant<long, 9>
+	>, true>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<bool, true>,
+		integral_constant<long, 1>
+	>,false>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<bool, true>,
+		integral_constant<long, 0>
+	>, true>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<bool, false>,
+		integral_constant<long, 1>
+	>, true>();
+	mire_ct_test_bool<nonequal<
+		integral_constant<short, 1>,
+		integral_constant<bool, true>
+	>,false>();
+}
+
 BOOST_AUTO_TEST_CASE(mire_ct_equal_types_test)
 {
 	using namespace mire::ct;

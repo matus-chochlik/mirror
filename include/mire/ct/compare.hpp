@@ -80,6 +80,17 @@ struct nonequal<optional<T1>, optional<T2>>
  : true_type
 { };
 
+// int_consts
+template <typename I1, typename I2, I1 V1, I2 V2>
+struct equal<integral_constant<I1, V1>, integral_constant<I2, V2>>
+ : integral_constant<bool, bool(V1 == V2)>
+{ };
+
+template <typename I1, typename I2, I1 V1, I2 V2>
+struct nonequal<integral_constant<I1, V1>, integral_constant<I2, V2>>
+ : integral_constant<bool, bool(V1 != V2)>
+{ };
+
 // other
 template <typename T, typename ... P>
 struct equal_types
