@@ -18,6 +18,8 @@
 #include <mire/ct/add.hpp>
 #include <mire/ct/subtract.hpp>
 #include <mire/ct/multiply.hpp>
+#include <mire/ct/divide.hpp>
+#include <mire/ct/modulo.hpp>
 
 BOOST_AUTO_TEST_SUITE(mire_ct_math)
 
@@ -273,6 +275,66 @@ BOOST_AUTO_TEST_CASE(mire_ct_math_multiply)
 	BOOST_CHECK((multiply<_1,_1,_1,_1>::value ==  1));
 	BOOST_CHECK((multiply<_2,_2,_2,_2,_2>::value == 32));
 	BOOST_CHECK((multiply<_1,_2,_3,_4,_5,_6>::value == 720));
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_math_divide)
+{
+	using namespace mire::ct;
+
+	typedef integral_constant<int, 0> _0;
+	typedef integral_constant<int, 1> _1;
+	typedef integral_constant<int, 2> _2;
+	typedef integral_constant<int, 3> _3;
+	typedef integral_constant<int, 4> _4;
+	typedef integral_constant<int, 5> _5;
+	typedef integral_constant<int, 6> _6;
+	typedef integral_constant<int, 7> _7;
+	typedef integral_constant<int, 8> _8;
+	typedef integral_constant<int, 9> _9;
+
+	BOOST_CHECK((divide<_0,_1>::value ==  0));
+	BOOST_CHECK((divide<_3,_1>::value ==  3));
+	BOOST_CHECK((divide<_7,_1>::value ==  7));
+	BOOST_CHECK((divide<_9,_1>::value ==  9));
+
+	BOOST_CHECK((divide<_4,_3>::value ==  1));
+	BOOST_CHECK((divide<_3,_4>::value ==  0));
+	BOOST_CHECK((divide<_6,_3>::value ==  2));
+	BOOST_CHECK((divide<_7,_3>::value ==  2));
+
+	BOOST_CHECK((divide<_8,_2>::value ==  4));
+	BOOST_CHECK((divide<_9,_2>::value ==  4));
+	BOOST_CHECK((divide<_9,_3>::value ==  3));
+	BOOST_CHECK((divide<_9,_5>::value ==  1));
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_math_modulo)
+{
+	using namespace mire::ct;
+
+	typedef integral_constant<int, 0> _0;
+	typedef integral_constant<int, 1> _1;
+	typedef integral_constant<int, 2> _2;
+	typedef integral_constant<int, 3> _3;
+	typedef integral_constant<int, 4> _4;
+	typedef integral_constant<int, 5> _5;
+	typedef integral_constant<int, 6> _6;
+	typedef integral_constant<int, 7> _7;
+	typedef integral_constant<int, 8> _8;
+	typedef integral_constant<int, 9> _9;
+
+	BOOST_CHECK((modulo<_0,_1>::value ==  0));
+	BOOST_CHECK((modulo<_1,_1>::value ==  0));
+	BOOST_CHECK((modulo<_3,_1>::value ==  0));
+
+	BOOST_CHECK((modulo<_1,_2>::value ==  1));
+	BOOST_CHECK((modulo<_2,_2>::value ==  0));
+	BOOST_CHECK((modulo<_3,_2>::value ==  1));
+
+	BOOST_CHECK((modulo<_1,_3>::value ==  1));
+	BOOST_CHECK((modulo<_2,_3>::value ==  2));
+	BOOST_CHECK((modulo<_3,_3>::value ==  0));
+	BOOST_CHECK((modulo<_5,_3>::value ==  2));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

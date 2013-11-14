@@ -22,6 +22,7 @@
 #include <mire/ct/contains.hpp>
 #include <mire/ct/c_str.hpp>
 #include <mire/ct/default.hpp>
+#include <mire/ct/divide.hpp>
 #include <mire/ct/empty.hpp>
 #include <mire/ct/ends_with.hpp>
 #include <mire/ct/evaluate.hpp>
@@ -32,6 +33,8 @@
 #include <mire/ct/identity.hpp>
 #include <mire/ct/if.hpp>
 #include <mire/ct/int_const.hpp>
+#include <mire/ct/lambda.hpp>
+#include <mire/ct/multiply.hpp>
 #include <mire/ct/next.hpp>
 #include <mire/ct/nil_type.hpp>
 #include <mire/ct/not.hpp>
