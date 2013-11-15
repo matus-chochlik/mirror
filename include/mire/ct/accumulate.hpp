@@ -152,7 +152,7 @@ StatusType accumulate(
  *    ),
  *    IterInfo_unsigned()
  *  );
- *  @encode
+ *  @endcode
  *
  *  Where the @c IterInfo_xyz types as models of the IterationInfo concept.
  *

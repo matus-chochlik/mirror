@@ -23,6 +23,7 @@ namespace ct {
 template <typename X>
 struct evaluate;
 
+#ifndef MIRROR_DOCUMENTATION_ONLY
 template <typename X>
 struct can_evaluate
 {
@@ -56,6 +57,7 @@ struct do_evaluate<X, false_type>
 {
 	typedef X type;
 };
+#endif
 
 /// Meta-function evaluates a compile-time expression
 /**
@@ -71,6 +73,7 @@ struct evaluate
 #endif
 { };
 
+#ifndef MIRROR_DOCUMENTATION_ONLY
 template <typename Char, Char ... C>
 struct evaluate<basic_string<Char, C...>>
  : basic_string<Char, C...>
@@ -100,6 +103,7 @@ template <>
 struct evaluate<nil_t>
  : nil_t
 { };
+#endif
 
 } // namespace ct
 } // namespace mire

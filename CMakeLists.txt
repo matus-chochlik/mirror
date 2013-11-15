@@ -16,5 +16,5 @@ endif()
 
 include_directories(include)
 
-#add_subdirectory(doc)
+add_subdirectory(doc)
 add_subdirectory(test)
