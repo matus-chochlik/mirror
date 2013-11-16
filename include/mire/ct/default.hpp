@@ -19,7 +19,7 @@
 namespace mire {
 namespace ct {
 
-/// Returns the IfTrue or the IfFalse type based on the passed Boolean type
+/// Returns the IfTrue or the IfFalse type based on the passed BooleanConstant
 /**
  *  @tparam BooleanConstant the boolean constant type determining the result
  *  @tparam IfTrue the type returned if the BooleanConstant has the true value
@@ -50,7 +50,7 @@ struct if_
 template <bool BooleanConstant, typename IfTrue, typename IfFalse>
 struct if_c;
 
-/// Meta-function returning a null terminated C-string literal from a String
+/// Metafunction returning a null terminated C-string literal from a String
 /** This function returns a null-terminated C-string for the compile-time
  *  string, passed as the @a String template parameter.
  *
@@ -70,7 +70,7 @@ struct c_str
 };
 #endif
 
-/// Meta-function returning the character type of a compile-time string
+/// Metafunction returning the character type of a compile-time String
 /**
  *  @see basic_string
  *
@@ -83,12 +83,12 @@ struct char_type
 { };
 #else
 {
-	/// The character type use by the examined compile-time string
+	/// The character type use by the examined compile-time String
 	typedef unspecified_char_type type;
 };
 #endif
 
-/// A meta-function returning string from a StringLiteralClass
+/// Metafunction returning String from a StringLiteralClass
 /**
  *  @see basic_string
  *
@@ -105,7 +105,7 @@ struct to_string
 };
 #endif
 
-/// Meta-function returning true_type if a compile-time string is empty
+/// Metafunction returning true_type if a compile-time String is empty
 /**
  *  @see basic_string
  *  @see nonempty
@@ -123,7 +123,7 @@ struct empty
 #endif
 { };
 
-/// Meta-function returning true_type if a compile-time string is not empty
+/// Metafunction returning true_type if a compile-time string is not empty
 /**
  *  @see basic_string
  *  @see empty
@@ -141,7 +141,7 @@ struct nonempty
 #endif
 { };
 
-/// Nil intrinsic meta-function for optionals
+/// Nil intrinsic metafunction for Optional
 /**
  *  @tparam Optional the optional to be examined
  *  @see optional
@@ -157,9 +157,9 @@ struct nil
 #endif
 { };
 
-/// Meta-function returning the length of a compile-time string
+/// Metafunction returning the length of a compile-time String
 /**
- *  This meta-function is equivalent to the @c length meta-function.
+ *  This metafunction is equivalent to the @c length metafunction.
  *  @see basic_string
  *  @see empty
  *  @see nonempty
@@ -176,9 +176,9 @@ struct size
 #endif
 { };
 
-/// Meta-function returning the length of a compile-time string
+/// Metafunction returning the length of a compile-time String
 /**
- *  This meta-function is equivalent to the @c size meta-function.
+ *  This metafunction is equivalent to the @c size metafunction.
  *  @see basic_string
  *  @see empty
  *  @see nonempty
@@ -195,13 +195,14 @@ struct length
 #endif
 { };
 
-/// Returns the element of the optional passed as argument
+/// Metafunction returnint the element of the optional passed as argument
 /**
  *  This operation may be invoked only on non-nil optionals.
  *
  *  @tparam Optional the optional the item of which is to be returned
  *  @see optional
  *  @see nil
+ *  @see empty
  *  @ingroup ct_utils
  */
 template <typename Optional>
@@ -216,7 +217,7 @@ struct get
 };
 #endif
 
-/// Equality comparison meta-function for compile-time ranges
+/// Equality comparison metafunction for compile-time Range
 /**
  *  @see basic_string
  *  @see range
@@ -235,7 +236,7 @@ struct equal
 #endif
 { };
 
-/// Non-equality comparison meta-function for compile-time ranges
+/// Non-equality comparison metafunction for compile-time Range
 /**
  *  @see basic_string
  *  @see range
@@ -254,7 +255,7 @@ struct nonequal
 #endif
 { };
 
-/// Equality comparison meta-function for arbitrary types
+/// Equality comparison metafunction for arbitrary types
 /**
  *  @ingroup ct_utils
  */
@@ -267,8 +268,9 @@ struct equal_types
 { };
 #endif
 
-/// Meta-function returning the first character in the compile-time string
+/// Metafunction returning the first element of a compile-time Range or String
 /**
+ *  @see range
  *  @see basic_string
  *  @see empty
  *  @see nonempty
@@ -285,7 +287,7 @@ struct front
 #endif
 { };
 
-/// Meta-function returning a compile-string without the first character
+/// Metafunction returning a Range or String without its first element
 /**
  *  @see basic_string
  *  @see empty
@@ -302,12 +304,12 @@ struct next
 { };
 #else
 {
-	/// The original compile-time string without the first character
+	/// The original compile-time Range without the first element
 	typedef CompileTimeString type;
 };
 #endif
 
-/// Meta-function concatenating several compile-time strings together
+/// Metafunction concatenating several compile-time Range(s) or String(s) together
 /**
  *  @see basic_string
  *
@@ -320,12 +322,12 @@ struct concat
 { };
 #else
 {
-	/// The concatenated compile-time string
-	typedef CompileTimeString type;
+	/// The concatenated compile-time Range
+	typedef Range type;
 };
 #endif
 
-/// Returns a range having the passed item(s) appended.
+/// Returns a Range having the passed item(s) appended.
 /**
  *  @tparam Range the range to be modified
  *  @tparam T the type(s) to be appended to the range
@@ -339,12 +341,12 @@ struct append
 { };
 #else
 {
-	/// The range with the types added
+	/// The Range with the types added
 	typedef Range type;
 };
 #endif
 
-/// Returns a string having the passed item(s) appended.
+/// Returns a String having the passed item(s) appended.
 /**
  *  @tparam String the range to be modified
  *  @tparam T the character(s) to be appended to the range
@@ -358,12 +360,12 @@ struct append_c
 { };
 #else
 {
-	/// The string with the character(s) added
+	/// The String with the character(s) added
 	typedef String type;
 };
 #endif
 
-/// Returns a range having the passed item(s) prepended.
+/// Returns a Range having the passed item(s) prepended.
 /**
  *  @tparam Range the range to be modified
  *  @tparam T the type(s) to be prepended to the range
@@ -377,12 +379,12 @@ struct prepend
 { };
 #else
 {
-	/// The range with the types added
+	/// The Range with the types added
 	typedef Range type;
 };
 #endif
 
-/// Returns a string having the passed item(s) prepended.
+/// Returns a String having the passed item(s) prepended.
 /**
  *  @tparam String the range to be modified
  *  @tparam T the character(s) to be prepended to the range
@@ -396,13 +398,14 @@ struct prepend_c
 { };
 #else
 {
-	/// The string with the character(s) added
+	/// The String with the character(s) added
 	typedef String type;
 };
 #endif
 
-/// Meta-function returning a string containing the first N characters
+/// Metafunction returning a sub-range containing the first N elements of Range
 /**
+ *  @see range
  *  @see basic_string
  *  @see tail
  *  @see slice
@@ -418,14 +421,13 @@ struct head
 > { };
 #else
 {
-	/// The head of the original range
+	/// The head of the original Range
 	typedef Range type;
 };
 #endif
 
-/// Meta-function returning a string containing the first N characters
+/// Metafunction returning a String containing the first N characters
 /**
- *  @see basic_string
  *  @see head_c
  *  @see tail
  *  @see slice
@@ -435,8 +437,9 @@ struct head
 template <typename Range, size_t Size>
 struct head_c;
 
-/// Meta-function returning a string containing the last N characters
+/// Metafunction returning a sub-Range containing the last N elements of Range
 /**
+ *  @see range
  *  @see basic_string
  *  @see head
  *  @see tail
@@ -454,14 +457,13 @@ struct tail
 > { };
 #else
 {
-	/// The tail of the original compile-time string
+	/// The tail of the original compile-time Range
 	typedef CompileTimeString type;
 };
 #endif
 
-/// Meta-function returning a string containing the last N characters
+/// Metafunction returning a String containing the last N characters
 /**
- *  @see range
  *  @see basic_string
  *  @see head
  *  @see tail
@@ -472,8 +474,8 @@ struct tail
 template <typename Range, size_t Size>
 struct tail_c;
 
-/// Meta-function returning a range starting with the searched sub-range
-/** This meta-function template returns a sub-range of the original
+/// Metafunction returning a Range starting with the searched sub-range
+/** This metafunction template returns a sub-range of the original
  *  compile-time range, that starts with the searched range (in case
  *  the original contains it) or an empty range (otherwise).
  *
@@ -496,8 +498,8 @@ struct find
 };
 #endif
 
-/// Meta-function returning the position of sub-range in a range
-/** This meta-function template returns the position of a sub-range
+/// Metafunction returning the position of sub-range in a Range
+/** This metafunction template returns the position of a sub-range
  *  in the original compile-time range, or nil_t if the sub-range
  *  is not present in the original range.
  *
@@ -518,7 +520,7 @@ struct position
 { };
 #endif
 
-/// Returns a sub-range ending before the first occurence of the searched range
+/// Returns a sub-range ending before the first occurence of the searched Range
 /**
  *  @tparam Range1 the range to search in.
  *  @tparam Range2 the range searched for
@@ -539,8 +541,9 @@ struct before
 };
 #endif
 
-/// Meta-function returning a sub-string of a compile-time string
+/// Metafunction returning a sub-range of a compile-time Range
 /**
+ *  @see range
  *  @see basic_string
  *  @see head
  *  @see tail
@@ -553,12 +556,12 @@ struct slice
 ;
 #else
 {
-	/// Sub-string starting at a specified position with the given length
+	/// Sub-range starting at a specified position with the given length
 	typedef CompileTimeString type;
 };
 #endif
 
-/// Meta-function returning a sub-string of a compile-time string
+/// Metafunction returning a sub-string of a compile-time String
 /**
  *  @see basic_string
  *  @see head_c
@@ -569,7 +572,7 @@ struct slice
 template <typename Range, size_t Start, size_t Size>
 struct slice_c;
 
-/// Meta-function returning a sub-string without the first N characters
+/// Metafunction returning a sub-Range without the first N elements
 /**
  *  @see basic_string
  *  @see head
@@ -589,7 +592,7 @@ struct skip_front
 };
 #endif
 
-/// Meta-function returning a sub-string without the first N characters
+/// Metafunction returning a sub-string without the first N characters
 /**
  *  @see basic_string
  *  @see head_c
@@ -601,7 +604,7 @@ struct skip_front
 template <typename Range, size_t Count>
 struct skip_front_c;
 
-/// Meta-function returning the character at the N-th position
+/// Metafunction returning the element at the N-th position in a Range
 /**
  *  @see basic_string
  *  @see head
@@ -618,7 +621,7 @@ struct at
 { };
 #endif
 
-/// Meta-function returning the character at the N-th position
+/// Metafunction returning the character at the N-th position
 /**
  *  @see basic_string
  *  @see head_c
@@ -629,7 +632,7 @@ struct at
 template <typename Range, size_t Position>
 struct at_c;
 
-/// Meta-function returns true_type if the string starts with another string
+/// Metafunction returning true_type if the Range starts with a sub-range
 /**
  *  @see basic_string
  *  @see head
@@ -648,7 +651,7 @@ struct starts_with
 #endif
 
 
-/// Meta-function returns true_type if the string ends with another string
+/// Metafunction returning true_type if the Range ends with a sub-range
 /**
  *  @see basic_string
  *  @see tail
@@ -666,7 +669,7 @@ struct ends_with
 { };
 #endif
 
-/// Meta-function returns true_type if the a Range contains another Range
+/// Metafunction returning true_type if the a Range contains a sub-range
 /**
  *  @see range
  *  @see basic_string
@@ -684,7 +687,7 @@ struct contains
 { };
 #endif
 
-/// Meta-function that reverses the elements in a Range
+/// Metafunction that reverses the elements in a Range
 /**
  *  @see range
  *  @see basic_string
@@ -703,8 +706,9 @@ struct reverse
 };
 #endif
 
-/// Meta-function returns true_type if the string does not contain another string
+/// Metafunction returns true_type if the Range does not contain a sub-range
 /**
+ *  @see range
  *  @see basic_string
  *  @see equal
  *  @see contains
@@ -720,7 +724,7 @@ struct lacks
 { };
 #endif
 
-/// Returns a range with the duplicities removed
+/// Returns a Range with the duplicities removed
 /**
  *  @tparam Range the range to be filtered
  *
@@ -733,21 +737,21 @@ struct unique
 { };
 #else
 {
-	/// The range containing only the unique elements
+	/// The Range containing only the unique elements
 	typedef UniqueRange type;
 };
 #endif
 
-/// Calls a nested meta-function with a pack <0,1,2, ... N-1> of ints
+/// Calls a nested metafunction with a pack <0,1,2, ... N-1> of ints
 /** This template assembles a pack of integral non-type template parameters
- *  which form a sequence of 0, 1, 2, ... , N-1 and calls the meta-function
+ *  which form a sequence of 0, 1, 2, ... , N-1 and calls the metafunction
  *  called apply nested in the MetaFunctionClass, passing the pack as
  *  parameters.
  *
  *  @tparam MetaFunctionClass a class containing a nested template called
  *  apply which can take @a N integral template parameters having
  *  typedef called "type".
- *  @param N the count of arguments for the meta-function.
+ *  @param N the count of arguments for the metafunction.
  *
  *  @see apply_on_seq_pack
  *  @ingroup ct_utils
@@ -758,7 +762,7 @@ struct apply_on_seq_pack_c
 ;
 #else
 {
-	/// The result of the meta-function with the <0,1,2,...,N-1> params
+	/// The result of the metafunction with the <0,1,2,...,N-1> params
 	/** This type is the result of the following expression
 	 *  @verbatim
 	 *  typename MetaFunctionClass:: template apply<
@@ -770,9 +774,9 @@ struct apply_on_seq_pack_c
 };
 #endif
 
-/// Calls a nested meta-function with a pack <0,1,2, ... N-1> of ints
+/// Calls a nested metafunction with a pack <0,1,2, ... N-1> of ints
 /** This template assembles a pack of integral non-type template parameters
- *  which form a sequence of 0, 1, 2, ... , N-1 and calls the meta-function
+ *  which form a sequence of 0, 1, 2, ... , N-1 and calls the metafunction
  *  called apply nested in the MetaFunctionClass, passing the pack as
  *  parameters.
  *
@@ -780,7 +784,7 @@ struct apply_on_seq_pack_c
  *  apply which can take @a N integral template parameters having
  *  typedef called "type".
  *  @param N an integral constant type providing the count of arguments for
- *  the meta-function.
+ *  the metafunction.
  *
  *  @see apply_on_seq_pack
  *  @ingroup ct_utils
@@ -792,7 +796,7 @@ struct apply_on_seq_pack
 { };
 #else
 {
-	/// The result of the meta-function with the <0,1,2,...,N-1> params
+	/// The result of the metafunction with the <0,1,2,...,N-1> params
 	/** This type is the result of the following expression
 	 *  @verbatim
 	 *  typename MetaFunctionClass:: template apply<
@@ -804,7 +808,7 @@ struct apply_on_seq_pack
 };
 #endif
 
-/// Invokes a meta-function-class or placeholder lambda expression.
+/// Invokes a metafunction-class or placeholder lambda expression.
 /**
  *
  *  @tparam LambdaExpression the expression to be "called"
@@ -824,7 +828,7 @@ struct apply
 };
 #endif
 
-/// Invokes a meta-function-class or placeholder lambda expression.
+/// Invokes a metafunction-class or placeholder lambda expression.
 /**
  *
  *  @tparam LambdaExpression the expression to be "called"
@@ -865,7 +869,7 @@ struct only_if
 /// Returns a range containing elements transformed by a unary function
 /**
  *  @tparam Range the range to be transformed
- *  @tparam UnaryMetaFnClass the meta-function class transforming the elements
+ *  @tparam UnaryMetaFnClass the metafunction class transforming the elements
  *
  *  @ingroup ct_utils
  */
@@ -884,7 +888,7 @@ struct transform
 /// Returns a range containing elements transformed by a unary function
 /**
  *  @tparam String the string to be transformed
- *  @tparam UnaryMetaFnClass the meta-function class transforming the elements
+ *  @tparam UnaryMetaFnClass the metafunction class transforming the elements
  *
  *  @ingroup ct_utils
  */
@@ -901,7 +905,7 @@ struct transform_c
 #endif
 
 /// Returns the result of successive application of ForwardOp on a range
-/** This meta-function returns the result of successive application
+/** This metafunction returns the result of successive application
  *  of the binary forward operation on the status and all the items
  *  in the range passed as argument.
  *
