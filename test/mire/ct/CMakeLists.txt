@@ -11,6 +11,8 @@ add_mire_exec_test("ct" traits)
 
 add_mire_exec_test("ct" if)
 add_mire_exec_test("ct" math)
+add_mire_exec_test("ct" log10)
+add_mire_exec_test("ct" exp10)
 add_mire_exec_test("ct" seq_pack)
 add_mire_exec_test("ct" lambda)
 add_mire_exec_test("ct" unpack_args)
