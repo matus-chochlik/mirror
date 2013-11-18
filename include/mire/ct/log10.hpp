@@ -16,22 +16,22 @@ namespace mire {
 namespace ct {
 namespace aux {
 
-template <typename Int, Int Boundary, Int Value, Int Log, bool Found>
-struct log10;
+template <typename Int, Int Boundary, Int Base, Int Value, Int Log, bool Found>
+struct log_base;
 
-template <typename Int, Int Boundary, Int Value, Int Log>
-struct log10<Int, Boundary, Value, Log, true>
+template <typename Int, Int Boundary, Int Base, Int Value, Int Log>
+struct log_base<Int, Boundary, Base, Value, Log, true>
  : integral_constant<Int, Log>
 { };
 
-template <typename Int, Int Boundary, Int Value, Int Log>
-struct log10<Int, Boundary, Value, Log, false>
- : log10<Int, Boundary * 10, Value, Log + 1, (Boundary > Value/10)>
+template <typename Int, Int Boundary, Int Base, Int Value, Int Log>
+struct log_base<Int, Boundary, Base, Value, Log, false>
+ : log_base<Int, Boundary * Base, Base, Value, Log + 1, (Boundary > Value/Base)>
 { };
 
-template <typename Int, Int Boundary, Int Value, Int Log>
-struct calc_log10
- : log10<Int, Boundary * 10, Value, Log, (Boundary > Value/10)>
+template <typename Int, Int Boundary, Int Base, Int Value, Int Log>
+struct calc_log_base
+ : log_base<Int, Boundary * Base, Base, Value, Log, (Boundary > Value/Base)>
 { };
 
 } // namespace aux
@@ -43,9 +43,10 @@ struct calc_log10
 template <typename IntegralConstant>
 struct log10
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : aux::calc_log10<
+ : aux::calc_log_base<
 	typename std::remove_cv<decltype(IntegralConstant::value)>::type,
 	1,
+	10,
 	IntegralConstant::value,
 	0
 >

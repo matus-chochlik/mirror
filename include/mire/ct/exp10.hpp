@@ -16,22 +16,22 @@ namespace mire {
 namespace ct {
 namespace aux {
 
-template <typename Int, Int Boundary, Int Value, Int Exp, bool Found>
-struct exp10;
+template <typename Int, Int Boundary, Int Base, Int Value, Int Exp, bool Found>
+struct exp_base;
 
-template <typename Int, Int Boundary, Int Value, Int Exp>
-struct exp10<Int, Boundary, Value, Exp, true>
+template <typename Int, Int Boundary, Int Base, Int Value, Int Exp>
+struct exp_base<Int, Boundary, Base, Value, Exp, true>
  : integral_constant<Int, Exp>
 { };
 
-template <typename Int, Int Boundary, Int Value, Int Exp>
-struct exp10<Int, Boundary, Value, Exp, false>
- : exp10<Int, Boundary + 1, Value, Exp * 10, Boundary == Value>
+template <typename Int, Int Boundary, Int Base, Int Value, Int Exp>
+struct exp_base<Int, Boundary, Base, Value, Exp, false>
+ : exp_base<Int, Boundary + 1, Base, Value, Exp * Base, Boundary == Value>
 { };
 
-template <typename Int, Int Boundary, Int Value, Int Exp>
-struct calc_exp10
- : exp10<Int, Boundary + 1, Value, Exp, Boundary == Value>
+template <typename Int, Int Boundary, Int Base, Int Value, Int Exp>
+struct calc_exp_base
+ : exp_base<Int, Boundary + 1, Base, Value, Exp, Boundary == Value>
 { };
 
 } // namespace aux
@@ -43,9 +43,10 @@ struct calc_exp10
 template <typename IntegralConstant>
 struct exp10
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : aux::calc_exp10<
+ : aux::calc_exp_base<
 	typename std::remove_cv<decltype(IntegralConstant::value)>::type,
 	0,
+	10,
 	IntegralConstant::value,
 	1
 >
