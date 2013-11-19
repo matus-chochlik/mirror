@@ -24,46 +24,9 @@ BOOST_AUTO_TEST_CASE(mire_ct_string_test1)
 	typedef ct::basic_string<wchar_t, L't',L'e',L's',L't',L'1'> wtest;
 	typedef ct::basic_string<char, 't','e','s','t','2'> btest;
 	typedef ct::string<'t','e','s','t','3'> test;
+	typedef ct::string<'A','B','C','D','E','F','G','H','I'> abcdefghi;
 	typedef ct::empty_string es;
-
-	BOOST_CHECK(std::wcscmp(wtest::c_str,L"test1") == 0);
-	BOOST_CHECK(std::strcmp(btest::c_str, "test2") == 0);
-	BOOST_CHECK(std::strcmp( test::c_str, "test3") == 0);
-	BOOST_CHECK(std::strcmp(es::c_str, "") == 0);
-
-	BOOST_CHECK(wtest::size == 5);
-	BOOST_CHECK(btest::size == 5);
-	BOOST_CHECK( test::size == 5);
-	BOOST_CHECK(es::size == 0);
-}
-
-BOOST_AUTO_TEST_CASE(mire_ct_string_test2)
-{
-	using namespace mire::ct;
-
-	BOOST_CHECK((string<>::size == 0));
-	BOOST_CHECK((string<'A'>::size == 1));
-	BOOST_CHECK((string<'A','B'>::size == 2));
-	BOOST_CHECK((string<'A','B','C'>::size == 3));
-	BOOST_CHECK((string<'A','B','C','D'>::size == 4));
-	BOOST_CHECK((string<'A','B','C','D','E'>::size == 5));
-	BOOST_CHECK((string<'A','B','C','D','E','F'>::size == 6));
-	BOOST_CHECK((string<'A','B','C','D','E','F','G'>::size == 7));
-	BOOST_CHECK((string<'A','B','C','D','E','F','G','H'>::size == 8));
-	BOOST_CHECK((string<'A','B','C','D','E','F','G','H','I'>::size == 9));
-}
-
-BOOST_AUTO_TEST_CASE(mire_ct_string_test3)
-{
-	using namespace mire::ct;
-
-	BOOST_CHECK(std::strcmp(string<>::c_str, "") == 0);
-	BOOST_CHECK(std::strcmp(string<'A'>::c_str, "A") == 0);
-	BOOST_CHECK(std::strcmp(string<'A','B'>::c_str, "AB") == 0);
-	BOOST_CHECK(std::strcmp(string<'A','B','C'>::c_str, "ABC") == 0);
-	BOOST_CHECK(std::strcmp(string<'A','B','C','D'>::c_str, "ABCD") == 0);
-	BOOST_CHECK(std::strcmp(string<'A','B','C','D','E'>::c_str, "ABCDE") == 0);
-	BOOST_CHECK(std::strcmp(string<'A','B','C','D','E','F'>::c_str, "ABCDEF") == 0);
+	typedef ct::basic_string<int, 0,1,2,3,4,5,6,7,8,9> _0123456789;
 }
 
 BOOST_AUTO_TEST_SUITE_END()

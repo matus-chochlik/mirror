@@ -1,5 +1,5 @@
 /**
- *  .file test/mire/ct/exp10.cpp
+ *  .file test/mire/ct/exp.cpp
  *  .brief Test case for compile-time exp10 meta-function
  *
  *  .author Matus Chochlik
@@ -9,12 +9,12 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE MIRE_CT_exp10
+#define BOOST_TEST_MODULE MIRE_CT_exp
 #include <boost/test/unit_test.hpp>
 
-#include <mire/ct/exp10.hpp>
+#include <mire/ct/exp.hpp>
 
-BOOST_AUTO_TEST_SUITE(mire_ct_exp10)
+BOOST_AUTO_TEST_SUITE(mire_ct_exp)
 
 BOOST_AUTO_TEST_CASE(mire_ct_exp10_test1)
 {

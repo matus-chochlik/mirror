@@ -1,14 +1,14 @@
 /**
- * @file mire/ct/log10.hpp
- * @brief Base-10 logarithm for compile-time integral constants
+ * @file mire/ct/log.hpp
+ * @brief Logarithm for compile-time integral constants
  *
  *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRE_CT_LOG10_1105240825_HPP
-#define MIRE_CT_LOG10_1105240825_HPP
+#ifndef MIRE_CT_LOG_1105240825_HPP
+#define MIRE_CT_LOG_1105240825_HPP
 
 #include <mire/ct/int_const.hpp>
 

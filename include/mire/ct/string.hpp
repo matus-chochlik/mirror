@@ -39,11 +39,7 @@ template <typename Char, Char ... C>
 struct basic_string
 {
 	typedef basic_string<Char, C...> type;
-	static constexpr Char c_str[] = { C..., '\0' };
-	static constexpr size_t size = sizeof...(C);
 };
-template <typename Char, Char ... C>
-constexpr Char basic_string<Char, C...>::c_str[];
 
 /// A specialization of the basic compile-time string using @c char type
 /**

@@ -20,13 +20,15 @@ namespace ct {
 template <typename Char, Char ... C>
 struct c_str<basic_string<Char, C...>>
 {
-	static constexpr const char* value = basic_string<Char, C...>::c_str;
+	static constexpr Char value[] = { C..., '\0' };
 
 	operator const char* (void) const
 	{
 		return value;
 	}
 };
+template <typename Char, Char ... C>
+constexpr Char c_str<basic_string<Char, C...>>::value[];
 
 } // namespace ct
 } // namespace mire

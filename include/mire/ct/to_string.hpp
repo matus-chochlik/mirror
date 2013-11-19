@@ -47,6 +47,11 @@ struct to_string<basic_string<Char, C...>>
  : basic_string<Char, C...>
 { };
 
+template <char ... C>
+struct to_string<string<C...>>
+ : string<C...>
+{ };
+
 } // namespace ct
 } // namespace mire
 

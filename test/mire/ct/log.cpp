@@ -1,6 +1,6 @@
 /**
- *  .file test/mire/ct/log10.cpp
- *  .brief Test case for compile-time log10 meta-function
+ *  .file test/mire/ct/log.cpp
+ *  .brief Test case for compile-time log meta-function
  *
  *  .author Matus Chochlik
  *
@@ -9,12 +9,12 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE MIRE_CT_log10
+#define BOOST_TEST_MODULE MIRE_CT_log
 #include <boost/test/unit_test.hpp>
 
-#include <mire/ct/log10.hpp>
+#include <mire/ct/log.hpp>
 
-BOOST_AUTO_TEST_SUITE(mire_ct_log10)
+BOOST_AUTO_TEST_SUITE(mire_ct_log)
 
 BOOST_AUTO_TEST_CASE(mire_ct_log10_test1)
 {

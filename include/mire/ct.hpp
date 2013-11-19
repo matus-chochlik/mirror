@@ -26,6 +26,7 @@
 #include <mire/ct/empty.hpp>
 #include <mire/ct/ends_with.hpp>
 #include <mire/ct/evaluate.hpp>
+#include <mire/ct/exp.hpp>
 #include <mire/ct/find.hpp>
 #include <mire/ct/front.hpp>
 #include <mire/ct/get.hpp>
@@ -45,7 +46,7 @@
 #include <mire/ct/range.hpp>
 #include <mire/ct/seq_pack.hpp>
 #include <mire/ct/size.hpp>
-#include <mire/ct/skip_front.hpp>
+#include <mire/ct/next.hpp>
 #include <mire/ct/slice.hpp>
 #include <mire/ct/starts_with.hpp>
 #include <mire/ct/string.hpp>

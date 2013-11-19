@@ -40,6 +40,11 @@ BOOST_AUTO_TEST_CASE(mire_ct_string_c_str)
 		c_str<string<'a','b','c','d','e','f','g','h'>>::value,
 		"abcdefgh"
 	) == 0);
+
+	BOOST_CHECK(std::wcscmp(
+		c_str<basic_string<wchar_t, L'S',L't',L'r',L'i',L'n',L'g'>>::value,
+		L"String"
+	) == 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
