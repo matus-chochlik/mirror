@@ -9,8 +9,8 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRE_STDDEF_1310291537_HPP
-#define MIRE_STDDEF_1310291537_HPP
+#ifndef MIRE_MIRROR_STDDEF_1310291537_HPP
+#define MIRE_MIRROR_STDDEF_1310291537_HPP
 
 #include <cstddef>
 

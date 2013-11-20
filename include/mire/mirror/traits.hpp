@@ -9,64 +9,65 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRROR_TRAITS_1310291537_HPP
-#define MIRROR_TRAITS_1310291537_HPP
+#ifndef MIRE_MIRROR_TRAITS_1310291537_HPP
+#define MIRE_MIRROR_TRAITS_1310291537_HPP
 
-#include <mirror/stddef.hpp>
+#include <mire/ct/int_const.hpp>
 
+namespace mire {
 namespace mirror {
 
 template <typename X>
 struct is_metaobject
- : false_type
+ : ct::false_type
 { };
 
 template <typename T, typename M>
 struct is_metaobject<meta<T, M>>
- : true_type
+ : ct::true_type
 { };
 
 template <typename X>
 struct is_specifier
- : false_type
+ : ct::false_type
 { };
 
 template <typename T>
 struct is_specifier<spec<T>>
- : true_type
+ : ct::true_type
 { };
 
 template <typename X>
 struct has_name
- : false_type
+ : ct::false_type
 { };
 
 template <typename X>
 struct has_scope
- : false_type
+ : ct::false_type
 { };
 
 template <typename X>
 struct is_scope
- : false_type
+ : ct::false_type
 { };
 
 template <typename X>
 struct is_class_member
- : false_type
+ : ct::false_type
 { };
 
 template <typename X>
 struct has_template
- : false_type
+ : ct::false_type
 { };
 
 template <typename X>
 struct is_template
- : false_type
+ : ct::false_type
 { };
 
-
 } // namespace mirror
+} // namespace mire
 
 #endif // include guard

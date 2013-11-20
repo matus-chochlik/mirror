@@ -78,6 +78,11 @@ struct int_to_str2
 #endif
 { };
 
+template <typename Int, Int I, typename Char = char>
+struct int_to_str2_c
+ : int_to_str2<integral_constant<Int, I>, Char>
+{ };
+
 /// Converts an IntegralConstant to a string of its decadic digits
 /**
  *  @ingroup ct_utils
@@ -103,6 +108,10 @@ struct int_to_str10
 #endif
 { };
 
+template <typename Int, Int I, typename Char = char>
+struct int_to_str10_c
+ : int_to_str10<integral_constant<Int, I>, Char>
+{ };
 
 /// Converts an IntegralConstant to a string of its hexadecimal digits
 /**
@@ -129,6 +138,11 @@ struct int_to_str16
 #else
  : String
 #endif
+{ };
+
+template <typename Int, Int I, typename Char = char>
+struct int_to_str16_c
+ : int_to_str16<integral_constant<Int, I>, Char>
 { };
 
 } // namespace ct

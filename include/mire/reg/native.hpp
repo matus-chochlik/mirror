@@ -1,6 +1,5 @@
-
 /**
- *  @file mire/mirror/reg/native.cpp
+ *  @file mire/reg/native.cpp
  *  @brief Pre-registering of native C++ types.
  *
  *  @note This is an automatically generated header file, do not modify manually.
@@ -9,20 +8,19 @@
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
-#ifndef MIRROR_REG_NATIVE_1311042119_HPP
-#define MIRROR_REG_NATIVE_1311042119_HPP
+#ifndef MIRE_REG_NATIVE_1311042119_HPP
+#define MIRE_REG_NATIVE_1311042119_HPP
 
-#include <mire/mirror/tags.hpp>
-#include <mire/mirror/reg/global_scope.hpp>
+#include <mire/reg/global_scope.hpp>
 
-namespace mirror {
-namespace _reg {
+namespace mire {
+namespace reg {
 
 namespace _void {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef void original_type;
 		struct base_name
 		{
@@ -66,7 +64,7 @@ namespace _bool {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef bool original_type;
 		struct base_name
 		{
@@ -110,7 +108,7 @@ namespace _char {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef char original_type;
 		struct base_name
 		{
@@ -154,7 +152,7 @@ namespace _signed_char {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef signed char original_type;
 		struct base_name
 		{
@@ -198,7 +196,7 @@ namespace _unsigned_char {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef unsigned char original_type;
 		struct base_name
 		{
@@ -242,7 +240,7 @@ namespace _wchar_t {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef wchar_t original_type;
 		struct base_name
 		{
@@ -286,7 +284,7 @@ namespace _char16_t {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef char16_t original_type;
 		struct base_name
 		{
@@ -330,7 +328,7 @@ namespace _char32_t {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef char32_t original_type;
 		struct base_name
 		{
@@ -374,7 +372,7 @@ namespace _short_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef short int original_type;
 		struct base_name
 		{
@@ -418,7 +416,7 @@ namespace _unsigned_short_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef unsigned short int original_type;
 		struct base_name
 		{
@@ -462,7 +460,7 @@ namespace _int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef int original_type;
 		struct base_name
 		{
@@ -506,7 +504,7 @@ namespace _unsigned_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef unsigned int original_type;
 		struct base_name
 		{
@@ -550,7 +548,7 @@ namespace _long_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef long int original_type;
 		struct base_name
 		{
@@ -594,7 +592,7 @@ namespace _unsigned_long_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef unsigned long int original_type;
 		struct base_name
 		{
@@ -638,7 +636,7 @@ namespace _long_long_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef long long int original_type;
 		struct base_name
 		{
@@ -682,7 +680,7 @@ namespace _unsigned_long_long_int {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef unsigned long long int original_type;
 		struct base_name
 		{
@@ -726,7 +724,7 @@ namespace _float {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef float original_type;
 		struct base_name
 		{
@@ -770,7 +768,7 @@ namespace _double {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef double original_type;
 		struct base_name
 		{
@@ -814,7 +812,7 @@ namespace _long_double {
 	struct _
 	{
 		typedef meta_type_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef long double original_type;
 		struct base_name
 		{
@@ -853,6 +851,6 @@ struct _type_reg<long double>
 	typedef _long_double::_ type;
 };
 
-} // namespace _reg
-} // namespace mirror
+} // namespace reg
+} // namespace mire
 #endif // include guard

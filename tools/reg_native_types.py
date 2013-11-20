@@ -6,9 +6,9 @@
 def print_file_header():
 	import datetime
 	print(
-"""
+"""\
 /**
- *  @file mire/mirror/reg/native.cpp
+ *  @file mire/reg/native.cpp
  *  @brief Pre-registering of native C++ types.
  *
  *  @note This is an automatically generated header file, do not modify manually.
@@ -17,11 +17,10 @@ def print_file_header():
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
-#ifndef MIRROR_REG_NATIVE_1311042119_HPP
-#define MIRROR_REG_NATIVE_1311042119_HPP
+#ifndef MIRE_REG_NATIVE_1311042119_HPP
+#define MIRE_REG_NATIVE_1311042119_HPP
 
-#include <mire/mirror/tags.hpp>
-#include <mire/mirror/reg/global_scope.hpp>
+#include <mire/reg/global_scope.hpp>
 """ % {'year': datetime.datetime.now().year}
 	)
 
@@ -33,7 +32,7 @@ namespace _%(type_name_)s {
 	struct _
 	{
 		typedef meta_%(kind)s_tag category;
-		typedef _reg::_ scope;
+		typedef mire::reg::_ scope;
 		typedef %(type_name)s original_type;
 		struct base_name
 		{
@@ -97,12 +96,12 @@ def main():
 
 	try:
 		print_file_header()
-		print("namespace mirror {")
-		print("namespace _reg {")
+		print("namespace mire {")
+		print("namespace reg {")
 		for native_type in native_types:
 			print_reg_code(native_type, "type")
-		print("} // namespace _reg")
-		print("} // namespace mirror")
+		print("} // namespace reg")
+		print("} // namespace mire")
 		print_file_footer()
 		return 0
 

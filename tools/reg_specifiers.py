@@ -7,10 +7,10 @@
 def print_file_header():
 	import datetime
 	print(
-"""
+"""\
 /**
- *  @file mire/mirror/specifiers.cpp
- *  @brief Declaration of specifiers.
+ *  @file mire/tags/specifier.cpp
+ *  @brief Declaration of specifier tags.
  *
  *  @note This is an automatically generated header file, do not modify manually.
  *
@@ -18,19 +18,22 @@ def print_file_header():
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
-#ifndef MIRROR_SPECIFIERS_1311042119_HPP
-#define MIRROR_SPECIFIERS_1311042119_HPP
+#ifndef MIRE_TAGS_SPECIFIER_1311042119_HPP
+#define MIRE_TAGS_SPECIFIER_1311042119_HPP
 """ % {'year': datetime.datetime.now().year}
 	)
 
 def print_reg_code(spec_name):
 	spec_name_ = str('_').join(spec_name.split(' '))
 	print(
-"""
+"""\
 struct spec_%(spec_name_)s_tag
 {
-	static constexpr const char* _kw_c_str = "%(spec_name)s";
-	static constexpr std::size_t _kw_size  = %(name_size)d;
+	struct _kw
+	{
+		static constexpr const char* c_str = "%(spec_name)s";
+		static constexpr std::size_t size  = %(name_size)d;
+	};
 };
 """ %		{
 			'spec_name_': spec_name_,
@@ -44,8 +47,11 @@ def print_reg_code_none():
 """
 struct spec_none_tag
 {
-	static constexpr const char* _kw_c_str = "";
-	static constexpr std::size_t _kw_size  = 0;
+	struct _kw
+	{
+		static constexpr const char* c_str = "";
+		static constexpr std::size_t size  = 0;
+	};
 };
 """
 	)
@@ -71,16 +77,19 @@ def main():
 		"struct",
 		"union",
 		"enum",
-		"enum class"
+		"enum class",
+		"typedef"
 	]
 
 	try:
 		print_file_header()
-		print("namespace mirror {")
+		print("namespace mire {")
+		print("namespace tags {")
 		print_reg_code_none()
 		for specifier in specifiers:
 			print_reg_code(specifier)
-		print("} // namespace mirror")
+		print("} // namespace tags")
+		print("} // namespace mire")
 		print_file_footer()
 		return 0
 

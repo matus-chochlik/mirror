@@ -12,13 +12,20 @@
 #ifndef MIRROR_FWD_1310291537_HPP
 #define MIRROR_FWD_1310291537_HPP
 
+namespace mire {
 namespace mirror {
 
 template <typename X, typename M>
-struct meta { };
+struct meta
+{
+	typedef meta type;
+};
 
 template <typename X>
-struct spec { };
+struct spec
+{
+	typedef spec type;
+};
 
 template <typename T>
 struct mirrored_t;
@@ -44,13 +51,6 @@ struct named_mem_var;
 template <typename X>
 struct scope;
 
-namespace _reg {
-
-template <typename T>
-struct _type_reg;
-
-} // namespace _reg
-
 namespace _aux {
 
 template <typename X>
@@ -59,5 +59,6 @@ struct _get_meta;
 } // namespace _aux
 
 } // namespace mirror
+} // namespace mire
 
 #endif // include guard

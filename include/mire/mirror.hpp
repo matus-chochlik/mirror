@@ -1,5 +1,5 @@
 /**
- *  @file mire/mirror/all.hpp
+ *  @file mire/mirror.hpp
  *  @brief All-in-one inclusion of everything in Mirror
  *
  *  @author Matus Chochlik
@@ -9,16 +9,14 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRROR_ALL_1104131419_HPP
-#define MIRROR_ALL_1104131419_HPP
+#ifndef MIRE_MIRROR_1104131419_HPP
+#define MIRE_MIRROR_1104131419_HPP
 
 #include <mire/mirror/fwd.hpp>
 #include <mire/mirror/stddef.hpp>
 #include <mire/mirror/tags.hpp>
-#include <mire/mirror/specifiers.hpp>
+#include <mire/mirror/evaluate.hpp>
 #include <mire/mirror/traits.hpp>
 #include <mire/mirror/intrinsic.hpp>
-// pre-registered symbols
-#include <mire/mirror/reg.hpp>
 
 #endif // include guard

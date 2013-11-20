@@ -9,16 +9,16 @@
 #ifndef MIRROR_REG_STD_1311042119_HPP
 #define MIRROR_REG_STD_1311042119_HPP
 
-#include <mirror/tags.hpp>
+#include <mire/reg/global_scope.hpp>
 
-namespace mirror {
-namespace _reg {
+namespace mire {
+namespace reg {
 
 namespace _std {
 struct _
 {
 	typedef meta_namespace_tag category;
-	typedef _reg::_ scope;
+	typedef mire::reg::_ scope;
 	struct base_name
 	{
 		static constexpr const char* c_str = "std";
@@ -51,6 +51,6 @@ struct _
 };
 } // namespace _std
 
-} // namespace _reg
-} // namespace mirror
+} // namespace reg
+} // namespace mire
 #endif // include guard

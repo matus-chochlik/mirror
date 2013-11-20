@@ -34,6 +34,7 @@
 #include <mire/ct/identity.hpp>
 #include <mire/ct/if.hpp>
 #include <mire/ct/int_const.hpp>
+#include <mire/ct/int_to_str.hpp>
 #include <mire/ct/lambda.hpp>
 #include <mire/ct/multiply.hpp>
 #include <mire/ct/next.hpp>

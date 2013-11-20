@@ -1,6 +1,6 @@
 /**
- *  @file mire/mirror/reg.hpp
- *  @brief Pre-registered symbols
+ *  @file mire/tags.hpp
+ *  @brief Mirror tags types
  *
  *  @author Matus Chochlik
  *
@@ -8,12 +8,11 @@
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
+#ifndef MIRE_TAGS_1310291537_HPP
+#define MIRE_TAGS_1310291537_HPP
 
-#ifndef MIRROR_REG_1310291537_HPP
-#define MIRROR_REG_1310291537_HPP
-
-#include <mirror/reg/global_scope.hpp>
-#include <mirror/reg/native.hpp>
-#include <mirror/reg/std.hpp>
+#include <mire/tags/metaobject.hpp>
+#include <mire/tags/specifier.hpp>
 
 #endif // include guard
+

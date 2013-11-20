@@ -1,6 +1,6 @@
 /**
  *  @file mire/mirror/tags.hpp
- *  @brief Tag types
+ *  @brief Metaobject/specifier tags.
  *
  *  @author Matus Chochlik
  *
@@ -9,67 +9,17 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRROR_TAGS_1310291537_HPP
-#define MIRROR_TAGS_1310291537_HPP
+#ifndef MIRE_MIRROR_TAGS_1310291537_HPP
+#define MIRE_MIRROR_TAGS_1310291537_HPP
 
+#include <mire/tags.hpp>
+
+namespace mire {
 namespace mirror {
 
-struct meta_global_scope_tag
-{
-};
-
-struct meta_namespace_tag
-{
-};
-
-struct meta_type_tag
-{
-};
-
-struct meta_typedef_tag
-{
-};
-
-struct meta_class_tag
-{
-};
-
-struct meta_function_tag
-{
-};
-
-struct meta_constructor_tag
-{
-};
-
-struct meta_operator_tag
-{
-};
-
-struct meta_overloaded_function_tag
-{
-};
-
-struct meta_enum_tag
-{
-};
-
-struct meta_inheritance_tag
-{
-};
-
-struct meta_constant_tag
-{
-};
-
-struct meta_variable_tag
-{
-};
-
-struct meta_parameter_tag
-{
-};
+using namespace mire::tags;
 
 } // namespace mirror
+} // namespace mire
 
 #endif // include guard

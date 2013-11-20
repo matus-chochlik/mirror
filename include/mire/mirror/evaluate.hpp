@@ -1,6 +1,6 @@
 /**
- *  @file mire/mirror/intrinsic.hpp
- *  @brief Implementation of intrinsic meta-functions
+ *  @file mire/mirror/evaluate.hpp
+ *  @brief Implementation of the evaluate meta-function
  *
  *  @author Matus Chochlik
  *
@@ -9,8 +9,8 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRROR_INTRINSIC_1310291537_HPP
-#define MIRROR_INTRINSIC_1310291537_HPP
+#ifndef MIRROR_EVALUATE_1310291537_HPP
+#define MIRROR_EVALUATE_1310291537_HPP
 
 #include <mire/mirror/fwd.hpp>
 #include <mire/mirror/stddef.hpp>
@@ -18,13 +18,14 @@
 namespace mire {
 namespace mirror {
 
-#define MIRRORED(NAME) mirror::meta<mire::reg::_##NAME::_, void>
-// TODO: define only optionally
-#define mirrored(NAME) MIRRORED(NAME)
+template <typename X>
+struct evaluate
+ : evaluate<typename X::type>
+{ };
 
-template <typename Type>
-struct mirrored_t
- : meta<typename reg::_type_reg<Type>::type, Type>
+template <typename R, typename M>
+struct evaluate<meta<R, M>>
+ : meta<R, M>
 { };
 
 } // namespace mirror
