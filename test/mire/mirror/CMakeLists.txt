@@ -4,7 +4,5 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-include(mire_testing.cmake)
-
-add_subdirectory(ct)
-add_subdirectory(mirror)
+add_mire_exec_test("mirror" original_type)
+add_mire_exec_test("mirror" base_name)

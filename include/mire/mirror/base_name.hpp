@@ -12,6 +12,7 @@
 #ifndef MIRE_MIRROR_BASE_NAME_1310291537_HPP
 #define MIRE_MIRROR_BASE_NAME_1310291537_HPP
 
+#include <mire/mirror/default.hpp>
 #include <mire/mirror/make_name.hpp>
 #include <mire/ct/to_string.hpp>
 
@@ -25,11 +26,6 @@ struct get_base_name
 { };
 
 } // namespace _aux
-
-template <typename Metaobject>
-struct base_name
- : base_name<typename evaluate<Metaobject>::type>
-{ };
 
 template <typename R, typename M>
 struct base_name<meta<R, M>>

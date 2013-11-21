@@ -12,26 +12,26 @@ function(add_mire_test COMPONENT TEST_NAME BUILD_ONLY)
 	set_property(TARGET ${TEST_NAME} PROPERTY FOLDER "Test/${COMPONENT}")
 
 	add_test(
-		build-test-${TEST_NAME}
+		build-test-${COMPONENT}-${TEST_NAME}
 		"${CMAKE_COMMAND}"
 		--build ${CMAKE_BINARY_DIR}
 		--target ${TEST_NAME}
 	)
 	set_tests_properties(
-		build-test-${TEST_NAME}
+		build-test-${COMPONENT}-${TEST_NAME}
 		PROPERTIES FOLDER
 		"Test/${COMPONENT}"
 	)
 
 	if(NOT(${BUILD_ONLY}))
-		add_test(exec-test-${TEST_NAME} ${TEST_NAME})
+		add_test(exec-test-${COMPONENT}-${TEST_NAME} ${TEST_NAME})
 		set_tests_properties(
-			exec-test-${TEST_NAME}
+			exec-test-${COMPONENT}-${TEST_NAME}
 			PROPERTIES DEPENDS
-			build-test-${TEST_NAME}
+			build-test-${COMPONENT}-${TEST_NAME}
 		)
 		set_tests_properties(
-			exec-test-${TEST_NAME}
+			exec-test-${COMPONENT}-${TEST_NAME}
 			PROPERTIES FOLDER
 			"Test/${COMPONENT}"
 		)

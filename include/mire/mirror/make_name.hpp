@@ -15,6 +15,7 @@
 #include <mire/mirror/reflection.hpp>
 #include <mire/mirror/evaluate.hpp>
 
+#include <mire/ct/range.hpp>
 #include <mire/ct/string.hpp>
 #include <mire/ct/concat.hpp>
 #include <mire/ct/prepend.hpp>
@@ -383,23 +384,24 @@ template <
  : do_make_name_array_N<GetName, MakeData, mirror::meta<R, M const volatile>, N>
 { };
 
-// <T (void)>
-template <
-	template <typename> class GetName,
-	typename MakeData,
-	typename R,
-	typename RV
-> struct do_make_name<GetName, MakeData, mirror::meta<R, RV(void)>>
- : make_name_data<
-	make_name<GetName, mirror::mirrored_t<RV>>,
-	typename MakeData::main,
-	typename MakeData::right,
-	ct::concat<
-		ct::string<' '>,
-		typename GetName<R>::type,
-		typename MakeData::exts
-	>,
-	ct::string<'(', 'v','o','i','d',')'>
+template <template <typename> class GetName, typename Ps>
+struct do_make_name_fn_args;
+
+template <template <typename> class GetName>
+struct do_make_name_fn_args<GetName, ct::range<>>
+ : ct::string<'(', 'v','o','i','d',')'>
+{ };
+
+template <template <typename> class GetName, typename P0, typename ... P>
+struct do_make_name_fn_args<GetName, ct::range<P0, P...>>
+ : ct::concat<
+	ct::string<'('>,
+	make_name<GetName, mirror::mirrored_t<P0>>,
+	ct::prepend_c<
+		make_name<GetName, mirror::mirrored_t<P>>,
+		char, ',',' '
+	>...,
+	ct::string<')'>
 >
 { };
 
@@ -409,9 +411,8 @@ template <
 	typename MakeData,
 	typename R,
 	typename RV,
-	typename P0,
 	typename ... P
-> struct do_make_name<GetName, MakeData, mirror::meta<R, RV(P0, P...)>>
+> struct do_make_name<GetName, MakeData, mirror::meta<R, RV(P...)>>
  : make_name_data<
 	make_name<GetName, mirror::mirrored_t<RV>>,
 	typename MakeData::main,
@@ -421,15 +422,7 @@ template <
 		typename GetName<R>::type,
 		typename MakeData::exts
 	>,
-	ct::concat<
-		ct::string<'('>,
-		make_name<GetName, mirror::mirrored_t<P0>>,
-		ct::prepend_c<
-			make_name<GetName, mirror::mirrored_t<P>>,
-			char, ',',' '
-		>...,
-		ct::string<')'>
-	>
+	typename do_make_name_fn_args<GetName, ct::range<P...>>::type
 >
 { };
 
@@ -454,6 +447,31 @@ template <
 		typename MakeData::args
 	>,
 	mirror::meta<R, RV(P...)>
+>
+{ };
+
+// <T (*(*)(P0...))(P1...)>
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	typename RV,
+	typename ... P0,
+	typename ... P1
+> struct do_make_name<GetName, MakeData, mirror::meta<R, RV(*(*)(P1...))(P0...)>>
+ : make_name_data<
+	typename do_make_name<GetName, MakeData, mirror::meta<R, RV(*)(P0...)>>::left,
+	typename do_make_name<GetName, MakeData, mirror::meta<R, RV(*)(P0...)>>::main,
+	ct::concat<
+		ct::string<' ','*','('>,
+		typename do_make_name<GetName, MakeData, mirror::meta<R, RV(*)(P0...)>>::right
+	>,
+	typename do_make_name<GetName, MakeData, mirror::meta<R, RV(*)(P0...)>>::exts,
+	ct::concat<
+		typename do_make_name_fn_args<GetName, ct::range<P1...>>::type,
+		ct::string<')'>,
+		typename do_make_name<GetName, MakeData, mirror::meta<R, RV(*)(P0...)>>::args
+	>
 >
 { };
 
