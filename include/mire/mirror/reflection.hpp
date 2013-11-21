@@ -1,6 +1,6 @@
 /**
- *  @file mire/mirror/intrinsic.hpp
- *  @brief Implementation of intrinsic meta-functions
+ *  @file mire/mirror/reflection.hpp
+ *  @brief Implementation of reflection templates and operators
  *
  *  @author Matus Chochlik
  *
@@ -9,11 +9,12 @@
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
-#ifndef MIRROR_INTRINSIC_1310291537_HPP
-#define MIRROR_INTRINSIC_1310291537_HPP
+#ifndef MIRE_MIRROR_REFLECTION_1310291537_HPP
+#define MIRE_MIRROR_REFLECTION_1310291537_HPP
 
 #include <mire/mirror/fwd.hpp>
 #include <mire/mirror/stddef.hpp>
+#include <mire/reg/global_scope.hpp>
 
 namespace mire {
 namespace mirror {

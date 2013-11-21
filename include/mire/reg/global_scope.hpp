@@ -65,8 +65,8 @@ struct anon_t
 	};
 	struct full_name
 	{
-		static constexpr const char* c_str = "<anon>";
-		static constexpr std::size_t size = 6;
+		static constexpr const char* c_str = "";
+		static constexpr std::size_t size = 0;
 	};
 
 	template <typename X>

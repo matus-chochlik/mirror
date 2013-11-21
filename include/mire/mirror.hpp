@@ -17,6 +17,9 @@
 #include <mire/mirror/tags.hpp>
 #include <mire/mirror/evaluate.hpp>
 #include <mire/mirror/traits.hpp>
-#include <mire/mirror/intrinsic.hpp>
+#include <mire/mirror/reflection.hpp>
+
+#include <mire/mirror/base_name.hpp>
+#include <mire/mirror/full_name.hpp>
 
 #endif // include guard
