@@ -20,6 +20,8 @@ namespace ct {
 template <typename Char, Char ... C>
 struct c_str<basic_string<Char, C...>>
 {
+	typedef c_str type;
+
 	static constexpr Char value[] = { C..., '\0' };
 
 	operator const char* (void) const

@@ -47,5 +47,7 @@ add_mire_exec_test("ct" transform)
 add_mire_exec_test("ct" fold)
 add_mire_exec_test("ct" reverse)
 
+add_mire_exec_test("ct" eval_if)
+
 add_mire_exec_test("ct" for_each)
 add_mire_exec_test("ct" accumulate)

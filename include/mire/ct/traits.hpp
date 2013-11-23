@@ -53,6 +53,11 @@ struct is_string<basic_string<Char, C...>>
  : true_type
 { };
 
+template <char ... C>
+struct is_string<string<C...>>
+ : true_type
+{ };
+
 } // namespace aux
 
 /// This trait meta-function can be used to check if the passed type is a string

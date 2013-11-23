@@ -34,12 +34,12 @@ struct if_
 { };
 #else
 {
-	/// The @a IfTrue or @a IfFalse type based on @a BooleanConstant
+	/// The @a IfTrue or @a IfFalse type depending on @a BooleanConstant
 	typedef unspecified type;
 };
 #endif
 
-/// Returns the IfTrue or the IfFalse type based on the passed boolean value
+/// Returns the IfTrue or the IfFalse type depending on the passed boolean value
 /**
  *  @tparam BooleanConstant the boolean constant value determining the result
  *  @tparam IfTrue the type returned if the BooleanConstant has the true value
@@ -49,6 +49,37 @@ struct if_
  */
 template <bool BooleanConstant, typename IfTrue, typename IfFalse>
 struct if_c;
+
+/// Evaluates the IfTrue or the IfFalse expression depending on BooleanConstant
+/**
+ *  @tparam BooleanConstant the boolean constant type determining the result
+ *  @tparam IfTrue the expression evaluated if the BooleanConstant has true value
+ *  @tparam IfFalse the expression evaluated if the BooleanConstant has false value
+ *
+ *  @ingroup ct_utils
+ */
+template <typename BooleanConstant, typename IfTrue, typename IfFalse>
+struct eval_if
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : eval_if<typename evaluate<BooleanConstant>::type, IfTrue, IfFalse>
+{ };
+#else
+{
+	/// The result of @a IfTrue or @a IfFalse depending on @a BooleanConstant
+	typedef unspecified type;
+};
+#endif
+
+/// Evaluates the IfTrue or the IfFalse expression depending on BooleanConstant
+/**
+ *  @tparam BooleanConstant the boolean constant value determining the result
+ *  @tparam IfTrue the expression evaluated if the BooleanConstant has true value
+ *  @tparam IfFalse the expression evaluated if the BooleanConstant has false value
+ *
+ *  @ingroup ct_utils
+ */
+template <bool BooleanConstant, typename IfTrue, typename IfFalse>
+struct eval_if_c;
 
 /// Metafunction returning a null terminated C-string literal from a String
 /** This function returns a null-terminated C-string for the compile-time

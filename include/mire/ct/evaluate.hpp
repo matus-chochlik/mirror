@@ -27,17 +27,17 @@ struct evaluate;
 template <typename X>
 struct can_evaluate
 {
+	static integral_constant<int, 0> _can(...);
+
 	template <typename Y>
-	static false_type _can_hlp(Y*, Y*);
+	static integral_constant<int, 1> _can_hlp(Y*, Y*);
 
 	template <typename Y, typename Z>
-	static true_type _can_hlp(Y*, Z*);
+	static integral_constant<int, 2> _can_hlp(Y*, Z*);
 
 	template <typename Y>
 	static auto _can(Y* a, typename Y::type* b = nullptr) ->
 	decltype(_can_hlp(a, b));
-
-	static false_type _can(...);
 
 	static X* _ptr(void);
 
@@ -48,12 +48,17 @@ template <typename X, typename CanEvaluate>
 struct do_evaluate;
 
 template <typename X>
-struct do_evaluate<X, true_type>
+struct do_evaluate<X, integral_constant<int, 2>>
  : evaluate<typename X::type>
 { };
 
 template <typename X>
-struct do_evaluate<X, false_type>
+struct do_evaluate<X, integral_constant<int, 1>>
+ : X
+{ };
+
+template <typename X>
+struct do_evaluate<X, integral_constant<int, 0>>
 {
 	typedef X type;
 };
