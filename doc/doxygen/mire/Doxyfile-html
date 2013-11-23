@@ -6,6 +6,7 @@
 #HIDE_SCOPE_NAMES       = NO
 
 PREDEFINED += "MIRROR_DOCUMENTATION_ONLY=1"
+ALIASES += mire_example_output{1}="@b Output: @verbinclude \1.out.txt"
 
 GENERATE_HTML = YES
 GENERATE_XML = NO

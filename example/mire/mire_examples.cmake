@@ -8,6 +8,17 @@ function(add_mire_example COMPONENT EXAMPLE_NAME)
 	add_dependencies(examples-${COMPONENT} ${EXAMPLE_NAME})
 	set_property(TARGET ${EXAMPLE_NAME} PROPERTY FOLDER "Examples/${COMPONENT}")
 
+	add_custom_command(
+		OUTPUT ${EXAMPLE_NAME}.out.txt
+		COMMAND ${EXAMPLE_NAME} > ${EXAMPLE_NAME}.out.txt
+		DEPENDS ${EXAMPLE_NAME}
+	)
+	add_custom_target(
+		${EXAMPLE_NAME}-output
+		DEPENDS ${EXAMPLE_NAME}.out.txt
+	)
+	add_dependencies(examples-${COMPONENT} ${EXAMPLE_NAME}-output)
+
 endfunction()
 
 function(add_mire_examples COMPONENT)

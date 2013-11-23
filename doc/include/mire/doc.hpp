@@ -21,6 +21,9 @@ namespace mire {
 
 /** @mainpage MiRe - Mirror Reflection utilities
  *
+ *  @section mire_components Components
+ *  - <A HREF="ct/index.html">Compile-time metaprogramming</A>
+ *  - <A HREF="mirror/index.html">Mirror compile-time reflection layer</A>
  */
 
 } // namespace mire
