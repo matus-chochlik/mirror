@@ -18,6 +18,8 @@
 namespace mire {
 namespace mirror {
 
+#ifndef MIRROR_DOCUMENTATION_ONLY
+
 template <typename X>
 struct evaluate
  : evaluate<typename X::type>
@@ -27,6 +29,8 @@ template <typename R, typename M>
 struct evaluate<meta<R, M>>
  : meta<R, M>
 { };
+
+#endif // MIRROR_DOCUMENTATION_ONLY
 
 } // namespace mirror
 } // namespace mire

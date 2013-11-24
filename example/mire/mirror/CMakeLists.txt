@@ -4,10 +4,8 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-add_custom_target(examples)
-set_property(TARGET examples PROPERTY FOLDER "Examples")
+add_custom_target(examples-mirror)
+add_dependencies(examples examples-mirror)
+set_property(TARGET examples-mirror PROPERTY FOLDER "Examples/mirror")
 
-include(mire_examples.cmake)
-
-add_subdirectory(ct)
-add_subdirectory(mirror)
+add_mire_examples("mirror")

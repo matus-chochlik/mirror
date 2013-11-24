@@ -23,9 +23,16 @@ namespace mirror {
 // TODO: define only optionally
 #define mirrored(NAME) MIRRORED(NAME)
 
+/// Reflects the specified Type
+/** Returns a Metaobject reflecting the specified type.
+ */
 template <typename Type>
 struct mirrored_t
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : meta<typename reg::_type_reg<Type>::type, Type>
+#else
+ : MetaType
+#endif
 { };
 
 } // namespace mirror

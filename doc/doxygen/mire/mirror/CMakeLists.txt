@@ -4,17 +4,5 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-include(./mire_doc.cmake)
-
-mire_doxy_doc_common(mire)
-
-add_subdirectory(ct)
-add_subdirectory(mirror)
-
-add_custom_target(
-	doc DEPENDS
-		mire-doc
-		mire-ct-doc
-		mire-mirror-doc
-)
+mire_doxy_doc_common(mire/mirror)
 

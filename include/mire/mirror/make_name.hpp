@@ -240,6 +240,34 @@ template <
 >
 { };
 
+// <T(&)[N]> helper
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename Meta,
+	size_t N
+> struct do_make_name_array_N_ref
+ : do_make_name<
+	GetName,
+	make_name_data<
+		typename MakeData::left,
+		typename MakeData::main,
+		typename ct::concat<
+			typename MakeData::right,
+			ct::string<' ','(','&',')'>
+		>::type,
+		typename ct::concat<
+			typename MakeData::exts,
+			ct::string<' ','['>,
+			ct::int_to_str10_c<size_t, N, char>,
+			ct::string<']'>
+		>::type,
+		typename MakeData::args
+	>,
+	Meta
+>
+{ };
+
 // <T const>
 template <
 	template <typename> class GetName,
@@ -382,6 +410,50 @@ template <
 	size_t N
 > struct do_make_name<GetName, MakeData, mirror::meta<R, M const volatile [N]>>
  : do_make_name_array_N<GetName, MakeData, mirror::meta<R, M const volatile>, N>
+{ };
+
+// <T(&)[N]>
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	typename M,
+	size_t N
+> struct do_make_name<GetName, MakeData, mirror::meta<R, M(&)[N]>>
+ : do_make_name_array_N_ref<GetName, MakeData, mirror::meta<R, M>, N>
+{ };
+
+// <T const(&)[N]>
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	typename M,
+	size_t N
+> struct do_make_name<GetName, MakeData, mirror::meta<R, M const (&)[N]>>
+ : do_make_name_array_N_ref<GetName, MakeData, mirror::meta<R, M const>, N>
+{ };
+
+// <T volatile(&)[N]>
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	typename M,
+	size_t N
+> struct do_make_name<GetName, MakeData, mirror::meta<R, M volatile (&)[N]>>
+ : do_make_name_array_N_ref<GetName, MakeData, mirror::meta<R, M volatile>, N>
+{ };
+
+// <T const volatile(&)[N]>
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	typename M,
+	size_t N
+> struct do_make_name<GetName, MakeData, mirror::meta<R, M const volatile (&)[N]>>
+ : do_make_name_array_N_ref<GetName, MakeData, mirror::meta<R, M const volatile>, N>
 { };
 
 template <template <typename> class GetName, typename Ps>

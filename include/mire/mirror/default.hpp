@@ -20,12 +20,18 @@ namespace mirror {
 
 template <typename Metaobject>
 struct category
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : category<typename evaluate<Metaobject>::type>
+#else
+#endif
 { };
 
 template <typename Metaobject>
 struct keyword
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : keyword<typename evaluate<Metaobject>::type>
+#else
+#endif
 { };
 
 /// Returns the base name of the base-level object reflected by a Metaobject
@@ -56,12 +62,18 @@ struct full_name
 
 template <typename Metaobject>
 struct original_type
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : original_type<typename evaluate<Metaobject>::type>
+#else
+#endif
 { };
 
 template <typename Metaobject>
 struct scope
+#ifndef MIRROR_DOCUMENTATION_ONLY
  : scope<typename evaluate<Metaobject>::type>
+#else
+#endif
 { };
 
 } // namespace mirror

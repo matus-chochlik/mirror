@@ -10,6 +10,7 @@
 #define MIRE_REG_GLOBAL_SCOPE_1311042119_HPP
 
 #include <mire/tags.hpp>
+#include <utility>
 
 namespace mire {
 namespace reg {
