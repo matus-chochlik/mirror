@@ -20,6 +20,7 @@ namespace mire {
 namespace mirror {
 
 #define MIRRORED(NAME) mirror::meta<mire::reg::_##NAME::_, void>
+#define MIRRORED_GLOBAL_SCOPE() mirror::meta<mire::reg::_, void>
 // TODO: define only optionally
 #define mirrored(NAME) MIRRORED(NAME)
 

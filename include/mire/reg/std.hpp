@@ -15,7 +15,7 @@ namespace mire {
 namespace reg {
 
 namespace _std {
-struct _
+struct _ : mire::reg::defaults
 {
 	typedef meta_namespace_tag category;
 	typedef mire::reg::_ scope;

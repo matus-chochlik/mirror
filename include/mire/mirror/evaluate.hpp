@@ -14,6 +14,7 @@
 
 #include <mire/mirror/fwd.hpp>
 #include <mire/mirror/stddef.hpp>
+#include <mire/ct/evaluate.hpp>
 
 namespace mire {
 namespace mirror {
@@ -22,7 +23,7 @@ namespace mirror {
 
 template <typename X>
 struct evaluate
- : evaluate<typename X::type>
+ : mire::ct::evaluate<X>
 { };
 
 template <typename R, typename M>

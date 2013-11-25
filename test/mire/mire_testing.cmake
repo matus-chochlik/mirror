@@ -7,15 +7,15 @@ include(CTest)
 
 function(add_mire_test COMPONENT TEST_NAME BUILD_ONLY)
 
-	add_executable(${TEST_NAME} EXCLUDE_FROM_ALL ${TEST_NAME}.cpp)
-	target_link_libraries(${TEST_NAME} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-	set_property(TARGET ${TEST_NAME} PROPERTY FOLDER "Test/${COMPONENT}")
+	add_executable(${COMPONENT}-${TEST_NAME} EXCLUDE_FROM_ALL ${TEST_NAME}.cpp)
+	target_link_libraries(${COMPONENT}-${TEST_NAME} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+	set_property(TARGET ${COMPONENT}-${TEST_NAME} PROPERTY FOLDER "Test/${COMPONENT}")
 
 	add_test(
 		build-test-${COMPONENT}-${TEST_NAME}
 		"${CMAKE_COMMAND}"
 		--build ${CMAKE_BINARY_DIR}
-		--target ${TEST_NAME}
+		--target ${COMPONENT}-${TEST_NAME}
 	)
 	set_tests_properties(
 		build-test-${COMPONENT}-${TEST_NAME}
@@ -24,7 +24,7 @@ function(add_mire_test COMPONENT TEST_NAME BUILD_ONLY)
 	)
 
 	if(NOT(${BUILD_ONLY}))
-		add_test(exec-test-${COMPONENT}-${TEST_NAME} ${TEST_NAME})
+		add_test(exec-test-${COMPONENT}-${TEST_NAME} ${COMPONENT}-${TEST_NAME})
 		set_tests_properties(
 			exec-test-${COMPONENT}-${TEST_NAME}
 			PROPERTIES DEPENDS

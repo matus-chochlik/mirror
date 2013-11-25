@@ -9,6 +9,7 @@
 #ifndef MIRE_REG_GLOBAL_SCOPE_1311042119_HPP
 #define MIRE_REG_GLOBAL_SCOPE_1311042119_HPP
 
+#include <mire/ct/int_const.hpp>
 #include <mire/tags.hpp>
 #include <utility>
 
@@ -20,8 +21,19 @@ using namespace ::mire::tags;
 template <typename T>
 struct _type_reg;
 
-struct _
+struct defaults
 {
+	typedef ct::true_type has_name;
+	typedef ct::true_type has_scope;
+	typedef ct::false_type is_scope;
+	typedef ct::false_type is_class_member;
+	typedef ct::false_type has_template;
+	typedef ct::false_type is_template;
+};
+
+struct _ : mire::reg::defaults
+{
+	typedef ct::true_type is_scope;
 	typedef meta_global_scope_tag category;
 	typedef mire::reg::_ scope;
 	struct base_name
@@ -55,7 +67,7 @@ struct _
 	};
 };
 
-struct anon_t
+struct anon_t : mire::reg::defaults
 {
 	typedef meta_type_tag category;
 	typedef mire::reg::_ scope;

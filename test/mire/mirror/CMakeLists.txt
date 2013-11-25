@@ -4,5 +4,6 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
+add_mire_exec_test("mirror" traits)
 add_mire_exec_test("mirror" original_type)
 add_mire_exec_test("mirror" base_name)

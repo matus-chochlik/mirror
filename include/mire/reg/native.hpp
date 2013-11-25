@@ -17,7 +17,7 @@ namespace mire {
 namespace reg {
 
 namespace _void {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -61,7 +61,7 @@ struct _type_reg<void>
 
 
 namespace _bool {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -105,7 +105,7 @@ struct _type_reg<bool>
 
 
 namespace _char {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -149,7 +149,7 @@ struct _type_reg<char>
 
 
 namespace _signed_char {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -193,7 +193,7 @@ struct _type_reg<signed char>
 
 
 namespace _unsigned_char {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -237,7 +237,7 @@ struct _type_reg<unsigned char>
 
 
 namespace _wchar_t {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -281,7 +281,7 @@ struct _type_reg<wchar_t>
 
 
 namespace _char16_t {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -325,7 +325,7 @@ struct _type_reg<char16_t>
 
 
 namespace _char32_t {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -369,7 +369,7 @@ struct _type_reg<char32_t>
 
 
 namespace _short_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -413,7 +413,7 @@ struct _type_reg<short int>
 
 
 namespace _unsigned_short_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -457,7 +457,7 @@ struct _type_reg<unsigned short int>
 
 
 namespace _int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -501,7 +501,7 @@ struct _type_reg<int>
 
 
 namespace _unsigned_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -545,7 +545,7 @@ struct _type_reg<unsigned int>
 
 
 namespace _long_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -589,7 +589,7 @@ struct _type_reg<long int>
 
 
 namespace _unsigned_long_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -633,7 +633,7 @@ struct _type_reg<unsigned long int>
 
 
 namespace _long_long_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -677,7 +677,7 @@ struct _type_reg<long long int>
 
 
 namespace _unsigned_long_long_int {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -721,7 +721,7 @@ struct _type_reg<unsigned long long int>
 
 
 namespace _float {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -765,7 +765,7 @@ struct _type_reg<float>
 
 
 namespace _double {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
@@ -809,7 +809,7 @@ struct _type_reg<double>
 
 
 namespace _long_double {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;

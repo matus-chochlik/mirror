@@ -29,7 +29,7 @@ def print_reg_code(type_name, kind):
 	print(
 """
 namespace _%(type_name_)s {
-	struct _
+	struct _ : mire::reg::defaults
 	{
 		typedef meta_%(kind)s_tag category;
 		typedef mire::reg::_ scope;
