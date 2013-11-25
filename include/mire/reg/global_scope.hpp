@@ -10,6 +10,7 @@
 #define MIRE_REG_GLOBAL_SCOPE_1311042119_HPP
 
 #include <mire/ct/int_const.hpp>
+#include <mire/ct/string.hpp>
 #include <mire/tags.hpp>
 #include <utility>
 
@@ -36,16 +37,8 @@ struct _ : mire::reg::defaults
 	typedef ct::true_type is_scope;
 	typedef meta_global_scope_tag category;
 	typedef mire::reg::_ scope;
-	struct base_name
-	{
-		static constexpr const char* c_str = "";
-		static constexpr std::size_t size = 0;
-	};
-	struct full_name
-	{
-		static constexpr const char* c_str = "";
-		static constexpr std::size_t size = 0;
-	};
+
+	typedef ct::empty_string base_name;
 
 	template <typename X>
 	struct named_typedef
@@ -57,8 +50,6 @@ struct _ : mire::reg::defaults
 	struct named_mem_var
 	{
 		X _;
-
-		named_mem_var(void) = default;
 
 		template <typename ... P>
 		named_mem_var(P&& ... p)
@@ -76,11 +67,6 @@ struct anon_t : mire::reg::defaults
 		static constexpr const char* c_str = "";
 		static constexpr std::size_t size = 0;
 	};
-	struct full_name
-	{
-		static constexpr const char* c_str = "";
-		static constexpr std::size_t size = 0;
-	};
 
 	template <typename X>
 	struct named_typedef
@@ -92,8 +78,6 @@ struct anon_t : mire::reg::defaults
 	struct named_mem_var
 	{
 		X _;
-
-		named_mem_var(void) = default;
 
 		template <typename ... P>
 		named_mem_var(P&& ... p)

@@ -22,16 +22,9 @@ namespace _void {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef void original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "void";
-			static constexpr std::size_t size  = 4;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'v','o','i','d'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -43,8 +36,6 @@ namespace _void {
 		struct named_mem_var
 		{
 			X void_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -66,16 +57,9 @@ namespace _bool {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef bool original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "bool";
-			static constexpr std::size_t size  = 4;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'b','o','o','l'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -87,8 +71,6 @@ namespace _bool {
 		struct named_mem_var
 		{
 			X bool_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -110,16 +92,9 @@ namespace _char {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef char original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "char";
-			static constexpr std::size_t size  = 4;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'c','h','a','r'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -131,8 +106,6 @@ namespace _char {
 		struct named_mem_var
 		{
 			X char_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -154,16 +127,9 @@ namespace _signed_char {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef signed char original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "signed char";
-			static constexpr std::size_t size  = 11;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'s','i','g','n','e','d',' ','c','h','a','r'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -175,8 +141,6 @@ namespace _signed_char {
 		struct named_mem_var
 		{
 			X signed_char_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -198,16 +162,9 @@ namespace _unsigned_char {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned char original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "unsigned char";
-			static constexpr std::size_t size  = 13;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'u','n','s','i','g','n','e','d',' ','c','h','a','r'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -219,8 +176,6 @@ namespace _unsigned_char {
 		struct named_mem_var
 		{
 			X unsigned_char_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -242,16 +197,9 @@ namespace _wchar_t {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef wchar_t original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "wchar_t";
-			static constexpr std::size_t size  = 7;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'w','c','h','a','r','_','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -263,8 +211,6 @@ namespace _wchar_t {
 		struct named_mem_var
 		{
 			X wchar_t_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -286,16 +232,9 @@ namespace _char16_t {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef char16_t original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "char16_t";
-			static constexpr std::size_t size  = 8;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'c','h','a','r','1','6','_','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -307,8 +246,6 @@ namespace _char16_t {
 		struct named_mem_var
 		{
 			X char16_t_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -330,16 +267,9 @@ namespace _char32_t {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef char32_t original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "char32_t";
-			static constexpr std::size_t size  = 8;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'c','h','a','r','3','2','_','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -351,8 +281,6 @@ namespace _char32_t {
 		struct named_mem_var
 		{
 			X char32_t_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -374,16 +302,9 @@ namespace _short_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef short int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "short int";
-			static constexpr std::size_t size  = 9;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'s','h','o','r','t',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -395,8 +316,6 @@ namespace _short_int {
 		struct named_mem_var
 		{
 			X short_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -418,16 +337,9 @@ namespace _unsigned_short_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned short int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "unsigned short int";
-			static constexpr std::size_t size  = 18;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'u','n','s','i','g','n','e','d',' ','s','h','o','r','t',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -439,8 +351,6 @@ namespace _unsigned_short_int {
 		struct named_mem_var
 		{
 			X unsigned_short_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -462,16 +372,9 @@ namespace _int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "int";
-			static constexpr std::size_t size  = 3;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -483,8 +386,6 @@ namespace _int {
 		struct named_mem_var
 		{
 			X int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -506,16 +407,9 @@ namespace _unsigned_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "unsigned int";
-			static constexpr std::size_t size  = 12;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'u','n','s','i','g','n','e','d',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -527,8 +421,6 @@ namespace _unsigned_int {
 		struct named_mem_var
 		{
 			X unsigned_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -550,16 +442,9 @@ namespace _long_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef long int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "long int";
-			static constexpr std::size_t size  = 8;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'l','o','n','g',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -571,8 +456,6 @@ namespace _long_int {
 		struct named_mem_var
 		{
 			X long_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -594,16 +477,9 @@ namespace _unsigned_long_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned long int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "unsigned long int";
-			static constexpr std::size_t size  = 17;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'u','n','s','i','g','n','e','d',' ','l','o','n','g',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -615,8 +491,6 @@ namespace _unsigned_long_int {
 		struct named_mem_var
 		{
 			X unsigned_long_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -638,16 +512,9 @@ namespace _long_long_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef long long int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "long long int";
-			static constexpr std::size_t size  = 13;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'l','o','n','g',' ','l','o','n','g',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -659,8 +526,6 @@ namespace _long_long_int {
 		struct named_mem_var
 		{
 			X long_long_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -682,16 +547,9 @@ namespace _unsigned_long_long_int {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned long long int original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "unsigned long long int";
-			static constexpr std::size_t size  = 22;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'u','n','s','i','g','n','e','d',' ','l','o','n','g',' ','l','o','n','g',' ','i','n','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -703,8 +561,6 @@ namespace _unsigned_long_long_int {
 		struct named_mem_var
 		{
 			X unsigned_long_long_int_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -726,16 +582,9 @@ namespace _float {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef float original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "float";
-			static constexpr std::size_t size  = 5;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'f','l','o','a','t'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -747,8 +596,6 @@ namespace _float {
 		struct named_mem_var
 		{
 			X float_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -770,16 +617,9 @@ namespace _double {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef double original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "double";
-			static constexpr std::size_t size  = 6;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'d','o','u','b','l','e'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -791,8 +631,6 @@ namespace _double {
 		struct named_mem_var
 		{
 			X double_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -814,16 +652,9 @@ namespace _long_double {
 		typedef meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef long double original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "long double";
-			static constexpr std::size_t size  = 11;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<'l','o','n','g',' ','d','o','u','b','l','e'>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -835,8 +666,6 @@ namespace _long_double {
 		struct named_mem_var
 		{
 			X long_double_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)

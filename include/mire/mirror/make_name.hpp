@@ -547,6 +547,77 @@ template <
 >
 { };
 
+// <T<P...>>
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename Meta,
+	typename IsTpl
+> struct do_make_name_tpl;
+
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	template <typename ...> class T,
+	typename P0,
+	typename ... P
+> struct do_make_name_tpl<
+	GetName,
+	MakeData,
+	meta<R, T<P0, P...>>,
+	ct::true_type
+>: make_name_data<
+	typename MakeData::left,
+	typename GetName<R>::type,
+	typename ct::concat<
+		ct::string<'<'>,
+		make_name<GetName, mirror::mirrored_t<P0>>,
+		ct::prepend_c<
+			make_name<GetName, mirror::mirrored_t<P>>,
+			char, ',',' '
+		>...,
+		ct::string<'>'>
+	>::type,
+	typename MakeData::exts,
+	typename MakeData::args
+>
+{ };
+
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	typename M
+> struct do_make_name_tpl<
+	GetName,
+	MakeData,
+	meta<R, M>,
+	ct::false_type
+>: make_name_data<
+	typename MakeData::left,
+	typename GetName<R>::type,
+	typename MakeData::right,
+	typename MakeData::exts,
+	typename MakeData::args
+>
+{ };
+
+template <
+	template <typename> class GetName,
+	typename MakeData,
+	typename R,
+	template <typename ...P> class T,
+	typename ... P
+> struct do_make_name<GetName, MakeData, mirror::meta<R, T<P...>>>
+ : do_make_name_tpl<
+	GetName,
+	MakeData,
+	mirror::meta<R, T<P...>>,
+	typename R::is_template
+>
+{ };
+
 } // namespace _aux
 } // namespace mirror
 } // namespace mire

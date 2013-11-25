@@ -9,48 +9,11 @@
 #ifndef MIRROR_REG_STD_1311042119_HPP
 #define MIRROR_REG_STD_1311042119_HPP
 
-#include <mire/reg/global_scope.hpp>
+#include <mire/reg/std/pair.hpp>
+#include <mire/reg/std/allocator.hpp>
+#include <mire/reg/std/char_traits.hpp>
+#include <mire/reg/std/basic_string.hpp>
+#include <mire/reg/std/string.hpp>
+#include <mire/reg/std/vector.hpp>
 
-namespace mire {
-namespace reg {
-
-namespace _std {
-struct _ : mire::reg::defaults
-{
-	typedef meta_namespace_tag category;
-	typedef mire::reg::_ scope;
-	struct base_name
-	{
-		static constexpr const char* c_str = "std";
-		static constexpr std::size_t size = 3;
-	};
-	struct full_name
-	{
-		static constexpr const char* c_str = base_name::c_str;
-		static constexpr std::size_t size = base_name::size;
-	};
-
-	template <typename X>
-	struct named_typedef
-	{
-		typedef X std;
-	};
-
-	template <typename X>
-	struct named_mem_var
-	{
-		X std;
-
-		named_mem_var(void) = default;
-
-		template <typename ... P>
-		named_mem_var(P&& ... p)
-		 : std(std::forward<P>(p)...)
-		{ }
-	};
-};
-} // namespace _std
-
-} // namespace reg
-} // namespace mire
 #endif // include guard

@@ -34,16 +34,9 @@ namespace _%(type_name_)s {
 		typedef meta_%(kind)s_tag category;
 		typedef mire::reg::_ scope;
 		typedef %(type_name)s original_type;
-		struct base_name
-		{
-			static constexpr const char* c_str = "%(type_name)s";
-			static constexpr std::size_t size  = %(name_size)d;
-		};
-		struct full_name
-		{
-			static constexpr const char* c_str = base_name::c_str;
-			static constexpr std::size_t size  = base_name::size;
-		};
+
+		typedef mire::ct::string<%(type_name_chars)s>
+			base_name;
 
 		template <typename X>
 		struct named_typedef
@@ -55,8 +48,6 @@ namespace _%(type_name_)s {
 		struct named_mem_var
 		{
 			X %(type_name_)s_;
-
-			named_mem_var(void) = default;
 
 			template <typename ... P>
 			named_mem_var(P&& ... p)
@@ -73,7 +64,7 @@ struct _type_reg<%(type_name)s>
 """ %		{
 			'type_name_': type_name_,
 			'type_name': type_name,
-			'name_size': len(type_name),
+			'type_name_chars': str("'")+str("','").join(list(type_name))+str("'"),
 			'kind': kind
 		}
 	)

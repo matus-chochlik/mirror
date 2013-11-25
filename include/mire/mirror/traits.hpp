@@ -147,6 +147,11 @@ struct has_template
  : ct::false_type
 { };
 
+template <typename R, template <typename...> class T, typename ... P>
+struct has_template<meta<R, T<P...>>>
+ : R::is_template
+{ };
+
 template <typename R, typename M>
 struct has_template<meta<R, M>>
  : R::has_template
@@ -167,9 +172,14 @@ struct is_template
  : ct::false_type
 { };
 
+template <typename R>
+struct is_template<meta<R, void>>
+ : R::is_template
+{ };
+
 template <typename R, typename M>
 struct is_template<meta<R, M>>
- : R::is_template
+ : ct::false_type
 { };
 
 } // namespace _aux
