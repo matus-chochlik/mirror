@@ -14,6 +14,7 @@
 #include <mire/reg/std/char_traits.hpp>
 #include <mire/reg/std/basic_string.hpp>
 #include <mire/reg/std/string.hpp>
+#include <mire/reg/std/wstring.hpp>
 #include <mire/reg/std/vector.hpp>
 
 #endif // include guard

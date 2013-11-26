@@ -567,20 +567,25 @@ template <
 	MakeData,
 	meta<R, T<P0, P...>>,
 	ct::true_type
->: make_name_data<
-	typename MakeData::left,
-	typename GetName<R>::type,
-	typename ct::concat<
-		ct::string<'<'>,
-		make_name<GetName, mirror::mirrored_t<P0>>,
-		ct::prepend_c<
-			make_name<GetName, mirror::mirrored_t<P>>,
-			char, ',',' '
-		>...,
-		ct::string<'>'>
-	>::type,
-	typename MakeData::exts,
-	typename MakeData::args
+>: do_make_name<
+	GetName,
+	make_name_data<
+		typename MakeData::left,
+		typename MakeData::main,
+		typename ct::concat<
+			ct::string<'<'>,
+			make_name<GetName, mirror::mirrored_t<P0>>,
+			ct::prepend_c<
+				make_name<GetName, mirror::mirrored_t<P>>,
+				char, ',',' '
+			>...,
+			ct::string<'>'>,
+			typename MakeData::right
+		>::type,
+		typename MakeData::exts,
+		typename MakeData::args
+	>,
+	meta<R, void>
 >
 { };
 

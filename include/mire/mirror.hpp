@@ -21,5 +21,7 @@
 
 #include <mire/mirror/base_name.hpp>
 #include <mire/mirror/full_name.hpp>
+#include <mire/mirror/scope.hpp>
+#include <mire/mirror/typedef_type.hpp>
 
 #endif // include guard

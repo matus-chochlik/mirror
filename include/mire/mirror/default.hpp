@@ -26,6 +26,36 @@ struct category
 #endif
 { };
 
+/// Equality comparison metafunction for compile-time Metaobjects
+/** Returns true is @c Metaobject1 is equal to @c Metaobject2
+ */
+template <typename Metaobject1, typename Metaobject2>
+struct equal
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : equal<
+	typename evaluate<Metaobject1>::type,
+	typename evaluate<Metaobject2>::type
+>
+#else
+ : BooleanConstantType
+#endif
+{ };
+
+/// Non-equality comparison metafunction for compile-time Metaobjects
+/** Returns true is @c Metaobject1 is not equal to @c Metaobject2
+ */
+template <typename Metaobject1, typename Metaobject2>
+struct nonequal
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : nonequal<
+	typename evaluate<Metaobject1>::type,
+	typename evaluate<Metaobject2>::type
+>
+#else
+ : BooleanConstantType
+#endif
+{ };
+
 template <typename Metaobject>
 struct keyword
 #ifndef MIRROR_DOCUMENTATION_ONLY
@@ -72,6 +102,14 @@ template <typename Metaobject>
 struct scope
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : scope<typename evaluate<Metaobject>::type>
+#else
+#endif
+{ };
+
+template <typename Metaobject>
+struct typedef_type
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : typedef_type<typename evaluate<Metaobject>::type>
 #else
 #endif
 { };

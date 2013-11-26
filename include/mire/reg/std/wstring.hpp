@@ -1,13 +1,13 @@
 /**
- *  @file mire/mirror/reg/std/string.cpp
- *  @brief Pre-registering of the std::string typedef
+ *  @file mire/mirror/reg/std/wstring.cpp
+ *  @brief Pre-registering of the std::wstring typedef
  *
  *  Copyright 2012-2013 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
-#ifndef MIRROR_REG_STD_STRING_1311042119_HPP
-#define MIRROR_REG_STD_STRING_1311042119_HPP
+#ifndef MIRROR_REG_STD_WSTRING_1311042119_HPP
+#define MIRROR_REG_STD_WSTRING_1311042119_HPP
 
 #include <mire/reg/std/namespace.hpp>
 #include <mire/reg/std/basic_string.hpp>
@@ -17,7 +17,7 @@ namespace mire {
 namespace reg {
 namespace _std {
 
-namespace string {
+namespace wstring {
 struct _ : mire::reg::defaults
 {
 	typedef meta_typedef_tag category;
@@ -26,33 +26,33 @@ struct _ : mire::reg::defaults
 	typedef mire::reg::_std::basic_string::_ template_;
 	typedef mire::reg::_std::basic_string::_ typedef_type;
 
-	typedef mire::ct::string<'s','t','r','i','n','g'>
+	typedef mire::ct::string<'w','s','t','r','i','n','g'>
 		base_name;
 
 	template <typename X>
 	struct named_typedef
 	{
-		typedef X string;
+		typedef X wstring;
 	};
 
 	template <typename X>
 	struct named_mem_var
 	{
-		X string;
+		X wstring;
 
 		template <typename ... P>
 		named_mem_var(P&& ... p)
-		 : string(std::forward<P>(p)...)
+		 : wstring(std::forward<P>(p)...)
 		{ }
 	};
 };
-} // namespace string
+} // namespace wstring
 } // namespace _std
 
 template <>
-struct _type_reg<std::string>
+struct _type_reg<std::wstring>
 {
-	typedef mire::reg::_std::string::_ type;
+	typedef mire::reg::_std::wstring::_ type;
 };
 
 } // namespace reg
