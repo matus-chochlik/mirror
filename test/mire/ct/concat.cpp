@@ -19,42 +19,33 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_concat)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_concat_string1)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<string<'a','b','c'>>,
 		string<'a','b','c'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			string<'a','b','c'>,
 			string<'d','e','f'>
 		>,
 		string<'a','b','c','d','e','f'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			string<'a','b','c'>,
 			string<'d','e','f'>,
 			string<'g','h','i'>
 		>,
 		string<'a','b','c','d','e','f','g','h','i'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			string<'a','b','c'>,
 			string<'d','e','f'>,
@@ -62,9 +53,9 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_string1)
 			string<'j','k','l'>
 		>,
 		string<'a','b','c','d','e','f','g','h','i','j','k','l'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			concat<
 				string<'a','b','c'>,
@@ -76,7 +67,7 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_string1)
 			>
 		>,
 		string<'a','b','c','d','e','f','g','h','i','j','k','l'>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_concat_string2)
@@ -120,21 +111,21 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<range<short, int, long>>,
 		range<short, int, long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			range<bool, char>,
 			range<wchar_t, short, int>,
 			range<long double>
 		>,
 		range<bool, char, wchar_t, short, int, long double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			range<bool, char, wchar_t>,
 			range<short, int, long>,
@@ -142,9 +133,9 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_range)
 			range<float, double>
 		>,
 		range<bool, char, wchar_t, short, int, long, unsigned, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		concat<
 			concat<
 				range<bool, char, wchar_t>,
@@ -156,7 +147,7 @@ BOOST_AUTO_TEST_CASE(mire_ct_concat_range)
 			>
 		>,
 		range<bool, char, wchar_t, short, int, long, unsigned, float, double>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

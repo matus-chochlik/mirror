@@ -17,93 +17,84 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_before)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_before_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<>, range<>>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<bool, char, short>, range<int, long>>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<bool, char, short, int>, range<bool, char, short, int>>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<bool, char, short, int, long, bool>, range<bool>>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<bool, char, short, int, long, bool>, range<long, bool>>,
 		range<bool, char, short, int>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<bool, char, short, int, long, double>, range<double>>,
 		range<bool, char, short, int, long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<range<bool, char, short, int, long>, range<>>,
 		range<>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_before_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<>, string<>>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<'a','b','c'>, string<'x','y'>>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<'s','t','r'>, string<'s','t','r'>>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<'s','t','r'>, string<'s'>>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<'s','t','r','i','n','g'>, string<'i','n','g'>>,
 		string<'s','t','r'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<'s','t','r','i','n','g'>, string<'g'>>,
 		string<'s','t','r','i','n'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		before<string<'s','t','r','i','n','g'>, string<>>,
 		string<>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

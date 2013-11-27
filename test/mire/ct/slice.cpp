@@ -17,15 +17,6 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_slice)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_slice_range)
 {
 	using namespace mire::ct;
@@ -60,32 +51,32 @@ BOOST_AUTO_TEST_CASE(mire_ct_slice_range)
 	typedef range<long> r4_1;
 	typedef range<float> r5_1;
 
-	mire_ct_test_bool<equal<slice<r0_6, _0, _5>, r0_5>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _0, _4>, r0_4>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _0, _3>, r0_3>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _0, _2>, r0_2>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _0, _1>, r0_1>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _0, _0>, r0_0>, true>();
+	BOOST_CHECK((equal<slice<r0_6, _0, _5>, r0_5>::value));
+	BOOST_CHECK((equal<slice<r0_6, _0, _4>, r0_4>::value));
+	BOOST_CHECK((equal<slice<r0_6, _0, _3>, r0_3>::value));
+	BOOST_CHECK((equal<slice<r0_6, _0, _2>, r0_2>::value));
+	BOOST_CHECK((equal<slice<r0_6, _0, _1>, r0_1>::value));
+	BOOST_CHECK((equal<slice<r0_6, _0, _0>, r0_0>::value));
 
-	mire_ct_test_bool<equal<slice<r0_6, _1, _5>, r1_5>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _1, _4>, r1_4>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _1, _3>, r1_3>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _1, _2>, r1_2>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _1, _1>, r1_1>, true>();
+	BOOST_CHECK((equal<slice<r0_6, _1, _5>, r1_5>::value));
+	BOOST_CHECK((equal<slice<r0_6, _1, _4>, r1_4>::value));
+	BOOST_CHECK((equal<slice<r0_6, _1, _3>, r1_3>::value));
+	BOOST_CHECK((equal<slice<r0_6, _1, _2>, r1_2>::value));
+	BOOST_CHECK((equal<slice<r0_6, _1, _1>, r1_1>::value));
 
-	mire_ct_test_bool<equal<slice<r0_6, _2, _4>, r2_4>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _2, _3>, r2_3>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _2, _2>, r2_2>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _2, _1>, r2_1>, true>();
+	BOOST_CHECK((equal<slice<r0_6, _2, _4>, r2_4>::value));
+	BOOST_CHECK((equal<slice<r0_6, _2, _3>, r2_3>::value));
+	BOOST_CHECK((equal<slice<r0_6, _2, _2>, r2_2>::value));
+	BOOST_CHECK((equal<slice<r0_6, _2, _1>, r2_1>::value));
 
-	mire_ct_test_bool<equal<slice<r0_6, _3, _3>, r3_3>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _3, _2>, r3_2>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _3, _1>, r3_1>, true>();
+	BOOST_CHECK((equal<slice<r0_6, _3, _3>, r3_3>::value));
+	BOOST_CHECK((equal<slice<r0_6, _3, _2>, r3_2>::value));
+	BOOST_CHECK((equal<slice<r0_6, _3, _1>, r3_1>::value));
 
-	mire_ct_test_bool<equal<slice<r0_6, _4, _2>, r4_2>, true>();
-	mire_ct_test_bool<equal<slice<r0_6, _4, _1>, r4_1>, true>();
+	BOOST_CHECK((equal<slice<r0_6, _4, _2>, r4_2>::value));
+	BOOST_CHECK((equal<slice<r0_6, _4, _1>, r4_1>::value));
 
-	mire_ct_test_bool<equal<slice<r0_6, _5, _1>, r5_1>, true>();
+	BOOST_CHECK((equal<slice<r0_6, _5, _1>, r5_1>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_slice_string)
@@ -122,32 +113,32 @@ BOOST_AUTO_TEST_CASE(mire_ct_slice_string)
 	typedef string<'n'> s4_1;
 	typedef string<'g'> s5_1;
 
-	mire_ct_test_bool<equal<slice<s0_6, _0, _5>, s0_5>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _0, _4>, s0_4>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _0, _3>, s0_3>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _0, _2>, s0_2>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _0, _1>, s0_1>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _0, _0>, s0_0>, true>();
+	BOOST_CHECK((equal<slice<s0_6, _0, _5>, s0_5>::value));
+	BOOST_CHECK((equal<slice<s0_6, _0, _4>, s0_4>::value));
+	BOOST_CHECK((equal<slice<s0_6, _0, _3>, s0_3>::value));
+	BOOST_CHECK((equal<slice<s0_6, _0, _2>, s0_2>::value));
+	BOOST_CHECK((equal<slice<s0_6, _0, _1>, s0_1>::value));
+	BOOST_CHECK((equal<slice<s0_6, _0, _0>, s0_0>::value));
 
-	mire_ct_test_bool<equal<slice<s0_6, _1, _5>, s1_5>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _1, _4>, s1_4>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _1, _3>, s1_3>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _1, _2>, s1_2>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _1, _1>, s1_1>, true>();
+	BOOST_CHECK((equal<slice<s0_6, _1, _5>, s1_5>::value));
+	BOOST_CHECK((equal<slice<s0_6, _1, _4>, s1_4>::value));
+	BOOST_CHECK((equal<slice<s0_6, _1, _3>, s1_3>::value));
+	BOOST_CHECK((equal<slice<s0_6, _1, _2>, s1_2>::value));
+	BOOST_CHECK((equal<slice<s0_6, _1, _1>, s1_1>::value));
 
-	mire_ct_test_bool<equal<slice<s0_6, _2, _4>, s2_4>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _2, _3>, s2_3>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _2, _2>, s2_2>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _2, _1>, s2_1>, true>();
+	BOOST_CHECK((equal<slice<s0_6, _2, _4>, s2_4>::value));
+	BOOST_CHECK((equal<slice<s0_6, _2, _3>, s2_3>::value));
+	BOOST_CHECK((equal<slice<s0_6, _2, _2>, s2_2>::value));
+	BOOST_CHECK((equal<slice<s0_6, _2, _1>, s2_1>::value));
 
-	mire_ct_test_bool<equal<slice<s0_6, _3, _3>, s3_3>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _3, _2>, s3_2>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _3, _1>, s3_1>, true>();
+	BOOST_CHECK((equal<slice<s0_6, _3, _3>, s3_3>::value));
+	BOOST_CHECK((equal<slice<s0_6, _3, _2>, s3_2>::value));
+	BOOST_CHECK((equal<slice<s0_6, _3, _1>, s3_1>::value));
 
-	mire_ct_test_bool<equal<slice<s0_6, _4, _2>, s4_2>, true>();
-	mire_ct_test_bool<equal<slice<s0_6, _4, _1>, s4_1>, true>();
+	BOOST_CHECK((equal<slice<s0_6, _4, _2>, s4_2>::value));
+	BOOST_CHECK((equal<slice<s0_6, _4, _1>, s4_1>::value));
 
-	mire_ct_test_bool<equal<slice<s0_6, _5, _1>, s5_1>, true>();
+	BOOST_CHECK((equal<slice<s0_6, _5, _1>, s5_1>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -16,67 +16,58 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_empty)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_empty_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<empty<empty_optional>, true>();
-	mire_ct_test_bool<empty<optional<long>>,false>();
+	BOOST_CHECK(( empty<empty_optional>::value));
+	BOOST_CHECK((!empty<optional<long>>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonempty_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonempty<empty_optional>,false>();
-	mire_ct_test_bool<nonempty<optional<char>>, true>();
+	BOOST_CHECK((!nonempty<empty_optional>::value));
+	BOOST_CHECK(( nonempty<optional<char>>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_empty_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<empty<empty_range>, true>();
-	mire_ct_test_bool<empty<range<long>>,false>();
-	mire_ct_test_bool<empty<range<int, long, float>>,false>();
+	BOOST_CHECK(( empty<empty_range>::value));
+	BOOST_CHECK((!empty<range<long>>::value));
+	BOOST_CHECK((!empty<range<int, long, float>>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonempty_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonempty<empty_range>,false>();
-	mire_ct_test_bool<nonempty<range<char>>, true>();
-	mire_ct_test_bool<nonempty<range<bool, wchar_t, short, double>>, true>();
+	BOOST_CHECK((!nonempty<empty_range>::value));
+	BOOST_CHECK(( nonempty<range<char>>::value));
+	BOOST_CHECK(( nonempty<range<bool, wchar_t, short, double>>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_empty_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<empty<empty_string>, true>();
-	mire_ct_test_bool<empty<string<'x'>>,false>();
-	mire_ct_test_bool<empty<string<'s','t','r'>>,false>();
-	mire_ct_test_bool<empty<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>,false>();
+	BOOST_CHECK(( empty<empty_string>::value));
+	BOOST_CHECK((!empty<string<'x'>>::value));
+	BOOST_CHECK((!empty<string<'s','t','r'>>::value));
+	BOOST_CHECK((!empty<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonempty_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonempty<empty_string>, false>();
-	mire_ct_test_bool<nonempty<string<'x'>>, true>();
-	mire_ct_test_bool<nonempty<string<'s','t','r','i','n','g'>>, true>();
-	mire_ct_test_bool<nonempty<basic_string<wchar_t,L'a',L'b',L'c'>>, true>();
+	BOOST_CHECK((!nonempty<empty_string>::value));
+	BOOST_CHECK(( nonempty<string<'x'>>::value));
+	BOOST_CHECK(( nonempty<string<'s','t','r','i','n','g'>>::value));
+	BOOST_CHECK(( nonempty<basic_string<wchar_t,L'a',L'b',L'c'>>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

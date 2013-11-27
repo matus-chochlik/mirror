@@ -18,14 +18,6 @@
 namespace mire {
 namespace mirror {
 
-template <typename Metaobject>
-struct category
-#ifndef MIRROR_DOCUMENTATION_ONLY
- : category<typename evaluate<Metaobject>::type>
-#else
-#endif
-{ };
-
 /// Equality comparison metafunction for compile-time Metaobjects
 /** Returns true is @c Metaobject1 is equal to @c Metaobject2
  */

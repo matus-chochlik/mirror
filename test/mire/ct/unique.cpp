@@ -17,53 +17,44 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_unique)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_unique_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		unique<range<>>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		unique<range<bool, char, int, float, double>>,
 		range<bool, char, int, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		unique<range<bool, char, bool, int, int, int, float, double, float>>,
 		range<bool, char, int, float, double>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_unique_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		unique<string<>>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		unique<string<'s','t','r','i','n','g'>>,
 		string<'s','t','r','i','n','g'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		unique<string<'s','t','s','r','i','i','i','n','i','g','n'>>,
 		string<'s','t','r','i','n','g'>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

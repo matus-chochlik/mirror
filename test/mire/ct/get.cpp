@@ -17,33 +17,24 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_get)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_get_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		get<optional<long>>,
 		long
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((!equal_types<
 		get<optional<int>>,
 		long
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		get<optional<int>>,
 		int
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

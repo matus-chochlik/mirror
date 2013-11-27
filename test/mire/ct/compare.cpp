@@ -16,334 +16,325 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_compare)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_equal_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		empty_optional,
 		empty_optional
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		optional<float>,
 		optional<float>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		empty_optional,
 		optional<char>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		optional<char>,
 		empty_optional
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		optional<short>,
 		optional<float>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		optional<float>,
 		optional<short>
-	>,false>();
+	>::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonequal_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonequal<
+	BOOST_CHECK((nonequal<
 		empty_optional,
 		empty_optional
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		optional<long>,
 		optional<long>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		empty_optional,
 		optional<short>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		optional<short>,
 		empty_optional
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		optional<char>,
 		optional<bool>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		optional<bool>,
 		optional<char>
-	>, true>();
+	>::value == true));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_equal_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		empty_range,
 		empty_range
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		range<float>,
 		range<float>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		range<bool, char, short, int, long, float, double>,
 		range<bool, char, short, int, long, float, double>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		empty_range,
 		range<float>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		range<float>,
 		empty_range
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		range<bool, char, short, int, long, float, double>,
 		range<wchar_t, long long, long double, unsigned>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		range<bool, char, short, int, long, float, double>,
 		range<bool, char, short, int, long, float, wchar_t>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		range<char, bool, short, int, long, float, double>,
 		range<bool, char, short, int, long, float, double>
-	>,false>();
+	>::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonequal_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonequal<
+	BOOST_CHECK((nonequal<
 		empty_range,
 		empty_range
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		range<float>,
 		range<float>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		range<bool, char, short, int, long, float, double>,
 		range<bool, char, short, int, long, float, double>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		empty_range,
 		range<float>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		range<float>,
 		empty_range
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		range<bool, char, short, int, long, float, double>,
 		range<wchar_t, long long, long double, unsigned>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		range<bool, char, short, int, long, float, double>,
 		range<bool, char, short, int, long, float, wchar_t>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		range<char, bool, short, int, long, float, double>,
 		range<bool, char, short, int, long, float, double>
-	>, true>();
+	>::value == true));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_equal_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		empty_string,
 		empty_string
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		string<'s'>,
 		string<'s'>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		string<'x'>,
 		string<'y'>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		string<'x','y'>,
 		string<'x','y'>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		string<'z','y','x'>,
 		string<'x','y','z'>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		string<'s','t','r','i','n','g'>,
 		string<'s','t','r','i','n','g'>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		string<'S','t','r','i','n','g'>,
 		string<'s','t','r','i','n','g'>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		string<'s','t','r','i','n','g'>,
 		string<'S','t','r','i','n','g'>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		string<'s','t','r','i','n','G'>,
 		string<'s','t','r','i','n','g'>
-	>,false>();
+	>::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonequal_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonequal<
+	BOOST_CHECK((nonequal<
 		empty_string,
 		empty_string
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		string<'s'>,
 		string<'s'>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		string<'x'>,
 		string<'y'>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		string<'x','y'>,
 		string<'x','y'>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		string<'z','y','x'>,
 		string<'x','y','z'>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		string<'s','t','r','i','n','g'>,
 		string<'s','t','r','i','n','g'>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		string<'S','t','r','i','n','g'>,
 		string<'s','t','r','i','n','g'>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		string<'s','t','r','i','n','g'>,
 		string<'S','t','r','i','n','g'>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		string<'s','t','r','i','n','G'>,
 		string<'s','t','r','i','n','g'>
-	>, true>();
+	>::value == true));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_equal_int_const)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		integral_constant<int, 0>,
 		integral_constant<int, 0>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<long, 1>,
 		integral_constant<long, 1>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<int, 5>,
 		integral_constant<int, 5>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<int, 1>,
 		integral_constant<int, 3>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		integral_constant<short, 5>,
 		integral_constant<long, 5>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<short, 4>,
 		integral_constant<unsigned, 5>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		integral_constant<int, 1>,
 		integral_constant<bool,true>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<int, 2>,
 		integral_constant<bool,false>
-	>,false>();
-	mire_ct_test_bool<equal<
+	>::value == false));
+	BOOST_CHECK((equal<
 		integral_constant<unsigned, 0>,
 		integral_constant<bool,false>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<bool, true>,
 		integral_constant<bool, true>
-	>, true>();
-	mire_ct_test_bool<equal<
+	>::value == true));
+	BOOST_CHECK((equal<
 		integral_constant<bool,false>,
 		integral_constant<bool, true>
-	>,false>();
+	>::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_nonequal_int_const)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<nonequal<
+	BOOST_CHECK((nonequal<
 		integral_constant<int, 0>,
 		integral_constant<int, 0>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		integral_constant<int, 2>,
 		integral_constant<int, 3>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		integral_constant<long, 1>,
 		integral_constant<long, 1>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		integral_constant<long, 5>,
 		integral_constant<long, 9>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		integral_constant<bool, true>,
 		integral_constant<long, 1>
-	>,false>();
-	mire_ct_test_bool<nonequal<
+	>::value == false));
+	BOOST_CHECK((nonequal<
 		integral_constant<bool, true>,
 		integral_constant<long, 0>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		integral_constant<bool, false>,
 		integral_constant<long, 1>
-	>, true>();
-	mire_ct_test_bool<nonequal<
+	>::value == true));
+	BOOST_CHECK((nonequal<
 		integral_constant<short, 1>,
 		integral_constant<bool, true>
-	>,false>();
+	>::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_equal_types_test)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal_types<int, int>, true>();
-	mire_ct_test_bool<equal_types<int, int, int, int, int>, true>();
-	mire_ct_test_bool<equal_types<float, float, float, float>, true>();
-	mire_ct_test_bool<equal_types<char, short, long, unsigned>, false>();
-	mire_ct_test_bool<equal_types<bool, int, int, int, int>,false>();
-	mire_ct_test_bool<equal_types<int, int, bool, int, int>,false>();
-	mire_ct_test_bool<equal_types<int, int, int, int, bool>,false>();
+	BOOST_CHECK((equal_types<int, int>::value == true));
+	BOOST_CHECK((equal_types<int, int, int, int, int>::value == true));
+	BOOST_CHECK((equal_types<float, float, float, float>::value == true));
+	BOOST_CHECK((equal_types<char, short, long, unsigned>::value == false));
+	BOOST_CHECK((equal_types<bool, int, int, int, int>::value == false));
+	BOOST_CHECK((equal_types<int, int, bool, int, int>::value == false));
+	BOOST_CHECK((equal_types<int, int, int, int, bool>::value == false));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

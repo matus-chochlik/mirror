@@ -17,24 +17,6 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_at)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
-template <typename Char, char value, bool check>
-void mire_ct_test_char(void)
-{
-	BOOST_CHECK((Char::value == value) == check);
-	BOOST_CHECK((Char() == value) == check);
-	BOOST_CHECK((Char::type::value == value) == check);
-	BOOST_CHECK((typename Char::type() == value) == check);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_at_range)
 {
 	using namespace mire::ct;
@@ -46,85 +28,85 @@ BOOST_AUTO_TEST_CASE(mire_ct_at_range)
 	typedef integral_constant<size_t, 4> four;
 	typedef integral_constant<size_t, 5> five;
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, zero>,
 		bool
-	>, true>();
+	::value == true));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, zero>,
 		short
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, one>,
 		short
-	>, true>();
+	::value == true));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, one>,
 		bool
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, one>,
 		int
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, two>,
 		int
-	>, true>();
+	::value == true));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, two>,
 		short
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, two>,
 		long
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, three>,
 		long
-	>, true>();
+	::value == true));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, three>,
 		int
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, three>,
 		unsigned
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, four>,
 		unsigned
-	>, true>();
+	::value == true));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, four>,
 		long
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, four>,
 		float
-	>,false>();
+	::value == false));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, five>,
 		float
-	>, true>();
+	::value == true));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, five>,
 		unsigned
-	>,false>();
+	::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_at_string)
@@ -138,22 +120,22 @@ BOOST_AUTO_TEST_CASE(mire_ct_at_string)
 	typedef integral_constant<size_t, 4> four;
 	typedef integral_constant<size_t, 5> five;
 
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, zero>, 's', true>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, zero>, 't',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, one>,  't', true>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, one>,  's',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, one>,  'r',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, two>,  'r', true>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, two>,  't',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, two>,  'i',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, three>,'i', true>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, three>,'r',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, three>,'n',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, four>, 'n', true>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, four>, 'i',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, four>, 'g',false>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, five>, 'g', true>();
-	mire_ct_test_char<at<string<'s','t','r','i','n','g'>, five>, 'n',false>();
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, zero>::value == 's'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, zero>::value != 't'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, one>::value  == 't'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, one>::value  != 's'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, one>::value  != 'r'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, two>::value  == 'r'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, two>::value  != 't'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, two>::value  != 'i'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, three>::value== 'i'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, three>::value!= 'r'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, three>::value!= 'n'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, four>::value == 'n'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, four>::value != 'i'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, four>::value != 'g'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, five>::value == 'g'));
+	BOOST_CHECK((at<string<'s','t','r','i','n','g'>, five>::value != 'n'));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

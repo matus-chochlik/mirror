@@ -61,13 +61,13 @@ BOOST_AUTO_TEST_CASE(mire_mirror_typedef_type_test1)
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<typedef_type<mirrored_t<std::string>>>::type,
-		typename original_type<mirrored_t<std::string>>::type
+		original_type<typedef_type<mirrored_t<std::string>>>::type,
+		original_type<mirrored_t<std::string>>::type
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<typedef_type<mirrored_t<std::wstring>>>::type,
-		typename original_type<mirrored_t<std::wstring>>::type
+		original_type<typedef_type<mirrored_t<std::wstring>>>::type,
+		original_type<mirrored_t<std::wstring>>::type
 	>::value));
 }
 

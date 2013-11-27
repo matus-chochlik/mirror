@@ -16,56 +16,47 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_size)
 
-template <typename Size, size_t value>
-void mire_ct_test_size_t(void)
-{
-	BOOST_CHECK(Size::value == value);
-	BOOST_CHECK(Size() == value);
-	BOOST_CHECK(Size::type::value== value);
-	BOOST_CHECK(typename Size::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_size_optional)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_size_t<size<empty_optional>, 0>();
-	mire_ct_test_size_t<size<optional<long>>, 1>();
-	mire_ct_test_size_t<size<optional<bool>>, 1>();
-	mire_ct_test_size_t<size<optional<char>>, 1>();
+	BOOST_CHECK((size<empty_optional>::value == 0));
+	BOOST_CHECK((size<optional<long>>::value == 1));
+	BOOST_CHECK((size<optional<bool>>::value == 1));
+	BOOST_CHECK((size<optional<char>>::value == 1));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_size_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_size_t<size<empty_range>, 0>();
-	mire_ct_test_size_t<size<range<long>>, 1>();
-	mire_ct_test_size_t<size<range<short, int>>, 2>();
-	mire_ct_test_size_t<size<range<int, long, float>>, 3>();
-	mire_ct_test_size_t<size<range<long, float, double, bool>>, 4>();
+	BOOST_CHECK((size<empty_range>::value == 0));
+	BOOST_CHECK((size<range<long>>::value == 1));
+	BOOST_CHECK((size<range<short, int>>::value == 2));
+	BOOST_CHECK((size<range<int, long, float>>::value == 3));
+	BOOST_CHECK((size<range<long, float, double, bool>>::value == 4));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_size_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_size_t<size<empty_string>, 0>();
-	mire_ct_test_size_t<size<string<'x'>>, 1>();
-	mire_ct_test_size_t<size<string<'x','y'>>, 2>();
-	mire_ct_test_size_t<size<string<'s','t','r'>>, 3>();
-	mire_ct_test_size_t<size<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>, 4>();
+	BOOST_CHECK((size<empty_string>::value == 0));
+	BOOST_CHECK((size<string<'x'>>::value == 1));
+	BOOST_CHECK((size<string<'x','y'>>::value == 2));
+	BOOST_CHECK((size<string<'s','t','r'>>::value == 3));
+	BOOST_CHECK((size<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>::value == 4));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_length_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_size_t<length<empty_string>, 0>();
-	mire_ct_test_size_t<length<string<'x'>>, 1>();
-	mire_ct_test_size_t<length<string<'x','y'>>, 2>();
-	mire_ct_test_size_t<length<string<'s','t','r'>>, 3>();
-	mire_ct_test_size_t<length<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>, 4>();
+	BOOST_CHECK((length<empty_string>::value == 0));
+	BOOST_CHECK((length<string<'x'>>::value == 1));
+	BOOST_CHECK((length<string<'x','y'>>::value == 2));
+	BOOST_CHECK((length<string<'s','t','r'>>::value == 3));
+	BOOST_CHECK((length<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>::value == 4));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

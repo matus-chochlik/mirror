@@ -17,15 +17,6 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_skip)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_skip_range)
 {
 	using namespace mire::ct;
@@ -45,12 +36,12 @@ BOOST_AUTO_TEST_CASE(mire_ct_skip_range)
 	typedef skip<r0, integral_constant<size_t, 5>>::type n5;
 	typedef skip<r0, integral_constant<size_t, 6>>::type n6;
 
-	mire_ct_test_bool<equal<n1, r1>, true>();
-	mire_ct_test_bool<equal<n2, r2>, true>();
-	mire_ct_test_bool<equal<n3, r3>, true>();
-	mire_ct_test_bool<equal<n4, r4>, true>();
-	mire_ct_test_bool<equal<n5, r5>, true>();
-	mire_ct_test_bool<equal<n6, r6>, true>();
+	BOOST_CHECK((equal<n1, r1>::value));
+	BOOST_CHECK((equal<n2, r2>::value));
+	BOOST_CHECK((equal<n3, r3>::value));
+	BOOST_CHECK((equal<n4, r4>::value));
+	BOOST_CHECK((equal<n5, r5>::value));
+	BOOST_CHECK((equal<n6, r6>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_skip_string)
@@ -72,12 +63,12 @@ BOOST_AUTO_TEST_CASE(mire_ct_skip_string)
 	typedef skip<s0, integral_constant<size_t, 5>>::type n5;
 	typedef skip<s0, integral_constant<size_t, 6>>::type n6;
 
-	mire_ct_test_bool<equal<n1, s1>, true>();
-	mire_ct_test_bool<equal<n2, s2>, true>();
-	mire_ct_test_bool<equal<n3, s3>, true>();
-	mire_ct_test_bool<equal<n4, s4>, true>();
-	mire_ct_test_bool<equal<n5, s5>, true>();
-	mire_ct_test_bool<equal<n6, s6>, true>();
+	BOOST_CHECK((equal<n1, s1>::value));
+	BOOST_CHECK((equal<n2, s2>::value));
+	BOOST_CHECK((equal<n3, s3>::value));
+	BOOST_CHECK((equal<n4, s4>::value));
+	BOOST_CHECK((equal<n5, s5>::value));
+	BOOST_CHECK((equal<n6, s6>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

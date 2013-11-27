@@ -27,67 +27,67 @@ BOOST_AUTO_TEST_CASE(mire_mirror_original_type_test1)
 	using namespace mire::mirror;
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<void>>::type,
+		original_type<mirrored_t<void>>::type,
 		void
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<char>>::type,
+		original_type<mirrored_t<char>>::type,
 		char
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<char*>>::type,
+		original_type<mirrored_t<char*>>::type,
 		char*
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long&>>::type,
+		original_type<mirrored_t<long&>>::type,
 		long&
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long const * &>>::type,
+		original_type<mirrored_t<long const * &>>::type,
 		long const * &
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long const * volatile &>>::type,
+		original_type<mirrored_t<long const * volatile &>>::type,
 		long const * volatile &
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long[]>>::type,
+		original_type<mirrored_t<long[]>>::type,
 		long[]
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long[9]>>::type,
+		original_type<mirrored_t<long[9]>>::type,
 		long[9]
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long[9][8][7][6][5][4][3][2][1]>>::type,
+		original_type<mirrored_t<long[9][8][7][6][5][4][3][2][1]>>::type,
 		long[9][8][7][6][5][4][3][2][1]
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long(void)>>::type,
+		original_type<mirrored_t<long(void)>>::type,
 		long(void)
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long(int, float, char)>>::type,
+		original_type<mirrored_t<long(int, float, char)>>::type,
 		long(int, float, char)
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long(*)(int, float, char)>>::type,
+		original_type<mirrored_t<long(*)(int, float, char)>>::type,
 		long(*)(int, float, char)
 	>::value));
 
 	BOOST_CHECK((std::is_same<
-		typename original_type<mirrored_t<long(*(*)(double))(int, float, char)>>::type,
+		original_type<mirrored_t<long(*(*)(double))(int, float, char)>>::type,
 		long(*(*)(double))(int, float, char)
 	>::value));
 }

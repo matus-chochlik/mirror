@@ -17,70 +17,52 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_front)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
-template <typename Char, char value, bool check>
-void mire_ct_test_char(void)
-{
-	BOOST_CHECK((Char::value == value) == check);
-	BOOST_CHECK((Char() == value) == check);
-	BOOST_CHECK((Char::type::value == value) == check);
-	BOOST_CHECK((typename Char::type() == value) == check);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_front_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		front<range<long>>,
 		long
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((!equal_types<
 		front<range<char>>,
 		bool
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((equal_types<
 		front<range<short, int, long>>,
 		short
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((!equal_types<
 		front<range<short, int, long>>,
 		int
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((!equal_types<
 		front<range<short, int, long>>,
 		long
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<equal_types<
+	BOOST_CHECK((!equal_types<
 		front<range<bool, short, int, long, unsigned, float>>,
 		char
-	>,false>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_front_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_char<front<empty_string>, '\0', true>();
-	mire_ct_test_char<front<string<'A'>>, 'A', true>();
-	mire_ct_test_char<front<string<'A'>>, '\0', false>();
-	mire_ct_test_char<front<string<'B','C','D'>>, 'A',false>();
-	mire_ct_test_char<front<string<'B','C','D'>>, 'B', true>();
-	mire_ct_test_char<front<string<'B','C','D'>>, 'C',false>();
-	mire_ct_test_char<front<string<'B','C','D'>>, 'D',false>();
+	BOOST_CHECK((front<empty_string>::value == '\0'));
+	BOOST_CHECK((front<string<'A'>>::value  == 'A'));
+	BOOST_CHECK((front<string<'A'>>::value  != '\0'));
+	BOOST_CHECK((front<string<'B','C','D'>>::value != 'A'));
+	BOOST_CHECK((front<string<'B','C','D'>>::value == 'B'));
+	BOOST_CHECK((front<string<'B','C','D'>>::value != 'C'));
+	BOOST_CHECK((front<string<'B','C','D'>>::value != 'D'));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

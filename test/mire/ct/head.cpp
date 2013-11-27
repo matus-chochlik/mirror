@@ -17,15 +17,6 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_head)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_head_range)
 {
 	using namespace mire::ct;
@@ -37,80 +28,80 @@ BOOST_AUTO_TEST_CASE(mire_ct_head_range)
 	typedef integral_constant<size_t, 4> four;
 	typedef integral_constant<size_t, 5> five;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<>, zero>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<long>, zero>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<long>, one>,
 		range<long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<long>, three>,
 		range<long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<long>, five>,
 		range<long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<short, int, long>, zero>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<short, int, long>, one>,
 		range<short>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<short, int, long>, two>,
 		range<short, int>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<short, int, long>, three>,
 		range<short, int, long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<short, int, long>, four>,
 		range<short, int, long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<bool, char, short, int, long, float>, zero>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<bool, char, short, int, long, float>, one>,
 		range<bool>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<bool, char, short, int, long, float>, three>,
 		range<bool, char, short>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<range<bool, char, short, int, long, float>, five>,
 		range<bool, char, short, int, long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<head<range<bool, char, short, int, long, float>, four>, two>,
 		range<bool, char>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_head_string)
@@ -124,65 +115,65 @@ BOOST_AUTO_TEST_CASE(mire_ct_head_string)
 	typedef integral_constant<size_t, 4> four;
 	typedef integral_constant<size_t, 5> five;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<>, zero>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a'>, zero>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a'>, one>,
 		string<'a'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a','b','c'>, zero>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a','b','c'>, one>,
 		string<'a'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a','b','c'>, two>,
 		string<'a','b'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a','b','c'>, three>,
 		string<'a','b','c'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a','b','c'>, four>,
 		string<'a','b','c'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'a','b','c'>, five>,
 		string<'a','b','c'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'s','t','r','i','n','g'>, zero>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'s','t','r','i','n','g'>, one>,
 		string<'s'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		head<string<'s','t','r','i','n','g'>, three>,
 		string<'s','t','r'>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

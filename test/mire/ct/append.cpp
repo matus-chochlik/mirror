@@ -18,48 +18,39 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_append)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_append_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append_c<string<'a','b','c'>, char>,
 		string<'a','b','c'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append_c<string<'a','b','c'>, char,'d'>,
 		string<'a','b','c','d'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append_c<string<'a','b','c'>, char, 'd','e','f'>,
 		string<'a','b','c','d','e','f'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append_c<string<'a','b','c','d','e'>, char,'f','g','h','i'>,
 		string<'a','b','c','d','e','f','g','h','i'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append_c<string<'a','b','c','d','e','f'>, char,'g','h','i','j','k','l'>,
 		string<'a','b','c','d','e','f','g','h','i','j','k','l'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append_c<append_c<string<'a','b','c'>, char,'d','e','f'>, char,'g','h','i'>,
 		string<'a','b','c','d','e','f','g','h','i'>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_append_string2)
@@ -76,55 +67,55 @@ BOOST_AUTO_TEST_CASE(mire_ct_append_string2)
 	typedef integral_constant<char, 'h'> _h;
 	typedef integral_constant<char, 'i'> _i;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<string<'a','b','c'>, _d>,
 		string<'a','b','c','d'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<string<'a','b','c'>, _d,_e,_f>,
 		string<'a','b','c','d','e','f'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<string<'a','b','c','d','e'>, _f,_g,_h,_i>,
 		string<'a','b','c','d','e','f','g','h','i'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<append<string<'a','b','c'>, _d,_e,_f>, _g,_h,_i>,
 		string<'a','b','c','d','e','f','g','h','i'>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_append_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<range<short, int, long>>,
 		range<short, int, long>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<range<short, int, long>, float>,
 		range<short, int, long, float>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<range<bool, char, wchar_t, short>, int, long double>,
 		range<bool, char, wchar_t, short, int, long double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<range<bool, char, wchar_t, short, int>, long, unsigned, float, double>,
 		range<bool, char, wchar_t, short, int, long, unsigned, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<equal<
+	BOOST_CHECK((equal<
 		append<append<range<bool, char>, wchar_t, short>, int, long double>,
 		range<bool, char, wchar_t, short, int, long double>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

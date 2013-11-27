@@ -17,98 +17,89 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_ends_with)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_ends_with_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		range<>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		range<char, float, double>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		range<char, float, double>,
 		range<double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((!ends_with<
 		range<double>,
 		range<char, float, double>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		range<bool, char, short, int, float, double>,
 		range<int, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((!ends_with<
 		range<bool, char, short, int, float, double>,
 		range<short, int, float>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((!ends_with<
 		range<char, wchar_t, short, int, long, long long, double>,
 		range<unsigned, float>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		range<bool, char, short, int, float, double>,
 		range<bool, char, short, int, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((!ends_with<
 		range<bool, char, short, int, float, double>,
 		range<long, bool, char, short, int, float, double>
-	>,false>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_ends_with_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		string<>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		string<'c'>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((!ends_with<
 		string<>,
 		string<'c'>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		string<'s','t','r'>,
 		string<'r'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((ends_with<
 		string<'s','t','r'>,
 		string<'s','t','r'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<ends_with<
+	BOOST_CHECK((!ends_with<
 		string<'s','t','r'>,
 		string<'s','t','r','i','n','g'>
-	>,false>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

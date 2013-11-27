@@ -17,133 +17,124 @@
 
 BOOST_AUTO_TEST_SUITE(mire_ct_contains)
 
-template <typename Bool, bool value>
-void mire_ct_test_bool(void)
-{
-	BOOST_CHECK(Bool::value == value);
-	BOOST_CHECK(Bool() == value);
-	BOOST_CHECK(Bool::type::value == value);
-	BOOST_CHECK(typename Bool::type() == value);
-}
-
 BOOST_AUTO_TEST_CASE(mire_ct_contains_range)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<char, float, double>,
 		range<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<char, float, double>,
 		range<char>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<char, float, double>,
 		range<char, float>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<char, float, double>,
 		range<float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((!contains<
 		range<char>,
 		range<char, float, double>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<bool, char, short, int, float, double>,
 		range<bool, char, short>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<bool, char, short, int, float, double>,
 		range<char, short, int>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<bool, char, short, int, float, double>,
 		range<short, int, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		range<bool, char, short, int, float, double>,
 		range<bool, char, short, int, float, double>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((!contains<
 		range<bool, char, short, int, float, double>,
 		range<long, bool, char, short, int, float, double>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((!contains<
 		range<bool, char, short, int, float, double>,
 		range<bool, char, short, int, float, double, long>
-	>,false>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_contains_string)
 {
 	using namespace mire::ct;
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'c'>,
 		string<>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((!contains<
 		string<>,
 		string<'c'>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r'>,
 		string<'t'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r'>,
 		string<'s','t'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r'>,
 		string<'t','r'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r'>,
 		string<'s','t','r'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((!contains<
 		string<'s','t','r'>,
 		string<'s','t','r','i','n','g'>
-	>,false>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r','i','n','g'>,
 		string<'s','t','r'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r','i','n','g'>,
 		string<'t','r','i'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r','i','n','g'>,
 		string<'r','i','n'>
-	>, true>();
+	>::value));
 
-	mire_ct_test_bool<contains<
+	BOOST_CHECK((contains<
 		string<'s','t','r','i','n','g'>,
 		string<'i','n','g'>
-	>, true>();
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
