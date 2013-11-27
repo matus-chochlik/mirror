@@ -1,6 +1,6 @@
 /**
- *  @file mire/ct/doc.hpp
- *  @brief Documentation of Mirror's compile-time metaprogramming utilities
+ *  @file mire/mirror/doc.hpp
+ *  @brief Documentation of Mirror compile-time reflection layer
  *
  *  @author Matus Chochlik
  *
@@ -10,15 +10,15 @@
  */
 
 #pragma once
-#ifndef MIRE_CT_DOC_1107121519_HPP
-#define MIRE_CT_DOC_1107121519_HPP
+#ifndef MIRE_MIRROR_DOC_1107121519_HPP
+#define MIRE_MIRROR_DOC_1107121519_HPP
 
 namespace mire {
 
-/// The compile-time metaprogramming utilities are implemented in this namespace.
-namespace ct {
+/// Mirror reflection layer is implemented in this namespace.
+namespace mirror {
 
-/** @mainpage mire_ct Mirror's compile-time metaprogramming utilities
+/** @mainpage mire_mirror Mirror compile-time reflection layer
  *
  */
 

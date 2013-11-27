@@ -59,6 +59,11 @@ struct keyword
 /// Returns the base name of the base-level object reflected by a Metaobject
 /**
  *  @tparam Metaobject the meta-object the base name of which should be returned.
+ *
+ *  @note This metafunction is applicable only to Metaobjects for which
+ *  the has_name trait returns true.
+ *
+ *  @see has_name
  */
 template <typename Metaobject>
 struct base_name
@@ -72,6 +77,12 @@ struct base_name
 /// Returns the full name of the base-level object reflected by a Metaobject
 /**
  *  @tparam Metaobject the meta-object the full name of which should be returned.
+ *
+ *  @note This metafunction is applicable only to Metaobjects for which
+ *  the has_name and has_scope traits both return true.
+ *
+ *  @see has_name
+ *  @see has_scope
  */
 template <typename Metaobject>
 struct full_name
@@ -82,6 +93,16 @@ struct full_name
 #endif
 { };
 
+/// Returns the original type reflected by the @c Metaobject
+/**
+ *  @note This metafunction is applicable only to Metaobjects reflecting types.
+ *
+ *  @see category
+ *  @see is_a
+ *  @see meta_type_tag
+ *  @see meta_typedef_tag
+ *  @see meta_class_tag
+ */
 template <typename Metaobject>
 struct original_type
 #ifndef MIRROR_DOCUMENTATION_ONLY
@@ -90,19 +111,35 @@ struct original_type
 #endif
 { };
 
+/// Returns the scope of a @c Metaobject
+/**
+ *  @tparam Metaobject the meta-object for which the scope should be returned.
+ *
+ *  @note This metafunction is applicable only to Metaobjects for which
+ *  the has_scope trait returns true.
+ */
 template <typename Metaobject>
 struct scope
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : scope<typename evaluate<Metaobject>::type>
 #else
+ : Metaobject
 #endif
 { };
 
+/// Returns the typedef-type of a @c Metaobject
+/**
+ *  @tparam Metaobject the meta-object for which the @
+ *  should be returned.
+ *
+ *  @note This metafunction is applicable only to Metaobjects reflecting typedefs.
+ */
 template <typename Metaobject>
 struct typedef_type
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : typedef_type<typename evaluate<Metaobject>::type>
 #else
+ : Metaobject
 #endif
 { };
 

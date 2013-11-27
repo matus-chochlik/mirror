@@ -274,7 +274,7 @@ struct apply_on_type
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : _aux::apply_on_type<typename evaluate<Metaobject>::type, Expression>
 #else
- : Unspecified
+ : Metaobject
 #endif
 { };
 
