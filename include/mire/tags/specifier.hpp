@@ -1,5 +1,5 @@
 /**
- *  @file mire/tags/specifier.cpp
+ *  @file mire/tags/specifier.hpp
  *  @brief Declaration of specifier tags.
  *
  *  @note This is an automatically generated header file, do not modify manually.

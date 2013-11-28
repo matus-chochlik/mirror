@@ -4,8 +4,8 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-add_custom_target(examples-mirror)
-add_dependencies(examples examples-mirror)
-set_property(TARGET examples-mirror PROPERTY FOLDER "Examples/mirror")
+add_custom_target(examples-mire-mirror)
+add_dependencies(examples examples-mire-mirror)
+set_property(TARGET examples-mire-mirror PROPERTY FOLDER "Examples/mire/mirror")
 
-add_mire_examples("mirror")
+add_mire_examples(mire/mirror)

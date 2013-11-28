@@ -16,20 +16,41 @@ macro(mire_doxy_doc_common LIBRARY)
 	# doxyfile for building html docs
 	set(DOXYFILE ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-html)
 	file(WRITE ${DOXYFILE}  "@INCLUDE = ${DOXYGEN_WD}/Doxyfile\n")
-	file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/doc/include/${LIBRARY}\n")
-	file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/doc/tutorial/${LIBRARY}\n")
 	file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/include/${LIBRARY}\n")
-	file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/example/${LIBRARY}\n")
-	file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_BINARY_DIR}/example/${LIBRARY}\n")
+	if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/doc/include/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/doc/include/${LIBRARY}\n")
+	endif()
+	if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/doc/tutorial/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/doc/tutorial/${LIBRARY}\n")
+	endif()
+	if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/example/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_SOURCE_DIR}/example/${LIBRARY}\n")
+	endif()
+	if(IS_DIRECTORY "${PROJECT_BINARY_DIR}/example/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "INPUT += ${PROJECT_BINARY_DIR}/example/${LIBRARY}\n")
+	endif()
 	file(APPEND ${DOXYFILE} "INCLUDE_PATH += ${PROJECT_SOURCE_DIR}/include\n")
 	file(APPEND ${DOXYFILE} "INCLUDE_PATH += ${PROJECT_SOURCE_DIR}/example\n")
-	file(APPEND ${DOXYFILE} "EXAMPLE_PATH += ${PROJECT_SOURCE_DIR}/doc/tutorial\n")
-	file(APPEND ${DOXYFILE} "EXAMPLE_PATH += ${PROJECT_SOURCE_DIR}/example/${LIBRARY}\n")
-	file(APPEND ${DOXYFILE} "EXAMPLE_PATH += ${PROJECT_BINARY_DIR}/example/${LIBRARY}\n")
+	if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/doc/tutorial/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "EXAMPLE_PATH += ${PROJECT_SOURCE_DIR}/doc/tutorial\n")
+	endif()
+	if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/example/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "EXAMPLE_PATH += ${PROJECT_SOURCE_DIR}/example/${LIBRARY}\n")
+	endif()
+	if(IS_DIRECTORY "${PROJECT_BINARY_DIR}/example/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "EXAMPLE_PATH += ${PROJECT_BINARY_DIR}/example/${LIBRARY}\n")
+	endif()
 	file(APPEND ${DOXYFILE} "IMAGE_PATH += ${PROJECT_SOURCE_DIR}/logo/\n")
+	file(APPEND ${DOXYFILE} "STRIP_FROM_INC_PATH += ${PROJECT_SOURCE_DIR}/include\n")
+	if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/doc/include/${LIBRARY}")
+		file(APPEND ${DOXYFILE} "STRIP_FROM_INC_PATH += ${PROJECT_SOURCE_DIR}/doc/include\n")
+		file(APPEND ${DOXYFILE} "STRIP_FROM_PATH += ${PROJECT_SOURCE_DIR}/doc/include\n")
+	endif()
+	file(APPEND ${DOXYFILE} "STRIP_FROM_PATH += ${PROJECT_SOURCE_DIR}/include\n")
+	file(APPEND ${DOXYFILE} "STRIP_FROM_PATH += ${PROJECT_SOURCE_DIR}/example\n")
 	file(APPEND ${DOXYFILE} "OUTPUT_DIRECTORY = ${CMAKE_CURRENT_BINARY_DIR}\n")
 
-	foreach(COMPONENT mire mire/ct)
+	foreach(COMPONENT mire mire/ct mire/mirror mire/tags)
 		if("${LIBRARY}" STREQUAL "${COMPONENT}")
 			file(APPEND ${DOXYFILE} "GENERATE_TAGFILE = ${CMAKE_CURRENT_BINARY_DIR}/doxygen.tags\n")
 		else()
@@ -48,26 +69,26 @@ macro(mire_doxy_doc_common LIBRARY)
 	)
 
 	add_custom_target(
-		${LIB_PREFIX}-prebuild-doc
+		doc-prebuild-${LIB_PREFIX}
 		DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
 	)
-	set_property(TARGET ${LIB_PREFIX}-prebuild-doc PROPERTY FOLDER "Documentation/${LIBRARY}")
+	set_property(TARGET doc-prebuild-${LIB_PREFIX} PROPERTY FOLDER "Documentation/${LIBRARY}")
 
 	add_custom_target(
-		${LIB_PREFIX}-doc
+		doc-${LIB_PREFIX}
 		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
 		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-		DEPENDS ${LIB_PREFIX}-prebuild-doc
+		DEPENDS doc-prebuild-${LIB_PREFIX}
 		COMMENT "Generating HTML documentation for '${LIBRARY}' (phase 2)"
 	)
-	set_property(TARGET ${LIB_PREFIX}-doc PROPERTY FOLDER "Documentation/${LIBRARY}")
+	set_property(TARGET doc-${LIB_PREFIX} PROPERTY FOLDER "Documentation/${LIBRARY}")
 
 	set(COPIED_FILES tab_a.png tab_b.png tab_h.png tab_s.png tabs.css)
 
 	foreach(COPIED_FILE ${COPIED_FILES})
 		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${COPIED_FILE}")
 			add_custom_command(
-				TARGET ${LIB_PREFIX}-doc
+				TARGET doc-${LIB_PREFIX}
 				POST_BUILD
 				COMMAND ${CMAKE_COMMAND} -E copy
 					"${CMAKE_CURRENT_SOURCE_DIR}/${COPIED_FILE}"

@@ -4,8 +4,8 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-add_custom_target(examples-ct)
-add_dependencies(examples examples-ct)
-set_property(TARGET examples-ct PROPERTY FOLDER "Examples/ct")
+add_custom_target(examples-mire-ct)
+add_dependencies(examples examples-mire-ct)
+set_property(TARGET examples-mire-ct PROPERTY FOLDER "Examples/mire/ct")
 
-add_mire_examples("ct")
+add_mire_examples(mire/ct)
