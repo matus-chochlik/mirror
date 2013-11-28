@@ -20,7 +20,7 @@ namespace _std {
 namespace wstring {
 struct _ : mire::reg::defaults
 {
-	typedef meta_typedef_tag category;
+	typedef mirror::meta_typedef_tag category;
 	typedef mire::reg::_std::_ scope;
 	typedef ct::true_type has_template;
 	typedef mire::reg::_std::basic_string::_ template_;

@@ -9,14 +9,12 @@ include(./mire_doc.cmake)
 mire_doxy_doc_common(mire)
 
 add_subdirectory(ct)
-add_subdirectory(tags)
 add_subdirectory(mirror)
 
 add_custom_target(
 	doc DEPENDS
 		doc-mire
 		doc-mire-ct
-		doc-mire-tags
 		doc-mire-mirror
 )
 

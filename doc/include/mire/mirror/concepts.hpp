@@ -141,7 +141,7 @@ struct MetaNamedScoped
 	friend struct named_mem_var<MetaNamedScoped, X>;
 };
 
-/// Metaobject reflecting a named scope
+/// Metaobject reflecting a named scope.
 /**
  *  @ingroup mirror_concepts
  */
@@ -149,7 +149,7 @@ struct MetaScope
  : MetaNamedScoped
 {
 	/// Returns true_type for MetaScope metaobjects.
-	friend struct is_scope<Metaobject>;
+	friend struct is_scope<MetaScope>;
 };
 
 /// Metaobject reflecting a named namespace.
@@ -160,7 +160,7 @@ struct MetaNamespace
  : MetaScope
 {
 	/// Returns meta_namespace_tag
-	friend struct category<Metaobject>;
+	friend struct category<MetaNamespace>;
 };
 
 /// Metaobject reflecting the global-scope namespace.
@@ -170,10 +170,276 @@ struct MetaNamespace
 struct MetaGlobalScope
  : MetaNamespace
 {
-	/// Returns meta_global_scope_tag
-	friend struct category<Metaobject>;
+	/// Returns meta_global_scope_tag.
+	friend struct category<MetaGlobalScope>;
 };
 
+/// Metaobject reflecting a type.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaType
+ : MetaNamedScoped
+{
+	/// Returns meta_type_tag.
+	friend struct category<MetaType>;
+
+	/// Returns the original (base-level) type reflected by the MetaType.
+	friend struct original_type<MetaType>;
+};
+
+/// Metaobject reflecting a typedef.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaTypedef
+ : MetaType
+{
+	/// Returns meta_typedef_tag.
+	friend struct category<MetaTypedef>;
+
+	/// Returns a MetaType reflecting the typedef type of the typedef.
+	friend struct typedef_type<MetaTypedef>;
+};
+
+/// Metaobject reflecting a class.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaClass
+ : virtual MetaType
+ , virtual MetaScope
+{
+	/// Returns meta_class_tag.
+	friend struct category<MetaClass>;
+
+	/// Returns the elaborated type specifier used to declare the class.
+	friend struct elaborated_type<MetaClass>;
+
+	/// Returns the a range of MetaInheritance reflecting the base classes.
+	friend struct base_classes<MetaClass>;
+};
+
+/// Metaobject reflecting a function.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaFunction
+ : virtual MetaScope
+{
+	/// Returns meta_function_tag.
+	friend struct category<MetaFunction>;
+
+	/// Returns the linkage specifier of the function.
+	friend struct linkage<MetaClass>;
+
+	/// Returns true if the function was declared as constexpr.
+	friend struct constexpr_<MetaClass>;
+
+	/// Returns a MetaType reflecting the result type of the function.
+	friend struct result_type<MetaClass>;
+};
+
+/// Metaobject reflecting a class member.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaClassMember
+ : MetaNamedScoped
+{
+	/// Returns true for MetaClassMember metaobjects.
+	friend struct is_class_member<MetaClassMember>;
+
+	/// Returns the access-type specifier of the class member.
+	friend struct linkage<MetaClass>;
+};
+
+/// Metaobject reflecting an initializer (constructor of native type)
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaInitializer
+ : MetaFunction
+{
+	/// Returns meta_constructor_tag.
+	friend struct category<MetaInitializer>;
+};
+
+/// Metaobject reflecting a constructor
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaConstructor
+ : MetaFunction
+ , MetaClassMember
+{
+	/// Returns meta_constructor_tag.
+	friend struct category<MetaConstructor>;
+};
+
+/// Metaobject reflecting an operator
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaOperator
+ : MetaFunction
+ , virtual MetaClassMember
+{
+	/// Returns meta_constructor_tag.
+	friend struct category<MetaOperator>;
+};
+
+/// Metaobject reflecting an overloaded function
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaOverloadedFunction
+ : MetaNamedScoped
+ , virtual MetaClassMember
+{
+	/// Returns meta_overloaded_function_tag.
+	friend struct category<MetaOverloadedFunction>;
+
+	/// Returns a range of MetaFunction listing the overloads.
+	friend struct overloads<MetaOverloadedFunction>;
+};
+
+/// Metaobject reflecting template function or class
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaTemplate
+ : virtual MetaFunction
+ , virtual MetaClass
+ , virtual MetaClassMember
+{
+	/// Returns true_type for MetaTemplate metaobjects.
+	friend struct is_template<MetaTemplate>;
+};
+
+/// Metaobject reflecting template type or constant parameter
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaTemplateParameter
+ : virtual MetaTypedef
+ , virtual MetaConstant
+{
+	/// Returns true_type for MetaTemplateParameter metaobjects.
+	friend struct is_template<MetaTemplateParameter>;
+
+	/// Returns true_type if the parameter is a parameter pack
+	friend struct pack<MetaTemplateParameter>;
+
+	/// Returns the position of the template parameter
+	friend struct position<MetaTemplateParameter>;
+};
+
+/// Metaobject reflecting template function or class instantiation
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaInstantiation
+ : virtual MetaFunction
+ , virtual MetaClass
+ , virtual MetaClassMember
+{
+	/// Returns true_type for MetaInstantiation metaobjects.
+	friend struct has_template<MetaInstantiation>;
+
+	/// Returns a MetaTemplate reflecting the template of the instantiation
+	friend struct template_<MetaInstantiation>;
+};
+
+/// Metaobject reflecting an enum or enum class
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaEnum
+ : virtual MetaScope
+ , virtual MetaType
+{
+	/// Returns meta_enum_tag for MetaEnum metaobjects.
+	friend struct category<MetaEnum>;
+
+	/// Returns the elaborated type specifier used to declare the enum.
+	friend struct elaborated_type<MetaClass>;
+};
+
+/// Metaobject reflecting a class inheritance
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaInheritance
+ : virtual Metaobject
+{
+	/// Returns meta_inheritance_tag for MetaInheritance metaobjects.
+	friend struct category<MetaInheritance>;
+
+	/// Returns the access type specifier used in the inheritance
+	friend struct access_type<MetaInheritance>;
+
+	/// Returns the inheritance type specifier used in the inheritance
+	friend struct inheritance_type<MetaInheritance>;
+
+	/// Returns a MetaClass reflecting the base class in the inheritance
+	friend struct base_class<MetaInheritance>;
+
+	/// Returns a MetaClass reflecting the derived class in the inheritance
+	friend struct derived_class<MetaInheritance>;
+};
+
+/// Metaobject reflecting a variable
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaVariable
+ : MetaNamedScoped
+ , virtual MetaClassMember
+{
+	/// Returns meta_variable_tag for MetaVariable metaobjects.
+	friend struct category<MetaVariable>;
+
+	/// Returns the storage class specifier of the reflected variable.
+	friend struct storage_class<MetaVariable>;
+
+	/// Returns a MetaType reflecting the type of the variable
+	friend struct data_type<MetaVariable>;
+};
+
+/// Metaobject reflecting a function parameter
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaParameter
+ : MetaVariable
+{
+	/// Returns meta_parameter_tag for MetaParameter metaobjects.
+	friend struct category<MetaParameter>;
+
+	/// Returns true_type if the parameter is a parameter pack
+	friend struct pack<MetaTemplateParameter>;
+
+	/// Returns the position of the function parameter
+	friend struct position<MetaTemplateParameter>;
+};
+
+/// Metaobject reflecting a named compile-time constant.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaConstant
+ : MetaNamedScoped
+ , virtual MetaClassMember
+{
+	/// Returns meta_constant_tag for MetaConstant metaobjects.
+	friend struct category<MetaConstant>;
+
+	/// Returns the value of the constant.
+	friend struct value<MetaConstant>;
+};
+
+//TODO
 
 } // namespace ct
 } // namespace mire

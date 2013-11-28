@@ -53,6 +53,7 @@ struct keyword
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : keyword<typename evaluate<Metaobject>::type>
 #else
+ : String
 #endif
 { };
 
@@ -70,7 +71,7 @@ struct base_name
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : base_name<typename evaluate<Metaobject>::type>
 #else
- : ct::String
+ : String
 #endif
 { };
 
@@ -89,7 +90,7 @@ struct full_name
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : full_name<typename evaluate<Metaobject>::type>
 #else
- : ct::String
+ : String
 #endif
 { };
 
@@ -123,7 +124,7 @@ struct scope
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : scope<typename evaluate<Metaobject>::type>
 #else
- : Metaobject
+ : MetaScope
 #endif
 { };
 

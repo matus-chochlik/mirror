@@ -50,7 +50,7 @@ macro(mire_doxy_doc_common LIBRARY)
 	file(APPEND ${DOXYFILE} "STRIP_FROM_PATH += ${PROJECT_SOURCE_DIR}/example\n")
 	file(APPEND ${DOXYFILE} "OUTPUT_DIRECTORY = ${CMAKE_CURRENT_BINARY_DIR}\n")
 
-	foreach(COMPONENT mire mire/ct mire/mirror mire/tags)
+	foreach(COMPONENT mire mire/ct mire/mirror)
 		if("${LIBRARY}" STREQUAL "${COMPONENT}")
 			file(APPEND ${DOXYFILE} "GENERATE_TAGFILE = ${CMAKE_CURRENT_BINARY_DIR}/doxygen.tags\n")
 		else()

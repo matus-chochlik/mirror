@@ -39,6 +39,26 @@ struct nonequal<meta<R1, M1>, meta<R2, M2>>
  : ct::true_type
 { };
 
+template <typename T>
+struct equal<spec<T>, spec<T>>
+ : ct::true_type
+{ };
+
+template <typename T1, typename T2>
+struct equal<spec<T1>, spec<T2>>
+ : ct::false_type
+{ };
+
+template <typename T>
+struct nonequal<spec<T>, spec<T>>
+ : ct::false_type
+{ };
+
+template <typename T1, typename T2>
+struct nonequal<spec<T1>, spec<T2>>
+ : ct::true_type
+{ };
+
 } // namespace mirror
 } // namespace mire
 

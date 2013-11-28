@@ -31,7 +31,7 @@ def print_reg_code(type_name, kind):
 namespace _%(type_name_)s {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_%(kind)s_tag category;
+		typedef mirror::meta_%(kind)s_tag category;
 		typedef mire::reg::_ scope;
 		typedef %(type_name)s original_type;
 

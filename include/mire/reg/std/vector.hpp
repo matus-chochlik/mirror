@@ -20,7 +20,8 @@ namespace _std {
 namespace vector {
 struct _ : mire::reg::defaults
 {
-	typedef meta_class_tag category;
+	typedef mirror::meta_class_tag category;
+	typedef mirror::spec_class_tag elaborated_type;
 	typedef ct::true_type is_template;
 	typedef ct::true_type is_scope;
 	typedef mire::reg::_std::_ scope;

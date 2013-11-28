@@ -17,7 +17,7 @@ namespace reg {
 namespace _std {
 struct _ : mire::reg::defaults
 {
-	typedef meta_namespace_tag category;
+	typedef mirror::meta_namespace_tag category;
 	typedef mire::reg::_ scope;
 
 	typedef ct::string<'s','t','d'> base_name;

@@ -19,11 +19,12 @@ namespace _std {
 namespace pair {
 struct _ : mire::reg::defaults
 {
-	typedef meta_class_tag category;
+	typedef mirror::meta_class_tag category;
+	typedef mirror::spec_struct_tag elaborated_type;
 	typedef ct::true_type is_template;
 	typedef mire::reg::_std::_ scope;
 
-	typedef mire::ct::string<'p','a','i','r'> base_name;
+	typedef ct::string<'p','a','i','r'> base_name;
 
 	template <typename X>
 	struct named_typedef

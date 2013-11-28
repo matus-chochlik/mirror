@@ -19,7 +19,7 @@ namespace reg {
 namespace _void {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef void original_type;
 
@@ -54,7 +54,7 @@ struct _type_reg<void>
 namespace _bool {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef bool original_type;
 
@@ -89,7 +89,7 @@ struct _type_reg<bool>
 namespace _char {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef char original_type;
 
@@ -124,7 +124,7 @@ struct _type_reg<char>
 namespace _signed_char {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef signed char original_type;
 
@@ -159,7 +159,7 @@ struct _type_reg<signed char>
 namespace _unsigned_char {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned char original_type;
 
@@ -194,7 +194,7 @@ struct _type_reg<unsigned char>
 namespace _wchar_t {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef wchar_t original_type;
 
@@ -229,7 +229,7 @@ struct _type_reg<wchar_t>
 namespace _char16_t {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef char16_t original_type;
 
@@ -264,7 +264,7 @@ struct _type_reg<char16_t>
 namespace _char32_t {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef char32_t original_type;
 
@@ -299,7 +299,7 @@ struct _type_reg<char32_t>
 namespace _short_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef short int original_type;
 
@@ -334,7 +334,7 @@ struct _type_reg<short int>
 namespace _unsigned_short_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned short int original_type;
 
@@ -369,7 +369,7 @@ struct _type_reg<unsigned short int>
 namespace _int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef int original_type;
 
@@ -404,7 +404,7 @@ struct _type_reg<int>
 namespace _unsigned_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned int original_type;
 
@@ -439,7 +439,7 @@ struct _type_reg<unsigned int>
 namespace _long_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef long int original_type;
 
@@ -474,7 +474,7 @@ struct _type_reg<long int>
 namespace _unsigned_long_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned long int original_type;
 
@@ -509,7 +509,7 @@ struct _type_reg<unsigned long int>
 namespace _long_long_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef long long int original_type;
 
@@ -544,7 +544,7 @@ struct _type_reg<long long int>
 namespace _unsigned_long_long_int {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef unsigned long long int original_type;
 
@@ -579,7 +579,7 @@ struct _type_reg<unsigned long long int>
 namespace _float {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef float original_type;
 
@@ -614,7 +614,7 @@ struct _type_reg<float>
 namespace _double {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef double original_type;
 
@@ -649,7 +649,7 @@ struct _type_reg<double>
 namespace _long_double {
 	struct _ : mire::reg::defaults
 	{
-		typedef meta_type_tag category;
+		typedef mirror::meta_type_tag category;
 		typedef mire::reg::_ scope;
 		typedef long double original_type;
 
