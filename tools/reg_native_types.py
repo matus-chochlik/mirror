@@ -39,18 +39,18 @@ namespace _%(type_name_)s {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X %(type_name_)s_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X %(type_name_)s_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : %(type_name_)s_(std::forward<P>(p)...)
 			{ }
 		};

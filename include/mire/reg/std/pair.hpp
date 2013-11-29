@@ -27,18 +27,18 @@ struct _ : mire::reg::defaults
 	typedef ct::string<'p','a','i','r'> base_name;
 
 	template <typename X>
-	struct named_typedef
+	struct _named_typedef
 	{
 		typedef X pair;
 	};
 
 	template <typename X>
-	struct named_mem_var
+	struct _named_mem_var
 	{
 		X pair;
 
 		template <typename ... P>
-		named_mem_var(P&& ... p)
+		_named_mem_var(P&& ... p)
 		 : pair(std::forward<P>(p)...)
 		{ }
 	};

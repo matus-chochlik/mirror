@@ -39,18 +39,18 @@ struct _ : mire::reg::defaults
 	typedef ct::empty_string base_name;
 
 	template <typename X>
-	struct named_typedef
+	struct _named_typedef
 	{
 		typedef X _;
 	};
 
 	template <typename X>
-	struct named_mem_var
+	struct _named_mem_var
 	{
 		X _;
 
 		template <typename ... P>
-		named_mem_var(P&& ... p)
+		_named_mem_var(P&& ... p)
 		 : _(std::forward<P>(p)...)
 		{ }
 	};
@@ -67,18 +67,18 @@ struct anon_t : mire::reg::defaults
 	};
 
 	template <typename X>
-	struct named_typedef
+	struct _named_typedef
 	{
 		typedef X _;
 	};
 
 	template <typename X>
-	struct named_mem_var
+	struct _named_mem_var
 	{
 		X _;
 
 		template <typename ... P>
-		named_mem_var(P&& ... p)
+		_named_mem_var(P&& ... p)
 		 : _(std::forward<P>(p)...)
 		{ }
 	};

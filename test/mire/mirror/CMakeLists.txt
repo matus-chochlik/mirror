@@ -12,4 +12,9 @@ add_mire_exec_test("mirror" base_name)
 add_mire_exec_test("mirror" full_name)
 add_mire_exec_test("mirror" scope)
 
+add_mire_exec_test("mirror" named_typedef)
+add_mire_exec_test("mirror" named_mem_var)
+
 add_mire_exec_test("mirror" typedef_type)
+
+add_mire_exec_test("mirror" elaborated_type)

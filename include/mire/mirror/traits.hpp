@@ -40,6 +40,11 @@ namespace _aux {
 	 : ct::true_type
 	{ };
 
+	template <typename T>
+	struct is_metaobject<spec<T>>
+	 : ct::true_type
+	{ };
+
 } // namespace _aux
 
 /// Returns true_type if the argument @c X is a Metaobject, false_type otherwise

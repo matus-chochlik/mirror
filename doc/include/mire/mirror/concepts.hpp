@@ -40,20 +40,20 @@ namespace mirror {
  *  @see category
  *  @see is_a
  *
- *  @see mire::tags::meta_global_scope_tag
- *  @see mire::tags::meta_namespace_tag
- *  @see mire::tags::meta_type_tag
- *  @see mire::tags::meta_typedef_tag
- *  @see mire::tags::meta_class_tag
- *  @see mire::tags::meta_function_tag
- *  @see mire::tags::meta_constructor_tag
- *  @see mire::tags::meta_operator_tag
- *  @see mire::tags::meta_overloaded_function_tag
- *  @see mire::tags::meta_enum_tag
- *  @see mire::tags::meta_inheritance_tag
- *  @see mire::tags::meta_constant_tag
- *  @see mire::tags::meta_variable_tag
- *  @see mire::tags::meta_parameter_tag
+ *  @see meta_global_scope_tag
+ *  @see meta_namespace_tag
+ *  @see meta_type_tag
+ *  @see meta_typedef_tag
+ *  @see meta_class_tag
+ *  @see meta_function_tag
+ *  @see meta_constructor_tag
+ *  @see meta_operator_tag
+ *  @see meta_overloaded_function_tag
+ *  @see meta_enum_tag
+ *  @see meta_inheritance_tag
+ *  @see meta_constant_tag
+ *  @see meta_variable_tag
+ *  @see meta_parameter_tag
  *
  */
 struct MetaobjectCategory { };
@@ -69,6 +69,9 @@ struct Metaobject
 
 	/// Tests if the parameter is a Metaobject
 	friend struct is_metaobject<Metaobject>;
+
+	/// Tests if the parameter is a MetaSpecifier
+	friend struct is_specifier<Metaobject>;
 
 	/// Returns the main MetaobjectCategory of Metaobject.
 	friend struct category<Metaobject>;
@@ -93,6 +96,20 @@ struct Metaobject
 
 	/// Tests if a Metaobject conforms to the MetaInstantiation concept.
 	friend struct has_template<Metaobject>;
+};
+
+/// Metaobject reflecting a C++ specifier.
+/**
+ *  @ingroup mirror_concepts
+ */
+struct MetaSpecifier
+ : virtual Metaobject
+{
+	/// Returns true_type for MetaSpecifier metaobjects.
+	friend struct is_specifier<MetaSpecifier>;
+
+	/// Returns the specifier keyword as a compile-time String.
+	friend struct keyword<MetaSpecifier>;
 };
 
 /// Metaobject reflecting program constructs having a human-readable name

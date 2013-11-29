@@ -31,6 +31,11 @@ struct evaluate<meta<R, M>>
  : meta<R, M>
 { };
 
+template <typename T>
+struct evaluate<spec<T>>
+ : spec<T>
+{ };
+
 #endif // MIRROR_DOCUMENTATION_ONLY
 
 } // namespace mirror

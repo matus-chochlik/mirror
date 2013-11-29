@@ -27,18 +27,18 @@ namespace _void {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X void_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X void_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : void_(std::forward<P>(p)...)
 			{ }
 		};
@@ -62,18 +62,18 @@ namespace _bool {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X bool_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X bool_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : bool_(std::forward<P>(p)...)
 			{ }
 		};
@@ -97,18 +97,18 @@ namespace _char {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X char_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X char_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : char_(std::forward<P>(p)...)
 			{ }
 		};
@@ -132,18 +132,18 @@ namespace _signed_char {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X signed_char_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X signed_char_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : signed_char_(std::forward<P>(p)...)
 			{ }
 		};
@@ -167,18 +167,18 @@ namespace _unsigned_char {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X unsigned_char_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X unsigned_char_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : unsigned_char_(std::forward<P>(p)...)
 			{ }
 		};
@@ -202,18 +202,18 @@ namespace _wchar_t {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X wchar_t_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X wchar_t_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : wchar_t_(std::forward<P>(p)...)
 			{ }
 		};
@@ -237,18 +237,18 @@ namespace _char16_t {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X char16_t_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X char16_t_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : char16_t_(std::forward<P>(p)...)
 			{ }
 		};
@@ -272,18 +272,18 @@ namespace _char32_t {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X char32_t_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X char32_t_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : char32_t_(std::forward<P>(p)...)
 			{ }
 		};
@@ -307,18 +307,18 @@ namespace _short_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X short_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X short_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : short_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -342,18 +342,18 @@ namespace _unsigned_short_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X unsigned_short_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X unsigned_short_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : unsigned_short_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -377,18 +377,18 @@ namespace _int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -412,18 +412,18 @@ namespace _unsigned_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X unsigned_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X unsigned_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : unsigned_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -447,18 +447,18 @@ namespace _long_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X long_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X long_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : long_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -482,18 +482,18 @@ namespace _unsigned_long_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X unsigned_long_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X unsigned_long_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : unsigned_long_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -517,18 +517,18 @@ namespace _long_long_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X long_long_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X long_long_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : long_long_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -552,18 +552,18 @@ namespace _unsigned_long_long_int {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X unsigned_long_long_int_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X unsigned_long_long_int_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : unsigned_long_long_int_(std::forward<P>(p)...)
 			{ }
 		};
@@ -587,18 +587,18 @@ namespace _float {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X float_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X float_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : float_(std::forward<P>(p)...)
 			{ }
 		};
@@ -622,18 +622,18 @@ namespace _double {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X double_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X double_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : double_(std::forward<P>(p)...)
 			{ }
 		};
@@ -657,18 +657,18 @@ namespace _long_double {
 			base_name;
 
 		template <typename X>
-		struct named_typedef
+		struct _named_typedef
 		{
 			typedef X long_double_;
 		};
 
 		template <typename X>
-		struct named_mem_var
+		struct _named_mem_var
 		{
 			X long_double_;
 
 			template <typename ... P>
-			named_mem_var(P&& ... p)
+			_named_mem_var(P&& ... p)
 			 : long_double_(std::forward<P>(p)...)
 			{ }
 		};
