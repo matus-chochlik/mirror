@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(mire_ct_lambda_test5)
 			equal_types<arg<1>, std::remove_reference<arg<4>>>,
 			equal_types<arg<1>, std::remove_volatile<arg<5>>>
 		>,
-		long*
+		long*,
 		long,
 		long**,
 		long* const,
