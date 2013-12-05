@@ -229,6 +229,11 @@ struct spec_const_tag
 	typedef ct::string<'c','o','n','s','t'> _kw;
 };
 
+struct spec_volatile_tag
+{
+	typedef ct::string<'v','o','l','a','t','i','l','e'> _kw;
+};
+
 struct spec_virtual_tag
 {
 	typedef ct::string<'v','i','r','t','u','a','l'> _kw;
