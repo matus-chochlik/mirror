@@ -120,7 +120,9 @@ struct char_type
 #endif
 
 /// Metafunction returning String from a StringLiteralClass
-/**
+/** This metafunction returns a compile-time String equal to the compile-time
+ *  StringLiteralClass passed as argument.
+ *
  *  @see basic_string
  *
  *  @ingroup ct_utils
@@ -130,10 +132,8 @@ struct to_string
 #ifndef MIRROR_DOCUMENTATION_ONLY
 ;
 #else
-{
-	/// String equal to the compile-time string literal passed as argument
-	typedef String type;
-};
+ : String
+{ };
 #endif
 
 /// Metafunction returning true_type if a compile-time String is empty
@@ -336,12 +336,13 @@ struct next
 #else
 {
 	/// The original compile-time Range without the first element
-	typedef CompileTimeString type;
+	typedef String type;
 };
 #endif
 
 /// Metafunction concatenating several compile-time Range(s) or String(s) together
 /**
+ *  @see range
  *  @see basic_string
  *
  *  @ingroup ct_utils
@@ -350,16 +351,75 @@ template <typename ... Ranges>
 struct concat
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : concat<typename evaluate<Ranges>::type...>
-{ };
 #else
-{
-	/// The concatenated compile-time Range
-	typedef Range type;
-};
+ : Range
+#endif
+{ };
+
+/// Metafunction creating a Range containing @p Count instances of @p Type
+/**
+ *  @see range
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Count, typename Type>
+struct repeat_type
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : Range
+{ };
+#endif
+
+/// Metafunction creating a Range containing @p Count instances of @p Type
+/**
+ *  @see range
+ *
+ *  @ingroup ct_utils
+ */
+template <size_t Count, typename Type>
+struct repeat_type_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : Range
+{ };
+#endif
+
+/// Metafunction creating a String containing @p Count instances of @p Element
+/**
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Count, typename Char, Char C>
+struct repeat_char
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : Range
+{ };
+#endif
+
+/// Metafunction creating a String containing @p Count instances of @p Element
+/**
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <size_t Count, typename Char, Char C>
+struct repeat_char_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : Range
+{ };
 #endif
 
 /// Returns a Range having the passed item(s) appended.
 /**
+ *  @see range
+ *
  *  @tparam Range the range to be modified
  *  @tparam T the type(s) to be appended to the range
  *
@@ -369,16 +429,15 @@ template <typename Range, typename ... T>
 struct append
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : append<typename evaluate<Range>::type, T...>
-{ };
 #else
-{
-	/// The Range with the types added
-	typedef Range type;
-};
+ : Range
 #endif
+{ };
 
 /// Returns a String having the passed item(s) appended.
 /**
+ *  @see basic_string
+ *
  *  @tparam String the range to be modified
  *  @tparam T the character(s) to be appended to the range
  *
@@ -388,16 +447,15 @@ template <typename String, typename Char, Char ... T>
 struct append_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : append_c<typename evaluate<String>::type, Char, T...>
-{ };
 #else
-{
-	/// The String with the character(s) added
-	typedef String type;
-};
+ : String
 #endif
+{ };
 
 /// Returns a Range having the passed item(s) prepended.
 /**
+ *  @see range
+ *
  *  @tparam Range the range to be modified
  *  @tparam T the type(s) to be prepended to the range
  *
@@ -407,16 +465,15 @@ template <typename Range, typename ... T>
 struct prepend
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : prepend<typename evaluate<Range>::type, T...>
-{ };
 #else
-{
-	/// The Range with the types added
-	typedef Range type;
-};
+ : Range
 #endif
+{ };
 
 /// Returns a String having the passed item(s) prepended.
 /**
+ *  @see basic_string
+ *
  *  @tparam String the range to be modified
  *  @tparam T the character(s) to be prepended to the range
  *
@@ -426,15 +483,73 @@ template <typename String, typename Char, Char ... T>
 struct prepend_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : prepend_c<typename evaluate<String>::type, Char, T...>
-{ };
 #else
-{
-	/// The String with the character(s) added
-	typedef String type;
-};
+ : String
 #endif
+{ };
 
-/// Metafunction returning a sub-range containing the first N elements of Range
+/// Removes the first element from a range
+/**
+ *  @see range
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range>
+struct pop_front
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : pop_front<typename evaluate<Range>::type>
+#else
+ : Range
+#endif
+{ };
+
+/// Removes the specified element from a Range
+/**
+ *  @see range
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range, typename Elem>
+struct remove
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : remove<typename evaluate<Range>::type, Elem>
+#else
+ : Range
+#endif
+{ };
+
+/// Removes the specified character from a String
+/**
+ *  @see range
+ *
+ *  @ingroup ct_utils
+ */
+template <typename String, typename Char, Char C>
+struct remove_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : remove_c<typename evaluate<String>::type, Char, C>
+#else
+ : Range
+#endif
+{ };
+
+/// Removes elements satisfying a predicate from a Range
+/**
+ *  @see range
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range, typename Predicate>
+struct remove_if
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : remove_if<typename evaluate<Range>::type, Predicate>
+#else
+ : Range
+#endif
+{ };
+
+/// Returns a sub-Range containing the first @p Count elements of @p Range
 /**
  *  @see range
  *  @see basic_string
@@ -443,21 +558,19 @@ struct prepend_c
  *
  *  @ingroup ct_utils
  */
-template <typename Range, typename Size>
+template <typename Range, typename Count>
 struct head
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : head<
 	typename evaluate<Range>::type,
-	typename Size::type
-> { };
+	typename evaluate<Count>::type
+>
 #else
-{
-	/// The head of the original Range
-	typedef Range type;
-};
+ : Range
 #endif
+{ };
 
-/// Metafunction returning a String containing the first N characters
+/// Returns a sub-Range containing the first @p Count elements of @p Range
 /**
  *  @see head_c
  *  @see tail
@@ -465,10 +578,16 @@ struct head
  *
  *  @ingroup ct_utils
  */
-template <typename Range, size_t Size>
-struct head_c;
+template <typename Range, size_t Count>
+struct head_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : Range
+{ };
+#endif
 
-/// Metafunction returning a sub-Range containing the last N elements of Range
+/// Returns a sub-Range containing the last @p Count elements of @p Range
 /**
  *  @see range
  *  @see basic_string
@@ -479,21 +598,19 @@ struct head_c;
  *
  *  @ingroup ct_utils
  */
-template <typename Range, typename Size>
+template <typename Range, typename Count>
 struct tail
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : tail<
 	typename evaluate<Range>::type,
-	typename Size::type
-> { };
+	typename evaluate<Count>::type
+>
 #else
-{
-	/// The tail of the original compile-time Range
-	typedef CompileTimeString type;
-};
+ : Range
 #endif
+{ };
 
-/// Metafunction returning a String containing the last N characters
+/// Returns a sub-Range containing the last @Count elements of @p Range
 /**
  *  @see basic_string
  *  @see head
@@ -502,31 +619,13 @@ struct tail
  *
  *  @ingroup ct_utils
  */
-template <typename Range, size_t Size>
-struct tail_c;
-
-/// Metafunction returning a Range starting with the searched sub-range
-/** This metafunction template returns a sub-range of the original
- *  compile-time range, that starts with the searched range (in case
- *  the original contains it) or an empty range (otherwise).
- *
- *  @see range
- *  @see basic_string
- *
- *  @ingroup ct_utils
- */
-template <typename Range1, typename Range2>
-struct find
+template <typename Range, size_t Count>
+struct tail_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : find<
-	typename evaluate<Range1>::type,
-	typename evaluate<Range2>::type
-> { };
+;
 #else
-{
-	/// Sub-range starting with the searched range or empty range
-	typedef Range type;
-};
+ : Range
+{ };
 #endif
 
 /// Metafunction returning the position of sub-range in a Range
@@ -545,11 +644,11 @@ struct position
  : position<
 	typename evaluate<Range1>::type,
 	typename evaluate<Range2>::type
-> { };
+>
 #else
  : IntegralConstantOrNil
-{ };
 #endif
+{ };
 
 /// Returns a sub-range ending before the first occurence of the searched Range
 /**
@@ -564,16 +663,58 @@ struct before
  : before<
 	typename evaluate<Range1>::type,
 	typename evaluate<Range2>::type
-> { };
+>
 #else
-{
-	/// Sub-range ending before the searched ranges
-	typedef CompileTimeString type;
-};
+ : Range
 #endif
+{ };
 
-/// Metafunction returning a sub-range of a compile-time Range
-/**
+/// Returns a Range starting with the searched sub-range
+/** This metafunction template returns a sub-range of the original
+ *  compile-time range, that starts with the searched range (in case
+ *  the original range contains it) or an empty range (otherwise).
+ *
+ *  @see range
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range1, typename Range2>
+struct find
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : find<
+	typename evaluate<Range1>::type,
+	typename evaluate<Range2>::type
+>
+#else
+ : Range
+#endif
+{ };
+
+/// Returns a sub-Range starting with first elements satisfying @p a Predicate
+/** This metafunction template returns a sub-range of the original
+ *  compile-time range, that starts with the first element satisfying a unary
+ *  predicate (in case the original range contains it) or and empty range
+ *  (otherwise).
+ *
+ *  @see range
+ *  @see basic_string
+ *
+ *  @ingroup ct_utils
+ */
+template <typename Range, typename Predicate>
+struct find_if
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : find_if<typename evaluate<Range>::type, Predicate>
+#else
+ : Range
+#endif
+{ };
+
+/// Returng a sub-range of a compile-time Range
+/** This metafunction returns a sub-Range starting at a specified
+ *  position with the given length
+ *
  *  @see range
  *  @see basic_string
  *  @see head
@@ -586,13 +727,11 @@ struct slice
 #ifndef MIRROR_DOCUMENTATION_ONLY
 ;
 #else
-{
-	/// Sub-range starting at a specified position with the given length
-	typedef CompileTimeString type;
-};
+ : String
+{ };
 #endif
 
-/// Metafunction returning a sub-string of a compile-time String
+/// Metafunction returning a sub-Range of a compile-time Range
 /**
  *  @see basic_string
  *  @see head_c
@@ -601,7 +740,13 @@ struct slice
  *  @ingroup ct_utils
  */
 template <typename Range, size_t Start, size_t Size>
-struct slice_c;
+struct slice_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : Range
+{ };
+#endif
 
 /// Metafunction returning a sub-Range without the first N elements
 /**
@@ -617,10 +762,8 @@ struct skip_front
 #ifndef MIRROR_DOCUMENTATION_ONLY
 ;
 #else
-{
-	/// Sub-string of the original string starting at the specified position
-	typedef CompileTimeString type;
-};
+ : String
+{ };
 #endif
 
 /// Metafunction returning a sub-string without the first N characters
@@ -633,7 +776,13 @@ struct skip_front
  *  @ingroup ct_utils
  */
 template <typename Range, size_t Count>
-struct skip_front_c;
+struct skip_front_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : String
+{ };
+#endif
 
 /// Metafunction returning the element at the N-th position in a Range
 /**
@@ -661,7 +810,13 @@ struct at
  *  @ingroup ct_utils
  */
 template <typename Range, size_t Position>
-struct at_c;
+struct at_c
+#ifndef MIRROR_DOCUMENTATION_ONLY
+;
+#else
+ : CharacterConstantType
+{ };
+#endif
 
 /// Metafunction returning true_type if the Range starts with a sub-range
 /**
@@ -729,13 +884,10 @@ template <typename Range>
 struct reverse
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : reverse<typename evaluate<Range>::type>
-{ };
 #else
-{
-	/// The reversed range
-	typedef Range type;
-};
+ : Range
 #endif
+{ };
 
 /// Metafunction returns true_type if the Range does not contain a sub-range
 /**
@@ -765,13 +917,10 @@ template <typename Range>
 struct unique
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : unique<typename evaluate<Range>::type>
-{ };
 #else
-{
-	/// The Range containing only the unique elements
-	typedef UniqueRange type;
-};
+ : Range
 #endif
+{ };
 
 /// Calls a nested metafunction with a pack <0,1,2, ... N-1> of ints
 /** This template assembles a pack of integral non-type template parameters
@@ -890,15 +1039,15 @@ template <typename Range, typename Predicate>
 struct only_if
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : only_if<typename evaluate<Range>::type, Predicate>
-{ };
 #else
-{
-	typedef Range type;
-};
+ : Range
 #endif
+{ };
 
 /// Returns a range containing elements transformed by a unary function
-/**
+/** This metafunction returns a Range containing elements transformed
+ *  by the UnaryMetaFnClass.
+ *
  *  @tparam Range the range to be transformed
  *  @tparam UnaryMetaFnClass the metafunction class transforming the elements
  *
@@ -908,15 +1057,12 @@ template <typename Range, typename UnaryMetaFnClass>
 struct transform
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : transform<typename evaluate<Range>::type, UnaryMetaFnClass>
-{ };
 #else
-{
-	/// Range containing elements transformed ty the UnaryMetaFnClass
-	typedef Range type;
-};
+ : Range
 #endif
+{ };
 
-/// Returns a range containing elements transformed by a unary function
+/// Returns a String containing characters transformed by a unary function
 /**
  *  @tparam String the string to be transformed
  *  @tparam UnaryMetaFnClass the metafunction class transforming the elements
@@ -927,13 +1073,10 @@ template <typename String, typename UnaryMetaFnClass>
 struct transform_c
 #ifndef MIRROR_DOCUMENTATION_ONLY
  : transform_c<typename evaluate<String>::type, UnaryMetaFnClass>
-{ };
 #else
-{
-	/// String containing characters transformed by the UnaryMetaFnClass
-	typedef String type;
-};
+ : String
 #endif
+{ };
 
 /// Returns the result of successive application of ForwardOp on a range
 /** This metafunction returns the result of successive application
@@ -945,7 +1088,7 @@ struct transform_c
  *  @tparam ForwardOp the operation to be executed during the traversal
  *
  *  @see for_each
- *  @ingroup meta_programming
+ *  @ingroup ct_utils
  */
 template <
 	typename Range,
@@ -961,6 +1104,24 @@ template <
 	typedef unspecified_type type;
 };
 #endif
+
+/// Zips the elements from the specified Range(s) into a single range
+/** This metafunction creates a Range, containing the elements from
+ *  all ranges passed as arguments.
+ *
+ *  @note At least one range must be specified, all ranges must have
+ *  the same number of elements.
+ *
+ *  @ingroup ct_utils
+ */
+template <typename ... Ranges>
+struct zip
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : zip<typename evaluate<Ranges>::type...>
+#else
+ : Range
+#endif
+{ };
 
 } // namespace ct
 } // namespace mire
