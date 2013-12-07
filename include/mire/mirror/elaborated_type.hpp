@@ -46,6 +46,31 @@ struct elaborated_type<meta<R, M>>
  : _aux::elaborated_type<R, typename R::category>
 { };
 
+template <typename R, typename M>
+struct elaborated_type<meta<R, M*>>
+ : spec<spec_none_tag>
+{ };
+
+template <typename R, typename M>
+struct elaborated_type<meta<R, M&>>
+ : spec<spec_none_tag>
+{ };
+
+template <typename R, typename M>
+struct elaborated_type<meta<R, M&&>>
+ : spec<spec_none_tag>
+{ };
+
+template <typename R, typename M>
+struct elaborated_type<meta<R, M[]>>
+ : spec<spec_none_tag>
+{ };
+
+template <typename R, typename M, size_t N>
+struct elaborated_type<meta<R, M[N]>>
+ : spec<spec_none_tag>
+{ };
+
 } // namespace mirror
 } // namespace mire
 
