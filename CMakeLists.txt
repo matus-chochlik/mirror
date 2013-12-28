@@ -6,6 +6,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(mirror CXX)
 
+option(MIRROR_NO_DOCS "Don't build and install the documentation" Off)
+
 # we need C++11
 if(${CMAKE_COMPILER_IS_GNUCXX})
 	add_definitions(-std=c++0x)
@@ -16,6 +18,8 @@ endif()
 
 include_directories(include)
 
-add_subdirectory(doc)
+if(NOT MIRROR_NO_DOCS)
+	add_subdirectory("doc")
+endif()
 add_subdirectory(example)
 add_subdirectory(test)

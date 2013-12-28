@@ -8,3 +8,10 @@ include(mire_testing.cmake)
 
 add_subdirectory(ct)
 add_subdirectory(mirror)
+
+add_custom_target(
+	check
+	COMMAND ctest
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	COMMENT "Running the test suite"
+)

@@ -4,7 +4,7 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-add_custom_target(examples)
+add_custom_target(examples ALL)
 set_property(TARGET examples PROPERTY FOLDER "Examples")
 
 include(mire_examples.cmake)
