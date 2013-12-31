@@ -9,17 +9,19 @@ function(add_mire_example LIBRARY EXAMPLE_NAME)
 	add_dependencies(examples-${LIB_PREFIX} ${EXAMPLE_NAME})
 	set_property(TARGET ${EXAMPLE_NAME} PROPERTY FOLDER "Examples/${LIBRARY}")
 
-	add_custom_command(
-		OUTPUT ${EXAMPLE_NAME}.out.txt
-		COMMAND ${EXAMPLE_NAME} > ${EXAMPLE_NAME}.out.txt
-		DEPENDS ${EXAMPLE_NAME}
-	)
-	add_custom_target(
-		${EXAMPLE_NAME}-output
-		DEPENDS ${EXAMPLE_NAME}.out.txt
-	)
-	add_dependencies(examples-${LIB_PREFIX} ${EXAMPLE_NAME}-output)
-	add_dependencies(doc-prebuild-${LIB_PREFIX} ${EXAMPLE_NAME}-output)
+	if(NOT MIRROR_NO_DOCS)
+		add_custom_command(
+			OUTPUT ${EXAMPLE_NAME}.out.txt
+			COMMAND ${EXAMPLE_NAME} > ${EXAMPLE_NAME}.out.txt
+			DEPENDS ${EXAMPLE_NAME}
+		)
+		add_custom_target(
+			${EXAMPLE_NAME}-output
+			DEPENDS ${EXAMPLE_NAME}.out.txt
+		)
+		add_dependencies(examples-${LIB_PREFIX} ${EXAMPLE_NAME}-output)
+		add_dependencies(doc-prebuild-${LIB_PREFIX} ${EXAMPLE_NAME}-output)
+	endif()
 
 endfunction()
 

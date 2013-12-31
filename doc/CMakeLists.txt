@@ -5,7 +5,10 @@
 cmake_minimum_required(VERSION 2.8)
 
 find_package(Doxygen)
+
 if(DOXYGEN_FOUND)
 	add_subdirectory(doxygen)
+else()
+	set(MIRROR_NO_DOCS 1 PARENT_SCOPE)
 endif()
 
