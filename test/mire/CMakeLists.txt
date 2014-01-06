@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 2.8)
 include(mire_testing.cmake)
 
 add_subdirectory(ct)
+add_subdirectory(ct_counter)
 add_subdirectory(mirror)
 
 add_custom_target(
