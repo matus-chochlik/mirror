@@ -10,6 +10,8 @@
 #ifndef MIRE_CT_INSTEAD_1401292224_HPP
 #define MIRE_CT_INSTEAD_1401292224_HPP
 
+#include <mire/ct/int_const.hpp>
+
 namespace mire {
 namespace ct {
 
@@ -23,6 +25,16 @@ struct instead
 	/// The resulting type
 	typedef NewT type;
 };
+
+/// Meta-function returning NewC character
+/**
+ *  @ingroup ct_utils
+ */
+template <typename Char, Char OldC, Char NewC>
+struct instead_c
+ : integral_constant<Char, NewC>
+{ };
+
 
 } // namespace ct
 } // namespace mire

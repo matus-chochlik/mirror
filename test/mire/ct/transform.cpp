@@ -14,6 +14,9 @@
 
 #include <mire/ct/transform.hpp>
 #include <mire/ct/compare.hpp>
+#include <mire/ct/quote.hpp>
+#include <mire/ct/lambda.hpp>
+#include <mire/ct/instead.hpp>
 #include <type_traits>
 #include <memory>
 
@@ -79,6 +82,19 @@ struct mire_ct_transf_str1_func
 	{ };
 };
 
+BOOST_AUTO_TEST_CASE(mire_ct_transform_range3)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((equal<
+		transform<
+			range<char, short, int const, volatile long, float*>,
+			instead<arg<0>, void>
+		>,
+		range<void, void, void, void, void>
+	>::value));
+}
+
 BOOST_AUTO_TEST_CASE(mire_ct_transform_string1)
 {
 	using namespace mire::ct;
@@ -118,6 +134,23 @@ BOOST_AUTO_TEST_CASE(mire_ct_transform_string2)
 			mire_ct_transf_str2_func
 		>,
 		string<'S','T','R','I','N','G'>
+	>::value));
+}
+
+BOOST_AUTO_TEST_CASE(mire_ct_transform_string3)
+{
+	using namespace mire::ct;
+
+	BOOST_CHECK((equal<
+		transform_c<
+			string<'s','t','r','i','n','g'>,
+			bind_c<
+				quote_c<instead_c>,
+				arg<0>,
+				integral_constant<char, 'X'>
+			>
+		>,
+		string<'X','X','X','X','X','X'>
 	>::value));
 }
 
