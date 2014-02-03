@@ -4,7 +4,7 @@
  *
  *  .author Matus Chochlik
  *
- *  Copyright 2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2013-2014 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -31,82 +31,82 @@ BOOST_AUTO_TEST_CASE(mire_ct_at_range)
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, zero>,
 		bool
-	::value == true));
+	>::value == true));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, zero>,
 		short
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, one>,
 		short
-	::value == true));
+	>::value == true));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, one>,
 		bool
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, one>,
 		int
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, two>,
 		int
-	::value == true));
+	>::value == true));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, two>,
 		short
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, two>,
 		long
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, three>,
 		long
-	::value == true));
+	>::value == true));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, three>,
 		int
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, three>,
 		unsigned
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, four>,
 		unsigned
-	::value == true));
+	>::value == true));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, four>,
 		long
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, four>,
 		float
-	::value == false));
+	>::value == false));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, five>,
 		float
-	::value == true));
+	>::value == true));
 
 	BOOST_CHECK((equal_types<
 		at<range<bool, short, int, long, unsigned, float>, five>,
 		unsigned
-	::value == false));
+	>::value == false));
 }
 
 BOOST_AUTO_TEST_CASE(mire_ct_at_string)
