@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2013-2014 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
@@ -12,7 +12,7 @@
  */
 
 #include <mire/mirror/reflection.hpp>
-#include <mire/mirror/base_name.hpp>
+#include <mire/mirror/full_name.hpp>
 #include <mire/ct/c_str.hpp>
 #include <mire/reg/native.hpp>
 #include <iostream>
@@ -21,11 +21,11 @@ template <typename T>
 void print_typename(void)
 {
 	using mire::ct::c_str;
-	using mire::mirror::base_name;
+	using mire::mirror::full_name;
 	using mire::mirror::mirrored_t;
 
 	std::cout << c_str<
-		base_name<
+		full_name<
 			mirrored_t<T>
 		>
 	>() << std::endl;

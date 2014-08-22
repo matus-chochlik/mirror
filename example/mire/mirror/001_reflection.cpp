@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2013-2014 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
@@ -13,6 +13,7 @@
 
 #include <mire/mirror/reflection.hpp>
 #include <mire/mirror/base_name.hpp>
+#include <mire/mirror/full_name.hpp>
 #include <mire/ct/c_str.hpp>
 #include <mire/reg/native.hpp>
 #include <mire/reg/std/pair.hpp>
@@ -35,6 +36,7 @@ int main(void)
 	std::cout << c_str<base_name<meta_std_pair>>() << std::endl;
 	std::cout << c_str<base_name<meta_int>>() << std::endl;
 	std::cout << c_str<base_name<meta_std_pair_int_float>>() << std::endl;
+	std::cout << c_str<full_name<meta_std_pair_int_float>>() << std::endl;
 
 	return 0;
 }
