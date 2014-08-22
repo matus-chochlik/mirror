@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2013-2014 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
@@ -15,6 +15,7 @@
 #include <mire/mirror/elaborated_type.hpp>
 #include <mire/mirror/keyword.hpp>
 #include <mire/ct/c_str.hpp>
+#include <mire/reg/specifier.hpp>
 #include <mire/reg/native.hpp>
 #include <mire/reg/std/string.hpp>
 #include <mire/reg/std/pair.hpp>
@@ -35,9 +36,10 @@ void print_keyword(void)
 
 int main(void)
 {
-	print_keyword<MIRRORED_SPECIFIER(thread_local)>();
-	print_keyword<MIRRORED_SPECIFIER(volatile)>();
-	print_keyword<MIRRORED_SPECIFIER(virtual)>();
+	print_keyword<MIRRORED(thread_local)>();
+	print_keyword<MIRRORED(volatile)>();
+	print_keyword<MIRRORED(virtual)>();
+	print_keyword<MIRRORED(static)>();
 
 	using mire::mirror::elaborated_type;
 	using mire::mirror::mirrored_t;

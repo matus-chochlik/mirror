@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2006-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2006-2014 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -14,10 +14,32 @@
 
 #include <mire/mirror/fwd.hpp>
 #include <mire/mirror/stddef.hpp>
+#include <mire/mirror/traits.hpp>
 #include <mire/reg/global_scope.hpp>
 
 namespace mire {
 namespace mirror {
+namespace _aux {
+
+template <typename Reg, typename IsSpecifier>
+struct pick_refl;
+
+template <typename Reg>
+struct pick_refl<Reg, ct::false_type>
+ : meta<Reg, void>
+{ };
+
+template <typename Reg>
+struct pick_refl<Reg, ct::true_type>
+ : spec<typename Reg::spec_tag>
+{ };
+
+} // namespace _aux
+
+template <typename Reg>
+struct pick_refl
+ : _aux::pick_refl<Reg, typename Reg::is_specifier>
+{ };
 
 /** @defgroup mirror_reflection_expr Mirror's reflection expressions
  *
@@ -31,7 +53,7 @@ namespace mirror {
  *  @ingroup mirror_reflection_expr
  */
 #define MIRRORED(NAME) \
-	mire::mirror::meta<mire::reg::_##NAME::_, void>
+	mire::mirror::pick_refl<mire::reg::_##NAME::_>
 
 /// This macro can be used to reflect the global scope namespace
 /**
