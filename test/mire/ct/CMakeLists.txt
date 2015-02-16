@@ -1,4 +1,4 @@
-#  Copyright 2013-2014 Matus Chochlik. Distributed under the Boost
+#  Copyright 2013-2015 Matus Chochlik. Distributed under the Boost
 #  Software License, Version 1.0. (See accompanying file
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
@@ -9,7 +9,7 @@ add_mire_exec_test("ct" range)
 add_mire_exec_test("ct" optional)
 add_mire_exec_test("ct" traits)
 
-add_mire_exec_test("ct" if)
+add_mire_exec_test("ct" conditional)
 add_mire_exec_test("ct" math)
 add_mire_exec_test("ct" log)
 add_mire_exec_test("ct" exp)

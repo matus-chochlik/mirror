@@ -3,7 +3,7 @@
  *  @brief Meta-function returning a range which contains the elements
  *  of the passed ranges without duplicities.
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -13,7 +13,7 @@
 
 
 #include <mire/ct/default.hpp>
-#include <mire/ct/if.hpp>
+#include <mire/ct/conditional.hpp>
 #include <mire/ct/contains.hpp>
 
 namespace mire {
@@ -35,7 +35,7 @@ struct unique<range<UniqueP...>, range<>>
 
 template <typename Char, Char ... UniqueP, Char T, Char ... P>
 struct unique<basic_string<Char, UniqueP...>, basic_string<Char, T, P...>>
- : if_<
+ : conditional<
 	contains<basic_string<Char, UniqueP...>, basic_string<Char, T>>,
 	unique<
 		basic_string<Char, UniqueP...>,
@@ -50,7 +50,7 @@ struct unique<basic_string<Char, UniqueP...>, basic_string<Char, T, P...>>
 
 template <typename ... UniqueP, typename T, typename ... P>
 struct unique<range<UniqueP...>, range<T, P...> >
- : if_<
+ : conditional<
 	contains<range<UniqueP...>, range<T>>,
 	unique<
 		range<UniqueP...>,

@@ -2,7 +2,7 @@
  * @file mire/ct/remove_if.hpp
  * @brief Implementation of the remove_if meta-function
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -12,7 +12,7 @@
 
 #include <mire/ct/default.hpp>
 #include <mire/ct/lambda.hpp>
-#include <mire/ct/if.hpp>
+#include <mire/ct/conditional.hpp>
 
 namespace mire {
 namespace ct {
@@ -30,7 +30,7 @@ struct remove_if<range<P...>, range<>, Predicate>
 template <typename ... P, typename ... R, typename H, typename Predicate>
 struct remove_if<range<P...>, range<H, R...>, Predicate>
  : remove_if<
-	typename if_<
+	typename conditional<
 		apply<Predicate, H>,
 		range<P...>,
 		range<P..., H>
@@ -52,7 +52,7 @@ struct remove_if<
 	basic_string<Char, H, R...>,
 	Predicate
 >: remove_if<
-	typename if_<
+	typename conditional<
 		apply_c<Predicate, Char, H>,
 		basic_string<Char, P...>,
 		basic_string<Char, P..., H>

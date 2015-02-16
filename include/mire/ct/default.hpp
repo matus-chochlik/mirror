@@ -2,7 +2,7 @@
  * @file mire/ct/default.hpp
  * @brief Default implementation of the compile-time algorithms
  *
- *  Copyright 2008-2014 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -28,9 +28,9 @@ namespace ct {
  *  @ingroup ct_utils
  */
 template <typename BooleanConstant, typename IfTrue, typename IfFalse>
-struct if_
+struct conditional
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : if_<typename evaluate<BooleanConstant>::type, IfTrue, IfFalse>
+ : conditional<typename evaluate<BooleanConstant>::type, IfTrue, IfFalse>
 { };
 #else
 {
@@ -48,7 +48,7 @@ struct if_
  *  @ingroup ct_utils
  */
 template <bool BooleanConstant, typename IfTrue, typename IfFalse>
-struct if_c;
+struct conditional_c;
 
 /// Evaluates the IfTrue or the IfFalse expression depending on BooleanConstant
 /**
