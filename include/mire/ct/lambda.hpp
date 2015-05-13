@@ -16,6 +16,7 @@
 #include <mire/ct/unpack_args.hpp>
 #include <mire/ct/at.hpp>
 #include <mire/ct/stddef.hpp>
+#include <mire/ct/identity.hpp>
 
 namespace mire {
 namespace ct {
@@ -33,9 +34,8 @@ namespace ct {
 template <typename Expr, typename ... Params>
 struct use_arg
 #ifndef MIRROR_DOCUMENTATION_ONLY
-{
-	typedef Expr type;
-};
+ : identity<Expr>
+{ };
 #else
 {
 	/// Either the N-th argument or the Expr itself
@@ -45,9 +45,8 @@ struct use_arg
 
 template <typename Expr, typename Char, Char ... Params>
 struct use_arg_c
-{
-	typedef Expr type;
-};
+ : identity<Expr>
+{ };
 
 template <typename Char, Char C, Char ... Params>
 struct use_arg_c<integral_constant<Char, C>, Char, Params...>
@@ -114,9 +113,8 @@ struct use_arg_c<Expr<arg<Number>>, Char, Params...>
 //
 template <typename Expr, typename ... Params>
 struct use_arg<protect<Expr>, Params...>
-{
-	typedef Expr type;
-};
+ : identity<Expr>
+{ };
 
 //
 template <

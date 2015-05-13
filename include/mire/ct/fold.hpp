@@ -2,7 +2,7 @@
  * @file mire/ct/fold.hpp
  * @brief Definition of the fold template.
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -12,6 +12,7 @@
 
 #include <mire/ct/default.hpp>
 #include <mire/ct/lambda.hpp>
+#include <mire/ct/identity.hpp>
 
 namespace mire {
 namespace ct {
@@ -19,9 +20,8 @@ namespace ct {
 // range
 template <typename Status, typename ForwardOp>
 struct fold<range<>, Status, ForwardOp>
-{
-	typedef Status type;
-};
+ : identity<Status>
+{ };
 
 template <
 	typename T,
@@ -51,9 +51,8 @@ template <
 // string
 template <typename Status, typename Char, typename ForwardOp>
 struct fold<basic_string<Char>, Status, ForwardOp>
-{
-	typedef Status type;
-};
+ : identity<Status>
+{ };
 
 template <
 	typename Char,

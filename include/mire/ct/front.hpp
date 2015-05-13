@@ -12,21 +12,20 @@
 
 #include <mire/ct/default.hpp>
 #include <mire/ct/int_const.hpp>
+#include <mire/ct/identity.hpp>
 
 namespace mire {
 namespace ct {
 
 template <>
 struct front<range<>>
-{
-	typedef nil_t type;
-};
+ : nil_t
+{ };
 
 template <typename F, typename ... P>
 struct front<range<F, P...>>
-{
-	typedef F type;
-};
+ : identity<F>
+{ };
 
 template <typename Char>
 struct front<basic_string<Char>>
