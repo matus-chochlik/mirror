@@ -2,7 +2,7 @@
  * @file mire/ct/string.hpp
  * @brief Declaration of the compile-time basic_string and string
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -49,9 +49,7 @@ struct basic_string
  *  @ingroup ct_utils
  */
 template <char ... C>
-struct string
- : basic_string<char, C...>
-{ };
+using string = basic_string<char, C...>;
 
 /// An empty string
 /**
