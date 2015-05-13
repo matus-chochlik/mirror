@@ -2,7 +2,7 @@
  * @file mire/ct/size.hpp
  * @brief Implementation of the size and length meta-functions
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -22,7 +22,7 @@ struct size<range<P...>>
 { };
 
 template <typename Char, Char ... C>
-struct size<basic_string<Char, C...> >
+struct size<basic_string<Char, C...>>
  : integral_constant<size_t, sizeof ... (C)>
 { };
 
@@ -37,7 +37,7 @@ struct size<optional<nil_t>>
 { };
 
 template <typename Char, Char ... C>
-struct length<basic_string<Char, C...> >
+struct length<basic_string<Char, C...>>
  : integral_constant<size_t, sizeof ... (C)>
 { };
 

@@ -2,7 +2,7 @@
  * @file mire/ct/next.hpp
  * @brief Implementation of the next meta-function
  *
- *  Copyright 2008-2011 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -18,22 +18,22 @@ namespace ct {
 #ifndef MIRROR_DOCUMENTATION_ONLY
 
 template <typename Char, Char C, Char ... Cn>
-struct next<basic_string<Char, C, Cn...> >
+struct next<basic_string<Char, C, Cn...>>
  : basic_string<Char, Cn...>
 { };
 
 template <typename Char>
-struct next<basic_string<Char> >
+struct next<basic_string<Char>>
  : basic_string<Char>
 { };
 
 template <typename T, typename ... P>
-struct next<range<T, P...> >
+struct next<range<T, P...>>
  : range<P...>
 { };
 
 template <>
-struct next<range<> >
+struct next<range<>>
  : range<>
 { };
 

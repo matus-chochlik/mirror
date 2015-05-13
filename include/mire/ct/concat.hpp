@@ -2,7 +2,7 @@
  * @file mire/ct/concat.hpp
  * @brief Implementation of the concat meta-function
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -22,7 +22,7 @@ struct concat<basic_string<Char, C...>>
 };
 
 template <typename Char, Char ... C1, Char ... C2>
-struct concat<basic_string<Char, C1...>, basic_string<Char, C2...> >
+struct concat<basic_string<Char, C1...>, basic_string<Char, C2...>>
 {
 	typedef basic_string<Char, C1..., C2...> type;
 };

@@ -77,7 +77,7 @@ template <
 		basic_string<Char, CTn...>,
 		basic_string<Char, CSn...>
 	>::type,
-	typename empty<basic_string<Char, CTn...> >::type
+	typename empty<basic_string<Char, CTn...>>::type
 >
 { };
 
@@ -146,7 +146,7 @@ struct find<
 		basic_string<Char, C1n...>,
 		basic_string<Char, C2n...>
 	>::type,
-	typename empty<basic_string<Char, C1n...> >::type
+	typename empty<basic_string<Char, C1n...>>::type
 > { };
 
 template <typename ... P1, typename ... P2>

@@ -2,7 +2,7 @@
  * @file mire/ct/before.hpp
  * @brief Implementation of the before meta-function
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -90,7 +90,7 @@ template <
 		basic_string<Char, CTn...>,
 		basic_string<Char, CSn...>
 	>::type,
-	typename empty<basic_string<Char, CTn...> >::type
+	typename empty<basic_string<Char, CTn...>>::type
 >
 { };
 
@@ -171,7 +171,7 @@ struct before<
 		basic_string<Char, C1n...>,
 		basic_string<Char, C2n...>
 	>::type,
-	typename empty<basic_string<Char, C1n...> >::type
+	typename empty<basic_string<Char, C1n...>>::type
 > { };
 
 template <typename Char, Char ... C2n>

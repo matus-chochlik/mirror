@@ -3,7 +3,7 @@
  *  @brief Meta-function returning a range which contains the elements
  *  of the passed ranges without duplicities.
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -49,7 +49,7 @@ struct unique<basic_string<Char, UniqueP...>, basic_string<Char, T, P...>>
 { };
 
 template <typename ... UniqueP, typename T, typename ... P>
-struct unique<range<UniqueP...>, range<T, P...> >
+struct unique<range<UniqueP...>, range<T, P...>>
  : if_<
 	contains<range<UniqueP...>, range<T>>,
 	unique<

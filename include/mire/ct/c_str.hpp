@@ -2,7 +2,7 @@
  * @file mire/ct/c_str.hpp
  * @brief Implementation of the c_str function
  *
- *  Copyright 2008-2011 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -24,7 +24,9 @@ struct c_str<basic_string<Char, C...>>
 
 	static constexpr Char value[] = { C..., '\0' };
 
+	constexpr
 	operator const char* (void) const
+	noexcept
 	{
 		return value;
 	}

@@ -2,7 +2,7 @@
  * @file mire/ct/ends_with.hpp
  * @brief Implementation of the ends_with meta-function
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -23,7 +23,7 @@ namespace ct {
 template <typename Range1, typename Range2>
 struct ends_with
  : equal<
-	tail<Range1, size<Range2> >,
+	tail<Range1, size<Range2>>,
 	Range2
 > { };
 

@@ -2,7 +2,7 @@
  * @file mire/ct/pop_front.hpp
  * @brief Implementation of the pop_front meta-function
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -26,12 +26,12 @@ struct pop_front<range<F, P...>>
 { };
 
 template <typename Char>
-struct pop_front<basic_string<Char> >
+struct pop_front<basic_string<Char>>
  : basic_string<Char>
 { };
 
 template <typename Char, Char C, Char ... Cn>
-struct pop_front<basic_string<Char, C, Cn...> >
+struct pop_front<basic_string<Char, C, Cn...>>
  : basic_string<Char, Cn...>
 { };
 
