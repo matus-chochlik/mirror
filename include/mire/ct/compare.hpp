@@ -2,7 +2,7 @@
  * @file mire/ct/compare.hpp
  * @brief Implementation of compile-time string comparison meta-functions
  *
- *  Copyright 2008-2011 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -83,12 +83,12 @@ struct nonequal<optional<T1>, optional<T2>>
 // int_consts
 template <typename I1, typename I2, I1 V1, I2 V2>
 struct equal<integral_constant<I1, V1>, integral_constant<I2, V2>>
- : integral_constant<bool, bool(V1 == V2)>
+ : boolean_constant<bool(V1 == V2)>
 { };
 
 template <typename I1, typename I2, I1 V1, I2 V2>
 struct nonequal<integral_constant<I1, V1>, integral_constant<I2, V2>>
- : integral_constant<bool, bool(V1 != V2)>
+ : boolean_constant<bool(V1 != V2)>
 { };
 
 // other

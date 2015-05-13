@@ -2,7 +2,7 @@
  * @file mire/ct/eval_if.hpp
  * @brief The eval_if metafunction for conditional evaluation of two expressions
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -29,7 +29,7 @@ struct eval_if<false_type, IfTrue, IfFalse>
 
 template <bool Value, class IfTrue, class IfFalse>
 struct eval_if_c
- : eval_if<integral_constant<bool, Value>, IfTrue, IfFalse>
+ : eval_if<boolean_constant<Value>, IfTrue, IfFalse>
 { };
 
 

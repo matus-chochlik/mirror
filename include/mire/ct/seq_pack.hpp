@@ -3,7 +3,7 @@
  * @brief Meta function calling the apply metafunction of a meta-function
  * class with a range of integer params of 0,1, ..., N-1.
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -49,9 +49,9 @@ struct seq_pack_helper;
  */
 template <>
 struct seq_pack_helper<
-	integral_constant<size_t, 1u>,
-	integral_constant<size_t, 0u>
-> : seq_pack_applier<1u, integral_constant<size_t, 0u>>
+	size_constant<1u>,
+	size_constant<0u>
+> : seq_pack_applier<1u, size_constant<0u>>
 { };
 
 /*  Specialization of the seq_pack_helper with fully
@@ -61,8 +61,8 @@ struct seq_pack_helper<
  */
 template <size_t N, class ...I>
 struct seq_pack_helper<
-	integral_constant<size_t, N>,
-	integral_constant<size_t, N>,
+	size_constant<N>,
+	size_constant<N>,
 	I...
 > : seq_pack_applier<N, I...>
 { };
@@ -73,13 +73,13 @@ struct seq_pack_helper<
  */
 template <size_t N, size_t I_plus_1, class ... I>
 struct seq_pack_helper<
-	integral_constant<size_t, N>,
-	integral_constant<size_t, I_plus_1>,
+	size_constant<N>,
+	size_constant<I_plus_1>,
 	I...
 > : seq_pack_helper<
-	integral_constant<size_t, N>,
-	integral_constant<size_t, I_plus_1 + 1>,
-	integral_constant<size_t, I_plus_1>,
+	size_constant<N>,
+	size_constant<I_plus_1 + 1>,
+	size_constant<I_plus_1>,
 	I...
 >
 { };
@@ -90,8 +90,8 @@ struct seq_pack_helper<
 template <typename MetaFunctionClass, size_t Count>
 struct apply_on_seq_pack_c
  : aux::seq_pack_helper<
-	integral_constant<size_t, Count>,
-	integral_constant<size_t, 0u>
+	size_constant<Count>,
+	size_constant<0u>
 >::template do_apply<MetaFunctionClass>
 { };
 

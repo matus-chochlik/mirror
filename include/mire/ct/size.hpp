@@ -18,27 +18,27 @@ namespace ct {
 
 template <typename ... P>
 struct size<range<P...>>
- : integral_constant<size_t, sizeof ... (P)>
+ : size_constant<sizeof ... (P)>
 { };
 
 template <typename Char, Char ... C>
 struct size<basic_string<Char, C...>>
- : integral_constant<size_t, sizeof ... (C)>
+ : size_constant<sizeof ... (C)>
 { };
 
 template <typename T>
 struct size<optional<T>>
- : integral_constant<size_t, 1>
+ : size_constant<1>
 { };
 
 template <>
 struct size<optional<nil_t>>
- : integral_constant<size_t, 0>
+ : size_constant<0>
 { };
 
 template <typename Char, Char ... C>
 struct length<basic_string<Char, C...>>
- : integral_constant<size_t, sizeof ... (C)>
+ : size_constant<sizeof ... (C)>
 { };
 
 } // namespace ct

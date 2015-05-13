@@ -2,7 +2,7 @@
  * @file mire/ct/tail.hpp
  * @brief Implementation of the tail meta-function
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -25,7 +25,7 @@ template <
 
 template <size_t N, typename Char, Char ... C>
 struct tail<
-	integral_constant<size_t, N>,
+	size_constant<N>,
 	false_type,
 	basic_string<Char, C...>,
 	basic_string<Char>
@@ -34,7 +34,7 @@ struct tail<
 
 template <size_t N, typename Char, Char ... Hn, Char ... Tn>
 struct tail<
-	integral_constant<size_t, N>,
+	size_constant<N>,
 	true_type,
 	basic_string<Char, Hn...>,
 	basic_string<Char, Tn...>
@@ -43,20 +43,20 @@ struct tail<
 
 template <size_t N, typename Char, Char C, Char ... Hn, Char ... Tn>
 struct tail<
-	integral_constant<size_t, N>,
+	size_constant<N>,
 	false_type,
 	basic_string<Char, Hn...>,
 	basic_string<Char, C, Tn...>
 > : tail<
-	integral_constant<size_t, N - 1>,
-	integral_constant<bool, N - 1 == 0>,
+	size_constant<N - 1>,
+	boolean_constant<N - 1 == 0>,
 	basic_string<Char, Hn..., C>,
 	basic_string<Char, Tn...>
 > { };
 
 template <size_t N, typename ... P>
 struct tail<
-	integral_constant<size_t, N>,
+	size_constant<N>,
 	false_type,
 	range<P...>,
 	range<>
@@ -65,7 +65,7 @@ struct tail<
 
 template <size_t N, typename ... H, typename ... T>
 struct tail<
-	integral_constant<size_t, N>,
+	size_constant<N>,
 	true_type,
 	range<H...>,
 	range<T...>
@@ -74,13 +74,13 @@ struct tail<
 
 template <size_t N, typename C, typename ... H, typename ... T>
 struct tail<
-	integral_constant<size_t, N>,
+	size_constant<N>,
 	false_type,
 	range<H...>,
 	range<C, T...>
 > : tail<
-	integral_constant<size_t, N - 1>,
-	integral_constant<bool, N - 1 == 0>,
+	size_constant<N - 1>,
+	boolean_constant<N - 1 == 0>,
 	range<H..., C>,
 	range<T...>
 > { };
@@ -92,8 +92,8 @@ struct tail<
 	basic_string<Char, C...>,
 	Size
 > : aux::tail<
-	integral_constant<size_t, sizeof...(C) -  Size::value>,
-	integral_constant<bool,   sizeof...(C) <= Size::value>,
+	size_constant<sizeof...(C) -  Size::value>,
+	boolean_constant<sizeof...(C) <= Size::value>,
 	basic_string<Char>,
 	basic_string<Char, C...>
 > { };
@@ -103,8 +103,8 @@ struct tail<
 	range<P...>,
 	Size
 > : aux::tail<
-	integral_constant<size_t, sizeof...(P) -  Size::value>,
-	integral_constant<bool,   sizeof...(P) <= Size::value>,
+	size_constant<sizeof...(P) -  Size::value>,
+	boolean_constant<sizeof...(P) <= Size::value>,
 	range<>,
 	range<P...>
 > { };
@@ -113,7 +113,7 @@ template <typename Range, size_t Size>
 struct tail_c
  : tail<
 	typename Range::type,
-	integral_constant<size_t, Size>
+	size_constant<Size>
 > { };
 
 } // namespace ct

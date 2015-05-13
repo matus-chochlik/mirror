@@ -29,7 +29,7 @@ struct conditional<false_type, IfTrue, IfFalse>
 
 template <bool Value, class IfTrue, class IfFalse>
 struct conditional_c
- : conditional<integral_constant<bool, Value>, IfTrue, IfFalse>
+ : conditional<boolean_constant<Value>, IfTrue, IfFalse>
 { };
 
 

@@ -3,7 +3,7 @@
  * @brief Implementation of the accumulate function.
  *
  *
- *  Copyright 2008-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -83,7 +83,7 @@ StatusType accumulate(
 	range<T1, T2, P...>,
 	IsFirst,
 	IsLast,
-	integral_constant<size_t, Position>
+	size_constant<Position>
 )
 {
 	return accumulate(
@@ -93,14 +93,14 @@ StatusType accumulate(
 				T1,
 				IsFirst,
 				IsLast,
-				integral_constant<size_t, Position>
+				size_constant<Position>
 			>()
 		),
 		func,
 		range<T2, P...>(),
 		false_type(),
 		IsLast(),
-		integral_constant<size_t, Position+1>()
+		size_constant<Position+1>()
 	);
 }
 
@@ -182,7 +182,7 @@ StatusType accumulate(Functor func, StatusType initial)
 		typename evaluate<Range>::type(),
 		true_type(),
 		false_type(),
-		integral_constant<size_t, 0>()
+		size_constant<0>()
 	);
 }
 

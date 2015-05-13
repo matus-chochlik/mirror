@@ -32,7 +32,7 @@ template <typename Char, size_t P>
 struct position<
 	basic_string<Char>,
 	basic_string<Char>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	true_type,
 	true_type
 >: nil_t
@@ -46,10 +46,10 @@ template <
 > struct position<
 	basic_string<Char, CTn...>,
 	basic_string<Char, CSn...>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	true_type,
 	false_type
->: integral_constant<size_t, P>
+>: size_constant<P>
 { };
 
 template <
@@ -60,7 +60,7 @@ template <
 > struct position<
 	basic_string<Char, CTn...>,
 	basic_string<Char, CSn...>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	false_type,
 	true_type
 >: nil_t
@@ -75,13 +75,13 @@ template <
 > struct position<
 	basic_string<Char, CT, CTn...>,
 	basic_string<Char, CSn...>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	false_type,
 	false_type
 > : position<
 	basic_string<Char, CTn...>,
 	basic_string<Char, CSn...>,
-	integral_constant<size_t, P+1>,
+	size_constant<P+1>,
 	typename starts_with<
 		basic_string<Char, CTn...>,
 		basic_string<Char, CSn...>
@@ -95,7 +95,7 @@ template <size_t P>
 struct position<
 	range<>,
 	range<>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	true_type,
 	true_type
 >: nil_t
@@ -108,10 +108,10 @@ template <
 > struct position<
 	range<CT...>,
 	range<CS...>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	true_type,
 	false_type
->: integral_constant<size_t, P>
+>: size_constant<P>
 { };
 
 template <
@@ -121,7 +121,7 @@ template <
 > struct position<
 	range<CT...>,
 	range<CS...>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	false_type,
 	true_type
 >: nil_t
@@ -135,13 +135,13 @@ template <
 > struct position<
 	range<C, CT...>,
 	range<CS...>,
-	integral_constant<size_t, P>,
+	size_constant<P>,
 	false_type,
 	false_type
 > : position<
 	range<CT...>,
 	range<CS...>,
-	integral_constant<size_t, P+1>,
+	size_constant<P+1>,
 	typename starts_with<
 		range<CT...>,
 		range<CS...>
@@ -159,7 +159,7 @@ struct position<
 > : aux::position<
 	basic_string<Char, C1n...>,
 	basic_string<Char, C2n...>,
-	integral_constant<size_t, 0>,
+	size_constant<0>,
 	typename starts_with<
 		basic_string<Char, C1n...>,
 		basic_string<Char, C2n...>
@@ -174,7 +174,7 @@ struct position<
 > : aux::position<
 	range<P1...>,
 	range<P2...>,
-	integral_constant<size_t, 0>,
+	size_constant<0>,
 	typename starts_with<
 		range<P1...>,
 		range<P2...>
