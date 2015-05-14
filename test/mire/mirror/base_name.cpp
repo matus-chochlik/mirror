@@ -4,7 +4,7 @@
  *
  *  .author Matus Chochlik
  *
- *  Copyright 2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2013-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -49,77 +49,77 @@ BOOST_AUTO_TEST_CASE(mire_mirror_base_name_test1)
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<char*>>>::value,
-		"char*"
+		"char"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int&>>>::value,
-		"int&"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<float&&>>>::value,
-		"float&&"
+		"float"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<char const>>>::value,
-		"char const"
+		"char"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<char const*>>>::value,
-		"char const *"
+		"char"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int volatile>>>::value,
-		"int volatile"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<long const volatile>>>::value,
-		"long int const volatile"
+		"long int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<unsigned volatile const>>>::value,
-		"unsigned int const volatile"
+		"unsigned int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int**>>>::value,
-		"int**"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<long long const * const>>>::value,
-		"long long int const * const"
+		"long long int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<long long volatile * const *>>>::value,
-		"long long int volatile * const *"
+		"long long int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<long double const * volatile * &>>>::value,
-		"long double const * volatile * &"
+		"long double"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<long volatile * volatile * &&>>>::value,
-		"long int volatile * volatile * &&"
+		"long int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int const * const * const>>>::value,
-		"int const * const * const "
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int const * const * const *>>>::value,
-		"int const * const * const *"
+		"int"
 	));
 }
 
@@ -130,47 +130,47 @@ BOOST_AUTO_TEST_CASE(mire_mirror_base_name_test2)
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int*>>>::value,
-		"int*"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int**>>>::value,
-		"int**"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int***>>>::value,
-		"int***"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int****>>>::value,
-		"int****"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int*****>>>::value,
-		"int*****"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int******>>>::value,
-		"int******"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int*******>>>::value,
-		"int*******"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int********>>>::value,
-		"int********"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int*********>>>::value,
-		"int*********"
+		"int"
 	));
 }
 
@@ -181,77 +181,77 @@ BOOST_AUTO_TEST_CASE(mire_mirror_base_name_test3)
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[]>>>::value,
-		"int[]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9]>>>::value,
-		"int[9]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[][9]>>>::value,
-		"int[][9]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8]>>>::value,
-		"int[9][8]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7]>>>::value,
-		"int[9][8][7]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7][6]>>>::value,
-		"int[9][8][7][6]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7][6][5]>>>::value,
-		"int[9][8][7][6][5]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7][6][5][4]>>>::value,
-		"int[9][8][7][6][5][4]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7][6][5][4][3]>>>::value,
-		"int[9][8][7][6][5][4][3]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7][6][5][4][3][2]>>>::value,
-		"int[9][8][7][6][5][4][3][2]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[9][8][7][6][5][4][3][2][1]>>>::value,
-		"int[9][8][7][6][5][4][3][2][1]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int[][9][8][7][6][5][4][3][2][1]>>>::value,
-		"int[][9][8][7][6][5][4][3][2][1]"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int const *[]>>>::value,
-		"int const * []"
+		"int"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<char const * [12345]>>>::value,
-		"char const * [12345]"
+		"char"
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<volatile int * [][100]>>>::value,
-		"int volatile * [][100]"
+		"int"
 	));
 }
 
@@ -262,57 +262,57 @@ BOOST_AUTO_TEST_CASE(mire_mirror_base_name_test4)
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<void(void)>>>::value,
-		"void(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<int(void)>>>::value,
-		"int(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<const char*(void)>>>::value,
-		"char const*(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<volatile unsigned long &(void)>>>::value,
-		"unsigned long int volatile&(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<double&(void)>>>::value,
-		"double&(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<void(int)>>>::value,
-		"void(int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<bool(int)>>>::value,
-		"bool(int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<double&(bool, double&, double&)>>>::value,
-		"double&(bool, double&, double&)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<wchar_t*(*)(void)>>>::value,
-		"wchar_t* (*)(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<const char* (**)(bool, const float&, short*)>>>::value,
-		"char const * (**)(bool, float const&, short int*)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<const char** (*)(bool, const float&, short*)>>>::value,
-		"char const ** (*)(bool, float const&, short int*)"
+		""
 	));
 }
 
@@ -325,56 +325,56 @@ BOOST_AUTO_TEST_CASE(mire_mirror_base_name_test5)
 		ct::c_str<base_name<mirrored_t<
 		float(long)
 		>>>::value,
-		"float(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*)(long int)
 		>>>::value,
-		"float(*)(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(unsigned int))(long int)
 		>>>::value,
-		"float(*(*)(unsigned int))(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*(*)(int))(unsigned int))(long int)
 		>>>::value,
-		"float(*(*(*)(int))(unsigned int))(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*(*(*)(short int))(int))(unsigned int))(long int)
 		>>>::value,
-		"float(*(*(*(*)(short int))(int))(unsigned int))(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*(*(*(*)(wchar_t))(short int))(int))(unsigned int))(long int)
 		>>>::value,
-		"float(*(*(*(*(*)(wchar_t))(short int))(int))(unsigned int))(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*(*(*(*(*)(char))(wchar_t))(short int))(int))(unsigned int))(long int)
 		>>>::value,
-		"float(*(*(*(*(*(*)(char))(wchar_t))(short int))(int))(unsigned int))(long int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*(*(*(*(*(*)(bool))(char))(wchar_t))(short int))(int))(unsigned int))(long int)
 		>>>::value,
-		"float(*(*(*(*(*(*(*)(bool))(char))(wchar_t))(short int))(int))(unsigned int))(long int)"
+		""
 	));
 }
 
@@ -387,49 +387,49 @@ BOOST_AUTO_TEST_CASE(mire_mirror_base_name_test6)
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(void))(void)
 		>>>::value,
-		"float(*(*)(void))(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(int, bool, float))(void)
 		>>>::value,
-		"float(*(*)(int, bool, float))(void)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(int, bool, float))(int)
 		>>>::value,
-		"float(*(*)(int, bool, float))(int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(float))(double, char, int, bool)
 		>>>::value,
-		"float(*(*)(float))(double, char, int, bool)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(void))(double, char, int, bool)
 		>>>::value,
-		"float(*(*)(void))(double, char, int, bool)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(int, float))(double, char, int)
 		>>>::value,
-		"float(*(*)(int, float))(double, char, int)"
+		""
 	));
 
 	BOOST_CHECK(mire_mirror_name_equal(
 		ct::c_str<base_name<mirrored_t<
 		float(*(*)(int, bool, float))(double, char, int)
 		>>>::value,
-		"float(*(*)(int, bool, float))(double, char, int)"
+		""
 	));
 }
 
