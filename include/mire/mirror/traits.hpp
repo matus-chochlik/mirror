@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2006-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2006-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -402,6 +402,34 @@ namespace _aux {
 	{ };
 
 } // namespace _aux
+
+// *has_position*
+namespace _aux {
+
+	template <typename X>
+	struct has_position
+	 : ct::false_type
+	{ };
+
+	template <typename R, typename M>
+	struct has_position<meta<R, M>>
+	 : R::has_scope
+	{ };
+
+} // namespace _aux
+
+/// Returns true_type if the argument @c X is a Positional, false_type otherwise
+/**
+ *  @ingroup mirror_traits
+ */
+template <typename X>
+struct has_position
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : _aux::has_position<typename evaluate<X>::type>
+#else
+ : BooleanConstant
+#endif
+{ };
 
 /// Returns true_type if the argument @c X is a ClassMember, false_type otherwise
 /**
