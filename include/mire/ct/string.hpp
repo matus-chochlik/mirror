@@ -15,7 +15,7 @@
 namespace mire {
 namespace ct {
 
-/// A compile-time basic-string template for various characted types
+/// A compile-time basic-string template for various character types
 /**
  *  @see string
  *  @see empty
