@@ -30,6 +30,9 @@ struct defaults
 	typedef ct::false_type is_class_member;
 	typedef ct::false_type has_template;
 	typedef ct::false_type is_template;
+
+	typedef ct::empty_string source_file;
+	typedef ct::integral_constant<unsigned, 0u> source_line;
 };
 
 struct _ : mire::reg::defaults

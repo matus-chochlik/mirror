@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2006-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2006-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -45,6 +45,38 @@ struct nonequal
 >
 #else
  : BooleanConstantType
+#endif
+{ };
+
+/// Returns the declaration source file of the specified Metaobject
+/**
+ *  @tparam Metaobject the metaobject reflecting the base-level
+ *  declaration for which the source file should be returned.
+ *
+ *  @see is_metaobject
+ */
+template <typename Metaobject>
+struct source_file
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : source_file<typename evaluate<Metaobject>::type>
+#else
+ : String
+#endif
+{ };
+
+/// Returns the declaration source line of the specified Metaobject
+/**
+ *  @tparam Metaobject the metaobject reflecting the base-level
+ *  declaration for which the source file line should be returned.
+ *
+ *  @see is_metaobject
+ */
+template <typename Metaobject>
+struct source_line
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : source_line<typename evaluate<Metaobject>::type>
+#else
+ : IntegralConstantType
 #endif
 { };
 
