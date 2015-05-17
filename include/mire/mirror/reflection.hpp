@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2006-2014 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2006-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -16,6 +16,7 @@
 #include <mire/mirror/stddef.hpp>
 #include <mire/mirror/traits.hpp>
 #include <mire/reg/global_scope.hpp>
+#include <mire/reg/specifier.hpp>
 
 namespace mire {
 namespace mirror {
@@ -67,7 +68,7 @@ struct pick_refl
  *  @ingroup mirror_reflection_expr
  */
 #define MIRRORED_SPECIFIER(NAME) \
-	mire::mirror::spec<mire::mirror::spec_##NAME##_tag>
+	mire::mirror::spec<mire::reg::_##NAME::_>
 
 // TODO: define only optionally
 #define mirrored(NAME) MIRRORED(NAME)
