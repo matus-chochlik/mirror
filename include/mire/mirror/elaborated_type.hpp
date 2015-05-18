@@ -25,17 +25,17 @@ struct elaborated_type
 { };
 
 template <typename Reg>
-struct elaborated_type<Reg, mirror::meta_enum_tag>
+struct elaborated_type<Reg, mirror::enum_tag>
  : mirror::spec<typename Reg::elaborated_type>
 { };
 
 template <typename Reg>
-struct elaborated_type<Reg, mirror::meta_class_tag>
+struct elaborated_type<Reg, mirror::class_tag>
  : mirror::spec<typename Reg::elaborated_type>
 { };
 
 template <typename Reg>
-struct elaborated_type<Reg, mirror::meta_typedef_tag>
+struct elaborated_type<Reg, mirror::typedef_tag>
  : mirror::spec<typename Reg::typedef_type::elaborated_type>
 { };
 
@@ -48,27 +48,27 @@ struct elaborated_type<meta<R, M>>
 
 template <typename R, typename M>
 struct elaborated_type<meta<R, M*>>
- : spec<spec_none_tag>
+ : spec<none_tag>
 { };
 
 template <typename R, typename M>
 struct elaborated_type<meta<R, M&>>
- : spec<spec_none_tag>
+ : spec<none_tag>
 { };
 
 template <typename R, typename M>
 struct elaborated_type<meta<R, M&&>>
- : spec<spec_none_tag>
+ : spec<none_tag>
 { };
 
 template <typename R, typename M>
 struct elaborated_type<meta<R, M[]>>
- : spec<spec_none_tag>
+ : spec<none_tag>
 { };
 
 template <typename R, typename M, size_t N>
 struct elaborated_type<meta<R, M[N]>>
- : spec<spec_none_tag>
+ : spec<none_tag>
 { };
 
 } // namespace mirror

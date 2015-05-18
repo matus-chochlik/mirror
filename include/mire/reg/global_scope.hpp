@@ -38,7 +38,7 @@ struct defaults
 struct _ : mire::reg::defaults
 {
 	typedef ct::true_type is_scope;
-	typedef mirror::meta_global_scope_tag category;
+	typedef mirror::global_scope_tag category;
 	typedef mire::reg::_ scope;
 
 	typedef ct::empty_string base_name;
@@ -63,7 +63,7 @@ struct _ : mire::reg::defaults
 
 struct anon_t : mire::reg::defaults
 {
-	typedef mirror::meta_type_tag category;
+	typedef mirror::type_tag category;
 	typedef mire::reg::_ scope;
 	struct base_name
 	{

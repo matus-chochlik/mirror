@@ -131,12 +131,12 @@ struct same_ctg
 { };
 
 template <typename Reg>
-struct same_ctg<Reg, meta_global_scope_tag, meta_namespace_tag>
+struct same_ctg<Reg, global_scope_tag, namespace_tag>
  : ct::true_type
 { };
 
 template <typename Reg>
-struct same_ctg<Reg, meta_class_tag, meta_type_tag>
+struct same_ctg<Reg, class_tag, type_tag>
  : ct::true_type
 { };
 
@@ -146,12 +146,12 @@ struct same_ctg<Reg, MOC, MOC>
 { };
 
 template <typename Reg>
-struct same_ctg<Reg, meta_typedef_tag, meta_typedef_tag>
+struct same_ctg<Reg, typedef_tag, typedef_tag>
  : ct::true_type
 { };
 
 template <typename Reg, typename MOC>
-struct same_ctg<Reg, meta_typedef_tag, MOC>
+struct same_ctg<Reg, typedef_tag, MOC>
  : same_ctg<
 	typename Reg::typedef_type,
 	typename Reg::typedef_type::category,
@@ -363,7 +363,7 @@ namespace _aux {
 	{ };
 
 	template <typename Reg>
-	struct is_scope_hlp<Reg, meta_typedef_tag>
+	struct is_scope_hlp<Reg, typedef_tag>
 	 : Reg::typedef_type::is_scope
 	{ };
 

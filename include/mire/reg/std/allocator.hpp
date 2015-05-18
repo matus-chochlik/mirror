@@ -20,7 +20,7 @@ namespace _std {
 namespace allocator {
 struct _ : mire::reg::defaults
 {
-	typedef mirror::meta_class_tag category;
+	typedef mirror::class_tag category;
 	typedef mire::reg::_class elaborated_type;
 	typedef ct::true_type is_template;
 	typedef mire::reg::_std::_ scope;

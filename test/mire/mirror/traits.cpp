@@ -39,27 +39,27 @@ BOOST_AUTO_TEST_CASE(mire_mirror_traits_category)
 
 	BOOST_CHECK((std::is_same<
 		category<MIRRORED_GLOBAL_SCOPE()>::type,
-		meta_global_scope_tag
+		global_scope_tag
 	>::value));
 
 	BOOST_CHECK((std::is_same<
 		category<MIRRORED(std)>::type,
-		meta_namespace_tag
+		namespace_tag
 	>::value));
 
 	BOOST_CHECK((std::is_same<
 		category<mirrored_t<float>>::type,
-		meta_type_tag
+		type_tag
 	>::value));
 
 	BOOST_CHECK((std::is_same<
 		category<mirrored_t<std::string>>::type,
-		meta_typedef_tag
+		typedef_tag
 	>::value));
 
 	BOOST_CHECK((std::is_same<
 		category<mirrored_t<std::wstring>>::type,
-		meta_class_tag
+		class_tag
 	>::value));
 
 	// TODO
@@ -71,62 +71,62 @@ BOOST_AUTO_TEST_CASE(mire_mirror_traits_is_a)
 
 	BOOST_CHECK((is_a<
 		MIRRORED_GLOBAL_SCOPE(),
-		meta_global_scope_tag
+		global_scope_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		MIRRORED_GLOBAL_SCOPE(),
-		meta_namespace_tag
+		namespace_tag
 	>::value));
 
 	BOOST_CHECK((!is_a<
 		MIRRORED(std),
-		meta_global_scope_tag
+		global_scope_tag
 	>::value));
 
 	BOOST_CHECK((!is_a<
 		MIRRORED(std),
-		meta_type_tag
+		type_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		MIRRORED(std),
-		meta_namespace_tag
+		namespace_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		mirrored_t<int>,
-		meta_type_tag
+		type_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		mirrored_t<std::string>,
-		meta_type_tag
+		type_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		mirrored_t<std::string>,
-		meta_typedef_tag
+		typedef_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		mirrored_t<std::string>,
-		meta_class_tag
+		class_tag
 	>::value));
 
 	BOOST_CHECK(( is_a<
 		mirrored_t<std::vector<int>>,
-		meta_type_tag
+		type_tag
 	>::value));
 
 	BOOST_CHECK((!is_a<
 		mirrored_t<std::vector<int>>,
-		meta_typedef_tag
+		typedef_tag
 	>::value));
 
 	BOOST_CHECK((is_a<
 		mirrored_t<std::vector<int>>,
-		meta_class_tag
+		class_tag
 	>::value));
 }
 

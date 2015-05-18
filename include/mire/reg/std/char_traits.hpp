@@ -20,7 +20,7 @@ namespace _std {
 namespace char_traits {
 struct _ : mire::reg::defaults
 {
-	typedef mirror::meta_class_tag category;
+	typedef mirror::class_tag category;
 	typedef mire::reg::_struct elaborated_type;
 	typedef ct::true_type is_template;
 	typedef mire::reg::_std::_ scope;

@@ -139,9 +139,9 @@ struct full_name
  *
  *  @see category
  *  @see is_a
- *  @see meta_type_tag
- *  @see meta_typedef_tag
- *  @see meta_class_tag
+ *  @see type_tag
+ *  @see typedef_tag
+ *  @see class_tag
  */
 template <typename Metaobject>
 struct original_type

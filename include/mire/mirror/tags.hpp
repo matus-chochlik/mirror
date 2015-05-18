@@ -23,9 +23,7 @@ namespace mirror {
  *  @see MetaobjectCategory
  *  @see MetaGlobalScope
  */
-struct meta_global_scope_tag
-{
-};
+struct global_scope_tag { };
 
 /// Indicates that a Metaobject is a model of MetaNamespace
 /** Tag indicating that the tagged Metaobject
@@ -35,9 +33,7 @@ struct meta_global_scope_tag
  *  @see MetaobjectCategory
  *  @see MetaNamespace
  */
-struct meta_namespace_tag
-{
-};
+struct namespace_tag { };
 
 /// Indicates that a Metaobject is a model of MetaType
 /** Tag indicating that the tagged Metaobject
@@ -47,9 +43,7 @@ struct meta_namespace_tag
  *  @see MetaobjectCategory
  *  @see MetaType
  */
-struct meta_type_tag
-{
-};
+struct type_tag { };
 
 /// Indicates that a Metaobject is a model of MetaTypedef
 /** Tag indicating that the tagged Metaobject
@@ -59,9 +53,7 @@ struct meta_type_tag
  *  @see MetaobjectCategory
  *  @see MetaTypedef
  */
-struct meta_typedef_tag
-{
-};
+struct typedef_tag { };
 
 /// Indicates that a Metaobject is a model of MetaClass
 /** Tag indicating that the tagged Metaobject
@@ -71,9 +63,7 @@ struct meta_typedef_tag
  *  @see MetaobjectCategory
  *  @see MetaClass
  */
-struct meta_class_tag
-{
-};
+struct class_tag { };
 
 /// Indicates that a Metaobject is a model of MetaFunction
 /** Tag indicating that the tagged Metaobject
@@ -83,9 +73,7 @@ struct meta_class_tag
  *  @see MetaobjectCategory
  *  @see MetaFunction
  */
-struct meta_function_tag
-{
-};
+struct function_tag { };
 
 /// Indicates that a Metaobject is a model of MetaConstructor
 /** Tag indicating that the tagged Metaobject
@@ -95,9 +83,7 @@ struct meta_function_tag
  *  @see MetaobjectCategory
  *  @see MetaConstructor
  */
-struct meta_constructor_tag
-{
-};
+struct constructor_tag { };
 
 /// Indicates that a Metaobject is a model of MetaOperator
 /** Tag indicating that the tagged Metaobject
@@ -107,9 +93,7 @@ struct meta_constructor_tag
  *  @see MetaobjectCategory
  *  @see MetaOperator
  */
-struct meta_operator_tag
-{
-};
+struct operator_tag { };
 
 /// Indicates that a Metaobject is a model of MetaOverloadedFunction
 /** Tag indicating that the tagged Metaobject
@@ -120,9 +104,7 @@ struct meta_operator_tag
  *  @see MetaobjectCategory
  *  @see MetaFunction
  */
-struct meta_overloaded_function_tag
-{
-};
+struct overloaded_function_tag { };
 
 /// Indicates that a Metaobject is a model of MetaEnum
 /** Tag indicating that the tagged Metaobject
@@ -132,9 +114,17 @@ struct meta_overloaded_function_tag
  *  @see MetaobjectCategory
  *  @see MetaEnum
  */
-struct meta_enum_tag
-{
-};
+struct enum_tag { };
+
+/// Indicates that a Metaobject is a model of MetaEnumClass
+/** Tag indicating that the tagged Metaobject
+ *  satisfies requirements of the MetaEnumClass
+ *  concept.
+ *
+ *  @see MetaobjectCategory
+ *  @see MetaEnumClass
+ */
+struct enum_class_tag { };
 
 /// Indicates that a Metaobject is a model of MetaInheritance
 /** Tag indicating that the tagged Metaobject
@@ -144,9 +134,7 @@ struct meta_enum_tag
  *  @see MetaobjectCategory
  *  @see MetaInheritance
  */
-struct meta_inheritance_tag
-{
-};
+struct inheritance_tag { };
 
 /// Indicates that a Metaobject is a model of MetaConstant
 /** Tag indicating that the tagged Metaobject
@@ -156,9 +144,7 @@ struct meta_inheritance_tag
  *  @see MetaobjectCategory
  *  @see MetaConstant
  */
-struct meta_constant_tag
-{
-};
+struct constant_tag { };
 
 /// Indicates that a Metaobject is a model of MetaVariable
 /** Tag indicating that the tagged Metaobject
@@ -168,9 +154,7 @@ struct meta_constant_tag
  *  @see MetaobjectCategory
  *  @see MetaVariable
  */
-struct meta_variable_tag
-{
-};
+struct variable_tag { };
 
 /// Indicates that a Metaobject is a model of MetaParameter
 /** Tag indicating that the tagged Metaobject
@@ -180,96 +164,52 @@ struct meta_variable_tag
  *  @see MetaobjectCategory
  *  @see MetaParameter
  */
-struct meta_parameter_tag
-{
-};
+struct parameter_tag { };
 
 
 // -- Specifiers --
 
-struct spec_none_tag
-{
-};
+struct none_tag { };
 
-struct spec_extern_tag
-{
-};
+struct extern_tag { };
 
-struct spec_static_tag
-{
-};
+struct static_tag { };
 
-struct spec_mutable_tag
-{
-};
+struct mutable_tag { };
 
-struct spec_register_tag
-{
-};
+struct register_tag { };
 
-struct spec_thread_local_tag
-{
-};
+struct thread_local_tag { };
 
-struct spec_constexpr_tag
-{
-};
+struct constexpr_tag { };
 
-struct spec_const_tag
-{
-};
+struct const_tag { };
 
-struct spec_volatile_tag
-{
-};
+struct volatile_tag { };
 
-struct spec_virtual_tag
-{
-};
+struct virtual_tag { };
 
-struct spec_override_tag
-{
-};
+struct override_tag { };
 
-struct spec_private_tag
-{
-};
+struct private_tag { };
 
-struct spec_protected_tag
-{
-};
+struct protected_tag { };
 
-struct spec_public_tag
-{
-};
+struct public_tag { };
 
-struct spec_class_tag
-{
-};
+struct class_tag /*{ }*/;
 
-struct spec_struct_tag
-{
-};
+struct struct_tag { };
 
-struct spec_union_tag
-{
-};
+struct union_tag { };
 
-struct spec_enum_tag
-{
-};
+struct enum_tag /*{ }*/;
 
-struct spec_enum_class_tag
-{
-};
+struct enum_class_tag /*{ }*/;
 
-struct spec_typedef_tag
-{
-};
+struct typedef_tag /*{ }*/;
 
-struct spec_noexcept_tag
-{
-};
+struct noexcept_tag { };
 
 } // namespace mirror
 } // namespace mire
