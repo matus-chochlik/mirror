@@ -24,7 +24,7 @@ struct _ : mire::reg::defaults
 	typedef mire::reg::_std::_ scope;
 	typedef ct::true_type has_template;
 	typedef mire::reg::_std::basic_string::_ template_;
-	typedef mire::reg::_std::basic_string::_ typedef_type;
+	typedef mire::reg::_std::basic_string::_ decl_type;
 
 	typedef mire::ct::string<'s','t','r','i','n','g'>
 		base_name;

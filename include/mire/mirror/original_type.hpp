@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2006-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2006-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -26,7 +26,7 @@ struct get_orig_type
 	static typename X::original_type _get(X*);
 	static void _get(...);
 
-	typedef decltype(_get((T*)nullptr)) type;
+	typedef decltype(_get(static_cast<T*>(nullptr))) type;
 };
 
 } // namespace _aux

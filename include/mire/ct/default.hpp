@@ -628,7 +628,7 @@ struct tail
 #endif
 { };
 
-/// Returns a sub-Range containing the last @Count elements of @p Range
+/// Returns a sub-Range containing the last @p Count elements of @p Range
 /**
  *  @see basic_string
  *  @see head
@@ -949,7 +949,7 @@ struct unique
  *  @tparam MetaFunctionClass a class containing a nested template called
  *  apply which can take @a N integral template parameters having
  *  typedef called "type".
- *  @param N the count of arguments for the metafunction.
+ *  @tparam N the count of arguments for the metafunction.
  *
  *  @see apply_on_seq_pack
  *  @ingroup ct_utils
@@ -981,7 +981,7 @@ struct apply_on_seq_pack_c
  *  @tparam MetaFunctionClass a class containing a nested template called
  *  apply which can take @a N integral template parameters having
  *  typedef called "type".
- *  @param N an integral constant type providing the count of arguments for
+ *  @tparam N an integral constant type providing the count of arguments for
  *  the metafunction.
  *
  *  @see apply_on_seq_pack

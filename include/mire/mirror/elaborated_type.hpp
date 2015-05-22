@@ -36,7 +36,7 @@ struct elaborated_type<Reg, mirror::class_tag>
 
 template <typename Reg>
 struct elaborated_type<Reg, mirror::typedef_tag>
- : mirror::spec<typename Reg::typedef_type::elaborated_type>
+ : mirror::spec<typename Reg::decl_type::elaborated_type>
 { };
 
 } // namespace _aux

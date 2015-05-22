@@ -82,7 +82,7 @@ struct source_line
 
 /// Returns the keyword of a specifier reflected by a MetaSpecifier
 /**
- *  @tparam MetaSpecifer the metaobject reflecting the specifier for which
+ *  @tparam MetaSpecifier the metaobject reflecting the specifier for which
  *  the keyword should be returned.
  *
  *  @see is_specifier
@@ -98,7 +98,7 @@ struct keyword
 
 /// Returns the base name of the base-level object reflected by a Metaobject
 /**
- *  @tparam Metaobject the metaobject the base name of which should be returned.
+ *  @tparam MetaNamed the metaobject the base name of which should be returned.
  *
  *  @note This metafunction is applicable only to Metaobjects for which
  *  the has_name trait returns true i.e. for MetaNamed metaobjects.
@@ -167,19 +167,17 @@ struct scope
 #endif
 { };
 
-/// Returns the typedef-type of a @c MetaTypedef
+/// Returns the decl_type of a @c MetaTypedef, a @c MetaVariable or a @c MetaConstant
 /**
- *  @tparam MetaTypedef the meta-object for which a @c MetaType reflecting
- *  the typedef-type should be returned.
- *
- *  @note This metafunction is applicable only to Metaobjects reflecting typedefs.
+ *  @tparam Metaobject the meta-object for which a @c MetaType reflecting
+ *  the typedef-type, variable-type or constant-type should be returned.
  */
-template <typename MetaTypedef>
-struct typedef_type
+template <typename Metaobject>
+struct decl_type
 #ifndef MIRROR_DOCUMENTATION_ONLY
- : typedef_type<typename evaluate<MetaTypedef>::type>
+ : decl_type<typename evaluate<Metaobject>::type>
 #else
- : Metaobject
+ : MetaType
 #endif
 { };
 
@@ -277,7 +275,7 @@ struct named_mem_var
 
 /// Returns the elaborated type specifier of a @c MetaClass or @c MetaEnum
 /**
- *  @tparam Metaobject the meta-object for which the @c MetaSpecifier
+ *  @tparam MetaType the meta-object for which the @c MetaSpecifier
  *  should be returned.
  *
  *  @note This metafunction is applicable only to Metaobjects reflecting typedefs.

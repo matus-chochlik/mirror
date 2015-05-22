@@ -153,8 +153,8 @@ struct same_ctg<Reg, typedef_tag, typedef_tag>
 template <typename Reg, typename MOC>
 struct same_ctg<Reg, typedef_tag, MOC>
  : same_ctg<
-	typename Reg::typedef_type,
-	typename Reg::typedef_type::category,
+	typename Reg::decl_type,
+	typename Reg::decl_type::category,
 	MOC
 >
 { };
@@ -364,7 +364,7 @@ namespace _aux {
 
 	template <typename Reg>
 	struct is_scope_hlp<Reg, typedef_tag>
-	 : Reg::typedef_type::is_scope
+	 : Reg::decl_type::is_scope
 	{ };
 
 	template <typename R, typename M>

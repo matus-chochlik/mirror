@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2013-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
@@ -13,7 +13,7 @@
 
 #include <mire/mirror/reflection.hpp>
 #include <mire/mirror/full_name.hpp>
-#include <mire/mirror/typedef_type.hpp>
+#include <mire/mirror/decl_type.hpp>
 #include <mire/ct/c_str.hpp>
 #include <mire/reg/native.hpp>
 #include <mire/reg/std/string.hpp>
@@ -35,13 +35,13 @@ void print_name(void)
 int main(void)
 {
 	using mire::mirror::mirrored_t;
-	using mire::mirror::typedef_type;
+	using mire::mirror::decl_type;
 
 	print_name<mirrored_t<std::string>>();
-	print_name<typedef_type<mirrored_t<std::string>>>();
+	print_name<decl_type<mirrored_t<std::string>>>();
 
 	print_name<mirrored_t<std::wstring>>();
-	print_name<typedef_type<mirrored_t<std::wstring>>>();
+	print_name<decl_type<mirrored_t<std::wstring>>>();
 
 	print_name<mirrored_t<std::pair<std::pair<bool, char>, std::pair<int, float>>>>();
 
