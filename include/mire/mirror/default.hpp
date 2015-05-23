@@ -133,6 +133,22 @@ struct full_name
 #endif
 { };
 
+/// Returns the ordinal position of the specified MetaPositional
+/**
+ *  @tparam MetaPositional the metaobject reflecting the base-level
+ *  positional declaration for which the position should be returned
+ *
+ *  @see has_position
+ */
+template <typename MetaPositional>
+struct position
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : position<typename evaluate<MetaPositional>::type>
+#else
+ : IntegralConstantType
+#endif
+{ };
+
 /// Returns the original type reflected by the @c Metaobject
 /**
  *  @note This metafunction is applicable only to Metaobjects reflecting types.
@@ -178,6 +194,21 @@ struct decl_type
  : decl_type<typename evaluate<Metaobject>::type>
 #else
  : MetaType
+#endif
+{ };
+
+/// Returns the constant value of the specified MetaConstant
+/**
+ *  @tparam MetaConstant the metaobject reflecting the base-level
+ *  compile-time constant for which the value should be returned
+ *
+ */
+template <typename MetaConstant>
+struct value
+#ifndef MIRROR_DOCUMENTATION_ONLY
+ : value<typename evaluate<MetaConstant>::type>
+#else
+ : IntegralConstantType
 #endif
 { };
 
