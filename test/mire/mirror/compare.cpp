@@ -53,32 +53,32 @@ BOOST_AUTO_TEST_CASE(mire_mirror_compare_test1)
 	BOOST_CHECK((equal<
 		MIRRORED(std),
 		MIRRORED(std)
-	>()));
+	>::value));
 
 	BOOST_CHECK((!nonequal<
 		MIRRORED(std),
 		MIRRORED(std)
-	>()));
+	>::value));
 
 	BOOST_CHECK((equal<
 		mirrored_t<std::string>,
 		mirrored_t<std::string>
-	>()));
+	>::value));
 
 	BOOST_CHECK((nonequal<
 		mirrored_t<std::string>,
 		mirrored_t<std::wstring>
-	>()));
+	>::value));
 
 	BOOST_CHECK((!nonequal<
 		mirrored_t<std::string>,
 		mirrored_t<std::string>
-	>()));
+	>::value));
 
 	BOOST_CHECK((!equal<
 		mirrored_t<std::string>,
 		mirrored_t<std::wstring>
-	>()));
+	>::value));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
