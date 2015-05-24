@@ -22,6 +22,7 @@
 #include <mire/mirror/source_file.hpp>
 #include <mire/mirror/source_line.hpp>
 
+#include <mire/mirror/position.hpp>
 #include <mire/mirror/keyword.hpp>
 #include <mire/mirror/base_name.hpp>
 #include <mire/mirror/full_name.hpp>
