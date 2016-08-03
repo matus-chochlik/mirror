@@ -1,16 +1,18 @@
 #!/usr/bin/python
 # coding=utf-8
-#  Copyright 2010-2013 Matus Chochlik. Distributed under the Boost
-#  Software License, Version 1.0. (See accompanying file
-#  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
 #
-import os, sys, getopt, shutil, subprocess
+import os, sys, stat, getopt, shutil, subprocess
+from tools import args
+from tools import paths
 
 # initial values for the configuration options
 
 def get_argument_parser():
 	import argparse
-	import datetime
 
 	def BoolArgValue(arg):
 		if(arg in ("True", "true", "Yes", "yes", "Y", "On", "1")):
@@ -21,6 +23,29 @@ def get_argument_parser():
 			msg = "'%s' is not a valid boolean value" % str(arg)
 			raise argparse.ArgumentTypeError(msg)
 
+	def JobCountValue(arg):
+		msg_fmt = "'%s' is not a valid process count value"
+		try:
+			if int(arg) <= 0:
+				msg = msg_fmt % str(arg)
+				raise argparse.ArgumentTypeError(msg)
+			else:
+				return int(arg)
+		except:
+			msg = msg_fmt % str(arg)
+			raise argparse.ArgumentTypeError(msg)
+
+	def OpenGLVersionValue(arg):
+		import re
+		match = re.match("^([3-9]).([0-9])$", arg)
+		if match:
+			return match.group(1)+"_"+match.group(2)
+		else:
+			msg = "'%s' is not a supported OpenGL version" % str(arg)
+			raise argparse.ArgumentTypeError(msg)
+
+	CMakeGeneratorValue = str
+
 	version_file = os.path.join(os.path.dirname(sys.argv[0]), "VERSION")
 	try: version = open(version_file, "r").read().strip()
 	except: version = str("<unknown>")
@@ -29,20 +54,28 @@ def get_argument_parser():
 	argparser = argparse.ArgumentParser(
 		prog="configure",
 		description="""
-			Configuration script for the mirror reflection utilities (version %(version)s)
+			Configuration script for the Mirror reflection utilities (version %(version)s)
 		""" % { "version" : version },
 		epilog="""
-			Copyright (c) 2012 - %(year)d Matúš Chochlík.
+			Copyright (c) Matúš Chochlík.
 			Permission is granted to copy, distribute and/or modify this document
 			under the terms of the Boost Software License, Version 1.0.
 			(See a copy at http://www.boost.org/LICENSE_1_0.txt)
-		""" % { "year": datetime.datetime.now().year }
+		"""
 	)
 	argparser.add_argument(
 		"--generate-bash-complete",
 		action="store_true",
 		help="""
 			Generates bash completion script for this configure script and quits.
+			For internal use only.
+		"""
+	)
+	argparser.add_argument(
+		"--generate-manual",
+		action="store_true",
+		help="""
+			Generates a man-compatible manual.
 			For internal use only.
 		"""
 	)
@@ -77,9 +110,10 @@ def get_argument_parser():
 		action="append",
 		default=list(),
 		help="""
-			Specifies additional directory to search when looking for external headers.
-			The specified path must be absolute or relative to the current working
-			directory from which %(prog)s is invoked. This option may be specified
+			Specifies additional directory to search when looking for external
+			headers like GL/glew.h or GL3/gl3.h. The specified path
+			must be absolute or relative to the current working directory
+			from which %(prog)s is invoked. This option may be specified
 			multiple times to add multiple directories to the search list.
 		"""
 	)
@@ -90,12 +124,30 @@ def get_argument_parser():
 		action="append",
 		default=list(),
 		help="""
-			Specifies additional directory to search when looking for compiled libraries.
-			The specified path must be absolute or relative to the current working
-			directory from which configure is invoked. This option may be specified
+			Specifies additional directory to search when looking for compiled
+			libraries like GL, GLEW, glut, png, etc. The specified
+			path must be absolute or relative to the current working directory
+			from which configure is invoked. This option may be specified
 			multiple times to add multiple directories to the search list.
 		"""
 	)
+	argparser.add_argument(
+		"--search-dir", "-S",
+		dest="search_dirs",
+		type=os.path.abspath,
+		action="append",
+		default=list(),
+		help="""
+			Specifies additional directory with include and lib subdirectories
+			that should be searched when looking for C++ headers or compiled
+			libraries. Specifying --search-dir PATH is equivalent to specifying
+			--include-dir PATH/include --library-dir PATH/lib. The provided
+			path must be absolute or relative to the current working directory
+			from which configure is invoked. This option may be specified
+			multiple times to add multiple directories to the search list.
+		"""
+	)
+
 	argparser.add_argument(
 		"--use-cxxflags",
 		default=False,
@@ -116,6 +168,7 @@ def get_argument_parser():
 			to the values specified by --library-dir.
 		"""
 	)
+
 	argparser_build_docs_group = argparser.add_mutually_exclusive_group()
 	argparser_build_docs_group.add_argument(
 		"--build-docs",
@@ -138,7 +191,7 @@ def get_argument_parser():
 		"""
 	)
 	argparser.add_argument(
-		"--from-scratch",
+		"--clean",
 		default=False,
 		action="store_true",
 		help="""
@@ -166,6 +219,16 @@ def get_argument_parser():
 		"""
 	)
 	argparser.add_argument(
+		"--jobs",
+		type=JobCountValue,
+		default=None,
+		action="store",
+		help="""
+			Specifies the number of parallel build jobs to be used,
+			if applicable for the used build tool.
+		"""
+	)
+	argparser.add_argument(
 		"--build",
 		default=False,
 		action="store_true",
@@ -176,11 +239,29 @@ def get_argument_parser():
 		"""
 	)
 	argparser.add_argument(
-		"--with-tests",
+		"--no-tests",
 		default=False,
 		action="store_true",
 		help="""
-			Configure the testsuite.
+			Disable configuring of the testsuite.
+		"""
+	)
+	argparser.add_argument(
+		"--generator",
+		type=CMakeGeneratorValue,
+		default=None,
+		action="store",
+		help="""
+			Specify the cmake generator to be used.
+		"""
+	)
+	argparser.add_argument(
+		"--debug-config",
+		dest="debug_config",
+		default=False,
+		action="store_true",
+		help="""
+			Enable debugging of the cmake build system.
 		"""
 	)
 	argparser.add_argument(
@@ -193,60 +274,17 @@ def get_argument_parser():
 
 	return argparser
 
-# returns the common valid prefix for the specified paths
-def common_path_prefix(paths):
-	prefix = os.path.commonprefix(paths)
-	for path in paths:
-		if prefix != path:
-			suffix = path[len(prefix):]
-			if not suffix.startswith(os.path.sep):
-				return os.path.dirname(prefix)
-	return prefix
-
-
-# returns the shortest path from the directory
-# at source_path to the directory at target_path
-def shortest_path_from_to(source_path, target_path):
-	source_path = os.path.abspath(source_path)
-	target_path = os.path.abspath(target_path)
-
-	if source_path == target_path:
-		return os.path.curdir
-
-	common_prefix = common_path_prefix([
-		source_path,
-		target_path
-	])
-	backtrace = os.path.curdir
-	while source_path != common_prefix:
-		source_path = os.path.dirname(source_path)
-		backtrace = os.path.join(os.path.pardir, backtrace)
-	backtrace = os.path.normpath(backtrace)
-
-	relative_path = target_path[len(common_prefix):]
-	if relative_path.startswith(os.path.sep):
-		relative_path = relative_path[len(os.path.sep):]
-	relative_path = os.path.normpath(os.path.join(
-		backtrace,
-		relative_path
-	))
-	if len(relative_path) < len(target_path):
-		return relative_path
-	else: return target_path
-
-# shortens a full command path to a command name only
-# if possible
-def shorten_command(command_path):
-	def is_exe(filepath):
-		return os.path.isfile(filepath) and os.access(filepath, os.X_OK)
-
-	command_dir, command = os.path.split(command_path)
-
-	for path_dir in os.environ["PATH"].split(os.pathsep):
-		if command_dir == path_dir and is_exe(command_path):
-			return command
-	return command_path
-
+# applies LD_LIBRARY_PATH to library search directories
+def search_ld_library_path():
+	ld_library_path_dirs = list()
+	try:
+		ld_library_path = os.environ.get("LD_LIBRARY_PATH")
+		if ld_library_path:
+			for ld_library_dir in ld_library_path.split(':'):
+				if os.path.isdir(ld_library_dir):
+					ld_library_path_dirs.append(ld_library_dir)
+	except: pass
+	return ld_library_path_dirs
 
 # applies CXXFLAGS to the options for cmake if possible
 def search_cxxflags():
@@ -284,8 +322,9 @@ def search_ldflags():
 	return ldflags_library_dirs
 
 # get some useful information from cmake
-def cmake_system_info(cmake_args):
-	command = ["cmake", "--system-information"] + cmake_args
+def cmake_system_info(options):
+	info_path = os.path.join(options.build_dir, "system-info.txt")
+	command = ["cmake", "--system-information", info_path]
 	try:
 		proc = subprocess.Popen(
 			command,
@@ -304,7 +343,7 @@ def cmake_system_info(cmake_args):
 
 	try:
 		import shlex
-		for line in proc.stdout.readlines():
+		for line in open(info_path).readlines():
 			try:
 				words = shlex.split(line)
 				if(words[0] in (
@@ -319,123 +358,6 @@ def cmake_system_info(cmake_args):
 
 	return result
 
-def print_bash_complete_script(argparser):
-
-	import argparse
-	import datetime
-
-	year = datetime.datetime.now().year
-	print('#  Copyright 2012-%(year)s Matus Chochlik.' % {"year" : year})
-	print('#  Distributed under the Boost Software License, Version 1.0.')
-	print('#  (See accompanying file LICENSE_1_0.txt or copy at')
-	print('#  http://www.boost.org/LICENSE_1_0.txt)')
-	print('#')
-	print('#  Automatically generated file. Do NOT modify manually,')
-	print('#  edit %(self)s instead' % {"self" : os.path.basename(sys.argv[0])})
-	print(str())
-	print('function _configure_mirror()')
-	print('{')
-	print('	COMPREPLY=()')
-	print('	local curr="${COMP_WORDS[COMP_CWORD]}"')
-	print('	local prev="${COMP_WORDS[COMP_CWORD-1]}"')
-	print(str())
-
-	options_with_path=list()
-	for action in argparser._actions:
-		if action.type == os.path.abspath:
-			options_with_path += action.option_strings
-
-	print('	case "${prev}" in')
-	print('		-h|--help)')
-	print('			return 0;;')
-	print('		%s)' % str("|").join(options_with_path))
-	print('			COMPREPLY=($(compgen -f "${curr}"))')
-	print('			return 0;;')
-
-	for action in argparser._actions:
-		if action.choices is not None:
-			print('		%s)' % str("|").join(action.option_strings))
-			ch = str(" ").join([str(c) for c in action.choices])
-			print('			COMPREPLY=($(compgen -W "%s" -- "${curr}"))' % ch)
-			print('			return 0;;')
-
-	print('		*)')
-	print('	esac')
-	print(str())
-
-	print('	local only_once_opts=" \\')
-	for action in argparser._actions:
-		if type(action) != argparse._AppendAction:
-			print('		%s \\' % str(" ").join(action.option_strings))
-	print('	"')
-	print(str())
-
-	muog_list = list()
-	muog_id = 0
-	for group in argparser._mutually_exclusive_groups:
-		print('	local muog_%d=" \\' % muog_id)
-		for action in group._group_actions:
-			print('		%s \\' % str(" ").join(action.option_strings))
-		print('	"')
-		print(str())
-		muog_list.append('muog_%d' % muog_id)
-		muog_id += 1
-
-	print('	local repeated_opts=" \\')
-	for action in argparser._actions:
-		if type(action) == argparse._AppendAction:
-			print('		%s \\' % str(" ").join(action.option_strings))
-	print('	"')
-	print(str())
-	print('	local opts="${repeated_opts}"')
-	print(str())
-	print('	for opt in ${only_once_opts}')
-	print('	do')
-	print('		local opt_used=false')
-	print('		for pre in ${COMP_WORDS[@]}')
-	print('		do')
-	print('			if [ "${opt}" == "${pre}" ]')
-	print('			then opt_used=true && break')
-	print('			fi')
-	print('		done')
-	print('		if [ "${opt_used}" == "false" ]')
-	print('		then')
-	print('			for muog in "${%s}"' % str('}" "${').join(muog_list))
-	print('			do')
-	print('				local is_muo=false')
-	print('				for muo in ${muog}')
-	print('				do')
-	print('					if [ "${opt}" == "${muo}" ]')
-	print('					then is_muo=true && break')
-	print('					fi')
-	print('				done')
-	print('				if [ "${is_muo}" == "true" ]')
-	print('				then')
-	print('					for pre in ${COMP_WORDS[@]}')
-	print('					do')
-	print('						for muo in ${muog}')
-	print('						do')
-	print('							if [ "${pre}" == "${muo}" ]')
-	print('							then opt_used=true && break')
-	print('							fi')
-	print('						done')
-	print('					done')
-	print('				fi')
-	print('			done')
-	print(str())
-	print('			if [ "${opt_used}" == "false" ]')
-	print('			then opts="${opts} ${opt}"')
-	print('			fi')
-	print('		fi')
-	print('	done')
-	print(str())
-	print('	if [ ${COMP_CWORD} -le 1 ]')
-	print('	then opts="--help ${opts}"')
-	print('	fi')
-	print(str())
-	print('	COMPREPLY=($(compgen -W "${opts}" -- "${curr}"))')
-	print('}')
-	print('complete -F _configure_mirror ./config-mirror')
 
 # the main function
 def main(argv):
@@ -443,10 +365,19 @@ def main(argv):
 	# parse and process the command-line arguments
 	argparser = get_argument_parser()
 	options = argparser.parse_args()
+	cmake_env = os.environ.copy()
+	if sys.platform == 'win32':
+		env_list_sep = str(";")
+	else: env_list_sep = str(":")
 
 	# if we just wanted to generate the bash completion script
 	if options.generate_bash_complete:
-		print_bash_complete_script(argparser)
+		args.print_bash_complete_script(argparser)
+		return 0
+
+	# if we just wanted to generate the bash completion script
+	if options.generate_manual:
+		args.print_manual(argparser)
 		return 0
 
 	# if we are in quiet mode we may also go to quick mode
@@ -457,9 +388,28 @@ def main(argv):
 
 	# get the info from cmake if we are not in a hurry
 	if not options.quick:
-		cmake_info = cmake_system_info(options.cmake_options)
+		cmake_info = cmake_system_info(options)
 	else: cmake_info = list()
 
+	# the search prefix
+	for search_dir in options.search_dirs:
+		subdir = os.path.join(search_dir, "include")
+		if os.path.exists(subdir):
+			options.include_dirs.append(subdir)
+		subdir = os.path.join(search_dir, "lib")
+		if os.path.exists(subdir):
+			options.library_dirs.append(subdir)
+			subdir = os.path.join(subdir, "pkgconfig")
+			pkg_config_path = cmake_env.get("PKG_CONFIG_PATH", None)
+			if pkg_config_path:
+				pc_paths = pkg_config_path.split(env_list_sep)
+				pc_paths.append(subdir)
+				pkg_config_path = env_list_sep.join(pc_paths)
+			else: pkg_config_path = subdir
+			cmake_env["PKG_CONFIG_PATH"] = pkg_config_path
+
+	# search the LD_LIBRARY_PATH
+	options.library_dirs += search_ld_library_path()
 	# search the CXX and LD FLAGS if requested
 	if(options.use_cxxflags): options.include_dirs += search_cxxflags()
 	if(options.use_ldflags):  options.library_dirs += search_ldflags()
@@ -474,10 +424,6 @@ def main(argv):
 			options.install_prefix
 		)
 
-	# disable building the docs
-	if(not options.build_docs):
-		cmake_options.append("-DMIRROR_NO_DOCS=On")
-
 	# add paths for header lookop
 	if(options.include_dirs):
 		cmake_options.append("-DHEADER_SEARCH_PATHS="+";".join(options.include_dirs))
@@ -487,22 +433,51 @@ def main(argv):
 		cmake_options.append("-DLIBRARY_SEARCH_PATHS="+";".join(options.library_dirs))
 
 	# remove the build dir if it was requested
-	if(options.from_scratch and os.path.exists(options.build_dir)):
+	if(options.clean and os.path.exists(options.build_dir)):
 		try: shutil.rmtree(options.build_dir)
 		except OSError as os_error:
 			print("Warning failed to remove build directory")
+
+	# configure the test suite
+	if(options.no_tests):
+		cmake_options.append("-DNO_TESTS=On")
+
+	# set the generator if specified
+	if(options.generator):
+		cmake_options += ['-G', options.generator]
+
+	if(options.debug_config):
+		cmake_options += ["--debug-output", "--debug-trycompile"]
+
+	# get the work directory path
+	workdir = os.path.abspath(os.path.dirname(sys.argv[0]))
 
 	# create the build directory if necessary
 	if(not os.path.isdir(options.build_dir)):
 		os.makedirs(options.build_dir)
 
+	# write the build directory path to the 'BUILD_DIR' file
+	with open(os.path.join(workdir, "BUILD_DIR"), "wt") as bdf:
+		bdf.write(options.build_dir)
+
+	# try to write the reconfigure script
+	try:
+		rcsp = os.path.join(options.build_dir, "reconfig-mirror.sh") 
+		with open(rcsp, "wt") as rcs:
+			rcs.write("cmake %s\n" % workdir)
+			os.fchmod(rcs.fileno(), stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
+	except: pass
+
 	# compose the command line for calling cmake
-	workdir = os.path.abspath(os.path.dirname(sys.argv[0]))
 	cmake_cmd_line = ["cmake"] + cmake_options + options.cmake_options + [workdir]
 
 	# call cmake
 	try:
-		ret = subprocess.call(cmake_cmd_line,cwd=options.build_dir)
+		ret = subprocess.call(
+			cmake_cmd_line,
+			cwd=options.build_dir,
+			env=cmake_env
+		)
 		if ret < 0:
 			print("# Configuration killed by signal %d" % -ret)
 			sys.exit(-ret)
@@ -518,11 +493,15 @@ def main(argv):
 		})
 		sys.exit(3)
 
-	# try to get the processor count (use below)
-	try:
-		import multiprocessing
-		processor_count = multiprocessing.cpu_count()
-	except: processor_count = None
+	# use the specified number of jobs
+	if options.jobs is not None:
+		job_count = options.jobs
+	else:
+		# else try to get the processor count (use below)
+		try:
+			import multiprocessing
+			job_count = multiprocessing.cpu_count()+1
+		except: job_count = None
 
 	# print some info if not supressed
 	if not options.quiet:
@@ -530,18 +509,18 @@ def main(argv):
 
 		cmake_build_tool = cmake_info.get("CMAKE_BUILD_TOOL")
 		if(cmake_build_tool):
-			cmake_build_tool = shorten_command(cmake_build_tool)
-			path_to_build_dir = shortest_path_from_to(os.getcwd(), options.build_dir)
+			cmake_build_tool = paths.shorten_command(cmake_build_tool)
+			path_to_build_dir = paths.shortest_path_from_to(os.getcwd(), options.build_dir)
 
 			if(not options.build):
 				if(cmake_build_tool == "make"):
-					print("# To build mirror do the following:")
+					print("# To build Mirror do the following:")
 					print(str())
 					print("cd "+ path_to_build_dir)
-					if processor_count:
+					if job_count:
 						print("%(tool)s -j %(jobs)d" % {
 							"tool": cmake_build_tool,
-							"jobs": processor_count+1
+							"jobs": job_count
 						})
 					else: print(cmake_build_tool)
 					print(cmake_build_tool + " install")
@@ -557,19 +536,23 @@ def main(argv):
 
 		if build_tool_name in ("make",):
 			build_cmd_line = [cmake_build_tool];
-			if processor_count:
-				build_cmd_line += ["-j", str(processor_count-1)]
+			if job_count:
+				build_cmd_line += ["-j", str(job_count)]
 		elif build_tool_name in ("devenv.com", "devenv.exe"):
 			build_cmd_line = [
 				cmake_build_tool,
-				os.path.join(options.build_dir, "mirror.sln"),
+				os.path.join(options.build_dir, "Mirror.sln"),
 				"/Build",
 				"Release"
 			]
 		else: build_cmd_line = [ "cmake", "--build", options.build_dir ]
 
 		if build_cmd_line:
-			try: subprocess.call(build_cmd_line,cwd=options.build_dir)
+			try: subprocess.call(
+				build_cmd_line,
+				cwd=options.build_dir,
+				env=cmake_env
+			)
 			except OSError as os_error:
 				print( "# Build failed")
 				print("# Failed to execute '%(cmd)s': %(error)s" % {
