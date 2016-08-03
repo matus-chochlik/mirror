@@ -19,70 +19,117 @@ namespace mire {
 namespace ct {
 namespace aux {
 
+// basic_string
 template <
 	typename Temp,
 	typename Searched,
 	typename Found,
 	typename Failed
-> struct find_hlp;
+> struct find;
 
 template <typename Char>
-struct find_hlp<
+struct find<
 	basic_string<Char>,
 	basic_string<Char>,
 	true_type,
 	true_type
->
-{
-	typedef basic_string<Char> type;
-};
+>: basic_string<Char>
+{ };
 
 template <
 	typename Char,
 	Char ... CTn,
 	Char ... CSn
-> struct find_hlp<
+> struct find<
 	basic_string<Char, CTn...>,
 	basic_string<Char, CSn...>,
 	true_type,
 	false_type
->
-{
-	typedef basic_string<Char, CTn...> type;
-};
+>: basic_string<Char, CTn...>
+{ };
 
 template <
 	typename Char,
 	Char ... CTn,
 	Char ... CSn
-> struct find_hlp<
+> struct find<
 	basic_string<Char, CTn...>,
 	basic_string<Char, CSn...>,
 	false_type,
 	true_type
->
-{
-	typedef basic_string<Char> type;
-};
+>: basic_string<Char>
+{ };
 
 template <
 	typename Char,
 	Char CT,
 	Char ... CTn,
 	Char ... CSn
-> struct find_hlp<
+> struct find<
 	basic_string<Char, CT, CTn...>,
 	basic_string<Char, CSn...>,
 	false_type,
 	false_type
-> : find_hlp<
+> : find<
 	basic_string<Char, CTn...>,
 	basic_string<Char, CSn...>,
 	typename starts_with<
 		basic_string<Char, CTn...>,
 		basic_string<Char, CSn...>
 	>::type,
-	typename empty<basic_string<Char, CTn...> >::type
+	typename empty<basic_string<Char, CTn...>>::type
+>
+{ };
+
+// range
+template <>
+struct find<
+	range<>,
+	range<>,
+	true_type,
+	true_type
+>: range<>
+{ };
+
+template <
+	typename ... CT,
+	typename ... CS
+> struct find<
+	range<CT...>,
+	range<CS...>,
+	true_type,
+	false_type
+>: range<CT...>
+{ };
+
+template <
+	typename ... CT,
+	typename ... CS
+> struct find<
+	range<CT...>,
+	range<CS...>,
+	false_type,
+	true_type
+>: range<>
+{ };
+
+template <
+	typename C,
+	typename ... CT,
+	typename ... CS
+> struct find<
+	range<C, CT...>,
+	range<CS...>,
+	false_type,
+	false_type
+> : find<
+	range<CT...>,
+	range<CS...>,
+	typename starts_with<
+		range<CT...>,
+		range<CS...>
+	>::type,
+	typename empty<range<CT...>>::type
 >
 { };
 
@@ -92,14 +139,28 @@ template <typename Char, Char ... C1n, Char ... C2n>
 struct find<
 	basic_string<Char, C1n...>,
 	basic_string<Char, C2n...>
-> : aux::find_hlp<
+> : aux::find<
 	basic_string<Char, C1n...>,
 	basic_string<Char, C2n...>,
 	typename starts_with<
 		basic_string<Char, C1n...>,
 		basic_string<Char, C2n...>
 	>::type,
-	typename empty<basic_string<Char, C1n...> >::type
+	typename empty<basic_string<Char, C1n...>>::type
+> { };
+
+template <typename ... P1, typename ... P2>
+struct find<
+	range<P1...>,
+	range<P2...>
+> : aux::find<
+	range<P1...>,
+	range<P2...>,
+	typename starts_with<
+		range<P1...>,
+		range<P2...>
+	>::type,
+	typename empty<range<P1...>>::type
 > { };
 
 } // namespace ct

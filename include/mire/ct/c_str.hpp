@@ -2,7 +2,7 @@
  * @file mire/ct/c_str.hpp
  * @brief Implementation of the c_str function
  *
- *  Copyright 2008-2011 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -17,27 +17,22 @@
 namespace mire {
 namespace ct {
 
-/// A meta-function returning a C-null-terminated-string for a CT string
-/** This function returns a null-terminated C-string for the compile-time
- *  string, passed as the @a String template parameter.
- *
- *  @see basic_string
- *
- *  @ingroup ct_utils
- */
-template <typename String>
-struct c_str;
-
 template <typename Char, Char ... C>
 struct c_str<basic_string<Char, C...>>
 {
-	static constexpr const char* value = basic_string<Char, C...>::c_str;
+	typedef c_str type;
 
+	static constexpr Char value[] = { C..., '\0' };
+
+	constexpr
 	operator const char* (void) const
+	noexcept
 	{
 		return value;
 	}
 };
+template <typename Char, Char ... C>
+constexpr Char c_str<basic_string<Char, C...>>::value[];
 
 } // namespace ct
 } // namespace mire

@@ -12,7 +12,7 @@
 
 #include <mire/ct/default.hpp>
 #include <mire/ct/front.hpp>
-#include <mire/ct/skip_front.hpp>
+#include <mire/ct/skip.hpp>
 
 namespace mire {
 namespace ct {
@@ -21,12 +21,12 @@ namespace ct {
 
 template <typename Range, typename Position>
 struct at
- : front<skip_front<Range, Position>>
+ : front<skip<Range, Position>>
 { };
 
 template <typename Range, size_t Position>
 struct at_c
- : front<skip_front_c<Range, Position>>
+ : front<skip_c<Range, Position>>
 { };
 
 #endif // !MIRROR_DOCUMENTATION_ONLY

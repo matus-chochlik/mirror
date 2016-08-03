@@ -4,7 +4,7 @@
  *
  *  @author Matus Chochlik
  *
- *  Copyright 2006-2013 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2006-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
@@ -12,13 +12,20 @@
 #ifndef MIRROR_FWD_1310291537_HPP
 #define MIRROR_FWD_1310291537_HPP
 
+namespace mire {
 namespace mirror {
 
 template <typename X, typename M>
-struct meta { };
+struct meta
+{
+	typedef meta type;
+};
 
 template <typename X>
-struct spec { };
+struct spec
+{
+	typedef spec type;
+};
 
 template <typename T>
 struct mirrored_t;
@@ -44,12 +51,8 @@ struct named_mem_var;
 template <typename X>
 struct scope;
 
-namespace _reg {
-
-template <typename T>
-struct _type_reg;
-
-} // namespace _reg
+template <typename X>
+struct decl_type;
 
 namespace _aux {
 
@@ -59,5 +62,6 @@ struct _get_meta;
 } // namespace _aux
 
 } // namespace mirror
+} // namespace mire
 
 #endif // include guard

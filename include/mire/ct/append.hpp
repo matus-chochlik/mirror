@@ -22,15 +22,18 @@ namespace ct {
 
 template <typename ... P, typename ... T>
 struct append<range<P...>, T...>
-{
-	typedef range<P..., T...> type;
-};
+ : range<P..., T...>
+{ };
 
-template <char ... C, char ... T>
-struct append_char<basic_string<char, C...>, T...>
-{
-	typedef basic_string<char, C..., T...> type;
-};
+template <typename Char, Char ... C, Char ... T>
+struct append<basic_string<Char, C...>, integral_constant<Char, T>...>
+ : basic_string<Char, C..., T...>
+{ };
+
+template <typename Char, Char ... C, Char ... T>
+struct append_c<basic_string<Char, C...>, Char, T...>
+ : basic_string<Char, C..., T...>
+{ };
 
 #endif // !MIRROR_DOCUMENTATION_ONLY
 
