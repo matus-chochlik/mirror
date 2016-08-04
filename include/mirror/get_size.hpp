@@ -15,6 +15,7 @@
 #include "range.hpp"
 #include "string.hpp"
 #include "optional.hpp"
+#include "metaobject.hpp"
 
 namespace mirror {
 
@@ -39,6 +40,11 @@ struct op_get_size<range<P...>>
 template <typename Char, Char ... C>
 struct op_get_size<basic_string<Char, C...>>
  : unsigned_<sizeof ... (C)>
+{ };
+
+template <typename MO>
+struct op_get_size<metaobject<MO>>
+ : unsigned_<std::meta::get_size_v<MO>>
 { };
 
 template <typename X>

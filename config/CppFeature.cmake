@@ -4,10 +4,25 @@
 #   http://www.boost.org/LICENSE_1_0.txt
 #
 # we need C++14 + reflection
+if(NOT(EXISTS "${REFLEXPR_INCLUDE_DIR}"))
+	message(FATAL_ERROR
+		"The reflexpr header directory `${REFLEXPR_INCLUDE_DIR}` does not exist!"
+	)
+endif()
+
+if(NOT(EXISTS "${REFLEXPR_INCLUDE_DIR}/reflexpr"))
+	message(FATAL_ERROR "the reflexpr header file does not exist!")
+endif()
+
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	set(CPP_COMPILER_OPTIONS -std=c++14 -Xclang -freflection)
+	set(CPP_COMPILER_OPTIONS
+		-std=c++14
+		-isystem "${REFLEXPR_INCLUDE_DIR}"
+		-Xclang -freflection
+	)
 else()
-	message(FATAL_ERROR "Only clang is supported at the moment")
+	message(FATAL_ERROR "Only clang is supported at the moment!")
 endif()
 
 add_definitions(${CPP_COMPILER_OPTIONS})

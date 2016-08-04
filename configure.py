@@ -104,6 +104,17 @@ def get_argument_parser():
 		"""
 	)
 	argparser.add_argument(
+		"--reflexpr-include-dir", "-R",
+		dest="reflexpr_include_dir",
+		type=os.path.abspath,
+		action="store",
+		help="""
+			Specifies additional directory to search when looking for the
+			reflexpr header. The specified path must be absolute or relative
+			to the current working directory from which %(prog)s is invoked.
+		"""
+	)
+	argparser.add_argument(
 		"--include-dir", "-I",
 		dest="include_dirs",
 		type=os.path.abspath,
@@ -111,8 +122,8 @@ def get_argument_parser():
 		default=list(),
 		help="""
 			Specifies additional directory to search when looking for external
-			headers like GL/glew.h or GL3/gl3.h. The specified path
-			must be absolute or relative to the current working directory
+			headers. The specified path must be absolute or relative
+			to the current working directory
 			from which %(prog)s is invoked. This option may be specified
 			multiple times to add multiple directories to the search list.
 		"""
@@ -125,7 +136,7 @@ def get_argument_parser():
 		default=list(),
 		help="""
 			Specifies additional directory to search when looking for compiled
-			libraries like GL, GLEW, glut, png, etc. The specified
+			libraries. The specified
 			path must be absolute or relative to the current working directory
 			from which configure is invoked. This option may be specified
 			multiple times to add multiple directories to the search list.
@@ -423,6 +434,10 @@ def main(argv):
 			"-DCMAKE_INSTALL_PREFIX="+
 			options.install_prefix
 		)
+
+	# add paths for reflexpr header lookop
+	if(options.reflexpr_include_dir):
+		cmake_options.append("-DREFLEXPR_INCLUDE_DIR="+options.reflexpr_include_dir)
 
 	# add paths for header lookop
 	if(options.include_dirs):

@@ -15,7 +15,14 @@
 
 namespace mirror {
 
-
+template <typename MO>
+struct metaobject
+{
+	static_assert(
+		std::is_metaobject_v<MO>,
+		"Template argument to `metaobject` must be a metaobject type"
+	);
+};
 
 } // namespace mirror
 
