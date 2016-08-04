@@ -21,4 +21,4 @@ if(NOT MIRROR_NO_DOCS)
 endif()
 # TODO
 #add_subdirectory(example)
-#add_subdirectory(test)
+add_subdirectory(test)
