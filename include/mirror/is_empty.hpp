@@ -1,6 +1,6 @@
 /**
- * @file mirror/empty.hpp
- * @brief Implementation of the `empty` operation
+ * @file mirror/is_empty.hpp
+ * @brief Implementation of the `is_empty` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -14,34 +14,35 @@
 #include "integers.hpp"
 #include "range.hpp"
 #include "string.hpp"
+#include "optional.hpp"
 
 namespace mirror {
 
 template <typename X>
-struct op_empty;
+struct op_is_empty;
 
 template <typename T>
-struct op_empty<optional<T>>
+struct op_is_empty<optional<T>>
  : false_
 { };
 
 template <>
-struct op_empty<optional<nil_t>>
+struct op_is_empty<optional<none>>
  : true_
 { };
 
 template <typename ... P>
-struct op_empty<range<P...>>
+struct op_is_empty<range<P...>>
  : bool_<sizeof ... (P) == 0>
 { };
 
 template <typename Char, Char ... C>
-struct op_empty<basic_string<Char, C...>>
+struct op_is_empty<basic_string<Char, C...>>
  : bool_<sizeof ... (C) == 0>
 { };
 
 template <typename X>
-struct empty = typename op_empty<X>::type;
+using is_empty = typename op_is_empty<X>::type;
 
 } // namespace mirror
 

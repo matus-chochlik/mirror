@@ -11,6 +11,8 @@
 #ifndef MIRROR_OPTIONAL_1105240825_HPP
 #define MIRROR_OPTIONAL_1105240825_HPP
 
+#include "none.hpp"
+
 namespace mirror {
 
 /// A single value container

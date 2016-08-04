@@ -12,6 +12,7 @@
 #define MIRROR_INTEGERS_1105240825_HPP
 
 #include <type_traits>
+#include "identity.hpp"
 
 namespace mirror {
 
