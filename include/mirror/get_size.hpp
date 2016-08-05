@@ -18,6 +18,7 @@
 #include "metaobjects.hpp"
 
 namespace mirror {
+namespace _aux {
 
 template <typename X>
 struct op_get_size;
@@ -47,8 +48,10 @@ struct op_get_size<meta_object<MO>>
  : unsigned_<std::meta::get_size_v<MO>>
 { };
 
+} // namespace _aux
+
 template <typename X>
-using get_size = typename op_get_size<X>::type;
+using get_size = eval<_aux::op_get_size<X>>;
 
 } // namespace mirror
 

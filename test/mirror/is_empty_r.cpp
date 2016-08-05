@@ -21,27 +21,27 @@ BOOST_AUTO_TEST_CASE(mirror_is_empty_optional)
 {
 	using namespace mirror;
 
-	BOOST_CHECK(( is_empty<empty_optional>::value));
-	BOOST_CHECK((!is_empty<optional<long>>::value));
+	BOOST_CHECK(( value<is_empty<empty_optional>>));
+	BOOST_CHECK((!value<is_empty<optional<long>>>));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_is_empty_range)
 {
 	using namespace mirror;
 
-	BOOST_CHECK(( is_empty<empty_range>::value));
-	BOOST_CHECK((!is_empty<range<long>>::value));
-	BOOST_CHECK((!is_empty<range<int, long, float>>::value));
+	BOOST_CHECK(( value<is_empty<empty_range>>));
+	BOOST_CHECK((!value<is_empty<range<long>>>));
+	BOOST_CHECK((!value<is_empty<range<int, long, float>>>));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_is_empty_string)
 {
 	using namespace mirror;
 
-	BOOST_CHECK(( is_empty<empty_string>::value));
-	BOOST_CHECK((!is_empty<string<'x'>>::value));
-	BOOST_CHECK((!is_empty<string<'s','t','r'>>::value));
-	BOOST_CHECK((!is_empty<basic_string<wchar_t,L'a',L'b'>>::value));
+	BOOST_CHECK(( value<is_empty<empty_string>>));
+	BOOST_CHECK((!value<is_empty<string<'x'>>>));
+	BOOST_CHECK((!value<is_empty<string<'s','t','r'>>>));
+	BOOST_CHECK((!value<is_empty<basic_string<wchar_t,L'a',L'b'>>>));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

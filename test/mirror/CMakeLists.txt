@@ -14,3 +14,4 @@ foreach(RUNTIME_TEST ${RUNTIME_TESTS})
 	add_runtime_test(mirror ${TEST_NAME})
 endforeach()
 
+add_runtime_test_dependency(mirror equal_r concat_r)

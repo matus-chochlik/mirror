@@ -17,6 +17,7 @@
 #include "optional.hpp"
 
 namespace mirror {
+namespace _aux {
 
 template <typename X>
 struct op_is_empty;
@@ -41,8 +42,10 @@ struct op_is_empty<basic_string<Char, C...>>
  : bool_<sizeof ... (C) == 0>
 { };
 
+} // namespace _aux
+
 template <typename X>
-using is_empty = typename op_is_empty<X>::type;
+using is_empty = eval<_aux::op_is_empty<X>>;
 
 } // namespace mirror
 

@@ -21,32 +21,32 @@ BOOST_AUTO_TEST_CASE(mirror_get_size_optional)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((get_size<empty_optional>::value == 0));
-	BOOST_CHECK((get_size<optional<long>>::value == 1));
-	BOOST_CHECK((get_size<optional<bool>>::value == 1));
-	BOOST_CHECK((get_size<optional<char>>::value == 1));
+	BOOST_CHECK((value<get_size<empty_optional>> == 0));
+	BOOST_CHECK((value<get_size<optional<long>>> == 1));
+	BOOST_CHECK((value<get_size<optional<bool>>> == 1));
+	BOOST_CHECK((value<get_size<optional<char>>> == 1));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_get_size_range)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((get_size<empty_range>::value == 0));
-	BOOST_CHECK((get_size<range<long>>::value == 1));
-	BOOST_CHECK((get_size<range<short, int>>::value == 2));
-	BOOST_CHECK((get_size<range<int, long, float>>::value == 3));
-	BOOST_CHECK((get_size<range<long, float, double, bool>>::value == 4));
+	BOOST_CHECK((value<get_size<empty_range>> == 0));
+	BOOST_CHECK((value<get_size<range<long>>> == 1));
+	BOOST_CHECK((value<get_size<range<short, int>>> == 2));
+	BOOST_CHECK((value<get_size<range<int, long, float>>> == 3));
+	BOOST_CHECK((value<get_size<range<long, float, double, bool>>> == 4));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_get_size_string)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((get_size<empty_string>::value == 0));
-	BOOST_CHECK((get_size<string<'x'>>::value == 1));
-	BOOST_CHECK((get_size<string<'x','y'>>::value == 2));
-	BOOST_CHECK((get_size<string<'s','t','r'>>::value == 3));
-	BOOST_CHECK((get_size<basic_string<wchar_t,L'a',L'b',L'c',L'd'>>::value == 4));
+	BOOST_CHECK((value<get_size<empty_string>> == 0));
+	BOOST_CHECK((value<get_size<string<'x'>>> == 1));
+	BOOST_CHECK((value<get_size<string<'x','y'>>> == 2));
+	BOOST_CHECK((value<get_size<basic_string<wchar_t,L's',L't',L'r'>>> == 3));
+	BOOST_CHECK((value<get_size<string<'a','b','c','d'>>> == 4));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

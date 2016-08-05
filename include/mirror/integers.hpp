@@ -22,11 +22,17 @@ using bool_ = std::integral_constant<bool, B>;
 using true_ = bool_<true>;
 using false_ = bool_<false>;
 
+template <char C>
+using char_ = std::integral_constant<char, C>;
+
 template <int I>
 using int_ = std::integral_constant<int, I>;
 
 template <unsigned U>
 using unsigned_ = std::integral_constant<unsigned, U>;
+
+template <typename Int>
+constexpr auto value = Int::value;
 
 } // namespace mirror
 

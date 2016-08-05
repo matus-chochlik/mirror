@@ -19,6 +19,9 @@ struct identity
 	typedef T type;
 };
 
+template <typename X>
+using eval = typename X::type;
+
 } // namespace mirror
 
 #endif //include guard
