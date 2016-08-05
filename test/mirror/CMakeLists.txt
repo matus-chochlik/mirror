@@ -12,6 +12,5 @@ file(GLOB RUNTIME_TESTS *_r.cpp)
 foreach(RUNTIME_TEST ${RUNTIME_TESTS})
 	get_filename_component(TEST_NAME "${RUNTIME_TEST}" NAME_WE)
 	add_runtime_test(mirror ${TEST_NAME})
-	message(${TEST_NAME})
 endforeach()
 

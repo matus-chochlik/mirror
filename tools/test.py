@@ -18,7 +18,7 @@ def test_src_dir():
 
 def build_dir():
 	try:
-		p = open(os.path.join(root_dir(), "BUILD_DIR"), "rt").read()
+		p = open(os.path.join(root_dir(), "BINARY_DIR"), "rt").read()
 		if os.path.isdir(p):
 			return p
 	except: pass

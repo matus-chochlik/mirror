@@ -471,18 +471,6 @@ def main(argv):
 	if(not os.path.isdir(options.build_dir)):
 		os.makedirs(options.build_dir)
 
-	# write the build directory path to the 'BUILD_DIR' file
-	with open(os.path.join(workdir, "BUILD_DIR"), "wt") as bdf:
-		bdf.write(options.build_dir)
-
-	# try to write the reconfigure script
-	try:
-		rcsp = os.path.join(options.build_dir, "reconfig-mirror.sh") 
-		with open(rcsp, "wt") as rcs:
-			rcs.write("cmake %s\n" % workdir)
-			os.fchmod(rcs.fileno(), stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
-	except: pass
-
 	# compose the command line for calling cmake
 	cmake_cmd_line = ["cmake"] + cmake_options + options.cmake_options + [workdir]
 
