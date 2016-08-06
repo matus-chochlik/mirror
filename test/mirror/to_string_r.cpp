@@ -15,17 +15,18 @@
 
 #include <mirror/to_string.hpp>
 #include <mirror/equal.hpp>
+#include <reflexpr>
 
 BOOST_AUTO_TEST_SUITE(mirror_to_string)
 
 struct sl_abcde
 {
-	static constexpr char value[6] = "abcde";
+	static constexpr char value[] = "abcde";
 };
 
 struct sl_foo
 {
-	static constexpr char value[4] = "foo";
+	static constexpr char value[] = "foo";
 };
 
 BOOST_AUTO_TEST_CASE(mirror_to_string_1)
@@ -34,6 +35,9 @@ BOOST_AUTO_TEST_CASE(mirror_to_string_1)
 
 	BOOST_CHECK((value<equal<to_string<sl_abcde>, string<'a','b','c','d','e'>>>));
 	BOOST_CHECK((value<equal<to_string<sl_foo>, string<'f','o','o'>>>));
+
+	using sl_int = std::meta::get_base_name<reflexpr(int)>;
+	BOOST_CHECK((value<equal<to_string<sl_int>, string<'i','n','t'>>>));
 
 }
 
