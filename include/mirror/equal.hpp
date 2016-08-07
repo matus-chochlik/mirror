@@ -1,6 +1,6 @@
 /**
  * @file mirror/equal.hpp
- * @brief Implementation of `equal` operations
+ * @brief Implementation of `equal` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.

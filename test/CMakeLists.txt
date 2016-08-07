@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 2.8)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 if(Boost_FOUND)
+	enable_testing()
 	add_subdirectory("mirror")
 else()
 	message(WARNING "Boost.Test required for testing but not found")

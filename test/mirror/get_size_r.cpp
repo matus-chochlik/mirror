@@ -1,6 +1,6 @@
 /**
  *  .file test/mirror/get_size_r.cpp
- *  .brief Test case for compile-time get_size meta-function
+ *  .brief Test case for compile-time get_size operation
  *
  *  .author Matus Chochlik
  *

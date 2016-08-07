@@ -1,6 +1,6 @@
 /**
  *  .file test/mirror/to_string_r.cpp
- *  .brief Test case for compile-time to_string meta-function
+ *  .brief Test case for compile-time to_string operation
  *
  *  .author Matus Chochlik
  *
@@ -21,12 +21,12 @@ BOOST_AUTO_TEST_SUITE(mirror_to_string)
 
 struct sl_abcde
 {
-	static constexpr char value[] = "abcde";
+	static constexpr const char value[] = "abcde";
 };
 
 struct sl_foo
 {
-	static constexpr char value[] = "foo";
+	static constexpr const char value[] = "foo";
 };
 
 BOOST_AUTO_TEST_CASE(mirror_to_string_1)

@@ -30,11 +30,15 @@ struct basic_string_from_lit_cls<Char, SLC, index_seq<I...>>
  : basic_string<Char, SLC::value[I]...>
 { };
 
-template <typename SLS>
+template <typename SLC>
 struct op_to_string
  : basic_string_from_lit_cls<
-	char, SLS,
-	make_index_seq<std::extent<decltype(SLS::value)>::value-1>
+	char, SLC,
+	typename std::conditional<
+		std::extent<decltype(SLC::value)>::value != 0,
+		make_index_seq<std::extent<decltype(SLC::value)>::value-1>,
+		make_index_seq<0>
+	>::type
 > { };
 
 template <typename Char, Char ... C>

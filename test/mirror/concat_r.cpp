@@ -1,6 +1,6 @@
 /**
  *  .file test/mirror/concat_r.cpp
- *  .brief Test case for compile-time concat meta-function
+ *  .brief Test case for compile-time concat operation
  *
  *  .author Matus Chochlik
  *

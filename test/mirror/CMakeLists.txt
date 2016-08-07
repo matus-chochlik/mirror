@@ -15,3 +15,4 @@ foreach(RUNTIME_TEST ${RUNTIME_TESTS})
 endforeach()
 
 add_runtime_test_dependency(mirror equal_r concat_r)
+add_runtime_test_dependency(mirror equal_r to_string_r)

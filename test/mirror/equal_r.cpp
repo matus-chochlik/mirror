@@ -1,6 +1,6 @@
 /**
  *  .file test/mirror/equal_r.cpp
- *  .brief Test case for compile-time equal meta-function
+ *  .brief Test case for compile-time equal operation
  *
  *  .author Matus Chochlik
  *

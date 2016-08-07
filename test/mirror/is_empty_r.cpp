@@ -1,6 +1,6 @@
 /**
  *  .file test/mirror/is_empty_r.cpp
- *  .brief Test case for compile-time is_empty meta-function
+ *  .brief Test case for compile-time is_empty operation
  *
  *  .author Matus Chochlik
  *
