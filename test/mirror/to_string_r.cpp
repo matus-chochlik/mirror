@@ -21,12 +21,12 @@ BOOST_AUTO_TEST_SUITE(mirror_to_string)
 
 struct sl_abcde
 {
-	static constexpr const char value[] = "abcde";
+	static constexpr const char cvalue[] = "abcde";
 };
 
 struct sl_foo
 {
-	static constexpr const char value[] = "foo";
+	static constexpr const char cvalue[] = "foo";
 };
 
 BOOST_AUTO_TEST_CASE(mirror_to_string_1)

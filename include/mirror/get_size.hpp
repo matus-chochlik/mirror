@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_EMPTY_1105240825_HPP
-#define MIRROR_EMPTY_1105240825_HPP
+#ifndef MIRROR_GET_SIZE_1105240825_HPP
+#define MIRROR_GET_SIZE_1105240825_HPP
 
 #include "integers.hpp"
 #include "range.hpp"

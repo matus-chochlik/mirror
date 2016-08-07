@@ -27,19 +27,18 @@ struct basic_string_from_lit_cls;
 
 template <typename Char, typename SLC, std::size_t ... I>
 struct basic_string_from_lit_cls<Char, SLC, index_seq<I...>>
- : basic_string<Char, SLC::value[I]...>
+ : basic_string<Char, SLC::cvalue[I]...>
 { };
 
 template <typename SLC>
+constexpr std::size_t str_lit_len = 
+	std::extent<decltype(SLC::cvalue)>::value?
+	std::extent<decltype(SLC::cvalue)>::value-1:0;
+
+template <typename SLC>
 struct op_to_string
- : basic_string_from_lit_cls<
-	char, SLC,
-	typename std::conditional<
-		std::extent<decltype(SLC::value)>::value != 0,
-		make_index_seq<std::extent<decltype(SLC::value)>::value-1>,
-		make_index_seq<0>
-	>::type
-> { };
+ : basic_string_from_lit_cls<char, SLC, make_index_seq<str_lit_len<SLC>>>
+{ };
 
 template <typename Char, Char ... C>
 struct op_to_string<basic_string<Char, C...>>
