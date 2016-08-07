@@ -33,12 +33,20 @@ BOOST_AUTO_TEST_CASE(mirror_to_string_1)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((value<equal<to_string<sl_abcde>, string<'a','b','c','d','e'>>>));
-	BOOST_CHECK((value<equal<to_string<sl_foo>, string<'f','o','o'>>>));
+	BOOST_CHECK((value<equal<
+		to_string<sl_abcde>,
+		string<'a','b','c','d','e'>
+	>>));
+	BOOST_CHECK((value<equal<
+		to_string<sl_foo>,
+		string<'f','o','o'>
+	>>));
 
 	using sl_int = std::meta::get_base_name<reflexpr(int)>;
-	BOOST_CHECK((value<equal<to_string<sl_int>, string<'i','n','t'>>>));
-
+	BOOST_CHECK((value<equal<
+		to_string<sl_int>,
+		string<'i','n','t'>
+	>>));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

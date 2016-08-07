@@ -34,12 +34,12 @@ struct op_get_front<range<H, T...>>
 
 template <typename Char>
 struct op_get_front<basic_string<Char>>
- : std::integral_constant<Char, Char(0)>
+ : int_const<Char, Char(0)>
 { };
 
 template <typename Char, Char CH, Char ... CT>
 struct op_get_front<basic_string<Char, CH, CT...>>
- : std::integral_constant<Char, CH>
+ : int_const<Char, CH>
 { };
 
 } // namespace _aux

@@ -1,0 +1,32 @@
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
+
+function _mirror_run_example()
+{
+	COMPREPLY=()
+	local curr="${COMP_WORDS[COMP_CWORD]}"
+	local first="${COMP_WORDS[1]}"
+
+	exampledir="$(<SOURCE_DIR)/example"
+
+	if [[ ${COMP_CWORD} -le 1 ]]
+	then
+		local sc='s/^\s*add_subdirectory(\(["]\?\)\([^"]\+\)\1).*$/\2/p'
+		local libs=$(sed -n ${sc} "${exampledir}/CMakeLists.txt")
+		COMPREPLY=($(compgen -W "${libs}" -- "${curr}"))
+		return 0
+	else
+		local exc=(${COMP_WORDS[@]:2})
+		local examples=$(
+			ls ${exampledir}/${first}/[0-9][0-9][0-9]_*.cpp |
+			xargs -i basename {} .cpp |
+			grep -v -w -e '' ${exc[@]/#/-e}
+		)
+		COMPREPLY=($(compgen -W "${examples}" -- "${curr}"))
+		return 0
+	fi
+}
+
+complete -F _mirror_run_example ./run_example-mirror

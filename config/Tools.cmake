@@ -12,6 +12,14 @@ configure_file(
 	"${PROJECT_BINARY_DIR}/" COPYONLY
 )
 configure_file(
+	"${PROJECT_SOURCE_DIR}/config/tools/complete-run_example"
+	"${PROJECT_BINARY_DIR}/" COPYONLY
+)
+configure_file(
+	"${PROJECT_SOURCE_DIR}/config/tools/run_example-mirror"
+	"${PROJECT_BINARY_DIR}/" COPYONLY
+)
+configure_file(
 	"${PROJECT_SOURCE_DIR}/config/tools/reconfig-mirror"
 	"${PROJECT_BINARY_DIR}/" COPYONLY
 )

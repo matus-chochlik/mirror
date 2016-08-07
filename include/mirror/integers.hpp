@@ -16,20 +16,23 @@
 
 namespace mirror {
 
+template <typename Int, Int I>
+using int_const = std::integral_constant<Int, I>;
+
 template <bool B>
-using bool_ = std::integral_constant<bool, B>;
+using bool_ = int_const<bool, B>;
 
 using true_ = bool_<true>;
 using false_ = bool_<false>;
 
 template <char C>
-using char_ = std::integral_constant<char, C>;
+using char_ = int_const<char, C>;
 
 template <int I>
-using int_ = std::integral_constant<int, I>;
+using int_ = int_const<int, I>;
 
 template <unsigned U>
-using unsigned_ = std::integral_constant<unsigned, U>;
+using unsigned_ = int_const<unsigned, U>;
 
 template <typename Int>
 constexpr auto value = Int::value;

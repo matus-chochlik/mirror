@@ -23,14 +23,38 @@ BOOST_AUTO_TEST_CASE(mirror_get_front_range)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((value<std::is_same<get_front<empty_range>, none>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<long>>, long>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<char>>, char>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<int>>, int>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<int, double>>, int>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<int, int, int>>, int>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<double, float>>, double>>));
-	BOOST_CHECK((value<std::is_same<get_front<range<char, int, bool>>, char>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<empty_range>,
+		none
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<long>>,
+		long
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<char>>,
+		char
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<int>>,
+		int
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<int, double>>,
+		int
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<int, int, int>>,
+		int
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<double, float>>,
+		double
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get_front<range<char, int, bool>>,
+		char
+	>>));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_get_front_string)

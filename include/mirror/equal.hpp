@@ -24,7 +24,7 @@ struct op_equal;
 
 // integers
 template <typename IL, typename IR, IL VL, IR VR>
-struct op_equal<std::integral_constant<IL, VL>, std::integral_constant<IR, VR>>
+struct op_equal<int_const<IL, VL>, int_const<IR, VR>>
  : bool_<bool(VL == VR)>
 { };
 
