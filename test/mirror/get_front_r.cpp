@@ -14,7 +14,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mirror/get_front.hpp>
-#include <mirror/integers.hpp>
+#include <mirror/int_const.hpp>
 #include <type_traits>
 
 BOOST_AUTO_TEST_SUITE(mirror_get_front)

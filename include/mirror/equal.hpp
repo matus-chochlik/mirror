@@ -11,7 +11,7 @@
 #ifndef MIRROR_EQUAL_1105240825_HPP
 #define MIRROR_EQUAL_1105240825_HPP
 
-#include "integers.hpp"
+#include "int_const.hpp"
 #include "range.hpp"
 #include "string.hpp"
 #include "optional.hpp"
@@ -22,7 +22,7 @@ namespace _aux {
 template <typename L, typename R>
 struct op_equal;
 
-// integers
+// int_const
 template <typename IL, typename IR, IL VL, IR VR>
 struct op_equal<int_const<IL, VL>, int_const<IR, VR>>
  : bool_<bool(VL == VR)>

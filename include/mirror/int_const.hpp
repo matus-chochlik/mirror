@@ -1,5 +1,5 @@
 /**
- * @file mirror/integers.hpp
+ * @file mirror/int_const.hpp
  * @brief Compile-time integers
  *
  * Copyright Matus Chochlik.

@@ -11,7 +11,7 @@
 #ifndef MIRROR_POP_FRONT_1105240825_HPP
 #define MIRROR_POP_FRONT_1105240825_HPP
 
-#include "integers.hpp"
+#include "int_const.hpp"
 #include "range.hpp"
 #include "string.hpp"
 #include "none.hpp"
