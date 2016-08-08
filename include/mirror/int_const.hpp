@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_INTEGERS_1105240825_HPP
-#define MIRROR_INTEGERS_1105240825_HPP
+#ifndef MIRROR_INT_CONST_1105240825_HPP
+#define MIRROR_INT_CONST_1105240825_HPP
 
 #include <type_traits>
 #include "identity.hpp"
