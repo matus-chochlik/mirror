@@ -1,6 +1,6 @@
 /**
- * @file mirror/get_front.hpp
- * @brief Implementation of the `get_front` operation
+ * @file mirror/get.hpp
+ * @brief Implementation of the `get` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -8,47 +8,50 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_GET_FRONT_1105240825_HPP
-#define MIRROR_GET_FRONT_1105240825_HPP
+#ifndef MIRROR_GET_1105240825_HPP
+#define MIRROR_GET_1105240825_HPP
 
 #include "int_const.hpp"
 #include "optional.hpp"
 #include "range.hpp"
 #include "string.hpp"
+#include "identity.hpp"
 
 namespace mirror {
 namespace _aux {
 
 template <typename X>
-struct op_get_front;
+struct op_get;
 
 template <>
-struct op_get_front<empty_range>
- : empty_optional
+struct op_get<empty_range>
+ : none
+{ };
+
+template <typename T>
+struct op_get<optional<T>>
+ : identity<T>
 { };
 
 template <typename H, typename ... T>
-struct op_get_front<range<H, T...>>
- : optional<H>
+struct op_get<range<H, T...>>
+ : identity<H>
 { };
 
 template <typename Char>
-struct op_get_front<basic_string<Char>>
- : empty_optional
+struct op_get<basic_string<Char>>
+ : int_const<Char, Char(0)>
 { };
 
 template <typename Char, Char CH, Char ... CT>
-struct op_get_front<basic_string<Char, CH, CT...>>
- : optional<int_const<Char, CH>>
+struct op_get<basic_string<Char, CH, CT...>>
+ : int_const<Char, CH>
 { };
 
 } // namespace _aux
 
 template <typename X>
-using get_front = eval<_aux::op_get_front<X>>;
-
-template <typename X>
-using front = get_front<X>;
+using get = eval<_aux::op_get<X>>;
 
 } // namespace mirror
 

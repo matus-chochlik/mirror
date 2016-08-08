@@ -14,6 +14,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mirror/equal.hpp>
+#include <mirror/value.hpp>
 
 BOOST_AUTO_TEST_SUITE(mirror_equal)
 

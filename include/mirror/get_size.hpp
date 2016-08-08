@@ -53,6 +53,9 @@ struct op_get_size<meta_object<MO>>
 template <typename X>
 using get_size = eval<_aux::op_get_size<X>>;
 
+template <typename X>
+using size = get_size;
+
 } // namespace mirror
 
 #endif //include guard

@@ -15,6 +15,7 @@
 
 #include <mirror/concat.hpp>
 #include <mirror/equal.hpp>
+#include <mirror/value.hpp>
 
 BOOST_AUTO_TEST_SUITE(mirror_concat)
 

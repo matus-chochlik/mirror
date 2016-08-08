@@ -15,6 +15,8 @@
 
 #include <mirror/get_front.hpp>
 #include <mirror/int_const.hpp>
+#include <mirror/get.hpp>
+#include <mirror/value.hpp>
 #include <type_traits>
 
 BOOST_AUTO_TEST_SUITE(mirror_get_front)
@@ -25,35 +27,39 @@ BOOST_AUTO_TEST_CASE(mirror_get_front_range)
 
 	BOOST_CHECK((value<std::is_same<
 		get_front<empty_range>,
-		none
+		empty_optional
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<long>>,
+		optional<long>
+	>>));
+	BOOST_CHECK((value<std::is_same<
+		get<front<range<long>>>,
 		long
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<char>>,
-		char
+		optional<char>
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<int>>,
-		int
+		optional<int>
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<int, double>>,
-		int
+		optional<int>
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<int, int, int>>,
-		int
+		optional<int>
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<double, float>>,
-		double
+		optional<double>
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<char, int, bool>>,
-		char
+		optional<char>
 	>>));
 }
 

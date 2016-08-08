@@ -72,8 +72,8 @@ default_opts = [
 	'-x', 'c++',
 	'-isystem', '/usr/include',
 	'-isystem', '/usr/local/include',
+	'-isystem', ReflexprDir(),
 	'-I', os.path.join(BuildDir(), "include"),
-	'-I', ReflexprDir(),
 	'-I', 'include'
 ]
 

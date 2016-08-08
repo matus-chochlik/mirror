@@ -34,9 +34,6 @@ using int_ = int_const<int, I>;
 template <unsigned U>
 using unsigned_ = int_const<unsigned, U>;
 
-template <typename Int>
-constexpr auto value = Int::value;
-
 } // namespace mirror
 
 #endif //include guard

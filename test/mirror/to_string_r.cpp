@@ -15,6 +15,7 @@
 
 #include <mirror/to_string.hpp>
 #include <mirror/equal.hpp>
+#include <mirror/value.hpp>
 #include <reflexpr>
 
 BOOST_AUTO_TEST_SUITE(mirror_to_string)

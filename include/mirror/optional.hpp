@@ -29,7 +29,7 @@ struct optional
 };
 
 /// Convenience typedef for empty optional
-typedef optional<none> empty_optional;
+using empty_optional = optional<none> ;
 
 } // namespace mirror
 

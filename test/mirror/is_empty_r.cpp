@@ -14,6 +14,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mirror/is_empty.hpp>
+#include <mirror/value.hpp>
 
 BOOST_AUTO_TEST_SUITE(mirror_is_empty)
 

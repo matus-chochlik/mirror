@@ -12,6 +12,7 @@
 #define MIRROR_METAOBJECTS_1105240825_HPP
 
 #include <reflexpr>
+#include "int_const.hpp"
 
 namespace mirror {
 
@@ -24,11 +25,19 @@ struct meta_object
 	);
 };
 
+namespace _aux {
+
+template <typename X>
+struct is_meta_object
+ : false_
+{ };
+
 template <typename MO>
-struct meta_object_sequence
-{
-	static_assert(std::meta::ObjectSequence<MO>, "");
-};
+struct is_meta_object<meta_object<MO>>
+ : true_
+{ };
+
+} // namespace _aux
 
 } // namespace mirror
 

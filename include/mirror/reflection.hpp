@@ -16,7 +16,7 @@
 
 namespace mirror {
 
-#define MIRRORED(...) meta_object<reflexpr(__VA_ARGS__)>
+#define MIRRORED(...) ::mirror::meta_object<reflexpr(__VA_ARGS__)>
 
 } // namespace mirror
 

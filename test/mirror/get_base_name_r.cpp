@@ -15,6 +15,7 @@
 
 #include <mirror/get_base_name.hpp>
 #include <mirror/equal.hpp>
+#include <mirror/value.hpp>
 #include <mirror/reflection.hpp>
 
 BOOST_AUTO_TEST_SUITE(mirror_get_base_name)
