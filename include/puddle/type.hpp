@@ -12,6 +12,7 @@
 #define PUDDLE_TYPE_1105240825_HPP
 
 #include <mirror/identity.hpp>
+#include <mirror/type_ops.hpp>
 
 namespace puddle {
 

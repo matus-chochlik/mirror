@@ -12,6 +12,7 @@
 #define MIRROR_STRING_OPS_1105240825_HPP
 
 #include "string.hpp"
+#include "int_const.hpp"
 #include <iosfwd>
 #include <string>
 
@@ -19,12 +20,33 @@ namespace mirror {
 
 template <typename Char, Char ... CL, Char ... CR>
 static constexpr inline
+false_
+operator == (basic_string<Char, CL...>, basic_string<Char, CR...>)
+noexcept { return {}; }
+
+template <typename Char, Char ... C>
+static constexpr inline
+true_
+operator == (basic_string<Char, C...>, basic_string<Char, C...>)
+noexcept { return {}; }
+
+template <typename Char, Char ... CL, Char ... CR>
+static constexpr inline
+true_
+operator != (basic_string<Char, CL...>, basic_string<Char, CR...>)
+noexcept { return {}; }
+
+template <typename Char, Char ... C>
+static constexpr inline
+false_
+operator != (basic_string<Char, C...>, basic_string<Char, C...>)
+noexcept { return {}; }
+
+template <typename Char, Char ... CL, Char ... CR>
+static constexpr inline
 basic_string<Char, CL..., CR...>
 operator + (basic_string<Char, CL...>, basic_string<Char, CR...>)
-noexcept
-{
-	return {};
-}
+noexcept { return {}; }
 
 template <typename Char, Char ... C>
 static inline
