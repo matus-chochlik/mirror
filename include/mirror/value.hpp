@@ -12,7 +12,7 @@
 #define MIRROR_VALUE_1105240825_HPP
 
 #include "int_const.hpp"
-#include "optional.hpp"
+#include "none.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -26,13 +26,8 @@ struct op_value<int_const<Int, I>>
 { };
 
 template <>
-struct op_value<empty_optional>
+struct op_value<none>
  : int_const<int, 0>
-{ };
-
-template <typename X>
-struct op_value<optional<X>>
- : op_value<X>
 { };
 
 } // namespace _aux

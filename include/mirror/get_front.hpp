@@ -11,10 +11,12 @@
 #ifndef MIRROR_GET_FRONT_1105240825_HPP
 #define MIRROR_GET_FRONT_1105240825_HPP
 
+#include "conditional.hpp"
 #include "int_const.hpp"
-#include "optional.hpp"
+#include "none.hpp"
 #include "range.hpp"
 #include "string.hpp"
+#include "metaobjects.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -24,23 +26,31 @@ struct op_get_front;
 
 template <>
 struct op_get_front<empty_range>
- : empty_optional
+ : none
 { };
 
 template <typename H, typename ... T>
 struct op_get_front<range<H, T...>>
- : optional<H>
+ : identity<H>
 { };
 
 template <typename Char>
 struct op_get_front<basic_string<Char>>
- : empty_optional
+ : none
 { };
 
 template <typename Char, Char CH, Char ... CT>
 struct op_get_front<basic_string<Char, CH, CT...>>
- : optional<int_const<Char, CH>>
+ : int_const<Char, CH>
 { };
+
+template <typename MOS>
+struct op_get_front<meta_object_sequence<MOS>>
+ : conditional<
+	bool_<(0 < std::meta::get_size_v<MOS>)>,
+	meta_object<std::meta::get_element_m<MOS, 0>>,
+	none
+> { };
 
 } // namespace _aux
 

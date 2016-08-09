@@ -13,7 +13,7 @@
 
 #include <reflexpr>
 #include "metaobjects.hpp"
-#include "optional.hpp"
+#include "none.hpp"
 #include "to_string.hpp"
 
 namespace mirror {
@@ -28,8 +28,8 @@ struct op_get_display_name<meta_object<MO>>
 { };
 
 template <typename X>
-struct op_get_display_name<optional<X>>
- : op_get_display_name<X>
+struct op_get_display_name<none>
+ : empty_string
 { };
 
 } // namespace _aux

@@ -13,7 +13,7 @@
 
 #include <reflexpr>
 #include "metaobjects.hpp"
-#include "optional.hpp"
+#include "none.hpp"
 #include "to_string.hpp"
 
 namespace mirror {
@@ -30,11 +30,6 @@ struct op_get_base_name<meta_object<MO>>
 template <>
 struct op_get_base_name<none>
  : empty_string
-{ };
-
-template <typename X>
-struct op_get_base_name<optional<X>>
- : op_get_base_name<X>
 { };
 
 } // namespace _aux

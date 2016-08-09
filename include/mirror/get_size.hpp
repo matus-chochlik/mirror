@@ -14,7 +14,7 @@
 #include "int_const.hpp"
 #include "range.hpp"
 #include "string.hpp"
-#include "optional.hpp"
+#include "none.hpp"
 #include "metaobjects.hpp"
 
 namespace mirror {
@@ -23,13 +23,8 @@ namespace _aux {
 template <typename X>
 struct op_get_size;
 
-template <typename T>
-struct op_get_size<optional<T>>
- : unsigned_<1u>
-{ };
-
 template <>
-struct op_get_size<optional<none>>
+struct op_get_size<none>
  : unsigned_<0u>
 { };
 
@@ -44,7 +39,7 @@ struct op_get_size<basic_string<Char, C...>>
 { };
 
 template <typename MO>
-struct op_get_size<meta_object<MO>>
+struct op_get_size<meta_object_sequence<MO>>
  : unsigned_<std::meta::get_size_v<MO>>
 { };
 

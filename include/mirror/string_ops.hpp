@@ -30,7 +30,7 @@ template <typename Char, Char ... C>
 static inline
 std::ostream& operator << (std::ostream& out, basic_string<Char, C...>)
 {
-	const Char s[] = {C...};
+	const Char s[] = {C..., '\0'};
 	return out.write(s, sizeof...(C));
 }
 
@@ -38,7 +38,7 @@ template <typename Char, Char ... C>
 static inline
 std::string str(basic_string<Char, C...>)
 {
-	const Char s[] = {C...};
+	const Char s[] = {C..., '\0'};
 	return std::string{s, sizeof...(C)};
 }
 

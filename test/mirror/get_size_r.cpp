@@ -18,14 +18,11 @@
 
 BOOST_AUTO_TEST_SUITE(mirror_get_size)
 
-BOOST_AUTO_TEST_CASE(mirror_get_size_optional)
+BOOST_AUTO_TEST_CASE(mirror_get_size_none)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((value<get_size<empty_optional>> == 0));
-	BOOST_CHECK((value<get_size<optional<long>>> == 1));
-	BOOST_CHECK((value<get_size<optional<bool>>> == 1));
-	BOOST_CHECK((value<get_size<optional<char>>> == 1));
+	BOOST_CHECK((value<get_size<none>> == 0));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_get_size_range)

@@ -14,7 +14,8 @@
 #include "int_const.hpp"
 #include "range.hpp"
 #include "string.hpp"
-#include "optional.hpp"
+#include "none.hpp"
+#include "metaobjects.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -22,13 +23,8 @@ namespace _aux {
 template <typename X>
 struct op_is_empty;
 
-template <typename T>
-struct op_is_empty<optional<T>>
- : false_
-{ };
-
 template <>
-struct op_is_empty<optional<none>>
+struct op_is_empty<none>
  : true_
 { };
 
@@ -40,6 +36,11 @@ struct op_is_empty<range<P...>>
 template <typename Char, Char ... C>
 struct op_is_empty<basic_string<Char, C...>>
  : bool_<sizeof ... (C) == 0>
+{ };
+
+template <typename MO>
+struct op_is_empty<meta_object_sequence<MO>>
+ : bool_<std::meta::get_size_v<MO> == 0>
 { };
 
 } // namespace _aux

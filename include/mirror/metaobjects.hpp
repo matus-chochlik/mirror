@@ -20,8 +20,20 @@ struct meta_object
 {
 	static_assert(
 		std::is_metaobject_v<MO>,
-		"Template argument to `meta_object` must be a metaobject type!"
+		"Template argument must be a meta-object type!"
 	);
+	typedef meta_object type;
+};
+
+template <typename MOS>
+struct meta_object_sequence
+{
+	static_assert(
+		std::is_metaobject_v<MOS> &&
+		std::meta::ObjectSequence<MOS>,
+		"Template argument must be a meta-object-sequence type!"
+	);
+	typedef meta_object_sequence type;
 };
 
 } // namespace mirror

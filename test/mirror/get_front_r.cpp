@@ -15,7 +15,6 @@
 
 #include <mirror/get_front.hpp>
 #include <mirror/int_const.hpp>
-#include <mirror/get.hpp>
 #include <mirror/value.hpp>
 #include <type_traits>
 
@@ -27,39 +26,35 @@ BOOST_AUTO_TEST_CASE(mirror_get_front_range)
 
 	BOOST_CHECK((value<std::is_same<
 		get_front<empty_range>,
-		empty_optional
+		none
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<long>>,
-		optional<long>
-	>>));
-	BOOST_CHECK((value<std::is_same<
-		get<front<range<long>>>,
 		long
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<char>>,
-		optional<char>
+		char
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<int>>,
-		optional<int>
+		int
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<int, double>>,
-		optional<int>
+		int
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<int, int, int>>,
-		optional<int>
+		int
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<double, float>>,
-		optional<double>
+		double
 	>>));
 	BOOST_CHECK((value<std::is_same<
 		get_front<range<char, int, bool>>,
-		optional<char>
+		char
 	>>));
 }
 
@@ -67,13 +62,27 @@ BOOST_AUTO_TEST_CASE(mirror_get_front_string)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((value<get_front<empty_string>> == '\0'));
-	BOOST_CHECK((value<get_front<string<'x'>>> == 'x'));
-	BOOST_CHECK((value<get_front<string<'y'>>> == 'y'));
-	BOOST_CHECK((value<get_front<string<'x','y','z'>>> == 'x'));
-	BOOST_CHECK((value<get_front<string<'a','b','c','d'>>> == 'a'));
-	BOOST_CHECK((value<get_front<basic_string<wchar_t,L'w'>>> == L'w'));
-	BOOST_CHECK((value<get_front<basic_string<wchar_t,L's',L't',L'r'>>> == L's'));
+	BOOST_CHECK_EQUAL('\0',
+		(value<get_front<empty_string>>)
+	);
+	BOOST_CHECK_EQUAL('x',
+		(value<get_front<string<'x'>>>)
+	);
+	BOOST_CHECK_EQUAL('y',
+		(value<get_front<string<'y'>>>)
+	);
+	BOOST_CHECK_EQUAL('x',
+		(value<get_front<string<'x','y','z'>>>)
+	);
+	BOOST_CHECK_EQUAL('a',
+		(value<get_front<string<'a','b','c','d'>>>)
+	);
+	BOOST_CHECK_EQUAL(L'w',
+		(value<get_front<basic_string<wchar_t,L'w'>>>)
+	);
+	BOOST_CHECK_EQUAL(L's',
+		(value<get_front<basic_string<wchar_t,L's',L't',L'r'>>>)
+	);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

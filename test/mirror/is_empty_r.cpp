@@ -18,12 +18,11 @@
 
 BOOST_AUTO_TEST_SUITE(mirror_is_empty)
 
-BOOST_AUTO_TEST_CASE(mirror_is_empty_optional)
+BOOST_AUTO_TEST_CASE(mirror_is_empty_none)
 {
 	using namespace mirror;
 
-	BOOST_CHECK(( value<is_empty<empty_optional>>));
-	BOOST_CHECK((!value<is_empty<optional<long>>>));
+	BOOST_CHECK(( value<is_empty<none>>));
 }
 
 BOOST_AUTO_TEST_CASE(mirror_is_empty_range)

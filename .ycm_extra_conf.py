@@ -69,6 +69,7 @@ default_opts = [
 	'-Wno-documentation-unknown-command',
 	'-Wno-switch-enum',
 	'-std=c++14',
+        '-Xclang', '-freflection',
 	'-x', 'c++',
 	'-isystem', '/usr/include',
 	'-isystem', '/usr/local/include',

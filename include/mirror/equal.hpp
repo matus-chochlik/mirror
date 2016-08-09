@@ -14,7 +14,6 @@
 #include "int_const.hpp"
 #include "range.hpp"
 #include "string.hpp"
-#include "optional.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -49,18 +48,6 @@ template <typename CharL, typename CharR, CharL ... CL, CharR ... CR>
 struct op_equal<basic_string<CharL, CL...>, basic_string<CharR, CR...>>
  : false_
 { };
-
-// optional
-template <typename P>
-struct op_equal<optional<P>, optional<P>>
- : true_
-{ };
-
-template <typename PL, typename PR>
-struct op_equal<optional<PL>, optional<PR>>
- : false_
-{ };
-
 
 } // namespace _aux
 

@@ -18,18 +18,6 @@
 
 BOOST_AUTO_TEST_SUITE(mirror_equal)
 
-BOOST_AUTO_TEST_CASE(mirror_equal_optional)
-{
-	using namespace mirror;
-
-	BOOST_CHECK(( value<equal<empty_optional, empty_optional>>));
-	BOOST_CHECK(( value<equal<optional<char>, optional<char>>>));
-	BOOST_CHECK((!value<equal<optional<char>, optional<long>>>));
-	BOOST_CHECK((!value<equal<optional<long>, optional<char>>>));
-	BOOST_CHECK((!value<equal<optional<float>, empty_optional>>));
-	BOOST_CHECK((!value<equal<empty_optional, optional<double>>>));
-}
-
 BOOST_AUTO_TEST_CASE(mirror_equal_range)
 {
 	using namespace mirror;
