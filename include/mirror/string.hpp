@@ -11,6 +11,8 @@
 #ifndef MIRROR_STRING_1105240825_HPP
 #define MIRROR_STRING_1105240825_HPP
 
+#include "int_const.hpp"
+
 namespace mirror {
 
 /// A compile-time basic-string template for various character types
