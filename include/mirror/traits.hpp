@@ -21,6 +21,16 @@ namespace mirror {
 namespace _aux {
 
 template <typename X>
+struct op_is_int_const
+ : false_
+{ };
+
+template <typename Int, Int I>
+struct op_is_int_const<int_const<Int, I>>
+ : true_
+{ };
+
+template <typename X>
 struct op_is_string
  : false_
 { };
@@ -56,6 +66,16 @@ struct op_is_meta_object<meta_object_sequence<MOS>>
 { };
 
 template <typename X>
+struct op_is_meta_object_sequence
+ : false_
+{ };
+
+template <typename MOS>
+struct op_is_meta_object_sequence<meta_object_sequence<MOS>>
+ : true_
+{ };
+
+template <typename X>
 struct op_is_none
  : false_
 { };
@@ -68,6 +88,9 @@ struct op_is_none<none>
 } // namespace _aux
 
 template <typename X>
+using is_int_const = eval<_aux::op_is_int_const<X>>;
+
+template <typename X>
 using is_string = eval<_aux::op_is_string<X>>;
 
 template <typename X>
@@ -75,6 +98,9 @@ using is_range = eval<_aux::op_is_range<X>>;
 
 template <typename X>
 using is_meta_object = eval<_aux::op_is_meta_object<X>>;
+
+template <typename X>
+using is_meta_object_sequence = eval<_aux::op_is_meta_object_sequence<X>>;
 
 template <typename X>
 using is_none = eval<_aux::op_is_none<X>>;

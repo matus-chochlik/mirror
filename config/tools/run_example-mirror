@@ -12,7 +12,7 @@ cd $(dirname ${0})/example/${library} &&
 for example
 do
 	if [[ -f "${example_src_dir}/${example}.cpp" ]]
-	then make ${example} && ./${example}
+	then make ${library}-${example} && ./${library}-${example}
 	else echo "Invalid '${library}' example name: '${example}'"
 	fi
 done

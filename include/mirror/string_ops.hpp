@@ -13,7 +13,7 @@
 
 #include "string.hpp"
 #include "int_const.hpp"
-#include <iosfwd>
+#include <iostream>
 #include <string>
 
 namespace mirror {
@@ -53,7 +53,10 @@ static inline
 std::ostream& operator << (std::ostream& out, basic_string<Char, C...>)
 {
 	const Char s[] = {C..., '\0'};
-	return out.write(s, sizeof...(C));
+	return out.write(
+		static_cast<const char*>(s),
+		sizeof...(C)*sizeof(Char)
+	);
 }
 
 template <typename Char, Char ... C>

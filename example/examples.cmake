@@ -6,21 +6,21 @@
 function(add_example LIBRARY EXAMPLE_NAME)
 
 	string(REGEX REPLACE "/" "-" LIB_PREFIX ${LIBRARY})
-	add_executable(${EXAMPLE_NAME} EXCLUDE_FROM_ALL ${EXAMPLE_NAME}.cpp)
-	add_dependencies(examples-${LIB_PREFIX} ${EXAMPLE_NAME})
-	set_property(TARGET ${EXAMPLE_NAME} PROPERTY FOLDER "Examples/${LIBRARY}")
+	add_executable(${LIBRARY}-${EXAMPLE_NAME} EXCLUDE_FROM_ALL ${EXAMPLE_NAME}.cpp)
+	add_dependencies(examples-${LIB_PREFIX} ${LIBRARY}-${EXAMPLE_NAME})
+	set_property(TARGET ${LIBRARY}-${EXAMPLE_NAME} PROPERTY FOLDER "Examples/${LIBRARY}")
 
 	if(NOT MIRROR_NO_DOCS)
 		add_custom_command(
-			OUTPUT ${EXAMPLE_NAME}.out.txt
-			COMMAND ${EXAMPLE_NAME} > ${EXAMPLE_NAME}.out.txt
-			DEPENDS ${EXAMPLE_NAME}
+			OUTPUT ${LIBRARY}-${EXAMPLE_NAME}.out.txt
+			COMMAND ${LIBRARY}-${EXAMPLE_NAME} > ${LIBRARY}-${EXAMPLE_NAME}.out.txt
+			DEPENDS ${LIBRARY}-${EXAMPLE_NAME}
 		)
 		add_custom_target(
-			${EXAMPLE_NAME}-output
-			DEPENDS ${EXAMPLE_NAME}.out.txt
+			${LIBRARY}-${EXAMPLE_NAME}-output
+			DEPENDS ${LIBRARY}-${EXAMPLE_NAME}.out.txt
 		)
-		add_dependencies(examples-${LIB_PREFIX} ${EXAMPLE_NAME}-output)
+		add_dependencies(examples-${LIB_PREFIX} ${LIBRARY}-${EXAMPLE_NAME}-output)
 	endif()
 
 endfunction()

@@ -14,8 +14,6 @@
 #include <mirror/string.hpp>
 #include <mirror/string_ops.hpp>
 #include <mirror/c_str.hpp>
-#include <iosfwd>
-#include <string>
 
 namespace puddle {
 
