@@ -1,5 +1,5 @@
 /**
- * @file puddle/sequence.hpp
+ * @file puddle/sequence_ops.hpp
  * @brief Implementation of sequence, range, string operations
  *
  * Copyright Matus Chochlik.
@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef PUDDLE_SEQUENCE_1105240825_HPP
-#define PUDDLE_SEQUENCE_1105240825_HPP
+#ifndef PUDDLE_SEQUENCE_OPS_1105240825_HPP
+#define PUDDLE_SEQUENCE_OPS_1105240825_HPP
 
 #include <mirror/unpack.hpp>
 #include <mirror/is_empty.hpp>

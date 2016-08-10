@@ -27,7 +27,7 @@ struct op_get_display_name<meta_object<MO>>
  : to_string<std::meta::get_display_name<MO>>
 { };
 
-template <typename X>
+template <>
 struct op_get_display_name<none>
  : empty_string
 { };
