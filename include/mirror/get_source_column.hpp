@@ -23,7 +23,7 @@ template <typename X>
 struct op_get_source_column;
 
 template <typename MO>
-struct op_get_source_column<meta_object<MO>>
+struct op_get_source_column<metaobject<MO>>
  : unsigned_<std::meta::get_source_column_v<MO>>
 { };
 

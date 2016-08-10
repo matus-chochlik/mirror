@@ -39,7 +39,7 @@ struct op_is_empty<basic_string<Char, C...>>
 { };
 
 template <typename MO>
-struct op_is_empty<meta_object_sequence<MO>>
+struct op_is_empty<metaobject_sequence<MO>>
  : bool_<std::meta::get_size_v<MO> == 0>
 { };
 

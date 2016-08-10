@@ -12,10 +12,8 @@
 #define MIRROR_GET_BASE_CLASSES_1105240825_HPP
 
 #include <reflexpr>
-#include "metaobjects.hpp"
-#include "conditional.hpp"
+#include "metaobject_ops.hpp"
 #include "range.hpp"
-#include "none.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -24,12 +22,16 @@ template <typename X>
 struct op_get_base_classes;
 
 template <typename MO>
-struct op_get_base_classes<meta_object<MO>>
- : conditional<
-	bool_<std::meta::Class<MO>>,
-	meta_object_sequence<std::meta::get_base_classes_m<MO>>,
-	none
+struct op_get_base_classes<metaobject<MO>>
+ : make_metaobject_sequence_if_c<
+	std::meta::Class<MO>,
+	std::meta::get_base_classes<MO>
 > { };
+
+template <>
+struct op_get_base_classes<none>
+ : none
+{ };
 
 } // namespace _aux
 

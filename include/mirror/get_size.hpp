@@ -39,7 +39,7 @@ struct op_get_size<basic_string<Char, C...>>
 { };
 
 template <typename MO>
-struct op_get_size<meta_object_sequence<MO>>
+struct op_get_size<metaobject_sequence<MO>>
  : unsigned_<std::meta::get_size_v<MO>>
 { };
 

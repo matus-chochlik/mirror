@@ -23,10 +23,10 @@ template <typename X>
 struct op_unpack;
 
 template <typename ... MO>
-using mo_range = range<meta_object<MO>...>;
+using mo_range = range<metaobject<MO>...>;
 
 template <typename MOS>
-struct op_unpack<meta_object_sequence<MOS>>
+struct op_unpack<metaobject_sequence<MOS>>
  : std::meta::unpack_sequence<MOS, mo_range>
 { };
 

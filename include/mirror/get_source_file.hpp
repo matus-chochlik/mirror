@@ -23,7 +23,7 @@ template <typename X>
 struct op_get_source_file;
 
 template <typename MO>
-struct op_get_source_file<meta_object<MO>>
+struct op_get_source_file<metaobject<MO>>
  : to_string<std::meta::get_source_file<MO>>
 { };
 

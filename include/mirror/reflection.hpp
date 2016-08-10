@@ -14,7 +14,7 @@
 #include <reflexpr>
 #include "metaobjects.hpp"
 
-#define MIRRORED(...) ::mirror::meta_object<reflexpr(__VA_ARGS__)>
+#define MIRRORED(...) ::mirror::metaobject<reflexpr(__VA_ARGS__)>
 
 #endif //include guard
 

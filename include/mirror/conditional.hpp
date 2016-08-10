@@ -12,6 +12,7 @@
 #define MIRROR_CONDITIONAL_1105240825_HPP
 
 #include "int_const.hpp"
+#include "identity.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -29,10 +30,26 @@ struct op_conditional<false_, Unused, IfFalse>
  : identity<IfFalse>
 { };
 
+template <typename Bool, typename IfTrue, typename IfFalse>
+struct op_lazy_conditional;
+
+template <typename IfTrue, typename Unused>
+struct op_lazy_conditional<true_, IfTrue, Unused>
+ : IfTrue
+{ };
+
+template <typename Unused, typename IfFalse>
+struct op_lazy_conditional<false_, Unused, IfFalse>
+ : IfFalse
+{ };
+
 } // namespace _aux
 
 template <typename Bool, typename IfTrue, typename IfFalse>
-using conditional = typename _aux::op_conditional<Bool, IfTrue, IfFalse>::type;
+using conditional = eval<_aux::op_conditional<Bool, IfTrue, IfFalse>>;
+
+template <typename Bool, typename IfTrue, typename IfFalse>
+using lazy_conditional = eval<_aux::op_lazy_conditional<Bool, IfTrue, IfFalse>>;
 
 } // namespace mirror
 

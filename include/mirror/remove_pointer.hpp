@@ -1,6 +1,6 @@
 /**
- * @file mirror/get_enumerators.hpp
- * @brief Implementation of `get_enumerators` operation
+ * @file mirror/remove_pointer.hpp
+ * @brief Implementation of `remove_pointer` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -8,30 +8,31 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_GET_ENUMERATORS_1105240825_HPP
-#define MIRROR_GET_ENUMERATORS_1105240825_HPP
+#ifndef MIRROR_REMOVE_POINTER_1105240825_HPP
+#define MIRROR_REMOVE_POINTER_1105240825_HPP
 
 #include <reflexpr>
 #include "metaobject_ops.hpp"
-#include "range.hpp"
+#include "identity.hpp"
 
 namespace mirror {
 namespace _aux {
 
 template <typename X>
-struct op_get_enumerators;
+struct op_remove_pointer;
 
 template <typename MO>
-struct op_get_enumerators<metaobject<MO>>
- : make_metaobject_sequence_if_c<
-	std::meta::Enum<MO>,
-	std::meta::get_enumerators<MO>
+struct op_remove_pointer<metaobject<MO>>
+ : conditional<
+	bool_<std::meta::Typed<MO>>,
+	metaobject<std::meta::get_type_m<MO>>,
+	none
 > { };
 
 } // namespace _aux
 
 template <typename X>
-using get_enumerators = eval<_aux::op_get_enumerators<X>>;
+using get_remove_pointer = eval<_aux::op_remove_pointer<X>>;
 
 } // namespace mirror
 

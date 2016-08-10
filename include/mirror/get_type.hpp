@@ -12,9 +12,7 @@
 #define MIRROR_GET_TYPE_1105240825_HPP
 
 #include <reflexpr>
-#include "metaobjects.hpp"
-#include "conditional.hpp"
-#include "none.hpp"
+#include "metaobject_ops.hpp"
 #include "identity.hpp"
 
 namespace mirror {
@@ -24,12 +22,16 @@ template <typename X>
 struct op_get_type;
 
 template <typename MO>
-struct op_get_type<meta_object<MO>>
- : conditional<
-	bool_<std::meta::Typed<MO>>,
-	meta_object<std::meta::get_type_m<MO>>,
-	none
+struct op_get_type<metaobject<MO>>
+ : make_metaobject_if_c<
+	std::meta::Typed<MO>,
+	std::meta::get_type<MO>
 > { };
+
+template <>
+struct op_get_type<none>
+ : none
+{ };
 
 } // namespace _aux
 

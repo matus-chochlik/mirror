@@ -11,12 +11,11 @@
 #ifndef MIRROR_GET_ELEMENT_1105240825_HPP
 #define MIRROR_GET_ELEMENT_1105240825_HPP
 
-#include "conditional.hpp"
 #include "int_const.hpp"
 #include "range.hpp"
 #include "string.hpp"
 #include "identity.hpp"
-#include "metaobjects.hpp"
+#include "metaobject_ops.hpp"
 #include "none.hpp"
 
 namespace mirror {
@@ -26,11 +25,10 @@ template <typename X, typename Idx>
 struct op_get_element;
 
 template <typename MOS, typename Int, Int Idx>
-struct op_get_element<meta_object_sequence<MOS>, int_const<Int, Idx>>
- : conditional<
-	bool_<(unsigned(Idx) < std::meta::get_size_v<MOS>)>,
-	meta_object<std::meta::get_element_m<MOS, Idx>>,
-	none
+struct op_get_element<metaobject_sequence<MOS>, int_const<Int, Idx>>
+ : make_metaobject_if_c<
+	(std::meta::get_size_v<MOS> > unsigned(Idx)),
+	std::meta::get_element<MOS, Idx>
 > { };
 
 template <typename Idx>

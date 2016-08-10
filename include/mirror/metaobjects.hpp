@@ -16,24 +16,24 @@
 namespace mirror {
 
 template <typename MO>
-struct meta_object
+struct metaobject
 {
 	static_assert(
 		std::is_metaobject_v<MO>,
 		"Template argument must be a meta-object type!"
 	);
-	typedef meta_object type;
+	typedef metaobject type;
 };
 
 template <typename MOS>
-struct meta_object_sequence
+struct metaobject_sequence
 {
 	static_assert(
 		std::is_metaobject_v<MOS> &&
 		std::meta::ObjectSequence<MOS>,
 		"Template argument must be a meta-object-sequence type!"
 	);
-	typedef meta_object_sequence type;
+	typedef metaobject_sequence type;
 };
 
 } // namespace mirror

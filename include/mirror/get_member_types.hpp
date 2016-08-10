@@ -12,10 +12,8 @@
 #define MIRROR_GET_MEMBER_TYPES_1105240825_HPP
 
 #include <reflexpr>
-#include "metaobjects.hpp"
-#include "conditional.hpp"
+#include "metaobject_ops.hpp"
 #include "range.hpp"
-#include "none.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -24,12 +22,16 @@ template <typename X>
 struct op_get_member_types;
 
 template <typename MO>
-struct op_get_member_types<meta_object<MO>>
- : conditional<
-	bool_<std::meta::Record<MO>>,
-	meta_object_sequence<std::meta::get_member_types_m<MO>>,
-	none
+struct op_get_member_types<metaobject<MO>>
+ : make_metaobject_sequence_if_c<
+	std::meta::Record<MO>,
+	std::meta::get_member_types<MO>
 > { };
+
+template <>
+struct op_get_member_types<none>
+ : none
+{ };
 
 } // namespace _aux
 

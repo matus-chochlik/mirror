@@ -51,27 +51,27 @@ struct op_is_range<range<P...>>
 { };
 
 template <typename X>
-struct op_is_meta_object
+struct op_is_metaobject
  : false_
 { };
 
 template <typename MO>
-struct op_is_meta_object<meta_object<MO>>
+struct op_is_metaobject<metaobject<MO>>
  : true_
 { };
 
 template <typename MOS>
-struct op_is_meta_object<meta_object_sequence<MOS>>
+struct op_is_metaobject<metaobject_sequence<MOS>>
  : true_
 { };
 
 template <typename X>
-struct op_is_meta_object_sequence
+struct op_is_metaobject_sequence
  : false_
 { };
 
 template <typename MOS>
-struct op_is_meta_object_sequence<meta_object_sequence<MOS>>
+struct op_is_metaobject_sequence<metaobject_sequence<MOS>>
  : true_
 { };
 
@@ -97,10 +97,10 @@ template <typename X>
 using is_range = eval<_aux::op_is_range<X>>;
 
 template <typename X>
-using is_meta_object = eval<_aux::op_is_meta_object<X>>;
+using is_metaobject = eval<_aux::op_is_metaobject<X>>;
 
 template <typename X>
-using is_meta_object_sequence = eval<_aux::op_is_meta_object_sequence<X>>;
+using is_metaobject_sequence = eval<_aux::op_is_metaobject_sequence<X>>;
 
 template <typename X>
 using is_none = eval<_aux::op_is_none<X>>;

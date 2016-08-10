@@ -23,7 +23,7 @@ namespace puddle {
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object_sequence<X>,
+		mirror::is_metaobject_sequence<X>,
 		mirror::is_string<X>,
 		mirror::is_range<X>,
 		mirror::is_none<X>
@@ -38,7 +38,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object_sequence<X>,
+		mirror::is_metaobject_sequence<X>,
 		mirror::is_string<X>,
 		mirror::is_range<X>,
 		mirror::is_none<X>
@@ -53,7 +53,7 @@ noexcept
 template <
 	typename X, typename I,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object_sequence<X>,
+		mirror::is_metaobject_sequence<X>,
 		mirror::is_string<X>,
 		mirror::is_range<X>,
 		mirror::is_none<X>
@@ -70,7 +70,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object_sequence<X>,
+		mirror::is_metaobject_sequence<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline

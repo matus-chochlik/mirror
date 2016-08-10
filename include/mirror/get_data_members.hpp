@@ -12,10 +12,8 @@
 #define MIRROR_GET_DATA_MEMBERS_1105240825_HPP
 
 #include <reflexpr>
-#include "metaobjects.hpp"
-#include "conditional.hpp"
+#include "metaobject_ops.hpp"
 #include "range.hpp"
-#include "none.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -24,12 +22,16 @@ template <typename X>
 struct op_get_data_members;
 
 template <typename MO>
-struct op_get_data_members<meta_object<MO>>
- : conditional<
-	bool_<std::meta::Record<MO>>,
-	meta_object_sequence<std::meta::get_data_members_m<MO>>,
-	none
+struct op_get_data_members<metaobject<MO>>
+ : make_metaobject_sequence_if_c<
+	std::meta::Record<MO>,
+	std::meta::get_data_members<MO>
 > { };
+
+template <>
+struct op_get_data_members<none>
+ : none
+{ };
 
 } // namespace _aux
 

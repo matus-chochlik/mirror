@@ -23,7 +23,7 @@ template <typename X>
 struct op_get_source_line;
 
 template <typename MO>
-struct op_get_source_line<meta_object<MO>>
+struct op_get_source_line<metaobject<MO>>
  : unsigned_<std::meta::get_source_line_v<MO>>
 { };
 

@@ -15,6 +15,7 @@
 #include <mirror/get_source_line.hpp>
 #include <mirror/get_source_column.hpp>
 #include <mirror/get_base_name.hpp>
+#include <mirror/get_full_name.hpp>
 #include <mirror/get_display_name.hpp>
 #include <mirror/get_scope.hpp>
 #include <mirror/get_type.hpp>
@@ -22,6 +23,7 @@
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_member_types.hpp>
 #include <mirror/get_enumerators.hpp>
+#include <mirror/get_reflected_type.hpp>
 #include <mirror/enable_if.hpp>
 #include <mirror/traits.hpp>
 
@@ -30,7 +32,7 @@ namespace puddle {
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -43,7 +45,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -56,7 +58,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -69,7 +71,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -82,7 +84,20 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_full_name(X)
+noexcept
+{
+	return mirror::get_full_name<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -95,7 +110,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -108,7 +123,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -121,7 +136,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -134,7 +149,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -147,7 +162,7 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
-		mirror::is_meta_object<X>,
+		mirror::is_metaobject<X>,
 		mirror::is_none<X>
 	>
 > static constexpr inline
@@ -155,6 +170,32 @@ auto get_member_types(X)
 noexcept
 {
 	return mirror::get_member_types<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_enumerators(X)
+noexcept
+{
+	return mirror::get_enumerators<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_reflected_type(X)
+noexcept
+{
+	return mirror::identity<mirror::get_reflected_type<X>>{};
 }
 
 

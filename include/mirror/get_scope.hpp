@@ -12,9 +12,7 @@
 #define MIRROR_GET_SCOPE_1105240825_HPP
 
 #include <reflexpr>
-#include "metaobjects.hpp"
-#include "conditional.hpp"
-#include "none.hpp"
+#include "metaobject_ops.hpp"
 #include "identity.hpp"
 
 namespace mirror {
@@ -24,12 +22,16 @@ template <typename X>
 struct op_get_scope;
 
 template <typename MO>
-struct op_get_scope<meta_object<MO>>
- : conditional<
-	bool_<std::meta::ScopeMember<MO>>,
-	meta_object<std::meta::get_scope_m<MO>>,
-	none
+struct op_get_scope<metaobject<MO>>
+ : make_metaobject_if_c<
+	std::meta::ScopeMember<MO> && !std::meta::GlobalScope<MO>,
+	std::meta::get_scope<MO>
 > { };
+
+template <>
+struct op_get_scope<none>
+ : none
+{ };
 
 } // namespace _aux
 

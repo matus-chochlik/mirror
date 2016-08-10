@@ -23,7 +23,7 @@ template <typename X>
 struct op_get_display_name;
 
 template <typename MO>
-struct op_get_display_name<meta_object<MO>>
+struct op_get_display_name<metaobject<MO>>
  : to_string<std::meta::get_display_name<MO>>
 { };
 

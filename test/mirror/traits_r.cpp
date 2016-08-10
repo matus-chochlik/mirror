@@ -62,18 +62,18 @@ BOOST_AUTO_TEST_CASE(mirror_traits_is_none)
 	BOOST_CHECK((!value<is_none<string<'a','b','c'>>>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_traits_is_meta_object)
+BOOST_AUTO_TEST_CASE(mirror_traits_is_metaobject)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((!value<is_meta_object<int>>));
-	BOOST_CHECK((!value<is_meta_object<none>>));
-	BOOST_CHECK((!value<is_meta_object<empty_string>>));
-	BOOST_CHECK((!value<is_meta_object<string<'x','y','z'>>>));
-	BOOST_CHECK((!value<is_meta_object<empty_range>>));
-	BOOST_CHECK((!value<is_meta_object<range<float, int, short>>>));
-	BOOST_CHECK((!value<is_meta_object<bool_<true>>>));
-	BOOST_CHECK(( value<is_meta_object<MIRRORED(int)>>));
+	BOOST_CHECK((!value<is_metaobject<int>>));
+	BOOST_CHECK((!value<is_metaobject<none>>));
+	BOOST_CHECK((!value<is_metaobject<empty_string>>));
+	BOOST_CHECK((!value<is_metaobject<string<'x','y','z'>>>));
+	BOOST_CHECK((!value<is_metaobject<empty_range>>));
+	BOOST_CHECK((!value<is_metaobject<range<float, int, short>>>));
+	BOOST_CHECK((!value<is_metaobject<bool_<true>>>));
+	BOOST_CHECK(( value<is_metaobject<MIRRORED(int)>>));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
