@@ -17,6 +17,7 @@
 #include "conditional.hpp"
 #include "traits.hpp"
 #include "concat.hpp"
+#include "int_to_str.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -26,6 +27,190 @@ struct op_get_full_name;
 
 template <typename MO, typename T>
 struct do_get_full_name;
+
+template <typename T>
+struct decor
+{
+	template <typename Str>
+	struct left : Str { };
+
+	template <typename Str>
+	struct right : Str { };
+
+	template <typename Str>
+	struct extent : Str { };
+
+	template <typename Str>
+	struct params : Str { };
+};
+
+template <typename T, typename S>
+using apply_decor_left = eval<typename decor<T>::template left<S>>;
+
+template <typename T, typename S>
+using apply_decor_right = eval<typename decor<T>::template right<S>>;
+
+template <typename T, typename S>
+using apply_decor_extent  = eval<typename decor<T>::template extent<S>>;
+
+template <typename T, typename S>
+using apply_decor_params  = eval<typename decor<T>::template params<S>>;
+
+template <typename T>
+struct decor<T*>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right
+	 : apply_decor_right<
+		T, concat<string<'*'>, Str>
+	> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<T, Str> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <typename T>
+struct decor<T&>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right
+	 : apply_decor_right<
+		T, concat<string<'&'>, Str>
+	> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<T, Str> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <typename T>
+struct decor<T const>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right
+	 : apply_decor_right<
+		T, concat<
+			string<' ','c','o','n','s','t'>,
+			Str
+		>
+	> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<T, Str> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <typename T>
+struct decor<T volatile>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right
+	 : apply_decor_right<
+		T, concat<
+			string<' ','v','o','l','a','t','i','l','e'>,
+			Str
+		>
+	> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<T, Str> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <typename T>
+struct decor<T const volatile>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right
+	 : apply_decor_right<
+		T, concat<
+			string<' ','c','o','n','s','t'>,
+			string<' ','v','o','l','a','t','i','l','e'>,
+			Str
+		>
+	> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<T, Str> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <typename T>
+struct decor<T[]>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right : apply_decor_right<T, Str> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<
+		T, concat<Str, string<'[',']'>>
+	> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <typename T, unsigned N>
+struct decor<T[N]>
+{
+	template <typename Str>
+	struct left : apply_decor_left<T, Str> { };
+
+	template <typename Str>
+	struct right : apply_decor_right<T, Str> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<
+		T, concat<Str, string<'['>, uint_to_dec_str<N>, string<']'>>
+	> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<T, Str> { };
+};
+
+template <>
+struct do_get_full_name<none, none>
+ : empty_string
+{ };
+
+template <typename MO, typename T>
+struct do_get_full_name
+ : concat<
+	apply_decor_left<T, empty_string>,
+	get_base_name<MO>,
+	apply_decor_right<T, empty_string>,
+	apply_decor_extent<T, empty_string>
+>
+{ };
 
 template <>
 struct op_get_full_name<none>
@@ -39,53 +224,6 @@ struct op_get_full_name<metaobject<MO>>
 	get_reflected_type<metaobject<MO>>
 >
 { };
-
-template <>
-struct do_get_full_name<none, none>
- : empty_string
-{ };
-
-template <typename MO, typename T>
-struct do_get_full_name
- : concat<
-	lazy_conditional<
-		is_none<get_scope<MO>>,
-		empty_string,
-		concat<
-			eval<do_get_full_name<get_scope<MO>, none>>,
-			string<':',':'>
-		>
-	>,
-	eval<op_get_base_name<MO>>
-> { };
-
-template <typename MO, typename T>
-struct do_get_full_name<MO, T*>
- : concat<
-	eval<do_get_full_name<MO, std::remove_pointer_t<T*>>>,
-	string<'*'>
-> { };
-
-template <typename MO, typename T>
-struct do_get_full_name<MO, T&>
- : concat<
-	eval<do_get_full_name<MO, std::remove_reference_t<T&>>>,
-	string<'&'>
-> { };
-
-template <typename MO, typename T>
-struct do_get_full_name<MO, const T>
- : concat<
-	eval<do_get_full_name<MO, T>>,
-	string<' ','c','o','n','s','t'>
-> { };
-
-template <typename MO, typename T>
-struct do_get_full_name<MO, volatile T>
- : concat<
-	eval<do_get_full_name<MO, T>>,
-	string<' ','v','o','l','a','t','i','l','e'>
-> { };
 
 } // namespace _aux
 
