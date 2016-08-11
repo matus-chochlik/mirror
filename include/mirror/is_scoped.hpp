@@ -29,10 +29,10 @@ struct op_is_scoped<none>
 
 template <typename MO>
 struct op_is_scoped<metaobject<MO>>
- : lazy_conditional<
- 	bool_<std::meta::Enum<MO>>,
+ : lazy_conditional_c<
+ 	std::meta::Enum<MO>,
 	std::meta::is_scoped<MO>,
-	true_
+	bool_<std::meta::ScopeMember<MO>>
 > { };
 
 } // namespace _aux

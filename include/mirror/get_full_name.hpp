@@ -19,6 +19,7 @@
 #include "int_to_str.hpp"
 #include "traits.hpp"
 #include "concat.hpp"
+#include "not.hpp"
 #include "or.hpp"
 
 namespace mirror {
@@ -35,7 +36,7 @@ struct op_get_scope_spec<none>
 template <typename MO>
 struct do_get_scope_spec
  : lazy_conditional<
- 	is_anonymous<MO>,
+ 	or_<is_anonymous<MO>, not_<is_scoped<MO>>>,
 	op_get_scope_spec<get_scope<MO>>,
 	lazy_conditional<
 		is_none<get_scope<MO>>,

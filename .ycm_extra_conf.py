@@ -75,7 +75,8 @@ default_opts = [
 	'-isystem', '/usr/local/include',
 	'-isystem', ReflexprDir(),
 	'-I', os.path.join(BuildDir(), "include"),
-	'-I', 'include'
+	'-I', 'include',
+        '-D__cpp_reflection=1'
 ]
 
 def FlagsForFile(filename, ** kwargs):

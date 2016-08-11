@@ -51,6 +51,9 @@ using conditional = eval<_aux::op_conditional<Bool, IfTrue, IfFalse>>;
 template <typename Bool, typename IfTrue, typename IfFalse>
 using lazy_conditional = eval<_aux::op_lazy_conditional<Bool, IfTrue, IfFalse>>;
 
+template <bool B, typename IfTrue, typename IfFalse>
+using lazy_conditional_c = lazy_conditional<bool_<B>, IfTrue, IfFalse>;
+
 } // namespace mirror
 
 #endif //include guard
