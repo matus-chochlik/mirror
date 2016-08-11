@@ -1,5 +1,5 @@
 /**
- * @example mirror/hello_world.cpp
+ * @example mirror/001_hello_world.cpp
  * @brief Very basic example of Mirror Reflection compile-time utilities.
  *
  * Copyright Matus Chochlik.

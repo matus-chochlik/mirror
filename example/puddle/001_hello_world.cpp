@@ -1,6 +1,6 @@
 /**
- * @example puddle/hello_world.cpp
- * @brief Hellow world example
+ * @example puddle/001_hello_world.cpp
+ * @brief Hello world example
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
