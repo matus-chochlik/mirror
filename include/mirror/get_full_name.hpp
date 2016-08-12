@@ -12,14 +12,18 @@
 #define MIRROR_GET_FULL_NAME_1105240825_HPP
 
 #include "get_base_name.hpp"
+#include "get_aliased.hpp"
 #include "get_scope.hpp"
 #include "get_reflected_type.hpp"
 #include "is_anonymous.hpp"
-#include "is_scoped.hpp"
+#include "is_empty.hpp"
+#include "is_scoped_enum.hpp"
+#include "is_enum.hpp"
 #include "int_to_str.hpp"
 #include "traits.hpp"
 #include "concat.hpp"
 #include "not.hpp"
+#include "and.hpp"
 #include "or.hpp"
 
 namespace mirror {
@@ -36,7 +40,7 @@ struct op_get_scope_spec<none>
 template <typename MO>
 struct do_get_scope_spec
  : lazy_conditional<
- 	or_<is_anonymous<MO>, not_<is_scoped<MO>>>,
+	or_<is_anonymous<MO>, and_<is_enum<MO>, not_<is_scoped_enum<MO>>>>,
 	op_get_scope_spec<get_scope<MO>>,
 	lazy_conditional<
 		is_none<get_scope<MO>>,
@@ -255,6 +259,43 @@ struct decor<MO, T[N]>
 
 	template <typename Str>
 	struct params : apply_decor_params<MO, T, Str> { };
+};
+
+template <typename MO, typename R, typename ... P>
+struct decor<MO, R(P...)>
+{
+	typedef get_aliased<MIRRORED(R)> MR;
+
+	template <typename Str>
+	struct left : concat<
+		Str,
+		apply_decor_left<MR, R, empty_string>,
+		apply_decor_base<MR, R, empty_string>,
+		apply_decor_right<MR, R, empty_string>,
+		apply_decor_extent<MR, R, empty_string>
+	> { };
+
+	template <typename Str>
+	struct base : Str { };
+
+	template <typename Str>
+	struct right : lazy_conditional<
+		is_empty<Str>,
+		Str,
+		concat<string<'('>, Str, string<')'>>
+	> { };
+
+	template <typename Str>
+	struct extent : Str { };
+
+	template <typename Str>
+	struct params : concat<
+		Str,
+		string<'('>,
+		string<'.','.','.'>,
+		string<')'>,
+		apply_decor_params<MR, R, empty_string>
+	> { };
 };
 
 template <>

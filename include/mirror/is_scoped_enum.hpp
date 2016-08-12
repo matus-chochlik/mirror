@@ -1,6 +1,6 @@
 /**
- * @file mirror/is_scoped.hpp
- * @brief Implementation of the `is_scoped` operation
+ * @file mirror/is_scoped_enum.hpp
+ * @brief Implementation of the `is_scoped_enum` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_IS_SCOPED_1105240825_HPP
-#define MIRROR_IS_SCOPED_1105240825_HPP
+#ifndef MIRROR_IS_SCOPED_ENUM_1105240825_HPP
+#define MIRROR_IS_SCOPED_ENUM_1105240825_HPP
 
 #include "int_const.hpp"
 #include "none.hpp"
@@ -20,25 +20,25 @@ namespace mirror {
 namespace _aux {
 
 template <typename X>
-struct op_is_scoped;
+struct op_is_scoped_enum;
 
 template <>
-struct op_is_scoped<none>
- : true_
+struct op_is_scoped_enum<none>
+ : false_
 { };
 
 template <typename MO>
-struct op_is_scoped<metaobject<MO>>
+struct op_is_scoped_enum<metaobject<MO>>
  : lazy_conditional_c<
  	std::meta::Enum<MO>,
-	std::meta::is_scoped<MO>,
-	bool_<std::meta::ScopeMember<MO>>
+	std::meta::is_scoped_enum<MO>,
+	false_
 > { };
 
 } // namespace _aux
 
 template <typename X>
-using is_scoped = eval<_aux::op_is_scoped<X>>;
+using is_scoped_enum = eval<_aux::op_is_scoped_enum<X>>;
 
 } // namespace mirror
 

@@ -76,7 +76,11 @@ default_opts = [
 	'-isystem', ReflexprDir(),
 	'-I', os.path.join(BuildDir(), "include"),
 	'-I', 'include',
-        '-D__cpp_reflection=1'
+        '-D__cpp_reflection=1',
+        '-D__metaobject_id=unsigned',
+        '-D__reflexpr(...)=0u',
+        '-Dreflexpr(...)=std::__metaobject<0u>',
+        '-DMIRRORED(...)=mirror::metaobject<void>'
 ]
 
 def FlagsForFile(filename, ** kwargs):

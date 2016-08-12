@@ -18,9 +18,12 @@ namespace foo {
 struct bar {
 
 	static int baz;
+	float qux;
 };
 
 } // namespace foo
+
+typedef void(*pf1)(void);
 
 int main(void)
 {
@@ -56,6 +59,10 @@ int main(void)
 
 	std::cout << c_str<get_full_name<
 		MIRRORED(foo::bar[3][2][1])
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(pf1)
 	>> << std::endl;
 
 	return 0;
