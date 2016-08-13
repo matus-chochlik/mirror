@@ -13,24 +13,12 @@
 
 namespace mirror {
 
-/// Range of types supporting forward traversal
-/**
- *  @tparam P the pack of elements in the range
- *  @see empty
- *  @see size
- *  @see front
- *  @see next
- *  @see at
- *  @see at_c
- *  @ingroup utils
- */
 template <typename ... P>
 struct range
 {
 	typedef range type;
 };
 
-/// Convenience typedef for empty range
 using empty_range = range<> ;
 
 } // namespace mirror
