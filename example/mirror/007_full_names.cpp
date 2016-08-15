@@ -23,7 +23,7 @@ struct bar {
 
 } // namespace foo
 
-typedef void(*pf1)(void);
+typedef void(*pf1)(int, int);
 
 int main(void)
 {

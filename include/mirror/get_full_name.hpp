@@ -22,6 +22,7 @@
 #include "int_to_str.hpp"
 #include "traits.hpp"
 #include "concat.hpp"
+#include "join.hpp"
 #include "not.hpp"
 #include "and.hpp"
 #include "or.hpp"
@@ -291,9 +292,10 @@ struct decor<MO, R(P...)>
 	template <typename Str>
 	struct params : concat<
 		Str,
-		string<'('>,
-		string<'.','.','.'>,
-		string<')'>,
+		string<'('>, join<
+			string<','>,
+			eval<op_get_full_name<get_aliased<MIRRORED(P)>>>...
+		>, string<')'>,
 		apply_decor_params<MR, R, empty_string>
 	> { };
 };
