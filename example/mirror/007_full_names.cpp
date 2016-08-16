@@ -23,8 +23,6 @@ struct bar {
 
 } // namespace foo
 
-typedef void(*pf1)(int, int);
-
 int main(void)
 {
 	using namespace mirror;
@@ -62,7 +60,27 @@ int main(void)
 	>> << std::endl;
 
 	std::cout << c_str<get_full_name<
-		MIRRORED(pf1)
+		MIRRORED(void())
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(void(*)())
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(double(*)(float, long))
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(const char*(int, long))
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(double(*(float, long, int))(short, bool))
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(foo::bar&(*(*(float, long, int))(short, bool))(char))
 	>> << std::endl;
 
 	return 0;

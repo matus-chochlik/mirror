@@ -25,7 +25,7 @@ template <typename MO>
 struct op_get_aliased<metaobject<MO>>
  : lazy_conditional_c<
 	std::meta::Alias<MO>,
-	metaobject<std::meta::get_aliased<MO>>,
+	metaobject<std::meta::get_aliased_m<MO>>,
 	metaobject<MO>
 > { };
 

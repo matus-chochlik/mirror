@@ -280,11 +280,7 @@ struct decor<MO, R(P...)>
 	struct base : Str { };
 
 	template <typename Str>
-	struct right : lazy_conditional<
-		is_empty<Str>,
-		Str,
-		concat<string<'('>, Str, string<')'>>
-	> { };
+	struct right : Str { };
 
 	template <typename Str>
 	struct extent : Str { };
@@ -292,6 +288,41 @@ struct decor<MO, R(P...)>
 	template <typename Str>
 	struct params : concat<
 		Str,
+		string<'('>, join<
+			string<','>,
+			eval<op_get_full_name<get_aliased<MIRRORED(P)>>>...
+		>, string<')'>,
+		apply_decor_params<MR, R, empty_string>
+	> { };
+};
+
+template <typename MO, typename R, typename ... P>
+struct decor<MO, R(*)(P...)>
+{
+	typedef get_aliased<MIRRORED(R)> MR;
+
+	template <typename Str>
+	struct left : concat<
+		Str,
+		apply_decor_left<MR, R, empty_string>,
+		apply_decor_base<MR, R, empty_string>,
+		apply_decor_right<MR, R, empty_string>,
+		apply_decor_extent<MR, R, empty_string>,
+		string<'('>
+	> { };
+
+	template <typename Str>
+	struct base : Str { };
+
+	template <typename Str>
+	struct right : concat<string<'*'>, Str> { };
+
+	template <typename Str>
+	struct extent : Str { };
+
+	template <typename Str>
+	struct params : concat<
+		string<')'>, Str,
 		string<'('>, join<
 			string<','>,
 			eval<op_get_full_name<get_aliased<MIRRORED(P)>>>...
