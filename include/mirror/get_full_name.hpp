@@ -11,6 +11,7 @@
 #ifndef MIRROR_GET_FULL_NAME_1105240825_HPP
 #define MIRROR_GET_FULL_NAME_1105240825_HPP
 
+#include "reflection.hpp"
 #include "get_base_name.hpp"
 #include "get_aliased.hpp"
 #include "get_scope.hpp"

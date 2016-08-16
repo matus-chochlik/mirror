@@ -12,7 +12,7 @@
 #define MIRROR_GET_ALIASED_1105240825_HPP
 
 #include <reflexpr>
-#include "conditional.hpp"
+#include "metaobject_ops.hpp"
 #include "identity.hpp"
 
 namespace mirror {
@@ -23,10 +23,9 @@ struct op_get_aliased;
 
 template <typename MO>
 struct op_get_aliased<metaobject<MO>>
- : lazy_conditional_c<
+ : make_metaobject_if_c<
 	std::meta::Alias<MO>,
-	metaobject<std::meta::get_aliased_m<MO>>,
-	metaobject<MO>
+	std::meta::get_aliased<MO>, MO
 > { };
 
 template <>
