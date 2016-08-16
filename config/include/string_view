@@ -1,0 +1,155 @@
+/**
+ * .file string_view
+ * .brief Sorry replacement for std::string_view
+ *
+ * Copyright Matus Chochlik.
+ * Distributed under the Boost Software License, Version 1.0.
+ * See accompanying file LICENSE_1_0.txt or copy at
+ *  http://www.boost.org/LICENSE_1_0.txt
+ */
+
+#ifndef MIRROR_STD_STRING_VIEW_1105240825_HPP
+#define MIRROR_STD_STRING_VIEW_1105240825_HPP
+
+#include <string>
+#include <iterator>
+#include <iosfwd>
+
+namespace std {
+
+template <typename Char, typename Traits = char_traits<Char>>
+class basic_string_view
+{
+private:
+	std::size_t _s;
+	const Char* _c;
+public:
+	using traits_type = Traits;
+	using value_type = Char;
+	using pointer = const Char*;
+	using const_pointer = const Char*;
+	using reference = const Char&;
+	using const_reference = const Char&;
+	using const_iterator = const Char*;
+	using iterator = const_iterator;
+	using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+	using reverse_iterator = const_reverse_iterator;
+	using size_type = size_t;
+	using difference_type = ptrdiff_t;
+	static constexpr size_type npos = size_type(-1);
+
+	constexpr
+	basic_string_view(void)
+	noexcept
+	 : _s{0}
+	 , _c{nullptr}
+	{ }
+
+	template <size_type N>
+	constexpr
+	basic_string_view(const Char (&c)[N])
+	noexcept
+	 : _s{N}
+	 , _c{c}
+	{ }
+
+	constexpr
+	basic_string_view(const Char* c, std::size_t s)
+	noexcept
+	 : _s{s}
+	 , _c{c}
+	{ }
+
+	constexpr
+	size_type size(void) const
+	noexcept
+	{
+		return _s;
+	}
+
+	constexpr
+	size_type length(void) const
+	noexcept
+	{
+		return _s;
+	}
+
+	constexpr
+	size_type empty(void) const
+	noexcept
+	{
+		return _s == 0;
+	}
+
+	constexpr
+	const_pointer data(void) const
+	noexcept
+	{
+		return _c;
+	}
+
+	int compare(const basic_string_view& v) const
+	noexcept
+	{
+		int res = traits_type::compare(_c, v._c, std::min(_s, v._s));
+		if(res == 0) {
+			res = int(_s - v._s);
+		}
+		return res;
+	}
+
+	friend bool
+	operator == (const basic_string_view& a, const basic_string_view& b)
+	noexcept
+	{
+		return a.compare(b) == 0;
+	}
+
+	friend bool
+	operator != (const basic_string_view& a, const basic_string_view& b)
+	noexcept
+	{
+		return a.compare(b) != 0;
+	}
+
+	friend bool
+	operator <  (const basic_string_view& a, const basic_string_view& b)
+	noexcept
+	{
+		return a.compare(b) <  0;
+	}
+
+	friend bool
+	operator <= (const basic_string_view& a, const basic_string_view& b)
+	noexcept
+	{
+		return a.compare(b) <= 0;
+	}
+
+	friend bool
+	operator >  (const basic_string_view& a, const basic_string_view& b)
+	noexcept
+	{
+		return a.compare(b) >  0;
+	}
+
+	friend bool
+	operator >= (const basic_string_view& a, const basic_string_view& b)
+	noexcept
+	{
+		return a.compare(b) >= 0;
+	}
+};
+
+template <typename Char, typename Traits>
+static inline
+std::ostream& operator << (std::ostream& out, basic_string_view<Char, Traits> s)
+{
+	return out.write(s.data(), std::streamsize(s.size()));
+}
+
+using string_view = basic_string_view<char>;
+
+} // namespace std
+
+#endif

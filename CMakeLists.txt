@@ -11,7 +11,8 @@ option(MIRROR_NO_DOCS "Don't build and install the documentation" Off)
 
 include(config/Tools.cmake)
 
-include(config/CppFeature.cmake)
+include(config/CppReflection.cmake)
+include(config/CppIncludes.cmake)
 include(config/Warnings.cmake)
 
 include_directories(include)
