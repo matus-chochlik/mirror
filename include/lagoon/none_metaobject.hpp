@@ -22,6 +22,7 @@ class none_metaobject
 {
 private:
 	base_registry& _reg;
+	metaobject_traits _ts;
 public:
 	none_metaobject(base_registry& reg)
 	noexcept
@@ -29,6 +30,9 @@ public:
 	{ }
 
 	bool is_none(void) const
+	override;
+
+	const metaobject_traits& traits(void)
 	override;
 
 	std::string_view get_base_name(void)
@@ -49,10 +53,16 @@ public:
 	shared_metaobject get_aliased(void)
 	override;
 
+	shared_metaobject_sequence get_base_classes(void)
+	override;
+
 	shared_metaobject_sequence get_data_members(void)
 	override;
 
 	shared_metaobject_sequence get_member_types(void)
+	override;
+
+	shared_metaobject_sequence get_enumerators(void)
 	override;
 };
 

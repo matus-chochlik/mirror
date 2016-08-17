@@ -18,6 +18,13 @@ none_metaobject::is_none(void) const
 }
 
 inline
+const metaobject_traits&
+none_metaobject::traits(void)
+{
+	return _ts;
+}
+
+inline
 std::string_view
 none_metaobject::get_base_name(void)
 {
@@ -61,6 +68,13 @@ none_metaobject::get_aliased(void)
 
 inline
 shared_metaobject_sequence
+none_metaobject::get_base_classes(void)
+{
+	return _reg.get_none_seq();
+}
+
+inline
+shared_metaobject_sequence
 none_metaobject::get_data_members(void)
 {
 	return _reg.get_none_seq();
@@ -69,6 +83,13 @@ none_metaobject::get_data_members(void)
 inline
 shared_metaobject_sequence
 none_metaobject::get_member_types(void)
+{
+	return _reg.get_none_seq();
+}
+
+inline
+shared_metaobject_sequence
+none_metaobject::get_enumerators(void)
 {
 	return _reg.get_none_seq();
 }

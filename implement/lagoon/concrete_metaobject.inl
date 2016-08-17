@@ -13,14 +13,16 @@
 #include <mirror/get_type.hpp>
 #include <mirror/get_scope.hpp>
 #include <mirror/get_aliased.hpp>
+#include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_member_types.hpp>
+#include <mirror/get_enumerators.hpp>
 
 namespace lagoon {
 
 template <typename MO>
 inline
-concrete_metaobject::concrete_metaobject(MO, metaobject_registry& reg)
+concrete_metaobject::concrete_metaobject(MO mo, metaobject_registry& reg)
 noexcept
  : _bn(mirror::string_view<mirror::get_base_name<MO>>)
  , _fn(mirror::string_view<mirror::get_full_name<MO>>)
@@ -28,8 +30,11 @@ noexcept
  , _ty(reg.get(mirror::get_fingerprint<mirror::get_type<MO>>))
  , _sc(reg.get(mirror::get_fingerprint<mirror::get_scope<MO>>))
  , _al(reg.get(mirror::get_fingerprint<mirror::get_aliased<MO>>))
+ , _bi(reg.get_seq(mirror::get_base_classes<MO>{}))
  , _dm(reg.get_seq(mirror::get_data_members<MO>{}))
  , _mt(reg.get_seq(mirror::get_member_types<MO>{}))
+ , _em(reg.get_seq(mirror::get_enumerators<MO>{}))
+ , _ts(mo)
 {
 	static_assert(mirror::is_metaobject<MO>::value, "");
 }
@@ -39,6 +44,13 @@ bool
 concrete_metaobject::is_none(void) const
 {
 	return false;
+}
+
+inline
+const metaobject_traits&
+concrete_metaobject::traits(void)
+{
+	return _ts;
 }
 
 inline
@@ -85,6 +97,13 @@ concrete_metaobject::get_aliased(void)
 
 inline
 shared_metaobject_sequence
+concrete_metaobject::get_base_classes(void)
+{
+	return _bi;
+}
+
+inline
+shared_metaobject_sequence
 concrete_metaobject::get_data_members(void)
 {
 	return _dm;
@@ -95,6 +114,13 @@ shared_metaobject_sequence
 concrete_metaobject::get_member_types(void)
 {
 	return _mt;
+}
+
+inline
+shared_metaobject_sequence
+concrete_metaobject::get_enumerators(void)
+{
+	return _em;
 }
 
 } // namespace lagoon

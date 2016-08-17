@@ -18,6 +18,13 @@ proxy_metaobject::is_none(void) const
 }
 
 inline
+const metaobject_traits&
+proxy_metaobject::traits(void)
+{
+	return _reg.find(_fpt).traits();
+}
+
+inline
 std::string_view
 proxy_metaobject::get_base_name(void)
 {
@@ -61,6 +68,13 @@ proxy_metaobject::get_aliased(void)
 
 inline
 shared_metaobject_sequence
+proxy_metaobject::get_base_classes(void)
+{
+	return _reg.find(_fpt).get_base_classes();
+}
+
+inline
+shared_metaobject_sequence
 proxy_metaobject::get_data_members(void)
 {
 	return _reg.find(_fpt).get_data_members();
@@ -71,6 +85,13 @@ shared_metaobject_sequence
 proxy_metaobject::get_member_types(void)
 {
 	return _reg.find(_fpt).get_member_types();
+}
+
+inline
+shared_metaobject_sequence
+proxy_metaobject::get_enumerators(void)
+{
+	return _reg.find(_fpt).get_enumerators();
 }
 
 } // namespace lagoon

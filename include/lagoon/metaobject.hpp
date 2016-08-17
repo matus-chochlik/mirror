@@ -14,6 +14,7 @@
 #include <memory>
 #include <utility>
 #include <string_view>
+#include "metaobject_traits.hpp"
 
 namespace lagoon {
 
@@ -35,6 +36,8 @@ public:
 	operator bool (void) const { return !is_none(); }
 	bool operator ! (void) const { return is_none(); }
 
+	const metaobject_traits& traits(void);
+
 	std::string_view get_base_name(void);
 	std::string_view get_full_name(void);
 	std::string_view get_display_name(void);
@@ -43,8 +46,10 @@ public:
 	shared_metaobject get_scope(void);
 	shared_metaobject get_aliased(void);
 
+	shared_metaobject_sequence get_base_classes(void);
 	shared_metaobject_sequence get_data_members(void);
 	shared_metaobject_sequence get_member_types(void);
+	shared_metaobject_sequence get_enumerators(void);
 };
 
 template <typename ConcreteMO, typename ... P>
@@ -61,6 +66,9 @@ struct metaobject
 	virtual ~metaobject(void) = default;
 
 	virtual bool is_none(void) const = 0;
+
+	virtual const metaobject_traits& traits(void) = 0;
+
 	virtual std::string_view get_base_name(void) = 0;
 	virtual std::string_view get_full_name(void) = 0;
 	virtual std::string_view get_display_name(void) = 0;
@@ -69,8 +77,10 @@ struct metaobject
 	virtual shared_metaobject get_scope(void) = 0;
 	virtual shared_metaobject get_aliased(void) = 0;
 
+	virtual shared_metaobject_sequence get_base_classes(void) = 0;
 	virtual shared_metaobject_sequence get_data_members(void) = 0;
 	virtual shared_metaobject_sequence get_member_types(void) = 0;
+	virtual shared_metaobject_sequence get_enumerators(void) = 0;
 };
 
 struct metaobject_sequence;

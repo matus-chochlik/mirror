@@ -37,6 +37,70 @@
 
 namespace puddle {
 
+template <typename X>
+static constexpr inline
+auto reflects_specifier(X)
+noexcept
+{
+	return mirror::reflects_specifier<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_global_scope(X)
+noexcept
+{
+	return mirror::reflects_global_scope<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_namespace(X)
+noexcept
+{
+	return mirror::reflects_namespace<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_type(X)
+noexcept
+{
+	return mirror::reflects_type<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_variable(X)
+noexcept
+{
+	return mirror::reflects_variable<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_enum_member(X)
+noexcept
+{
+	return mirror::reflects_enum_member<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_record_member(X)
+noexcept
+{
+	return mirror::reflects_record_member<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_inheritance(X)
+noexcept
+{
+	return mirror::reflects_inheritance<X>{};
+}
+
 template <
 	typename X,
 	typename = mirror::enable_if_any<
