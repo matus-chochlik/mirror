@@ -74,8 +74,9 @@ default_opts = [
 	'-isystem', '/usr/include',
 	'-isystem', '/usr/local/include',
 	'-isystem', ReflexprDir(),
-	'-I', os.path.join(BuildDir(), "include"),
+	'-isystem', os.path.join(BuildDir(), "include"),
 	'-I', 'include',
+	'-I', 'implement',
         '-D__cpp_reflection=1',
         '-D__metaobject_id=unsigned',
         '-D__reflexpr(...)=0u',
@@ -88,6 +89,14 @@ def FlagsForFile(filename, ** kwargs):
 	final_opts = MakeOptionPathsAbsolute(default_opts)
 
 	path, ext = os.path.splitext(filename)
+	if ext == ".inl":
+		def repl(x): return 'include' if name == 'implement' else name
+		path = os.path.sep.join([repl(name) for name in path.split(os.path.sep)])
+		inl_header = path + '.hpp'
+
+		if os.path.isfile(inl_header):
+			final_opts += ['-include', inl_header]
+
 
 	return {
 		'flags': final_opts,

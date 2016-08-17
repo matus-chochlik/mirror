@@ -16,6 +16,7 @@ include(config/CppIncludes.cmake)
 include(config/Warnings.cmake)
 
 include_directories(include)
+include_directories(implement)
 
 if(NOT MIRROR_NO_DOCS)
 	# TODO

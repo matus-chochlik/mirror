@@ -19,11 +19,19 @@
 #include <mirror/get_display_name.hpp>
 #include <mirror/get_scope.hpp>
 #include <mirror/get_type.hpp>
+#include <mirror/get_aliased.hpp>
+#include <mirror/get_elaborated_type_specifier.hpp>
+#include <mirror/get_access_specifier.hpp>
 #include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_member_types.hpp>
 #include <mirror/get_enumerators.hpp>
 #include <mirror/get_reflected_type.hpp>
+#include <mirror/is_class.hpp>
+#include <mirror/is_struct.hpp>
+#include <mirror/is_union.hpp>
+#include <mirror/is_enum.hpp>
+#include <mirror/is_scoped_enum.hpp>
 #include <mirror/enable_if.hpp>
 #include <mirror/traits.hpp>
 
@@ -131,6 +139,110 @@ auto get_type(X)
 noexcept
 {
 	return mirror::get_type<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_aliased(X)
+noexcept
+{
+	return mirror::get_aliased<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_elaborated_type_specifier(X)
+noexcept
+{
+	return mirror::get_elaborated_type_specifier<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_access_specifier(X)
+noexcept
+{
+	return mirror::get_access_specifier<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_class(X)
+noexcept
+{
+	return mirror::is_class<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_struct(X)
+noexcept
+{
+	return mirror::is_struct<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_union(X)
+noexcept
+{
+	return mirror::is_union<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_enum(X)
+noexcept
+{
+	return mirror::is_enum<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_scoped_enum(X)
+noexcept
+{
+	return mirror::is_scoped_enum<X>{};
 }
 
 template <

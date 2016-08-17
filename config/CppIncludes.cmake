@@ -8,7 +8,7 @@ check_include_file_cxx("string_view" HAS_STRING_VIEW)
 if (NOT HAS_STRING_VIEW)
 	configure_file(
 		"${PROJECT_SOURCE_DIR}/config/include/string_view"
-		"${PROJECT_BINARY_DIR}/include/string_view" COPY_ONLY
+		"${PROJECT_BINARY_DIR}/include/string_view" COPYONLY
 	)
 endif()
 

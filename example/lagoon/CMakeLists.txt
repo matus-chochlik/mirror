@@ -5,11 +5,8 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-add_custom_target(examples ALL)
-set_property(TARGET examples PROPERTY FOLDER "Examples")
+add_custom_target(examples-lagoon)
+add_dependencies(examples examples-lagoon)
+set_property(TARGET examples-lagoon PROPERTY FOLDER "Examples/lagoon")
 
-include(examples.cmake)
-
-add_subdirectory(mirror)
-add_subdirectory(puddle)
-add_subdirectory(lagoon)
+add_examples(lagoon)
