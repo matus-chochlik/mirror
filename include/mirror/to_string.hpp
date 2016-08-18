@@ -45,10 +45,29 @@ struct op_to_string<basic_string<Char, C...>>
  : basic_string<Char, C...>
 { };
 
+template <typename Bool, typename Char, typename X>
+struct op_to_string_if;
+
+template <typename X, typename Char>
+struct op_to_string_if<true_, Char, X>
+ : op_to_string<X>
+{ };
+
+template <typename Char, typename X>
+struct op_to_string_if<false_, Char, X>
+ : basic_string<Char>
+{ };
+
 } // namespace _aux
 
 template <typename X>
 using to_string = eval<_aux::op_to_string<X>>;
+
+template <typename Bool, typename Char, typename X>
+using to_string_if = eval<_aux::op_to_string_if<Bool, Char, X>>;
+
+template <bool B, typename Char, typename X>
+using to_string_if_c = to_string_if<bool_<B>, Char, X>;
 
 } // namespace mirror
 

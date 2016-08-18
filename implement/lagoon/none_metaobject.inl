@@ -6,9 +6,18 @@
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
-#include <lagoon/base_registry.hpp>
+#include <lagoon/none_sequence.hpp>
 
 namespace lagoon {
+
+inline
+shared_metaobject& none_metaobject::get_single(void)
+{
+	static shared_metaobject s(
+		make_shared_metaobject<none_metaobject>()
+	);
+	return s;
+}
 
 inline
 bool
@@ -49,49 +58,63 @@ inline
 shared_metaobject
 none_metaobject::get_type(void)
 {
-	return _reg.get_none();
+	return get_single();
 }
 
 inline
 shared_metaobject
 none_metaobject::get_scope(void)
 {
-	return _reg.get_none();
+	return get_single();
 }
 
 inline
 shared_metaobject
 none_metaobject::get_aliased(void)
 {
-	return _reg.get_none();
+	return get_single();
+}
+
+inline
+shared_metaobject
+none_metaobject::get_base_class(void)
+{
+	return get_single();
+}
+
+inline
+shared_metaobject
+none_metaobject::get_access_specifier(void)
+{
+	return get_single();
 }
 
 inline
 shared_metaobject_sequence
 none_metaobject::get_base_classes(void)
 {
-	return _reg.get_none_seq();
+	return none_metaobject_sequence::get_single();
 }
 
 inline
 shared_metaobject_sequence
 none_metaobject::get_data_members(void)
 {
-	return _reg.get_none_seq();
+	return none_metaobject_sequence::get_single();
 }
 
 inline
 shared_metaobject_sequence
 none_metaobject::get_member_types(void)
 {
-	return _reg.get_none_seq();
+	return none_metaobject_sequence::get_single();
 }
 
 inline
 shared_metaobject_sequence
 none_metaobject::get_enumerators(void)
 {
-	return _reg.get_none_seq();
+	return none_metaobject_sequence::get_single();
 }
 
 } // namespace lagoon

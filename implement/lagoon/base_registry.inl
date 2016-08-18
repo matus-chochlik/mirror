@@ -13,32 +13,24 @@
 namespace lagoon {
 
 inline
-base_registry::base_registry(void)
- : _nmo(make_shared_metaobject<none_metaobject>(*this))
- , _nmos(make_shared_metaobject_sequence<none_metaobject_sequence>(*this))
-{ }
-
-inline
 const shared_metaobject&
 base_registry::get_none(void) const
 {
-	return _nmo;
+	return none_metaobject::get_single();
 }
 
 inline
 const shared_metaobject_sequence&
 base_registry::get_none_seq(void) const
 {
-	return _nmos;
+	return none_metaobject_sequence::get_single();
 }
 
 inline
 shared_metaobject
 base_registry::get_proxy(const mirror::fingerprint& n)
 {
-	return std::shared_ptr<metaobject>(
-		std::make_shared<proxy_metaobject>(n, *this)
-	);
+	return make_shared_metaobject<proxy_metaobject>(n, *this);
 }
 
 inline

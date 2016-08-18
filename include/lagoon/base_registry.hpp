@@ -20,11 +20,9 @@ namespace lagoon {
 class base_registry
 {
 protected:
-	shared_metaobject _nmo;
-	shared_metaobject_sequence _nmos;
 	std::map<mirror::fingerprint, std::shared_ptr<metaobject>> _mos;
 
-	base_registry(void);
+	base_registry(void) = default;
 public:
 	const shared_metaobject& get_none(void) const;
 	const shared_metaobject_sequence& get_none_seq(void) const;

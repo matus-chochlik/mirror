@@ -13,10 +13,13 @@
 #include <mirror/get_type.hpp>
 #include <mirror/get_scope.hpp>
 #include <mirror/get_aliased.hpp>
+#include <mirror/get_base_class.hpp>
+#include <mirror/get_access_specifier.hpp>
 #include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_member_types.hpp>
 #include <mirror/get_enumerators.hpp>
+#include <mirror/string_view.hpp>
 
 namespace lagoon {
 
@@ -30,7 +33,9 @@ noexcept
  , _ty(reg.get(mirror::get_fingerprint<mirror::get_type<MO>>))
  , _sc(reg.get(mirror::get_fingerprint<mirror::get_scope<MO>>))
  , _al(reg.get(mirror::get_fingerprint<mirror::get_aliased<MO>>))
- , _bi(reg.get_seq(mirror::get_base_classes<MO>{}))
+ , _bc(reg.get(mirror::get_fingerprint<mirror::get_base_class<MO>>))
+ , _as(reg.get(mirror::get_fingerprint<mirror::get_access_specifier<MO>>))
+ , _bs(reg.get_seq(mirror::get_base_classes<MO>{}))
  , _dm(reg.get_seq(mirror::get_data_members<MO>{}))
  , _mt(reg.get_seq(mirror::get_member_types<MO>{}))
  , _em(reg.get_seq(mirror::get_enumerators<MO>{}))
@@ -96,10 +101,24 @@ concrete_metaobject::get_aliased(void)
 }
 
 inline
+shared_metaobject
+concrete_metaobject::get_base_class(void)
+{
+	return _bc;
+}
+
+inline
+shared_metaobject
+concrete_metaobject::get_access_specifier(void)
+{
+	return _as;
+}
+
+inline
 shared_metaobject_sequence
 concrete_metaobject::get_base_classes(void)
 {
-	return _bi;
+	return _bs;
 }
 
 inline

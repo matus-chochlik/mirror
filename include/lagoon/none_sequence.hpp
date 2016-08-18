@@ -20,11 +20,8 @@ class base_registry;
 class none_metaobject_sequence
  : public metaobject_sequence
 {
-private:
-	base_registry& _reg;
 public:
-	none_metaobject_sequence(base_registry& reg)
-	noexcept;
+	static shared_metaobject_sequence& get_single(void);
 
 	bool is_none(void) const
 	override;

@@ -1,6 +1,6 @@
 /**
- * @file mirror/get_access_specifier.hpp
- * @brief Implementation of `get_access_specifier` operation
+ * @file mirror/get_base_class.hpp
+ * @brief Implementation of `get_base_class` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_GET_ACCESS_SPECIFIER_1105240825_HPP
-#define MIRROR_GET_ACCESS_SPECIFIER_1105240825_HPP
+#ifndef MIRROR_GET_BASE_CLASS_1105240825_HPP
+#define MIRROR_GET_BASE_CLASS_1105240825_HPP
 
 #include <reflexpr>
 #include "metaobject_ops.hpp"
@@ -19,25 +19,24 @@ namespace mirror {
 namespace _aux {
 
 template <typename X>
-struct op_get_access_specifier;
+struct op_get_base_class;
 
 template <typename MO>
-struct op_get_access_specifier<metaobject<MO>>
+struct op_get_base_class<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::RecordMember<MO> || std::meta::Inheritance<MO>,
-	std::meta::get_access_specifier<MO>
+	std::meta::Inheritance<MO>,
+	std::meta::get_base_class<MO>
 > { };
 
 template <>
-struct op_get_access_specifier<none>
+struct op_get_base_class<none>
  : none
 { };
 
 } // namespace _aux
 
 template <typename X>
-using get_access_specifier =
-	eval<_aux::op_get_access_specifier<X>>;
+using get_base_class = eval<_aux::op_get_base_class<X>>;
 
 } // namespace mirror
 

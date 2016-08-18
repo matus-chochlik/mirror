@@ -67,6 +67,20 @@ proxy_metaobject::get_aliased(void)
 }
 
 inline
+shared_metaobject
+proxy_metaobject::get_base_class(void)
+{
+	return _reg.find(_fpt).get_aliased();
+}
+
+inline
+shared_metaobject
+proxy_metaobject::get_access_specifier(void)
+{
+	return _reg.find(_fpt).get_access_specifier();
+}
+
+inline
 shared_metaobject_sequence
 proxy_metaobject::get_base_classes(void)
 {

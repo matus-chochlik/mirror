@@ -12,22 +12,44 @@
 #define LAGOON_METAOBJECT_REGISTRY_1105240825_HPP
 
 #include "base_registry.hpp"
+#include <mirror/none.hpp>
+#include <mirror/range.hpp>
 
 namespace lagoon {
 
 class metaobject_registry
  : public base_registry
 {
+private:
+	template <typename ... X>
+	static void _eat(X ...) { }
 public:
+	shared_metaobject reg(mirror::none);
+
 	template <typename MO>
 	shared_metaobject reg(MO);
 
-	shared_metaobject reg(mirror::none);
+	void reg_range(mirror::none) { }
+
+	template <typename ... MO>
+	void reg_range(mirror::range<MO...>);
+
+	template <typename MO>
+	void reg_base_classes(MO);
+
+	template <typename MO>
+	void reg_data_members(MO);
+
+	template <typename MO>
+	void reg_member_types(MO);
+
+	template <typename MO>
+	void reg_enumerators(MO);
+
+	shared_metaobject_sequence get_seq(mirror::none);
 
 	template <typename MOS>
 	shared_metaobject_sequence get_seq(MOS);
-
-	shared_metaobject_sequence get_seq(mirror::none);
 };
 
 } // namespace lagoon

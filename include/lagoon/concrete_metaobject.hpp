@@ -28,8 +28,11 @@ private:
 	shared_metaobject _ty;
 	shared_metaobject _sc;
 	shared_metaobject _al;
+	shared_metaobject _bc;
 
-	shared_metaobject_sequence _bi;
+	shared_metaobject _as;
+
+	shared_metaobject_sequence _bs;
 	shared_metaobject_sequence _dm;
 	shared_metaobject_sequence _mt;
 	shared_metaobject_sequence _em;
@@ -62,6 +65,12 @@ public:
 	override;
 
 	shared_metaobject get_aliased(void)
+	override;
+
+	shared_metaobject get_base_class(void)
+	override;
+
+	shared_metaobject get_access_specifier(void)
 	override;
 
 	shared_metaobject_sequence get_base_classes(void)

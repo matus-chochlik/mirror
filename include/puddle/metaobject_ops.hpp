@@ -20,6 +20,7 @@
 #include <mirror/get_scope.hpp>
 #include <mirror/get_type.hpp>
 #include <mirror/get_aliased.hpp>
+#include <mirror/get_base_class.hpp>
 #include <mirror/get_elaborated_type_specifier.hpp>
 #include <mirror/get_access_specifier.hpp>
 #include <mirror/get_base_classes.hpp>
@@ -71,10 +72,26 @@ noexcept
 
 template <typename X>
 static constexpr inline
+auto reflects_alias(X)
+noexcept
+{
+	return mirror::reflects_alias<X>{};
+}
+
+template <typename X>
+static constexpr inline
 auto reflects_variable(X)
 noexcept
 {
 	return mirror::reflects_variable<X>{};
+}
+
+template <typename X>
+static constexpr inline
+auto reflects_constant(X)
+noexcept
+{
+	return mirror::reflects_constant<X>{};
 }
 
 template <typename X>
@@ -216,6 +233,19 @@ auto get_aliased(X)
 noexcept
 {
 	return mirror::get_aliased<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_base_class(X)
+noexcept
+{
+	return mirror::get_base_class<X>{};
 }
 
 template <

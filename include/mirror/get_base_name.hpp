@@ -24,8 +24,10 @@ struct op_get_base_name;
 
 template <typename MO>
 struct op_get_base_name<metaobject<MO>>
- : to_string<std::meta::get_base_name<MO>>
-{ };
+ : to_string_if_c<
+	std::meta::Named<MO>, char,
+	std::meta::get_base_name<MO>
+> { };
 
 template <>
 struct op_get_base_name<none>

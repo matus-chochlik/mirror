@@ -12,16 +12,31 @@
 #define MIRROR_GET_FINGERPRINT_1105240825_HPP
 
 #include <reflexpr>
-#include "string_view.hpp"
-#include "get_full_name.hpp"
 
 namespace mirror {
 
-// TODO: do something better here
-using fingerprint = ::std::string_view;
+// TODO: do something better here?
+using fingerprint = uint64_t;
+
+namespace _aux {
 
 template <typename X>
-constexpr fingerprint get_fingerprint = string_view<get_full_name<X>>;
+struct op_get_fingerprint;
+
+template <__metaobject_id MOID>
+struct op_get_fingerprint<metaobject<std::__metaobject<MOID>>>
+ : std::integral_constant<uint64_t, __metaobject_get_id_value(MOID)>
+{ };
+
+template <>
+struct op_get_fingerprint<none>
+ : std::integral_constant<uint64_t, 0>
+{ };
+
+} // namespace _aux
+
+template <typename X>
+constexpr fingerprint get_fingerprint = _aux::op_get_fingerprint<X>::value;
 
 
 } // namespace mirror

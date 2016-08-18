@@ -126,6 +126,16 @@ struct op_reflects_type<metaobject<MO>>
 { };
 
 template <typename X>
+struct op_reflects_alias
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_alias<metaobject<MO>>
+ : bool_<std::meta::Alias<MO>>
+{ };
+
+template <typename X>
 struct op_reflects_variable
  : false_
 { };
@@ -133,6 +143,16 @@ struct op_reflects_variable
 template <typename MO>
 struct op_reflects_variable<metaobject<MO>>
  : bool_<std::meta::Variable<MO>>
+{ };
+
+template <typename X>
+struct op_reflects_constant
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_constant<metaobject<MO>>
+ : bool_<std::meta::Constant<MO>>
 { };
 
 template <typename X>
@@ -198,7 +218,13 @@ template <typename X>
 using reflects_type = eval<_aux::op_reflects_type<X>>;
 
 template <typename X>
+using reflects_alias = eval<_aux::op_reflects_alias<X>>;
+
+template <typename X>
 using reflects_variable = eval<_aux::op_reflects_variable<X>>;
+
+template <typename X>
+using reflects_constant = eval<_aux::op_reflects_constant<X>>;
 
 template <typename X>
 using reflects_enum_member = eval<_aux::op_reflects_enum_member<X>>;

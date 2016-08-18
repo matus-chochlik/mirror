@@ -21,13 +21,9 @@ class none_metaobject
  : public metaobject
 {
 private:
-	base_registry& _reg;
 	metaobject_traits _ts;
 public:
-	none_metaobject(base_registry& reg)
-	noexcept
-	 : _reg(reg)
-	{ }
+	static shared_metaobject& get_single(void);
 
 	bool is_none(void) const
 	override;
@@ -51,6 +47,12 @@ public:
 	override;
 
 	shared_metaobject get_aliased(void)
+	override;
+
+	shared_metaobject get_base_class(void)
+	override;
+
+	shared_metaobject get_access_specifier(void)
 	override;
 
 	shared_metaobject_sequence get_base_classes(void)
