@@ -31,6 +31,15 @@ public:
 	const metaobject_traits& traits(void)
 	override;
 
+	std::string_view get_source_file(void)
+	override;
+
+	unsigned get_source_line(void)
+	override;
+
+	unsigned get_source_column(void)
+	override;
+
 	std::string_view get_base_name(void)
 	override;
 

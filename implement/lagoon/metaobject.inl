@@ -26,6 +26,27 @@ shared_metaobject::traits(void) const
 
 inline
 std::string_view
+shared_metaobject::get_source_file(void) const
+{
+	return _mo->get_source_file();
+}
+
+inline
+unsigned
+shared_metaobject::get_source_line(void) const
+{
+	return _mo->get_source_line();
+}
+
+inline
+unsigned
+shared_metaobject::get_source_column(void) const
+{
+	return _mo->get_source_column();
+}
+
+inline
+std::string_view
 shared_metaobject::get_base_name(void) const
 {
 	return _mo->get_base_name();

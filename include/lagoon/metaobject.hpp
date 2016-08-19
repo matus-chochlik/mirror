@@ -90,6 +90,10 @@ public:
 		return traits().is_scoped_enum;
 	}
 
+	std::string_view get_source_file(void) const;
+	unsigned get_source_line(void) const;
+	unsigned get_source_column(void) const;
+
 	std::string_view get_base_name(void) const;
 	std::string_view get_full_name(void) const;
 	std::string_view get_display_name(void) const;
@@ -123,6 +127,10 @@ struct metaobject
 	virtual bool is_none(void) const = 0;
 
 	virtual const metaobject_traits& traits(void) = 0;
+
+	virtual std::string_view get_source_file(void) = 0;
+	virtual unsigned get_source_line(void) = 0;
+	virtual unsigned get_source_column(void) = 0;
 
 	virtual std::string_view get_base_name(void) = 0;
 	virtual std::string_view get_full_name(void) = 0;

@@ -35,6 +35,27 @@ none_metaobject::traits(void)
 
 inline
 std::string_view
+none_metaobject::get_source_file(void)
+{
+	return {};
+}
+
+inline
+unsigned
+none_metaobject::get_source_line(void)
+{
+	return 0;
+}
+
+inline
+unsigned
+none_metaobject::get_source_column(void)
+{
+	return 0;
+}
+
+inline
+std::string_view
 none_metaobject::get_base_name(void)
 {
 	return {};

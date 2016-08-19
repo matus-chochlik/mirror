@@ -20,6 +20,7 @@ template <typename X>
 struct do_make_mo_trait_tuple;
 
 template <
+	bool HasSourceInfo,
 	bool IsScopeMember,
 	bool IsNamed,
 	bool IsTyped,
@@ -30,6 +31,7 @@ template <
 	bool IsSpecifier
 > struct mo_trait_tuple
 {
+	static constexpr const bool has_source_info = HasSourceInfo;
 	static constexpr const bool is_scope_member = IsScopeMember;
 	static constexpr const bool is_named = IsNamed;
 	static constexpr const bool is_typed = IsTyped;
@@ -44,6 +46,7 @@ template <typename MO>
 struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 {
 	typedef mo_trait_tuple<
+		std::meta::get_source_line_v<MO> != 0,
 		std::meta::ScopeMember<MO>,
 		std::meta::Named<MO>,
 		std::meta::Typed<MO>,
@@ -66,12 +69,51 @@ struct do_make_mo_trait_tuple<mirror::none>
 		false,
 		false,
 		false,
+		false,
 		false
 	> type;
 };
 
 template <typename MO>
 using make_mo_trait_tuple = typename do_make_mo_trait_tuple<MO>::type;
+
+// mo_source_data
+template <bool HasSrc>
+class mo_source_data;
+
+template <>
+class mo_source_data<true>
+{
+private:
+	struct {
+		std::string_view _fil;
+		unsigned _lin;
+		unsigned _col;
+	} _store;
+protected:
+	template <typename MO>
+	mo_source_data(MO);
+
+	std::string_view _src_fil(void) const { return _store._fil; }
+	unsigned  _src_lin(void) const { return _store._lin; }
+	unsigned  _src_col(void) const { return _store._col; }
+};
+
+template <>
+class mo_source_data<false>
+{
+protected:
+	template <typename MO>
+	mo_source_data(MO)
+	{ }
+
+	std::string_view _src_fil(void) const { return {}; }
+	unsigned _src_lin(void) const { return 0; }
+	unsigned _src_col(void) const { return 0; }
+};
+
+template <typename Traits>
+using mo_source = mo_source_data<Traits::has_source_info>;
 
 // mo_named_data
 template <bool Named, bool SingleName>

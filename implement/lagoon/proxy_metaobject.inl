@@ -26,6 +26,27 @@ proxy_metaobject::traits(void)
 
 inline
 std::string_view
+proxy_metaobject::get_source_file(void)
+{
+	return {};
+}
+
+inline
+unsigned
+proxy_metaobject::get_source_line(void)
+{
+	return 0;
+}
+
+inline
+unsigned
+proxy_metaobject::get_source_column(void)
+{
+	return 0;
+}
+
+inline
+std::string_view
 proxy_metaobject::get_base_name(void)
 {
 	return _reg.find(_fpt).get_base_name();

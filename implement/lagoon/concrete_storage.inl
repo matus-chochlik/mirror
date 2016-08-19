@@ -7,6 +7,9 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 #include <lagoon/metaobject_registry.hpp>
+#include <mirror/get_source_file.hpp>
+#include <mirror/get_source_line.hpp>
+#include <mirror/get_source_column.hpp>
 #include <mirror/get_base_name.hpp>
 #include <mirror/get_full_name.hpp>
 #include <mirror/get_display_name.hpp>
@@ -20,12 +23,23 @@
 #include <mirror/get_member_types.hpp>
 #include <mirror/get_enumerators.hpp>
 #include <mirror/string_view.hpp>
+#include <mirror/value.hpp>
 #include <lagoon/none_metaobject.hpp>
 #include <lagoon/none_sequence.hpp>
 #include <lagoon/fingerprint.hpp>
 
 namespace lagoon {
 namespace _aux {
+
+// mo_source
+template <typename MO>
+inline
+mo_source_data<true>::mo_source_data(MO)
+ : _store{
+	mirror::string_view<mirror::get_source_file<MO>>,
+	mirror::value<mirror::get_source_line<MO>>,
+	mirror::value<mirror::get_source_column<MO>>
+} { }
 
 // mo_named
 template <typename MO>

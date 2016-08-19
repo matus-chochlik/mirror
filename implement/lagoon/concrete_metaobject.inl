@@ -16,7 +16,8 @@ inline
 concrete_metaobject_tpl<Traits>::
 concrete_metaobject_tpl(MO mo, metaobject_registry& reg)
 noexcept
- : _aux::mo_scoped<Traits>(mo, reg)
+ : _aux::mo_source<Traits>(mo)
+ , _aux::mo_scoped<Traits>(mo, reg)
  , _aux::mo_typed<Traits>(mo, reg)
  , _aux::mo_named<Traits>(mo)
  , _aux::mo_alias<Traits>(mo, reg)
@@ -43,6 +44,30 @@ const metaobject_traits&
 concrete_metaobject_tpl<Traits>::traits(void)
 {
 	return _ts;
+}
+
+template <class Traits>
+inline
+std::string_view
+concrete_metaobject_tpl<Traits>::get_source_file(void)
+{
+	return this->_src_fil();
+}
+
+template <class Traits>
+inline
+unsigned
+concrete_metaobject_tpl<Traits>::get_source_line(void)
+{
+	return this->_src_lin();
+}
+
+template <class Traits>
+inline
+unsigned
+concrete_metaobject_tpl<Traits>::get_source_column(void)
+{
+	return this->_src_col();
 }
 
 template <class Traits>

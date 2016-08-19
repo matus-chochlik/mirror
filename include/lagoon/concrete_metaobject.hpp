@@ -21,6 +21,7 @@ class metaobject_registry;
 template <class Traits>
 class concrete_metaobject_tpl
  : public metaobject
+ , public _aux::mo_source<Traits>
  , public _aux::mo_scoped<Traits>
  , public _aux::mo_typed<Traits>
  , public _aux::mo_named<Traits>
@@ -41,6 +42,15 @@ public:
 	override;
 
 	const metaobject_traits& traits(void)
+	override;
+
+	std::string_view get_source_file(void)
+	override;
+
+	unsigned get_source_line(void)
+	override;
+
+	unsigned get_source_column(void)
 	override;
 
 	std::string_view get_base_name(void)
