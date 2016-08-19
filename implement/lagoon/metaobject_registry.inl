@@ -33,7 +33,7 @@ metaobject_registry::reg(fingerprint fp, MO pmo)
 	auto p = _mos.find(fp);
 	if (p == _mos.end())
 	{
-		auto mo = make_shared_metaobject<concrete_metaobject>(
+		auto mo = make_shared_metaobject<concrete_metaobject<MO>>(
 			pmo, *this
 		);
 		p = _mos.emplace(fp, mo).first;

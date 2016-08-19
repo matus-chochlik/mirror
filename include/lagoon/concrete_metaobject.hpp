@@ -12,35 +12,29 @@
 #define LAGOON_CONCRETE_METAOBJECT_1105240825_HPP
 
 #include "metaobject.hpp"
+#include "concrete_storage.hpp"
 
 namespace lagoon {
 
 class metaobject_registry;
 
-class concrete_metaobject
+template <class Traits>
+class concrete_metaobject_tpl
  : public metaobject
+ , public _aux::mo_scoped<Traits>
+ , public _aux::mo_typed<Traits>
+ , public _aux::mo_named<Traits>
+ , public _aux::mo_alias<Traits>
+ , public _aux::mo_record<Traits>
+ , public _aux::mo_enum<Traits>
+ , public _aux::mo_inherit<Traits>
+ , public _aux::mo_access<Traits>
 {
 private:
-	std::string_view _bn;
-	std::string_view _fn;
-	std::string_view _dn;
-
-	shared_metaobject _ty;
-	shared_metaobject _sc;
-	shared_metaobject _al;
-	shared_metaobject _bc;
-
-	shared_metaobject _as;
-
-	shared_metaobject_sequence _bs;
-	shared_metaobject_sequence _dm;
-	shared_metaobject_sequence _mt;
-	shared_metaobject_sequence _em;
-
 	metaobject_traits _ts;
 public:
 	template <typename MO>
-	concrete_metaobject(MO, metaobject_registry& reg)
+	concrete_metaobject_tpl(MO, metaobject_registry& reg)
 	noexcept;
 
 	bool is_none(void) const
@@ -86,6 +80,9 @@ public:
 	override;
 };
 
+template <typename MO>
+using concrete_metaobject =
+	concrete_metaobject_tpl<_aux::make_mo_trait_tuple<MO>>;
 
 } // namespace lagoon
 
