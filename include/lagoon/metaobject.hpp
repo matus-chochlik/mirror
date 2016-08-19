@@ -237,7 +237,7 @@ public:
 
 template <typename ConcreteMOS, typename ... P>
 static inline
-shared_metaobject_sequence make_shared_metaobject_sequence(P&& ... p)
+shared_metaobject_sequence make_shared_sequence(P&& ... p)
 {
 	return std::shared_ptr<metaobject_sequence>(
 		std::make_shared<ConcreteMOS>(std::forward<P>(p)...)

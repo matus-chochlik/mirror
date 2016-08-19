@@ -13,7 +13,7 @@
 
 #include "int_const.hpp"
 #include "none.hpp"
-#include "metaobjects.hpp"
+#include "metaobject.hpp"
 #include "conditional.hpp"
 
 namespace mirror {

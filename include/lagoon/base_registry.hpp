@@ -12,7 +12,8 @@
 #define LAGOON_BASE_REGISTRY_1105240825_HPP
 
 #include "metaobject.hpp"
-#include <mirror/get_fingerprint.hpp>
+#include "fingerprint.hpp"
+#include <cstdint>
 #include <map>
 
 namespace lagoon {
@@ -20,16 +21,16 @@ namespace lagoon {
 class base_registry
 {
 protected:
-	std::map<mirror::fingerprint, std::shared_ptr<metaobject>> _mos;
+	std::map<fingerprint, shared_metaobject> _mos;
 
 	base_registry(void) = default;
 public:
 	const shared_metaobject& get_none(void) const;
 	const shared_metaobject_sequence& get_none_seq(void) const;
 
-	shared_metaobject get_proxy(const mirror::fingerprint& n);
-	shared_metaobject get(const mirror::fingerprint& n);
-	shared_metaobject find(const mirror::fingerprint& n);
+	shared_metaobject get_proxy(fingerprint n);
+	shared_metaobject get(fingerprint n);
+	shared_metaobject find(fingerprint n);
 };
 
 } // namespace lagoon

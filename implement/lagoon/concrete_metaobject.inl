@@ -20,6 +20,7 @@
 #include <mirror/get_member_types.hpp>
 #include <mirror/get_enumerators.hpp>
 #include <mirror/string_view.hpp>
+#include <lagoon/fingerprint.hpp>
 
 namespace lagoon {
 
@@ -30,15 +31,15 @@ noexcept
  : _bn(mirror::string_view<mirror::get_base_name<MO>>)
  , _fn(mirror::string_view<mirror::get_full_name<MO>>)
  , _dn(mirror::string_view<mirror::get_display_name<MO>>)
- , _ty(reg.get(mirror::get_fingerprint<mirror::get_type<MO>>))
- , _sc(reg.get(mirror::get_fingerprint<mirror::get_scope<MO>>))
- , _al(reg.get(mirror::get_fingerprint<mirror::get_aliased<MO>>))
- , _bc(reg.get(mirror::get_fingerprint<mirror::get_base_class<MO>>))
- , _as(reg.get(mirror::get_fingerprint<mirror::get_access_specifier<MO>>))
- , _bs(reg.get_seq(mirror::get_base_classes<MO>{}))
- , _dm(reg.get_seq(mirror::get_data_members<MO>{}))
- , _mt(reg.get_seq(mirror::get_member_types<MO>{}))
- , _em(reg.get_seq(mirror::get_enumerators<MO>{}))
+ , _ty(reg.get(get_fingerprint(mirror::get_type<MO>{})))
+ , _sc(reg.get(get_fingerprint(mirror::get_scope<MO>{})))
+ , _al(reg.get(get_fingerprint(mirror::get_aliased<MO>{})))
+ , _bc(reg.get(get_fingerprint(mirror::get_base_class<MO>{})))
+ , _as(reg.get(get_fingerprint(mirror::get_access_specifier<MO>{})))
+ , _bs(reg.make_inh_seq(mo, mirror::get_base_classes<MO>{}))
+ , _dm(reg.make_seq(mirror::get_data_members<MO>{}))
+ , _mt(reg.make_seq(mirror::get_member_types<MO>{}))
+ , _em(reg.make_seq(mirror::get_enumerators<MO>{}))
  , _ts(mo)
 {
 	static_assert(mirror::is_metaobject<MO>::value, "");

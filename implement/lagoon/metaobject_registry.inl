@@ -27,19 +27,26 @@ metaobject_registry::reg(mirror::none)
 template <typename MO>
 inline
 shared_metaobject
-metaobject_registry::reg(MO pmo)
+metaobject_registry::reg(fingerprint fp, MO pmo)
 {
 	static_assert(mirror::is_metaobject<MO>::value, "");
-	auto i = mirror::get_fingerprint<MO>;
-	auto p = _mos.find(i);
+	auto p = _mos.find(fp);
 	if (p == _mos.end())
 	{
-		auto mo = std::make_shared<concrete_metaobject>(
+		auto mo = make_shared_metaobject<concrete_metaobject>(
 			pmo, *this
 		);
-		p = _mos.emplace(i, mo).first;
+		p = _mos.emplace(fp, mo).first;
 	}
 	return p->second;
+}
+
+template <typename MO>
+inline
+shared_metaobject
+metaobject_registry::reg(MO pmo)
+{
+	return reg(get_fingerprint(pmo), pmo);
 }
 
 template <typename ... MO>
@@ -50,12 +57,20 @@ metaobject_registry::reg_range(mirror::range<MO...>)
 	_eat(reg(MO{})...);
 }
 
+template <typename PMO, typename ... MO>
+inline
+void
+metaobject_registry::reg_inh_range(PMO pmo, mirror::range<MO...>)
+{
+	_eat(reg(get_fingerprint(pmo, mirror::get_base_class<MO>{}), MO{})...);
+}
+
 template <typename MO>
 inline
 void
-metaobject_registry::reg_base_classes(MO)
+metaobject_registry::reg_base_classes(MO pmo)
 {
-	reg_range(mirror::unpack<mirror::get_base_classes<MO>>{});
+	reg_inh_range(pmo, mirror::unpack<mirror::get_base_classes<MO>>{});
 }
 
 template <typename MO>
@@ -92,13 +107,28 @@ metaobject_registry::get_seq(mirror::none)
 template <typename MOS>
 inline
 shared_metaobject_sequence
-metaobject_registry::get_seq(MOS pmos)
+metaobject_registry::make_seq(MOS mos)
 {
-	static_assert(mirror::is_metaobject_sequence<MOS>::value, "");
-	return std::shared_ptr<metaobject_sequence>(
-		std::make_shared<concrete_metaobject_sequence>(
-			pmos, *this
-		)
+	static_assert(
+		mirror::is_none<MOS>::value ||
+		mirror::is_metaobject_sequence<MOS>::value,
+	"");
+	return make_shared_sequence<concrete_metaobject_sequence>(
+		mos, *this
+	);
+}
+
+template <typename PMO, typename MOS>
+inline
+shared_metaobject_sequence
+metaobject_registry::make_inh_seq(PMO pmo, MOS mos)
+{
+	static_assert(
+		mirror::is_none<MOS>::value ||
+		mirror::is_metaobject_sequence<MOS>::value,
+	"");
+	return make_shared_sequence<concrete_inh_metaobject_sequence>(
+		pmo, mos, *this
 	);
 }
 

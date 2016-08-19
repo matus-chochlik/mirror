@@ -15,7 +15,7 @@ shared_metaobject_sequence&
 none_metaobject_sequence::get_single(void)
 {
 	static shared_metaobject_sequence s(
-		make_shared_metaobject_sequence<none_metaobject_sequence>()
+		make_shared_sequence<none_metaobject_sequence>()
 	);
 	return s;
 }

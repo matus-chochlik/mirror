@@ -14,7 +14,7 @@
 #include "int_const.hpp"
 #include "string.hpp"
 #include "range.hpp"
-#include "metaobjects.hpp"
+#include "metaobject.hpp"
 #include "none.hpp"
 
 namespace mirror {

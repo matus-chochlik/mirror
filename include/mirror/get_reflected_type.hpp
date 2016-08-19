@@ -12,7 +12,7 @@
 #define MIRROR_GET_REFLECTED_TYPE_1105240825_HPP
 
 #include <reflexpr>
-#include "metaobjects.hpp"
+#include "metaobject.hpp"
 #include "conditional.hpp"
 #include "none.hpp"
 #include "identity.hpp"

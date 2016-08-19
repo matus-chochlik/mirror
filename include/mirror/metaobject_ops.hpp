@@ -11,7 +11,7 @@
 #ifndef MIRROR_METAOBJECT_OPS_1105240825_HPP
 #define MIRROR_METAOBJECT_OPS_1105240825_HPP
 
-#include "metaobjects.hpp"
+#include "metaobject.hpp"
 #include "identity.hpp"
 #include "int_const.hpp"
 #include "none.hpp"

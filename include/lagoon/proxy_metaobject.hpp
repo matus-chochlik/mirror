@@ -12,7 +12,7 @@
 #define LAGOON_PROXY_METAOBJECT_1105240825_HPP
 
 #include "metaobject.hpp"
-#include <mirror/get_fingerprint.hpp>
+#include "fingerprint.hpp"
 
 namespace lagoon {
 
@@ -22,10 +22,10 @@ class proxy_metaobject
  : public metaobject
 {
 private:
-	mirror::fingerprint _fpt;
+	fingerprint _fpt;
 	base_registry& _reg;
 public:
-	proxy_metaobject(const mirror::fingerprint& fpt, base_registry& reg)
+	proxy_metaobject(fingerprint fpt, base_registry& reg)
 	noexcept
 	 : _fpt(fpt)
 	 , _reg(reg)

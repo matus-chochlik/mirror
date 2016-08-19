@@ -1,5 +1,5 @@
 /**
- * @file mirror/metaobjects.hpp
+ * @file mirror/metaobject.hpp
  * @brief Metaobject type wrappers
  *
  * Copyright Matus Chochlik.

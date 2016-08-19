@@ -19,22 +19,19 @@ namespace lagoon {
 
 class base_registry;
 
-class concrete_metaobject_sequence
+class concrete_metaobject_sequence_base
  : public metaobject_sequence
 {
 private:
 	base_registry& _reg;
 	std::vector<shared_metaobject> _mos;
 
-	template <typename ... MO>
-	static
-	std::vector<shared_metaobject>
-	_make_vec(mirror::range<MO...>, base_registry& reg);
+protected:
+	concrete_metaobject_sequence_base(
+		std::vector<shared_metaobject>&& mos,
+		base_registry& reg
+	);
 public:
-	template <typename MO>
-	concrete_metaobject_sequence(MO, base_registry& reg)
-	noexcept;
-
 	bool is_none(void) const
 	override;
 
@@ -43,6 +40,34 @@ public:
 
 	shared_metaobject get_element(size_type)
 	override;
+};
+
+class concrete_metaobject_sequence
+ : public concrete_metaobject_sequence_base
+{
+private:
+	template <typename ... MO>
+	static
+	std::vector<shared_metaobject>
+	_make_vec(mirror::range<MO...>, base_registry& reg);
+public:
+	template <typename MOS>
+	concrete_metaobject_sequence(MOS, base_registry& reg)
+	noexcept;
+};
+
+class concrete_inh_metaobject_sequence
+ : public concrete_metaobject_sequence_base
+{
+private:
+	template <typename PMO, typename ... MO>
+	static
+	std::vector<shared_metaobject>
+	_make_vec(PMO, mirror::range<MO...>, base_registry& reg);
+public:
+	template <typename PMO, typename MOS>
+	concrete_inh_metaobject_sequence(PMO, MOS, base_registry& reg)
+	noexcept;
 };
 
 } // namespace lagoon

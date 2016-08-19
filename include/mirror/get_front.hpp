@@ -16,7 +16,7 @@
 #include "none.hpp"
 #include "range.hpp"
 #include "string.hpp"
-#include "metaobjects.hpp"
+#include "metaobject.hpp"
 
 namespace mirror {
 namespace _aux {

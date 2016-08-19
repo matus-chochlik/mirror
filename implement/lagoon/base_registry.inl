@@ -28,14 +28,14 @@ base_registry::get_none_seq(void) const
 
 inline
 shared_metaobject
-base_registry::get_proxy(const mirror::fingerprint& n)
+base_registry::get_proxy(fingerprint n)
 {
 	return make_shared_metaobject<proxy_metaobject>(n, *this);
 }
 
 inline
 shared_metaobject
-base_registry::get(const mirror::fingerprint& n)
+base_registry::get(fingerprint n)
 {
 	auto p = _mos.find(n);
 	if (p == _mos.end()) {
@@ -46,7 +46,7 @@ base_registry::get(const mirror::fingerprint& n)
 
 inline
 shared_metaobject
-base_registry::find(const mirror::fingerprint& n)
+base_registry::find(fingerprint n)
 {
 	auto p = _mos.find(n);
 	if (p == _mos.end()) {
