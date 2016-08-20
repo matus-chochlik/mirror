@@ -16,7 +16,7 @@
 #include <mirror/c_str.hpp>
 #include <cstring>
 
-BOOST_AUTO_TEST_SUITE(mirror_concat)
+BOOST_AUTO_TEST_SUITE(mirror_c_str)
 
 BOOST_AUTO_TEST_CASE(mirror_string_c_str)
 {
