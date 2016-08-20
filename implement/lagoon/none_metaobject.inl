@@ -27,10 +27,10 @@ none_metaobject::is_none(void) const
 }
 
 inline
-const metaobject_traits&
+const metaobject_traits*
 none_metaobject::traits(void)
 {
-	return _ts;
+	return nullptr;
 }
 
 inline

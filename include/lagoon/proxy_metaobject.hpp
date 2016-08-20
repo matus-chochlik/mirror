@@ -34,7 +34,7 @@ public:
 	bool is_none(void) const
 	override;
 
-	const metaobject_traits& traits(void)
+	const metaobject_traits* traits(void)
 	override;
 
 	std::string_view get_source_file(void)

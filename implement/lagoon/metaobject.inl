@@ -18,7 +18,7 @@ shared_metaobject::is_none(void) const
 }
 
 inline
-const metaobject_traits&
+const metaobject_traits*
 shared_metaobject::traits(void) const
 {
 	return _mo->traits();

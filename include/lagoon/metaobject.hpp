@@ -12,6 +12,7 @@
 #define LAGOON_METAOBJECT_1105240825_HPP
 
 #include "metaobject_traits.hpp"
+#include "tribool.hpp"
 #include <memory>
 #include <utility>
 #include <iterator>
@@ -38,57 +39,34 @@ public:
 	operator bool (void) const { return !is_none(); }
 	bool operator ! (void) const { return is_none(); }
 
-	const metaobject_traits& traits(void) const;
+	const metaobject_traits* traits(void) const;
 
-	bool reflects_specifier(void) const {
-		return traits().reflects_specifier;
-	}
-	bool reflects_global_scope(void) const {
-		return traits().reflects_global_scope;
-	}
-	bool reflects_namespace(void) const {
-		return traits().reflects_namespace;
-	}
-	bool reflects_type(void) const {
-		return traits().reflects_type;
-	}
-	bool reflects_alias(void) const {
-		return traits().reflects_alias;
-	}
-	bool reflects_variable(void) const {
-		return traits().reflects_variable;
-	}
-	bool reflects_constant(void) const {
-		return traits().reflects_variable;
-	}
-	bool reflects_enum_member(void) const {
-		return traits().reflects_enum_member;
-	}
-	bool reflects_record_member(void) const {
-		return traits().reflects_record_member;
-	}
-	bool reflects_inheritance(void) const {
-		return traits().reflects_inheritance;
+#define LAGOON_IMPLEMENT_TRAIT_GETTER(TRAIT) \
+	tribool TRAIT (void) const { \
+		if(auto *ts = traits()) { \
+			return {ts->TRAIT}; \
+		} else return none; \
 	}
 
-	bool is_anonymous(void) const {
-		return traits().is_anonymous;
-	}
-	bool is_class(void) const {
-		return traits().is_class;
-	}
-	bool is_struct(void) const {
-		return traits().is_struct;
-	}
-	bool is_union(void) const {
-		return traits().is_union;
-	}
-	bool is_enum(void) const {
-		return traits().is_enum;
-	}
-	bool is_scoped_enum(void) const {
-		return traits().is_scoped_enum;
-	}
+	LAGOON_IMPLEMENT_TRAIT_GETTER(has_source_info)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_specifier)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_global_scope)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_namespace)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_type)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_alias)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_variable)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_constant)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_enum_member)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_record_member)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(reflects_inheritance)
+
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_anonymous)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_class)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_struct)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_union)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_enum)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_scoped_enum)
+#undef  LAGOON_IMPLEMENT_TRAIT_GETTER
 
 	std::string_view get_source_file(void) const;
 	unsigned get_source_line(void) const;
@@ -126,7 +104,7 @@ struct metaobject
 
 	virtual bool is_none(void) const = 0;
 
-	virtual const metaobject_traits& traits(void) = 0;
+	virtual const metaobject_traits* traits(void) = 0;
 
 	virtual std::string_view get_source_file(void) = 0;
 	virtual unsigned get_source_line(void) = 0;

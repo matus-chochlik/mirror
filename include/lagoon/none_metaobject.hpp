@@ -20,15 +20,13 @@ class base_registry;
 class none_metaobject
  : public metaobject
 {
-private:
-	metaobject_traits _ts;
 public:
 	static shared_metaobject& get_single(void);
 
 	bool is_none(void) const
 	override;
 
-	const metaobject_traits& traits(void)
+	const metaobject_traits* traits(void)
 	override;
 
 	std::string_view get_source_file(void)

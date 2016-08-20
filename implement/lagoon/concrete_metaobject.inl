@@ -40,10 +40,10 @@ concrete_metaobject_tpl<Traits>::is_none(void) const
 
 template <class Traits>
 inline
-const metaobject_traits&
+const metaobject_traits*
 concrete_metaobject_tpl<Traits>::traits(void)
 {
-	return _ts;
+	return &_ts;
 }
 
 template <class Traits>

@@ -18,7 +18,7 @@ proxy_metaobject::is_none(void) const
 }
 
 inline
-const metaobject_traits&
+const metaobject_traits*
 proxy_metaobject::traits(void)
 {
 	return _reg.find(_fpt).traits();

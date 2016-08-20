@@ -12,6 +12,7 @@
 #define LAGOON_METAOBJECT_TRAITS_1105240825_HPP
 
 #include <mirror/traits.hpp>
+#include <mirror/has_source_info.hpp>
 #include <mirror/is_anonymous.hpp>
 #include <mirror/is_class.hpp>
 #include <mirror/is_struct.hpp>
@@ -23,6 +24,7 @@ namespace lagoon {
 
 struct metaobject_traits
 {
+	bool has_source_info    : 1;
 	bool reflects_specifier     : 1;
 	bool reflects_global_scope  : 1;
 	bool reflects_namespace     : 1;
@@ -44,7 +46,8 @@ struct metaobject_traits
 	constexpr
 	metaobject_traits(mirror::none = {})
 	noexcept
-	 : reflects_specifier{false}
+	 : has_source_info{false}
+	 , reflects_specifier{false}
 	 , reflects_global_scope{false}
 	 , reflects_namespace{false}
 	 , reflects_type{false}
@@ -66,7 +69,8 @@ struct metaobject_traits
 	constexpr
 	metaobject_traits(MO)
 	noexcept
-	 : reflects_specifier{mirror::reflects_specifier<MO>{}}
+	 : has_source_info{mirror::has_source_info<MO>{}}
+	 , reflects_specifier{mirror::reflects_specifier<MO>{}}
 	 , reflects_global_scope{mirror::reflects_global_scope<MO>{}}
 	 , reflects_namespace{mirror::reflects_namespace<MO>{}}
 	 , reflects_type{mirror::reflects_type<MO>{}}
