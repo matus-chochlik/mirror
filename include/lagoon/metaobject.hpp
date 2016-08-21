@@ -66,6 +66,8 @@ public:
 	LAGOON_IMPLEMENT_TRAIT_GETTER(is_union)
 	LAGOON_IMPLEMENT_TRAIT_GETTER(is_enum)
 	LAGOON_IMPLEMENT_TRAIT_GETTER(is_scoped_enum)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_static)
+	LAGOON_IMPLEMENT_TRAIT_GETTER(is_virtual)
 #undef  LAGOON_IMPLEMENT_TRAIT_GETTER
 
 	std::string_view get_source_file(void) const;

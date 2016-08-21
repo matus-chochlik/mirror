@@ -33,6 +33,8 @@
 #include <mirror/is_union.hpp>
 #include <mirror/is_enum.hpp>
 #include <mirror/is_scoped_enum.hpp>
+#include <mirror/is_static.hpp>
+#include <mirror/is_virtual.hpp>
 #include <mirror/enable_if.hpp>
 #include <mirror/traits.hpp>
 
@@ -337,6 +339,32 @@ auto is_scoped_enum(X)
 noexcept
 {
 	return mirror::is_scoped_enum<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_static(X)
+noexcept
+{
+	return mirror::is_static<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto is_virtual(X)
+noexcept
+{
+	return mirror::is_virtual<X>{};
 }
 
 template <

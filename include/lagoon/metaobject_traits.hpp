@@ -19,6 +19,8 @@
 #include <mirror/is_union.hpp>
 #include <mirror/is_enum.hpp>
 #include <mirror/is_scoped_enum.hpp>
+#include <mirror/is_static.hpp>
+#include <mirror/is_virtual.hpp>
 
 namespace lagoon {
 
@@ -42,6 +44,8 @@ struct metaobject_traits
 	bool is_union       : 1;
 	bool is_enum        : 1;
 	bool is_scoped_enum : 1;
+	bool is_static      : 1;
+	bool is_virtual     : 1;
 
 	constexpr
 	metaobject_traits(mirror::none = {})
@@ -63,6 +67,8 @@ struct metaobject_traits
 	 , is_union{false}
 	 , is_enum{false}
 	 , is_scoped_enum{false}
+	 , is_static{false}
+	 , is_virtual{false}
 	{ }
 
 	template <typename MO>
@@ -86,6 +92,8 @@ struct metaobject_traits
 	 , is_union{mirror::is_union<MO>{}}
 	 , is_enum{mirror::is_enum<MO>{}}
 	 , is_scoped_enum{mirror::is_scoped_enum<MO>{}}
+	 , is_static{mirror::is_static<MO>{}}
+	 , is_virtual{mirror::is_virtual<MO>{}}
 	{ }
 };
 
