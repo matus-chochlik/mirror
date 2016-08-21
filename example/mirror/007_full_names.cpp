@@ -12,6 +12,7 @@
 #include <mirror/get_full_name.hpp>
 #include <mirror/c_str.hpp>
 #include <iostream>
+#include <string>
 
 namespace foo {
 
@@ -81,6 +82,14 @@ int main(void)
 
 	std::cout << c_str<get_full_name<
 		MIRRORED(foo::bar&(*(*(float, long, int))(short, bool))(char))
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(std::basic_string<char>)
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
+		MIRRORED(const std::basic_string<char>&)
 	>> << std::endl;
 
 	return 0;

@@ -12,6 +12,7 @@
 #include <puddle/metaobject_ops.hpp>
 #include <puddle/reflection.hpp>
 #include <iostream>
+#include <string>
 
 namespace foo {
 
@@ -81,6 +82,14 @@ int main(void)
 
 	std::cout << get_full_name(
 		PUDDLED(foo::bar&(*(*(float, long, int))(short, bool))(char))
+	) << std::endl;
+
+	std::cout << get_full_name(
+		PUDDLED(std::basic_string<char>)
+	) << std::endl;
+
+	std::cout << get_full_name(
+		PUDDLED(const std::basic_string<char>&)
 	) << std::endl;
 
 	return 0;

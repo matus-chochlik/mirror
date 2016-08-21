@@ -332,6 +332,30 @@ struct decor<MO, R(*)(P...)>
 	> { };
 };
 
+template <typename MO, template <typename...> class T, typename ... P>
+struct decor<MO, T<P...>>
+{
+	template <typename Str>
+	struct left : Str { };
+
+	template <typename Str>
+	struct base : op_get_scope_spec<MO> { };
+
+	template <typename Str>
+	struct right : concat<
+		string<'<'>, join<
+			string<','>,
+			eval<op_get_full_name<get_aliased<MIRRORED(P)>>>...
+		>, string<'>'>, Str
+	> { };
+
+	template <typename Str>
+	struct extent : Str { };
+
+	template <typename Str>
+	struct params : Str { };
+};
+
 template <>
 struct do_get_full_name<none, none>
  : empty_string
