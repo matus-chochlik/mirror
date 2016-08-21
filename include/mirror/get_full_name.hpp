@@ -339,7 +339,7 @@ struct decor<MO, T<P...>>
 	struct left : Str { };
 
 	template <typename Str>
-	struct base : op_get_scope_spec<MO> { };
+	struct base : op_get_scope_spec<get_aliased<MIRRORED(T<P...>)>> { };
 
 	template <typename Str>
 	struct right : concat<

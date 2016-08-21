@@ -85,6 +85,10 @@ int main(void)
 	>> << std::endl;
 
 	std::cout << c_str<get_full_name<
+		MIRRORED(std::string)
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
 		MIRRORED(std::basic_string<char>)
 	>> << std::endl;
 

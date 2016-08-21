@@ -85,6 +85,10 @@ int main(void)
 	) << std::endl;
 
 	std::cout << get_full_name(
+		PUDDLED(std::string)
+	) << std::endl;
+
+	std::cout << get_full_name(
 		PUDDLED(std::basic_string<char>)
 	) << std::endl;
 
