@@ -6,38 +6,37 @@
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
-#include <mirror/hash.hpp>
-#include <mirror/get_full_name.hpp>
+#include <puddle/string.hpp>
+#include <puddle/hash.hpp>
+#include <puddle/meta_named_ops.hpp>
 
 namespace lagoon {
 
 inline
 fingerprint
-get_fingerprint(mirror::none)
+get_fingerprint(mirror::none n)
 {
-	return mirror::hash<mirror::none>::value;
+	return puddle::hash(n);
 }
 
 template <typename MO>
 inline
 fingerprint
-get_fingerprint(mirror::metaobject<MO>)
+get_fingerprint(mirror::metaobject<MO> mo)
 {
-	return mirror::hash<
-		mirror::get_full_name<mirror::metaobject<MO>>
-	>::value;
+	return puddle::hash(puddle::get_full_name(mo));
 }
 
 template <typename MO1, typename MO2>
 inline
 fingerprint
-get_fingerprint(mirror::metaobject<MO1>, mirror::metaobject<MO2>)
+get_fingerprint(mirror::metaobject<MO1> mo1, mirror::metaobject<MO2> mo2)
 {
-	return mirror::hash<
-		mirror::get_full_name<mirror::metaobject<MO2>>,
-		mirror::string<'@'>,
-		mirror::get_full_name<mirror::metaobject<MO1>>
-	>::value;
+	return puddle::hash(
+		puddle::get_full_name(mo2),
+		puddle::string<'@'>,
+		puddle::get_full_name(mo1)
+	);
 }
 
 } // namespace lagoon

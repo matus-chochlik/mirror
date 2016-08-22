@@ -27,7 +27,7 @@ noexcept
  , _aux::mo_access<Traits>(mo, reg)
  , _ts(mo)
 {
-	static_assert(mirror::is_metaobject<MO>::value, "");
+	static_assert(puddle::is_metaobject(mo), "");
 }
 
 template <class Traits>

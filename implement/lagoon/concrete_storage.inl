@@ -7,23 +7,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 #include <lagoon/metaobject_registry.hpp>
-#include <mirror/get_source_file.hpp>
-#include <mirror/get_source_line.hpp>
-#include <mirror/get_source_column.hpp>
-#include <mirror/get_base_name.hpp>
-#include <mirror/get_full_name.hpp>
-#include <mirror/get_display_name.hpp>
-#include <mirror/get_type.hpp>
-#include <mirror/get_scope.hpp>
-#include <mirror/get_aliased.hpp>
-#include <mirror/get_base_class.hpp>
-#include <mirror/get_access_specifier.hpp>
-#include <mirror/get_base_classes.hpp>
-#include <mirror/get_data_members.hpp>
-#include <mirror/get_member_types.hpp>
-#include <mirror/get_enumerators.hpp>
-#include <mirror/string_view.hpp>
-#include <mirror/value.hpp>
+#include <puddle/metaobject_ops.hpp>
 #include <lagoon/none_metaobject.hpp>
 #include <lagoon/none_sequence.hpp>
 #include <lagoon/fingerprint.hpp>
@@ -34,34 +18,34 @@ namespace _aux {
 // mo_source
 template <typename MO>
 inline
-mo_source_data<true>::mo_source_data(MO)
+mo_source_data<true>::mo_source_data(MO mo)
  : _store{
-	mirror::string_view<mirror::get_source_file<MO>>,
-	mirror::value<mirror::get_source_line<MO>>,
-	mirror::value<mirror::get_source_column<MO>>
+	puddle::string_view(puddle::get_source_file(mo)),
+	puddle::get_source_line(mo),
+	puddle::get_source_column(mo)
 } { }
 
 // mo_named
 template <typename MO>
 inline
-mo_named_data<true, false>::mo_named_data(MO)
+mo_named_data<true, false>::mo_named_data(MO mo)
  : _store{
-	mirror::string_view<mirror::get_base_name<MO>>,
-	mirror::string_view<mirror::get_full_name<MO>>,
-	mirror::string_view<mirror::get_display_name<MO>>
+	puddle::string_view(puddle::get_base_name(mo)),
+	puddle::string_view(puddle::get_full_name(mo)),
+	puddle::string_view(puddle::get_display_name(mo))
 } { }
 
 template <typename MO>
 inline
-mo_named_data<true, true>::mo_named_data(MO)
- : _store{mirror::string_view<mirror::get_base_name<MO>>}
+mo_named_data<true, true>::mo_named_data(MO mo)
+ : _store{puddle::string_view(puddle::get_base_name(mo))}
 { }
 
 // mo_typed
 template <typename MO>
 inline
-mo_typed_data<true>::mo_typed_data(MO, metaobject_registry& reg)
- : _store{reg.get(get_fingerprint(mirror::get_type<MO>{}))}
+mo_typed_data<true>::mo_typed_data(MO mo, metaobject_registry& reg)
+ : _store{reg.get(get_fingerprint(puddle::get_type(mo)))}
 { }
 
 inline
@@ -74,8 +58,8 @@ mo_typed_data<false>::_type(void) const
 // mo_scoped
 template <typename MO>
 inline
-mo_scoped_data<true>::mo_scoped_data(MO, metaobject_registry& reg)
- : _store{reg.get(get_fingerprint(mirror::get_scope<MO>{}))}
+mo_scoped_data<true>::mo_scoped_data(MO mo, metaobject_registry& reg)
+ : _store{reg.get(get_fingerprint(puddle::get_scope(mo)))}
 { }
 
 inline
@@ -88,8 +72,8 @@ mo_scoped_data<false>::_scope(void) const
 // mo_alias
 template <typename MO>
 inline
-mo_alias_data<true>::mo_alias_data(MO, metaobject_registry& reg)
- : _store{reg.get(get_fingerprint(mirror::get_aliased<MO>{}))}
+mo_alias_data<true>::mo_alias_data(MO mo, metaobject_registry& reg)
+ : _store{reg.get(get_fingerprint(puddle::get_aliased(mo)))}
 { }
 
 inline
@@ -102,8 +86,8 @@ mo_alias_data<false>::_aliased(void) const
 // mo_inherit
 template <typename MO>
 inline
-mo_inherit_data<true>::mo_inherit_data(MO, metaobject_registry& reg)
- : _store{reg.get(get_fingerprint(mirror::get_base_class<MO>{}))}
+mo_inherit_data<true>::mo_inherit_data(MO mo, metaobject_registry& reg)
+ : _store{reg.get(get_fingerprint(puddle::get_base_class(mo)))}
 { }
 
 inline
@@ -116,8 +100,8 @@ mo_inherit_data<false>::_base_cls(void) const
 // mo_access
 template <typename MO>
 inline
-mo_access_data<true>::mo_access_data(MO, metaobject_registry& reg)
- : _store{reg.get(get_fingerprint(mirror::get_access_specifier<MO>{}))}
+mo_access_data<true>::mo_access_data(MO mo, metaobject_registry& reg)
+ : _store{reg.get(get_fingerprint(puddle::get_access_specifier(mo)))}
 { }
 
 inline
@@ -132,9 +116,9 @@ template <typename MO>
 inline
 mo_record_data<true>::mo_record_data(MO mo, metaobject_registry& reg)
  : _store{
-	reg.make_inh_seq(mo, mirror::get_base_classes<MO>{}),
-	reg.make_seq(mirror::get_data_members<MO>{}),
-	reg.make_seq(mirror::get_member_types<MO>{})
+	reg.make_inh_seq(mo, puddle::get_base_classes(mo)),
+	reg.make_seq(puddle::get_data_members(mo)),
+	reg.make_seq(puddle::get_member_types(mo))
  } { }
 
 inline
@@ -161,8 +145,8 @@ mo_record_data<false>::_memb_typs(void) const
 // mo_enum
 template <typename MO>
 inline
-mo_enum_data<true>::mo_enum_data(MO, metaobject_registry& reg)
- : _store{reg.make_seq(mirror::get_enumerators<MO>{})}
+mo_enum_data<true>::mo_enum_data(MO mo, metaobject_registry& reg)
+ : _store{reg.make_seq(puddle::get_enumerators(mo))}
 { }
 
 inline

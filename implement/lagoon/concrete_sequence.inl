@@ -7,8 +7,9 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 #include <lagoon/base_registry.hpp>
-#include <mirror/unpack.hpp>
-#include <mirror/get_base_class.hpp>
+#include <puddle/sequence_ops.hpp>
+#include <puddle/meta_record_ops.hpp>
+#include <puddle/traits.hpp>
 
 namespace lagoon {
 
@@ -58,15 +59,15 @@ _make_vec(mirror::range<MO...>, base_registry& reg)
 template <typename MOS>
 inline
 concrete_metaobject_sequence::
-concrete_metaobject_sequence(MOS, base_registry& reg)
+concrete_metaobject_sequence(MOS mos, base_registry& reg)
 noexcept
  : concrete_metaobject_sequence_base(
-	_make_vec(mirror::unpack<MOS>{}, reg),
+	_make_vec(puddle::unpack(mos), reg),
 	reg
 ) {
 	static_assert(
-		mirror::is_none<MOS>::value ||
-		mirror::is_metaobject_sequence<MOS>::value,
+		puddle::is_none(mos) ||
+		puddle::is_metaobject_sequence(mos),
 	"");
 }
 
@@ -76,21 +77,21 @@ std::vector<shared_metaobject>
 concrete_inh_metaobject_sequence::
 _make_vec(PMO pmo, mirror::range<MO...>, base_registry& reg)
 {
-	return {reg.get(get_fingerprint(pmo, mirror::get_base_class<MO>{}))...};
+	return {reg.get(get_fingerprint(pmo, puddle::get_base_class(MO{})))...};
 }
 
 template <typename PMO, typename MOS>
 inline
 concrete_inh_metaobject_sequence::
-concrete_inh_metaobject_sequence(PMO pmo, MOS, base_registry& reg)
+concrete_inh_metaobject_sequence(PMO pmo, MOS mos, base_registry& reg)
 noexcept
  : concrete_metaobject_sequence_base(
-	_make_vec(pmo, mirror::unpack<MOS>{}, reg),
+	_make_vec(pmo, puddle::unpack(mos), reg),
 	reg
 ) {
 	static_assert(
-		mirror::is_none<MOS>::value ||
-		mirror::is_metaobject_sequence<MOS>::value,
+		puddle::is_none(mos) ||
+		puddle::is_metaobject_sequence(mos),
 	"");
 }
 

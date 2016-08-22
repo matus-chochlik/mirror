@@ -8,12 +8,10 @@
  */
 #include <lagoon/concrete_metaobject.hpp>
 #include <lagoon/concrete_sequence.hpp>
-#include <mirror/traits.hpp>
-#include <mirror/unpack.hpp>
-#include <mirror/get_base_classes.hpp>
-#include <mirror/get_data_members.hpp>
-#include <mirror/get_member_types.hpp>
-#include <mirror/get_enumerators.hpp>
+#include <puddle/traits.hpp>
+#include <puddle/sequence_ops.hpp>
+#include <puddle/meta_enum_ops.hpp>
+#include <puddle/meta_record_ops.hpp>
 
 namespace lagoon {
 
@@ -29,7 +27,7 @@ inline
 shared_metaobject
 metaobject_registry::reg(fingerprint fp, MO pmo)
 {
-	static_assert(mirror::is_metaobject<MO>::value, "");
+	static_assert(puddle::is_metaobject(pmo), "");
 	auto p = _mos.find(fp);
 	if (p == _mos.end())
 	{
@@ -62,7 +60,7 @@ inline
 void
 metaobject_registry::reg_inh_range(PMO pmo, mirror::range<MO...>)
 {
-	_eat(reg(get_fingerprint(pmo, mirror::get_base_class<MO>{}), MO{})...);
+	_eat(reg(get_fingerprint(pmo, puddle::get_base_class(MO{})), MO{})...);
 }
 
 template <typename MO>
@@ -70,31 +68,31 @@ inline
 void
 metaobject_registry::reg_base_classes(MO pmo)
 {
-	reg_inh_range(pmo, mirror::unpack<mirror::get_base_classes<MO>>{});
+	reg_inh_range(pmo, puddle::unpack(puddle::get_base_classes(pmo)));
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_data_members(MO)
+metaobject_registry::reg_data_members(MO mo)
 {
-	reg_range(mirror::unpack<mirror::get_data_members<MO>>{});
+	reg_range(puddle::unpack(puddle::get_data_members(mo)));
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_member_types(MO)
+metaobject_registry::reg_member_types(MO mo)
 {
-	reg_range(mirror::unpack<mirror::get_member_types<MO>>{});
+	reg_range(puddle::unpack(puddle::get_member_types(mo)));
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_enumerators(MO)
+metaobject_registry::reg_enumerators(MO mo)
 {
-	reg_range(mirror::unpack<mirror::get_enumerators<MO>>{});
+	reg_range(puddle::unpack(puddle::get_enumerators(mo)));
 }
 
 inline
@@ -110,8 +108,8 @@ shared_metaobject_sequence
 metaobject_registry::make_seq(MOS mos)
 {
 	static_assert(
-		mirror::is_none<MOS>::value ||
-		mirror::is_metaobject_sequence<MOS>::value,
+		puddle::is_none(mos) ||
+		puddle::is_metaobject_sequence(mos),
 	"");
 	return make_shared_sequence<concrete_metaobject_sequence>(
 		mos, *this
@@ -124,8 +122,8 @@ shared_metaobject_sequence
 metaobject_registry::make_inh_seq(PMO pmo, MOS mos)
 {
 	static_assert(
-		mirror::is_none<MOS>::value ||
-		mirror::is_metaobject_sequence<MOS>::value,
+		puddle::is_none(mos) ||
+		puddle::is_metaobject_sequence(mos),
 	"");
 	return make_shared_sequence<concrete_inh_metaobject_sequence>(
 		pmo, mos, *this

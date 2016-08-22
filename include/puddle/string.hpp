@@ -13,6 +13,7 @@
 
 #include <mirror/string.hpp>
 #include <mirror/string_ops.hpp>
+#include <mirror/string_view.hpp>
 #include <mirror/c_str.hpp>
 
 namespace puddle {
@@ -29,6 +30,14 @@ auto c_str(S)
 noexcept
 {
 	return ::mirror::c_str<S>;
+}
+
+template <typename S>
+static inline constexpr
+auto string_view(S)
+noexcept
+{
+	return ::mirror::string_view<S>;
 }
 
 } // namespace puddle
