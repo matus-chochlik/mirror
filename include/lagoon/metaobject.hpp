@@ -220,6 +220,9 @@ public:
 	size_type get_size(void) const;
 	size_type size(void) const { return get_size(); }
 
+	bool is_empty(void) const { return get_size() == 0; }
+	bool empty(void) const { return is_empty(); }
+
 	shared_metaobject get_element(size_type i) const;
 	shared_metaobject at(size_type i) const { return get_element(i); }
 
