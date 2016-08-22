@@ -9,8 +9,25 @@
 #include <lagoon/none_metaobject.hpp>
 #include <lagoon/none_sequence.hpp>
 #include <lagoon/proxy_metaobject.hpp>
+#include <lagoon/member_sequence.hpp>
+#include <algorithm>
 
 namespace lagoon {
+namespace _aux {
+
+template <typename T>
+inline
+void
+flat_set<T>::insert(T v)
+{
+	auto i = std::lower_bound(_v.begin(), _v.end(), v);
+	if((i == _v.end()) || (*i != v))
+	{
+		_v.insert(i, std::move(v));
+	}
+}
+
+} // namespace _aux
 
 inline
 const shared_metaobject&
@@ -53,6 +70,13 @@ base_registry::find(fingerprint n)
 		return get_none();
 	}
 	return p->second;
+}
+
+inline
+shared_metaobject_sequence
+base_registry::make_mem_seq(fingerprint n)
+{
+	return make_shared_sequence<member_metaobject_sequence>(_mems[n],*this);
 }
 
 } // namespace lagoon

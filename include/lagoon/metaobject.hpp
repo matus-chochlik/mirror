@@ -89,6 +89,8 @@ public:
 	shared_metaobject_sequence get_data_members(void) const;
 	shared_metaobject_sequence get_member_types(void) const;
 	shared_metaobject_sequence get_enumerators(void) const;
+
+	shared_metaobject_sequence get_members(void) const;
 };
 
 template <typename ConcreteMO, typename ... P>
@@ -127,6 +129,8 @@ struct metaobject
 	virtual shared_metaobject_sequence get_data_members(void) = 0;
 	virtual shared_metaobject_sequence get_member_types(void) = 0;
 	virtual shared_metaobject_sequence get_enumerators(void) = 0;
+
+	virtual shared_metaobject_sequence get_members(void) = 0;
 };
 
 struct metaobject_sequence;

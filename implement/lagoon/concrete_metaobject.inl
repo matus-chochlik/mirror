@@ -18,6 +18,7 @@ concrete_metaobject_tpl(MO mo, metaobject_registry& reg)
 noexcept
  : _aux::mo_source<Traits>(mo)
  , _aux::mo_scoped<Traits>(mo, reg)
+ , _aux::mo_scope<Traits>(mo, reg)
  , _aux::mo_typed<Traits>(mo, reg)
  , _aux::mo_named<Traits>(mo)
  , _aux::mo_alias<Traits>(mo, reg)
@@ -164,6 +165,14 @@ shared_metaobject_sequence
 concrete_metaobject_tpl<Traits>::get_enumerators(void)
 {
 	return this->_enmrtrs();
+}
+
+template <class Traits>
+inline
+shared_metaobject_sequence
+concrete_metaobject_tpl<Traits>::get_members(void)
+{
+	return this->_members();
 }
 
 } // namespace lagoon

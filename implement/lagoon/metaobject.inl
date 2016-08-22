@@ -130,6 +130,13 @@ shared_metaobject::get_enumerators(void) const
 }
 
 inline
+shared_metaobject_sequence
+shared_metaobject::get_members(void) const
+{
+	return _mo->get_members();
+}
+
+inline
 bool
 shared_metaobject_sequence::is_none(void) const
 {

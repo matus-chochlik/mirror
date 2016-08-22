@@ -23,6 +23,7 @@ class concrete_metaobject_tpl
  : public metaobject
  , public _aux::mo_source<Traits>
  , public _aux::mo_scoped<Traits>
+ , public _aux::mo_scope<Traits>
  , public _aux::mo_typed<Traits>
  , public _aux::mo_named<Traits>
  , public _aux::mo_alias<Traits>
@@ -87,6 +88,9 @@ public:
 	override;
 
 	shared_metaobject_sequence get_enumerators(void)
+	override;
+
+	shared_metaobject_sequence get_members(void)
 	override;
 };
 

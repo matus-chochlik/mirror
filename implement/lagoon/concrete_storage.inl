@@ -55,6 +55,20 @@ mo_typed_data<false>::_type(void) const
 	return none_metaobject::get_single();
 }
 
+// mo_scope
+template <typename MO>
+inline
+mo_scope_data<true>::mo_scope_data(MO mo, metaobject_registry& reg)
+ : _store{reg.make_mem_seq(get_fingerprint(mo))}
+{ }
+
+inline
+const shared_metaobject_sequence&
+mo_scope_data<false>::_members(void) const
+{
+	return none_metaobject_sequence::get_single();
+}
+
 // mo_scoped
 template <typename MO>
 inline

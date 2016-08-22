@@ -73,6 +73,9 @@ public:
 
 	shared_metaobject_sequence get_enumerators(void)
 	override;
+
+	shared_metaobject_sequence get_members(void)
+	override;
 };
 
 } // namespace lagoon

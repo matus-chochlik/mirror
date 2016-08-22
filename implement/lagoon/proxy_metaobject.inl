@@ -129,4 +129,11 @@ proxy_metaobject::get_enumerators(void)
 	return _reg.find(_fpt).get_enumerators();
 }
 
+inline
+shared_metaobject_sequence
+proxy_metaobject::get_members(void)
+{
+	return _reg.find(_fpt).get_members();
+}
+
 } // namespace lagoon

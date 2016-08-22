@@ -138,4 +138,11 @@ none_metaobject::get_enumerators(void)
 	return none_metaobject_sequence::get_single();
 }
 
+inline
+shared_metaobject_sequence
+none_metaobject::get_members(void)
+{
+	return none_metaobject_sequence::get_single();
+}
+
 } // namespace lagoon

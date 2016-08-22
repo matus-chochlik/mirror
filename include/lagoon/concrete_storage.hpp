@@ -22,6 +22,7 @@ struct do_make_mo_trait_tuple;
 template <
 	bool HasSourceInfo,
 	bool IsScopeMember,
+	bool IsScope,
 	bool IsNamed,
 	bool IsTyped,
 	bool IsRecord,
@@ -33,6 +34,7 @@ template <
 {
 	static constexpr const bool has_source_info = HasSourceInfo;
 	static constexpr const bool is_scope_member = IsScopeMember;
+	static constexpr const bool is_scope = IsScope;
 	static constexpr const bool is_named = IsNamed;
 	static constexpr const bool is_typed = IsTyped;
 	static constexpr const bool is_record = IsRecord;
@@ -48,6 +50,7 @@ struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 	typedef mo_trait_tuple<
 		std::meta::get_source_line_v<MO> != 0,
 		std::meta::ScopeMember<MO>,
+		std::meta::Scope<MO>,
 		std::meta::Named<MO>,
 		std::meta::Typed<MO>,
 		std::meta::Record<MO>,
@@ -62,6 +65,7 @@ template <>
 struct do_make_mo_trait_tuple<mirror::none>
 {
 	typedef mo_trait_tuple<
+		false,
 		false,
 		false,
 		false,
@@ -203,6 +207,40 @@ protected:
 
 template <typename Traits>
 using mo_typed = mo_typed_data<Traits::is_typed>;
+
+// mo_scope_data
+template <bool Scope>
+class mo_scope_data;
+
+template <>
+class mo_scope_data<true>
+{
+private:
+	struct {
+		shared_metaobject_sequence _mems;
+	} _store;
+protected:
+	template <typename MO>
+	mo_scope_data(MO, metaobject_registry& reg);
+
+	const shared_metaobject_sequence& _members(void) const {
+		return _store._mems;
+	}
+};
+
+template <>
+class mo_scope_data<false>
+{
+protected:
+	template <typename MO>
+	mo_scope_data(MO, metaobject_registry&)
+	{ }
+
+	const shared_metaobject_sequence& _members(void) const;
+};
+
+template <typename Traits>
+using mo_scope = mo_scope_data<Traits::is_scope>;
 
 // mo_scoped_data
 template <bool Typed>

@@ -10,8 +10,10 @@
 #include <lagoon/concrete_sequence.hpp>
 #include <puddle/traits.hpp>
 #include <puddle/sequence_ops.hpp>
+#include <puddle/meta_scoped_ops.hpp>
 #include <puddle/meta_enum_ops.hpp>
 #include <puddle/meta_record_ops.hpp>
+#include <puddle/reflection.hpp>
 
 namespace lagoon {
 
@@ -25,16 +27,35 @@ metaobject_registry::reg(mirror::none)
 template <typename MO>
 inline
 shared_metaobject
-metaobject_registry::reg(fingerprint fp, MO pmo)
+metaobject_registry::reg(fingerprint fp, MO mo)
 {
-	static_assert(puddle::is_metaobject(pmo), "");
+	static_assert(puddle::is_metaobject(mo), "");
 	auto p = _mos.find(fp);
 	if (p == _mos.end())
 	{
-		auto mo = make_shared_metaobject<concrete_metaobject<MO>>(
-			pmo, *this
+		auto smo = make_shared_metaobject<concrete_metaobject<MO>>(
+			mo, *this
 		);
-		p = _mos.emplace(fp, mo).first;
+		p = _mos.emplace(fp, smo).first;
+
+		auto scmo = puddle::get_scope(mo);
+
+		if(puddle::is_none(scmo))
+		{
+			if(
+				!puddle::reflects_specifier(mo) &&
+				!puddle::reflects_inheritance(mo) &&
+				!puddle::reflects_global_scope(mo)
+			)
+			{
+				auto gsco = PUDDLED(::);
+				_mems[get_fingerprint(gsco)].insert(fp);
+			}
+		}
+		else
+		{
+			_mems[get_fingerprint(scmo)].insert(fp);
+		}
 	}
 	return p->second;
 }
@@ -42,9 +63,9 @@ metaobject_registry::reg(fingerprint fp, MO pmo)
 template <typename MO>
 inline
 shared_metaobject
-metaobject_registry::reg(MO pmo)
+metaobject_registry::reg(MO mo)
 {
-	return reg(get_fingerprint(pmo), pmo);
+	return reg(get_fingerprint(mo), mo);
 }
 
 template <typename ... MO>
