@@ -1,6 +1,6 @@
 /**
- * @example lagoon/010_member_tree.cpp
- * @brief Lists namespace members
+ * @example lagoon/012_member_tree.cpp
+ * @brief Recursively lists namespace members
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -82,13 +82,19 @@ int main(void)
 
 	r.reg(PUDDLED(foo));
 	r.reg(PUDDLED(foo::A));
+	r.reg_data_members(PUDDLED(foo::A));
+	//r.reg_member_types(PUDDLED(foo::A));
 	r.reg(PUDDLED(foo::B));
+	r.reg_data_members(PUDDLED(foo::B));
+	//r.reg_member_types(PUDDLED(foo::B));
 	r.reg(PUDDLED(foo::bar));
 	r.reg(PUDDLED(foo::bar::C));
 	r.reg(PUDDLED(foo::bar::D));
 	r.reg(PUDDLED(foo::bar::baz));
 	r.reg(PUDDLED(foo::bar::baz::E));
+	r.reg_enumerators(PUDDLED(foo::bar::baz::E));
 	r.reg(PUDDLED(foo::bar::U));
+	r.reg_data_members(PUDDLED(foo::bar::U));
 
 	print_members(r.reg(PUDDLED(::)));
 
