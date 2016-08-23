@@ -7,6 +7,11 @@ cmake_minimum_required(VERSION 2.8)
 
 project(Mirror CXX)
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+	message(STATUS "No build type selected, default to Release")
+	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type (default Release)")
+endif()
+
 option(MIRROR_NO_DOCS "Don't build and install the documentation" Off)
 
 include(config/Tools.cmake)

@@ -179,6 +179,36 @@ def get_argument_parser():
 			to the values specified by --library-dir.
 		"""
 	)
+	argparser.add_argument(
+		"--config-type",
+		dest="config_types",
+		choices=["Debug", "Release"],
+		action="append",
+		default=list(),
+		help="""
+			Determines the build configuration (default = %(default)s).
+		"""
+	)
+	argparser.add_argument(
+		"--debug",
+		dest="config_types",
+		action="append_const",
+		const="Debug",
+		default=list(),
+		help="""
+			Configures for the 'Debug' build type.
+		"""
+	)
+	argparser.add_argument(
+		"--release",
+		dest="config_types",
+		action="append_const",
+		const="Release",
+		default=list(),
+		help="""
+			Configures for the 'Release' build type.
+		"""
+	)
 
 	argparser_build_docs_group = argparser.add_mutually_exclusive_group()
 	argparser_build_docs_group.add_argument(
@@ -446,6 +476,12 @@ def main(argv):
 	# add paths for library lookup
 	if(options.library_dirs):
 		cmake_options.append("-DLIBRARY_SEARCH_PATHS="+";".join(options.library_dirs))
+
+	# add configuration options
+	if(len(options.config_types) == 1):
+		cmake_options.append("-DCMAKE_BUILD_TYPE="+options.config_types[0])
+	elif(len(options.config_types) > 1):
+		cmake_options.append("-DCMAKE_CONFIGURATION_TYPES="+";".join(options.config_types))
 
 	# remove the build dir if it was requested
 	if(options.clean and os.path.exists(options.build_dir)):
