@@ -7,6 +7,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 #include <lagoon/metaobject_registry.hpp>
+#include <lagoon/fingerprint.hpp>
 
 namespace lagoon {
 
@@ -26,6 +27,7 @@ noexcept
  , _aux::mo_enum<Traits>(mo, reg)
  , _aux::mo_inherit<Traits>(mo, reg)
  , _aux::mo_access<Traits>(mo, reg)
+ , _fpt(lagoon::get_fingerprint(mo))
  , _ts(mo)
 {
 	static_assert(puddle::is_metaobject(mo), "");
@@ -37,6 +39,14 @@ bool
 concrete_metaobject_tpl<Traits>::is_none(void) const
 {
 	return false;
+}
+
+template <class Traits>
+inline
+fingerprint
+concrete_metaobject_tpl<Traits>::get_fingerprint(void)
+{
+	return _fpt;
 }
 
 template <class Traits>

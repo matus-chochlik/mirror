@@ -27,6 +27,13 @@ none_metaobject::is_none(void) const
 }
 
 inline
+fingerprint
+none_metaobject::get_fingerprint(void)
+{
+	return {};
+}
+
+inline
 const metaobject_traits*
 none_metaobject::traits(void)
 {

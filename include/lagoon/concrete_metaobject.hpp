@@ -33,6 +33,7 @@ class concrete_metaobject_tpl
  , public _aux::mo_access<Traits>
 {
 private:
+	fingerprint _fpt;
 	metaobject_traits _ts;
 public:
 	template <typename MO>
@@ -40,6 +41,9 @@ public:
 	noexcept;
 
 	bool is_none(void) const
+	override;
+
+	fingerprint get_fingerprint(void)
 	override;
 
 	const metaobject_traits* traits(void)

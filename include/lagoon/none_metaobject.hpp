@@ -26,6 +26,9 @@ public:
 	bool is_none(void) const
 	override;
 
+	fingerprint get_fingerprint(void)
+	override;
+
 	const metaobject_traits* traits(void)
 	override;
 

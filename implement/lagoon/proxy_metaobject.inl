@@ -18,6 +18,13 @@ proxy_metaobject::is_none(void) const
 }
 
 inline
+fingerprint
+proxy_metaobject::get_fingerprint(void)
+{
+	return _fpt;
+}
+
+inline
 const metaobject_traits*
 proxy_metaobject::traits(void)
 {

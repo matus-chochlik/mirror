@@ -23,6 +23,7 @@ namespace lagoon {
 
 struct metaobject;
 class shared_metaobject_sequence;
+using fingerprint = std::uint64_t;
 
 class shared_metaobject
 {
@@ -38,6 +39,8 @@ public:
 	explicit
 	operator bool (void) const { return !is_none(); }
 	bool operator ! (void) const { return is_none(); }
+
+	fingerprint get_fingerprint(void) const;
 
 	const metaobject_traits* traits(void) const;
 
@@ -107,6 +110,8 @@ struct metaobject
 	virtual ~metaobject(void) = default;
 
 	virtual bool is_none(void) const = 0;
+
+	virtual fingerprint get_fingerprint(void) = 0;
 
 	virtual const metaobject_traits* traits(void) = 0;
 
