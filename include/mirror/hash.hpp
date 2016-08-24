@@ -36,6 +36,78 @@ template <
 (hash_t((b7&0x80)|(b6&0x40)|(b5&0x20)|(b4&0x10)|(b3&0x08)|(b2&0x04)|(b1&0x02)|(b0&0x01))<<(7*8))>
 { };
 
+template <hash_t V, uint8_t R>
+struct do_rotate;
+
+template <hash_t V>
+struct do_rotate<V, 0x00> : std::integral_constant<hash_t, (V <<  1)|(V >> 63)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x01> : std::integral_constant<hash_t, (V <<  2)|(V >> 62)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x02> : std::integral_constant<hash_t, (V <<  3)|(V >> 61)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x03> : std::integral_constant<hash_t, (V <<  5)|(V >> 59)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x04> : std::integral_constant<hash_t, (V <<  7)|(V >> 57)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x05> : std::integral_constant<hash_t, (V << 11)|(V >> 53)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x06> : std::integral_constant<hash_t, (V << 13)|(V >> 51)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x07> : std::integral_constant<hash_t, (V << 17)|(V >> 47)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x08> : std::integral_constant<hash_t, (V << 19)|(V >> 45)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x09> : std::integral_constant<hash_t, (V << 23)|(V >> 41)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x0A> : std::integral_constant<hash_t, (V << 29)|(V >> 35)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x0B> : std::integral_constant<hash_t, (V << 31)|(V >> 33)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x0C> : std::integral_constant<hash_t, (V << 37)|(V >> 27)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x0D> : std::integral_constant<hash_t, (V << 41)|(V >> 23)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x0E> : std::integral_constant<hash_t, (V << 43)|(V >> 21)>
+{ };
+
+template <hash_t V>
+struct do_rotate<V, 0x0F> : std::integral_constant<hash_t, (V << 47)|(V >> 17)>
+{ };
+
+template <hash_t V>
+struct rotate
+ : do_rotate<V, uint8_t(V & 0x0F)>
+{ };
+
 template <hash_t State, typename X>
 struct do_hash;
 
@@ -51,10 +123,10 @@ template <
 > struct do_hash<State, string<c7, c6, c5, c4, c3, c2, c1, c0>>
  : std::integral_constant<
 	hash_t,
-	(State ^ 0x8001400220041008U) ^ hash_bytes<
+	(State ^ 0x8001400220041008U) ^ rotate<hash_bytes<
 		uint8_t(c7), uint8_t(c6), uint8_t(c5), uint8_t(c4), 
 		uint8_t(c3), uint8_t(c2), uint8_t(c1), uint8_t(c0)
-	>::value
+	>::value>::value
 > { };
 
 template <
