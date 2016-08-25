@@ -16,3 +16,4 @@ endforeach()
 
 add_runtime_test_dependency(mirror equal_r concat_r)
 add_runtime_test_dependency(mirror equal_r to_string_r)
+add_runtime_test_dependency(mirror is_empty_r get_empty_r)

@@ -32,6 +32,11 @@ struct op_push_back<range<T...>, E>
  : range<T..., E>
 { };
 
+template <typename ... T>
+struct op_push_back<range<T...>, none>
+ : range<T...>
+{ };
+
 template <typename Char, Char E>
 struct op_push_back<basic_string<Char>, int_const<Char, E>>
  : basic_string<Char, E>
@@ -40,6 +45,11 @@ struct op_push_back<basic_string<Char>, int_const<Char, E>>
 template <typename Char, Char ... T, Char E>
 struct op_push_back<basic_string<Char, T...>, int_const<Char, E>>
  : basic_string<Char, T..., E>
+{ };
+
+template <typename Char, Char ... T>
+struct op_push_back<basic_string<Char, T...>, none>
+ : basic_string<Char, T...>
 { };
 
 } // namespace _aux
