@@ -42,26 +42,20 @@ struct op_get_scope_spec<none>
 template <typename MO>
 struct do_get_scope_spec
  : lazy_conditional<
-	or_<
-		is_anonymous<get_scope<MO>>,
-		and_<
-			is_enum<get_scope<MO>>,
-			not_<is_scoped_enum<get_scope<MO>>>
-		>
-	>,
+	is_none<get_scope<MO>>,
+	get_base_name<MO>,
 	concat<
-		eval<op_get_scope_spec<get_scope<get_scope<MO>>>>,
-		string<':',':'>,
- 		get_base_name<MO>
-	>,
-	lazy_conditional<
-		is_none<get_scope<MO>>,
- 		get_base_name<MO>,
-		concat<
-			eval<op_get_scope_spec<get_scope<MO>>>,
-			string<':',':'>,
- 			get_base_name<MO>
-		>
+		lazy_conditional<
+			or_<
+				is_anonymous<get_scope<MO>>,
+				and_<
+					is_enum<get_scope<MO>>,
+					not_<is_scoped_enum<get_scope<MO>>>
+				>
+			>,
+			op_get_scope_spec<get_scope<get_scope<MO>>>,
+			op_get_scope_spec<get_scope<MO>>
+		>, string<':',':'>, get_base_name<MO>
 	>
 > { };
 
