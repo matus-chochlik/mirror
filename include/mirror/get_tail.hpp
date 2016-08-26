@@ -11,10 +11,6 @@
 #ifndef MIRROR_GET_TAIL_1105240825_HPP
 #define MIRROR_GET_TAIL_1105240825_HPP
 
-#include "int_const.hpp"
-#include "none.hpp"
-#include "range.hpp"
-#include "string.hpp"
 #include "or.hpp"
 #include "less.hpp"
 #include "equal.hpp"
