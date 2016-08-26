@@ -25,22 +25,22 @@ struct op_get_size;
 
 template <>
 struct op_get_size<none>
- : unsigned_<0u>
+ : size_const<0u>
 { };
 
 template <typename ... P>
 struct op_get_size<range<P...>>
- : unsigned_<sizeof ... (P)>
+ : size_const<sizeof ... (P)>
 { };
 
 template <typename Char, Char ... C>
 struct op_get_size<basic_string<Char, C...>>
- : unsigned_<sizeof ... (C)>
+ : size_const<sizeof ... (C)>
 { };
 
 template <typename MO>
 struct op_get_size<metaobject_sequence<MO>>
- : unsigned_<std::meta::get_size_v<MO>>
+ : size_const<std::meta::get_size_v<MO>>
 { };
 
 } // namespace _aux
