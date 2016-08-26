@@ -25,6 +25,7 @@ template <
 	bool IsScope,
 	bool IsNamed,
 	bool IsTyped,
+	bool IsTagType,
 	bool IsRecord,
 	bool IsEnum,
 	bool IsRecordMember,
@@ -37,6 +38,7 @@ template <
 	static constexpr const bool is_scope = IsScope;
 	static constexpr const bool is_named = IsNamed;
 	static constexpr const bool is_typed = IsTyped;
+	static constexpr const bool is_tag_type = IsTagType;
 	static constexpr const bool is_record = IsRecord;
 	static constexpr const bool is_enum = IsEnum;
 	static constexpr const bool is_record_member = IsRecordMember;
@@ -53,6 +55,7 @@ struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 		std::meta::Scope<MO>,
 		std::meta::Named<MO>,
 		std::meta::Typed<MO>,
+		std::meta::TagType<MO>,
 		std::meta::Record<MO>,
 		std::meta::Enum<MO>,
 		std::meta::RecordMember<MO>,
@@ -65,6 +68,7 @@ template <>
 struct do_make_mo_trait_tuple<mirror::none>
 {
 	typedef mo_trait_tuple<
+		false,
 		false,
 		false,
 		false,
@@ -372,6 +376,40 @@ using mo_access = mo_access_data<
 	Traits::is_inheritance ||
 	Traits::is_record_member
 >;
+
+// mo_tag_type_data
+template <bool Record>
+class mo_tag_type_data;
+
+template <>
+class mo_tag_type_data<true>
+{
+private:
+	struct {
+		shared_metaobject _ets;
+	} _store;
+protected:
+	template <typename MO>
+	mo_tag_type_data(MO, metaobject_registry& reg);
+
+	const shared_metaobject& _tag_typ_spec(void) const {
+		return _store._ets;
+	}
+};
+
+template <>
+class mo_tag_type_data<false>
+{
+protected:
+	template <typename MO>
+	mo_tag_type_data(MO, metaobject_registry&)
+	{ }
+
+	const shared_metaobject& _tag_typ_spec(void) const;
+};
+
+template <typename Traits>
+using mo_tag_type = mo_tag_type_data<Traits::is_tag_type>;
 
 // mo_record_data
 template <bool Record>

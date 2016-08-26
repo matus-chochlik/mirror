@@ -103,6 +103,13 @@ proxy_metaobject::get_base_class(void)
 
 inline
 shared_metaobject
+proxy_metaobject::get_elaborated_type_specifier(void)
+{
+	return _reg.find(_fpt).get_elaborated_type_specifier();
+}
+
+inline
+shared_metaobject
 proxy_metaobject::get_access_specifier(void)
 {
 	return _reg.find(_fpt).get_access_specifier();

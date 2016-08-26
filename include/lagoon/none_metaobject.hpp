@@ -62,6 +62,9 @@ public:
 	shared_metaobject get_base_class(void)
 	override;
 
+	shared_metaobject get_elaborated_type_specifier(void)
+	override;
+
 	shared_metaobject get_access_specifier(void)
 	override;
 

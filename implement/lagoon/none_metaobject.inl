@@ -112,6 +112,13 @@ none_metaobject::get_base_class(void)
 
 inline
 shared_metaobject
+none_metaobject::get_elaborated_type_specifier(void)
+{
+	return get_single();
+}
+
+inline
+shared_metaobject
 none_metaobject::get_access_specifier(void)
 {
 	return get_single();

@@ -125,6 +125,20 @@ mo_access_data<false>::_accs_spec(void) const
 	return none_metaobject::get_single();
 }
 
+// mo_tag_type
+template <typename MO>
+inline
+mo_tag_type_data<true>::mo_tag_type_data(MO mo, metaobject_registry& reg)
+ : _store{reg.get(get_fingerprint(puddle::get_elaborated_type_specifier(mo)))}
+{ }
+
+inline
+const shared_metaobject&
+mo_tag_type_data<false>::_tag_typ_spec(void) const
+{
+	return none_metaobject::get_single();
+}
+
 // mo_record
 template <typename MO>
 inline

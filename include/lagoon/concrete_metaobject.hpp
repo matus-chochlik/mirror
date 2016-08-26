@@ -27,6 +27,7 @@ class concrete_metaobject_tpl
  , public _aux::mo_typed<Traits>
  , public _aux::mo_named<Traits>
  , public _aux::mo_alias<Traits>
+ , public _aux::mo_tag_type<Traits>
  , public _aux::mo_record<Traits>
  , public _aux::mo_enum<Traits>
  , public _aux::mo_inherit<Traits>
@@ -77,6 +78,9 @@ public:
 	override;
 
 	shared_metaobject get_base_class(void)
+	override;
+
+	shared_metaobject get_elaborated_type_specifier(void)
 	override;
 
 	shared_metaobject get_access_specifier(void)

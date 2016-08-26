@@ -89,9 +89,9 @@ shared_metaobject::get_aliased(void) const
 
 inline
 shared_metaobject
-shared_metaobject::get_base_class(void) const
+shared_metaobject::get_elaborated_type_specifier(void) const
 {
-	return _mo->get_base_class();
+	return _mo->get_elaborated_type_specifier();
 }
 
 inline
@@ -99,6 +99,13 @@ shared_metaobject
 shared_metaobject::get_access_specifier(void) const
 {
 	return _mo->get_access_specifier();
+}
+
+inline
+shared_metaobject
+shared_metaobject::get_base_class(void) const
+{
+	return _mo->get_base_class();
 }
 
 inline

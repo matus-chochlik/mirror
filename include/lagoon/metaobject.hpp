@@ -86,6 +86,7 @@ public:
 	shared_metaobject get_aliased(void) const;
 	shared_metaobject get_base_class(void) const;
 
+	shared_metaobject get_elaborated_type_specifier(void) const;
 	shared_metaobject get_access_specifier(void) const;
 
 	shared_metaobject_sequence get_base_classes(void) const;
@@ -128,6 +129,7 @@ struct metaobject
 	virtual shared_metaobject get_aliased(void) = 0;
 	virtual shared_metaobject get_base_class(void) = 0;
 
+	virtual shared_metaobject get_elaborated_type_specifier(void) = 0;
 	virtual shared_metaobject get_access_specifier(void) = 0;
 
 	virtual shared_metaobject_sequence get_base_classes(void) = 0;

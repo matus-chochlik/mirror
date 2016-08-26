@@ -23,6 +23,7 @@ noexcept
  , _aux::mo_typed<Traits>(mo, reg)
  , _aux::mo_named<Traits>(mo)
  , _aux::mo_alias<Traits>(mo, reg)
+ , _aux::mo_tag_type<Traits>(mo, reg)
  , _aux::mo_record<Traits>(mo, reg)
  , _aux::mo_enum<Traits>(mo, reg)
  , _aux::mo_inherit<Traits>(mo, reg)
@@ -135,6 +136,14 @@ shared_metaobject
 concrete_metaobject_tpl<Traits>::get_base_class(void)
 {
 	return this->_base_cls();
+}
+
+template <class Traits>
+inline
+shared_metaobject
+concrete_metaobject_tpl<Traits>::get_elaborated_type_specifier(void)
+{
+	return this->_tag_typ_spec();
 }
 
 template <class Traits>
