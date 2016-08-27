@@ -13,6 +13,7 @@
 
 #include <mirror/int_const.hpp>
 #include <mirror/int_ops.hpp>
+#include <mirror/value.hpp>
 
 namespace puddle {
 
@@ -33,6 +34,14 @@ constexpr mirror::int_<I> int_ = {};
 
 template <unsigned U>
 constexpr mirror::unsigned_<U> unsigned_ = {};
+
+template <typename I>
+static inline constexpr
+auto value(I)
+noexcept
+{
+	return ::mirror::value<I>;
+}
 
 using namespace mirror::cexpr;
 

@@ -13,6 +13,7 @@
 
 #include <mirror/unpack.hpp>
 #include <mirror/is_empty.hpp>
+#include <mirror/get_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/enable_if.hpp>
@@ -38,6 +39,20 @@ noexcept
 template <
 	typename X,
 	typename = mirror::enable_if_any<
+		mirror::is_string<X>,
+		mirror::is_range<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto get_empty(X)
+noexcept
+{
+	return mirror::get_empty<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
 		mirror::is_metaobject_sequence<X>,
 		mirror::is_string<X>,
 		mirror::is_range<X>,
@@ -48,6 +63,21 @@ auto get_size(X)
 noexcept
 {
 	return mirror::get_size<X>{};
+}
+
+template <
+	typename X,
+	typename = mirror::enable_if_any<
+		mirror::is_metaobject_sequence<X>,
+		mirror::is_string<X>,
+		mirror::is_range<X>,
+		mirror::is_none<X>
+	>
+> static constexpr inline
+auto size(X)
+noexcept
+{
+	return mirror::size<X>{};
 }
 
 template <

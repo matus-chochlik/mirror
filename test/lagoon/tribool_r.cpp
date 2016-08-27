@@ -10,7 +10,7 @@
  *   http://www.boost.org/LICENSE_1_0.txt
  */
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE MIRROR_tribool
+#define BOOST_TEST_MODULE LAGOON_tribool
 #include <boost/test/unit_test.hpp>
 
 #include <lagoon/tribool.hpp>

@@ -24,6 +24,8 @@ constexpr mirror::basic_string<Char, C...> basic_string = {};
 template <char ... C>
 constexpr mirror::string<C...> string = {};
 
+constexpr mirror::empty_string empty_string = {};
+
 template <typename S>
 static inline constexpr
 auto c_str(S)
