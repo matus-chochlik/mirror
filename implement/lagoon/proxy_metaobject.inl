@@ -74,6 +74,13 @@ proxy_metaobject::get_display_name(void)
 }
 
 inline
+raw_const_t
+proxy_metaobject::get_raw_constant(void)
+{
+	return _reg.find(_fpt).get_raw_constant();
+}
+
+inline
 shared_metaobject
 proxy_metaobject::get_type(void)
 {

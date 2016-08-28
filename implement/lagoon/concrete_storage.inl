@@ -18,7 +18,7 @@ namespace _aux {
 // mo_source
 template <typename MO>
 inline
-mo_source_data<true>::mo_source_data(MO mo)
+mo_source_data<true>::mo_source_data(MO mo, metaobject_registry&)
  : _store{
 	puddle::string_view(puddle::get_source_file(mo)),
 	puddle::get_source_line(mo),
@@ -28,7 +28,7 @@ mo_source_data<true>::mo_source_data(MO mo)
 // mo_named
 template <typename MO>
 inline
-mo_named_data<true, false>::mo_named_data(MO mo)
+mo_named_data<true, false>::mo_named_data(MO mo, metaobject_registry&)
  : _store{
 	puddle::string_view(puddle::get_base_name(mo)),
 	puddle::string_view(puddle::get_full_name(mo)),
@@ -37,7 +37,7 @@ mo_named_data<true, false>::mo_named_data(MO mo)
 
 template <typename MO>
 inline
-mo_named_data<true, true>::mo_named_data(MO mo)
+mo_named_data<true, true>::mo_named_data(MO mo, metaobject_registry&)
  : _store{puddle::string_view(puddle::get_base_name(mo))}
 { }
 
@@ -183,6 +183,13 @@ mo_enum_data<false>::_enmrtrs(void) const
 {
 	return none_metaobject_sequence::get_single();
 }
+
+// mo_constant
+template <typename MO>
+inline
+mo_constant_data<true>::mo_constant_data(MO mo, metaobject_registry&)
+ : _store{static_cast<std::uint64_t>(puddle::get_constant(mo))}
+{ }
 
 } // namespace _aux
 } // namespace lagoon

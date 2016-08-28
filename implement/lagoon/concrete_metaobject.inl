@@ -17,15 +17,16 @@ inline
 concrete_metaobject_tpl<Traits>::
 concrete_metaobject_tpl(MO mo, metaobject_registry& reg)
 noexcept
- : _aux::mo_source<Traits>(mo)
+ : _aux::mo_source<Traits>(mo, reg)
  , _aux::mo_scoped<Traits>(mo, reg)
  , _aux::mo_scope<Traits>(mo, reg)
  , _aux::mo_typed<Traits>(mo, reg)
- , _aux::mo_named<Traits>(mo)
+ , _aux::mo_named<Traits>(mo, reg)
  , _aux::mo_alias<Traits>(mo, reg)
  , _aux::mo_tag_type<Traits>(mo, reg)
  , _aux::mo_record<Traits>(mo, reg)
  , _aux::mo_enum<Traits>(mo, reg)
+ , _aux::mo_constant<Traits>(mo, reg)
  , _aux::mo_inherit<Traits>(mo, reg)
  , _aux::mo_access<Traits>(mo, reg)
  , _fpt(lagoon::get_fingerprint(mo))
@@ -104,6 +105,14 @@ std::string_view
 concrete_metaobject_tpl<Traits>::get_display_name(void)
 {
 	return this->_disp_name();
+}
+
+template <class Traits>
+inline
+raw_const_t
+concrete_metaobject_tpl<Traits>::get_raw_constant(void)
+{
+	return this->_cnst_val();
 }
 
 template <class Traits>

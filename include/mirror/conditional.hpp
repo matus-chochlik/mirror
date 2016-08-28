@@ -48,6 +48,9 @@ struct op_lazy_conditional<false_, Unused, IfFalse>
 template <typename Bool, typename IfTrue, typename IfFalse>
 using conditional = eval<_aux::op_conditional<Bool, IfTrue, IfFalse>>;
 
+template <bool B, typename IfTrue, typename IfFalse>
+using conditional_c = conditional<bool_<B>, IfTrue, IfFalse>;
+
 template <typename Bool, typename IfTrue, typename IfFalse>
 using lazy_conditional = eval<_aux::op_lazy_conditional<Bool, IfTrue, IfFalse>>;
 

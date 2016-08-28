@@ -67,6 +67,13 @@ shared_metaobject::get_display_name(void) const
 }
 
 inline
+raw_const_t
+shared_metaobject::get_raw_constant(void) const
+{
+	return _mo->get_raw_constant();
+}
+
+inline
 shared_metaobject
 shared_metaobject::get_type(void) const
 {

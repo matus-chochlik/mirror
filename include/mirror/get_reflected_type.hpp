@@ -25,11 +25,11 @@ struct op_get_reflected_type;
 
 template <typename MO>
 struct op_get_reflected_type<metaobject<MO>>
- : conditional<
-	bool_<std::meta::Type<MO>>,
+ : identity<lazy_conditional_c<
+	std::meta::Type<MO>,
 	std::meta::get_reflected_type<MO>,
 	none
-> { };
+>> { };
 
 } // namespace _aux
 

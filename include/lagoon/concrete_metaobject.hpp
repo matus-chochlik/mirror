@@ -30,6 +30,7 @@ class concrete_metaobject_tpl
  , public _aux::mo_tag_type<Traits>
  , public _aux::mo_record<Traits>
  , public _aux::mo_enum<Traits>
+ , public _aux::mo_constant<Traits>
  , public _aux::mo_inherit<Traits>
  , public _aux::mo_access<Traits>
 {
@@ -66,6 +67,9 @@ public:
 	override;
 
 	std::string_view get_display_name(void)
+	override;
+
+	raw_const_t get_raw_constant(void)
 	override;
 
 	shared_metaobject get_type(void)

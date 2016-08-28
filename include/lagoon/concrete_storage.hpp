@@ -29,6 +29,7 @@ template <
 	bool IsRecord,
 	bool IsEnum,
 	bool IsRecordMember,
+	bool IsConstant,
 	bool IsInheritance,
 	bool IsSpecifier
 > struct mo_trait_tuple
@@ -42,6 +43,7 @@ template <
 	static constexpr const bool is_record = IsRecord;
 	static constexpr const bool is_enum = IsEnum;
 	static constexpr const bool is_record_member = IsRecordMember;
+	static constexpr const bool is_constant = IsConstant;
 	static constexpr const bool is_inheritance = IsInheritance;
 	static constexpr const bool is_specifier = IsSpecifier;
 };
@@ -59,6 +61,7 @@ struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 		std::meta::Record<MO>,
 		std::meta::Enum<MO>,
 		std::meta::RecordMember<MO>,
+		std::meta::Constant<MO>,
 		std::meta::Inheritance<MO>,
 		std::meta::Specifier<MO>
 	> type;
@@ -68,6 +71,7 @@ template <>
 struct do_make_mo_trait_tuple<mirror::none>
 {
 	typedef mo_trait_tuple<
+		false,
 		false,
 		false,
 		false,
@@ -100,7 +104,7 @@ private:
 	} _store;
 protected:
 	template <typename MO>
-	mo_source_data(MO);
+	mo_source_data(MO, metaobject_registry&);
 
 	std::string_view _src_fil(void) const { return _store._fil; }
 	unsigned  _src_lin(void) const { return _store._lin; }
@@ -112,7 +116,7 @@ class mo_source_data<false>
 {
 protected:
 	template <typename MO>
-	mo_source_data(MO)
+	mo_source_data(MO, metaobject_registry&)
 	{ }
 
 	std::string_view _src_fil(void) const { return {}; }
@@ -138,7 +142,7 @@ private:
 	} _store;
 protected:
 	template <typename MO>
-	mo_named_data(MO);
+	mo_named_data(MO, metaobject_registry&);
 
 	std::string_view _base_name(void) const { return _store._bn; }
 	std::string_view _full_name(void) const { return _store._fn; }
@@ -154,7 +158,7 @@ private:
 	} _store;
 protected:
 	template <typename MO>
-	mo_named_data(MO);
+	mo_named_data(MO, metaobject_registry&);
 
 	std::string_view _base_name(void) const { return _store._n; }
 	std::string_view _full_name(void) const { return _store._n; }
@@ -166,7 +170,7 @@ class mo_named_data<false, B>
 {
 protected:
 	template <typename MO>
-	mo_named_data(MO) { }
+	mo_named_data(MO, metaobject_registry&) { }
 
 	std::string_view _base_name(void) const { return {}; }
 	std::string_view _full_name(void) const { return {}; }
@@ -488,6 +492,40 @@ protected:
 
 template <typename Traits>
 using mo_enum = mo_enum_data<Traits::is_enum>;
+
+// mo_constant_data
+template <bool Record>
+class mo_constant_data;
+
+template <>
+class mo_constant_data<true>
+{
+private:
+	struct {
+		std::uint64_t _cv;
+	} _store;
+protected:
+	template <typename MO>
+	mo_constant_data(MO, metaobject_registry& reg);
+
+	std::uint64_t _cnst_val(void) const {
+		return _store._cv;
+	}
+};
+
+template <>
+class mo_constant_data<false>
+{
+protected:
+	template <typename MO>
+	mo_constant_data(MO, metaobject_registry&)
+	{ }
+
+	std::uint64_t _cnst_val(void) const { return 0ULL; }
+};
+
+template <typename Traits>
+using mo_constant = mo_constant_data<Traits::is_constant>;
 
 } // namespace _aux
 } // namespace lagoon

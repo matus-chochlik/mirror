@@ -83,6 +83,13 @@ none_metaobject::get_display_name(void)
 }
 
 inline
+raw_const_t
+none_metaobject::get_raw_constant(void)
+{
+	return 0;
+}
+
+inline
 shared_metaobject
 none_metaobject::get_type(void)
 {

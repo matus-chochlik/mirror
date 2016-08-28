@@ -20,6 +20,7 @@
 #include "meta_type_ops.hpp"
 #include "meta_record_ops.hpp"
 #include "meta_enum_ops.hpp"
+#include "meta_constant_ops.hpp"
 #include "specifier_ops.hpp"
 
 namespace puddle {
