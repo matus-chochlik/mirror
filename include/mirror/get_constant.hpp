@@ -12,6 +12,7 @@
 #define MIRROR_GET_CONSTANT_1105240825_HPP
 
 #include <reflexpr>
+#include "get_type.hpp"
 #include "get_reflected_type.hpp"
 #include "to_int_const.hpp"
 #include "none.hpp"
