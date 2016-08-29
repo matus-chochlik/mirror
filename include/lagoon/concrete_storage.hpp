@@ -280,7 +280,7 @@ protected:
 };
 
 template <typename Traits>
-using mo_scoped = mo_scoped_data<Traits::is_typed>;
+using mo_scoped = mo_scoped_data<Traits::is_scope_member>;
 
 // mo_alias_data
 template <bool Typed>
