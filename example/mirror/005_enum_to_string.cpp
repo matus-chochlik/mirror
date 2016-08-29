@@ -1,5 +1,5 @@
 /**
- * @example lagoon/005_enum_to_string.cpp
+ * @example mirror/005_enum_to_string.cpp
  * @brief Shows how to implement a enumerator-to-string conversion
  *
  * Copyright Matus Chochlik.
