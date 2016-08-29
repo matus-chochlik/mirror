@@ -1,5 +1,5 @@
 /**
- * @example lagoon/005_string_to_enum.cpp
+ * @example lagoon/006_string_to_enum.cpp
  * @brief Shows how to implement a string-to-enumerator conversion
  *
  * Copyright Matus Chochlik.
@@ -17,6 +17,7 @@
 #include <mirror/range.hpp>
 #include <mirror/unpack.hpp>
 #include <iostream>
+#include <stdexcept>
 #include <map>
 
 enum class E : char
@@ -52,7 +53,11 @@ struct string_to_enum
 	{
 		using MECs = unpack<get_enumerators<MIRRORED(Enum)>>;
 		static auto m = _hlpr<MECs>::_make_map();
-		return m[s];
+		auto p = m.find(s);
+		if(p == m.end()) {
+			throw std::runtime_error("Invalid enumerator name");
+		}
+		return p->second;
 	}
 };
 
@@ -62,11 +67,16 @@ int main(void)
 {
 	mirror::string_to_enum<E> ste;
 
-	std::cout << char(ste("a")) << std::endl;
-	std::cout << char(ste("b")) << std::endl;
-	std::cout << char(ste("c")) << std::endl;
-	std::cout << char(ste("d")) << std::endl;
-	std::cout << char(ste("e")) << std::endl;
+	try {
+		std::cout << char(ste("a")) << std::endl;
+		std::cout << char(ste("b")) << std::endl;
+		std::cout << char(ste("c")) << std::endl;
+		std::cout << char(ste("d")) << std::endl;
+		std::cout << char(ste("e")) << std::endl;
+		std::cout << char(ste("f")) << std::endl;
+	} catch(std::exception& e) {
+		std::cerr << e.what() << std::endl;
+	}
 
 	return 0;
 }
