@@ -67,10 +67,10 @@ shared_metaobject::get_display_name(void) const
 }
 
 inline
-raw_const_t
-shared_metaobject::get_raw_constant(void) const
+any_constant
+shared_metaobject::get_constant(void) const
 {
-	return _mo->get_raw_constant();
+	return _mo->get_constant();
 }
 
 inline

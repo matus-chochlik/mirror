@@ -12,6 +12,7 @@
 #define LAGOON_CONCRETE_STORAGE_1105240825_HPP
 
 #include "metaobject.hpp"
+#include "any_constant.hpp"
 
 namespace lagoon {
 namespace _aux {
@@ -502,13 +503,13 @@ class mo_constant_data<true>
 {
 private:
 	struct {
-		std::uint64_t _cv;
+		any_constant _cv;
 	} _store;
 protected:
 	template <typename MO>
 	mo_constant_data(MO, metaobject_registry& reg);
 
-	std::uint64_t _cnst_val(void) const {
+	const any_constant& _cnst_val(void) const {
 		return _store._cv;
 	}
 };
@@ -521,7 +522,7 @@ protected:
 	mo_constant_data(MO, metaobject_registry&)
 	{ }
 
-	std::uint64_t _cnst_val(void) const { return 0ULL; }
+	any_constant _cnst_val(void) const { return {}; }
 };
 
 template <typename Traits>

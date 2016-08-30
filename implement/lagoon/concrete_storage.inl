@@ -8,6 +8,7 @@
  */
 #include <lagoon/metaobject_registry.hpp>
 #include <puddle/metaobject_ops.hpp>
+#include <puddle/int_const.hpp>
 #include <lagoon/none_metaobject.hpp>
 #include <lagoon/none_sequence.hpp>
 #include <lagoon/fingerprint.hpp>
@@ -188,7 +189,7 @@ mo_enum_data<false>::_enmrtrs(void) const
 template <typename MO>
 inline
 mo_constant_data<true>::mo_constant_data(MO mo, metaobject_registry&)
- : _store{static_cast<std::uint64_t>(puddle::get_constant(mo))}
+ : _store{puddle::value(puddle::get_constant(mo))}
 { }
 
 } // namespace _aux

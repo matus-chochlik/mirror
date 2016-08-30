@@ -109,8 +109,8 @@ concrete_metaobject_tpl<Traits>::get_display_name(void)
 
 template <class Traits>
 inline
-raw_const_t
-concrete_metaobject_tpl<Traits>::get_raw_constant(void)
+any_constant
+concrete_metaobject_tpl<Traits>::get_constant(void)
 {
 	return this->_cnst_val();
 }

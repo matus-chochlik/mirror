@@ -83,10 +83,10 @@ none_metaobject::get_display_name(void)
 }
 
 inline
-raw_const_t
-none_metaobject::get_raw_constant(void)
+any_constant
+none_metaobject::get_constant(void)
 {
-	return 0;
+	return {};
 }
 
 inline

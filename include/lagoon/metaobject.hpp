@@ -12,6 +12,7 @@
 #define LAGOON_METAOBJECT_1105240825_HPP
 
 #include "metaobject_traits.hpp"
+#include "any_constant.hpp"
 #include "tribool.hpp"
 #include <memory>
 #include <utility>
@@ -24,7 +25,6 @@ namespace lagoon {
 struct metaobject;
 class shared_metaobject_sequence;
 using fingerprint = std::uint64_t;
-using raw_const_t = std::uint64_t;
 
 class shared_metaobject
 {
@@ -82,7 +82,7 @@ public:
 	std::string_view get_full_name(void) const;
 	std::string_view get_display_name(void) const;
 
-	raw_const_t get_raw_constant(void) const;
+	any_constant get_constant(void) const;
 
 	shared_metaobject get_type(void) const;
 	shared_metaobject get_scope(void) const;
@@ -127,7 +127,7 @@ struct metaobject
 	virtual std::string_view get_full_name(void) = 0;
 	virtual std::string_view get_display_name(void) = 0;
 
-	virtual raw_const_t get_raw_constant(void) = 0;
+	virtual any_constant get_constant(void) = 0;
 
 	virtual shared_metaobject get_type(void) = 0;
 	virtual shared_metaobject get_scope(void) = 0;

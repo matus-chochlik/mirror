@@ -58,7 +58,7 @@ public:
 	std::string_view get_display_name(void)
 	override;
 
-	raw_const_t get_raw_constant(void)
+	any_constant get_constant(void)
 	override;
 
 	shared_metaobject get_type(void)

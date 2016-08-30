@@ -74,10 +74,10 @@ proxy_metaobject::get_display_name(void)
 }
 
 inline
-raw_const_t
-proxy_metaobject::get_raw_constant(void)
+any_constant
+proxy_metaobject::get_constant(void)
 {
-	return _reg.find(_fpt).get_raw_constant();
+	return _reg.find(_fpt).get_constant();
 }
 
 inline
