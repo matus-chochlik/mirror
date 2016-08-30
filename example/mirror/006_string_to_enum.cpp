@@ -28,8 +28,9 @@ enum class E : char
 namespace mirror {
 
 template <typename Enum>
-struct string_to_enum
+class string_to_enum
 {
+private:
 	template <typename Rng>
 	struct _hlpr;
 
@@ -48,7 +49,7 @@ struct string_to_enum
 			return res;
 		}
 	};
-
+public:
 	Enum operator()(const std::string& s) const
 	{
 		using MECs = unpack<get_enumerators<MIRRORED(Enum)>>;

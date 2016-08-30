@@ -24,8 +24,9 @@ enum class E
 namespace puddle {
 
 template <typename Enum>
-struct enum_to_string
+class enum_to_string
 {
+private:
 	static void _eat(bool ...) { }
 
 	template <typename ... MEC>
@@ -46,7 +47,7 @@ struct enum_to_string
 	{
 		return _do_make_map(MEC{}...);
 	}
-
+public:
 	std::string_view operator()(Enum e) const
 	{
 		auto MECs = unpack(get_enumerators(PUDDLED(Enum)));

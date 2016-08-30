@@ -1,5 +1,5 @@
 /**
- * @example puddle/006_string_to_enum.cpp
+ * @example lagoon/008_string_to_enum.cpp
  * @brief Shows how to implement a string-to-enumerator conversion
  *
  * Copyright Matus Chochlik.
@@ -8,13 +8,11 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#include <puddle/metaobject_ops.hpp>
-#include <puddle/sequence_ops.hpp>
+#include <lagoon/metaobject_registry.hpp>
+#include <lagoon/metaobject.hpp>
 #include <puddle/reflection.hpp>
-#include <puddle/int_const.hpp>
-#include <puddle/string.hpp>
-#include <iostream>
 #include <stdexcept>
+#include <iostream>
 #include <map>
 
 enum class E : char
@@ -22,50 +20,52 @@ enum class E : char
 	a = 'a', b = 'b', c = 'c', d = 'd', e = 'e'
 };
 
-namespace puddle {
+namespace lagoon {
 
 template <typename Enum>
 class string_to_enum
 {
 private:
-	static void _eat(bool ...) { }
-
-	template <typename ... MEC>
 	static
-	std::map<std::string, Enum> _do_make_map(MEC ... mec)
+	std::map<std::string, Enum>
+	_make_map(const shared_metaobject& me)
 	{
 		std::map<std::string, Enum> res;
-		_eat(res.emplace(
-				c_str(get_base_name(mec)),
-				value(get_constant(mec))
-		).second...);
+		for(auto mec : me.get_enumerators())
+		{
+			auto n = mec.get_base_name();
+			res.emplace(
+				std::string(n.data(), n.size()),
+				mec.get_constant().as<Enum>()
+			);
+		}
 		return res;
 	}
 
-	template <typename ... MEC>
-	static
-	std::map<std::string, Enum> _make_map(mirror::range<MEC...>)
-	{
-		return _do_make_map(MEC{}...);
-	}
+	std::map<std::string, Enum> _m;
 public:
-	Enum operator()(const std::string& s) const
+	string_to_enum(const shared_metaobject& meta_Enum)
+	 : _m(_make_map(meta_Enum))
+	{ }
+
+	Enum operator()(const std::string& s)
 	{
-		auto MECs = unpack(get_enumerators(PUDDLED(Enum)));
-		static auto m = _make_map(MECs);
-		auto p = m.find(s);
-		if(p == m.end()) {
+		auto p = _m.find(s);
+		if(p == _m.end()) {
 			throw std::runtime_error("Invalid enumerator name");
 		}
 		return p->second;
 	}
 };
 
-} // namespace puddle
+} // namespace lagoon
 
 int main(void)
 {
-	puddle::string_to_enum<E> ste;
+	lagoon::metaobject_registry reg;
+
+	reg.reg_enumerators(PUDDLED(E));
+	lagoon::string_to_enum<E> ste(reg.reg(PUDDLED(E)));
 
 	try {
 		std::cout << char(ste("a")) << std::endl;
