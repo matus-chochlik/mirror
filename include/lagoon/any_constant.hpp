@@ -23,16 +23,22 @@ class any_constant
 private:
 	raw_const_t _v;
 
+	// TODO: use C++14 template aliases and variables
 	template <typename T>
 	static constexpr bool _is_compatible =
 		std::is_integral<T>::value ||
 		std::is_enum<T>::value;
 
 	template <typename T>
-	using _underlying_type = std::conditional_t<
+	using _underlying_type = typename std::conditional<
 		std::is_enum<T>::value,
-		std::underlying_type_t<T>, T
-	>;
+		typename std::underlying_type<T>::type, T
+	>::type;
+
+	template <typename T>
+	using _enable_if_compatible = typename std::enable_if<
+		_is_compatible<T>
+	>::type;
 
 	// TODO: some kind of type-info
 public:
@@ -45,7 +51,7 @@ public:
 
 	template <
 		typename Src,
-		typename = std::enable_if_t<_is_compatible<Src>>
+		typename =_enable_if_compatible<Src>
 	>
 	constexpr inline
 	any_constant(Src v)
@@ -61,7 +67,7 @@ public:
 
 	template <
 		typename Dst,
-		typename = std::enable_if_t<_is_compatible<Dst>>
+		typename =_enable_if_compatible<Dst>
 	> constexpr inline
 	Dst as(void) const
 	{
