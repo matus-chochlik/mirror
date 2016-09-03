@@ -1,4 +1,6 @@
 /BINARY_DIR
+/doc/quickbook/bin
+/doc/quickbook/html
 /_*
 .*.swp
 *.sdf

@@ -1,0 +1,34 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[book cpp-reflection
+	[quickbook 1.6]
+	[lang en]
+	[id index]
+	[authors [Chochlík, Matúš]]
+	[copyright 2016 Matúš Chochlík]
+	[source-mode c++]
+	[license
+		Distributed under the Boost Software License, Version 1.0.
+		See accompanying file LICENSE_1_0.txt or copy at
+		[@http://www.boost.org/LICENSE_1_0.txt]
+	]
+]
+
+[/------]
+[/Macros]
+[/------]
+
+[def __UNSPECIFIED <UNSPECIFIED>]
+[def __Unspecified <Unspecified>]
+
+[/--------]
+[/Chapters]
+[/--------]
+
+[note This documentation is work-in progress and currently does not
+cover many of the implemented features.]
+
+[include reflexpr.qbk]

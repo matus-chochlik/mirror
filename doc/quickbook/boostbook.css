@@ -1,0 +1,33 @@
+/*
+ * Copyright Matus Chochlik.
+ * Distributed under the Boost Software License, Version 1.0.
+ * See accompanying file LICENSE_1_0.txt or copy at
+ *  http://www.boost.org/LICENSE_1_0.txt
+ */
+body
+{
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
+	background-color: #606060;
+}
+
+.calloutlist table
+{
+	font-size: 75%;
+}
+
+a:link
+{
+	color: #6060A0;
+}
+
+a:visited
+{
+	color: #404080;
+}
+
+a:hover
+{
+	color: #202040;
+	text-shadow: 1px 1px 1px rgba(40, 40, 40, 0.5);
+}
+
