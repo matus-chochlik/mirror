@@ -3,12 +3,12 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[chapter Introduction
-	[quickbook 1.6]
-	[id reflexpr.intro]
-]
+[/====================================================]
+[section:reflexpr_synopsis [^reflexpr] header synopsis]
+[/====================================================]
 
-This is the documentation for the implementation of C++ reflection as
-described in the [link papers.proposals papers].
+[import synopsis.cpp]
 
-[include intro/hello_world.qbk]
+[reflexpr_synopsis_1]
+
+[endsect]

@@ -3,9 +3,9 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[part Basic C++ reflection facility
+[part [/Mirror] template metaprogramming layer
 	[quickbook 1.6]
-	[id reflexpr]
+	[id mirror]
 ]
 
 [/------]
@@ -16,15 +16,16 @@
 [/Quick reference links]
 [/---------------------]
 
-[/def __reflexpr [link reflexpr.quickref.reflexpr_operator reflexpr]]
-
 [/---------]
 [/Templates]
 [/---------]
+
 
 [/--------]
 [/Chapters]
 [/--------]
 
-[include reflexpr/intro.qbk]
-[include reflexpr/quickref.qbk]
+TODO
+
+[/include mirror/intro.qbk]
+[/include mirror/quickref.qbk]

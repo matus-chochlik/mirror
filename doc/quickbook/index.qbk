@@ -21,14 +21,34 @@
 [/Macros]
 [/------]
 
+[def __clang__ [@ http://clang.llvm.org/ clang]]
+
 [def __UNSPECIFIED <UNSPECIFIED>]
 [def __Unspecified <Unspecified>]
+
+[/def __reflexpr [link reflexpr.quickref.reflexpr_operator reflexpr]]
 
 [/--------]
 [/Chapters]
 [/--------]
 
+This is the documentation for the C++ reflection factility proposed
+for standardization by a series of [link papers.proposals papers],
+its [link implementation implementation(s)]
+and a set of external libraries build on top of the
+basic reflection facility showing, that it can be used as the foundation
+for reflection-based utilities and applications using various programming
+paradigms.
+
+[note Note The external libraries are at the moment and in the current form
+[*not] part of the proposal for standard C++ reflection.]
+
 [note This documentation is work-in progress and currently does not
 cover many of the implemented features.]
 
 [include reflexpr.qbk]
+[include mirror.qbk]
+[include puddle.qbk]
+[include lagoon.qbk]
+[include papers.qbk]
+[include implementation.qbk]
