@@ -62,6 +62,6 @@ html/%.css: %.css
 
 html_css: html/boostbook.css
 
-#html/index.html: index.qbk html_images html_css
-html/index.html: index.qbk
+#html/index.html: index.qbk html_images
+html/index.html: index.qbk html_css
 	bjam

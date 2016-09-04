@@ -8,4 +8,32 @@
 	[id papers.proposals]
 ]
 
+This is a list of proposals for the C++ standard committee related to
+the [link reflexpr basic static reflection facility] described in this
+documentation.
+
+
+[itemized_list 
+[ [@ https://isocpp.org/files/papers/n3996.pdf
+   [*N3996] -- Static reflection (revision 1)]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4111.pdf
+   [*N4111] -- Static reflection (revision 2)]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4451.pdf
+   [*N4451] -- Static reflection (revision 3)]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0194r0.pdf
+   [*P0194R0] -- Static reflection (revision 4)]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0194r1.html
+   [*P0194R1] -- Static reflection (revision 5)]]
+]
+
+
+[itemized_list 
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4452.pdf
+   [*N4452] -- A case for strong static reflection] --
+   design paper for [*N4451]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0385r0.pdf
+   [*P0385R0] -- Static reflection. Rationale, design and evolution] --
+   design paper for [*P0194R1]]
+]
+
 TODO

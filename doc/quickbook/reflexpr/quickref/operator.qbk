@@ -3,10 +3,10 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[part implementation
-	[quickbook 1.6]
-	[id implementation]
-]
+[/====================================]
+[section:operator [^reflexpr] operator]
+[/====================================]
 
-[include implementation/intro.qbk]
-[include implementation/clang.qbk]
+TODO
+
+[endsect]

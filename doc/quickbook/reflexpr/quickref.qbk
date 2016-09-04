@@ -10,7 +10,11 @@
 
 [section:intro Introduction]
 
-This quick reference describes the public API of the standard reflection library
-proposed in __P0194Rx.
+This quick reference describes the public API of the standard reflection
+facility as proposed in the [link papers.proposals recent proposals] for
+the C++ standardization committee.
 
 [endsect]
+
+[include quickref/operator.qbk]
+[include quickref/header.qbk]
