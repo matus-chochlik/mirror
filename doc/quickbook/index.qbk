@@ -25,7 +25,9 @@
 
 [def __implementation_defined ['implementation-defined]]
 
-[/def __reflexpr [link reflexpr.quickref.reflexpr_operator reflexpr]]
+[def __reflexpr [link reflexpr.quickref.operator reflexpr]]
+[def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
+
 
 [/--------]
 [/Chapters]

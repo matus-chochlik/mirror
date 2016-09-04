@@ -3,8 +3,10 @@ Mirror reflection utilities
 
 :Author: Matúš Chochlík <chochlik@gmail.com>
 
-Reboot of the Mirror reflection utilities.
-(Currently in very early stage)
+Set of reflection libraries built on top of the C++ reflection facility
+proposed in P0194Rx.
+
+Documentation: http://matus-chochlik.github.io/mirror/doc/html/
 
 License
 =======
