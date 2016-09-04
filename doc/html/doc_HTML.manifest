@@ -2,9 +2,13 @@ index.html
 reflexpr.html
 reflexpr/intro.html
 reflexpr/quickref.html
+reflexpr/quickref/operator.html
+reflexpr/quickref/header.html
 mirror.html
 puddle.html
 lagoon.html
 papers.html
 papers/proposals.html
 implementation.html
+implementation/intro.html
+implementation/clang.html

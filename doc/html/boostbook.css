@@ -1,0 +1,70 @@
+/*
+ * Copyright Matus Chochlik.
+ * Distributed under the Boost Software License, Version 1.0.
+ * See accompanying file LICENSE_1_0.txt or copy at
+ *  http://www.boost.org/LICENSE_1_0.txt
+ */
+body
+{
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
+	background-color: white;
+}
+
+.calloutlist table
+{
+	font-size: 85%;
+}
+
+pre.programlisting
+{
+	margin-top: 0;
+	margin-bottom: 0;
+	border: solid #E0E0E0 1px;
+	background-color: #E8E8E4;
+	padding-right: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.programlisting .preprocessor
+{
+	font-weight: 600;
+	color: #303090;
+}
+.programlisting .keyword
+{
+	font-weight: 500;
+	color: #4040A0;
+}
+.programlisting .identifier
+{
+	font-weight: 400;
+	color: #101020;
+}
+.programlisting .string
+{
+	font-weight: 600;
+	color: #303080;
+}
+
+code.literal
+{
+	color: #101020;
+}
+
+a:link
+{
+	color: #6060A0;
+}
+
+a:visited
+{
+	color: #404080;
+}
+
+a:hover
+{
+	color: #202040;
+	text-shadow: 1px 1px 1px rgba(40, 40, 40, 0.5);
+}
+
