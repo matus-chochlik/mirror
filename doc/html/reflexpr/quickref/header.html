@@ -72,7 +72,7 @@
           which allow access to metadata reflecting specific program declarations.
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Object</span>
- <span class="special">=</span>  <span class="identifier">is_metaobject_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;;</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.is_metaobject">is_metaobject_v</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;;</span>
 </pre>
 <h4>
 <a name="reflexpr.quickref.header.h3"></a>
@@ -335,6 +335,146 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Inheritance</span>
  <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
 </pre>
+<h4>
+<a name="reflexpr.quickref.header.h23"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.operations"></a></span><a class="link" href="header.html#reflexpr.quickref.header.operations">Metaobject
+          operations</a>
+        </h4>
+<p>
+          <a name="ops_Object"></a>The following operations are applicable to all
+          <a class="link" href="header.html#reflexpr.quickref.header.concept_Object">metaobjects</a>.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T1</span><span class="special">,</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T2</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">reflects_same</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c2" href="header.html#reflexpr.quickref.header.c3"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">&gt;</span>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T1</span><span class="special">,</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T2</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">reflects_same_v</span>
+ <span class="special">=</span> <span class="identifier">reflects_same</span><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">,</span> <span class="identifier">T2</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_source_file</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">value_type</span> <span class="special">=</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">[</span><span class="identifier">N</span><span class="special">+</span><span class="number">1</span><span class="special">];</span>
+	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="identifier">value_type</span> <span class="identifier">value</span> <span class="special">=</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c4" href="header.html#reflexpr.quickref.header.c5"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_source_file_v</span>
+ <span class="special">=</span> <span class="identifier">get_source_file</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_source_line</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">unsigned</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c6" href="header.html#reflexpr.quickref.header.c7"><img src="../../images/callouts/3.png" alt="3" border="0"></a><span class="special">&gt;</span>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_source_line_v</span>
+ <span class="special">=</span> <span class="identifier">get_source_line</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_source_column</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">unsigned</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">&gt;</span> <a class="co" name="reflexpr.quickref.header.c8" href="header.html#reflexpr.quickref.header.c9"><img src="../../images/callouts/4.png" alt="4" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_source_column_v</span>
+ <span class="special">=</span> <span class="identifier">get_source_column</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c3"></a><a href="#reflexpr.quickref.header.c2"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if both <code class="literal">T1</code> and <code class="literal">T2</code>
+              reflect the same base-level declaration, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c5"></a><a href="#reflexpr.quickref.header.c4"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Null-terminated constexpr <code class="literal">char</code> array containing
+              the path to the source file, where the base-level entity reflected
+              by <code class="literal">T</code> was declared. If <code class="literal">T</code> does
+              not have an in-source declaration (for example a built-in type), the
+              value is an empty (null-terminated) string.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c7"></a><a href="#reflexpr.quickref.header.c6"><img src="../../images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The source file line number, where the base-level entity reflected
+              by <code class="literal">T</code> was declared. If <code class="literal">T</code> does
+              not have an in-source declaration (for example a built-in type), then
+              the value is zero.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c9"></a><a href="#reflexpr.quickref.header.c8"><img src="../../images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The source file column number, where the base-level entity reflected
+              by <code class="literal">T</code> was declared. If <code class="literal">T</code> does
+              not have an in-source declaration (for example a built-in type), then
+              the value is zero.
+            </p></td>
+</tr>
+</table></div>
+<p>
+          <a name="ops_ObjectSequence"></a>Operations applicable to metaobject sequences
+          -- types conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_size</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_size</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">unsigned</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c10" href="header.html#reflexpr.quickref.header.c11"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">&gt;</span>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_size_v</span>
+ <span class="special">=</span> <span class="identifier">get_size</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="comment">// get_element</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">I</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_element</span>
+ <span class="special">:</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <a class="co" name="reflexpr.quickref.header.c12" href="header.html#reflexpr.quickref.header.c13"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">I</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_element_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_element</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">I</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+
+
+<span class="comment">// unpack_sequence</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="special">...&gt;</span> <span class="keyword">class</span> <span class="identifier">Tpl</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">unpack_sequence</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <span class="identifier">Tpl</span><span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="special">...</span> <a class="co" name="reflexpr.quickref.header.c14" href="header.html#reflexpr.quickref.header.c15"><img src="../../images/callouts/3.png" alt="3" border="0"></a><span class="special">&gt;;</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="special">...&gt;</span> <span class="keyword">class</span> <span class="identifier">Tpl</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">unpack_sequence_t</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">unpack_sequence</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Tpl</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c11"></a><a href="#reflexpr.quickref.header.c10"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The number of elements in the metaobject sequence <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c13"></a><a href="#reflexpr.quickref.header.c12"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The <code class="literal">I</code>-th metaobject in the metaobject sequence
+              <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c15"></a><a href="#reflexpr.quickref.header.c14"><img src="../../images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A pack of all metaobjects in the metaobject sequence <code class="literal">T</code>.
+            </p></td>
+</tr>
+</table></div>
 <pre class="programlisting"><span class="special">}</span> <span class="comment">// namespace meta</span>
 </pre>
 <pre class="programlisting"><span class="special">}</span> <span class="comment">// namespace std</span>
