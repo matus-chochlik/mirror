@@ -9,7 +9,7 @@
 
 The following code shows a trivial, working example of usage
 of the [^__reflexpr] operator and the [^__std_meta_get_base_name] and
-[^__std_meta_get_scope] operations.
+[^__std_meta_get_scope] metaobject operations.
 
 [import hello_world.cpp]
 

@@ -15,24 +15,197 @@ The standard [^<reflexpr>] header implements the ['interface] of the
 
 [reflexpr_header_open_std]
 
+[heading:is_metaobject [^is_metaobject] type-trait]
+[/------------------------------------------------]
+
 The [^std::is_metaobject] type-trait is used to distinguish between
 [link reflexpr.intro.metaobjects metaobject types] and all other types.
 
 [reflexpr_header_is_metaobject]
 
-[#namespace_meta]
-All other reflection-related definitions are nested in the [^std::meta]
-namespace:
+[heading:namespace_meta namespace [^meta]]
+[/---------------------------------------]
+
+All reflection-related definitions (except for the [^is_metaobject] type trait)
+are nested in the [^std::meta] namespace:
 
 [reflexpr_header_open_meta]
 
-The [^meta::Object] concept is modelled by stateless anonymous types generated
+[heading:concept_Object [^Object]]
+[/-------------------------------]
+
+The [^__meta::Object] concept is modelled by stateless anonymous types generated
 by the compiler, which allow access to metadata reflecting specific program
 declarations.
 
 [reflexpr_header_concepts_Object]
+
+[heading:concept_ObjectSequence [^ObjectSequence]]
+[/-----------------------------------------------]
+
+[^__meta::ObjectSequence] is a concept for lazy metaobject sequences.
+
 [reflexpr_header_concepts_ObjectSequence]
-[reflexpr_header_concepts]
+
+[heading:concept_Reversible [^Reversible]]
+[/---------------------------------------]
+
+Metaobjects modelling the [^__meta::Reversible] concept can be ['reverted]
+to the original declaration. This means that for example a [^__meta::__Type]
+can be ['reverted] to the base-level type which it reflects.
+
+[reflexpr_header_concepts_Reversible]
+
+[heading:concept_Named [^Named]]
+[/-----------------------------]
+
+Metaobjects modelling the [^__meta::Named] concept reflect base-level
+declarations or other entities which ['can] have a name or are referred to
+by an identifier or a keyword.
+
+[reflexpr_header_concepts_Named]
+
+[heading:concept_Alias [^Alias]]
+[/-----------------------------]
+
+Some named base-level declarations can have one or several ['aliases]
+(for example type, template or namespace aliases).
+These are reflected by metaobjects modelling the [^__meta::Alias] concept.
+All [^meta::Alias]es also conform to the [^meta::__Named] concept.
+
+[reflexpr_header_concepts_Alias]
+
+[heading:concept_Typed [^Typed]]
+[/-----------------------------]
+
+Models of the [^__meta::Typed] concept reflect base-level declarations
+with a type (for example variables or constants)
+
+[reflexpr_header_concepts_Typed]
+
+[heading:concept_Scope [^Scope]]
+[/-----------------------------]
+
+Base-level scopes, like namespaces, classes, enumerations, etc. are reflected
+by metaobjects modelling the [^__meta::Scope] concept.
+
+[reflexpr_header_concepts_Scope]
+
+[heading:concept_Namespace [^Namespace]]
+[/-------------------------------------]
+
+Namespaces are reflected by metaobjects conforming to the [^__meta::Namespace]
+concept. All [^meta::Namespace]s also conform to [^meta::__Named],
+[^meta::__Scope] and [^meta::__ScopeMember].
+
+[reflexpr_header_concepts_Namespace]
+
+[heading:concept_GlobalScope [^GlobalScope]]
+[/-----------------------------------------]
+
+The global scope is reflected by metaobjects modelling
+the [^__meta::GlobalScope] concept.
+
+[reflexpr_header_concepts_GlobalScope]
+
+[heading:concept_Type [^Type]]
+[/---------------------------]
+
+Metaobjects conforming to the [^__meta::Type] concept reflect base-level types.
+Models of this concept are also [^meta::__Named] and [^meta::__Reversible].
+[^meta::Type]s reflecting native C++ types are not [^meta::__ScopeMember]s,
+reflections of all other types declared in source are [^meta::__ScopeMember]s.
+
+[reflexpr_header_concepts_Type]
+
+[heading:concept_TagType [^TagType]]
+[/---------------------------------]
+
+Models of [^__meta::TagType] reflect the common aspects of elaborated types
+like classes, unions and enumerations.
+
+[reflexpr_header_concepts_TagType]
+
+[heading:concept_Record [^Record]]
+[/-------------------------------]
+
+Models of [^__meta::Record] reflect the common aspects of structures, classes
+and unions.
+
+[reflexpr_header_concepts_Record]
+
+[heading:concept_Enum [^Enum]]
+[/---------------------------]
+
+Metaobjects modelling the [^__meta::Enum] concept reflect both scoped
+and non-scoped enumerations.
+
+[reflexpr_header_concepts_Enum]
+
+[heading:concept_Class [^Class]]
+[/-----------------------------]
+
+Metaobjects modelling the [^__meta::Class] concept reflect C++ classes
+and structures.
+
+[reflexpr_header_concepts_Class]
+
+[heading:concept_ScopeMember [^ScopeMember]]
+[/-----------------------------------------]
+
+Common aspects of base-level entities declared in a scope (the global scope,
+a namespace, a class, etc.) are reflected by metaobjects modelling the
+[^__meta::ScopeMember] concept.
+
+[reflexpr_header_concepts_ScopeMember]
+
+[heading:concept_EnumMember [^EnumMember]]
+[/---------------------------------------]
+
+Enumerated type members (enumerators) are reflected by metaobjects modelling
+the [^__meta::EnumMember] concept.
+
+[reflexpr_header_concepts_EnumMember]
+
+[heading:concept_RecordMember [^RecordMember]]
+[/-------------------------------------------]
+
+Common aspects of structure, class and union members are reflected by
+metaobjects conforming to the [^__meta::RecordMember] concept.
+
+[reflexpr_header_concepts_RecordMember]
+
+[heading:concept_Variable [^Variable]]
+[/-----------------------------------]
+
+Variables and class data members are reflected by [^__meta::Variable]
+metaobjects.
+
+[reflexpr_header_concepts_Variable]
+
+[heading:concept_Constant [^Constant]]
+[/-----------------------------------]
+
+Compile-time constants (for example enumerators) are reflected by
+[^__meta::Constant] metaobjects.
+
+[reflexpr_header_concepts_Constant]
+
+[heading:concept_Specifier [^Specifier]]
+[/-------------------------------------]
+
+Specifiers (like [^virtual], [^static], [^private], [^public], etc.) are
+reflected by [^__meta::Specifier] metaobjects.
+
+[reflexpr_header_concepts_Specifier]
+
+[heading:concept_Inheritance [^Inheritance]]
+[/-----------------------------------------]
+
+Class inheritance declarations are reflected by metaobjects conforming
+to the [^__meta::Inheritance] concept.
+
+[reflexpr_header_concepts_Inheritance]
 
 [reflexpr_header_close_meta]
 [reflexpr_header_close_std]

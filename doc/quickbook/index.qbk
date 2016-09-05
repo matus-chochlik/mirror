@@ -25,8 +25,10 @@
 
 [def __implementation_defined ['implementation-defined]]
 
-[def __reflexpr [link reflexpr.quickref.operator reflexpr]]
 [def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
+[def __reflexpr [link reflexpr.quickref.operator reflexpr]]
+
+[def __std_meta [link reflexpr.quickref.header.namespace_meta std::meta]]
 
 
 [/--------]
