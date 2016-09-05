@@ -43,10 +43,10 @@ basic reflection facility showing, that it can be used as the foundation
 for reflection-based utilities and applications using various programming
 paradigms.
 
-[note Note The external libraries are at the moment and in the current form
+[note The external libraries are at the moment and in the current form
 [*not] part of the proposal for standard C++ reflection.]
 
-[note This documentation is work-in progress and currently does not
+[warning This documentation is work-in progress and currently does not
 cover many of the implemented features.]
 
 [include reflexpr.qbk]
