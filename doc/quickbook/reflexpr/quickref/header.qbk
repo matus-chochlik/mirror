@@ -207,6 +207,21 @@ to the [^__meta::Inheritance] concept.
 
 [reflexpr_header_concepts_Inheritance]
 
+[heading:operations Metaobject operations]
+[/---------------------------------------]
+
+[#ops_Object]
+The following operations are applicable to all [link
+reflexpr.quickref.header.concept_Object metaobjects].
+
+[reflexpr_header_operations_Object]
+
+[#ops_ObjectSequence]
+Operations applicable to metaobject sequences -- types conforming
+to the [^meta::__ObjectSequence] concept:
+
+[reflexpr_header_operations_ObjectSequence]
+
 [reflexpr_header_close_meta]
 [reflexpr_header_close_std]
 

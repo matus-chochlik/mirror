@@ -18,6 +18,11 @@
 
 [def __meta [link reflexpr.quickref.header.namespace_meta meta]]
 
+[def __is_metaobject [link
+reflexpr.quickref.header.is_metaobject is_metaobject]]
+[def __is_metaobject_v [link
+reflexpr.quickref.header.is_metaobject is_metaobject_v]]
+
 [def __Object [link
 reflexpr.quickref.header.concept_Object Object]]
 [def __ObjectSequence [link

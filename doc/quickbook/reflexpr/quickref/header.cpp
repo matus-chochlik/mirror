@@ -24,7 +24,7 @@ namespace meta {
 //]
 //[reflexpr_header_concepts_Object
 template <typename T> concept bool Object
- =  is_metaobject_v<T>;
+ =  __is_metaobject_v<T>;
 //]
 
 //[reflexpr_header_concepts_ObjectSequence
@@ -147,6 +147,98 @@ template <Object T> concept bool Inheritance
  =  __implementation_defined;
 //]
 
+//[reflexpr_header_operations_Object
+template <__Object T1, __Object T2>
+struct reflects_same
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if both [^T1] and [^T2] reflect the same base-level declaration,
+[^false] otherwise.
+>*/>
+{ };
+
+template <__Object T1, __Object T2>
+constexpr bool reflects_same_v
+ = reflects_same<T1, T2>::value;
+
+template <__Object T>
+struct get_source_file {
+	using value_type = const char [N+1];
+	static constexpr value_type value = __implementation_defined; /*<
+	Null-terminated constexpr [^char] array containing the path
+	to the source file, where the base-level entity reflected by [^T]
+	was declared. If [^T] does not have an in-source declaration
+	(for example a built-in type), the value is an empty (null-terminated)
+	string.
+	>*/
+};
+
+template <__Object T>
+constexpr auto get_source_file_v
+ = get_source_file<T>::value;
+
+template <__Object T>
+struct get_source_line
+ : integral_constant<unsigned, __implementation_defined /*<
+The source file line number, where the base-level entity reflected by [^T]
+was declared. If [^T] does not have an in-source declaration
+(for example a built-in type), then the value is zero. >*/>
+{ };
+
+template <__Object T>
+constexpr auto get_source_line_v
+ = get_source_line<T>::value;
+
+template <__Object T>
+struct get_source_column
+ : integral_constant<unsigned, __implementation_defined> /*<
+The source file column number, where the base-level entity reflected by [^T]
+was declared. If [^T] does not have an in-source declaration
+(for example a built-in type), then the value is zero. >*/
+{ };
+
+template <__Object T>
+constexpr auto get_source_column_v
+ = get_source_column<T>::value;
+//]
+
+//[reflexpr_header_operations_ObjectSequence
+
+// get_size
+template <__ObjectSequence T>
+struct get_size
+ : integral_constant<unsigned, __implementation_defined /*<
+The number of elements in the metaobject sequence [^T]. >*/>
+{ };
+
+template <__ObjectSequence T>
+constexpr auto get_size_v
+ = get_size<T>::value;
+
+// get_element
+template <__ObjectSequence T, unsigned I>
+struct get_element
+ : __Object /*<
+The [^I]-th metaobject in the metaobject sequence [^T]. >*/
+{ };
+
+template <__ObjectSequence T, unsigned I>
+using get_element_m
+ = typename get_element<T, I>::type;
+
+
+// unpack_sequence
+template <__ObjectSequence T, template <class ...> class Tpl>
+struct unpack_sequence {
+	using type = Tpl<__Object ... /*<
+	A pack of all metaobjects in the metaobject sequence [^T].
+	>*/>;
+};
+
+template <__ObjectSequence T, template <class ...> class Tpl>
+using unpack_sequence_t
+ = typename unpack_sequence<T, Tpl>::type;
+
+//]
 // TODO
 
 //[reflexpr_header_close_meta
