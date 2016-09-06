@@ -31,6 +31,7 @@
 
 [def __std_meta [link reflexpr.quickref.header.namespace_meta std::meta]]
 
+[/basic metaobject concepts]
 [def __std_meta_Object [link
 reflexpr.quickref.header.concept_Object std::meta::Object]]
 [def __std_meta_ObjectSequence [link
@@ -73,6 +74,154 @@ reflexpr.quickref.header.concept_Constant std::meta::Constant]]
 reflexpr.quickref.header.concept_Specifier std::meta::Specifier]]
 [def __std_meta_Inheritance [link
 reflexpr.quickref.header.concept_Inheritance std::meta::Inheritance]]
+
+[/basic metaobject operations Object]
+[def __std_meta_reflects_same [link
+reflexpr.quickref.header.ops_Object std::meta::reflects_same]]
+[def __std_meta_reflects_same_v [link
+reflexpr.quickref.header.ops_Object std::meta::reflects_same_v]]
+[def __std_meta_get_source_file [link
+reflexpr.quickref.header.ops_Object std::meta::get_source_file]]
+[def __std_meta_get_source_file_v [link
+reflexpr.quickref.header.ops_Object std::meta::get_source_file_v]]
+[def __std_meta_get_source_line [link
+reflexpr.quickref.header.ops_Object std::meta::get_source_line]]
+[def __std_meta_get_source_line_v [link
+reflexpr.quickref.header.ops_Object std::meta::get_source_line_v]]
+[def __std_meta_get_source_column [link
+reflexpr.quickref.header.ops_Object std::meta::get_source_column]]
+[def __std_meta_get_source_column_v [link
+reflexpr.quickref.header.ops_Object std::meta::get_source_column_v]]
+
+[/basic metaobject operations ObjectSequence]
+[def __std_meta_get_size [link
+reflexpr.quickref.header.ops_ObjectSequence std::meta::get_size]]
+[def __std_meta_get_size_v [link
+reflexpr.quickref.header.ops_ObjectSequence std::meta::get_size_v]]
+[def __std_meta_get_element [link
+reflexpr.quickref.header.ops_ObjectSequence std::meta::get_element]]
+[def __std_meta_get_element_m [link
+reflexpr.quickref.header.ops_ObjectSequence std::meta::get_element_m]]
+[def __std_meta_unpack_sequence [link
+reflexpr.quickref.header.ops_ObjectSequence std::meta::unpack_sequence]]
+[def __std_meta_unpack_sequence_t [link
+reflexpr.quickref.header.ops_ObjectSequence std::meta::unpack_sequence_t]]
+
+[/basic metaobject operations Named]
+[def __std_meta_is_anonymous [link
+reflexpr.quickref.header.ops_Named std::meta::is_anonymous]]
+[def __std_meta_is_anonymous_v [link
+reflexpr.quickref.header.ops_Named meta::is_anonumoys_v]]
+[def __std_meta_get_base_name [link
+reflexpr.quickref.header.ops_Named std::meta::get_base_name]]
+[def __std_meta_get_base_name_v [link
+reflexpr.quickref.header.ops_Named std::meta::get_base_name_v]]
+[def __std_meta_get_display_name [link
+reflexpr.quickref.header.ops_Named std::meta::get_display_name]]
+[def __std_meta_get_display_name_v [link
+reflexpr.quickref.header.ops_Named std::meta::get_display_name_v]]
+
+[/basic metaobject operations Alias]
+[def __std_meta_get_aliased [link
+reflexpr.quickref.header.ops_Alias std::meta::get_aliased]]
+[def __std_meta_get_aliased_m [link
+reflexpr.quickref.header.ops_Alias std::meta::get_aliased_m]]
+
+[/basic metaobject operations Typed]
+[def __std_meta_get_type [link
+reflexpr.quickref.header.ops_Typed std::meta::get_type]]
+[def __std_meta_get_type_m [link
+reflexpr.quickref.header.ops_Typed std::meta::get_type_m]]
+
+[/basic metaobject operations Type]
+[def __std_meta_get_reflected_type [link
+reflexpr.quickref.header.ops_Type std::meta::get_reflected_type]]
+[def __std_meta_get_reflected_type_t [link
+reflexpr.quickref.header.ops_Type std::meta::get_reflected_type_t]]
+
+[/basic metaobject operations TagType]
+[def __std_meta_is_enum [link
+reflexpr.quickref.header.ops_TagType std::meta::is_enum]]
+[def __std_meta_is_enum_v [link
+reflexpr.quickref.header.ops_TagType std::meta::is_enum_v]]
+[def __std_meta_is_union [link
+reflexpr.quickref.header.ops_TagType std::meta::is_union]]
+[def __std_meta_is_union_v [link
+reflexpr.quickref.header.ops_TagType std::meta::is_union_v]]
+[def __std_meta_is_struct [link
+reflexpr.quickref.header.ops_TagType std::meta::is_struct]]
+[def __std_meta_is_struct_v [link
+reflexpr.quickref.header.ops_TagType std::meta::is_struct_v]]
+[def __std_meta_is_class [link
+reflexpr.quickref.header.ops_TagType std::meta::is_class]]
+[def __std_meta_is_class_v [link
+reflexpr.quickref.header.ops_TagType std::meta::is_class_v]]
+[def __std_meta_get_elaborated_type_specifier [link
+reflexpr.quickref.header.ops_TagType std::meta::get_elaborated_type_specifier]]
+[def __std_meta_get_elaborated_type_specifier_m [link
+reflexpr.quickref.header.ops_TagType std::meta::get_elaborated_type_specifier_m]]
+
+[/basic metaobject operations Enum]
+[def __std_meta_is_scoped_enum [link
+reflexpr.quickref.header.ops_Enum std::meta::is_scoped_enum]]
+[def __std_meta_is_scoped_enum_v [link
+reflexpr.quickref.header.ops_Enum std::meta::is_scoped_enum_v]]
+[def __std_meta_get_enumerators [link
+reflexpr.quickref.header.ops_Enum std::meta::get_enumerators]]
+[def __std_meta_get_enumerators_m [link
+reflexpr.quickref.header.ops_Enum std::meta::get_enumerators_m]]
+
+[/basic metaobject operations Record]
+[def __std_meta_get_member_types [link
+reflexpr.quickref.header.ops_Record std::meta::get_member_types]]
+[def __std_meta_get_member_types_m [link
+reflexpr.quickref.header.ops_Record std::meta::get_member_types_m]]
+[def __std_meta_get_data_members [link
+reflexpr.quickref.header.ops_Record std::meta::get_data_members]]
+[def __std_meta_get_data_members_m [link
+reflexpr.quickref.header.ops_Record std::meta::get_data_members_m]]
+
+[/basic metaobject operations ScopeMember]
+[def __std_meta_get_scope [link
+reflexpr.quickref.header.ops_ScopeMember std::meta::get_scope]]
+[def __std_meta_get_scope_m [link
+reflexpr.quickref.header.ops_ScopeMember std::meta::get_scope_m]]
+
+[/basic metaobject operations Inheritance]
+[def __std_meta_get_base_class [link
+reflexpr.quickref.header.ops_Inheritance std::meta::get_base_class]]
+[def __std_meta_get_base_class_m [link
+reflexpr.quickref.header.ops_Inheritance std::meta::get_base_class_m]]
+
+[/basic metaobject operations access]
+[def __std_meta_is_private [link
+reflexpr.quickref.header.ops_access std::meta::is_private]]
+[def __std_meta_is_private_v [link
+reflexpr.quickref.header.ops_access std::meta::is_private_v]]
+[def __std_meta_is_protected [link
+reflexpr.quickref.header.ops_access std::meta::is_protected]]
+[def __std_meta_is_protected_v [link
+reflexpr.quickref.header.ops_access std::meta::is_protected_v]]
+[def __std_meta_is_public [link
+reflexpr.quickref.header.ops_access std::meta::is_public]]
+[def __std_meta_is_public_v [link
+reflexpr.quickref.header.ops_access std::meta::is_public_v]]
+[def __std_meta_get_access_specifier [link
+reflexpr.quickref.header.ops_access std::meta::get_access_specifier]]
+[def __std_meta_get_access_specifier_m [link
+reflexpr.quickref.header.ops_access std::meta::get_access_specifier_m]]
+
+[/basic metaobject operations virtual]
+[def __std_meta_is_virtual [link
+reflexpr.quickref.header.ops_virtual std::meta::is_virtual]]
+[def __std_meta_is_virtual_v [link
+reflexpr.quickref.header.ops_virtual std::meta::is_virtual_v]]
+
+[/basic metaobject operations static]
+[def __std_meta_is_static [link
+reflexpr.quickref.header.ops_static std::meta::is_static]]
+[def __std_meta_is_static_v [link
+reflexpr.quickref.header.ops_static std::meta::is_static_v]]
 
 
 [/--------]

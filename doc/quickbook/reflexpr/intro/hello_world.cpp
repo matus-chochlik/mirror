@@ -20,7 +20,10 @@ int main(void)
 {
 	using namespace std;
 
-	using meta_HW = __reflexpr(Hello::World);
+	using meta_HW = __reflexpr(Hello::World); /*<
+	Reflect the [^Hello::World] [^struct], the [^meta_HW] type is
+	a ['[link reflexpr.intro.metaobjects metaobject]].
+	>*/
 
 	cout << __meta_get_base_name_v<__meta_get_scope_m<meta_HW>>;
 	cout << ", ";
