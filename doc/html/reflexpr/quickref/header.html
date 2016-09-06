@@ -871,6 +871,30 @@
 </pre>
 <h4>
 <a name="reflexpr.quickref.header.h32"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Constant"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Constant"><code class="literal">Constant</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Constant">Constant</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_constant</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Constant">Constant</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_constant</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="emphasis"><em>unspecified</em></span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c50" href="header.html#reflexpr.quickref.header.c51"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">&gt;</span>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Constant">Constant</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_constant_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">get_constant</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c51"></a><a href="#reflexpr.quickref.header.c50"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The constant base-level value reflected by <code class="literal">T</code>.
+            </p></td>
+</tr></table></div>
+<h4>
+<a name="reflexpr.quickref.header.h33"></a>
           <span class="phrase"><a name="reflexpr.quickref.header.concept_Specifier"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier"><code class="literal">Specifier</code></a>
         </h4>
 <p>
@@ -884,7 +908,7 @@
  <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
 </pre>
 <h4>
-<a name="reflexpr.quickref.header.h33"></a>
+<a name="reflexpr.quickref.header.h34"></a>
           <span class="phrase"><a name="reflexpr.quickref.header.concept_Inheritance"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance"><code class="literal">Inheritance</code></a>
         </h4>
 <p>
@@ -896,10 +920,205 @@
  <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
 </pre>
 <h4>
-<a name="reflexpr.quickref.header.h34"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.operations"></a></span><a class="link" href="header.html#reflexpr.quickref.header.operations">Metaobject
+<a name="reflexpr.quickref.header.h35"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Inheritance"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Inheritance"><code class="literal">Inheritance</code>
           operations</a>
         </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_base_class</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_base_class</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c52" href="header.html#reflexpr.quickref.header.c53"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_base_class_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_base_class</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c53"></a><a href="#reflexpr.quickref.header.c52"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a></code>
+              reflecting the base-class in the inheritance reflected by <code class="literal">T</code>.
+            </p></td>
+</tr></table></div>
+<h4>
+<a name="reflexpr.quickref.header.h36"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.other_operations"></a></span><a class="link" href="header.html#reflexpr.quickref.header.other_operations">Other
+          metaobject operations</a>
+        </h4>
+<pre class="programlisting"><span class="comment">// is_private</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_private</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember">RecordMember</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_private</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c54" href="header.html#reflexpr.quickref.header.c55"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_private</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c56" href="header.html#reflexpr.quickref.header.c57"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_private_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_private</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+
+<span class="comment">// is_protected</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_protected</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember">RecordMember</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_protected</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c58" href="header.html#reflexpr.quickref.header.c59"><img src="../../images/callouts/3.png" alt="3" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_protected</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c60" href="header.html#reflexpr.quickref.header.c61"><img src="../../images/callouts/4.png" alt="4" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_protected_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_protected</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+
+<span class="comment">// is_public</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_public</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember">RecordMember</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_public</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c62" href="header.html#reflexpr.quickref.header.c63"><img src="../../images/callouts/5.png" alt="5" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_public</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c64" href="header.html#reflexpr.quickref.header.c65"><img src="../../images/callouts/6.png" alt="6" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_public_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_public</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="comment">// get_access_specifier</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_access_specifier</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember">RecordMember</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_access_specifier</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier">Specifier</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c66" href="header.html#reflexpr.quickref.header.c67"><img src="../../images/callouts/7.png" alt="7" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_access_specifier</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier">Specifier</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c68" href="header.html#reflexpr.quickref.header.c69"><img src="../../images/callouts/8.png" alt="8" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_access_specifier_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_access_specifier</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c55"></a><a href="#reflexpr.quickref.header.c54"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the record member reflected by <code class="literal">T</code>
+              has private access, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c57"></a><a href="#reflexpr.quickref.header.c56"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the class inheritance reflected by <code class="literal">T</code>
+              is private, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c59"></a><a href="#reflexpr.quickref.header.c58"><img src="../../images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the record member reflected by <code class="literal">T</code>
+              has private access, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c61"></a><a href="#reflexpr.quickref.header.c60"><img src="../../images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the class inheritance reflected by <code class="literal">T</code>
+              is protected, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c63"></a><a href="#reflexpr.quickref.header.c62"><img src="../../images/callouts/5.png" alt="5" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the record member reflected by <code class="literal">T</code>
+              has public access, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c65"></a><a href="#reflexpr.quickref.header.c64"><img src="../../images/callouts/6.png" alt="6" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the class inheritance reflected by <code class="literal">T</code>
+              is public, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c67"></a><a href="#reflexpr.quickref.header.c66"><img src="../../images/callouts/7.png" alt="7" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier">Specifier</a></code>
+              reflecting the access specifier of the record member reflected by
+              <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c69"></a><a href="#reflexpr.quickref.header.c68"><img src="../../images/callouts/8.png" alt="8" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier">Specifier</a></code>
+              reflecting the access specifier of the class inheritance reflected
+              by <code class="literal">T</code>.
+            </p></td>
+</tr>
+</table></div>
+<pre class="programlisting"><span class="comment">// is_virtual</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_virtual</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_virtual</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c70" href="header.html#reflexpr.quickref.header.c71"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_virtual_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_virtual</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c71"></a><a href="#reflexpr.quickref.header.c70"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the class inheritance reflected by <code class="literal">T</code>
+              is virtual, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr></table></div>
+<pre class="programlisting"><span class="comment">// is_static</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_static</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Variable">Variable</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_static</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c72" href="header.html#reflexpr.quickref.header.c73"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_static_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_static</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c73"></a><a href="#reflexpr.quickref.header.c72"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the (possibly class member) variable reflected
+              by <code class="literal">T</code> is static, <code class="literal">false</code> otherwise.
+            </p></td>
+</tr></table></div>
 <p>
           TODO
         </p>

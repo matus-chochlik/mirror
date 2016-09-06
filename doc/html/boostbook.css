@@ -8,10 +8,13 @@ body {
 	background-color: white;
 }
 
-.calloutlist table {
-	font-size: 85%;
+.calloutlist {
 	border: solid #E8E8E8 1px;
 	background-color: #F0F0E8;
+}
+
+.calloutlist table {
+	font-size: 85%;
 }
 
 pre.programlisting {
