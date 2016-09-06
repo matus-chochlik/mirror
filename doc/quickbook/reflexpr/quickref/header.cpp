@@ -333,6 +333,178 @@ using get_type_m
  = typename get_type<T>::type;
 //]
 
+//[reflexpr_header_operations_Type
+// get_reflected_ type
+template <__Type T>
+struct get_reflected_type {
+	using type = __implementation_defined; /*<
+	The base-level type reflected by the [^meta::__Type] [^T].
+	>*/
+};
+
+
+template <__Type T>
+using get_reflected_type_t
+ = typename get_reflected_type<T>::type;
+//]
+
+//[reflexpr_header_operations_TagType
+
+// is_enum
+template <__TagType T>
+struct is_enum
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the [^meta::__TagType] [^T] reflects an enumeration type,
+[^false] otherwise.
+>*/
+{ };
+
+template <__TagType T>
+constexpr bool is_enum_v<T> = is_enum<T>::value;
+
+
+// is_union
+template <__TagType T>
+struct is_union
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the [^meta::__TagType] [^T] reflects a [^union], [^false] otherwise.
+>*/
+{ };
+
+template <__TagType T>
+constexpr bool is_union_v<T> = is_union<T>::value;
+
+// is_struct
+template <__TagType T>
+struct is_struct
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the [^meta::__TagType] [^T] reflects a [^struct], [^false] otherwise.
+>*/
+{ };
+
+template <__TagType T>
+constexpr bool is_struct_v<T> = is_struct<T>::value;
+
+
+// is_class
+template <__TagType T>
+struct is_class
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the [^meta::__TagType] [^T] reflects a [^class], [^false] otherwise.
+>*/
+{ };
+
+template <__TagType T>
+constexpr bool is_class_v<T> = is_class<T>::value;
+
+// get_elaborated_type_specifier
+template <__TagType T>
+struct get_elaborated_type_specifier {
+	using type = __Specifier; /*<
+	A [^meta::__Specifier] reflecting the elaborated type specifier
+	([^enum], [^union], [^struct] or [^class]) of the tag-type reflected
+	by [^T].
+	>*/
+};
+
+template <__TagType T>
+using get_elaborated_type_specifier_m
+ = typename get_elaborated_type_specifier<T>::type;
+//]
+
+//[reflexpr_header_operations_Enum
+
+// is_scoped_enum
+template <__Enum T>
+struct is_scoped_enum
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the [^meta::__Enum] [^T] reflects a scoped (strongly-typed)
+enumeration, [^false] otherwise.
+>*/
+{ };
+
+template <__Enum T>
+constexpr bool is_scoped_enum_v<T> = is_scoped_enum<T>::value;
+
+// get_enumerators
+template <__Enum T>
+struct get_enumerators {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__EnumMember],
+	[^meta::__Constant] metaobjects reflecting the individual enumerators
+	of the enumeration reflected by [^T].
+	>*/
+};
+
+template <__Enum T>
+using get_enumerators_m
+ = typename get_enumerators<T>::type;
+//]
+
+//[reflexpr_header_operations_Record
+
+// get_member_types
+template <__Record T>
+struct get_member_types {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__RecordMember],
+	[^meta::__Type] metaobjects reflecting the individual member types
+	of the [^class], [^struct] or [^union] reflected by [^T].
+	>*/
+};
+
+template <__Record T>
+using get_member_types_m
+ = typename get_member_types<T>::type;
+
+// get_data_members
+template <__Record T>
+struct get_data_members {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__RecordMember],
+	[^meta::__Variable] metaobjects reflecting the individual data
+	members of the [^class], [^struct] or [^union] reflected by [^T].
+	>*/
+};
+
+template <__Record T>
+using get_data_members_m
+ = typename get_data_members<T>::type;
+//]
+
+//[reflexpr_header_operations_Class
+
+// get_base_classes
+template <__Class T>
+struct get_base_classes {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__Inheritance]
+	metaobjects reflecting the individual base class declarations
+	of the [^class] or [^struct] reflected by [^T].
+	>*/
+};
+
+template <__Class T>
+using get_base_classes_m
+ = typename get_base_classes<T>::type;
+//]
+
+//[reflexpr_header_operations_ScopeMember
+
+// get_scope
+template <__ScopeMember T>
+struct get_scope {
+	using type = __Scope; /*<
+	A [^meta::__Scope] reflecting the scope of the base-level entity
+	reflected by [^T].
+	>*/
+};
+
+template <__ScopeMember T>
+using get_scope_m
+ = typename get_scope<T>::type;
+//]
+
 // TODO
 
 //[reflexpr_header_close_meta

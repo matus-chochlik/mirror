@@ -40,12 +40,27 @@ declarations.
 
 [reflexpr_header_concepts_Object]
 
+[heading:ops_Object [^Object] operations]
+[/--------------------------------------]
+
+The following operations are applicable to all [link
+reflexpr.quickref.header.concept_Object metaobjects].
+
+[reflexpr_header_operations_Object]
+
 [heading:concept_ObjectSequence [^ObjectSequence]]
 [/-----------------------------------------------]
 
 [^__meta::ObjectSequence] is a concept for lazy metaobject sequences.
 
 [reflexpr_header_concepts_ObjectSequence]
+
+[heading:ops_ObjectSequence [^ObjectSequence] operations]
+[/------------------------------------------------------]
+Operations applicable to metaobject sequences -- types conforming
+to the [^meta::__ObjectSequence] concept:
+
+[reflexpr_header_operations_ObjectSequence]
 
 [heading:concept_Reversible [^Reversible]]
 [/---------------------------------------]
@@ -65,6 +80,12 @@ by an identifier or a keyword.
 
 [reflexpr_header_concepts_Named]
 
+[heading:ops_Named [^Named] operations]
+[/------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Named] concept:
+
+[reflexpr_header_operations_Named]
+
 [heading:concept_Alias [^Alias]]
 [/-----------------------------]
 
@@ -75,6 +96,12 @@ All [^meta::Alias]es also conform to the [^meta::__Named] concept.
 
 [reflexpr_header_concepts_Alias]
 
+[heading:ops_Alias [^Alias] operations]
+[/------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Alias] concept:
+
+[reflexpr_header_operations_Alias]
+
 [heading:concept_Typed [^Typed]]
 [/-----------------------------]
 
@@ -82,6 +109,12 @@ Models of the [^__meta::Typed] concept reflect base-level declarations
 with a type (for example variables or constants)
 
 [reflexpr_header_concepts_Typed]
+
+[heading:ops_Typed [^Typed] operations]
+[/------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Typed] concept:
+
+[reflexpr_header_operations_Typed]
 
 [heading:concept_Scope [^Scope]]
 [/-----------------------------]
@@ -118,6 +151,12 @@ reflections of all other types declared in source are [^meta::__ScopeMember]s.
 
 [reflexpr_header_concepts_Type]
 
+[heading:ops_Type [^Type] operations]
+[/----------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Type] concept:
+
+[reflexpr_header_operations_Type]
+
 [heading:concept_TagType [^TagType]]
 [/---------------------------------]
 
@@ -126,13 +165,12 @@ like classes, unions and enumerations.
 
 [reflexpr_header_concepts_TagType]
 
-[heading:concept_Record [^Record]]
-[/-------------------------------]
+[heading:ops_TagType [^TagType] operations]
+[/----------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__TagType]
+concept:
 
-Models of [^__meta::Record] reflect the common aspects of structures, classes
-and unions.
-
-[reflexpr_header_concepts_Record]
+[reflexpr_header_operations_TagType]
 
 [heading:concept_Enum [^Enum]]
 [/---------------------------]
@@ -142,6 +180,28 @@ and non-scoped enumerations.
 
 [reflexpr_header_concepts_Enum]
 
+[heading:ops_Enum [^Enum] operations]
+[/----------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Enum]
+concept:
+
+[reflexpr_header_operations_Enum]
+
+[heading:concept_Record [^Record]]
+[/-------------------------------]
+
+Models of [^__meta::Record] reflect the common aspects of structures, classes
+and unions.
+
+[reflexpr_header_concepts_Record]
+
+[heading:ops_Record [^Record] operations]
+[/--------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Record]
+concept:
+
+[reflexpr_header_operations_Record]
+
 [heading:concept_Class [^Class]]
 [/-----------------------------]
 
@@ -149,6 +209,13 @@ Metaobjects modelling the [^__meta::Class] concept reflect C++ classes
 and structures.
 
 [reflexpr_header_concepts_Class]
+
+[heading:ops_Class [^Class] operations]
+[/------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Class]
+concept:
+
+[reflexpr_header_operations_Class]
 
 [heading:concept_ScopeMember [^ScopeMember]]
 [/-----------------------------------------]
@@ -158,6 +225,13 @@ a namespace, a class, etc.) are reflected by metaobjects modelling the
 [^__meta::ScopeMember] concept.
 
 [reflexpr_header_concepts_ScopeMember]
+
+[heading:ops_ScopeMember [^ScopeMember] operations]
+[/------------------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__ScopeMember]
+concept:
+
+[reflexpr_header_operations_ScopeMember]
 
 [heading:concept_EnumMember [^EnumMember]]
 [/---------------------------------------]
@@ -210,37 +284,7 @@ to the [^__meta::Inheritance] concept.
 [heading:operations Metaobject operations]
 [/---------------------------------------]
 
-[heading:ops_Object [^Object]]
-[/---------------------------]
-The following operations are applicable to all [link
-reflexpr.quickref.header.concept_Object metaobjects].
-
-[reflexpr_header_operations_Object]
-
-[heading:ops_ObjectSequence [^ObjectSequence]]
-[/-------------------------------------------]
-Operations applicable to metaobject sequences -- types conforming
-to the [^meta::__ObjectSequence] concept:
-
-[reflexpr_header_operations_ObjectSequence]
-
-[heading:ops_Named [^Named]]
-[/-------------------------]
-Operations applicable to metaobjects conforming to the [^meta::__Named] concept:
-
-[reflexpr_header_operations_Named]
-
-[heading:ops_Alias [^Alias]]
-[/-------------------------]
-Operations applicable to metaobjects conforming to the [^meta::__Alias] concept:
-
-[reflexpr_header_operations_Alias]
-
-[heading:ops_Typed [^Typed]]
-[/-------------------------]
-Operations applicable to metaobjects conforming to the [^meta::__Typed] concept:
-
-[reflexpr_header_operations_Typed]
+TODO
 
 [reflexpr_header_close_meta]
 [reflexpr_header_close_std]

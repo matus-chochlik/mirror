@@ -124,6 +124,54 @@ reflexpr.quickref.header.ops_Typed meta::get_type]]
 [def __meta_get_type_m [link
 reflexpr.quickref.header.ops_Typed meta::get_type_m]]
 
+[/operations Type]
+[def __meta_get_reflected_type [link
+reflexpr.quickref.header.ops_Type meta::get_reflected_type]]
+[def __meta_get_reflected_type_t [link
+reflexpr.quickref.header.ops_Type meta::get_reflected_type_t]]
+
+[/operations TagType]
+[def __meta_is_enum [link
+reflexpr.quickref.header.ops_TagType meta::is_enum]]
+[def __meta_is_enum_v [link
+reflexpr.quickref.header.ops_TagType meta::is_enum_v]]
+[def __meta_is_union [link
+reflexpr.quickref.header.ops_TagType meta::is_union]]
+[def __meta_is_union_v [link
+reflexpr.quickref.header.ops_TagType meta::is_union_v]]
+[def __meta_is_struct [link
+reflexpr.quickref.header.ops_TagType meta::is_struct]]
+[def __meta_is_struct_v [link
+reflexpr.quickref.header.ops_TagType meta::is_struct_v]]
+[def __meta_is_class [link
+reflexpr.quickref.header.ops_TagType meta::is_class]]
+[def __meta_is_class_v [link
+reflexpr.quickref.header.ops_TagType meta::is_class_v]]
+[def __meta_get_elaborated_type_specifier [link
+reflexpr.quickref.header.ops_TagType meta::get_elaborated_type_specifier]]
+[def __meta_get_elaborated_type_specifier_m [link
+reflexpr.quickref.header.ops_TagType meta::get_elaborated_type_specifier_m]]
+
+[/operations Enum]
+[def __meta_is_scoped_enum [link
+reflexpr.quickref.header.ops_Enum meta::is_scoped_enum]]
+[def __meta_is_scoped_enum_v [link
+reflexpr.quickref.header.ops_Enum meta::is_scoped_enum_v]]
+[def __meta_get_enumerators [link
+reflexpr.quickref.header.ops_Enum meta::get_enumerators]]
+[def __meta_get_enumerators_m [link
+reflexpr.quickref.header.ops_Enum meta::get_enumerators_m]]
+
+[/operations Record]
+[def __meta_get_member_types [link
+reflexpr.quickref.header.ops_Record meta::get_member_types]]
+[def __meta_get_member_types_m [link
+reflexpr.quickref.header.ops_Record meta::get_member_types_m]]
+[def __meta_get_data_members [link
+reflexpr.quickref.header.ops_Record meta::get_data_members]]
+[def __meta_get_data_members_m [link
+reflexpr.quickref.header.ops_Record meta::get_data_members_m]]
+
 [/---------]
 [/Templates]
 [/---------]
