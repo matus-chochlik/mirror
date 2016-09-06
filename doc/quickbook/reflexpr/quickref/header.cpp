@@ -505,6 +505,169 @@ using get_scope_m
  = typename get_scope<T>::type;
 //]
 
+//[reflexpr_header_operations_Constant
+
+// get_constant
+template <__Constant T>
+struct get_constant
+ : integral_constant<__unspecified, __implementation_defined /*<
+The constant base-level value reflected by [^T].
+>*/>
+{ };
+
+template <__Constant T>
+constexpr auto get_constant_v<T> = get_constant<T>::value;
+//]
+
+//[reflexpr_header_operations_Inheritance
+
+// get_base_class
+template <__Inheritance T>
+struct get_base_class {
+	using type = __Record; /*<
+	A [^meta::__Record] reflecting the base-class in the inheritance
+	reflected by [^T].
+	>*/
+};
+
+template <__Inheritance T>
+using get_base_class_m
+ = typename get_base_class<T>::type;
+//]
+
+//[reflexpr_header_operations_access
+// is_private
+template <__Object T>
+struct is_private;
+
+template <__RecordMember T>
+struct is_private<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the record member reflected by [^T] has private access,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Inheritance T>
+struct is_private<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the class inheritance reflected by [^T] is private,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Object T>
+constexpr bool is_private_v<T> = is_private<T>::value;
+
+
+// is_protected
+template <__Object T>
+struct is_protected;
+
+template <__RecordMember T>
+struct is_protected<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the record member reflected by [^T] has private access,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Inheritance T>
+struct is_protected<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the class inheritance reflected by [^T] is protected,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Object T>
+constexpr bool is_protected_v<T> = is_protected<T>::value;
+
+
+// is_public
+template <__Object T>
+struct is_public;
+
+template <__RecordMember T>
+struct is_public<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the record member reflected by [^T] has public access,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Inheritance T>
+struct is_public<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the class inheritance reflected by [^T] is public,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Object T>
+constexpr bool is_public_v<T> = is_public<T>::value;
+
+// get_access_specifier
+template <__Object T>
+struct get_access_specifier;
+
+template <__RecordMember T>
+struct get_access_specifier<T> {
+	using type = __Specifier; /*<
+	A [^meta::__Specifier] reflecting the access specifier of the
+	record member reflected by [^T].
+	>*/
+};
+
+template <__Inheritance T>
+struct get_access_specifier<T> {
+	using type = __Specifier; /*<
+	A [^meta::__Specifier] reflecting the access specifier of the
+	class inheritance reflected by [^T].
+	>*/
+};
+
+template <__Object T>
+using get_access_specifier_m
+ = typename get_access_specifier<T>::type;
+//]
+
+
+//[reflexpr_header_operations_virtual
+// is_virtual
+template <__Object T>
+struct is_virtual;
+
+template <__Inheritance T>
+struct is_virtual<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the class inheritance reflected by [^T] is virtual,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Object T>
+constexpr bool is_virtual_v<T> = is_virtual<T>::value;
+//]
+
+
+//[reflexpr_header_operations_static
+// is_static
+template <__Object T>
+struct is_static;
+
+template <__Variable T>
+struct is_static<T>
+ : integral_constant<bool, __implementation_defined /*<
+[^true] if the (possibly class member) variable reflected by [^T] is static,
+[^false] otherwise.
+>*/
+{ };
+
+template <__Object T>
+constexpr bool is_static_v<T> = is_static<T>::value;
+//]
+
 // TODO
 
 //[reflexpr_header_close_meta

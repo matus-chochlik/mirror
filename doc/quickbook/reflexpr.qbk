@@ -172,6 +172,12 @@ reflexpr.quickref.header.ops_Record meta::get_data_members]]
 [def __meta_get_data_members_m [link
 reflexpr.quickref.header.ops_Record meta::get_data_members_m]]
 
+[/operations Inheritance]
+[def __meta_get_base_class [link
+reflexpr.quickref.header.ops_Inheritance meta::get_base_class]]
+[def __meta_get_base_class_m [link
+reflexpr.quickref.header.ops_Inheritance meta::get_base_class_m]]
+
 [/---------]
 [/Templates]
 [/---------]

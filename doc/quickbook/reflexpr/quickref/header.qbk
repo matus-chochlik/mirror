@@ -265,6 +265,13 @@ Compile-time constants (for example enumerators) are reflected by
 
 [reflexpr_header_concepts_Constant]
 
+[heading:ops_Constant [^Constant] operations]
+[/------------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Constant]
+concept:
+
+[reflexpr_header_operations_Constant]
+
 [heading:concept_Specifier [^Specifier]]
 [/-------------------------------------]
 
@@ -281,8 +288,22 @@ to the [^__meta::Inheritance] concept.
 
 [reflexpr_header_concepts_Inheritance]
 
-[heading:operations Metaobject operations]
-[/---------------------------------------]
+[heading:ops_Inheritance [^Inheritance] operations]
+[/------------------------------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Inheritance]
+concept:
+
+[reflexpr_header_operations_Inheritance]
+
+
+[heading:other_operations Other metaobject operations]
+[/---------------------------------------------------]
+
+[reflexpr_header_operations_access]
+
+[reflexpr_header_operations_virtual]
+
+[reflexpr_header_operations_static]
 
 TODO
 

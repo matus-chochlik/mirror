@@ -23,6 +23,7 @@
 
 [def __clang__ [@ http://clang.llvm.org/ clang]]
 
+[def __unspecified ['unspecified]]
 [def __implementation_defined ['implementation-defined]]
 
 [def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
