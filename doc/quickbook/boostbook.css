@@ -4,20 +4,17 @@
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
-body
-{
+body {
 	background-color: white;
 }
 
-.calloutlist table
-{
+.calloutlist table {
 	font-size: 85%;
 	border: solid #E8E8E8 1px;
 	background-color: #F0F0E8;
 }
 
-pre.programlisting
-{
+pre.programlisting {
 	margin-top: 0;
 	margin-bottom: 0;
 	border: solid #E0E0E0 1px;
@@ -27,46 +24,44 @@ pre.programlisting
 	padding-bottom: 0.5em;
 }
 
-.programlisting .preprocessor
-{
+.programlisting .preprocessor {
 	font-weight: 600;
 	color: #303090;
 }
-.programlisting .keyword
-{
+.programlisting .keyword {
 	font-weight: 500;
 	color: #4040A0;
 }
-.programlisting .identifier
-{
+.programlisting .identifier {
 	font-weight: 400;
 	color: #101020;
 }
-.programlisting .string
-{
+.programlisting .string {
 	font-weight: 600;
 	color: #303080;
 }
 
-code.literal
-{
+code.literal {
 	font-weight: 600;
 	color: #101020;
 }
 
-a:link
-{
+a:link {
 	color: #6060A0;
 }
 
-a:visited
-{
+code.literal a:link,
+.programlisting a:link {
+	text-decoration: none;
+}
+
+a:visited {
 	color: #404080;
 }
 
-a:hover
-{
+a:hover {
 	color: #202040;
+	text-decoration: underline;
 	text-shadow: 1px 1px 1px rgba(40, 40, 40, 0.5);
 }
 

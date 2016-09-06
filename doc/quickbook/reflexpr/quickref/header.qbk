@@ -210,17 +210,37 @@ to the [^__meta::Inheritance] concept.
 [heading:operations Metaobject operations]
 [/---------------------------------------]
 
-[#ops_Object]
+[heading:ops_Object [^Object]]
+[/---------------------------]
 The following operations are applicable to all [link
 reflexpr.quickref.header.concept_Object metaobjects].
 
 [reflexpr_header_operations_Object]
 
-[#ops_ObjectSequence]
+[heading:ops_ObjectSequence [^ObjectSequence]]
+[/-------------------------------------------]
 Operations applicable to metaobject sequences -- types conforming
 to the [^meta::__ObjectSequence] concept:
 
 [reflexpr_header_operations_ObjectSequence]
+
+[heading:ops_Named [^Named]]
+[/-------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Named] concept:
+
+[reflexpr_header_operations_Named]
+
+[heading:ops_Alias [^Alias]]
+[/-------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Alias] concept:
+
+[reflexpr_header_operations_Alias]
+
+[heading:ops_Typed [^Typed]]
+[/-------------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Typed] concept:
+
+[reflexpr_header_operations_Typed]
 
 [reflexpr_header_close_meta]
 [reflexpr_header_close_std]

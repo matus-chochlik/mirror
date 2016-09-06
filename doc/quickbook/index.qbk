@@ -30,6 +30,49 @@
 
 [def __std_meta [link reflexpr.quickref.header.namespace_meta std::meta]]
 
+[def __std_meta_Object [link
+reflexpr.quickref.header.concept_Object std::meta::Object]]
+[def __std_meta_ObjectSequence [link
+reflexpr.quickref.header.concept_ObjectSequence std::meta::ObjectSequence]]
+[def __std_meta_Reversible [link
+reflexpr.quickref.header.concept_Reversible std::meta::Reversible]]
+[def __std_meta_Named [link
+reflexpr.quickref.header.concept_Named std::meta::Named]]
+[def __std_meta_Alias [link
+reflexpr.quickref.header.concept_Alias std::meta::Alias]]
+[def __std_meta_Typed [link
+reflexpr.quickref.header.concept_Typed std::meta::Typed]]
+[def __std_meta_Scope [link
+reflexpr.quickref.header.concept_Scope std::meta::Scope]]
+[def __std_meta_Namespace [link
+reflexpr.quickref.header.concept_Namespace std::meta::Namespace]]
+[def __std_meta_GlobalScope [link
+reflexpr.quickref.header.concept_GlobalScope std::meta::GlobalScope]]
+[def __std_meta_Type [link
+reflexpr.quickref.header.concept_Type std::meta::Type]]
+[def __std_meta_TagType [link
+reflexpr.quickref.header.concept_TagType std::meta::TagType]]
+[def __std_meta_Record [link
+reflexpr.quickref.header.concept_Record std::meta::Record]]
+[def __std_meta_Enum [link
+reflexpr.quickref.header.concept_Enum std::meta::Enum]]
+[def __std_meta_Class [link
+reflexpr.quickref.header.concept_Class std::meta::Class]]
+[def __std_meta_ScopeMember [link
+reflexpr.quickref.header.concept_ScopeMember std::meta::ScopeMember]]
+[def __std_meta_EnumMember [link
+reflexpr.quickref.header.concept_EnumMember std::meta::EnumMember]]
+[def __std_meta_RecordMember [link
+reflexpr.quickref.header.concept_RecordMember std::meta::RecordMember]]
+[def __std_meta_Variable [link
+reflexpr.quickref.header.concept_Variable std::meta::Variable]]
+[def __std_meta_Constant [link
+reflexpr.quickref.header.concept_Constant std::meta::Constant]]
+[def __std_meta_Specifier [link
+reflexpr.quickref.header.concept_Specifier std::meta::Specifier]]
+[def __std_meta_Inheritance [link
+reflexpr.quickref.header.concept_Inheritance std::meta::Inheritance]]
+
 
 [/--------]
 [/Chapters]

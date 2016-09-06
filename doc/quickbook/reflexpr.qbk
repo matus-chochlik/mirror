@@ -66,6 +66,64 @@ reflexpr.quickref.header.concept_Specifier Specifier]]
 [def __Inheritance [link
 reflexpr.quickref.header.concept_Inheritance Inheritance]]
 
+[/operations Object]
+[def __meta_reflects_same [link
+reflexpr.quickref.header.ops_Object meta::reflects_same]]
+[def __meta_reflects_same_v [link
+reflexpr.quickref.header.ops_Object meta::reflects_same_v]]
+[def __meta_get_source_file [link
+reflexpr.quickref.header.ops_Object meta::get_source_file]]
+[def __meta_get_source_file_v [link
+reflexpr.quickref.header.ops_Object meta::get_source_file_v]]
+[def __meta_get_source_line [link
+reflexpr.quickref.header.ops_Object meta::get_source_line]]
+[def __meta_get_source_line_v [link
+reflexpr.quickref.header.ops_Object meta::get_source_line_v]]
+[def __meta_get_source_column [link
+reflexpr.quickref.header.ops_Object meta::get_source_column]]
+[def __meta_get_source_column_v [link
+reflexpr.quickref.header.ops_Object meta::get_source_column_v]]
+
+[/operations ObjectSequence]
+[def __meta_get_size [link
+reflexpr.quickref.header.ops_ObjectSequence meta::get_size]]
+[def __meta_get_size_v [link
+reflexpr.quickref.header.ops_ObjectSequence meta::get_size_v]]
+[def __meta_get_element [link
+reflexpr.quickref.header.ops_ObjectSequence meta::get_element]]
+[def __meta_get_element_m [link
+reflexpr.quickref.header.ops_ObjectSequence meta::get_element_m]]
+[def __meta_unpack_sequence [link
+reflexpr.quickref.header.ops_ObjectSequence meta::unpack_sequence]]
+[def __meta_unpack_sequence_t [link
+reflexpr.quickref.header.ops_ObjectSequence meta::unpack_sequence_t]]
+
+[/operations Named]
+[def __meta_is_anonymous [link
+reflexpr.quickref.header.ops_Named meta::is_anonymous]]
+[def __meta_is_anonymous_v [link
+reflexpr.quickref.header.ops_Named meta::is_anonumoys_v]]
+[def __meta_get_base_name [link
+reflexpr.quickref.header.ops_Named meta::get_base_name]]
+[def __meta_get_base_name_v [link
+reflexpr.quickref.header.ops_Named meta::get_base_name_v]]
+[def __meta_get_display_name [link
+reflexpr.quickref.header.ops_Named meta::get_display_name]]
+[def __meta_get_display_name_v [link
+reflexpr.quickref.header.ops_Named meta::get_display_name_v]]
+
+[/operations Alias]
+[def __meta_get_aliased [link
+reflexpr.quickref.header.ops_Alias meta::get_aliased]]
+[def __meta_get_aliased_m [link
+reflexpr.quickref.header.ops_Alias meta::get_aliased_m]]
+
+[/operations Typed]
+[def __meta_get_type [link
+reflexpr.quickref.header.ops_Typed meta::get_type]]
+[def __meta_get_type_m [link
+reflexpr.quickref.header.ops_Typed meta::get_type_m]]
+
 [/---------]
 [/Templates]
 [/---------]
