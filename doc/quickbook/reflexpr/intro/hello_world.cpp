@@ -9,12 +9,9 @@
 This header implements the metaobject operation templates.
 >*/
 #include <iostream>
+#include <cassert>
 
-namespace Hello {
-
-struct World { };
-
-} // namespace Hello
+namespace Hello { struct World { }; }
 
 int main(void)
 {
@@ -24,6 +21,8 @@ int main(void)
 	Reflect the [^Hello::World] [^struct], the [^meta_HW] type is
 	a ['[link reflexpr.intro.metaobjects metaobject]].
 	>*/
+
+	assert(__is_metaobject_v<meta_HW>);
 
 	cout << __meta_get_base_name_v<__meta_get_scope_m<meta_HW>>;
 	cout << ", ";

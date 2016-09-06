@@ -1,0 +1,25 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/-----------------------]
+[section:c_Alias [^Alias]]
+[/-----------------------]
+
+Some named base-level declarations can have one or several ['aliases]
+(for example type, template or namespace aliases).
+These are reflected by metaobjects modelling the [^__meta::Alias] concept.
+All [^meta::Alias]es also conform to the [^meta::__Named] concept.
+
+[import header.cpp]
+
+[reflexpr_header_concepts_Alias]
+
+[heading:ops Operations]
+[/---------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Alias] concept:
+
+[reflexpr_header_operations_Alias]
+
+[endsect]

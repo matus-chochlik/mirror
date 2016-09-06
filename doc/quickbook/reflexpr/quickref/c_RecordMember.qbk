@@ -1,0 +1,17 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/-------------------------------------]
+[section:c_RecordMember [^RecordMember]]
+[/-------------------------------------]
+
+Common aspects of structure, class and union members are reflected by
+metaobjects conforming to the [^__meta::RecordMember] concept.
+
+[import header.qbk]
+
+[reflexpr_header_concepts_RecordMember]
+
+[endsect]

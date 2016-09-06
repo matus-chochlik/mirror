@@ -28,38 +28,38 @@ template <typename T> concept bool Object
 //]
 
 //[reflexpr_header_concepts_ObjectSequence
-template <Object T> concept bool ObjectSequence
+template <__Object T> concept bool ObjectSequence
  =  __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Reversible
-template <Object T> concept bool Reversible
+template <__Object T> concept bool Reversible
  =  __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Named
-template <Object T> concept bool Named
+template <__Object T> concept bool Named
  =  __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Alias
-template <Object T> concept bool Alias
+template <__Object T> concept bool Alias
  =  Named<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Typed
-template <Object T> concept bool Typed
+template <__Object T> concept bool Typed
  =  __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Scope
-template <Object T> concept bool Scope
+template <__Object T> concept bool Scope
  =  __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Namespace
-template <Object T> concept bool Namespace
+template <__Object T> concept bool Namespace
  =  __Named<T>
  && __Scope<T>
  && __ScopeMember<T>
@@ -67,20 +67,20 @@ template <Object T> concept bool Namespace
 //]
 
 //[reflexpr_header_concepts_GlobalScope
-template <Object T> concept bool GlobalScope
+template <__Object T> concept bool GlobalScope
  =  __Namespace<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Type
-template <Object T> concept bool Type
+template <__Object T> concept bool Type
  =  __Named<T>
  && __Reversible<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_TagType
-template <Object T> concept bool TagType
+template <__Object T> concept bool TagType
  =  __Type<T>
  && __Scope<T>
  && __ScopeMember<T>
@@ -88,42 +88,42 @@ template <Object T> concept bool TagType
 //]
 
 //[reflexpr_header_concepts_Record
-template <Object T> concept bool Record
+template <__Object T> concept bool Record
  =  __TagType<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Enum
-template <Object T> concept bool Enum
+template <__Object T> concept bool Enum
  =  __TagType<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Class
-template <Object T> concept bool Class
+template <__Object T> concept bool Class
  =  __Record<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_ScopeMember
-template <Object T> concept bool ScopeMember
+template <__Object T> concept bool ScopeMember
  =  __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_EnumMember
-template <Object T> concept bool EnumMember
+template <__Object T> concept bool EnumMember
  =  __ScopeMember<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_RecordMember
-template <Object T> concept bool RecordMember
+template <__Object T> concept bool RecordMember
  =  __ScopeMember<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Variable
-template <Object T> concept bool Variable
+template <__Object T> concept bool Variable
  =  __Named<T>
  && __Typed<T>
  && __ScopeMember<T>
@@ -131,19 +131,19 @@ template <Object T> concept bool Variable
 //]
 
 //[reflexpr_header_concepts_Constant
-template <Object T> concept bool Constant
+template <__Object T> concept bool Constant
  =  __Typed<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Specifier
-template <Object T> concept bool Specifier
+template <__Object T> concept bool Specifier
  =  __Named<T>
  && __implementation_defined;
 //]
 
 //[reflexpr_header_concepts_Inheritance
-template <Object T> concept bool Inheritance
+template <__Object T> concept bool Inheritance
  =  __implementation_defined;
 //]
 

@@ -16,203 +16,182 @@
 [/Quick reference links]
 [/---------------------]
 
-[def __meta [link reflexpr.quickref.header.namespace_meta meta]]
+[def __meta [link reflexpr.quickref.ns_meta meta]]
 
 [def __is_metaobject [link
-reflexpr.quickref.header.is_metaobject is_metaobject]]
+reflexpr.quickref.is_metaobject is_metaobject]]
 [def __is_metaobject_v [link
-reflexpr.quickref.header.is_metaobject is_metaobject_v]]
+reflexpr.quickref.is_metaobject is_metaobject_v]]
 
-[def __Object [link
-reflexpr.quickref.header.concept_Object Object]]
-[def __ObjectSequence [link
-reflexpr.quickref.header.concept_ObjectSequence ObjectSequence]]
-[def __Reversible [link
-reflexpr.quickref.header.concept_Reversible Reversible]]
-[def __Named [link
-reflexpr.quickref.header.concept_Named Named]]
-[def __Alias [link
-reflexpr.quickref.header.concept_Alias Alias]]
-[def __Typed [link
-reflexpr.quickref.header.concept_Typed Typed]]
-[def __Scope [link
-reflexpr.quickref.header.concept_Scope Scope]]
-[def __Namespace [link
-reflexpr.quickref.header.concept_Namespace Namespace]]
-[def __GlobalScope [link
-reflexpr.quickref.header.concept_GlobalScope GlobalScope]]
-[def __Type [link
-reflexpr.quickref.header.concept_Type Type]]
-[def __TagType [link
-reflexpr.quickref.header.concept_TagType TagType]]
-[def __Record [link
-reflexpr.quickref.header.concept_Record Record]]
-[def __Enum [link
-reflexpr.quickref.header.concept_Enum Enum]]
-[def __Class [link
-reflexpr.quickref.header.concept_Class Class]]
-[def __ScopeMember [link
-reflexpr.quickref.header.concept_ScopeMember ScopeMember]]
-[def __EnumMember [link
-reflexpr.quickref.header.concept_EnumMember EnumMember]]
-[def __RecordMember [link
-reflexpr.quickref.header.concept_RecordMember RecordMember]]
-[def __Variable [link
-reflexpr.quickref.header.concept_Variable Variable]]
-[def __Constant [link
-reflexpr.quickref.header.concept_Constant Constant]]
-[def __Specifier [link
-reflexpr.quickref.header.concept_Specifier Specifier]]
-[def __Inheritance [link
-reflexpr.quickref.header.concept_Inheritance Inheritance]]
+[def __Object [link reflexpr.quickref.c_Object Object]]
+[def __ObjectSequence [link reflexpr.quickref.c_ObjectSequence ObjectSequence]]
+[def __Reversible [link reflexpr.quickref.c_Reversible Reversible]]
+[def __Named [link reflexpr.quickref.c_Named Named]]
+[def __Alias [link reflexpr.quickref.c_Alias Alias]]
+[def __Typed [link reflexpr.quickref.c_Typed Typed]]
+[def __Scope [link reflexpr.quickref.c_Scope Scope]]
+[def __Namespace [link reflexpr.quickref.c_Namespace Namespace]]
+[def __GlobalScope [link reflexpr.quickref.c_GlobalScope GlobalScope]]
+[def __Type [link reflexpr.quickref.c_Type Type]]
+[def __TagType [link reflexpr.quickref.c_TagType TagType]]
+[def __Record [link reflexpr.quickref.c_Record Record]]
+[def __Enum [link reflexpr.quickref.c_Enum Enum]]
+[def __Class [link reflexpr.quickref.c_Class Class]]
+[def __ScopeMember [link reflexpr.quickref.c_ScopeMember ScopeMember]]
+[def __EnumMember [link reflexpr.quickref.c_EnumMember EnumMember]]
+[def __RecordMember [link reflexpr.quickref.c_RecordMember RecordMember]]
+[def __Variable [link reflexpr.quickref.c_Variable Variable]]
+[def __Constant [link reflexpr.quickref.c_Constant Constant]]
+[def __Specifier [link reflexpr.quickref.c_Specifier Specifier]]
+[def __Inheritance [link reflexpr.quickref.c_Inheritance Inheritance]]
 
 [/operations Object]
 [def __meta_reflects_same [link
-reflexpr.quickref.header.ops_Object meta::reflects_same]]
+reflexpr.quickref.c_Object.ops meta::reflects_same]]
 [def __meta_reflects_same_v [link
-reflexpr.quickref.header.ops_Object meta::reflects_same_v]]
+reflexpr.quickref.c_Object.ops meta::reflects_same_v]]
 [def __meta_get_source_file [link
-reflexpr.quickref.header.ops_Object meta::get_source_file]]
+reflexpr.quickref.c_Object.ops meta::get_source_file]]
 [def __meta_get_source_file_v [link
-reflexpr.quickref.header.ops_Object meta::get_source_file_v]]
+reflexpr.quickref.c_Object.ops meta::get_source_file_v]]
 [def __meta_get_source_line [link
-reflexpr.quickref.header.ops_Object meta::get_source_line]]
+reflexpr.quickref.c_Object.ops meta::get_source_line]]
 [def __meta_get_source_line_v [link
-reflexpr.quickref.header.ops_Object meta::get_source_line_v]]
+reflexpr.quickref.c_Object.ops meta::get_source_line_v]]
 [def __meta_get_source_column [link
-reflexpr.quickref.header.ops_Object meta::get_source_column]]
+reflexpr.quickref.c_Object.ops meta::get_source_column]]
 [def __meta_get_source_column_v [link
-reflexpr.quickref.header.ops_Object meta::get_source_column_v]]
+reflexpr.quickref.c_Object.ops meta::get_source_column_v]]
 
 [/operations ObjectSequence]
 [def __meta_get_size [link
-reflexpr.quickref.header.ops_ObjectSequence meta::get_size]]
+reflexpr.quickref.c_ObjectSequence.ops meta::get_size]]
 [def __meta_get_size_v [link
-reflexpr.quickref.header.ops_ObjectSequence meta::get_size_v]]
+reflexpr.quickref.c_ObjectSequence.ops meta::get_size_v]]
 [def __meta_get_element [link
-reflexpr.quickref.header.ops_ObjectSequence meta::get_element]]
+reflexpr.quickref.c_ObjectSequence.ops meta::get_element]]
 [def __meta_get_element_m [link
-reflexpr.quickref.header.ops_ObjectSequence meta::get_element_m]]
+reflexpr.quickref.c_ObjectSequence.ops meta::get_element_m]]
 [def __meta_unpack_sequence [link
-reflexpr.quickref.header.ops_ObjectSequence meta::unpack_sequence]]
+reflexpr.quickref.c_ObjectSequence.ops meta::unpack_sequence]]
 [def __meta_unpack_sequence_t [link
-reflexpr.quickref.header.ops_ObjectSequence meta::unpack_sequence_t]]
+reflexpr.quickref.c_ObjectSequence.ops meta::unpack_sequence_t]]
 
 [/operations Named]
 [def __meta_is_anonymous [link
-reflexpr.quickref.header.ops_Named meta::is_anonymous]]
+reflexpr.quickref.c_Named.ops meta::is_anonymous]]
 [def __meta_is_anonymous_v [link
-reflexpr.quickref.header.ops_Named meta::is_anonumoys_v]]
+reflexpr.quickref.c_Named.ops meta::is_anonumoys_v]]
 [def __meta_get_base_name [link
-reflexpr.quickref.header.ops_Named meta::get_base_name]]
+reflexpr.quickref.c_Named.ops meta::get_base_name]]
 [def __meta_get_base_name_v [link
-reflexpr.quickref.header.ops_Named meta::get_base_name_v]]
+reflexpr.quickref.c_Named.ops meta::get_base_name_v]]
 [def __meta_get_display_name [link
-reflexpr.quickref.header.ops_Named meta::get_display_name]]
+reflexpr.quickref.c_Named.ops meta::get_display_name]]
 [def __meta_get_display_name_v [link
-reflexpr.quickref.header.ops_Named meta::get_display_name_v]]
+reflexpr.quickref.c_Named.ops meta::get_display_name_v]]
 
 [/operations Alias]
 [def __meta_get_aliased [link
-reflexpr.quickref.header.ops_Alias meta::get_aliased]]
+reflexpr.quickref.c_Alias.ops meta::get_aliased]]
 [def __meta_get_aliased_m [link
-reflexpr.quickref.header.ops_Alias meta::get_aliased_m]]
+reflexpr.quickref.c_Alias.ops meta::get_aliased_m]]
 
 [/operations Typed]
 [def __meta_get_type [link
-reflexpr.quickref.header.ops_Typed meta::get_type]]
+reflexpr.quickref.c_Typed.ops meta::get_type]]
 [def __meta_get_type_m [link
-reflexpr.quickref.header.ops_Typed meta::get_type_m]]
+reflexpr.quickref.c_Typed.ops meta::get_type_m]]
 
 [/operations Type]
 [def __meta_get_reflected_type [link
-reflexpr.quickref.header.ops_Type meta::get_reflected_type]]
+reflexpr.quickref.c_Type.ops meta::get_reflected_type]]
 [def __meta_get_reflected_type_t [link
-reflexpr.quickref.header.ops_Type meta::get_reflected_type_t]]
+reflexpr.quickref.c_Type.ops meta::get_reflected_type_t]]
 
 [/operations TagType]
 [def __meta_is_enum [link
-reflexpr.quickref.header.ops_TagType meta::is_enum]]
+reflexpr.quickref.c_TagType.ops meta::is_enum]]
 [def __meta_is_enum_v [link
-reflexpr.quickref.header.ops_TagType meta::is_enum_v]]
+reflexpr.quickref.c_TagType.ops meta::is_enum_v]]
 [def __meta_is_union [link
-reflexpr.quickref.header.ops_TagType meta::is_union]]
+reflexpr.quickref.c_TagType.ops meta::is_union]]
 [def __meta_is_union_v [link
-reflexpr.quickref.header.ops_TagType meta::is_union_v]]
+reflexpr.quickref.c_TagType.ops meta::is_union_v]]
 [def __meta_is_struct [link
-reflexpr.quickref.header.ops_TagType meta::is_struct]]
+reflexpr.quickref.c_TagType.ops meta::is_struct]]
 [def __meta_is_struct_v [link
-reflexpr.quickref.header.ops_TagType meta::is_struct_v]]
+reflexpr.quickref.c_TagType.ops meta::is_struct_v]]
 [def __meta_is_class [link
-reflexpr.quickref.header.ops_TagType meta::is_class]]
+reflexpr.quickref.c_TagType.ops meta::is_class]]
 [def __meta_is_class_v [link
-reflexpr.quickref.header.ops_TagType meta::is_class_v]]
+reflexpr.quickref.c_TagType.ops meta::is_class_v]]
 [def __meta_get_elaborated_type_specifier [link
-reflexpr.quickref.header.ops_TagType meta::get_elaborated_type_specifier]]
+reflexpr.quickref.c_TagType.ops meta::get_elaborated_type_specifier]]
 [def __meta_get_elaborated_type_specifier_m [link
-reflexpr.quickref.header.ops_TagType meta::get_elaborated_type_specifier_m]]
+reflexpr.quickref.c_TagType.ops meta::get_elaborated_type_specifier_m]]
 
 [/operations Enum]
 [def __meta_is_scoped_enum [link
-reflexpr.quickref.header.ops_Enum meta::is_scoped_enum]]
+reflexpr.quickref.c_Enum.ops meta::is_scoped_enum]]
 [def __meta_is_scoped_enum_v [link
-reflexpr.quickref.header.ops_Enum meta::is_scoped_enum_v]]
+reflexpr.quickref.c_Enum.ops meta::is_scoped_enum_v]]
 [def __meta_get_enumerators [link
-reflexpr.quickref.header.ops_Enum meta::get_enumerators]]
+reflexpr.quickref.c_Enum.ops meta::get_enumerators]]
 [def __meta_get_enumerators_m [link
-reflexpr.quickref.header.ops_Enum meta::get_enumerators_m]]
+reflexpr.quickref.c_Enum.ops meta::get_enumerators_m]]
 
 [/operations Record]
 [def __meta_get_member_types [link
-reflexpr.quickref.header.ops_Record meta::get_member_types]]
+reflexpr.quickref.c_Record.ops meta::get_member_types]]
 [def __meta_get_member_types_m [link
-reflexpr.quickref.header.ops_Record meta::get_member_types_m]]
+reflexpr.quickref.c_Record.ops meta::get_member_types_m]]
 [def __meta_get_data_members [link
-reflexpr.quickref.header.ops_Record meta::get_data_members]]
+reflexpr.quickref.c_Record.ops meta::get_data_members]]
 [def __meta_get_data_members_m [link
-reflexpr.quickref.header.ops_Record meta::get_data_members_m]]
+reflexpr.quickref.c_Record.ops meta::get_data_members_m]]
 
 [/operations ScopeMember]
 [def __meta_get_scope [link
-reflexpr.quickref.header.ops_ScopeMember meta::get_scope]]
+reflexpr.quickref.c_ScopeMember.ops meta::get_scope]]
 [def __meta_get_scope_m [link
-reflexpr.quickref.header.ops_ScopeMember meta::get_scope_m]]
+reflexpr.quickref.c_ScopeMember.ops meta::get_scope_m]]
 
 [/operations Inheritance]
 [def __meta_get_base_class [link
-reflexpr.quickref.header.ops_Inheritance meta::get_base_class]]
+reflexpr.quickref.c_Inheritance.ops meta::get_base_class]]
 [def __meta_get_base_class_m [link
-reflexpr.quickref.header.ops_Inheritance meta::get_base_class_m]]
+reflexpr.quickref.c_Inheritance.ops meta::get_base_class_m]]
 
 [/operations access]
 [def __meta_is_private [link
-reflexpr.quickref.header.ops_access meta::is_private]]
+reflexpr.quickref.other_ops.ops meta::is_private]]
 [def __meta_is_private_v [link
-reflexpr.quickref.header.ops_access meta::is_private_v]]
+reflexpr.quickref.other_ops.ops meta::is_private_v]]
 [def __meta_is_protected [link
-reflexpr.quickref.header.ops_access meta::is_protected]]
+reflexpr.quickref.other_ops.ops meta::is_protected]]
 [def __meta_is_protected_v [link
-reflexpr.quickref.header.ops_access meta::is_protected_v]]
+reflexpr.quickref.other_ops.ops meta::is_protected_v]]
 [def __meta_is_public [link
-reflexpr.quickref.header.ops_access meta::is_public]]
+reflexpr.quickref.other_ops.ops meta::is_public]]
 [def __meta_is_public_v [link
-reflexpr.quickref.header.ops_access meta::is_public_v]]
+reflexpr.quickref.other_ops.ops meta::is_public_v]]
 [def __meta_get_access_specifier [link
-reflexpr.quickref.header.ops_access meta::get_access_specifier]]
+reflexpr.quickref.other_ops.ops meta::get_access_specifier]]
 [def __meta_get_access_specifier_m [link
-reflexpr.quickref.header.ops_access meta::get_access_specifier_m]]
+reflexpr.quickref.other_ops.ops meta::get_access_specifier_m]]
 
 [/operations virtual]
 [def __meta_is_virtual [link
-reflexpr.quickref.header.ops_virtual meta::is_virtual]]
+reflexpr.quickref.other_ops.ops meta::is_virtual]]
 [def __meta_is_virtual_v [link
-reflexpr.quickref.header.ops_virtual meta::is_virtual_v]]
+reflexpr.quickref.other_ops.ops meta::is_virtual_v]]
 
 [/operations static]
 [def __meta_is_static [link
-reflexpr.quickref.header.ops_static meta::is_static]]
+reflexpr.quickref.other_ops.ops meta::is_static]]
 [def __meta_is_static_v [link
-reflexpr.quickref.header.ops_static meta::is_static_v]]
+reflexpr.quickref.other_ops.ops meta::is_static_v]]
 
 [/---------]
 [/Templates]

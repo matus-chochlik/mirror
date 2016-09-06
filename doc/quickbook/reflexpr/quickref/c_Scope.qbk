@@ -1,0 +1,17 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/-----------------------]
+[section:c_Scope [^Scope]]
+[/-----------------------]
+
+Base-level scopes, like namespaces, classes, enumerations, etc. are reflected
+by metaobjects modelling the [^__meta::Scope] concept.
+
+[import header.cpp]
+
+[reflexpr_header_concepts_Scope]
+
+[endsect]
