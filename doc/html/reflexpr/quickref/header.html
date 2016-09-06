@@ -76,273 +76,8 @@
 </pre>
 <h4>
 <a name="reflexpr.quickref.header.h3"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_ObjectSequence"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence"><code class="literal">ObjectSequence</code></a>
-        </h4>
-<p>
-          <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::ObjectSequence</code>
-          is a concept for lazy metaobject sequences.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">ObjectSequence</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h4"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Reversible"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Reversible"><code class="literal">Reversible</code></a>
-        </h4>
-<p>
-          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Reversible</code>
-          concept can be <span class="emphasis"><em>reverted</em></span> to the original declaration.
-          This means that for example a <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::<a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a></code> can
-          be <span class="emphasis"><em>reverted</em></span> to the base-level type which it reflects.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Reversible</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h5"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Named"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Named"><code class="literal">Named</code></a>
-        </h4>
-<p>
-          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Named</code>
-          concept reflect base-level declarations or other entities which <span class="emphasis"><em>can</em></span>
-          have a name or are referred to by an identifier or a keyword.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Named</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h6"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Alias"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Alias"><code class="literal">Alias</code></a>
-        </h4>
-<p>
-          Some named base-level declarations can have one or several <span class="emphasis"><em>aliases</em></span>
-          (for example type, template or namespace aliases). These are reflected
-          by metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Alias</code>
-          concept. All <code class="literal">meta::Alias</code>es also conform to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Alias</span>
- <span class="special">=</span>  <span class="identifier">Named</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h7"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Typed"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Typed"><code class="literal">Typed</code></a>
-        </h4>
-<p>
-          Models of the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Typed</code>
-          concept reflect base-level declarations with a type (for example variables
-          or constants)
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Typed</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h8"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Scope"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Scope"><code class="literal">Scope</code></a>
-        </h4>
-<p>
-          Base-level scopes, like namespaces, classes, enumerations, etc. are reflected
-          by metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Scope</code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Scope</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h9"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Namespace"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Namespace"><code class="literal">Namespace</code></a>
-        </h4>
-<p>
-          Namespaces are reflected by metaobjects conforming to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Namespace</code>
-          concept. All <code class="literal">meta::Namespace</code>s also conform to <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>,
-          <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a></code>
-          and <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Namespace</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h10"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_GlobalScope"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_GlobalScope"><code class="literal">GlobalScope</code></a>
-        </h4>
-<p>
-          The global scope is reflected by metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::GlobalScope</code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">GlobalScope</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Namespace">Namespace</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h11"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Type"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Type"><code class="literal">Type</code></a>
-        </h4>
-<p>
-          Metaobjects conforming to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Type</code>
-          concept reflect base-level types. Models of this concept are also <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>
-          and <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Reversible">Reversible</a></code>.
-          <code class="literal">meta::Type</code>s reflecting native C++ types are not <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>s,
-          reflections of all other types declared in source are <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>s.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Type</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Reversible">Reversible</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h12"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_TagType"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType"><code class="literal">TagType</code></a>
-        </h4>
-<p>
-          Models of <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::TagType</code>
-          reflect the common aspects of elaborated types like classes, unions and
-          enumerations.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">TagType</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h13"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Record"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Record"><code class="literal">Record</code></a>
-        </h4>
-<p>
-          Models of <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Record</code>
-          reflect the common aspects of structures, classes and unions.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Record</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h14"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Enum"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Enum"><code class="literal">Enum</code></a>
-        </h4>
-<p>
-          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Enum</code>
-          concept reflect both scoped and non-scoped enumerations.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Enum</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h15"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Class"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Class"><code class="literal">Class</code></a>
-        </h4>
-<p>
-          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Class</code>
-          concept reflect C++ classes and structures.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Class</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h16"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_ScopeMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember"><code class="literal">ScopeMember</code></a>
-        </h4>
-<p>
-          Common aspects of base-level entities declared in a scope (the global scope,
-          a namespace, a class, etc.) are reflected by metaobjects modelling the
-          <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::ScopeMember</code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">ScopeMember</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h17"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_EnumMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_EnumMember"><code class="literal">EnumMember</code></a>
-        </h4>
-<p>
-          Enumerated type members (enumerators) are reflected by metaobjects modelling
-          the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::EnumMember</code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">EnumMember</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h18"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_RecordMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember"><code class="literal">RecordMember</code></a>
-        </h4>
-<p>
-          Common aspects of structure, class and union members are reflected by metaobjects
-          conforming to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::RecordMember</code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">RecordMember</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h19"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Variable"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Variable"><code class="literal">Variable</code></a>
-        </h4>
-<p>
-          Variables and class data members are reflected by <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Variable</code>
-          metaobjects.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Variable</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Typed">Typed</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h20"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Constant"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Constant"><code class="literal">Constant</code></a>
-        </h4>
-<p>
-          Compile-time constants (for example enumerators) are reflected by <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Constant</code>
-          metaobjects.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Constant</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Typed">Typed</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h21"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Specifier"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier"><code class="literal">Specifier</code></a>
-        </h4>
-<p>
-          Specifiers (like <code class="literal">virtual</code>, <code class="literal">static</code>,
-          <code class="literal">private</code>, <code class="literal">public</code>, etc.) are reflected
-          by <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Specifier</code>
-          metaobjects.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Specifier</span>
- <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
- <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h22"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.concept_Inheritance"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance"><code class="literal">Inheritance</code></a>
-        </h4>
-<p>
-          Class inheritance declarations are reflected by metaobjects conforming
-          to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Inheritance</code>
-          concept.
-        </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Inheritance</span>
- <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
-</pre>
-<h4>
-<a name="reflexpr.quickref.header.h23"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.operations"></a></span><a class="link" href="header.html#reflexpr.quickref.header.operations">Metaobject
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Object"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Object"><code class="literal">Object</code>
           operations</a>
-        </h4>
-<h4>
-<a name="reflexpr.quickref.header.h24"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.ops_Object"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Object"><code class="literal">Object</code></a>
         </h4>
 <p>
           The following operations are applicable to all <a class="link" href="header.html#reflexpr.quickref.header.concept_Object">metaobjects</a>.
@@ -429,8 +164,20 @@
 </tr>
 </table></div>
 <h4>
-<a name="reflexpr.quickref.header.h25"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.ops_ObjectSequence"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_ObjectSequence"><code class="literal">ObjectSequence</code></a>
+<a name="reflexpr.quickref.header.h4"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_ObjectSequence"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence"><code class="literal">ObjectSequence</code></a>
+        </h4>
+<p>
+          <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::ObjectSequence</code>
+          is a concept for lazy metaobject sequences.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">ObjectSequence</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h5"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_ObjectSequence"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_ObjectSequence"><code class="literal">ObjectSequence</code>
+          operations</a>
         </h4>
 <p>
           Operations applicable to metaobject sequences -- types conforming to the
@@ -491,8 +238,34 @@
 </tr>
 </table></div>
 <h4>
-<a name="reflexpr.quickref.header.h26"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.ops_Named"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Named"><code class="literal">Named</code></a>
+<a name="reflexpr.quickref.header.h6"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Reversible"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Reversible"><code class="literal">Reversible</code></a>
+        </h4>
+<p>
+          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Reversible</code>
+          concept can be <span class="emphasis"><em>reverted</em></span> to the original declaration.
+          This means that for example a <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::<a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a></code> can
+          be <span class="emphasis"><em>reverted</em></span> to the base-level type which it reflects.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Reversible</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h7"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Named"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Named"><code class="literal">Named</code></a>
+        </h4>
+<p>
+          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Named</code>
+          concept reflect base-level declarations or other entities which <span class="emphasis"><em>can</em></span>
+          have a name or are referred to by an identifier or a keyword.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Named</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h8"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Named"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Named"><code class="literal">Named</code>
+          operations</a>
         </h4>
 <p>
           Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>
@@ -566,8 +339,24 @@
 </tr>
 </table></div>
 <h4>
-<a name="reflexpr.quickref.header.h27"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.ops_Alias"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Alias"><code class="literal">Alias</code></a>
+<a name="reflexpr.quickref.header.h9"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Alias"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Alias"><code class="literal">Alias</code></a>
+        </h4>
+<p>
+          Some named base-level declarations can have one or several <span class="emphasis"><em>aliases</em></span>
+          (for example type, template or namespace aliases). These are reflected
+          by metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Alias</code>
+          concept. All <code class="literal">meta::Alias</code>es also conform to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Alias</span>
+ <span class="special">=</span>  <span class="identifier">Named</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h10"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Alias"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Alias"><code class="literal">Alias</code>
+          operations</a>
         </h4>
 <p>
           Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Alias">Alias</a></code>
@@ -591,8 +380,21 @@
             </p></td>
 </tr></table></div>
 <h4>
-<a name="reflexpr.quickref.header.h28"></a>
-          <span class="phrase"><a name="reflexpr.quickref.header.ops_Typed"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Typed"><code class="literal">Typed</code></a>
+<a name="reflexpr.quickref.header.h11"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Typed"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Typed"><code class="literal">Typed</code></a>
+        </h4>
+<p>
+          Models of the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Typed</code>
+          concept reflect base-level declarations with a type (for example variables
+          or constants)
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Typed</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h12"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Typed"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Typed"><code class="literal">Typed</code>
+          operations</a>
         </h4>
 <p>
           Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Typed">Typed</a></code>
@@ -614,6 +416,493 @@
               The reflection of the type of the typed declaration reflected by <code class="literal">T</code>.
             </p></td>
 </tr></table></div>
+<h4>
+<a name="reflexpr.quickref.header.h13"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Scope"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Scope"><code class="literal">Scope</code></a>
+        </h4>
+<p>
+          Base-level scopes, like namespaces, classes, enumerations, etc. are reflected
+          by metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Scope</code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Scope</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h14"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Namespace"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Namespace"><code class="literal">Namespace</code></a>
+        </h4>
+<p>
+          Namespaces are reflected by metaobjects conforming to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Namespace</code>
+          concept. All <code class="literal">meta::Namespace</code>s also conform to <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>,
+          <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a></code>
+          and <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Namespace</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h15"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_GlobalScope"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_GlobalScope"><code class="literal">GlobalScope</code></a>
+        </h4>
+<p>
+          The global scope is reflected by metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::GlobalScope</code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">GlobalScope</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Namespace">Namespace</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h16"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Type"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Type"><code class="literal">Type</code></a>
+        </h4>
+<p>
+          Metaobjects conforming to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Type</code>
+          concept reflect base-level types. Models of this concept are also <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a></code>
+          and <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Reversible">Reversible</a></code>.
+          <code class="literal">meta::Type</code>s reflecting native C++ types are not <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>s,
+          reflections of all other types declared in source are <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>s.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Type</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Reversible">Reversible</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h17"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Type"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Type"><code class="literal">Type</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a></code> concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_reflected_ type</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_reflected_type</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c26" href="header.html#reflexpr.quickref.header.c27"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">};</span>
+
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_reflected_type_t</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_reflected_type</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c27"></a><a href="#reflexpr.quickref.header.c26"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The base-level type reflected by the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a></code>
+              <code class="literal">T</code>.
+            </p></td>
+</tr></table></div>
+<h4>
+<a name="reflexpr.quickref.header.h18"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_TagType"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType"><code class="literal">TagType</code></a>
+        </h4>
+<p>
+          Models of <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::TagType</code>
+          reflect the common aspects of elaborated types like classes, unions and
+          enumerations.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">TagType</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h19"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_TagType"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_TagType"><code class="literal">TagType</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// is_enum</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_enum</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c28" href="header.html#reflexpr.quickref.header.c29"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_enum_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_enum</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+
+<span class="comment">// is_union</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_union</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c30" href="header.html#reflexpr.quickref.header.c31"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_union_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_union</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="comment">// is_struct</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_struct</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c32" href="header.html#reflexpr.quickref.header.c33"><img src="../../images/callouts/3.png" alt="3" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_struct_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_struct</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+
+<span class="comment">// is_class</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_class</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c34" href="header.html#reflexpr.quickref.header.c35"><img src="../../images/callouts/4.png" alt="4" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_class_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_class</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="comment">// get_elaborated_type_specifier</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_elaborated_type_specifier</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier">Specifier</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c36" href="header.html#reflexpr.quickref.header.c37"><img src="../../images/callouts/5.png" alt="5" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_elaborated_type_specifier_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_elaborated_type_specifier</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c29"></a><a href="#reflexpr.quickref.header.c28"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a></code>
+              <code class="literal">T</code> reflects an enumeration type, <code class="literal">false</code>
+              otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c31"></a><a href="#reflexpr.quickref.header.c30"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a></code>
+              <code class="literal">T</code> reflects a <code class="literal">union</code>, <code class="literal">false</code>
+              otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c33"></a><a href="#reflexpr.quickref.header.c32"><img src="../../images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a></code>
+              <code class="literal">T</code> reflects a <code class="literal">struct</code>, <code class="literal">false</code>
+              otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c35"></a><a href="#reflexpr.quickref.header.c34"><img src="../../images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a></code>
+              <code class="literal">T</code> reflects a <code class="literal">class</code>, <code class="literal">false</code>
+              otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c37"></a><a href="#reflexpr.quickref.header.c36"><img src="../../images/callouts/5.png" alt="5" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier">Specifier</a></code>
+              reflecting the elaborated type specifier (<code class="literal">enum</code>,
+              <code class="literal">union</code>, <code class="literal">struct</code> or <code class="literal">class</code>)
+              of the tag-type reflected by <code class="literal">T</code>.
+            </p></td>
+</tr>
+</table></div>
+<h4>
+<a name="reflexpr.quickref.header.h20"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Enum"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Enum"><code class="literal">Enum</code></a>
+        </h4>
+<p>
+          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Enum</code>
+          concept reflect both scoped and non-scoped enumerations.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Enum</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h21"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Enum"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Enum"><code class="literal">Enum</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Enum">Enum</a></code> concept:
+        </p>
+<pre class="programlisting"><span class="comment">// is_scoped_enum</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Enum">Enum</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">is_scoped_enum</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.header.c38" href="header.html#reflexpr.quickref.header.c39"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Enum">Enum</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_scoped_enum_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">is_scoped_enum</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+
+<span class="comment">// get_enumerators</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Enum">Enum</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_enumerators</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c40" href="header.html#reflexpr.quickref.header.c41"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Enum">Enum</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_enumerators_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_enumerators</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c39"></a><a href="#reflexpr.quickref.header.c38"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal">true</code> if the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Enum">Enum</a></code>
+              <code class="literal">T</code> reflects a scoped (strongly-typed) enumeration,
+              <code class="literal">false</code> otherwise.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c41"></a><a href="#reflexpr.quickref.header.c40"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_EnumMember">EnumMember</a></code>,
+              <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Constant">Constant</a></code>
+              metaobjects reflecting the individual enumerators of the enumeration
+              reflected by <code class="literal">T</code>.
+            </p></td>
+</tr>
+</table></div>
+<h4>
+<a name="reflexpr.quickref.header.h22"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Record"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Record"><code class="literal">Record</code></a>
+        </h4>
+<p>
+          Models of <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Record</code>
+          reflect the common aspects of structures, classes and unions.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Record</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_TagType">TagType</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h23"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Record"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Record"><code class="literal">Record</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_member_types</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_member_types</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c42" href="header.html#reflexpr.quickref.header.c43"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_member_types_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_member_types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+
+<span class="comment">// get_data_members</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_data_members</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c44" href="header.html#reflexpr.quickref.header.c45"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_data_members_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_data_members</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c43"></a><a href="#reflexpr.quickref.header.c42"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember">RecordMember</a></code>,
+              <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Type">Type</a></code>
+              metaobjects reflecting the individual member types of the <code class="literal">class</code>,
+              <code class="literal">struct</code> or <code class="literal">union</code> reflected by
+              <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c45"></a><a href="#reflexpr.quickref.header.c44"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember">RecordMember</a></code>,
+              <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Variable">Variable</a></code>
+              metaobjects reflecting the individual data members of the <code class="literal">class</code>,
+              <code class="literal">struct</code> or <code class="literal">union</code> reflected by
+              <code class="literal">T</code>.
+            </p></td>
+</tr>
+</table></div>
+<h4>
+<a name="reflexpr.quickref.header.h24"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Class"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Class"><code class="literal">Class</code></a>
+        </h4>
+<p>
+          Metaobjects modelling the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Class</code>
+          concept reflect C++ classes and structures.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Class</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Record">Record</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h25"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_Class"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_Class"><code class="literal">Class</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Class">Class</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_base_classes</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Class">Class</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_base_classes</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c46" href="header.html#reflexpr.quickref.header.c47"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_Class">Class</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_base_classes_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_base_classes</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c47"></a><a href="#reflexpr.quickref.header.c46"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance">Inheritance</a></code>
+              metaobjects reflecting the individual base class declarations of the
+              <code class="literal">class</code> or <code class="literal">struct</code> reflected by
+              <code class="literal">T</code>.
+            </p></td>
+</tr></table></div>
+<h4>
+<a name="reflexpr.quickref.header.h26"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_ScopeMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember"><code class="literal">ScopeMember</code></a>
+        </h4>
+<p>
+          Common aspects of base-level entities declared in a scope (the global scope,
+          a namespace, a class, etc.) are reflected by metaobjects modelling the
+          <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::ScopeMember</code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">ScopeMember</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h27"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.ops_ScopeMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.ops_ScopeMember"><code class="literal">ScopeMember</code>
+          operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a></code>
+          concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_scope</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_scope</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.header.c48" href="header.html#reflexpr.quickref.header.c49"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_scope_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_scope</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.header.c49"></a><a href="#reflexpr.quickref.header.c48"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="header.html#reflexpr.quickref.header.concept_Scope">Scope</a></code>
+              reflecting the scope of the base-level entity reflected by <code class="literal">T</code>.
+            </p></td>
+</tr></table></div>
+<h4>
+<a name="reflexpr.quickref.header.h28"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_EnumMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_EnumMember"><code class="literal">EnumMember</code></a>
+        </h4>
+<p>
+          Enumerated type members (enumerators) are reflected by metaobjects modelling
+          the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::EnumMember</code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">EnumMember</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h29"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_RecordMember"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_RecordMember"><code class="literal">RecordMember</code></a>
+        </h4>
+<p>
+          Common aspects of structure, class and union members are reflected by metaobjects
+          conforming to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::RecordMember</code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">RecordMember</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h30"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Variable"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Variable"><code class="literal">Variable</code></a>
+        </h4>
+<p>
+          Variables and class data members are reflected by <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Variable</code>
+          metaobjects.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Variable</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_Typed">Typed</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="header.html#reflexpr.quickref.header.concept_ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h31"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Constant"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Constant"><code class="literal">Constant</code></a>
+        </h4>
+<p>
+          Compile-time constants (for example enumerators) are reflected by <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Constant</code>
+          metaobjects.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Constant</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Typed">Typed</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h32"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Specifier"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Specifier"><code class="literal">Specifier</code></a>
+        </h4>
+<p>
+          Specifiers (like <code class="literal">virtual</code>, <code class="literal">static</code>,
+          <code class="literal">private</code>, <code class="literal">public</code>, etc.) are reflected
+          by <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Specifier</code>
+          metaobjects.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Specifier</span>
+ <span class="special">=</span>  <a class="link" href="header.html#reflexpr.quickref.header.concept_Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h33"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.concept_Inheritance"></a></span><a class="link" href="header.html#reflexpr.quickref.header.concept_Inheritance"><code class="literal">Inheritance</code></a>
+        </h4>
+<p>
+          Class inheritance declarations are reflected by metaobjects conforming
+          to the <code class="literal"><a class="link" href="header.html#reflexpr.quickref.header.namespace_meta">meta</a>::Inheritance</code>
+          concept.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Object</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Inheritance</span>
+ <span class="special">=</span>  <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+<h4>
+<a name="reflexpr.quickref.header.h34"></a>
+          <span class="phrase"><a name="reflexpr.quickref.header.operations"></a></span><a class="link" href="header.html#reflexpr.quickref.header.operations">Metaobject
+          operations</a>
+        </h4>
+<p>
+          TODO
+        </p>
 <pre class="programlisting"><span class="special">}</span> <span class="comment">// namespace meta</span>
 </pre>
 <pre class="programlisting"><span class="special">}</span> <span class="comment">// namespace std</span>
