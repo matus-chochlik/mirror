@@ -17,12 +17,13 @@ All reflection-related definitions proposed for standardisation and described
 in the following sections of this chapter, are nested directly or indirectly
 in the [^std] namespace.
 
-The namespace-definition opening,
+[note The namespace-definition opening,
 [reflexpr_header_open_std]
 
 and closing,
 [reflexpr_header_close_std]
 
-statements are assumed, but omitted for the sake of brevity from this reference.
+statements are assumed, but omitted for the sake of brevity from thisreference.
+]
 
 [endsect]

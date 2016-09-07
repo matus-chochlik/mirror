@@ -7,12 +7,12 @@
 [section:ns_meta namespace [^meta]]
 [/--------------------------------]
 
-All reflection-related definitions (except for the [^__is_metaobject] type trait)
-are nested in the [^std::meta] namespace:
-
 [import header.cpp]
 
-The namespace-definition opening,
+All reflection-related definitions (except for the [^__is_metaobject]
+type trait) are nested in the [^std::meta] namespace:
+
+[note The namespace-definition opening,
 [reflexpr_header_open_std]
 [reflexpr_header_open_meta]
 
@@ -21,5 +21,6 @@ and closing,
 [reflexpr_header_close_std]
 
 statements are assumed, but omitted for the sake of brevity from this reference.
+]
 
 [endsect]

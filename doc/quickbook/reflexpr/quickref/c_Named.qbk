@@ -21,4 +21,10 @@ Operations applicable to metaobjects conforming to the [^meta::__Named] concept:
 
 [reflexpr_header_operations_Named]
 
+[heading Examples]
+[/---------------]
+
+[import example.cpp]
+[reflexpr_example_Named]
+
 [endsect]

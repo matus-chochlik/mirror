@@ -81,11 +81,15 @@ reflexpr.quickref.c_ObjectSequence.ops meta::unpack_sequence_t]]
 [def __meta_is_anonymous [link
 reflexpr.quickref.c_Named.ops meta::is_anonymous]]
 [def __meta_is_anonymous_v [link
-reflexpr.quickref.c_Named.ops meta::is_anonumoys_v]]
+reflexpr.quickref.c_Named.ops meta::is_anonymous_v]]
+[def __is_anonymous_v [link
+reflexpr.quickref.c_Named.ops is_anonymous_v]]
 [def __meta_get_base_name [link
 reflexpr.quickref.c_Named.ops meta::get_base_name]]
 [def __meta_get_base_name_v [link
 reflexpr.quickref.c_Named.ops meta::get_base_name_v]]
+[def __get_base_name_v [link
+reflexpr.quickref.c_Named.ops get_base_name_v]]
 [def __meta_get_display_name [link
 reflexpr.quickref.c_Named.ops meta::get_display_name]]
 [def __meta_get_display_name_v [link
