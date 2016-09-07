@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Variable</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;2.&#160;Quick reference">
+<link rel="prev" href="c_RecordMember.html" title="RecordMember">
+<link rel="next" href="c_Constant.html" title="Constant">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="c_RecordMember.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="c_Constant.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="reflexpr.quickref.c_Variable"></a><a class="link" href="c_Variable.html" title="Variable"><code class="literal">Variable</code></a>
+</h2></div></div></div>
+<p>
+          Variables and class data members are reflected by <code class="literal"><a class="link" href="ns_meta.html" title="namespace meta">meta</a>::Variable</code>
+          metaobjects.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Object.html" title="Object">Object</a> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">concept</span> <span class="keyword">bool</span> <span class="identifier">Variable</span>
+ <span class="special">=</span>  <a class="link" href="c_Named.html" title="Named">Named</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="c_Typed.html" title="Typed">Typed</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <a class="link" href="c_ScopeMember.html" title="ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
+ <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="c_RecordMember.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="c_Constant.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

@@ -4,8 +4,31 @@
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
+html {
+	background-color: #446688;
+}
+
 body {
 	background-color: white;
+	margin: 2em;
+	border: solid #202020 2px;
+	padding: 1em;
+	box-shadow: 1px 1px 4px 4px #103050;
+}
+
+body hr {
+	display: none;
+}
+
+body > .spirit-nav {
+	border: solid #CC9900 1px;
+	background-color: #FFBB00;
+	padding: 0.5em;
+	box-shadow: inset 1px 1px 1px 1px #DDAA00;
+}
+
+.spirit-nav a img {
+	margin: 3px;
 }
 
 .calloutlist {
@@ -14,7 +37,7 @@ body {
 }
 
 .calloutlist table {
-	font-size: 85%;
+	font-size: 75%;
 }
 
 pre.programlisting {
@@ -66,5 +89,9 @@ a:hover {
 	color: #202040;
 	text-decoration: underline;
 	text-shadow: 1px 1px 1px rgba(40, 40, 40, 0.5);
+}
+
+div.copyright-footer {
+	font-size: 65%;
 }
 

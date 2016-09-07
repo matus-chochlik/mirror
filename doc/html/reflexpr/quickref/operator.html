@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="cpp-reflection">
 <link rel="up" href="../quickref.html" title="Chapter&#160;2.&#160;Quick reference">
 <link rel="prev" href="../quickref.html" title="Chapter&#160;2.&#160;Quick reference">
-<link rel="next" href="header.html" title="reflexpr header synopsis">
+<link rel="next" href="header.html" title="reflexpr header">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="spirit-nav">
@@ -19,8 +19,72 @@
         operator</a>
 </h2></div></div></div>
 <p>
-          TODO
+          The <a class="link" href="../intro.html#reflexpr.intro.metaobjects" title="Metaobjects">metaobjects</a> reflecting
+          various program declarations and other base-level entities are generated
+          by the compiler on demand by invoking the <code class="literal">reflexpr</code> operator.
         </p>
+<p>
+          The result of the <code class="literal">reflexpr</code> operator is a special implementation-dependent
+          type conforming to one of the <a class="link" href="c_Object.html" title="Object">metaobject
+          concepts</a>.
+        </p>
+<p>
+          The argument of the <code class="literal">reflexpr</code> operator can be one of
+          the following:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <span class="emphasis"><em>nothing (no argument)</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_GlobalScope.html" title="GlobalScope">GlobalScope</a></code>.
+            </li>
+<li class="listitem">
+              <code class="literal">::</code> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_GlobalScope.html" title="GlobalScope">GlobalScope</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>specifier</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Specifier.html" title="Specifier">Specifier</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>namespace name</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Namespace.html" title="Namespace">Namespace</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>namespace alias</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Namespace.html" title="Namespace">Namespace</a></code>,
+              <code class="literal">meta::<a class="link" href="c_Alias.html" title="Alias">Alias</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>type name</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Type.html" title="Type">Type</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>type alias</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Type.html" title="Type">Type</a></code>, <code class="literal">meta::<a class="link" href="c_Alias.html" title="Alias">Alias</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>enum type name</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Enum.html" title="Enum">Enum</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>union type name</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Record.html" title="Record">Record</a></code>.
+            </li>
+<li class="listitem">
+              <span class="emphasis"><em>class name</em></span> &#8212; the result is a <code class="literal">meta::<a class="link" href="c_Class.html" title="Class">Class</a></code>.
+            </li>
+</ul></div>
+<p>
+          For example:
+        </p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">meta_int</span> <span class="special">=</span> <a class="link" href="operator.html" title="reflexpr operator">reflexpr</a><span class="special">(</span><span class="keyword">int</span><span class="special">);</span> <a class="co" name="reflexpr.quickref.operator.c0" href="operator.html#reflexpr.quickref.operator.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+<span class="keyword">using</span> <span class="identifier">meta_std</span> <span class="special">=</span> <span class="identifier">reflexpr</span><span class="special">(</span><span class="identifier">std</span><span class="special">);</span> <a class="co" name="reflexpr.quickref.operator.c2" href="operator.html#reflexpr.quickref.operator.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.operator.c1"></a><a href="#reflexpr.quickref.operator.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal"><a class="link" href="ns_meta.html" title="namespace meta">meta</a>::<a class="link" href="c_Type.html" title="Type">Type</a></code>
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.operator.c3"></a><a href="#reflexpr.quickref.operator.c2"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              <code class="literal"><a class="link" href="ns_meta.html" title="namespace meta">meta</a>::<a class="link" href="c_Namespace.html" title="Namespace">Namespace</a></code>
+            </p></td>
+</tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
