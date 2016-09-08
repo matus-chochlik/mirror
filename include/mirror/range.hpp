@@ -16,7 +16,7 @@ namespace mirror {
 template <typename ... P>
 struct range
 {
-	typedef range type;
+	using type = range;
 };
 
 using empty_range = range<> ;

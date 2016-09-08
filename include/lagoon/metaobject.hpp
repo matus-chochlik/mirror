@@ -161,13 +161,13 @@ private:
 	shared_metaobject _cur;
 	shared_metaobject _load(unsigned pos);
 
-	typedef shared_metaobject_sequence_iterator _self;
+	using _self = shared_metaobject_sequence_iterator;
 public:
-	typedef int difference_type;
-	typedef shared_metaobject value_type;
-	typedef const value_type* pointer;
-	typedef const value_type& reference;
-	typedef std::forward_iterator_tag iterator_category;
+	using difference_type = int;
+	using value_type = shared_metaobject;
+	using pointer = const value_type*;
+	using reference = const value_type&;
+	using iterator_category = std::forward_iterator_tag;
 
 	shared_metaobject_sequence_iterator(void)
 	noexcept;
@@ -220,8 +220,8 @@ public:
 	 : _mos(std::move(mos))
 	{ }
 
-	typedef unsigned size_type;
-	typedef shared_metaobject_sequence_iterator iterator;
+	using size_type = unsigned;
+	using iterator = shared_metaobject_sequence_iterator;
 
 	bool is_none(void) const;
 
@@ -253,7 +253,7 @@ shared_metaobject_sequence make_shared_sequence(P&& ... p)
 
 struct metaobject_sequence
 {
-	typedef unsigned size_type;
+	using size_type = unsigned;
 
 	virtual ~metaobject_sequence(void) = default;
 

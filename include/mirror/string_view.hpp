@@ -23,7 +23,7 @@ struct op_string_view;
 template <typename Char, Char ... C>
 struct op_string_view<basic_string<Char, C...>>
 {
-	typedef op_string_view type;
+	using type = op_string_view;
 	static constexpr std::string_view value = {
 		c_str<basic_string<Char, C...>>,
 		sizeof ... (C)

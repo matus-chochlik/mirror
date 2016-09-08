@@ -18,7 +18,7 @@ namespace mirror {
 template <typename Char, Char ... C>
 struct basic_string
 {
-	typedef basic_string<Char, C...> type;
+	using type = basic_string<Char, C...>;
 };
 
 template <char ... C>

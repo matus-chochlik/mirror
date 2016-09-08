@@ -22,7 +22,7 @@ struct metaobject
 		std::is_metaobject_v<MO>,
 		"Template argument must be a meta-object type!"
 	);
-	typedef metaobject type;
+	using type = metaobject;
 };
 
 template <typename MOS>
@@ -33,7 +33,7 @@ struct metaobject_sequence
 		std::meta::ObjectSequence<MOS>,
 		"Template argument must be a meta-object-sequence type!"
 	);
-	typedef metaobject_sequence type;
+	using type = metaobject_sequence;
 };
 
 } // namespace mirror

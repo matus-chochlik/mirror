@@ -270,7 +270,7 @@ struct decor<MO, T[N]>
 template <typename MO, typename R, typename ... P>
 struct decor<MO, R(P...)>
 {
-	typedef get_aliased<MIRRORED(R)> MR;
+	using MR = get_aliased<MIRRORED(R)>;
 
 	template <typename Str>
 	struct left : concat<
@@ -304,7 +304,7 @@ struct decor<MO, R(P...)>
 template <typename MO, typename R, typename ... P>
 struct decor<MO, R(*)(P...)>
 {
-	typedef get_aliased<MIRRORED(R)> MR;
+	using MR = get_aliased<MIRRORED(R)>;
 
 	template <typename Str>
 	struct left : concat<

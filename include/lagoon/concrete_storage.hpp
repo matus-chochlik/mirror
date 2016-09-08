@@ -52,7 +52,7 @@ template <
 template <typename MO>
 struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 {
-	typedef mo_trait_tuple<
+	using type = mo_trait_tuple<
 		std::meta::get_source_line_v<MO> != 0,
 		std::meta::ScopeMember<MO>,
 		std::meta::Scope<MO>,
@@ -65,13 +65,13 @@ struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 		std::meta::Constant<MO>,
 		std::meta::Inheritance<MO>,
 		std::meta::Specifier<MO>
-	> type;
+	>;
 };
 
 template <>
 struct do_make_mo_trait_tuple<mirror::none>
 {
-	typedef mo_trait_tuple<
+	using type = mo_trait_tuple<
 		false,
 		false,
 		false,
@@ -84,7 +84,7 @@ struct do_make_mo_trait_tuple<mirror::none>
 		false,
 		false,
 		false
-	> type;
+	>;
 };
 
 template <typename MO>

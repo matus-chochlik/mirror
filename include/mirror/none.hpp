@@ -15,7 +15,7 @@ namespace mirror {
 
 struct none
 {
-	typedef none type;
+	using type = none;
 };
 
 } // namespace mirror

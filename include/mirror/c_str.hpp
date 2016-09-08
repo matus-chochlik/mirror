@@ -22,7 +22,7 @@ struct op_c_str;
 template <typename Char, Char ... C>
 struct op_c_str<basic_string<Char, C...>>
 {
-	typedef op_c_str type;
+	using type = op_c_str;
 	static constexpr const Char value[sizeof...(C)+1] = {C...,Char(0)};
 };
 

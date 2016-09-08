@@ -26,7 +26,7 @@ class flat_set
 private:
 	std::vector<T> _v;
 public:
-	typedef typename std::vector<T>::size_type size_type;
+	using size_type = typename std::vector<T>::size_type;
 
 	void clear(void) { return _v.clear(); }
 	size_type size(void) const { return _v.size(); }
