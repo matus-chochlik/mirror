@@ -7,6 +7,8 @@
 [section:int_const Integral constants ]
 [/====================================]
 
+[header int_const]
+
 The ['Mirror] library defines several convenience aliases for the standard
 [^__integral_constant] template:
 

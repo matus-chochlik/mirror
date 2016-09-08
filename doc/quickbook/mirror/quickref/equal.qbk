@@ -4,18 +4,17 @@
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
 [/===============================]
-[section:c_str operation [^c_str]]
+[section:equal operation [^equal]]
 [/===============================]
 
-[header c_str]
+[header equal]
 
-The [^c_str] operation returns a const character array, containing
-a null-terminated c-string from a compile-time [^__basic_string]
-as shown in the following pseudocode:
+The [^equal] operation returns [^true] if the pair of [^__basic_string]s,
+[^__range]s or [^int_const]s passed as arguments are equal, [^false]
+otherwise, as shown in the following pseudocode.
 
-``
-template <typename Char, Char ... C>
-const Char c_str<__basic_string<Char, C...>>[sizeof(C)+1] =  {C...,Char(0)};
-``
+[import equal.cpp]
+
+[mirror_op_equal]
 
 [endsect]

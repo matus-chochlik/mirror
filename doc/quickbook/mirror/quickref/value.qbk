@@ -7,12 +7,14 @@
 [section:value operation [^value]]
 [/===============================]
 
+[header value]
+
 The [^value] operation returns the value of an [link mirror.quickref.int_const
 integral constant] as shown in the following pseudocode:
 
 ``
 template <typename Int, Int I>
-const Int value<__int_const<Int, I>> = I;
+constexpr Int value<__int_const<Int, I>> = I;
 ``
 
 [endsect]

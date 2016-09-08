@@ -15,12 +15,30 @@ library.
 
 [endsect]
 
+[/---------]
+[/Templates]
+[/---------]
+
+[template header [name] [^#include <'''<ulink url="https://github.com/matus-chochlik/mirror/blob/develop/include/mirror/'''[name]'''.hpp">mirror/'''[name]'''.hpp</ulink>'''>]]
+
+[/--------]
+[/Sections]
+[/--------]
+
+[include quickref/metaobject.qbk]
 [include quickref/int_const.qbk]
-[include quickref/strings.qbk]
-[include quickref/ranges.qbk]
+[include quickref/string.qbk]
+[include quickref/range.qbk]
 [include quickref/none.qbk]
+
+[include quickref/identity.qbk]
 
 [include quickref/value.qbk]
 [include quickref/c_str.qbk]
+[include quickref/string_view.qbk]
+
+[include quickref/equal.qbk]
+
+[include quickref/get_size.qbk]
 
 [include quickref/operator.qbk]

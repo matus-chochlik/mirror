@@ -3,11 +3,11 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[/====================================]
-[section:strings Compile-time strings ]
-[/====================================]
+[/===================================]
+[section:string Compile-time strings ]
+[/===================================]
 
-[heading:basic_string [^basic_string]]
+[header string]
 
 The [^basic_string] class template is used to represent compile-time
 strings with [^Char] character type.
@@ -18,8 +18,6 @@ struct basic_string {
 	using type = basic_string;
 };
 ``
-
-[heading:string [^string]]
 
 Compile-time [^char] strings are represented by the following specialization
 of the [^basic_string] template:

@@ -3,11 +3,11 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[/=================================]
-[section:ranges Compile-time ranges]
-[/=================================]
+[/================================]
+[section:range Compile-time ranges]
+[/================================]
 
-[heading:range [^range]]
+[header range]
 
 The [^range] class template is used to represent compile-time type lists.
 
@@ -17,8 +17,6 @@ struct range {
 	using type = range;
 };
 ``
-
-[heading:empty_range [^empty_range]]
 
 ``
 using empty_range = __range<>;

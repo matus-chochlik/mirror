@@ -16,6 +16,9 @@
 [/Quick reference links]
 [/---------------------]
 
+[def __metaobject [link mirror.quickref.metaobject metaobject]]
+[def __metaobject_sequence [link mirror.quickref.metaobject metaobject_sequence]]
+
 [def __int_const [link mirror.quickref.int_const int_const]]
 [def __bool_ [link mirror.quickref.int_const bool_]]
 [def __true_ [link mirror.quickref.int_const true_]]
@@ -25,16 +28,22 @@
 [def __unsigned_ [link mirror.quickref.int_const unsigned_]]
 [def __size_const [link mirror.quickref.int_const size_const]]
 
-[def __basic_string [link mirror.quickref.strings.basic_string basic_string]]
-[def __string [link mirror.quickref.strings.string string]]
-[def __empty_string [link mirror.quickref.strings.empty_string empty_string]]
+[def __basic_string [link mirror.quickref.string basic_string]]
+[def __string [link mirror.quickref.string string]]
+[def __empty_string [link mirror.quickref.string empty_string]]
 
-[def __range [link mirror.quickref.ranges.range range]]
-[def __empty_range [link mirror.quickref.strings.empty_range empty_range]]
+[def __range [link mirror.quickref.range range]]
+[def __empty_range [link mirror.quickref.range empty_range]]
 
 [def __none [link mirror.quickref.none none]]
 
+[def __identity [link mirror.quickref.identity identity]]
+[def __value [link mirror.quickref.value value]]
 [def __c_str [link mirror.quickref.c_str c_str]]
+[def __equal [link mirror.quickref.equal equal]]
+
+[def __get_size [link mirror.quickref.get_size get_size]]
+[def __size [link mirror.quickref.get_size size]]
 
 [/---------]
 [/Templates]

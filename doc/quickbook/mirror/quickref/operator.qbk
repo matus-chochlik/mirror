@@ -7,6 +7,8 @@
 [section:operator operator [^MIRRORED]]
 [/====================================]
 
+[header reflection]
+
 The [link mirror.intro.metaobjects metaobjects] reflecting various program
 declarations and other base-level entities can be obtained 
 by invoking the [^MIRRORED] operator.
