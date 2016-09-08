@@ -9,7 +9,7 @@
 ]
 
 This is the documentation for the implementation of C++ reflection as
-described in the [link papers.proposals papers].
+proposed for standardisation in the [link papers.proposals papers].
 
 [section:metaobjects Metaobjects]
 

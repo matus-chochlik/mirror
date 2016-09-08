@@ -1,0 +1,31 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Introduction
+	[quickbook 1.6]
+	[id mirror.intro]
+]
+
+['Mirror] is a compile-time template metaprogramming-based reflection library 
+built on top of the [link reflexpr.intro basic C++ reflection facility].
+
+While the [^__reflexpr] operator and the related [link reflexpr.quickref.header
+library of ['metaobject operation] templates] is proposed for standardisation,
+the Mirror library at this point [*is not].
+
+[section:metaobjects Metaobjects]
+
+Unlike the [link reflexpr.intro basic C++ reflection facility] which defines
+several different metaobject concepts, the ['Mirror] library distinguishes only
+['metaobjects] implemented by the [^__metaobject] class template
+and ['metaobject sequences] implemented by [^__metaobject_sequence].
+
+Whenever a ['metaobject operation] is invoked on a ['metaobject] for which
+it is not applicable a suitable default value or the [^__none] type
+is returned.
+
+[endsect]
+
+[include intro/hello_world.qbk]

@@ -1,0 +1,26 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Quick reference
+	[quickbook 1.6]
+	[id mirror.quickref]
+]
+
+[section:intro Introduction]
+
+This quick reference describes the public API of the ['Mirror] reflection
+library.
+
+[endsect]
+
+[include quickref/int_const.qbk]
+[include quickref/strings.qbk]
+[include quickref/ranges.qbk]
+[include quickref/none.qbk]
+
+[include quickref/value.qbk]
+[include quickref/c_str.qbk]
+
+[include quickref/operator.qbk]

@@ -1,0 +1,18 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===============================]
+[section:value operation [^value]]
+[/===============================]
+
+The [^value] operation returns the value of an [link mirror.quickref.int_const
+integral constant] as shown in the following pseudocode:
+
+``
+template <typename Int, Int I>
+const Int value<__int_const<Int, I>> = I;
+``
+
+[endsect]

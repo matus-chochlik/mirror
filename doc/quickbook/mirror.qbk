@@ -16,6 +16,26 @@
 [/Quick reference links]
 [/---------------------]
 
+[def __int_const [link mirror.quickref.int_const int_const]]
+[def __bool_ [link mirror.quickref.int_const bool_]]
+[def __true_ [link mirror.quickref.int_const true_]]
+[def __false_ [link mirror.quickref.int_const false_]]
+[def __char_ [link mirror.quickref.int_const char_]]
+[def __int_ [link mirror.quickref.int_const int_]]
+[def __unsigned_ [link mirror.quickref.int_const unsigned_]]
+[def __size_const [link mirror.quickref.int_const size_const]]
+
+[def __basic_string [link mirror.quickref.strings.basic_string basic_string]]
+[def __string [link mirror.quickref.strings.string string]]
+[def __empty_string [link mirror.quickref.strings.empty_string empty_string]]
+
+[def __range [link mirror.quickref.ranges.range range]]
+[def __empty_range [link mirror.quickref.strings.empty_range empty_range]]
+
+[def __none [link mirror.quickref.none none]]
+
+[def __c_str [link mirror.quickref.c_str c_str]]
+
 [/---------]
 [/Templates]
 [/---------]
@@ -25,7 +45,5 @@
 [/Chapters]
 [/--------]
 
-TODO
-
-[/include mirror/intro.qbk]
-[/include mirror/quickref.qbk]
+[include mirror/intro.qbk]
+[include mirror/quickref.qbk]

@@ -23,11 +23,16 @@
 
 [def __clang__ [@ http://clang.llvm.org/ clang]]
 
+[def __pseudocode__ ['pseudocode]]
 [def __unspecified ['unspecified]]
 [def __implementation_defined ['implementation-defined]]
 
+[def __integral_constant [@ http://en.cppreference.com/w/cpp/types/integral_constant integral_constant]]
+
 [def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
 [def __reflexpr [link reflexpr.quickref.operator reflexpr]]
+
+[def __MIRRORED [link mirror.quickref.operator MIRRORED]]
 
 [def __std_meta [link reflexpr.quickref.ns_meta std::meta]]
 

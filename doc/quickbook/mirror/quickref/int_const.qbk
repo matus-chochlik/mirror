@@ -1,0 +1,36 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/====================================]
+[section:int_const Integral constants ]
+[/====================================]
+
+The ['Mirror] library defines several convenience aliases for the standard
+[^__integral_constant] template:
+
+``
+template <typename Int, Int I>
+using int_const = std::__integral_constant<Int, I>;
+
+template <bool B>
+using bool_ = int_const<bool, B>;
+
+using true_ = bool_<true>;
+using false_ = bool_<false>;
+
+template <char C>
+using char_ = int_const<char, C>;
+
+template <int I>
+using int_ = int_const<int, I>;
+
+template <unsigned U>
+using unsigned_ = int_const<unsigned, U>;
+
+template <std::size_t S>
+using size_const = int_const<std::size_t, S>;
+``
+
+[endsect]

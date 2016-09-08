@@ -23,11 +23,11 @@ template <typename Char, Char ... C>
 struct op_c_str<basic_string<Char, C...>>
 {
 	typedef op_c_str type;
-	static constexpr const char value[sizeof...(C)+1] = {C...,Char(0)};
+	static constexpr const Char value[sizeof...(C)+1] = {C...,Char(0)};
 };
 
 template <typename Char, Char ... C>
-const char op_c_str<basic_string<Char, C...>>::value[sizeof...(C)+1];
+const Char op_c_str<basic_string<Char, C...>>::value[sizeof...(C)+1];
 
 } // namespace _aux
 
