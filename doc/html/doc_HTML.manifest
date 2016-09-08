@@ -31,6 +31,16 @@ reflexpr/quickref/c_Inheritance.html
 reflexpr/quickref/other_ops.html
 reflexpr/example.html
 mirror.html
+mirror/intro.html
+mirror/intro/hello_world.html
+mirror/quickref.html
+mirror/quickref/int_const.html
+mirror/quickref/strings.html
+mirror/quickref/ranges.html
+mirror/quickref/none.html
+mirror/quickref/value.html
+mirror/quickref/c_str.html
+mirror/quickref/operator.html
 puddle.html
 lagoon.html
 papers.html
