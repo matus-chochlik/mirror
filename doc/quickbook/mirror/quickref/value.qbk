@@ -15,6 +15,8 @@ integral constant] as shown in the following pseudocode:
 ``
 template <typename Int, Int I>
 constexpr Int value<__int_const<Int, I>> = I;
+
+constexpr int value<__none> = 0;
 ``
 
 [endsect]

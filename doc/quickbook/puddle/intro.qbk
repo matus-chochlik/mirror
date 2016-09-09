@@ -1,0 +1,27 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Introduction
+	[quickbook 1.6]
+	[id puddle.intro]
+]
+
+['Puddle] is a compile-time constexpr metaprogramming-based reflection library 
+built on top of the [link reflexpr.intro basic C++ reflection facility]
+and the [link mirror.intro ['Mirror] reflection library].
+
+While the [^__reflexpr] operator and the related [link reflexpr.quickref.header
+library of ['metaobject operation] templates] are proposed for standardisation,
+the ['Puddle] library at this point [*is not].
+
+[section:metaobjects Metaobjects]
+
+The ['Puddle] library reuses the [link mirror.intro.metaobjects metaobject
+types] from the ['Mirror] library and uses them as [^constexpr] compile-time
+['values].
+
+[endsect]
+
+[include intro/hello_world.qbk]

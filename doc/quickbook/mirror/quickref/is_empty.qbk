@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:is_empty operation [^is_empty]]
+[/=====================================]
+
+[header is_empty]
+
+The [^is_empty] operation returns [^__true_] for [^__none] or if
+a [^__metaobject_sequence], [^__range] or [^__string] is empty, otherwise
+it returns [^__false_] as shown in the following pseudocode.
+
+[import is_empty.cpp]
+
+[mirror_op_is_empty]
+
+[endsect]

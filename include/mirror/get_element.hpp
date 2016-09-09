@@ -51,6 +51,21 @@ struct op_get_element<range<H, T...>, int_const<Int, I>>
  : op_get_element<range<T...>, int_const<Int, I-1>>
 { };
 
+template <typename Idx>
+struct op_get_element<empty_string, Idx>
+ : none
+{ };
+
+template <typename Char, Char H, Char ... T, typename Int>
+struct op_get_element<basic_string<Char, H, T...>, int_const<Int, Int(0)>>
+ : int_const<Char, H>
+{ };
+
+template <typename Char, Char H, Char ... T, typename Int, Int I>
+struct op_get_element<basic_string<Char, H, T...>, int_const<Int, I>>
+ : op_get_element<basic_string<Char, T...>, int_const<Int, I-1>>
+{ };
+
 } // namespace _aux
 
 template <typename X, typename Idx>

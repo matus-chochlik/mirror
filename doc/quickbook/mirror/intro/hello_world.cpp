@@ -26,8 +26,8 @@ int main(void)
 
 	using mo = __MIRRORED(Hello::World);
 
-	using hello = __get_base_name<get_scope<mo>>;
-	using world = __get_base_name<mo>;
+	using hello = __get_base_name<__get_scope<mo>>;
+	using world = get_base_name<mo>;
 
 	using hello_world = __concat<
 		__push_back<hello, char_<','>>,

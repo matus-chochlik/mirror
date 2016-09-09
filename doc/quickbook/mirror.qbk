@@ -41,9 +41,14 @@
 [def __value [link mirror.quickref.value value]]
 [def __c_str [link mirror.quickref.c_str c_str]]
 [def __equal [link mirror.quickref.equal equal]]
+[def __concat [link mirror.quickref.concat concat]]
+[def __push_back [link mirror.quickref.push_back push_back]]
 
-[def __get_size [link mirror.quickref.get_size get_size]]
+[def __is_empty [link mirror.quickref.is_empty is_empty]]
 [def __size [link mirror.quickref.get_size size]]
+[def __get_size [link mirror.quickref.get_size get_size]]
+[def __get_element [link mirror.quickref.get_element get_element]]
+[def __unpack [link mirror.quickref.unpack unpack]]
 
 [/---------]
 [/Templates]

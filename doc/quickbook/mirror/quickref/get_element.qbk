@@ -1,0 +1,25 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===========================================]
+[section:get_element operation [^get_element]]
+[/===========================================]
+
+[header get_element]
+
+The [^get_element] operation returns the ['I]-th element in a
+a [^__metaobject_sequence], [^__range], [^__string] or [^__none]
+as shown in the following pseudocode.
+
+[import get_element.cpp]
+
+[mirror_op_get_element]
+
+[note If the index passed as the second argument is greater or equal to
+the number of elements in the sequence, range or string, then the result
+is [^__none].
+]
+
+[endsect]

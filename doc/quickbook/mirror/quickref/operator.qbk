@@ -14,7 +14,8 @@ declarations and other base-level entities can be obtained
 by invoking the [^MIRRORED] operator.
 
 The result of the [^MIRRORED] operator is an instantiation of
-the [^__metaobject] template.
+the [^__metaobject] template wrapping a [link reflexpr.intro.metaobjects basic
+metaobject type].
 
 The [^MIRRORED] operator takes the same arguments as the [^reflexpr] operator.
 

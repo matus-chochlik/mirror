@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=======================================]
+[section:push_back operation [^push_back]]
+[/=======================================]
+
+[header push_back]
+
+The [^push_back] operation appends a single type to the end of a [^__range]
+or a single character to the end of a [^__string] as shown in the following
+pseudocode.
+
+[import push_back.cpp]
+
+[mirror_op_push_back]
+
+[endsect]

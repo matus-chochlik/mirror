@@ -12,6 +12,7 @@
 #define MIRROR_CONCAT_1105240825_HPP
 
 #include "identity.hpp"
+#include "none.hpp"
 #include "range.hpp"
 #include "string.hpp"
 
@@ -24,6 +25,22 @@ struct op_concat;
 template <typename H1, typename H2, typename H3, typename ... T>
 struct op_concat<H1, H2, H3, T...>
  : op_concat<eval<_aux::op_concat<H1, H2>>, H3, T...>
+{ };
+
+// none
+template <>
+struct op_concat<none, none>
+ : none
+{ };
+
+template <typename R>
+struct op_concat<none, R>
+ : identity<R>
+{ };
+
+template <typename R>
+struct op_concat<R, none>
+ : identity<R>
 { };
 
 // range

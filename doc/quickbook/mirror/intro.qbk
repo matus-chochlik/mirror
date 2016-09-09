@@ -12,8 +12,8 @@
 built on top of the [link reflexpr.intro basic C++ reflection facility].
 
 While the [^__reflexpr] operator and the related [link reflexpr.quickref.header
-library of ['metaobject operation] templates] is proposed for standardisation,
-the Mirror library at this point [*is not].
+library of ['metaobject operation] templates] are proposed for standardisation,
+the ['Mirror] library at this point [*is not].
 
 [section:metaobjects Metaobjects]
 
