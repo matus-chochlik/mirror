@@ -38,12 +38,12 @@
 
 	<span class="keyword">using</span> <span class="identifier">mo</span> <span class="special">=</span> <a class="link" href="../quickref/operator.html" title="operator MIRRORED">MIRRORED</a><span class="special">(</span><span class="identifier">Hello</span><span class="special">::</span><span class="identifier">World</span><span class="special">);</span>
 
-	<span class="keyword">using</span> <span class="identifier">hello</span> <span class="special">=</span> <span class="identifier">__get_base_name</span><span class="special">&lt;</span><span class="identifier">get_scope</span><span class="special">&lt;</span><span class="identifier">mo</span><span class="special">&gt;&gt;;</span>
-	<span class="keyword">using</span> <span class="identifier">world</span> <span class="special">=</span> <span class="identifier">__get_base_name</span><span class="special">&lt;</span><span class="identifier">mo</span><span class="special">&gt;;</span>
+	<span class="keyword">using</span> <span class="identifier">hello</span> <span class="special">=</span> <span class="identifier">__get_base_name</span><span class="special">&lt;</span><span class="identifier">__get_scope</span><span class="special">&lt;</span><span class="identifier">mo</span><span class="special">&gt;&gt;;</span>
+	<span class="keyword">using</span> <span class="identifier">world</span> <span class="special">=</span> <span class="identifier">get_base_name</span><span class="special">&lt;</span><span class="identifier">mo</span><span class="special">&gt;;</span>
 
-	<span class="keyword">using</span> <span class="identifier">hello_world</span> <span class="special">=</span> <span class="identifier">__concat</span><span class="special">&lt;</span>
-		<span class="identifier">__push_back</span><span class="special">&lt;</span><span class="identifier">hello</span><span class="special">,</span> <span class="identifier">char_</span><span class="special">&lt;</span><span class="char">','</span><span class="special">&gt;&gt;,</span>
-		<a class="link" href="../quickref/strings.html#mirror.quickref.strings.string">string</a><span class="special">&lt;</span><span class="char">' '</span><span class="special">&gt;,</span>
+	<span class="keyword">using</span> <span class="identifier">hello_world</span> <span class="special">=</span> <a class="link" href="../quickref/concat.html" title="operation concat">concat</a><span class="special">&lt;</span>
+		<a class="link" href="../quickref/push_back.html" title="operation push_back">push_back</a><span class="special">&lt;</span><span class="identifier">hello</span><span class="special">,</span> <span class="identifier">char_</span><span class="special">&lt;</span><span class="char">','</span><span class="special">&gt;&gt;,</span>
+		<a class="link" href="../quickref/string.html" title="Compile-time strings">string</a><span class="special">&lt;</span><span class="char">' '</span><span class="special">&gt;,</span>
 		<span class="identifier">push_back</span><span class="special">&lt;</span><span class="identifier">world</span><span class="special">,</span> <span class="identifier">char_</span><span class="special">&lt;</span><span class="char">'!'</span><span class="special">&gt;&gt;</span>
 	<span class="special">&gt;;</span>
 

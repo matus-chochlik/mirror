@@ -1,0 +1,64 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>operation concat</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;5.&#160;Quick reference">
+<link rel="prev" href="equal.html" title="operation equal">
+<link rel="next" href="push_back.html" title="operation push_back">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="equal.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="push_back.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="mirror.quickref.concat"></a><a class="link" href="concat.html" title="operation concat">operation <code class="literal">concat</code></a>
+</h2></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/mirror/concat.hpp" target="_top">mirror/concat.hpp</a>&gt;</code>
+        </p>
+<p>
+          The <code class="literal">concat</code> operation concatenates several separate
+          <code class="literal"><a class="link" href="range.html" title="Compile-time ranges">range</a></code>s
+          or <code class="literal"><a class="link" href="string.html" title="Compile-time strings">string</a></code>s
+          into one as shown in the following pseudocode.
+        </p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><a class="link" href="none.html" title="none type">none</a><span class="special">,</span> <span class="identifier">none</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">none</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">R</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><a class="link" href="none.html" title="none type">none</a><span class="special">,</span> <span class="identifier">R</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">R</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">,</span> <a class="link" href="none.html" title="none type">none</a><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">R</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="identifier">Char</span> <span class="special">...</span> <span class="identifier">C1</span><span class="special">,</span> <span class="identifier">Char</span> <span class="special">...</span> <span class="identifier">C2</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><a class="link" href="string.html" title="Compile-time strings">basic_string</a><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">C1</span><span class="special">...&gt;,</span> <span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">C2</span><span class="special">...&gt;&gt;</span>
+ <span class="special">=</span> <a class="link" href="string.html" title="Compile-time strings">basic_string</a><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">C1</span><span class="special">...,</span> <span class="identifier">C2</span><span class="special">...&gt;;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">P2</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><a class="link" href="range.html" title="Compile-time ranges">range</a><span class="special">&lt;</span><span class="identifier">P1</span><span class="special">...&gt;,</span> <span class="identifier">range</span><span class="special">&lt;</span><span class="identifier">P2</span><span class="special">...&gt;&gt;</span> <span class="special">=</span> <a class="link" href="range.html" title="Compile-time ranges">range</a><span class="special">&lt;</span><span class="identifier">P1</span><span class="special">...,</span> <span class="identifier">P2</span><span class="special">...&gt;;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">R2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">Rn</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">concat</span><span class="special">&lt;</span><span class="identifier">R1</span><span class="special">,</span> <span class="identifier">R2</span><span class="special">,</span> <span class="identifier">Rn</span><span class="special">...&gt;</span> <span class="special">=</span> <span class="identifier">concat</span><span class="special">&lt;</span><span class="identifier">concat</span><span class="special">&lt;</span><span class="identifier">R1</span><span class="special">,</span> <span class="identifier">R2</span><span class="special">&gt;,</span> <span class="identifier">Rn</span><span class="special">...&gt;;</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="equal.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="push_back.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
