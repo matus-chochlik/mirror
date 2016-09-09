@@ -39,11 +39,15 @@ library.
 
 [include quickref/equal.qbk]
 [include quickref/concat.qbk]
+[include quickref/pop_front.qbk]
 [include quickref/push_back.qbk]
 
 [include quickref/is_empty.qbk]
 [include quickref/get_size.qbk]
 [include quickref/get_element.qbk]
 [include quickref/unpack.qbk]
+
+[include quickref/get_base_name.qbk]
+[include quickref/get_scope.qbk]
 
 [include quickref/operator.qbk]

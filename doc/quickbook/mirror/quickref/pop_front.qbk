@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=======================================]
+[section:pop_front operation [^pop_front]]
+[/=======================================]
+
+[header pop_front]
+
+The [^pop_front] operation removes a single type from the front of a [^__range]
+or a single character from the front of a [^__string] as shown in the following
+pseudocode.
+
+[import pop_front.cpp]
+
+[mirror_op_pop_front]
+
+[endsect]
