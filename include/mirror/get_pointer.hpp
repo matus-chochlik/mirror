@@ -1,6 +1,6 @@
 /**
- * @file mirror/get_constant.hpp
- * @brief Implementation of `get_constant` operation
+ * @file mirror/get_pointer.hpp
+ * @brief Implementation of `get_pointer` operation
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef MIRROR_GET_CONSTANT_1105240825_HPP
-#define MIRROR_GET_CONSTANT_1105240825_HPP
+#ifndef MIRROR_GET_POINTER_1105240825_HPP
+#define MIRROR_GET_POINTER_1105240825_HPP
 
 #include <reflexpr>
 #include "metaobject.hpp"
@@ -20,25 +20,25 @@ namespace mirror {
 namespace _aux {
 
 template <typename X>
-struct op_get_constant;
+struct op_get_pointer;
 
 template <typename MO>
-struct op_get_constant<metaobject<MO>>
+struct op_get_pointer<metaobject<MO>>
  : lazy_conditional_c<
-	std::meta::Constant<MO>,
-	std::meta::get_constant<MO>,
+	std::meta::Variable<MO>,
+	std::meta::get_pointer<MO>,
 	none
 > { };
 
 template <>
-struct op_get_constant<none>
+struct op_get_pointer<none>
  : none
 { };
 
 } // namespace _aux
 
 template <typename X>
-using get_constant = eval<_aux::op_get_constant<X>>;
+using get_pointer = eval<_aux::op_get_pointer<X>>;
 
 } // namespace mirror
 
