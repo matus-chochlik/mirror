@@ -14,4 +14,11 @@ metaobjects.
 
 [reflexpr_header_concepts_Variable]
 
+[heading:ops Operations]
+[/---------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Variable]
+concept:
+
+[reflexpr_header_operations_Variable]
+
 [endsect]

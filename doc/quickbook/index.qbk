@@ -201,33 +201,33 @@ reflexpr.quickref.c_Inheritance.ops std::meta::get_base_class_m]]
 
 [/basic metaobject operations access]
 [def __std_meta_is_private [link
-reflexpr.quickref.other_ops.ops std::meta::is_private]]
+reflexpr.quickref.other_ops std::meta::is_private]]
 [def __std_meta_is_private_v [link
-reflexpr.quickref.other_ops.ops std::meta::is_private_v]]
+reflexpr.quickref.other_ops std::meta::is_private_v]]
 [def __std_meta_is_protected [link
-reflexpr.quickref.other_ops.ops std::meta::is_protected]]
+reflexpr.quickref.other_ops std::meta::is_protected]]
 [def __std_meta_is_protected_v [link
-reflexpr.quickref.other_ops.ops std::meta::is_protected_v]]
+reflexpr.quickref.other_ops std::meta::is_protected_v]]
 [def __std_meta_is_public [link
-reflexpr.quickref.other_ops.ops std::meta::is_public]]
+reflexpr.quickref.other_ops std::meta::is_public]]
 [def __std_meta_is_public_v [link
-reflexpr.quickref.other_ops.ops std::meta::is_public_v]]
+reflexpr.quickref.other_ops std::meta::is_public_v]]
 [def __std_meta_get_access_specifier [link
-reflexpr.quickref.other_ops.ops std::meta::get_access_specifier]]
+reflexpr.quickref.other_ops std::meta::get_access_specifier]]
 [def __std_meta_get_access_specifier_m [link
-reflexpr.quickref.other_ops.ops std::meta::get_access_specifier_m]]
+reflexpr.quickref.other_ops std::meta::get_access_specifier_m]]
 
 [/basic metaobject operations virtual]
 [def __std_meta_is_virtual [link
-reflexpr.quickref.other_ops.ops std::meta::is_virtual]]
+reflexpr.quickref.other_ops std::meta::is_virtual]]
 [def __std_meta_is_virtual_v [link
-reflexpr.quickref.other_ops.ops std::meta::is_virtual_v]]
+reflexpr.quickref.other_ops std::meta::is_virtual_v]]
 
 [/basic metaobject operations static]
 [def __std_meta_is_static [link
-reflexpr.quickref.other_ops.ops std::meta::is_static]]
+reflexpr.quickref.other_ops std::meta::is_static]]
 [def __std_meta_is_static_v [link
-reflexpr.quickref.other_ops.ops std::meta::is_static_v]]
+reflexpr.quickref.other_ops std::meta::is_static_v]]
 
 
 [/--------]

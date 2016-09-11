@@ -505,12 +505,33 @@ using get_scope_m
  = typename get_scope<T>::type;
 //]
 
+//[reflexpr_header_operations_Variable
+
+// get_pointer
+template <__Variable T>
+struct get_pointer
+ : integral_constant<__unspecified /*<
+The type of the pointer to the variable reflected by [^T].
+>*/, __implementation_defined /*<
+If [^T] is also a [^__meta::__RecordMember] and [^__meta_is_static] returns
+[^false], i.e. if [^T] is reflecting a non-static class data member, then
+this is a class member pointer, otherwise it is a ["plain] pointer to
+the reflected variable.
+>*/>
+{ };
+
+template <__Variable T>
+constexpr auto get_pointer_v<T> = get_pointer<T>::value;
+//]
+
 //[reflexpr_header_operations_Constant
 
 // get_constant
 template <__Constant T>
 struct get_constant
- : integral_constant<__unspecified, __implementation_defined /*<
+ : integral_constant<__unspecified /*<
+The type of the constant value reflected by [^T].
+>*/, __implementation_defined /*<
 The constant base-level value reflected by [^T].
 >*/>
 { };
