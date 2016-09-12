@@ -34,18 +34,26 @@
 <pre class="programlisting"><span class="comment">// get_constant</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Constant.html" title="Constant">Constant</a> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">get_constant</span>
- <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="emphasis"><em>unspecified</em></span><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.c_Constant.c0" href="c_Constant.html#reflexpr.quickref.c_Constant.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">&gt;</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="emphasis"><em>unspecified</em></span> <a class="co" name="reflexpr.quickref.c_Constant.c0" href="c_Constant.html#reflexpr.quickref.c_Constant.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.c_Constant.c2" href="c_Constant.html#reflexpr.quickref.c_Constant.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a><span class="special">&gt;</span>
 <span class="special">{</span> <span class="special">};</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Constant.html" title="Constant">Constant</a> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_constant_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">get_constant</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
 </pre>
-<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
 <td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Constant.c1"></a><a href="#reflexpr.quickref.c_Constant.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The type of the constant value reflected by <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Constant.c3"></a><a href="#reflexpr.quickref.c_Constant.c2"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
               The constant base-level value reflected by <code class="literal">T</code>.
             </p></td>
-</tr></table></div>
+</tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

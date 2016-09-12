@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>operation get_source_file</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;5.&#160;Quick reference">
+<link rel="prev" href="unpack.html" title="operation unpack">
+<link rel="next" href="get_source_line.html" title="operation get_source_line">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="unpack.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="get_source_line.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="mirror.quickref.get_source_file"></a><a class="link" href="get_source_file.html" title="operation get_source_file">operation <code class="literal">get_source_file</code></a>
+</h2></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/mirror/get_source_file.hpp" target="_top">mirror/get_source_file.hpp</a>&gt;</code>
+        </p>
+<p>
+          The <code class="literal">get_source_file</code> operation returns a compile-time
+          <code class="literal"><a class="link" href="string.html" title="Compile-time strings">string</a></code>
+          containing the <a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">path to the source
+          file</a> where the base-level entity reflected by the argument was declared,
+          as shown in the following pseudocode.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">__std_meta_object</span> <span class="identifier">O</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_source_file</span><span class="special">&lt;</span><a class="link" href="metaobject.html" title="Metaobjects">metaobject</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;</span> <span class="special">=</span> <a class="link" href="string.html" title="Compile-time strings">string</a><span class="special">&lt;</span><span class="emphasis"><em>unspecified</em></span> <a class="co" name="mirror.quickref.get_source_file.c0" href="get_source_file.html#mirror.quickref.get_source_file.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">&gt;;</span>
+
+<span class="keyword">using</span> <span class="identifier">get_source_file</span><span class="special">&lt;</span><a class="link" href="none.html" title="none type">none</a><span class="special">&gt;</span> <span class="special">=</span> <a class="link" href="string.html" title="Compile-time strings">empty_string</a><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="mirror.quickref.get_source_file.c1"></a><a href="#mirror.quickref.get_source_file.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The characters of the path to the source file where the base-level
+              entity reflected by the argument was declared as returned by <code class="literal"><a class="link" href="../../reflexpr/quickref/c_Object.html#reflexpr.quickref.c_Object.ops">std::meta::get_source_file</a></code>.
+              If the base-level entity does not have an in-source declaration (for
+              example a specifier, native type, etc.) then an empty string is returned.
+            </p></td>
+</tr></table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="unpack.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="get_source_line.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

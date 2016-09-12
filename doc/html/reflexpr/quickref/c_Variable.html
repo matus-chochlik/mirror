@@ -27,6 +27,40 @@
  <span class="special">&amp;&amp;</span> <a class="link" href="c_ScopeMember.html" title="ScopeMember">ScopeMember</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
  <span class="special">&amp;&amp;</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
 </pre>
+<h4>
+<a name="reflexpr.quickref.c_Variable.h0"></a>
+          <span class="phrase"><a name="reflexpr.quickref.c_Variable.ops"></a></span><a class="link" href="c_Variable.html#reflexpr.quickref.c_Variable.ops">Operations</a>
+        </h4>
+<p>
+          Operations applicable to metaobjects conforming to the <code class="literal">meta::<a class="link" href="c_Variable.html" title="Variable">Variable</a></code> concept:
+        </p>
+<pre class="programlisting"><span class="comment">// get_pointer</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Variable.html" title="Variable">Variable</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_pointer</span>
+ <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="emphasis"><em>unspecified</em></span> <a class="co" name="reflexpr.quickref.c_Variable.c0" href="c_Variable.html#reflexpr.quickref.c_Variable.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">,</span> <span class="emphasis"><em>implementation-defined</em></span> <a class="co" name="reflexpr.quickref.c_Variable.c2" href="c_Variable.html#reflexpr.quickref.c_Variable.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a><span class="special">&gt;</span>
+<span class="special">{</span> <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Variable.html" title="Variable">Variable</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="identifier">get_pointer_v</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">=</span> <span class="identifier">get_pointer</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Variable.c1"></a><a href="#reflexpr.quickref.c_Variable.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              The type of the pointer to the variable reflected by <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Variable.c3"></a><a href="#reflexpr.quickref.c_Variable.c2"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              If <code class="literal">T</code> is also a <code class="literal"><a class="link" href="ns_meta.html" title="namespace meta">meta</a>::<a class="link" href="c_RecordMember.html" title="RecordMember">RecordMember</a></code>
+              and <code class="literal"><a class="link" href="other_ops.html" title="Other metaobject operations">meta::is_static</a></code>
+              returns <code class="literal">false</code>, i.e. if <code class="literal">T</code> is reflecting
+              a non-static class data member, then this is a class member pointer,
+              otherwise it is a <span class="quote">&#8220;<span class="quote">plain</span>&#8221;</span> pointer to the reflected variable.
+            </p></td>
+</tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
