@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=============================================================]
+[section:get_access_specifier operation [^get_access_specifier]]
+[/=============================================================]
+
+[header get_access_specifier]
+
+The [^get_access_specifier] operation returns a [^__metaobject] reflecting
+the access specifier of a class member or an inherited base class.
+
+[import get_access_specifier.cpp]
+
+[mirror_op_get_access_specifier]
+
+[endsect]

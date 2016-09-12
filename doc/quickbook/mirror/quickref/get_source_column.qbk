@@ -1,0 +1,21 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=======================================================]
+[section:get_source_column operation [^get_source_column]]
+[/=======================================================]
+
+[header get_source_column]
+
+The [^get_source_column] operation returns a compile-time [^__int_const] with
+the [link reflexpr.quickref.c_Object column number in the source file] where
+the base-level entity reflected by the argument is declared,
+as shown in the following pseudocode.
+
+[import get_source_column.cpp]
+
+[mirror_op_get_source_column]
+
+[endsect]

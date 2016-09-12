@@ -1,0 +1,24 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===========================================]
+[section:get_aliased operation [^get_aliased]]
+[/===========================================]
+
+[header get_aliased]
+
+The [^get_aliased] operation returns a [^__metaobject] reflecting
+the base-level entity, aliased by the alias reflected by the argument,
+as shown on the following pseudocode.
+
+[import get_aliased.cpp]
+
+[mirror_op_get_aliased]
+
+[note If the argument is not a wrapped [^__std_meta_Alias] then
+the result is is [^__none].
+]
+
+[endsect]

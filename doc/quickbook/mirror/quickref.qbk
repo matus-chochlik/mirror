@@ -47,7 +47,18 @@ library.
 [include quickref/get_element.qbk]
 [include quickref/unpack.qbk]
 
+[include quickref/get_source_file.qbk]
+[include quickref/get_source_line.qbk]
+[include quickref/get_source_column.qbk]
 [include quickref/get_base_name.qbk]
+[include quickref/get_aliased.qbk]
+[include quickref/get_enumerators.qbk]
+[include quickref/get_member_types.qbk]
+[include quickref/get_data_members.qbk]
+[include quickref/get_base_classes.qbk]
 [include quickref/get_scope.qbk]
+[include quickref/get_constant.qbk]
+[include quickref/get_base_class.qbk]
+[include quickref/get_access_specifier.qbk]
 
 [include quickref/operator.qbk]

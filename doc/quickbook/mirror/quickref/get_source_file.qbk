@@ -1,0 +1,21 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================================]
+[section:get_source_file operation [^get_source_file]]
+[/===================================================]
+
+[header get_source_file]
+
+The [^get_source_file] operation returns a compile-time [^__string] containing
+the [link reflexpr.quickref.c_Object path to the source file] where the
+base-level entity reflected by the argument was declared,
+as shown in the following pseudocode.
+
+[import get_source_file.cpp]
+
+[mirror_op_get_source_file]
+
+[endsect]
