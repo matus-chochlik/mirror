@@ -6,7 +6,7 @@
  */
 //[mirror_op_get_access_specifier
 template <__std_meta_Inheritance I>
-using get_access_specifier<__metaobject<N>>
+using get_access_specifier<__metaobject<I>>
  = __metaobject<__std_meta_get_access_specifier<I>>;
 
 template <__std_meta_RecordMember M>

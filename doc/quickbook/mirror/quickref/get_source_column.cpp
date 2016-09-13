@@ -5,7 +5,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 //[mirror_op_get_source_column
-template <__std_meta_object O>
+template <__std_meta_Object O>
 using get_source_column<__metaobject<O>> = __unsigned_<__unspecified /*<
 The column number in the source file where the base-level entity
 reflected by the argument was declared as returned by

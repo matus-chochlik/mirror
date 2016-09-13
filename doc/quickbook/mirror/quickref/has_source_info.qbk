@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================================]
+[section:has_source_info operation [^has_source_info]]
+[/===================================================]
+
+[header has_source_info]
+
+The [^has_source_info] operation returns a compile-time [^__bool_] indicating
+whether the argument has source location information available,
+as shown in the following pseudocode.
+
+[import has_source_info.cpp]
+
+[mirror_op_has_source_info]
+
+[endsect]

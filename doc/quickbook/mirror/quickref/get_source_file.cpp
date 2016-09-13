@@ -5,7 +5,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 //[mirror_op_get_source_file
-template <__std_meta_object O>
+template <__std_meta_Object O>
 using get_source_file<__metaobject<O>> = __string<__unspecified /*<
 The characters of the path to the source file where the base-level entity
 reflected by the argument was declared as returned by

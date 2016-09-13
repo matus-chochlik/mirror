@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:is_union operation [^is_union]]
+[/=====================================]
+
+[header is_union]
+
+The [^is_union] operation indicates if the passed argument is a metaobject
+reflecting a [^union], as shown in the following pseudocode.
+
+[import is_union.cpp]
+
+[mirror_op_is_union]
+
+[endsect]
