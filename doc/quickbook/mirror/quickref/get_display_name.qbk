@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================================]
+[section:get_display_name operation [^get_display_name]]
+[/=====================================================]
+
+[header get_display_name]
+
+The [^get_display_name] operation return a compile-time [^__string] containing
+the [link reflexpr.quickref.c_Named display name] of the argument
+as shown in the following pseudocode.
+
+[import get_display_name.cpp]
+
+[mirror_op_get_display_name]
+
+[endsect]

@@ -51,6 +51,8 @@ library.
 [include quickref/get_source_line.qbk]
 [include quickref/get_source_column.qbk]
 [include quickref/get_base_name.qbk]
+[include quickref/get_full_name.qbk]
+[include quickref/get_display_name.qbk]
 [include quickref/get_aliased.qbk]
 [include quickref/get_enumerators.qbk]
 [include quickref/get_member_types.qbk]
@@ -58,6 +60,7 @@ library.
 [include quickref/get_base_classes.qbk]
 [include quickref/get_scope.qbk]
 [include quickref/get_constant.qbk]
+[include quickref/get_pointer.qbk]
 [include quickref/get_base_class.qbk]
 [include quickref/get_access_specifier.qbk]
 

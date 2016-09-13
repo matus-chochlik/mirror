@@ -55,6 +55,8 @@
 [def __get_source_line [link mirror.quickref.get_source_line get_source_line]]
 [def __get_source_column [link mirror.quickref.get_source_column get_source_column]]
 [def __get_base_name [link mirror.quickref.get_base_name get_base_name]]
+[def __get_full_name [link mirror.quickref.get_full_name get_full_name]]
+[def __get_display_name [link mirror.quickref.get_display_name get_display_name]]
 [def __get_aliased [link mirror.quickref.get_aliased get_aliased]]
 [def __get_enumerators [link mirror.quickref.get_enumerators get_enumerators]]
 [def __get_data_members [link mirror.quickref.get_data_members get_data_members]]
@@ -62,6 +64,7 @@
 [def __get_base_classes [link mirror.quickref.get_base_classes get_base_classes]]
 [def __get_scope [link mirror.quickref.get_scope get_scope]]
 [def __get_constant [link mirror.quickref.get_constant get_constant]]
+[def __get_pointer [link mirror.quickref.get_pointer get_pointer]]
 [def __get_base_class [link mirror.quickref.get_base_class get_base_class]]
 [def __get_access_specifier [link mirror.quickref.get_access_specifier get_access_specifier]]
 
