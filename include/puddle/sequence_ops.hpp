@@ -16,64 +16,36 @@
 #include <mirror/get_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/get_element.hpp>
-#include <mirror/enable_if.hpp>
-#include <mirror/traits.hpp>
+#include <puddle/enable_if.hpp>
 
 namespace puddle {
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject_sequence<X>,
-		mirror::is_string<X>,
-		mirror::is_range<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_any_opt_sequence<X>>
+static constexpr inline
 auto is_empty(X)
 noexcept
 {
 	return mirror::is_empty<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_string<X>,
-		mirror::is_range<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_eager_sequence<X>>
+static constexpr inline
 auto get_empty(X)
 noexcept
 {
 	return mirror::get_empty<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject_sequence<X>,
-		mirror::is_string<X>,
-		mirror::is_range<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_any_opt_sequence<X>>
+static constexpr inline
 auto get_size(X)
 noexcept
 {
 	return mirror::get_size<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject_sequence<X>,
-		mirror::is_string<X>,
-		mirror::is_range<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_any_opt_sequence<X>>
+static constexpr inline
 auto size(X)
 noexcept
 {
@@ -82,14 +54,8 @@ noexcept
 
 template <
 	typename X, typename I,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject_sequence<X>,
-		mirror::is_string<X>,
-		mirror::is_range<X>,
-		mirror::is_none<X>
-	>, typename = mirror::enable_if_any<
-		mirror::is_int_const<I>
-	>
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_int_const<I>
 > static constexpr inline
 auto get_element(X, I)
 noexcept
@@ -97,13 +63,8 @@ noexcept
 	return mirror::get_element<X, I>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject_sequence<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject_sequence<X>>
+static constexpr inline
 auto unpack(X)
 noexcept
 {

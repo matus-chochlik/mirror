@@ -1,5 +1,5 @@
 /**
- * @file puddle/meta_constant_ops.hpp
+ * @file puddle/meta_variable_ops.hpp
  * @brief Implementation of the metaobject operation wrappers
  *
  * Copyright Matus Chochlik.
@@ -8,20 +8,20 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef PUDDLE_META_CONSTANT_OPS_1105240825_HPP
-#define PUDDLE_META_CONSTANT_OPS_1105240825_HPP
+#ifndef PUDDLE_META_VARIABLE_OPS_1105240825_HPP
+#define PUDDLE_META_VARIABLE_OPS_1105240825_HPP
 
-#include <mirror/get_constant.hpp>
+#include <mirror/get_pointer.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
 
 template <typename X, typename = enable_if_opt_metaobject<X>>
 static constexpr inline
-auto get_constant(X)
+auto get_pointer(X)
 noexcept
 {
-	return mirror::get_constant<X>{};
+	return mirror::get_pointer<X>{};
 }
 
 } // namespace puddle

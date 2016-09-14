@@ -12,18 +12,12 @@
 #define PUDDLE_META_TYPED_OPS_1105240825_HPP
 
 #include <mirror/get_type.hpp>
-#include <mirror/enable_if.hpp>
-#include <mirror/traits.hpp>
+#include <puddle/enable_if.hpp>
 
 namespace puddle {
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_type(X)
 noexcept
 {

@@ -5,7 +5,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 //[mirror_op_is_private
-template <__std_meta_ClassMember M>
+template <__std_meta_RecordMember M>
 using is_private<__metaobject<M>>
  = __bool_<__std_meta_is_private_v<M>>;
 

@@ -14,44 +14,28 @@
 #include <mirror/is_enum.hpp>
 #include <mirror/is_scoped_enum.hpp>
 #include <mirror/get_enumerators.hpp>
-#include <mirror/enable_if.hpp>
-#include <mirror/traits.hpp>
+#include <puddle/enable_if.hpp>
 
 namespace puddle {
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_enum(X)
 noexcept
 {
 	return mirror::is_enum<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_scoped_enum(X)
 noexcept
 {
 	return mirror::is_scoped_enum<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_enumerators(X)
 noexcept
 {

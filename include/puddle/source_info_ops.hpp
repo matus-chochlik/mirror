@@ -15,8 +15,7 @@
 #include <mirror/get_source_file.hpp>
 #include <mirror/get_source_line.hpp>
 #include <mirror/get_source_column.hpp>
-#include <mirror/enable_if.hpp>
-#include <mirror/traits.hpp>
+#include <puddle/enable_if.hpp>
 
 namespace puddle {
 
@@ -28,39 +27,24 @@ noexcept
 	return mirror::has_source_info<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_source_file(X)
 noexcept
 {
 	return mirror::get_source_file<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_source_line(X)
 noexcept
 {
 	return mirror::get_source_line<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_source_column(X)
 noexcept
 {

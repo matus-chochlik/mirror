@@ -18,96 +18,60 @@
 #include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_member_types.hpp>
-#include <mirror/enable_if.hpp>
-#include <mirror/traits.hpp>
+#include <puddle/enable_if.hpp>
 
 namespace puddle {
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_base_class(X)
 noexcept
 {
 	return mirror::get_base_class<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_class(X)
 noexcept
 {
 	return mirror::is_class<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_struct(X)
 noexcept
 {
 	return mirror::is_struct<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_union(X)
 noexcept
 {
 	return mirror::is_union<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_base_classes(X)
 noexcept
 {
 	return mirror::get_base_classes<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_data_members(X)
 noexcept
 {
 	return mirror::get_data_members<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_member_types(X)
 noexcept
 {

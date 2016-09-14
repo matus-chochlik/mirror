@@ -12,60 +12,66 @@
 #define PUDDLE_SPECIFIER_OPS_1105240825_HPP
 
 #include <mirror/get_elaborated_type_specifier.hpp>
+#include <mirror/is_public.hpp>
+#include <mirror/is_protected.hpp>
+#include <mirror/is_private.hpp>
 #include <mirror/get_access_specifier.hpp>
 #include <mirror/is_static.hpp>
 #include <mirror/is_virtual.hpp>
-#include <mirror/enable_if.hpp>
-#include <mirror/traits.hpp>
+#include <puddle/enable_if.hpp>
 
 namespace puddle {
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_elaborated_type_specifier(X)
 noexcept
 {
 	return mirror::get_elaborated_type_specifier<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
+auto is_public(X)
+noexcept
+{
+	return mirror::is_public<X>{};
+}
+
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
+auto is_protected(X)
+noexcept
+{
+	return mirror::is_protected<X>{};
+}
+
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
+auto is_private(X)
+noexcept
+{
+	return mirror::is_private<X>{};
+}
+
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto get_access_specifier(X)
 noexcept
 {
 	return mirror::get_access_specifier<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_static(X)
 noexcept
 {
 	return mirror::is_static<X>{};
 }
 
-template <
-	typename X,
-	typename = mirror::enable_if_any<
-		mirror::is_metaobject<X>,
-		mirror::is_none<X>
-	>
-> static constexpr inline
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_virtual(X)
 noexcept
 {
