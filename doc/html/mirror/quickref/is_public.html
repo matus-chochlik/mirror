@@ -25,7 +25,7 @@
           entity reflected by the argument has <code class="literal">public</code> access,
           as shown in the following pseudocode.
         </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">__std_meta_ClassMember</span> <span class="identifier">M</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_RecordMember.html" title="RecordMember">std::meta::RecordMember</a> <span class="identifier">M</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">is_public</span><span class="special">&lt;</span><a class="link" href="metaobject.html" title="Metaobjects">metaobject</a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;&gt;</span>
  <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">bool_</a><span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/other_ops.html" title="Other metaobject operations">std::meta::is_public_v</a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;&gt;;</span>
 

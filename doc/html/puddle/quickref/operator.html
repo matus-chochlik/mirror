@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>operator PUDDLED</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;7.&#160;Quick reference">
+<link rel="prev" href="metaobject.html" title="Metaobjects">
+<link rel="next" href="../../lagoon.html" title="Part&#160;IV.&#160;Lagoon run-time reflection library">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="metaobject.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../lagoon.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="puddle.quickref.operator"></a><a class="link" href="operator.html" title="operator PUDDLED">operator <code class="literal">PUDDLED</code></a>
+</h2></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/puddle/reflection.hpp" target="_top">puddle/reflection.hpp</a>&gt;</code>
+        </p>
+<p>
+          The <a class="link" href="../intro.html#puddle.intro.metaobjects" title="Metaobjects">metaobjects</a> reflecting
+          various program declarations and other base-level entities can be obtained
+          by invoking the <code class="literal">PUDDLED</code> operator.
+        </p>
+<p>
+          The result of the <code class="literal">PUDDLED</code> operator is an constexpr instance
+          of a specialization of the the <code class="literal"><a class="link" href="../../mirror/quickref/metaobject.html" title="Metaobjects">mirror::metaobject</a></code>
+          template wrapping a <a class="link" href="../../reflexpr/intro.html#reflexpr.intro.metaobjects" title="Metaobjects">basic metaobject
+          type</a>:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">PUDDLED</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span> <a class="link" href="../../mirror/quickref/operator.html" title="operator MIRRORED">MIRRORED</a><span class="special">(</span><span class="identifier">X</span><span class="special">){}</span>
+</pre>
+<p>
+          The <code class="literal">PUDDLED</code> operator takes the same arguments as the
+          <code class="literal"><a class="link" href="../../reflexpr/quickref/operator.html" title="reflexpr operator">reflexpr</a></code>
+          and <code class="literal"><a class="link" href="../../mirror/quickref/operator.html" title="operator MIRRORED">MIRRORED</a></code>
+          operators.
+        </p>
+<p>
+          For example:
+        </p>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">meta_int</span> <span class="special">=</span> <a class="link" href="operator.html" title="operator PUDDLED">PUDDLED</a><span class="special">(</span><span class="keyword">int</span><span class="special">);</span>
+<span class="keyword">auto</span> <span class="identifier">meta_std</span> <span class="special">=</span> <span class="identifier">PUDDLED</span><span class="special">(</span><span class="identifier">std</span><span class="special">);</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="metaobject.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../lagoon.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
