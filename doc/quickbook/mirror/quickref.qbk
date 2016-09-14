@@ -70,7 +70,12 @@ library.
 [include quickref/get_scope.qbk]
 [include quickref/get_constant.qbk]
 [include quickref/get_pointer.qbk]
+[include quickref/is_static.qbk]
 [include quickref/get_base_class.qbk]
 [include quickref/get_access_specifier.qbk]
+[include quickref/is_public.qbk]
+[include quickref/is_protected.qbk]
+[include quickref/is_private.qbk]
+[include quickref/is_virtual.qbk]
 
 [include quickref/operator.qbk]

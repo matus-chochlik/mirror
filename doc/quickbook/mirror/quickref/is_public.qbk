@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=======================================]
+[section:is_public operation [^is_public]]
+[/=======================================]
+
+[header is_public]
+
+The [^is_public] operation indicates if the base-level entity reflected
+by the argument has [^public] access, as shown in the following pseudocode.
+
+[import is_public.cpp]
+
+[mirror_op_is_public]
+
+[endsect]

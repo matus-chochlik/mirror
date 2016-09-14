@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=========================================]
+[section:is_virtual operation [^is_virtual]]
+[/=========================================]
+
+[header is_virtual]
+
+The [^is_virtual] operation indicates if the base-level entity reflected
+by the argument was declared with the [^virtual] specifier,
+as shown in the following pseudocode.
+
+[import is_virtual.cpp]
+
+[mirror_op_is_virtual]
+
+[endsect]

@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=============================================]
+[section:is_protected operation [^is_protected]]
+[/=============================================]
+
+[header is_protected]
+
+The [^is_protected] operation indicates if the base-level entity reflected
+by the argument has [^protected] access, as shown in the following pseudocode.
+
+[import is_protected.cpp]
+
+[mirror_op_is_protected]
+
+[endsect]
