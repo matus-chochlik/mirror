@@ -34,6 +34,7 @@
 [def __reflexpr [link reflexpr.quickref.operator reflexpr]]
 
 [def __MIRRORED [link mirror.quickref.operator MIRRORED]]
+[def __PUDDLED [link puddle.quickref.operator PUDDLED]]
 
 [def __std_meta [link reflexpr.quickref.ns_meta std::meta]]
 
@@ -229,6 +230,9 @@ reflexpr.quickref.other_ops std::meta::is_static]]
 [def __std_meta_is_static_v [link
 reflexpr.quickref.other_ops std::meta::is_static_v]]
 
+[/Mirror]
+[def __mirror_metaobject [link mirror.quickref.metaobject mirror::metaobject]]
+[def __mirror_metaobject_sequence [link mirror.quickref.metaobject mirror::metaobject_sequence]]
 
 [/--------]
 [/Chapters]

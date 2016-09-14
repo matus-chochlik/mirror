@@ -28,4 +28,4 @@
 TODO
 
 [include puddle/intro.qbk]
-[/include puddle/quickref.qbk]
+[include puddle/quickref.qbk]

@@ -4,11 +4,12 @@
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
-//[mirrored_operator_definition
-#define MIRRORED(X) __metaobject<__reflexpr(X)>
+//[puddled_operator_definition
+#define PUDDLED(X) __MIRRORED(X){}
 //]
-//[mirrored_operator_example_1
-using meta_int = __MIRRORED(int);
-using meta_std = MIRRORED(std);
+
+//[puddled_operator_example_1
+auto meta_int = __PUDDLED(int);
+auto meta_std = PUDDLED(std);
 //]
 

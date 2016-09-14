@@ -8,6 +8,7 @@
 [/====================================]
 
 [header reflection]
+[import operator.cpp]
 
 The [link mirror.intro.metaobjects metaobjects] reflecting various program
 declarations and other base-level entities can be obtained 
@@ -15,13 +16,14 @@ by invoking the [^MIRRORED] operator.
 
 The result of the [^MIRRORED] operator is an instantiation of
 the [^__metaobject] template wrapping a [link reflexpr.intro.metaobjects basic
-metaobject type].
+metaobject type]:
 
-The [^MIRRORED] operator takes the same arguments as the [^reflexpr] operator.
+[mirrored_operator_definition]
+
+The [^MIRRORED] operator takes the same arguments as the [^__reflexpr] operator.
 
 For example:
 
-[import operator.cpp]
 [mirrored_operator_example_1]
 
 [endsect]

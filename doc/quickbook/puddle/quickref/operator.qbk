@@ -1,0 +1,30 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================]
+[section:operator operator [^PUDDLED]]
+[/===================================]
+
+[header reflection]
+[import operator.cpp]
+
+The [link puddle.intro.metaobjects metaobjects] reflecting various program
+declarations and other base-level entities can be obtained 
+by invoking the [^PUDDLED] operator.
+
+The result of the [^PUDDLED] operator is an constexpr instance of
+a specialization of the the [^__mirror_metaobject] template wrapping
+a [link reflexpr.intro.metaobjects basic metaobject type]:
+
+[puddled_operator_definition]
+
+The [^PUDDLED] operator takes the same arguments as the [^__reflexpr] and
+[^__MIRRORED] operators.
+
+For example:
+
+[puddled_operator_example_1]
+
+[endsect]
