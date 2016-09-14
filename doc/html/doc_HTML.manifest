@@ -74,8 +74,13 @@ mirror/quickref/get_base_classes.html
 mirror/quickref/get_scope.html
 mirror/quickref/get_constant.html
 mirror/quickref/get_pointer.html
+mirror/quickref/is_static.html
 mirror/quickref/get_base_class.html
 mirror/quickref/get_access_specifier.html
+mirror/quickref/is_public.html
+mirror/quickref/is_protected.html
+mirror/quickref/is_private.html
+mirror/quickref/is_virtual.html
 mirror/quickref/operator.html
 puddle.html
 puddle/intro.html
