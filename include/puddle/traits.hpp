@@ -81,6 +81,14 @@ noexcept
 
 template <typename X>
 static constexpr inline
+auto reflects_tag_type(X)
+noexcept
+{
+	return mirror::reflects_tag_type<X>{};
+}
+
+template <typename X>
+static constexpr inline
 auto reflects_alias(X)
 noexcept
 {
