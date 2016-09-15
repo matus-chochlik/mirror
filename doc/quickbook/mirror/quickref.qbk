@@ -31,6 +31,8 @@ library.
 [include quickref/range.qbk]
 [include quickref/none.qbk]
 
+[include quickref/traits.qbk]
+
 [include quickref/identity.qbk]
 
 [include quickref/value.qbk]

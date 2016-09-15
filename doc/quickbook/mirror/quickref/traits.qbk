@@ -1,0 +1,103 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=============================]
+[section:traits trait templates]
+[/=============================]
+
+[header traits]
+
+The ['Mirror] library implements a set of traits which allow to classify
+various types and metaobjects, commonly used in the library,
+as shown in the following pseudocode.
+
+[import traits.cpp]
+
+[heading:is_int_const [^is_int_const]]
+[/-----------------------------------]
+
+[mirror_tr_is_int_const]
+
+[heading:is_string [^is_string]]
+[/-----------------------------]
+
+[mirror_tr_is_string]
+
+[heading:is_range [^is_range]]
+[/---------------------------]
+
+[mirror_tr_is_range]
+
+[heading:is_none [^is_none]]
+[/-------------------------]
+
+[mirror_tr_is_none]
+
+[heading:is_metaobject [^is_metaobject]]
+[/-------------------------------------]
+
+[mirror_tr_is_metaobject]
+
+[heading:is_metaobject_sequence [^is_metaobject_sequence]]
+[/-------------------------------------------------------]
+
+[mirror_tr_is_metaobject_sequence]
+
+[heading:reflects_alias [^reflects_alias]]
+[/---------------------------------------]
+
+[mirror_tr_reflects_alias]
+
+[heading:reflects_global_scope [^reflects_global_scope]]
+[/-----------------------------------------------------]
+
+[mirror_tr_reflects_global_scope]
+
+[heading:reflects_namespace [^reflects_namespace]]
+[/-----------------------------------------------]
+
+[mirror_tr_reflects_namespace]
+
+[heading:reflects_type [^reflects_type]]
+[/-------------------------------------]
+
+[mirror_tr_reflects_type]
+
+[heading:reflects_tag_type [^reflects_tag_type]]
+[/---------------------------------------------]
+
+[mirror_tr_reflects_tag_type]
+
+[heading:reflects_enum_member [^reflects_enum_member]]
+[/---------------------------------------------------]
+
+[mirror_tr_reflects_enum_member]
+
+[heading:reflects_record_member [^reflects_record_member]]
+[/-------------------------------------------------------]
+
+[mirror_tr_reflects_record_member]
+
+[heading:reflects_variable [^reflects_variable]]
+[/---------------------------------------------]
+
+[mirror_tr_reflects_variable]
+
+[heading:reflects_constant [^reflects_constant]]
+[/---------------------------------------------]
+
+[mirror_tr_reflects_constant]
+
+[heading:reflects_specifier [^reflects_specifier]]
+[/-----------------------------------------------]
+
+[mirror_tr_reflects_specifier]
+
+[heading:reflects_inheritance [^reflects_inheritance]]
+[/---------------------------------------------------]
+
+[mirror_tr_reflects_inheritance]
+
+[endsect]

@@ -86,13 +86,13 @@ struct op_is_metaobject_sequence<metaobject_sequence<MOS>>
 { };
 
 template <typename X>
-struct op_reflects_specifier
+struct op_reflects_alias
  : false_
 { };
 
 template <typename MO>
-struct op_reflects_specifier<metaobject<MO>>
- : bool_<std::meta::Specifier<MO>>
+struct op_reflects_alias<metaobject<MO>>
+ : bool_<std::meta::Alias<MO>>
 { };
 
 template <typename X>
@@ -126,13 +126,33 @@ struct op_reflects_type<metaobject<MO>>
 { };
 
 template <typename X>
-struct op_reflects_alias
+struct op_reflects_tag_type
  : false_
 { };
 
 template <typename MO>
-struct op_reflects_alias<metaobject<MO>>
- : bool_<std::meta::Alias<MO>>
+struct op_reflects_tag_type<metaobject<MO>>
+ : bool_<std::meta::TagType<MO>>
+{ };
+
+template <typename X>
+struct op_reflects_enum_member
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_enum_member<metaobject<MO>>
+ : bool_<std::meta::EnumMember<MO>>
+{ };
+
+template <typename X>
+struct op_reflects_record_member
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_record_member<metaobject<MO>>
+ : bool_<std::meta::RecordMember<MO>>
 { };
 
 template <typename X>
@@ -156,23 +176,13 @@ struct op_reflects_constant<metaobject<MO>>
 { };
 
 template <typename X>
-struct op_reflects_enum_member
+struct op_reflects_specifier
  : false_
 { };
 
 template <typename MO>
-struct op_reflects_enum_member<metaobject<MO>>
- : bool_<std::meta::EnumMember<MO>>
-{ };
-
-template <typename X>
-struct op_reflects_record_member
- : false_
-{ };
-
-template <typename MO>
-struct op_reflects_record_member<metaobject<MO>>
- : bool_<std::meta::RecordMember<MO>>
+struct op_reflects_specifier<metaobject<MO>>
+ : bool_<std::meta::Specifier<MO>>
 { };
 
 template <typename X>
@@ -206,7 +216,7 @@ template <typename X>
 using is_metaobject_sequence = eval<_aux::op_is_metaobject_sequence<X>>;
 
 template <typename X>
-using reflects_specifier = eval<_aux::op_reflects_specifier<X>>;
+using reflects_alias = eval<_aux::op_reflects_alias<X>>;
 
 template <typename X>
 using reflects_global_scope = eval<_aux::op_reflects_global_scope<X>>;
@@ -218,7 +228,13 @@ template <typename X>
 using reflects_type = eval<_aux::op_reflects_type<X>>;
 
 template <typename X>
-using reflects_alias = eval<_aux::op_reflects_alias<X>>;
+using reflects_tag_type = eval<_aux::op_reflects_tag_type<X>>;
+
+template <typename X>
+using reflects_enum_member = eval<_aux::op_reflects_enum_member<X>>;
+
+template <typename X>
+using reflects_record_member = eval<_aux::op_reflects_record_member<X>>;
 
 template <typename X>
 using reflects_variable = eval<_aux::op_reflects_variable<X>>;
@@ -227,10 +243,7 @@ template <typename X>
 using reflects_constant = eval<_aux::op_reflects_constant<X>>;
 
 template <typename X>
-using reflects_enum_member = eval<_aux::op_reflects_enum_member<X>>;
-
-template <typename X>
-using reflects_record_member = eval<_aux::op_reflects_record_member<X>>;
+using reflects_specifier = eval<_aux::op_reflects_specifier<X>>;
 
 template <typename X>
 using reflects_inheritance = eval<_aux::op_reflects_inheritance<X>>;

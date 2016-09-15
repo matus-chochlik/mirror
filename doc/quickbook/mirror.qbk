@@ -37,6 +37,25 @@
 
 [def __none [link mirror.quickref.none none]]
 
+[def __is_int_const [link mirror.quickref.traits.is_int_const is_int_const]]
+[def __is_string [link mirror.quickref.traits.is_string is_string]]
+[def __is_range [link mirror.quickref.traits.is_range is_range]]
+[def __is_none [link mirror.quickref.traits.is_none is_none]]
+[def __is_metaobject [link mirror.quickref.traits.is_metaobject is_metaobject]]
+[def __is_metaobject_sequence [link mirror.quickref.traits.is_metaobject_sequence is_metaobject_sequence]]
+
+[def __reflects_alias [link mirror.quickref.traits.reflects_alias reflects_alias]]
+[def __reflects_global_scope [link mirror.quickref.traits.reflects_global_scope reflects_global_scope]]
+[def __reflects_namespace [link mirror.quickref.traits.reflects_namespace reflects_namespace]]
+[def __reflects_type [link mirror.quickref.traits.reflects_type reflects_type]]
+[def __reflects_tag_type [link mirror.quickref.traits.reflects_tag_type reflects_tag_type]]
+[def __reflects_enum_member [link mirror.quickref.traits.reflects_enum_member reflects_enum_member]]
+[def __reflects_record_member [link mirror.quickref.traits.reflects_record_member reflects_record_member]]
+[def __reflects_variable [link mirror.quickref.traits.reflects_variable reflects_variable]]
+[def __reflects_constant [link mirror.quickref.traits.reflects_constant reflects_constant]]
+[def __reflects_specifier [link mirror.quickref.traits.reflects_specifier reflects_specifier]]
+[def __reflects_inheritance [link mirror.quickref.traits.reflects_inheritance reflects_inheritance]]
+
 [def __identity [link mirror.quickref.identity identity]]
 [def __value [link mirror.quickref.value value]]
 [def __c_str [link mirror.quickref.c_str c_str]]
