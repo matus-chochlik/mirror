@@ -1,0 +1,126 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>trait operations</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;7.&#160;Quick reference">
+<link rel="prev" href="int_const.html" title="integral constants">
+<link rel="next" href="operator.html" title="operator PUDDLED">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="int_const.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="operator.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="puddle.quickref.traits"></a><a class="link" href="traits.html" title="trait operations">trait operations</a>
+</h2></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/puddle/traits.hpp" target="_top">puddle/traits.hpp</a>&gt;</code>
+        </p>
+<p>
+          The <span class="emphasis"><em>Puddle</em></span> library turns the <a class="link" href="../../mirror/quickref/traits.html" title="trait templates"><span class="emphasis"><em>Mirror</em></span>'s
+          trait templates</a> into the following constexpr <span class="emphasis"><em>functions</em></span>:
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.is_int_const">mirror::is_int_const</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">is_int_const</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.is_string">mirror::is_string</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">is_string</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.is_range">mirror::is_range</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">is_range</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.is_none">mirror::is_none</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">is_none</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.is_metaobject">mirror::is_metaobject</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">is_metaobject</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.is_metaobject_sequence">mirror::is_metaobject_sequence</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">is_metaobject_sequence</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_alias">mirror::reflects_alias</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_alias</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_global_scope">mirror::reflects_global_scope</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_global_scope</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_namespace">mirror::reflects_namespace</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_namespace</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_type">mirror::reflects_type</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_type</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_tag_type">mirror::reflects_tag_type</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_tag_type</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_enum_member">mirror::reflects_enum_member</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_enum_member</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_record_member">mirror::reflects_record_member</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_record_member</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_variable">mirror::reflects_variable</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_variable</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_constant">mirror::reflects_constant</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_constant</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_specifier">mirror::reflects_specifier</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_specifier</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_inheritance">mirror::reflects_inheritance</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_inheritance</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="int_const.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="operator.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
