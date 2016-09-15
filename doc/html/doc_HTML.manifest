@@ -39,6 +39,7 @@ mirror/quickref/int_const.html
 mirror/quickref/string.html
 mirror/quickref/range.html
 mirror/quickref/none.html
+mirror/quickref/traits.html
 mirror/quickref/identity.html
 mirror/quickref/value.html
 mirror/quickref/c_str.html
