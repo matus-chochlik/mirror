@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Compile-time strings</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;7.&#160;Quick reference">
+<link rel="prev" href="int_const.html" title="Integral constants">
+<link rel="next" href="range.html" title="Compile-time ranges">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="int_const.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="range.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="puddle.quickref.string"></a><a class="link" href="string.html" title="Compile-time strings">Compile-time strings </a>
+</h2></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/puddle/string.hpp" target="_top">puddle/string.hpp</a>&gt;</code>
+        </p>
+<p>
+          The <span class="emphasis"><em>Puddle</em></span> library turns the <a class="link" href="../../mirror/quickref/string.html" title="Compile-time strings"><span class="emphasis"><em>Mirror</em></span>'s
+          compile-time string class templates</a> into the following constexpr
+          <span class="emphasis"><em>variable templates</em></span>:
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="identifier">Char</span> <span class="special">...</span> <span class="identifier">C</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <a class="link" href="../../mirror/quickref/string.html" title="Compile-time strings">mirror::basic_string</a><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">C</span><span class="special">...&gt;</span> <span class="identifier">basic_string</span> <span class="special">=</span> <span class="special">{};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">char</span> <span class="special">...</span> <span class="identifier">C</span><span class="special">&gt;</span>
+<span class="keyword">constexpr</span> <a class="link" href="../../mirror/quickref/string.html" title="Compile-time strings">mirror::string</a><span class="special">&lt;</span><span class="identifier">C</span><span class="special">...&gt;</span> <span class="identifier">string</span> <span class="special">=</span> <span class="special">{};</span>
+
+<span class="keyword">constexpr</span> <a class="link" href="../../mirror/quickref/string.html" title="Compile-time strings">mirror::empty_string</a> <span class="identifier">empty_string</span> <span class="special">=</span> <span class="special">{};</span>
+</pre>
+<p>
+          The <span class="emphasis"><em>Mirror</em></span>'s <code class="literal">c_str</code> and <code class="literal">string_view</code>
+          template aliases are implemented as an constexpr functions:
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">S</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span>
+<a class="link" href="../../mirror/quickref/c_str.html" title="operation c_str">mirror::c_str</a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">c_str</span><span class="special">(</span><span class="identifier">S</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">S</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span>
+<a class="link" href="../../mirror/quickref/string_view.html" title="operation string_view">mirror::string_view</a> <span class="identifier">string_view</span><span class="special">(</span><span class="identifier">S</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<p>
+          The <span class="emphasis"><em>Puddle</em></span> library also provides the basic equality
+          comparison operators (<code class="literal">==</code>, <code class="literal">!=</code>) arithmetic
+          operators and the operator <code class="literal">&lt;&lt;</code> for output to <code class="literal">std::ostream</code>.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="int_const.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="range.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

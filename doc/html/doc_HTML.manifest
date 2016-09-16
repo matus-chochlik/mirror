@@ -89,6 +89,8 @@ puddle/intro/hello_world.html
 puddle/quickref.html
 puddle/quickref/metaobject.html
 puddle/quickref/int_const.html
+puddle/quickref/string.html
+puddle/quickref/range.html
 puddle/quickref/traits.html
 puddle/quickref/operator.html
 lagoon.html
