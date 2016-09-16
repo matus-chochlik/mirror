@@ -61,6 +61,7 @@ mirror/quickref/get_base_name.html
 mirror/quickref/get_full_name.html
 mirror/quickref/get_display_name.html
 mirror/quickref/get_aliased.html
+mirror/quickref/get_type.html
 mirror/quickref/get_reflected_type.html
 mirror/quickref/get_elaborated_type_specifier.html
 mirror/quickref/is_class.html
@@ -91,7 +92,17 @@ puddle/quickref/metaobject.html
 puddle/quickref/int_const.html
 puddle/quickref/string.html
 puddle/quickref/range.html
+puddle/quickref/none.html
+puddle/quickref/type.html
 puddle/quickref/traits.html
+puddle/quickref/source_info_ops.html
+puddle/quickref/meta_named_ops.html
+puddle/quickref/meta_alias_ops.html
+puddle/quickref/meta_scoped_ops.html
+puddle/quickref/meta_typed_ops.html
+puddle/quickref/meta_type_ops.html
+puddle/quickref/meta_enum_ops.html
+puddle/quickref/meta_record_ops.html
 puddle/quickref/operator.html
 lagoon.html
 papers.html

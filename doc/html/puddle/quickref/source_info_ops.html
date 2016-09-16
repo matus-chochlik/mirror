@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Source location information operations</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;7.&#160;Quick reference">
+<link rel="prev" href="traits.html" title="Trait operations">
+<link rel="next" href="meta_named_ops.html" title="Name operations">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="traits.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="meta_named_ops.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="puddle.quickref.source_info_ops"></a><a class="link" href="source_info_ops.html" title="Source location information operations">Source location information
+        operations</a>
+</h2></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/puddle/metaobject_ops.hpp" target="_top">puddle/metaobject_ops.hpp</a>&gt;</code>
+        </p>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/puddle/source_info_ops.hpp" target="_top">puddle/source_info_ops.hpp</a>&gt;</code>
+        </p>
+<p>
+          The metaobject source location operations are implemented by the following
+          functions:
+        </p>
+<h4>
+<a name="puddle.quickref.source_info_ops.h0"></a>
+          <span class="phrase"><a name="puddle.quickref.source_info_ops.has_source_info"></a></span><a class="link" href="source_info_ops.html#puddle.quickref.source_info_ops.has_source_info">operation
+          <code class="literal">has_source_info</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/has_source_info.html" title="operation has_source_info">mirror::has_source_info</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">has_source_info</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<h4>
+<a name="puddle.quickref.source_info_ops.h1"></a>
+          <span class="phrase"><a name="puddle.quickref.source_info_ops.get_source_file"></a></span><a class="link" href="source_info_ops.html#puddle.quickref.source_info_ops.get_source_file">operation
+          <code class="literal">get_source_file</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/get_source_file.html" title="operation get_source_file">mirror::get_source_file</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">get_source_file</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<h4>
+<a name="puddle.quickref.source_info_ops.h2"></a>
+          <span class="phrase"><a name="puddle.quickref.source_info_ops.get_source_line"></a></span><a class="link" href="source_info_ops.html#puddle.quickref.source_info_ops.get_source_line">operation
+          <code class="literal">get_source_line</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/get_source_line.html" title="operation get_source_line">mirror::get_source_line</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">get_source_line</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<h4>
+<a name="puddle.quickref.source_info_ops.h3"></a>
+          <span class="phrase"><a name="puddle.quickref.source_info_ops.get_source_column"></a></span><a class="link" href="source_info_ops.html#puddle.quickref.source_info_ops.get_source_column">operation
+          <code class="literal">get_source_column</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/get_source_column.html" title="operation get_source_column">mirror::get_source_column</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">get_source_column</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="traits.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="meta_named_ops.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
