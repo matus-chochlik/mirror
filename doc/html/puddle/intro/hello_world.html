@@ -20,7 +20,8 @@
 <p>
           The following code shows a trivial, working example of usage of the <code class="literal"><a class="link" href="../quickref/operator.html" title="operator PUDDLED">PUDDLED</a></code> operator and
           the <code class="literal"><a class="link" href="../quickref/meta_named_ops.html" title="Name operations">get_base_name</a></code>
-          and <code class="literal">__get_scope</code> metaobject operations.
+          and <code class="literal"><a class="link" href="../quickref/meta_scoped_ops.html" title="Scope-member operations">get_scope</a></code>
+          metaobject operations.
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">reflection</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <a class="co" name="puddle.intro.hello_world.c0" href="hello_world.html#puddle.intro.hello_world.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">metaobject_ops</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <a class="co" name="puddle.intro.hello_world.c2" href="hello_world.html#puddle.intro.hello_world.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
@@ -35,7 +36,7 @@
 
 	<span class="keyword">auto</span> <span class="identifier">mo</span> <span class="special">=</span> <a class="link" href="../quickref/operator.html" title="operator PUDDLED">PUDDLED</a><span class="special">(</span><span class="identifier">Hello</span><span class="special">::</span><span class="identifier">World</span><span class="special">);</span>
 
-	<span class="keyword">auto</span> <span class="identifier">hello</span> <span class="special">=</span> <a class="link" href="../quickref/meta_named_ops.html" title="Name operations">get_base_name</a><span class="special">(</span><span class="identifier">__get_scope</span><span class="special">(</span><span class="identifier">mo</span><span class="special">));</span>
+	<span class="keyword">auto</span> <span class="identifier">hello</span> <span class="special">=</span> <a class="link" href="../quickref/meta_named_ops.html" title="Name operations">get_base_name</a><span class="special">(</span><a class="link" href="../quickref/meta_scoped_ops.html" title="Scope-member operations">get_scope</a><span class="special">(</span><span class="identifier">mo</span><span class="special">));</span>
 	<span class="keyword">auto</span> <span class="identifier">world</span> <span class="special">=</span> <span class="identifier">get_base_name</span><span class="special">(</span><span class="identifier">mo</span><span class="special">);</span>
 
 	<span class="keyword">auto</span> <span class="identifier">hello_world</span> <span class="special">=</span> <span class="identifier">hello</span> <span class="special">+</span> <a class="link" href="../quickref/string.html" title="Compile-time strings">string</a><span class="special">&lt;</span><span class="char">','</span><span class="special">,</span><span class="char">' '</span><span class="special">&gt;</span> <span class="special">+</span> <span class="identifier">world</span> <span class="special">+</span> <span class="identifier">string</span><span class="special">&lt;</span><span class="char">'!'</span><span class="special">&gt;;</span>

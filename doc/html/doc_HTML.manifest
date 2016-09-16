@@ -74,8 +74,8 @@ mirror/quickref/get_member_types.html
 mirror/quickref/get_data_members.html
 mirror/quickref/get_base_classes.html
 mirror/quickref/get_scope.html
-mirror/quickref/get_constant.html
 mirror/quickref/get_pointer.html
+mirror/quickref/get_constant.html
 mirror/quickref/is_static.html
 mirror/quickref/get_base_class.html
 mirror/quickref/get_access_specifier.html
@@ -103,6 +103,10 @@ puddle/quickref/meta_typed_ops.html
 puddle/quickref/meta_type_ops.html
 puddle/quickref/meta_enum_ops.html
 puddle/quickref/meta_record_ops.html
+puddle/quickref/meta_variable_ops.html
+puddle/quickref/meta_constant_ops.html
+puddle/quickref/meta_inheritance_ops.html
+puddle/quickref/specifier_ops.html
 puddle/quickref/operator.html
 lagoon.html
 papers.html
