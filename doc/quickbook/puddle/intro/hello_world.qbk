@@ -15,4 +15,8 @@ of the [^__PUDDLED] operator and the [^__get_base_name] and
 
 [puddle_example_hello_world_1]
 
+See how to implement this example by using the
+[link reflexpr.intro.hello_world basic reflection facility] or the
+[link mirror.intro.hello_world ['Mirror] library].
+
 [endsect]

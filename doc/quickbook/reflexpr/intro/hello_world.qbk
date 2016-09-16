@@ -15,4 +15,8 @@ of the [^__reflexpr] operator and the [^__std_meta_get_base_name] and
 
 [reflexpr_example_hello_world_1]
 
+See how to implement this example by using the
+[link mirror.intro.hello_world ['Mirror] library] or the
+[link puddle.intro.hello_world ['Puddle] library].
+
 [endsect]

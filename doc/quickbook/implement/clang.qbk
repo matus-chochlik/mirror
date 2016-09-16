@@ -1,0 +1,16 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Clang
+	[quickbook 1.6]
+	[id implement.clang]
+]
+
+A fork of the __clang__ frontend for __llvm__ implementing the proposed
+[link reflexpr basic reflection facility] is hosted on
+[@https://github.com/matus-chochlik/clang ['GitHub]] on the
+[@https://github.com/matus-chochlik/clang/tree/reflexpr [^reflexpr]] branch.
+
+[include clang/get_started.qbk]

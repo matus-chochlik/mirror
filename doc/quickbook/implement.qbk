@@ -3,9 +3,10 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[chapter Clang
+[part Implementation
 	[quickbook 1.6]
-	[id implementation.clang]
+	[id implement]
 ]
 
-TODO
+[include implement/intro.qbk]
+[include implement/clang.qbk]

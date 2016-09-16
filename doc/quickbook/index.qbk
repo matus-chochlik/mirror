@@ -22,6 +22,9 @@
 [/------]
 
 [def __clang__ [@ http://clang.llvm.org/ clang]]
+[def __llvm__ [@ http://llvm.org/ llvm]]
+
+[def __prompt__ $>]
 
 [def __pseudocode__ ['pseudocode]]
 [def __unspecified ['unspecified]]
@@ -320,7 +323,7 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 
 This is the documentation for the C++ reflection factility proposed
 for standardization by a series of [link papers.proposals papers],
-its [link implementation implementation(s)]
+its [link implement implementation(s)]
 and a set of external libraries build on top of the
 basic reflection facility showing, that it can be used as the foundation
 for reflection-based utilities and applications using various programming
@@ -337,4 +340,4 @@ cover many of the implemented features.]
 [include puddle.qbk]
 [include lagoon.qbk]
 [include papers.qbk]
-[include implementation.qbk]
+[include implement.qbk]

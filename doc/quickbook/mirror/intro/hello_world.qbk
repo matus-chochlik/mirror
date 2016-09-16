@@ -15,4 +15,8 @@ of the [^__MIRRORED] operator and the [^__get_base_name] and
 
 [mirror_example_hello_world_1]
 
+See how to implement this example by using the
+[link reflexpr.intro.hello_world basic reflection facility] or the
+[link puddle.intro.hello_world ['Puddle] library].
+
 [endsect]
