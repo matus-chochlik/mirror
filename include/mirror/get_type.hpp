@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_TYPE_1105240825_HPP
 #define MIRROR_GET_TYPE_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_type;
 template <typename MO>
 struct op_get_type<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::Typed<MO>,
-	std::meta::get_type<MO>
+	reflbase::Typed<MO>,
+	reflbase::get_type<MO>
 > { };
 
 template <>

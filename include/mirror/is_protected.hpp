@@ -30,9 +30,9 @@ struct op_is_protected<none>
 template <typename MO>
 struct op_is_protected<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::RecordMember<MO> ||
-	std::meta::Inheritance<MO>,
-	std::meta::is_protected<MO>,
+ 	reflbase::RecordMember<MO> ||
+	reflbase::Inheritance<MO>,
+	reflbase::is_protected<MO>,
 	none
 > { };
 

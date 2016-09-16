@@ -30,8 +30,8 @@ struct op_is_anonymous<none>
 template <typename MO>
 struct op_is_anonymous<metaobject<MO>>
  : lazy_conditional_c<
-	std::meta::Named<MO>,
-	std::meta::is_anonymous<MO>,
+	reflbase::Named<MO>,
+	reflbase::is_anonymous<MO>,
 	true_
 > { };
 

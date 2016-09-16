@@ -92,7 +92,7 @@ struct op_reflects_alias
 
 template <typename MO>
 struct op_reflects_alias<metaobject<MO>>
- : bool_<std::meta::Alias<MO>>
+ : bool_<reflbase::Alias<MO>>
 { };
 
 template <typename X>
@@ -102,7 +102,7 @@ struct op_reflects_global_scope
 
 template <typename MO>
 struct op_reflects_global_scope<metaobject<MO>>
- : bool_<std::meta::GlobalScope<MO>>
+ : bool_<reflbase::GlobalScope<MO>>
 { };
 
 template <typename X>
@@ -112,7 +112,7 @@ struct op_reflects_namespace
 
 template <typename MO>
 struct op_reflects_namespace<metaobject<MO>>
- : bool_<std::meta::Namespace<MO>>
+ : bool_<reflbase::Namespace<MO>>
 { };
 
 template <typename X>
@@ -122,7 +122,7 @@ struct op_reflects_type
 
 template <typename MO>
 struct op_reflects_type<metaobject<MO>>
- : bool_<std::meta::Type<MO>>
+ : bool_<reflbase::Type<MO>>
 { };
 
 template <typename X>
@@ -132,7 +132,7 @@ struct op_reflects_tag_type
 
 template <typename MO>
 struct op_reflects_tag_type<metaobject<MO>>
- : bool_<std::meta::TagType<MO>>
+ : bool_<reflbase::TagType<MO>>
 { };
 
 template <typename X>
@@ -142,7 +142,7 @@ struct op_reflects_enum_member
 
 template <typename MO>
 struct op_reflects_enum_member<metaobject<MO>>
- : bool_<std::meta::EnumMember<MO>>
+ : bool_<reflbase::EnumMember<MO>>
 { };
 
 template <typename X>
@@ -152,7 +152,7 @@ struct op_reflects_record_member
 
 template <typename MO>
 struct op_reflects_record_member<metaobject<MO>>
- : bool_<std::meta::RecordMember<MO>>
+ : bool_<reflbase::RecordMember<MO>>
 { };
 
 template <typename X>
@@ -162,7 +162,7 @@ struct op_reflects_variable
 
 template <typename MO>
 struct op_reflects_variable<metaobject<MO>>
- : bool_<std::meta::Variable<MO>>
+ : bool_<reflbase::Variable<MO>>
 { };
 
 template <typename X>
@@ -172,7 +172,7 @@ struct op_reflects_constant
 
 template <typename MO>
 struct op_reflects_constant<metaobject<MO>>
- : bool_<std::meta::Constant<MO>>
+ : bool_<reflbase::Constant<MO>>
 { };
 
 template <typename X>
@@ -182,7 +182,7 @@ struct op_reflects_specifier
 
 template <typename MO>
 struct op_reflects_specifier<metaobject<MO>>
- : bool_<std::meta::Specifier<MO>>
+ : bool_<reflbase::Specifier<MO>>
 { };
 
 template <typename X>
@@ -192,7 +192,7 @@ struct op_reflects_inheritance
 
 template <typename MO>
 struct op_reflects_inheritance<metaobject<MO>>
- : bool_<std::meta::Inheritance<MO>>
+ : bool_<reflbase::Inheritance<MO>>
 { };
 
 } // namespace _aux

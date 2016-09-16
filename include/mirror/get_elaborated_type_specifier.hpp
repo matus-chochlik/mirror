@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_ELABORATED_TYPE_SPECIFIER_1105240825_HPP
 #define MIRROR_GET_ELABORATED_TYPE_SPECIFIER_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_elaborated_type_specifier;
 template <typename MO>
 struct op_get_elaborated_type_specifier<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::TagType<MO>,
-	std::meta::get_elaborated_type_specifier<MO>
+	reflbase::TagType<MO>,
+	reflbase::get_elaborated_type_specifier<MO>
 > { };
 
 template <>

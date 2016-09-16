@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_REFLECTED_TYPE_1105240825_HPP
 #define MIRROR_GET_REFLECTED_TYPE_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 #include "conditional.hpp"
 #include "none.hpp"
@@ -26,8 +25,8 @@ struct op_get_reflected_type;
 template <typename MO>
 struct op_get_reflected_type<metaobject<MO>>
  : identity<lazy_conditional_c<
-	std::meta::Type<MO>,
-	std::meta::get_reflected_type<MO>,
+	reflbase::Type<MO>,
+	reflbase::get_reflected_type<MO>,
 	none
 >> { };
 

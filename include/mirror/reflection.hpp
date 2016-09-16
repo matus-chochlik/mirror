@@ -11,7 +11,6 @@
 #ifndef MIRROR_REFLECTION_1105240825_HPP
 #define MIRROR_REFLECTION_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 
 #define MIRRORED(...) ::mirror::metaobject<reflexpr(__VA_ARGS__)>

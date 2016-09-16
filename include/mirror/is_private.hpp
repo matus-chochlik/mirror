@@ -30,9 +30,9 @@ struct op_is_private<none>
 template <typename MO>
 struct op_is_private<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::RecordMember<MO> ||
-	std::meta::Inheritance<MO>,
-	std::meta::is_private<MO>,
+ 	reflbase::RecordMember<MO> ||
+	reflbase::Inheritance<MO>,
+	reflbase::is_private<MO>,
 	none
 > { };
 

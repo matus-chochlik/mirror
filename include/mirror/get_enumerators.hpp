@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_ENUMERATORS_1105240825_HPP
 #define MIRROR_GET_ENUMERATORS_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "range.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_enumerators;
 template <typename MO>
 struct op_get_enumerators<metaobject<MO>>
  : make_metaobject_sequence_if_c<
-	std::meta::Enum<MO>,
-	std::meta::get_enumerators<MO>
+	reflbase::Enum<MO>,
+	reflbase::get_enumerators<MO>
 > { };
 
 } // namespace _aux

@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_ACCESS_SPECIFIER_1105240825_HPP
 #define MIRROR_GET_ACCESS_SPECIFIER_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_access_specifier;
 template <typename MO>
 struct op_get_access_specifier<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::RecordMember<MO> || std::meta::Inheritance<MO>,
-	std::meta::get_access_specifier<MO>
+	reflbase::RecordMember<MO> || reflbase::Inheritance<MO>,
+	reflbase::get_access_specifier<MO>
 > { };
 
 template <>

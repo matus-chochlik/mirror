@@ -30,8 +30,8 @@ struct op_is_virtual<none>
 template <typename MO>
 struct op_is_virtual<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::Inheritance<MO>,
-	std::meta::is_virtual<MO>,
+ 	reflbase::Inheritance<MO>,
+	reflbase::is_virtual<MO>,
 	false_
 > { };
 

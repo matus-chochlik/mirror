@@ -27,8 +27,8 @@ struct op_get_element;
 template <typename MOS, typename Int, Int Idx>
 struct op_get_element<metaobject_sequence<MOS>, int_const<Int, Idx>>
  : make_metaobject_if_c<
-	(std::meta::get_size_v<MOS> > unsigned(Idx)),
-	std::meta::get_element<MOS, Idx>
+	(reflbase::get_size_v<MOS> > unsigned(Idx)),
+	reflbase::get_element<MOS, Idx>
 > { };
 
 template <typename Idx>

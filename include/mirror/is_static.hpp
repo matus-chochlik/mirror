@@ -30,8 +30,8 @@ struct op_is_static<none>
 template <typename MO>
 struct op_is_static<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::Variable<MO>,
-	std::meta::is_static<MO>,
+ 	reflbase::Variable<MO>,
+	reflbase::is_static<MO>,
 	false_
 > { };
 

@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_POINTER_1105240825_HPP
 #define MIRROR_GET_POINTER_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 #include "conditional.hpp"
 #include "none.hpp"
@@ -25,8 +24,8 @@ struct op_get_pointer;
 template <typename MO>
 struct op_get_pointer<metaobject<MO>>
  : lazy_conditional_c<
-	std::meta::Variable<MO>,
-	std::meta::get_pointer<MO>,
+	reflbase::Variable<MO>,
+	reflbase::get_pointer<MO>,
 	none
 > { };
 

@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_DISPLAY_NAME_1105240825_HPP
 #define MIRROR_GET_DISPLAY_NAME_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 #include "none.hpp"
 #include "to_string.hpp"
@@ -25,8 +24,8 @@ struct op_get_display_name;
 template <typename MO>
 struct op_get_display_name<metaobject<MO>>
  : to_string_if_c<
-	std::meta::Named<MO>, char,
-	std::meta::get_display_name<MO>
+	reflbase::Named<MO>, char,
+	reflbase::get_display_name<MO>
 > { };
 
 template <>

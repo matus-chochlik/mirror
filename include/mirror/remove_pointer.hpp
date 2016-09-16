@@ -11,7 +11,6 @@
 #ifndef MIRROR_REMOVE_POINTER_1105240825_HPP
 #define MIRROR_REMOVE_POINTER_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_remove_pointer;
 template <typename MO>
 struct op_remove_pointer<metaobject<MO>>
  : conditional<
-	bool_<std::meta::Typed<MO>>,
-	metaobject<std::meta::get_type_m<MO>>,
+	bool_<reflbase::Typed<MO>>,
+	metaobject<reflbase::get_type_m<MO>>,
 	none
 > { };
 

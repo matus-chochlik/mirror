@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_BASE_CLASSES_1105240825_HPP
 #define MIRROR_GET_BASE_CLASSES_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "range.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_base_classes;
 template <typename MO>
 struct op_get_base_classes<metaobject<MO>>
  : make_metaobject_sequence_if_c<
-	std::meta::Class<MO>,
-	std::meta::get_base_classes<MO>
+	reflbase::Class<MO>,
+	reflbase::get_base_classes<MO>
 > { };
 
 template <>

@@ -30,8 +30,8 @@ struct op_is_scoped_enum<none>
 template <typename MO>
 struct op_is_scoped_enum<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::Enum<MO>,
-	std::meta::is_scoped_enum<MO>,
+ 	reflbase::Enum<MO>,
+	reflbase::is_scoped_enum<MO>,
 	false_
 > { };
 

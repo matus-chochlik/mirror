@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_MEMBER_TYPES_1105240825_HPP
 #define MIRROR_GET_MEMBER_TYPES_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "range.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_member_types;
 template <typename MO>
 struct op_get_member_types<metaobject<MO>>
  : make_metaobject_sequence_if_c<
-	std::meta::Record<MO>,
-	std::meta::get_member_types<MO>
+	reflbase::Record<MO>,
+	reflbase::get_member_types<MO>
 > { };
 
 template <>

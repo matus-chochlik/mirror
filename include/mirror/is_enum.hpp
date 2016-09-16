@@ -30,8 +30,8 @@ struct op_is_enum<none>
 template <typename MO>
 struct op_is_enum<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::TagType<MO>,
-	std::meta::is_enum<MO>,
+ 	reflbase::TagType<MO>,
+	reflbase::is_enum<MO>,
 	false_
 > { };
 

@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_SCOPE_1105240825_HPP
 #define MIRROR_GET_SCOPE_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_scope;
 template <typename MO>
 struct op_get_scope<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::ScopeMember<MO> && !std::meta::GlobalScope<MO>,
-	std::meta::get_scope<MO>
+	reflbase::ScopeMember<MO> && !reflbase::GlobalScope<MO>,
+	reflbase::get_scope<MO>
 > { };
 
 template <>

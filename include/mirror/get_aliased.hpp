@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_ALIASED_1105240825_HPP
 #define MIRROR_GET_ALIASED_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_aliased;
 template <typename MO>
 struct op_get_aliased<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::Alias<MO>,
-	std::meta::get_aliased<MO>, MO
+	reflbase::Alias<MO>,
+	reflbase::get_aliased<MO>, MO
 > { };
 
 template <>

@@ -53,18 +53,18 @@ template <typename MO>
 struct do_make_mo_trait_tuple<mirror::metaobject<MO>>
 {
 	using type = mo_trait_tuple<
-		std::meta::get_source_line_v<MO> != 0,
-		std::meta::ScopeMember<MO>,
-		std::meta::Scope<MO>,
-		std::meta::Named<MO>,
-		std::meta::Typed<MO>,
-		std::meta::TagType<MO>,
-		std::meta::Record<MO>,
-		std::meta::Enum<MO>,
-		std::meta::RecordMember<MO>,
-		std::meta::Constant<MO>,
-		std::meta::Inheritance<MO>,
-		std::meta::Specifier<MO>
+		reflbase::get_source_line_v<MO> != 0,
+		reflbase::ScopeMember<MO>,
+		reflbase::Scope<MO>,
+		reflbase::Named<MO>,
+		reflbase::Typed<MO>,
+		reflbase::TagType<MO>,
+		reflbase::Record<MO>,
+		reflbase::Enum<MO>,
+		reflbase::RecordMember<MO>,
+		reflbase::Constant<MO>,
+		reflbase::Inheritance<MO>,
+		reflbase::Specifier<MO>
 	>;
 };
 

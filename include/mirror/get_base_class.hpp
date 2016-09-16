@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_BASE_CLASS_1105240825_HPP
 #define MIRROR_GET_BASE_CLASS_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject_ops.hpp"
 #include "identity.hpp"
 
@@ -24,8 +23,8 @@ struct op_get_base_class;
 template <typename MO>
 struct op_get_base_class<metaobject<MO>>
  : make_metaobject_if_c<
-	std::meta::Inheritance<MO>,
-	std::meta::get_base_class<MO>
+	reflbase::Inheritance<MO>,
+	reflbase::get_base_class<MO>
 > { };
 
 template <>

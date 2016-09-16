@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_SOURCE_LINE_1105240825_HPP
 #define MIRROR_GET_SOURCE_LINE_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 #include "int_const.hpp"
 #include "none.hpp"
@@ -24,7 +23,7 @@ struct op_get_source_line;
 
 template <typename MO>
 struct op_get_source_line<metaobject<MO>>
- : unsigned_<std::meta::get_source_line_v<MO>>
+ : unsigned_<reflbase::get_source_line_v<MO>>
 { };
 
 template <>

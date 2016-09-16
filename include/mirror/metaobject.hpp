@@ -11,7 +11,7 @@
 #ifndef MIRROR_METAOBJECTS_1105240825_HPP
 #define MIRROR_METAOBJECTS_1105240825_HPP
 
-#include <reflexpr>
+#include <reflbase/reflbase.hpp>
 
 namespace mirror {
 
@@ -19,7 +19,7 @@ template <typename MO>
 struct metaobject
 {
 	static_assert(
-		std::is_metaobject_v<MO>,
+		reflbase::is_metaobject_v<MO>,
 		"Template argument must be a meta-object type!"
 	);
 	using type = metaobject;
@@ -29,8 +29,8 @@ template <typename MOS>
 struct metaobject_sequence
 {
 	static_assert(
-		std::is_metaobject_v<MOS> &&
-		std::meta::ObjectSequence<MOS>,
+		reflbase::is_metaobject_v<MOS> &&
+		reflbase::ObjectSequence<MOS>,
 		"Template argument must be a meta-object-sequence type!"
 	);
 	using type = metaobject_sequence;

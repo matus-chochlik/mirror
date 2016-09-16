@@ -62,7 +62,7 @@ struct do_get_scope_spec
 template <typename MO>
 struct op_get_scope_spec<metaobject<MO>>
  : do_get_scope_spec<
- 	metaobject<std::meta::get_underlying_object_m<MO>>
+ 	metaobject<reflbase::get_underlying_object_m<MO>>
 > { };
 
 template <typename X>

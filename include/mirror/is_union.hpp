@@ -30,8 +30,8 @@ struct op_is_union<none>
 template <typename MO>
 struct op_is_union<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::TagType<MO>,
-	std::meta::is_union<MO>,
+ 	reflbase::TagType<MO>,
+	reflbase::is_union<MO>,
 	false_
 > { };
 

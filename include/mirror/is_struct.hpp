@@ -30,8 +30,8 @@ struct op_is_struct<none>
 template <typename MO>
 struct op_is_struct<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::TagType<MO>,
-	std::meta::is_struct<MO>,
+ 	reflbase::TagType<MO>,
+	reflbase::is_struct<MO>,
 	false_
 > { };
 

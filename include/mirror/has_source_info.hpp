@@ -28,7 +28,7 @@ struct op_has_source_info<none>
 
 template <typename MO>
 struct op_has_source_info<metaobject<MO>>
- : bool_<std::meta::get_source_line_v<MO> != 0u>
+ : bool_<reflbase::get_source_line_v<MO> != 0u>
 { };
 
 } // namespace _aux

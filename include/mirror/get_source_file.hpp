@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_SOURCE_FILE_1105240825_HPP
 #define MIRROR_GET_SOURCE_FILE_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 #include "none.hpp"
 #include "to_string.hpp"
@@ -24,7 +23,7 @@ struct op_get_source_file;
 
 template <typename MO>
 struct op_get_source_file<metaobject<MO>>
- : to_string<std::meta::get_source_file<MO>>
+ : to_string<reflbase::get_source_file<MO>>
 { };
 
 template <>

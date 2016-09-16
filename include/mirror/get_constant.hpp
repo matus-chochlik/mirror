@@ -11,7 +11,6 @@
 #ifndef MIRROR_GET_CONSTANT_1105240825_HPP
 #define MIRROR_GET_CONSTANT_1105240825_HPP
 
-#include <reflexpr>
 #include "metaobject.hpp"
 #include "conditional.hpp"
 #include "none.hpp"
@@ -25,8 +24,8 @@ struct op_get_constant;
 template <typename MO>
 struct op_get_constant<metaobject<MO>>
  : lazy_conditional_c<
-	std::meta::Constant<MO>,
-	std::meta::get_constant<MO>,
+	reflbase::Constant<MO>,
+	reflbase::get_constant<MO>,
 	none
 > { };
 

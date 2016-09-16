@@ -47,8 +47,8 @@ struct op_get_front<basic_string<Char, CH, CT...>>
 template <typename MOS>
 struct op_get_front<metaobject_sequence<MOS>>
  : conditional<
-	bool_<(0 < std::meta::get_size_v<MOS>)>,
-	metaobject<std::meta::get_element_m<MOS, 0>>,
+	bool_<(0 < reflbase::get_size_v<MOS>)>,
+	metaobject<reflbase::get_element_m<MOS, 0>>,
 	none
 > { };
 

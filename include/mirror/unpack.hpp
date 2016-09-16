@@ -27,7 +27,7 @@ using mo_range = range<metaobject<MO>...>;
 
 template <typename MOS>
 struct op_unpack<metaobject_sequence<MOS>>
- : std::meta::unpack_sequence<MOS, mo_range>
+ : reflbase::unpack_sequence<MOS, mo_range>
 { };
 
 template <typename ... P>

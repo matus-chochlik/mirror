@@ -30,9 +30,9 @@ struct op_is_public<none>
 template <typename MO>
 struct op_is_public<metaobject<MO>>
  : lazy_conditional_c<
- 	std::meta::RecordMember<MO> ||
-	std::meta::Inheritance<MO>,
-	std::meta::is_public<MO>,
+ 	reflbase::RecordMember<MO> ||
+	reflbase::Inheritance<MO>,
+	reflbase::is_public<MO>,
 	none
 > { };
 
