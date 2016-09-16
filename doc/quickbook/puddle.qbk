@@ -16,9 +16,21 @@
 [/Quick reference links]
 [/---------------------]
 
-[/---------]
-[/Templates]
-[/---------]
+[def __int_const [link puddle.quickref.int_const int_const]]
+[def __bool_ [link puddle.quickref.int_const bool_]]
+[def __true_ [link puddle.quickref.int_const true_]]
+[def __false_ [link puddle.quickref.int_const false_]]
+[def __char_ [link puddle.quickref.int_const char_]]
+[def __int_ [link puddle.quickref.int_const int_]]
+[def __unsigned_ [link puddle.quickref.int_const unsigned_]]
+
+[def __basic_string [link puddle.quickref.string basic_string]]
+[def __string [link puddle.quickref.string string]]
+[def __empty_string [link puddle.quickref.string empty_string]]
+[def __range [link puddle.quickref.range range]]
+[def __empty_range [link puddle.quickref.range empty_range]]
+[def __none [link puddle.quickref.none none]]
+[def __type [link puddle.quickref.type type]]
 
 [def __is_int_const [link puddle.quickref.traits is_int_const]]
 [def __is_string [link puddle.quickref.traits is_string]]
@@ -38,6 +50,22 @@
 [def __reflects_constant [link puddle.quickref.traits reflects_constant]]
 [def __reflects_specifier [link puddle.quickref.traits reflects_specifier]]
 [def __reflects_inheritance [link puddle.quickref.traits reflects_inheritance]]
+
+[def __has_source_info [link puddle.quickref.source_info_ops has_source_info]]
+[def __get_source_file [link puddle.quickref.source_info_ops get_source_file]]
+[def __get_source_line [link puddle.quickref.source_info_ops get_source_line]]
+[def __get_source_column [link puddle.quickref.source_info_ops get_source_column]]
+
+[def __is_anonymous [link puddle.quickref.meta_named_ops is_anonymous]]
+[def __get_base_name [link puddle.quickref.meta_named_ops get_base_name]]
+[def __get_full_name [link puddle.quickref.meta_named_ops get_full_name]]
+[def __get_display_name [link puddle.quickref.meta_named_ops get_display_name]]
+
+[def __get_aliased [link puddle.quickref.meta_alias_ops get_aliased]]
+
+[/---------]
+[/Templates]
+[/---------]
 
 
 [/--------]

@@ -6,12 +6,12 @@
  */
 //[puddle_string_1
 template <typename Char, Char ... C>
-constexpr __mirror_basic_string<Char, C...> basic_string = {};
+constexpr __mirror_basic_string<Char, C...> basic_string;
 
 template <char ... C>
-constexpr __mirror_string<C...> string = {};
+constexpr __mirror_string<C...> string;
 
-constexpr __mirror_empty_string empty_string = {};
+constexpr __mirror_empty_string empty_string;
 //]
 //[puddle_string_2
 template <typename S>

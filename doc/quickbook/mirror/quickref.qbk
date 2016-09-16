@@ -58,6 +58,7 @@ library.
 [include quickref/get_full_name.qbk]
 [include quickref/get_display_name.qbk]
 [include quickref/get_aliased.qbk]
+[include quickref/get_type.qbk]
 [include quickref/get_reflected_type.qbk]
 [include quickref/get_elaborated_type_specifier.qbk]
 [include quickref/is_class.qbk]

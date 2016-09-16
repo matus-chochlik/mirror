@@ -1,0 +1,42 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=================================================]
+[section:meta_record_ops Structured type operations]
+[/=================================================]
+
+[header metaobject_ops]
+
+[header meta_record_ops]
+[import meta_record_ops.cpp]
+
+The structured-type metaobject-related operations are implemented by
+the following functions:
+
+[heading:is_class operation [^is_class]]
+[/-------------------------------------]
+[puddle_op_is_class]
+
+[heading:is_struct operation [^is_struct]]
+[/---------------------------------------]
+[puddle_op_is_struct]
+
+[heading:is_union operation [^is_union]]
+[/-------------------------------------]
+[puddle_op_is_union]
+
+[heading:base_classes operation [^base_classes]]
+[/---------------------------------------------]
+[puddle_op_get_base_classes]
+
+[heading:member_types operation [^member_types]]
+[/---------------------------------------------]
+[puddle_op_get_member_types]
+
+[heading:data_members operation [^data_members]]
+[/---------------------------------------------]
+[puddle_op_get_data_members]
+
+[endsect]

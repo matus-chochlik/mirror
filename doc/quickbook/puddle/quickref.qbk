@@ -29,8 +29,18 @@ library.
 [include quickref/int_const.qbk]
 [include quickref/string.qbk]
 [include quickref/range.qbk]
-[/include quickref/none.qbk]
+[include quickref/none.qbk]
+[include quickref/type.qbk]
 
 [include quickref/traits.qbk]
+
+[include quickref/source_info_ops.qbk]
+[include quickref/meta_named_ops.qbk]
+[include quickref/meta_alias_ops.qbk]
+[include quickref/meta_scoped_ops.qbk]
+[include quickref/meta_typed_ops.qbk]
+[include quickref/meta_type_ops.qbk]
+[include quickref/meta_enum_ops.qbk]
+[include quickref/meta_record_ops.qbk]
 
 [include quickref/operator.qbk]

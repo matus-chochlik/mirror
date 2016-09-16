@@ -3,12 +3,17 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[/=============================]
-[section:metaobject Metaobjects]
-[/=============================]
+[/=========================]
+[section:none [^none] value]
+[/=========================]
 
-The ['Puddle] library reuses the specializations of the [^__mirror_metaobject]
-template, but unlike in ['Mirror], they are used as compile-time constant
-objects.
+[header none]
+[import none.cpp]
+
+The ['Puddle] library turns the [link mirror.quickref.none ['Mirror]'s
+compile-time none type] into the following constexpr
+['variable]:
+
+[puddle_none_1]
 
 [endsect]

@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===========================]
+[section:type [^type] wrapper]
+[/===========================]
+
+[header type]
+[import type.cpp]
+
+The ['Puddle] library reuses the [link mirror.quickref.identity ['Mirror]'s
+identity operation] as the type of the following constexpr
+['type wrapper variable template]:
+
+[puddle_type_1]
+
+[endsect]

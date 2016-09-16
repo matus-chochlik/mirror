@@ -1,0 +1,34 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:meta_named_ops Name operations]
+[/=====================================]
+
+[header metaobject_ops]
+
+[header meta_named_ops]
+[import meta_named_ops.cpp]
+
+The metaobject name-related operations are implemented by the following
+functions:
+
+[heading:is_anonymous operation [^is_anonymous]]
+[/---------------------------------------------]
+[puddle_op_is_anonymous]
+
+[heading:get_base_name operation [^get_base_name]]
+[/-----------------------------------------------]
+[puddle_op_get_base_name]
+
+[heading:get_full_name operation [^get_full_name]]
+[/-----------------------------------------------]
+[puddle_op_get_full_name]
+
+[heading:get_display_name operation [^get_display_name]]
+[/-----------------------------------------------------]
+[puddle_op_get_display_name]
+
+[endsect]

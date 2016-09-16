@@ -80,6 +80,7 @@
 [def __get_full_name [link mirror.quickref.get_full_name get_full_name]]
 [def __get_display_name [link mirror.quickref.get_display_name get_display_name]]
 [def __get_aliased [link mirror.quickref.get_aliased get_aliased]]
+[def __get_type [link mirror.quickref.get_type get_type]]
 [def __get_reflected_type [link mirror.quickref.get_reflected_type get_reflected_type]]
 [def __get_elaborated_type_specifier [link mirror.quickref.get_elaborated_type_specifier get_elaborated_type_specifier]]
 [def __is_class [link mirror.quickref.is_class is_class]]
