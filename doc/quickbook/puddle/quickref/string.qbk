@@ -1,0 +1,28 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================]
+[section:string Compile-time strings ]
+[/===================================]
+
+[header string]
+[import string.cpp]
+
+The ['Puddle] library turns the [link mirror.quickref.string ['Mirror]'s
+compile-time string class templates] into the following constexpr
+['variable templates]:
+
+[puddle_string_1]
+
+The ['Mirror]'s [^c_str] and [^string_view] template aliases are implemented
+as an constexpr functions:
+
+[puddle_string_2]
+
+The ['Puddle] library also provides the basic equality comparison operators
+([^==], [^!=]) arithmetic operators
+and the operator [^<<] for output to [^std::ostream].
+
+[endsect]

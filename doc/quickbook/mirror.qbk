@@ -59,6 +59,7 @@
 [def __identity [link mirror.quickref.identity identity]]
 [def __value [link mirror.quickref.value value]]
 [def __c_str [link mirror.quickref.c_str c_str]]
+[def __string_view [link mirror.quickref.string_view string_view]]
 [def __equal [link mirror.quickref.equal equal]]
 [def __concat [link mirror.quickref.concat concat]]
 [def __pop_front [link mirror.quickref.pop_front pop_front]]

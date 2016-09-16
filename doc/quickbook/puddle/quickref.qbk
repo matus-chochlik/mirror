@@ -27,8 +27,8 @@ library.
 
 [include quickref/metaobject.qbk]
 [include quickref/int_const.qbk]
-[/include quickref/string.qbk]
-[/include quickref/range.qbk]
+[include quickref/string.qbk]
+[include quickref/range.qbk]
 [/include quickref/none.qbk]
 
 [include quickref/traits.qbk]

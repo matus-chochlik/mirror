@@ -243,6 +243,13 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_unsigned_ [link mirror.quickref.int_const mirror::unsigned_]]
 [def __mirror_size_const [link mirror.quickref.int_const mirror::size_const]]
 
+[def __mirror_basic_string [link mirror.quickref.string mirror::basic_string]]
+[def __mirror_string [link mirror.quickref.string mirror::string]]
+[def __mirror_empty_string [link mirror.quickref.string mirror::empty_string]]
+
+[def __mirror_range [link mirror.quickref.range mirror::range]]
+[def __mirror_empty_range [link mirror.quickref.range mirror::empty_range]]
+
 [def __mirror_is_int_const [link mirror.quickref.traits.is_int_const mirror::is_int_const]]
 [def __mirror_is_string [link mirror.quickref.traits.is_string mirror::is_string]]
 [def __mirror_is_range [link mirror.quickref.traits.is_range mirror::is_range]]
@@ -263,6 +270,8 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_reflects_inheritance [link mirror.quickref.traits.reflects_inheritance mirror::reflects_inheritance]]
 
 [def __mirror_value [link mirror.quickref.value mirror::value]]
+[def __mirror_c_str [link mirror.quickref.c_str mirror::c_str]]
+[def __mirror_string_view [link mirror.quickref.string_view mirror::string_view]]
 
 [/--------]
 [/Chapters]
