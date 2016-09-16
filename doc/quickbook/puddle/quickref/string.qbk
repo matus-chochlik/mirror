@@ -22,7 +22,7 @@ as an constexpr functions:
 [puddle_string_2]
 
 The ['Puddle] library also provides the basic equality comparison operators
-([^==], [^!=]) arithmetic operators
+([^==], [^!=]), concatenation operator ([^+])
 and the operator [^<<] for output to [^std::ostream].
 
 [endsect]

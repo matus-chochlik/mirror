@@ -12,8 +12,7 @@
 [header meta_named_ops]
 [import meta_named_ops.cpp]
 
-The metaobject name-related operations are implemented by the following
-functions:
+The name-related operations are implemented by the following functions:
 
 [heading:is_anonymous operation [^is_anonymous]]
 [/---------------------------------------------]

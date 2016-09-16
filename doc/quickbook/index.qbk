@@ -301,6 +301,19 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_get_member_types [link mirror.quickref.get_member_types mirror::get_member_types]]
 [def __mirror_get_base_classes [link mirror.quickref.get_base_classes mirror::get_base_classes]]
 
+[def __mirror_get_pointer [link mirror.quickref.get_pointer mirror::get_pointer]]
+[def __mirror_get_constant [link mirror.quickref.get_constant mirror::get_constant]]
+
+[def __mirror_get_base_class [link mirror.quickref.get_base_class mirror::get_base_class]]
+
+[def __mirror_get_elaborated_type_specifier [link mirror.quickref.get_elaborated_type_specifier mirror::get_elaborated_type_specifier]]
+[def __mirror_get_access_specifier [link mirror.quickref.get_access_specifier mirror::get_access_specifier]]
+[def __mirror_is_public [link mirror.quickref.is_public mirror::is_public]]
+[def __mirror_is_protected [link mirror.quickref.is_protected mirror::is_protected]]
+[def __mirror_is_private [link mirror.quickref.is_private mirror::is_private]]
+[def __mirror_is_static [link mirror.quickref.is_virtual mirror::is_static]]
+[def __mirror_is_virtual [link mirror.quickref.is_virtual mirror::is_virtual]]
+
 [/--------]
 [/Chapters]
 [/--------]

@@ -62,6 +62,28 @@
 [def __get_display_name [link puddle.quickref.meta_named_ops get_display_name]]
 
 [def __get_aliased [link puddle.quickref.meta_alias_ops get_aliased]]
+[def __get_scope [link puddle.quickref.meta_scoped_ops get_scope]]
+[def __get_type [link puddle.quickref.meta_typed_ops get_type]]
+[def __get_reflected_type [link puddle.quickref.meta_type_ops get_reflected_type]]
+
+[def __is_enum [link puddle.quickref.meta_enum_ops is_enum]]
+[def __is_scoped_enum [link puddle.quickref.meta_enum_ops is_scoped_enum]]
+[def __get_enumerators [link puddle.quickref.meta_enum_ops get_enumerators]]
+
+[def __is_class [link puddle.quickref.meta_record_ops is_class]]
+[def __is_struct [link puddle.quickref.meta_record_ops is_struct]]
+[def __is_union [link puddle.quickref.meta_record_ops is_union]]
+[def __get_base_classes [link puddle.quickref.meta_record_ops get_base_classes]]
+[def __get_member_types [link puddle.quickref.meta_record_ops get_member_types]]
+[def __get_data_members [link puddle.quickref.meta_record_ops get_data_members]]
+
+[def __get_elaborated_type_specifier [link puddle.quickref.meta_specifier_ops get_elaborated_type_specifier]]
+[def __get_access_specifier [link puddle.quickref.meta_specifier_ops get_access_specifier]]
+[def __is_public [link puddle.quickref.meta_specifier_ops is_public]]
+[def __is_protected [link puddle.quickref.meta_specifier_ops is_protected]]
+[def __is_private [link puddle.quickref.meta_specifier_ops is_private]]
+[def __is_static [link puddle.quickref.meta_specifier_ops is_static]]
+[def __is_virtual [link puddle.quickref.meta_specifier_ops is_virtual]]
 
 [/---------]
 [/Templates]

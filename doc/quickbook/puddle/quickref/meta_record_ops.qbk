@@ -12,7 +12,7 @@
 [header meta_record_ops]
 [import meta_record_ops.cpp]
 
-The structured-type metaobject-related operations are implemented by
+The structured-type-related operations are implemented by
 the following functions:
 
 [heading:is_class operation [^is_class]]

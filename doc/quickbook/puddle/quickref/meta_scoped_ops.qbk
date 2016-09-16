@@ -12,8 +12,7 @@
 [header meta_scoped_ops]
 [import meta_scoped_ops.cpp]
 
-The scope-member metaobject-related operations are implemented by the following
-functions:
+The scope-member-related operations are implemented by the following functions:
 
 [heading:get_scope operation [^get_scope]]
 [/---------------------------------------]

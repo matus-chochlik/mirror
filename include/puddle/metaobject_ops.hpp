@@ -22,7 +22,8 @@
 #include "meta_enum_ops.hpp"
 #include "meta_variable_ops.hpp"
 #include "meta_constant_ops.hpp"
-#include "specifier_ops.hpp"
+#include "meta_inheritance_ops.hpp"
+#include "meta_specifier_ops.hpp"
 
 namespace puddle {
 

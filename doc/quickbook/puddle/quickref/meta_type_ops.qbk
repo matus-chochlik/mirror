@@ -12,8 +12,7 @@
 [header meta_type_ops]
 [import meta_type_ops.cpp]
 
-The metaobject type-related operations are implemented by the following
-functions:
+The type-related operations are implemented by the following functions:
 
 [heading:get_reflected_type operation [^get_reflected_type]]
 [/---------------------------------------------------------]

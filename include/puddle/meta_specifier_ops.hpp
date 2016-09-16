@@ -32,6 +32,14 @@ noexcept
 
 template <typename X, typename = enable_if_opt_metaobject<X>>
 static constexpr inline
+auto get_access_specifier(X)
+noexcept
+{
+	return mirror::get_access_specifier<X>{};
+}
+
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
 auto is_public(X)
 noexcept
 {
@@ -52,14 +60,6 @@ auto is_private(X)
 noexcept
 {
 	return mirror::is_private<X>{};
-}
-
-template <typename X, typename = enable_if_opt_metaobject<X>>
-static constexpr inline
-auto get_access_specifier(X)
-noexcept
-{
-	return mirror::get_access_specifier<X>{};
 }
 
 template <typename X, typename = enable_if_opt_metaobject<X>>

@@ -1,0 +1,45 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=========================================]
+[section:specifier_ops Specifier operations]
+[/=========================================]
+
+[header metaobject_ops]
+
+[header meta_specifier_ops]
+[import meta_specifier_ops.cpp]
+
+The specifier operations are implemented by the following functions:
+
+[heading:get_elaborated_type_specifier operation [^get_elaborated_type_specifier]]
+[/-------------------------------------------------------------------------------]
+[puddle_op_get_elaborated_type_specifier]
+
+[heading:get_access_specifier operation [^get_access_specifier]]
+[/-------------------------------------------------------------]
+[puddle_op_get_access_specifier]
+
+[heading:is_public operation [^is_public]]
+[/---------------------------------------]
+[puddle_op_is_public]
+
+[heading:is_protected operation [^is_protected]]
+[/---------------------------------------------]
+[puddle_op_is_protected]
+
+[heading:is_private operation [^is_private]]
+[/-----------------------------------------]
+[puddle_op_is_private]
+
+[heading:is_static operation [^is_static]]
+[/---------------------------------------]
+[puddle_op_is_static]
+
+[heading:is_virtual operation [^is_virtual]]
+[/-----------------------------------------]
+[puddle_op_is_virtual]
+
+[endsect]

@@ -14,21 +14,12 @@
 #include <mirror/is_class.hpp>
 #include <mirror/is_struct.hpp>
 #include <mirror/is_union.hpp>
-#include <mirror/get_base_class.hpp>
 #include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_member_types.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
-
-template <typename X, typename = enable_if_opt_metaobject<X>>
-static constexpr inline
-auto get_base_class(X)
-noexcept
-{
-	return mirror::get_base_class<X>{};
-}
 
 template <typename X, typename = enable_if_opt_metaobject<X>>
 static constexpr inline

@@ -4,19 +4,18 @@
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
 [/==================================================]
-[section:meta_typed_ops Typed declaration operations]
+[section:meta_inheritance_ops Inheritance operations]
 [/==================================================]
 
 [header metaobject_ops]
 
-[header meta_typed_ops]
-[import meta_typed_ops.cpp]
+[header meta_inheritance_ops]
+[import meta_inheritance_ops.cpp]
 
-The typed-declaration-related operations are implemented by the following
-functions:
+The inheritance-related operations are implemented by the following functions:
 
-[heading:get_type operation [^get_type]]
-[/-------------------------------------]
-[puddle_op_get_type]
+[heading:base_class operation [^base_class]]
+[/-----------------------------------------]
+[puddle_op_get_base_class]
 
 [endsect]
