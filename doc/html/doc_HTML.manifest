@@ -111,6 +111,6 @@ puddle/quickref/operator.html
 lagoon.html
 papers.html
 papers/proposals.html
-implementation.html
-implementation/intro.html
-implementation/clang.html
+implement.html
+implement/intro.html
+implement/clang.html
