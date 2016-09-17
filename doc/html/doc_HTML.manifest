@@ -84,6 +84,9 @@ mirror/quickref/is_protected.html
 mirror/quickref/is_private.html
 mirror/quickref/is_virtual.html
 mirror/quickref/operator.html
+mirror/example.html
+mirror/example/enum_to_string.html
+mirror/example/string_to_enum.html
 puddle.html
 puddle/intro.html
 puddle/intro/hello_world.html
@@ -108,6 +111,7 @@ puddle/quickref/meta_constant_ops.html
 puddle/quickref/meta_inheritance_ops.html
 puddle/quickref/specifier_ops.html
 puddle/quickref/operator.html
+puddle/example.html
 lagoon.html
 papers.html
 papers/proposals.html
