@@ -30,6 +30,8 @@ reflexpr/quickref/c_Specifier.html
 reflexpr/quickref/c_Inheritance.html
 reflexpr/quickref/other_ops.html
 reflexpr/example.html
+reflexpr/example/enum_to_string.html
+reflexpr/example/string_to_enum.html
 mirror.html
 mirror/intro.html
 mirror/intro/hello_world.html
@@ -110,8 +112,11 @@ puddle/quickref/meta_variable_ops.html
 puddle/quickref/meta_constant_ops.html
 puddle/quickref/meta_inheritance_ops.html
 puddle/quickref/specifier_ops.html
+puddle/quickref/sequence_ops.html
 puddle/quickref/operator.html
 puddle/example.html
+puddle/example/enum_to_string.html
+puddle/example/string_to_enum.html
 lagoon.html
 papers.html
 papers/proposals.html

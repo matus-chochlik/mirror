@@ -1,0 +1,146 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>String to enum</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../example.html" title="Chapter&#160;9.&#160;Examples">
+<link rel="prev" href="enum_to_string.html" title="Enum to string">
+<link rel="next" href="../../lagoon.html" title="Part&#160;IV.&#160;Lagoon run-time reflection library">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="enum_to_string.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../lagoon.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="puddle.example.string_to_enum"></a><a class="link" href="string_to_enum.html" title="String to enum">String to enum</a>
+</h2></div></div></div>
+<p>
+          This example shows how to implement a string-to-<code class="literal">enum</code>
+          converter.
+        </p>
+<p>
+          We need to include the following headers:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">metaobject_ops</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">sequence_ops</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">reflection</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">int_const</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">stdexcept</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">map</span><span class="special">&gt;</span>
+</pre>
+<p>
+          We'll demonstrate the functionality on the following enum:
+        </p>
+<pre class="programlisting"><span class="keyword">enum</span> <span class="keyword">class</span> <span class="identifier">E</span> <span class="special">:</span> <span class="keyword">char</span>
+<span class="special">{</span>
+	<span class="identifier">a</span> <span class="special">=</span> <span class="char">'a'</span><span class="special">,</span> <span class="identifier">b</span> <span class="special">=</span> <span class="char">'b'</span><span class="special">,</span> <span class="identifier">c</span> <span class="special">=</span> <span class="char">'c'</span><span class="special">,</span> <span class="identifier">d</span> <span class="special">=</span> <span class="char">'d'</span><span class="special">,</span> <span class="identifier">e</span> <span class="special">=</span> <span class="char">'e'</span>
+<span class="special">};</span>
+</pre>
+<p>
+          The <code class="literal">string_to_enum</code> template creates a static instance
+          of a <code class="literal">std::map</code> mapping from all names of enumerators
+          of the <code class="literal">Enum</code> passed as argument to their values.
+        </p>
+<p>
+          The function call operator throws an exception if the name specified as
+          the argument is not contained in the map.
+        </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">puddle</span> <span class="special">{</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Enum</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">string_to_enum</span>
+<span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+	<span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">_eat</span><span class="special">(</span><span class="keyword">bool</span> <span class="special">...)</span> <span class="special">{</span> <span class="special">}</span>
+
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">MEC</span><span class="special">&gt;</span>
+	<span class="keyword">static</span>
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">Enum</span><span class="special">&gt;</span> <span class="identifier">_do_make_map</span><span class="special">(</span><span class="identifier">MEC</span> <span class="special">...</span> <span class="identifier">mec</span><span class="special">)</span>
+	<span class="special">{</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">Enum</span><span class="special">&gt;</span> <span class="identifier">res</span><span class="special">;</span>
+		<span class="identifier">_eat</span><span class="special">(</span><span class="identifier">res</span><span class="special">.</span><span class="identifier">emplace</span><span class="special">(</span>
+				<a class="link" href="../quickref/string.html" title="Compile-time strings">c_str</a><span class="special">(</span><a class="link" href="../quickref/meta_named_ops.html" title="Name operations">get_base_name</a><span class="special">(</span><span class="identifier">mec</span><span class="special">)),</span>
+				<a class="link" href="../quickref/int_const.html" title="Integral constants">value</a><span class="special">(</span><a class="link" href="../quickref/meta_constant_ops.html" title="Constant operations">get_constant</a><span class="special">(</span><span class="identifier">mec</span><span class="special">))</span>
+		<span class="special">).</span><span class="identifier">second</span><span class="special">...);</span>
+		<span class="keyword">return</span> <span class="identifier">res</span><span class="special">;</span>
+	<span class="special">}</span>
+
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">MEC</span><span class="special">&gt;</span>
+	<span class="keyword">static</span>
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">Enum</span><span class="special">&gt;</span> <span class="identifier">_make_map</span><span class="special">(</span><a class="link" href="../../mirror/quickref/range.html" title="Compile-time ranges">mirror::range</a><span class="special">&lt;</span><span class="identifier">MEC</span><span class="special">...&gt;)</span>
+	<span class="special">{</span>
+		<span class="keyword">return</span> <span class="identifier">_do_make_map</span><span class="special">(</span><span class="identifier">MEC</span><span class="special">{}...);</span>
+	<span class="special">}</span>
+<span class="keyword">public</span><span class="special">:</span>
+	<span class="identifier">Enum</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">s</span><span class="special">)</span> <span class="keyword">const</span>
+	<span class="special">{</span>
+		<span class="keyword">auto</span> <span class="identifier">MECs</span> <span class="special">=</span> <a class="link" href="../quickref/sequence_ops.html" title="Sequence operations">unpack</a><span class="special">(</span><a class="link" href="../quickref/meta_enum_ops.html" title="Enumeration operations">get_enumerators</a><span class="special">(</span><a class="link" href="../quickref/operator.html" title="operator PUDDLED">PUDDLED</a><span class="special">(</span><span class="identifier">Enum</span><span class="special">)));</span>
+		<span class="keyword">static</span> <span class="keyword">auto</span> <span class="identifier">m</span> <span class="special">=</span> <span class="identifier">_make_map</span><span class="special">(</span><span class="identifier">MECs</span><span class="special">);</span>
+		<span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">m</span><span class="special">.</span><span class="identifier">find</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
+		<span class="keyword">if</span><span class="special">(</span><span class="identifier">p</span> <span class="special">==</span> <span class="identifier">m</span><span class="special">.</span><span class="identifier">end</span><span class="special">())</span> <span class="special">{</span>
+			<span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span><span class="special">(</span><span class="string">"Invalid enumerator name"</span><span class="special">);</span>
+		<span class="special">}</span>
+		<span class="keyword">return</span> <span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">second</span><span class="special">;</span>
+	<span class="special">}</span>
+<span class="special">};</span>
+
+<span class="special">}</span> <span class="comment">// namespace puddle</span>
+</pre>
+<p>
+          Now let's try to print the enumerator values (converted to <code class="literal">char</code>s)
+          to standard output:
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">string_to_enum</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;</span> <span class="identifier">ste</span><span class="special">;</span>
+
+	<span class="keyword">try</span> <span class="special">{</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"a"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"b"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"c"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"d"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"e"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"f"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="special">}</span> <span class="keyword">catch</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span><span class="special">&amp;</span> <span class="identifier">e</span><span class="special">)</span> <span class="special">{</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cerr</span> <span class="special">&lt;&lt;</span> <span class="identifier">e</span><span class="special">.</span><span class="identifier">what</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="special">}</span>
+
+	<span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          The example produces the following output:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span>
+<span class="identifier">b</span>
+<span class="identifier">c</span>
+<span class="identifier">d</span>
+<span class="identifier">e</span>
+<span class="identifier">Invalid</span> <span class="identifier">enumerator</span> <span class="identifier">name</span> <a class="co" name="puddle.example.string_to_enum.c0" href="string_to_enum.html#puddle.example.string_to_enum.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="puddle.example.string_to_enum.c1"></a><a href="#puddle.example.string_to_enum.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              printed on <span class="emphasis"><em>stderr</em></span>
+            </p></td>
+</tr></table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="enum_to_string.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../lagoon.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
