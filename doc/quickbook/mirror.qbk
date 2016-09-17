@@ -114,3 +114,4 @@
 
 [include mirror/intro.qbk]
 [include mirror/quickref.qbk]
+[include mirror/example.qbk]

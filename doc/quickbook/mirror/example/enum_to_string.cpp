@@ -1,13 +1,11 @@
-/**
- * @example mirror/005_enum_to_string.cpp
- * @brief Shows how to implement a enumerator-to-string conversion
- *
+/*
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
+//[mirror_example_enum_to_string_1
 #include <mirror/get_constant.hpp>
 #include <mirror/get_base_name.hpp>
 #include <mirror/get_enumerators.hpp>
@@ -18,12 +16,14 @@
 #include <mirror/unpack.hpp>
 #include <iostream>
 #include <map>
-
+//]
+//[mirror_example_enum_to_string_2
 enum class E
 {
 	a, b, c, d, e
 };
-
+//]
+//[mirror_example_enum_to_string_3
 namespace mirror {
 
 template <typename Enum>
@@ -34,7 +34,7 @@ private:
 	struct _hlpr;
 
 	template <typename ... MEC>
-	struct _hlpr<range<MEC...>>
+	struct _hlpr<__range<MEC...>>
 	{
 		static void _eat(bool ...) { }
 
@@ -42,8 +42,8 @@ private:
 		{
 			std::map<Enum, std::string_view> res;
 			_eat(res.emplace(
-				value<get_constant<MEC>>,
-				string_view<get_base_name<MEC>>
+				__value<__get_constant<MEC>>,
+				__string_view<__get_base_name<MEC>>
 			).second...);
 			return res;
 		}
@@ -51,14 +51,15 @@ private:
 public:
 	std::string_view operator()(Enum e) const
 	{
-		using MECs = unpack<get_enumerators<MIRRORED(Enum)>>;
+		using MECs = __unpack<__get_enumerators<__MIRRORED(Enum)>>;
 		static auto m = _hlpr<MECs>::_make_map();
 		return m[e];
 	}
 };
 
 } // namespace mirror
-
+//]
+//[mirror_example_enum_to_string_4
 int main(void)
 {
 	mirror::enum_to_string<E> ets;
@@ -71,3 +72,12 @@ int main(void)
 
 	return 0;
 }
+//]
+//[mirror_example_enum_to_string_output
+a
+b
+c
+d
+e
+//]
+
