@@ -46,5 +46,6 @@ library.
 [include quickref/meta_constant_ops.qbk]
 [include quickref/meta_inheritance_ops.qbk]
 [include quickref/meta_specifier_ops.qbk]
+[include quickref/sequence_ops.qbk]
 
 [include quickref/operator.qbk]

@@ -279,6 +279,12 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_c_str [link mirror.quickref.c_str mirror::c_str]]
 [def __mirror_string_view [link mirror.quickref.string_view mirror::string_view]]
 
+[def __mirror_is_empty [link mirror.quickref.is_empty mirror::is_empty]]
+[def __mirror_size [link mirror.quickref.get_size mirror::size]]
+[def __mirror_get_size [link mirror.quickref.get_size mirror::get_size]]
+[def __mirror_get_element [link mirror.quickref.get_element mirror::get_element]]
+[def __mirror_unpack [link mirror.quickref.unpack mirror::unpack]]
+
 [def __mirror_has_source_info [link mirror.quickref.has_source_info mirror::has_source_info]]
 [def __mirror_get_source_file [link mirror.quickref.get_source_file mirror::get_source_file]]
 [def __mirror_get_source_line [link mirror.quickref.get_source_line mirror::get_source_line]]

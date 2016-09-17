@@ -1,0 +1,33 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=======================================]
+[section:sequence_ops Sequence operations]
+[/=======================================]
+
+[header sequence_ops]
+
+[import sequence_ops.cpp]
+
+The metaobject sequence, range and string operations are implemented by
+the following functions:
+
+[heading:is_empty operation [^is_empty]]
+[/-------------------------------------]
+[puddle_op_is_empty]
+
+[heading:get_size operation [^get_size]]
+[/-------------------------------------]
+[puddle_op_get_size]
+
+[heading:get_element operation [^get_element]]
+[/-------------------------------------------]
+[puddle_op_get_element]
+
+[heading:unpack operation [^unpack]]
+[/---------------------------------]
+[puddle_op_unpack]
+
+[endsect]

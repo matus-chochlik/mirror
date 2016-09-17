@@ -39,6 +39,10 @@
 [def __is_metaobject [link puddle.quickref.traits is_metaobject]]
 [def __is_metaobject_sequence [link puddle.quickref.traits is_metaobject_sequence]]
 
+[def __value [link puddle.quickref.int_const value]]
+[def __c_str [link puddle.quickref.string c_str]]
+[def __string_view [link puddle.quickref.string string_view]]
+
 [def __reflects_alias [link puddle.quickref.traits reflects_alias]]
 [def __reflects_global_scope [link puddle.quickref.traits reflects_global_scope]]
 [def __reflects_namespace [link puddle.quickref.traits reflects_namespace]]
@@ -50,6 +54,12 @@
 [def __reflects_constant [link puddle.quickref.traits reflects_constant]]
 [def __reflects_specifier [link puddle.quickref.traits reflects_specifier]]
 [def __reflects_inheritance [link puddle.quickref.traits reflects_inheritance]]
+
+[def __is_empty [link puddle.quickref.sequence_ops is_empty]]
+[def __size [link puddle.quickref.sequence_ops size]]
+[def __get_size [link puddle.quickref.sequence_ops get_size]]
+[def __get_element [link puddle.quickref.sequence_ops get_element]]
+[def __unpack [link puddle.quickref.sequence_ops unpack]]
 
 [def __has_source_info [link puddle.quickref.source_info_ops has_source_info]]
 [def __get_source_file [link puddle.quickref.source_info_ops get_source_file]]
@@ -76,6 +86,9 @@
 [def __get_base_classes [link puddle.quickref.meta_record_ops get_base_classes]]
 [def __get_member_types [link puddle.quickref.meta_record_ops get_member_types]]
 [def __get_data_members [link puddle.quickref.meta_record_ops get_data_members]]
+
+[def __get_pointer [link puddle.quickref.meta_variable_ops get_pointer]]
+[def __get_constant [link puddle.quickref.meta_constant_ops get_constant]]
 
 [def __get_elaborated_type_specifier [link puddle.quickref.meta_specifier_ops get_elaborated_type_specifier]]
 [def __get_access_specifier [link puddle.quickref.meta_specifier_ops get_access_specifier]]

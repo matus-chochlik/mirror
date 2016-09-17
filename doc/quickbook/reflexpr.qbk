@@ -161,6 +161,18 @@ reflexpr.quickref.c_ScopeMember.ops meta::get_scope]]
 [def __meta_get_scope_m [link
 reflexpr.quickref.c_ScopeMember.ops meta::get_scope_m]]
 
+[/operations Variable]
+[def __meta_get_pointer [link
+reflexpr.quickref.c_Variable.ops meta::get_pointer]]
+[def __meta_get_pointer_v [link
+reflexpr.quickref.c_Variable.ops meta::get_pointer_v]]
+
+[/operations Constant]
+[def __meta_get_constant [link
+reflexpr.quickref.c_Constant.ops meta::get_constant]]
+[def __meta_get_constant_v [link
+reflexpr.quickref.c_Constant.ops meta::get_constant_v]]
+
 [/operations Inheritance]
 [def __meta_get_base_class [link
 reflexpr.quickref.c_Inheritance.ops meta::get_base_class]]
