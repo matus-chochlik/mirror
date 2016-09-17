@@ -5,12 +5,8 @@
 #
 cmake_minimum_required(VERSION 2.8)
 
-add_custom_target(examples ALL)
-set_property(TARGET examples PROPERTY FOLDER "Examples")
+add_custom_target(examples-reflexpr)
+add_dependencies(examples examples-reflexpr)
+set_property(TARGET examples-reflexpr PROPERTY FOLDER "Examples/reflexpr")
 
-include(examples.cmake)
-
-add_subdirectory(reflexpr)
-add_subdirectory(mirror)
-add_subdirectory(puddle)
-add_subdirectory(lagoon)
+add_examples(reflexpr)
