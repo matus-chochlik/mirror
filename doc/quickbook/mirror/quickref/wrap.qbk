@@ -1,0 +1,22 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/============================================]
+[section:wrap operation [^wrap_if_not_special]]
+[/============================================]
+
+[header wrap]
+
+The [^wrap] operation wraps the type passed as the argument into
+the [^__identity] template, unless it is one of the ["special] types
+([^__none], [^__int_const], [^__range], [^__basic_string], [^__metaobject],
+[^__metaobject_sequence]) as shown in the following pseudocode.
+
+[import wrap.cpp]
+
+[mirror_op_wrap_if_not_special_1]
+[mirror_op_wrap_if_not_special_2]
+
+[endsect]

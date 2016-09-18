@@ -52,6 +52,28 @@ public:
 	}
 };
 
+template <typename Char, Char ... C>
+class for_each<basic_string<Char, C...>>
+{
+private:
+	static constexpr inline void _eat(bool ...) { }
+
+
+	template <typename Func, typename Pa>
+	static bool _single(Func& func, Pa pa)
+	{
+		func(pa);
+		return true;
+	}
+public:
+	template <typename Func>
+	static Func apply(Func func)
+	{
+		_eat(_single(func, int_const<Char, C>{})...);
+		return func;
+	}
+};
+
 } // namespace mirror
 
 #endif //include guard

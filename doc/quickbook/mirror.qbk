@@ -57,6 +57,8 @@
 [def __reflects_inheritance [link mirror.quickref.traits.reflects_inheritance reflects_inheritance]]
 
 [def __identity [link mirror.quickref.identity identity]]
+[def __wrap_if_not_special [link mirror.quickref.wrap wrap_if_not_special]]
+
 [def __value [link mirror.quickref.value value]]
 [def __c_str [link mirror.quickref.c_str c_str]]
 [def __string_view [link mirror.quickref.string_view string_view]]
@@ -64,6 +66,9 @@
 [def __concat [link mirror.quickref.concat concat]]
 [def __pop_front [link mirror.quickref.pop_front pop_front]]
 [def __push_back [link mirror.quickref.push_back push_back]]
+
+[def __for_each [link mirror.quickref.for_each for_each]]
+
 
 [def __is_empty [link mirror.quickref.is_empty is_empty]]
 [def __size [link mirror.quickref.get_size size]]

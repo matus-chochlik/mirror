@@ -34,6 +34,7 @@ library.
 [include quickref/traits.qbk]
 
 [include quickref/identity.qbk]
+[include quickref/wrap.qbk]
 
 [include quickref/value.qbk]
 [include quickref/c_str.qbk]
@@ -43,6 +44,8 @@ library.
 [include quickref/concat.qbk]
 [include quickref/pop_front.qbk]
 [include quickref/push_back.qbk]
+
+[include quickref/for_each.qbk]
 
 [include quickref/is_empty.qbk]
 [include quickref/get_size.qbk]
