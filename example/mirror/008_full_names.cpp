@@ -1,5 +1,5 @@
 /**
- * @example mirror/007_full_names.cpp
+ * @example mirror/008_full_names.cpp
  * @brief Example showing the usage of the `get_full_name` operation.
  *
  * Copyright Matus Chochlik.

@@ -16,6 +16,7 @@
 #include <mirror/get_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/get_element.hpp>
+#include <mirror/for_each.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -69,6 +70,13 @@ auto unpack(X)
 noexcept
 {
 	return mirror::unpack<X>{};
+}
+
+template <typename Rng, typename Func>
+static constexpr inline
+Func for_each(Rng, Func func)
+{
+	return mirror::for_each<Rng>::apply(func);
 }
 
 } // namespace puddle
