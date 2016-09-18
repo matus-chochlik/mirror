@@ -43,6 +43,7 @@ mirror/quickref/range.html
 mirror/quickref/none.html
 mirror/quickref/traits.html
 mirror/quickref/identity.html
+mirror/quickref/wrap.html
 mirror/quickref/value.html
 mirror/quickref/c_str.html
 mirror/quickref/string_view.html
@@ -50,6 +51,7 @@ mirror/quickref/equal.html
 mirror/quickref/concat.html
 mirror/quickref/pop_front.html
 mirror/quickref/push_back.html
+mirror/quickref/for_each.html
 mirror/quickref/is_empty.html
 mirror/quickref/get_size.html
 mirror/quickref/get_element.html
