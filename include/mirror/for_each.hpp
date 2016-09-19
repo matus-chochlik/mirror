@@ -12,6 +12,7 @@
 #define MIRROR_FOR_EACH_1105240825_HPP
 
 #include "wrap.hpp"
+#include "unpack.hpp"
 
 namespace mirror {
 
@@ -73,6 +74,11 @@ public:
 		return func;
 	}
 };
+
+template <typename S>
+class for_each<metaobject_sequence<S>>
+ : public for_each<unpack<metaobject_sequence<S>>>
+{ };
 
 } // namespace mirror
 

@@ -60,6 +60,7 @@
 [def __get_size [link puddle.quickref.sequence_ops get_size]]
 [def __get_element [link puddle.quickref.sequence_ops get_element]]
 [def __unpack [link puddle.quickref.sequence_ops unpack]]
+[def __for_each [link puddle.quickref.sequence_ops for_each]]
 
 [def __has_source_info [link puddle.quickref.source_info_ops has_source_info]]
 [def __get_source_file [link puddle.quickref.source_info_ops get_source_file]]

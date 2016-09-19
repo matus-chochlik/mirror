@@ -1,13 +1,11 @@
-/**
- * @example mirror/007_print_data_members.cpp
- * @brief Shows how to print out the values of class data members
- *
+/*
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
  * See accompanying file LICENSE_1_0.txt or copy at
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
+//[mirror_example_print_data_members_1
 #include <mirror/for_each.hpp>
 #include <mirror/get_pointer.hpp>
 #include <mirror/get_type.hpp>
@@ -20,7 +18,8 @@
 #include <mirror/range.hpp>
 #include <mirror/unpack.hpp>
 #include <iostream>
-
+//]
+//[mirror_example_print_data_members_2
 struct S {
 	static const int a = -321;
 	bool b;
@@ -30,7 +29,8 @@ struct S {
 };
 
 const int S::a;
-
+//]
+//[mirror_example_print_data_members_3
 namespace mirror {
 
 template <typename T>
@@ -42,24 +42,24 @@ private:
 		T& v;
 
 		template <typename MO>
-		void _print_value(MO, true_/*is_static*/) const
+		void _print_value(MO, __true_/*is_static*/) const
 		{
-			out << (*value<get_pointer<MO>>);
+			out << (*__value<__get_pointer<MO>>);
 		}
 
 		template <typename MO>
-		void _print_value(MO, false_/*is_static*/) const
+		void _print_value(MO, __false_/*is_static*/) const
 		{
-			out << (v.*value<get_pointer<MO>>);
+			out << (v.*__value<__get_pointer<MO>>);
 		}
 
 		template <typename MO>
 		void operator()(MO mo) const
 		{
-			if(value<is_static<MO>>) {
+			if(__value<__is_static<MO>>) {
 				out << "static ";
 			}
-			out << c_str<get_base_name<get_type<MO>>>;
+			out << __c_str<__get_base_name<__get_type<MO>>>;
 			out << " ";
 			out << c_str<get_base_name<MO>>;
 			out << " = ";
@@ -70,17 +70,18 @@ private:
 public:
 	std::ostream& operator()(std::ostream& out, S& v) const
 	{
-		using MDMs = get_data_members<MIRRORED(T)>;
+		using MDMs = __unpack<__get_data_members<__MIRRORED(T)>>;
 		_printer print{out, v};
 
-		for_each<MDMs>::apply(print);
+		__for_each<MDMs>::apply(print);
 
 		return out;
 	}
 };
 
 } // namespace mirror
-
+//]
+//[mirror_example_print_data_members_4
 int main(void)
 {
 	mirror::print_data_members<S> pdm;
@@ -92,4 +93,18 @@ int main(void)
 	pdm(std::cout, y) << std::endl;
 
 	return 0;
-}
+}//]
+//[mirror_example_print_data_members_output
+static int a = -321
+bool b = 0
+char c = X
+double d = 1234.56
+float e = 78.9
+
+static int a = -321
+bool b = 1
+char c = Y
+double d = 11.1111
+float e = 2222.22
+//]
+

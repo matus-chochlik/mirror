@@ -4,7 +4,7 @@
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
 [/=========================================]
-[section:specifier_ops Specifier operations]
+[section:meta_specifier_ops Specifier operations]
 [/=========================================]
 
 [header metaobject_ops]

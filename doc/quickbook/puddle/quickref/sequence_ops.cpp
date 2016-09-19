@@ -28,8 +28,14 @@ __mirror_get_element<X, I> get_element(X, I)
 noexcept;
 //]
 //[puddle_op_unpack
-template <typename X, typename = enable_if_opt_metaobject_sequence<X>>
+template <typename X>
 static constexpr inline
 __mirror_unpack<X> unpack(X)
+noexcept;
+//]
+//[puddle_op_for_each
+template <typename X>
+static constexpr inline
+__mirror_for_each<X> for_each(X)
 noexcept;
 //]
