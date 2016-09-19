@@ -91,6 +91,7 @@ mirror/quickref/operator.html
 mirror/example.html
 mirror/example/enum_to_string.html
 mirror/example/string_to_enum.html
+mirror/example/print_data_members.html
 puddle.html
 puddle/intro.html
 puddle/intro/hello_world.html
@@ -113,12 +114,13 @@ puddle/quickref/meta_record_ops.html
 puddle/quickref/meta_variable_ops.html
 puddle/quickref/meta_constant_ops.html
 puddle/quickref/meta_inheritance_ops.html
-puddle/quickref/specifier_ops.html
+puddle/quickref/meta_specifier_ops.html
 puddle/quickref/sequence_ops.html
 puddle/quickref/operator.html
 puddle/example.html
 puddle/example/enum_to_string.html
 puddle/example/string_to_enum.html
+puddle/example/print_data_members.html
 lagoon.html
 papers.html
 papers/proposals.html
