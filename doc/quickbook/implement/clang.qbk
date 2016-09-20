@@ -14,3 +14,4 @@ A fork of the __clang__ frontend for __llvm__ implementing the proposed
 [@https://github.com/matus-chochlik/clang/tree/reflexpr [^reflexpr]] branch.
 
 [include clang/get_started.qbk]
+[include clang/description.qbk]

@@ -41,6 +41,9 @@
 
 [def __std_meta [link reflexpr.quickref.ns_meta std::meta]]
 
+[def __std_is_metaobject [link reflexpr.quickref.is_metaobject std::is_metaobject]]
+[def __std_is_metaobject_v [link reflexpr.quickref.is_metaobject std::is_metaobject_v]]
+
 [/basic metaobject concepts]
 [def __std_meta_Object [link
 reflexpr.quickref.c_Object std::meta::Object]]
@@ -191,11 +194,29 @@ reflexpr.quickref.c_Record.ops std::meta::get_data_members]]
 [def __std_meta_get_data_members_m [link
 reflexpr.quickref.c_Record.ops std::meta::get_data_members_m]]
 
+[/basic metaobject operations Class]
+[def __std_meta_get_base_classes [link
+reflexpr.quickref.c_Class.ops std::meta::get_base_classes]]
+[def __std_meta_get_base_classes_m [link
+reflexpr.quickref.c_Class.ops std::meta::get_base_classes_m]]
+
 [/basic metaobject operations ScopeMember]
 [def __std_meta_get_scope [link
 reflexpr.quickref.c_ScopeMember.ops std::meta::get_scope]]
 [def __std_meta_get_scope_m [link
 reflexpr.quickref.c_ScopeMember.ops std::meta::get_scope_m]]
+
+[/basic metaobject operations Variable]
+[def __std_meta_get_pointer [link
+reflexpr.quickref.c_Variable.ops std::meta::get_pointer]]
+[def __std_meta_get_pointer_v [link
+reflexpr.quickref.c_Variable.ops std::meta::get_pointer_v]]
+
+[/basic metaobject operations Constant]
+[def __std_meta_get_constant [link
+reflexpr.quickref.c_Constant.ops std::meta::get_constant]]
+[def __std_meta_get_constant_v [link
+reflexpr.quickref.c_Constant.ops std::meta::get_constant_v]]
 
 [/basic metaobject operations Inheritance]
 [def __std_meta_get_base_class [link
