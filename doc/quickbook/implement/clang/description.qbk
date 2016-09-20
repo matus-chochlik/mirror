@@ -160,8 +160,8 @@ struct get_base_name
 ``
 
 There is also the [^__std_meta_get_reflected_type] operation which instead
-of a compile-time constant value, yields a type. This operation is implemented
-by the [^__unrefltype] built-in operator:
+of a compile-time constant ['value], yields a ['type].
+This operation is implemented by the [^__unrefltype] built-in operator:
 
 ``
 unspecified-type __unrefltype(__metaobject_id);
