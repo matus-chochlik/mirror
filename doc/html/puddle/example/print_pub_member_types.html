@@ -1,0 +1,161 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Print public class member types</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../example.html" title="Chapter&#160;9.&#160;Examples">
+<link rel="prev" href="print_pub_data_members.html" title="Print public class data members">
+<link rel="next" href="../../lagoon.html" title="Part&#160;IV.&#160;Lagoon run-time reflection library">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="print_pub_data_members.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../lagoon.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="puddle.example.print_pub_member_types"></a><a class="link" href="print_pub_member_types.html" title="Print public class member types">Print public
+        class member types</a>
+</h2></div></div></div>
+<p>
+          This example shows how to iterate and print the names of all or public-only
+          class member types.
+        </p>
+<p>
+          We need to include the following headers:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">metaobject_ops</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">sequence_ops</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">reflection</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">int_const</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">puddle</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+</pre>
+<p>
+          We'll demonstrate the functionality on the following classes:
+        </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">S</span> <span class="special">{</span>
+	<span class="keyword">struct</span> <span class="identifier">a</span> <span class="special">{</span> <span class="special">};</span>
+	<span class="keyword">typedef</span> <span class="keyword">int</span> <span class="identifier">b</span><span class="special">;</span>
+	<span class="keyword">using</span> <span class="identifier">c</span> <span class="special">=</span> <span class="keyword">char</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">class</span> <span class="identifier">C</span> <span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+	<span class="keyword">struct</span> <span class="identifier">_x</span> <span class="special">{</span> <span class="special">};</span>
+<span class="keyword">protected</span><span class="special">:</span>
+	<span class="keyword">typedef</span> <span class="keyword">const</span> <span class="identifier">_x</span> <span class="identifier">_y</span><span class="special">;</span>
+<span class="keyword">public</span><span class="special">:</span>
+	<span class="keyword">using</span> <span class="identifier">z</span> <span class="special">=</span> <span class="identifier">_y</span><span class="special">*;</span>
+<span class="special">};</span>
+</pre>
+<p>
+          The <code class="literal">print_pub_member_types</code> template uses the <code class="literal"><a class="link" href="../quickref/sequence_ops.html" title="Sequence operations">for_each</a></code> operation
+          to traverse the sequence of metaobjects reflecting class data members and
+          the other metaobject operations to get the required metadata.
+        </p>
+<p>
+          The difference between <code class="literal"><a class="link" href="../quickref/meta_record_ops.html" title="Structured type operations">get_member_types</a></code>
+          and <code class="literal"><a class="link" href="../quickref/meta_record_ops.html" title="Structured type operations">get_public_member_types</a></code>
+          is that the latter returns a metaobject sequence containing only public
+          class member types.
+        </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">puddle</span> <span class="special">{</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">print_member_types</span>
+<span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+	<span class="keyword">struct</span> <span class="identifier">_printer</span> <span class="special">{</span>
+		<span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">out</span><span class="special">;</span>
+
+		<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">MO</span><span class="special">&gt;</span>
+		<span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">MO</span> <span class="identifier">mo</span><span class="special">)</span> <span class="keyword">const</span>
+		<span class="special">{</span>
+			<span class="identifier">out</span> <span class="special">&lt;&lt;</span> <span class="identifier">c_str</span><span class="special">(</span><span class="identifier">get_base_name</span><span class="special">(</span><span class="identifier">mo</span><span class="special">));</span>
+			<span class="keyword">if</span><span class="special">(</span><span class="identifier">reflects_alias</span><span class="special">(</span><span class="identifier">mo</span><span class="special">))</span>
+			<span class="special">{</span>
+				<span class="identifier">out</span> <span class="special">&lt;&lt;</span> <span class="string">" -&gt; "</span><span class="special">;</span>
+				<span class="identifier">out</span> <span class="special">&lt;&lt;</span> <span class="identifier">c_str</span><span class="special">(</span><span class="identifier">get_full_name</span><span class="special">(</span><span class="identifier">get_aliased</span><span class="special">(</span><span class="identifier">mo</span><span class="special">)));</span>
+			<span class="special">}</span>
+			<span class="identifier">out</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+		<span class="special">}</span>
+	<span class="special">};</span>
+<span class="keyword">public</span><span class="special">:</span>
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">out</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">all</span><span class="special">)</span> <span class="keyword">const</span>
+	<span class="special">{</span>
+		<span class="identifier">_printer</span> <span class="identifier">print</span><span class="special">{</span><span class="identifier">out</span><span class="special">};</span>
+
+		<span class="keyword">auto</span> <span class="identifier">MT</span> <span class="special">=</span> <span class="identifier">PUDDLED</span><span class="special">(</span><span class="identifier">T</span><span class="special">);</span>
+
+		<span class="keyword">if</span><span class="special">(</span><span class="identifier">all</span><span class="special">)</span> <span class="special">{</span>
+			<span class="identifier">for_each</span><span class="special">(</span><span class="identifier">get_member_types</span><span class="special">(</span><span class="identifier">MT</span><span class="special">),</span> <span class="identifier">print</span><span class="special">);</span>
+		<span class="special">}</span> <span class="keyword">else</span> <span class="special">{</span>
+			<span class="identifier">for_each</span><span class="special">(</span><span class="identifier">get_public_member_types</span><span class="special">(</span><span class="identifier">MT</span><span class="special">),</span> <span class="identifier">print</span><span class="special">);</span>
+		<span class="special">}</span>
+		<span class="keyword">return</span> <span class="identifier">out</span><span class="special">;</span>
+	<span class="special">}</span>
+<span class="special">};</span>
+
+<span class="special">}</span> <span class="comment">// namespace puddle</span>
+</pre>
+<p>
+          Let's try the printer on instances of <code class="literal">S</code> and <code class="literal">C</code>.
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">print_S</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">print_member_types</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">void</span> <span class="identifier">print_C</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">print_member_types</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">print_S</span><span class="special">();</span>
+	<span class="identifier">print_C</span><span class="special">();</span>
+
+	<span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          Running the example produces the following output:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span>
+<span class="identifier">b</span> <span class="special">-&gt;</span> <span class="keyword">int</span>
+<span class="identifier">c</span> <span class="special">-&gt;</span> <span class="keyword">char</span>
+
+<span class="identifier">a</span>
+<span class="identifier">b</span> <span class="special">-&gt;</span> <span class="keyword">int</span>
+<span class="identifier">c</span> <span class="special">-&gt;</span> <span class="keyword">char</span>
+
+<span class="identifier">_x</span>
+<span class="identifier">_y</span> <span class="special">-&gt;</span> <span class="special">::</span><span class="identifier">C</span><span class="special">::</span><span class="identifier">_x</span> <span class="keyword">const</span>
+<span class="identifier">z</span> <span class="special">-&gt;</span> <span class="special">::</span><span class="identifier">C</span><span class="special">::</span><span class="identifier">_x</span> <span class="keyword">const</span><span class="special">*</span>
+
+<span class="identifier">z</span> <span class="special">-&gt;</span> <span class="special">::</span><span class="identifier">C</span><span class="special">::</span><span class="identifier">_x</span> <span class="keyword">const</span><span class="special">*</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="print_pub_data_members.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../lagoon.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

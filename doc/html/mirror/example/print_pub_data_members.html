@@ -1,26 +1,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Print class data members</title>
+<title>Print public class data members</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="cpp-reflection">
 <link rel="up" href="../example.html" title="Chapter&#160;6.&#160;Examples">
-<link rel="prev" href="string_to_enum.html" title="String to enum">
-<link rel="next" href="print_pub_data_members.html" title="Print public class data members">
+<link rel="prev" href="print_data_members.html" title="Print class data members">
+<link rel="next" href="print_pub_member_types.html" title="Print public class member types">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="spirit-nav">
-<a accesskey="p" href="string_to_enum.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="print_pub_data_members.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="print_data_members.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="print_pub_member_types.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="mirror.example.print_data_members"></a><a class="link" href="print_data_members.html" title="Print class data members">Print class data
-        members</a>
+<a name="mirror.example.print_pub_data_members"></a><a class="link" href="print_pub_data_members.html" title="Print public class data members">Print public
+        class data members</a>
 </h2></div></div></div>
 <p>
           This example shows how to iterate and print the types, names and values
-          of class data members.
+          of all or public-only class data members.
         </p>
 <p>
           We need to include the following headers:
@@ -30,6 +30,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">get_type</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">get_base_name</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">get_data_members</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">get_public_data_members</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">is_static</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">c_str</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">value</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -39,7 +40,7 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 </pre>
 <p>
-          We'll demonstrate the functionality on the following structure:
+          We'll demonstrate the functionality on the following classes:
         </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">S</span> <span class="special">{</span>
 	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">a</span> <span class="special">=</span> <span class="special">-</span><span class="number">321</span><span class="special">;</span>
@@ -50,16 +51,41 @@
 <span class="special">};</span>
 
 <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">S</span><span class="special">::</span><span class="identifier">a</span><span class="special">;</span>
+
+<span class="keyword">class</span> <span class="identifier">C</span> <span class="special">{</span>
+<span class="keyword">private</span><span class="special">:</span>
+	<span class="keyword">int</span> <span class="identifier">_a</span><span class="special">;</span>
+	<span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">_b</span><span class="special">;</span>
+<span class="keyword">protected</span><span class="special">:</span>
+	<span class="keyword">const</span> <span class="keyword">char</span> <span class="identifier">_c</span><span class="special">;</span>
+<span class="keyword">public</span><span class="special">:</span>
+	<span class="keyword">double</span> <span class="identifier">d</span><span class="special">;</span>
+	<span class="keyword">float</span> <span class="identifier">e</span><span class="special">;</span>
+
+	<span class="identifier">C</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">char</span> <span class="identifier">c</span><span class="special">,</span> <span class="keyword">double</span> <span class="identifier">_d</span><span class="special">,</span> <span class="keyword">float</span> <span class="identifier">_e</span><span class="special">)</span>
+	 <span class="special">:</span> <span class="identifier">_a</span><span class="special">(</span><span class="identifier">a</span><span class="special">),</span> <span class="identifier">_c</span><span class="special">(</span><span class="identifier">c</span><span class="special">),</span> <span class="identifier">d</span><span class="special">(</span><span class="identifier">_d</span><span class="special">),</span> <span class="identifier">e</span><span class="special">(</span><span class="identifier">_e</span><span class="special">)</span>
+	<span class="special">{</span> <span class="special">}</span>
+
+	<span class="keyword">int</span> <span class="identifier">get_a</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">_a</span><span class="special">;</span> <span class="special">}</span>
+<span class="special">};</span>
+
+<span class="keyword">bool</span> <span class="identifier">C</span><span class="special">::</span><span class="identifier">_b</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
 </pre>
 <p>
-          The <code class="literal">print_data_members</code> template uses the <code class="literal"><a class="link" href="../quickref/for_each.html" title="operation for_each">for_each</a></code> operation
+          The <code class="literal">print_pub_data_members</code> template uses the <code class="literal"><a class="link" href="../quickref/for_each.html" title="operation for_each">for_each</a></code> operation
           to traverse the sequence of metaobjects reflecting class data members and
           the other metaobject operations to get the required metadata.
+        </p>
+<p>
+          The difference between <code class="literal"><a class="link" href="../quickref/get_data_members.html" title="operation get_data_members">get_data_members</a></code>
+          and <code class="literal"><a class="link" href="../quickref/get_public_data_members.html" title="operation get_public_data_members">get_public_data_members</a></code>
+          is that the latter returns a metaobject sequence containing only public
+          class data members.
         </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">mirror</span> <span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">print_data_members</span>
+<span class="keyword">class</span> <span class="identifier">print_pub_data_members</span>
 <span class="special">{</span>
 <span class="keyword">private</span><span class="special">:</span>
 	<span class="keyword">struct</span> <span class="identifier">_printer</span> <span class="special">{</span>
@@ -95,10 +121,16 @@
 <span class="keyword">public</span><span class="special">:</span>
 	<span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">out</span><span class="special">,</span> <span class="identifier">S</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">)</span> <span class="keyword">const</span>
 	<span class="special">{</span>
-		<span class="keyword">using</span> <span class="identifier">MDMs</span> <span class="special">=</span> <a class="link" href="../quickref/unpack.html" title="operation unpack">unpack</a><span class="special">&lt;</span><a class="link" href="../quickref/get_data_members.html" title="operation get_data_members">get_data_members</a><span class="special">&lt;</span><a class="link" href="../quickref/operator.html" title="operator MIRRORED">MIRRORED</a><span class="special">(</span><span class="identifier">T</span><span class="special">)&gt;&gt;;</span>
 		<span class="identifier">_printer</span> <span class="identifier">print</span><span class="special">{</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">v</span><span class="special">};</span>
 
-		<a class="link" href="../quickref/for_each.html" title="operation for_each">for_each</a><span class="special">&lt;</span><span class="identifier">MDMs</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">(</span><span class="identifier">print</span><span class="special">);</span>
+		<span class="keyword">using</span> <span class="identifier">MT</span> <span class="special">=</span> <a class="link" href="../quickref/operator.html" title="operator MIRRORED">MIRRORED</a><span class="special">(</span><span class="identifier">T</span><span class="special">);</span>
+
+		<span class="keyword">if</span><span class="special">(</span><span class="identifier">all</span><span class="special">)</span> <span class="special">{</span>
+			<a class="link" href="../quickref/for_each.html" title="operation for_each">for_each</a><span class="special">&lt;</span><a class="link" href="../quickref/get_data_members.html" title="operation get_data_members">get_data_members</a><span class="special">&lt;</span><span class="identifier">MT</span><span class="special">&gt;&gt;::</span><span class="identifier">apply</span><span class="special">(</span><span class="identifier">print</span><span class="special">);</span>
+		<span class="special">}</span> <span class="keyword">else</span> <span class="special">{</span>
+			<span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="../quickref/get_public_data_members.html" title="operation get_public_data_members">get_public_data_members</a><span class="special">&lt;</span><span class="identifier">MT</span><span class="special">&gt;&gt;::</span><span class="identifier">apply</span><span class="special">(</span><span class="identifier">print</span><span class="special">);</span>
+		<span class="special">}</span>
+		<span class="keyword">return</span> <span class="identifier">out</span><span class="special">;</span>
 
 		<span class="keyword">return</span> <span class="identifier">out</span><span class="special">;</span>
 	<span class="special">}</span>
@@ -107,17 +139,37 @@
 <span class="special">}</span> <span class="comment">// namespace mirror</span>
 </pre>
 <p>
-          Let's try the printer on two instances of the <code class="literal">S</code> structure.
+          Let's try the printer on two instances of the <code class="literal">S</code> structure
+          and two instances of the <code class="literal">C</code> class.
         </p>
-<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">print_S</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
 	<span class="identifier">mirror</span><span class="special">::</span><span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
 
 	<span class="identifier">S</span> <span class="identifier">x</span> <span class="special">=</span> <span class="special">{</span><span class="keyword">false</span><span class="special">,</span> <span class="char">'X'</span><span class="special">,</span> <span class="number">1234.56</span><span class="special">,</span> <span class="number">78.9f</span><span class="special">};</span>
 	<span class="identifier">S</span> <span class="identifier">y</span> <span class="special">=</span> <span class="special">{</span><span class="keyword">true</span><span class="special">,</span> <span class="char">'Y'</span><span class="special">,</span> <span class="number">11.1111</span><span class="special">,</span> <span class="number">2222.22f</span><span class="special">};</span>
 
-	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">y</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">y</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">void</span> <span class="identifier">print_C</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">mirror</span><span class="special">::</span><span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+
+	<span class="identifier">C</span> <span class="identifier">x</span><span class="special">(</span><span class="number">0</span><span class="special">,</span> <span class="char">'A'</span><span class="special">,</span> <span class="number">2345.67</span><span class="special">,</span> <span class="number">8.9f</span><span class="special">);</span>
+	<span class="identifier">C</span> <span class="identifier">y</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="char">'B'</span><span class="special">,</span> <span class="number">22.2222</span><span class="special">,</span> <span class="number">3333.33f</span><span class="special">);</span>
+
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">x</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">y</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="identifier">y</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">print_S</span><span class="special">();</span>
+	<span class="identifier">print_C</span><span class="special">();</span>
 
 	<span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
@@ -136,6 +188,24 @@
 <span class="keyword">char</span> <span class="identifier">c</span> <span class="special">=</span> <span class="identifier">Y</span>
 <span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">11.1111</span>
 <span class="keyword">float</span> <span class="identifier">e</span> <span class="special">=</span> <span class="number">2222.22</span>
+
+<span class="keyword">int</span> <span class="identifier">_a</span> <span class="special">=</span> <span class="number">0</span>
+<span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">_b</span> <span class="special">=</span> <span class="number">0</span>
+<span class="keyword">char</span> <span class="identifier">_c</span> <span class="special">=</span> <span class="identifier">A</span>
+<span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">2345.67</span>
+<span class="keyword">float</span> <span class="identifier">e</span> <span class="special">=</span> <span class="number">8.9</span>
+
+<span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">2345.67</span>
+<span class="keyword">float</span> <span class="identifier">e</span> <span class="special">=</span> <span class="number">8.9</span>
+
+<span class="keyword">int</span> <span class="identifier">_a</span> <span class="special">=</span> <span class="number">1</span>
+<span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">_b</span> <span class="special">=</span> <span class="number">0</span>
+<span class="keyword">char</span> <span class="identifier">_c</span> <span class="special">=</span> <span class="identifier">B</span>
+<span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">22.2222</span>
+<span class="keyword">float</span> <span class="identifier">e</span> <span class="special">=</span> <span class="number">3333.33</span>
+
+<span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">22.2222</span>
+<span class="keyword">float</span> <span class="identifier">e</span> <span class="special">=</span> <span class="number">3333.33</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -148,7 +218,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="string_to_enum.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="print_pub_data_members.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="print_data_members.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="print_pub_member_types.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

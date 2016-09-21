@@ -6,12 +6,12 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="cpp-reflection">
 <link rel="up" href="../quickref.html" title="Chapter&#160;5.&#160;Quick reference">
-<link rel="prev" href="get_member_types.html" title="operation get_member_types">
-<link rel="next" href="get_base_classes.html" title="operation get_base_classes">
+<link rel="prev" href="get_public_member_types.html" title="operation get_public_member_types">
+<link rel="next" href="get_public_data_members.html" title="operation get_public_data_members">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="spirit-nav">
-<a accesskey="p" href="get_member_types.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="get_base_classes.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="get_public_member_types.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="get_public_data_members.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -22,8 +22,9 @@
         </p>
 <p>
           The <code class="literal">get_data_members</code> operation returns a <code class="literal"><a class="link" href="metaobject.html" title="Metaobjects">metaobject_sequence</a></code>
-          containing the metaobjects reflecting the data members of the class, structure
-          or union, reflected by the argument, as shown on the following pseudocode.
+          containing the metaobjects reflecting all data members (including the private
+          and protected ones) of the class, structure or union, reflected by the
+          argument, as shown on the following pseudocode.
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Record.html" title="Record">std::meta::Record</a> <span class="identifier">R</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">get_data_members</span><span class="special">&lt;</span><a class="link" href="metaobject.html" title="Metaobjects">metaobject</a><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;&gt;</span>
@@ -62,7 +63,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="get_member_types.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="get_base_classes.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="get_public_member_types.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="get_public_data_members.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

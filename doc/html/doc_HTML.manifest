@@ -75,7 +75,9 @@ mirror/quickref/is_enum.html
 mirror/quickref/is_scoped_enum.html
 mirror/quickref/get_enumerators.html
 mirror/quickref/get_member_types.html
+mirror/quickref/get_public_member_types.html
 mirror/quickref/get_data_members.html
+mirror/quickref/get_public_data_members.html
 mirror/quickref/get_base_classes.html
 mirror/quickref/get_scope.html
 mirror/quickref/get_pointer.html
@@ -92,6 +94,8 @@ mirror/example.html
 mirror/example/enum_to_string.html
 mirror/example/string_to_enum.html
 mirror/example/print_data_members.html
+mirror/example/print_pub_data_members.html
+mirror/example/print_pub_member_types.html
 puddle.html
 puddle/intro.html
 puddle/intro/hello_world.html
@@ -121,6 +125,8 @@ puddle/example.html
 puddle/example/enum_to_string.html
 puddle/example/string_to_enum.html
 puddle/example/print_data_members.html
+puddle/example/print_pub_data_members.html
+puddle/example/print_pub_member_types.html
 lagoon.html
 papers.html
 papers/proposals.html

@@ -42,15 +42,35 @@
 <span class="keyword">using</span> <span class="identifier">get_member_types_m</span>
  <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_member_types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
 
+<span class="comment">// get_public_member_types</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Record.html" title="Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_public_member_types</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.c_Record.c2" href="c_Record.html#reflexpr.quickref.c_Record.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Record.html" title="Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_public_member_types_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_public_member_types</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+
 <span class="comment">// get_data_members</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Record.html" title="Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">get_data_members</span> <span class="special">{</span>
-	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.c_Record.c2" href="c_Record.html#reflexpr.quickref.c_Record.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.c_Record.c4" href="c_Record.html#reflexpr.quickref.c_Record.c5"><img src="../../images/callouts/3.png" alt="3" border="0"></a>
 <span class="special">};</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Record.html" title="Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">get_data_members_m</span>
  <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_data_members</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+
+<span class="comment">// get_public_data_members</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Record.html" title="Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_public_data_members</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.c_Record.c6" href="c_Record.html#reflexpr.quickref.c_Record.c7"><img src="../../images/callouts/4.png" alt="4" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Record.html" title="Record">Record</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_public_data_members_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_public_data_members</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
 </pre>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
@@ -59,9 +79,9 @@
               A <code class="literal">meta::<a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a></code>
               containing <code class="literal">meta::<a class="link" href="c_RecordMember.html" title="RecordMember">RecordMember</a></code>,
               <code class="literal">meta::<a class="link" href="c_Type.html" title="Type">Type</a></code>
-              metaobjects reflecting the individual member types of the <code class="literal">class</code>,
-              <code class="literal">struct</code> or <code class="literal">union</code> reflected by
-              <code class="literal">T</code>.
+              metaobjects reflecting the individual member types (all of them including
+              the private and protected ones) of the <code class="literal">class</code>, <code class="literal">struct</code>
+              or <code class="literal">union</code> reflected by <code class="literal">T</code>.
             </p></td>
 </tr>
 <tr>
@@ -69,8 +89,30 @@
 <td valign="top" align="left"><p>
               A <code class="literal">meta::<a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a></code>
               containing <code class="literal">meta::<a class="link" href="c_RecordMember.html" title="RecordMember">RecordMember</a></code>,
+              <code class="literal">meta::<a class="link" href="c_Type.html" title="Type">Type</a></code>
+              metaobjects reflecting only the public member types of the <code class="literal">class</code>,
+              <code class="literal">struct</code> or <code class="literal">union</code> reflected by
+              <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Record.c5"></a><a href="#reflexpr.quickref.c_Record.c4"><img src="../../images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="c_RecordMember.html" title="RecordMember">RecordMember</a></code>,
               <code class="literal">meta::<a class="link" href="c_Variable.html" title="Variable">Variable</a></code>
-              metaobjects reflecting the individual data members of the <code class="literal">class</code>,
+              metaobjects reflecting the individual data members (all including the
+              private and protected ones) of the <code class="literal">class</code>, <code class="literal">struct</code>
+              or <code class="literal">union</code> reflected by <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Record.c7"></a><a href="#reflexpr.quickref.c_Record.c6"><img src="../../images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="c_RecordMember.html" title="RecordMember">RecordMember</a></code>,
+              <code class="literal">meta::<a class="link" href="c_Variable.html" title="Variable">Variable</a></code>
+              metaobjects reflecting only the public data members of the <code class="literal">class</code>,
               <code class="literal">struct</code> or <code class="literal">union</code> reflected by
               <code class="literal">T</code>.
             </p></td>
