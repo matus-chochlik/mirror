@@ -69,6 +69,7 @@ using std::meta::is_union;
 
 using std::meta::get_enumerators;
 using std::meta::get_member_types;
+using std::meta::get_public_member_types;
 using std::meta::get_data_members;
 using std::meta::get_public_data_members;
 using std::meta::get_base_classes;

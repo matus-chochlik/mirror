@@ -18,6 +18,7 @@
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_public_data_members.hpp>
 #include <mirror/get_member_types.hpp>
+#include <mirror/get_public_member_types.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -76,6 +77,14 @@ auto get_member_types(X)
 noexcept
 {
 	return mirror::get_member_types<X>{};
+}
+
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
+auto get_public_member_types(X)
+noexcept
+{
+	return mirror::get_public_member_types<X>{};
 }
 
 } // namespace puddle

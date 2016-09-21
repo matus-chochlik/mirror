@@ -1,5 +1,5 @@
 /**
- * @example mirror/010_print_data_members.cpp
+ * @example mirror/014_print_data_members.cpp
  * @brief Shows how to print out the values of class data members
  *
  * Copyright Matus Chochlik.

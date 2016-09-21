@@ -282,6 +282,10 @@ struct get_enumerators;
 template <typename X>
 struct get_member_types;
 
+// get_public_member_types
+template <typename X>
+struct get_public_member_types;
+
 // get_data_members
 template <typename X>
 struct get_data_members;
