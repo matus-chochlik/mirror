@@ -449,6 +449,7 @@ struct get_member_types {
 	using type = __ObjectSequence; /*<
 	A [^meta::__ObjectSequence] containing [^meta::__RecordMember],
 	[^meta::__Type] metaobjects reflecting the individual member types
+	(all of them including the private and protected ones)
 	of the [^class], [^struct] or [^union] reflected by [^T].
 	>*/
 };
@@ -457,19 +458,48 @@ template <__Record T>
 using get_member_types_m
  = typename get_member_types<T>::type;
 
+// get_public_member_types
+template <__Record T>
+struct get_public_member_types {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__RecordMember],
+	[^meta::__Type] metaobjects reflecting only the public member types
+	of the [^class], [^struct] or [^union] reflected by [^T].
+	>*/
+};
+
+template <__Record T>
+using get_public_member_types_m
+ = typename get_public_member_types<T>::type;
+
 // get_data_members
 template <__Record T>
 struct get_data_members {
 	using type = __ObjectSequence; /*<
 	A [^meta::__ObjectSequence] containing [^meta::__RecordMember],
 	[^meta::__Variable] metaobjects reflecting the individual data
-	members of the [^class], [^struct] or [^union] reflected by [^T].
+	members (all including the private and protected ones)
+	of the [^class], [^struct] or [^union] reflected by [^T].
 	>*/
 };
 
 template <__Record T>
 using get_data_members_m
  = typename get_data_members<T>::type;
+
+// get_public_data_members
+template <__Record T>
+struct get_public_data_members {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__RecordMember],
+	[^meta::__Variable] metaobjects reflecting only the public data
+	members of the [^class], [^struct] or [^union] reflected by [^T].
+	>*/
+};
+
+template <__Record T>
+using get_public_data_members_m
+ = typename get_public_data_members<T>::type;
 //]
 
 //[reflexpr_header_operations_Class

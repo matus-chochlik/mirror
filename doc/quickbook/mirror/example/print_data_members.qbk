@@ -3,9 +3,9 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[/============================================]
-[section:print_data_members Print data members]
-[/============================================]
+[/==================================================]
+[section:print_data_members Print class data members]
+[/==================================================]
 
 This example shows how to iterate and print the types, names and values
 of class data members.

@@ -1,0 +1,25 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================================================]
+[section:get_public_member_types operation [^get_public_member_types]]
+[/===================================================================]
+
+[header get_public_member_types]
+
+The [^get_public_member_types] operation returns a [^__metaobject_sequence]
+containing metaobjects reflecting the public member types of the class,
+structure or union, reflected by the argument,
+as shown on the following pseudocode.
+
+[import get_public_member_types.cpp]
+
+[mirror_op_get_public_member_types]
+
+[note If the argument is not a wrapped [^__std_meta_Record] then
+the result is is [^__none].
+]
+
+[endsect]

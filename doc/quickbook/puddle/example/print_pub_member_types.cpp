@@ -1,0 +1,111 @@
+/*
+ * Copyright Matus Chochlik.
+ * Distributed under the Boost Software License, Version 1.0.
+ * See accompanying file LICENSE_1_0.txt or copy at
+ *  http://www.boost.org/LICENSE_1_0.txt
+ */
+
+//[puddle_example_print_pub_member_types_1
+#include <puddle/metaobject_ops.hpp>
+#include <puddle/sequence_ops.hpp>
+#include <puddle/reflection.hpp>
+#include <puddle/int_const.hpp>
+#include <puddle/string.hpp>
+#include <iostream>
+//]
+//[puddle_example_print_pub_member_types_2
+struct S {
+	struct a { };
+	typedef int b;
+	using c = char;
+};
+
+class C {
+private:
+	struct _x { };
+protected:
+	typedef const _x _y;
+public:
+	using z = _y*;
+};
+//]
+//[puddle_example_print_pub_member_types_3
+namespace puddle {
+
+template <typename T>
+class print_member_types
+{
+private:
+	struct _printer {
+		std::ostream& out;
+
+		template <typename MO>
+		void operator()(MO mo) const
+		{
+			out << c_str(get_base_name(mo));
+			if(reflects_alias(mo))
+			{
+				out << " -> ";
+				out << c_str(get_full_name(get_aliased(mo)));
+			}
+			out << std::endl;
+		}
+	};
+public:
+	std::ostream& operator()(std::ostream& out, bool all) const
+	{
+		_printer print{out};
+
+		auto MT = PUDDLED(T);
+
+		if(all) {
+			for_each(get_member_types(MT), print);
+		} else {
+			for_each(get_public_member_types(MT), print);
+		}
+		return out;
+	}
+};
+
+} // namespace puddle
+//]
+//[puddle_example_print_pub_member_types_4
+void print_S(void)
+{
+	puddle::print_member_types<S> pdm;
+
+	pdm(std::cout, true) << std::endl;
+	pdm(std::cout,false) << std::endl;
+}
+
+void print_C(void)
+{
+	puddle::print_member_types<C> pdm;
+
+	pdm(std::cout, true) << std::endl;
+	pdm(std::cout,false) << std::endl;
+}
+
+int main(void)
+{
+	print_S();
+	print_C();
+
+	return 0;
+}
+//]
+//[puddle_example_print_pub_member_types_output
+a
+b -> int
+c -> char
+
+a
+b -> int
+c -> char
+
+_x
+_y -> ::C::_x const
+z -> ::C::_x const*
+
+z -> ::C::_x const*
+//]

@@ -34,9 +34,11 @@ the following functions:
 [heading:member_types operation [^member_types]]
 [/---------------------------------------------]
 [puddle_op_get_member_types]
+[puddle_op_get_public_member_types]
 
 [heading:data_members operation [^data_members]]
 [/---------------------------------------------]
 [puddle_op_get_data_members]
+[puddle_op_get_public_data_members]
 
 [endsect]

@@ -1,0 +1,25 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================================================]
+[section:get_public_data_members operation [^get_public_data_members]]
+[/===================================================================]
+
+[header get_public_data_members]
+
+The [^get_public_data_members] operation returns a [^__metaobject_sequence]
+containing metaobjects reflecting the public data members of the class,
+structure or union, reflected by the argument,
+as shown on the following pseudocode.
+
+[import get_public_data_members.cpp]
+
+[mirror_op_get_public_data_members]
+
+[note If the argument is not a wrapped [^__std_meta_Record] then
+the result is is [^__none].
+]
+
+[endsect]

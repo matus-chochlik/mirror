@@ -150,10 +150,19 @@ reflexpr.quickref.c_Enum.ops meta::get_enumerators_m]]
 reflexpr.quickref.c_Record.ops meta::get_member_types]]
 [def __meta_get_member_types_m [link
 reflexpr.quickref.c_Record.ops meta::get_member_types_m]]
+[def __meta_get_public_member_types [link
+reflexpr.quickref.c_Record.ops meta::get_public_member_types]]
+[def __meta_get_public_member_types_m [link
+reflexpr.quickref.c_Record.ops meta::get_public_member_types_m]]
+
 [def __meta_get_data_members [link
 reflexpr.quickref.c_Record.ops meta::get_data_members]]
 [def __meta_get_data_members_m [link
 reflexpr.quickref.c_Record.ops meta::get_data_members_m]]
+[def __meta_get_public_data_members [link
+reflexpr.quickref.c_Record.ops meta::get_public_data_members]]
+[def __meta_get_public_data_members_m [link
+reflexpr.quickref.c_Record.ops meta::get_public_data_members_m]]
 
 [/operations ScopeMember]
 [def __meta_get_scope [link

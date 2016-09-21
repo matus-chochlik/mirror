@@ -86,7 +86,9 @@
 [def __is_union [link puddle.quickref.meta_record_ops is_union]]
 [def __get_base_classes [link puddle.quickref.meta_record_ops get_base_classes]]
 [def __get_member_types [link puddle.quickref.meta_record_ops get_member_types]]
+[def __get_public_member_types [link puddle.quickref.meta_record_ops get_public_member_types]]
 [def __get_data_members [link puddle.quickref.meta_record_ops get_data_members]]
+[def __get_public_data_members [link puddle.quickref.meta_record_ops get_public_data_members]]
 
 [def __get_pointer [link puddle.quickref.meta_variable_ops get_pointer]]
 [def __get_constant [link puddle.quickref.meta_constant_ops get_constant]]

@@ -10,8 +10,9 @@
 [header get_member_types]
 
 The [^get_member_types] operation returns a [^__metaobject_sequence] containing
-the metaobjects reflecting the member types of the class, structure or union,
-reflected by the argument, as shown on the following pseudocode.
+the metaobjects reflecting all member types (including the private and protected
+ones) of the class, structure or union, reflected by the argument,
+as shown on the following pseudocode.
 
 [import get_member_types.cpp]
 

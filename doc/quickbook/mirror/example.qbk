@@ -12,3 +12,5 @@
 [include example/enum_to_string.qbk]
 [include example/string_to_enum.qbk]
 [include example/print_data_members.qbk]
+[include example/print_pub_data_members.qbk]
+[include example/print_pub_member_types.qbk]

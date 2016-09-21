@@ -34,10 +34,22 @@ static constexpr inline
 __mirror_get_member_types<X> get_member_types(X)
 noexcept;
 //]
+//[puddle_op_get_public_member_types
+template <typename X>
+static constexpr inline
+__mirror_get_public_member_types<X> get_public_member_types(X)
+noexcept;
+//]
 //[puddle_op_get_data_members
 template <typename X>
 static constexpr inline
 __mirror_get_data_members<X> get_data_members(X)
+noexcept;
+//]
+//[puddle_op_get_public_data_members
+template <typename X>
+static constexpr inline
+__mirror_get_public_data_members<X> get_public_data_members(X)
 noexcept;
 //]
 

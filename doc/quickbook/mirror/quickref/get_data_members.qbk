@@ -10,8 +10,9 @@
 [header get_data_members]
 
 The [^get_data_members] operation returns a [^__metaobject_sequence] containing
-the metaobjects reflecting the data members of the class, structure or union,
-reflected by the argument, as shown on the following pseudocode.
+the metaobjects reflecting all data members (including the private and protected
+ones) of the class, structure or union, reflected by the argument,
+as shown on the following pseudocode.
 
 [import get_data_members.cpp]
 

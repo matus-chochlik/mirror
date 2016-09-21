@@ -189,10 +189,19 @@ reflexpr.quickref.c_Enum.ops std::meta::get_enumerators_m]]
 reflexpr.quickref.c_Record.ops std::meta::get_member_types]]
 [def __std_meta_get_member_types_m [link
 reflexpr.quickref.c_Record.ops std::meta::get_member_types_m]]
+[def __std_meta_get_public_member_types [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_member_types]]
+[def __std_meta_get_public_member_types_m [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_member_types_m]]
+
 [def __std_meta_get_data_members [link
 reflexpr.quickref.c_Record.ops std::meta::get_data_members]]
 [def __std_meta_get_data_members_m [link
 reflexpr.quickref.c_Record.ops std::meta::get_data_members_m]]
+[def __std_meta_get_public_data_members [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_data_members]]
+[def __std_meta_get_public_data_members_m [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_data_members_m]]
 
 [/basic metaobject operations Class]
 [def __std_meta_get_base_classes [link
@@ -328,7 +337,9 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_is_struct [link mirror.quickref.is_struct mirror::is_struct]]
 [def __mirror_is_union [link mirror.quickref.is_union mirror::is_union]]
 [def __mirror_get_data_members [link mirror.quickref.get_data_members mirror::get_data_members]]
+[def __mirror_get_public_data_members [link mirror.quickref.get_public_data_members mirror::get_public_data_members]]
 [def __mirror_get_member_types [link mirror.quickref.get_member_types mirror::get_member_types]]
+[def __mirror_get_public_member_types [link mirror.quickref.get_public_member_types mirror::get_public_member_types]]
 [def __mirror_get_base_classes [link mirror.quickref.get_base_classes mirror::get_base_classes]]
 
 [def __mirror_get_pointer [link mirror.quickref.get_pointer mirror::get_pointer]]
