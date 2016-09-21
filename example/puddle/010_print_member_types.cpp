@@ -1,5 +1,5 @@
 /**
- * @example mirror/010_print_member_types.cpp
+ * @example puddle/010_print_member_types.cpp
  * @brief Shows how to print out class member types
  *
  * Copyright Matus Chochlik.
@@ -8,18 +8,11 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#include <mirror/for_each.hpp>
-#include <mirror/get_aliased.hpp>
-#include <mirror/get_base_name.hpp>
-#include <mirror/get_full_name.hpp>
-#include <mirror/get_member_types.hpp>
-#include <mirror/get_public_member_types.hpp>
-#include <mirror/traits.hpp>
-#include <mirror/c_str.hpp>
-#include <mirror/value.hpp>
-#include <mirror/reflection.hpp>
-#include <mirror/range.hpp>
-#include <mirror/unpack.hpp>
+#include <puddle/metaobject_ops.hpp>
+#include <puddle/sequence_ops.hpp>
+#include <puddle/reflection.hpp>
+#include <puddle/int_const.hpp>
+#include <puddle/string.hpp>
 #include <iostream>
 
 struct S {
@@ -37,7 +30,7 @@ public:
 	using z = _y*;
 };
 
-namespace mirror {
+namespace puddle {
 
 template <typename T>
 class print_member_types
@@ -47,13 +40,13 @@ private:
 		std::ostream& out;
 
 		template <typename MO>
-		void operator()(MO) const
+		void operator()(MO mo) const
 		{
-			out << c_str<get_base_name<MO>>;
-			if(value<reflects_alias<MO>>)
+			out << c_str(get_base_name(mo));
+			if(reflects_alias(mo))
 			{
 				out << " -> ";
-				out << c_str<get_full_name<get_aliased<MO>>>;
+				out << c_str(get_full_name(get_aliased(mo)));
 			}
 			out << std::endl;
 		}
@@ -63,22 +56,22 @@ public:
 	{
 		_printer print{out};
 
-		using MT = MIRRORED(T);
+		auto MT = PUDDLED(T);
 
 		if(all) {
-			for_each<get_member_types<MT>>::apply(print);
+			for_each(get_member_types(MT), print);
 		} else {
-			for_each<get_public_member_types<MT>>::apply(print);
+			for_each(get_public_member_types(MT), print);
 		}
 		return out;
 	}
 };
 
-} // namespace mirror
+} // namespace puddle
 
 void print_S(void)
 {
-	mirror::print_member_types<S> pdm;
+	puddle::print_member_types<S> pdm;
 
 	pdm(std::cout, true) << std::endl;
 	pdm(std::cout,false) << std::endl;
@@ -86,7 +79,7 @@ void print_S(void)
 
 void print_C(void)
 {
-	mirror::print_member_types<C> pdm;
+	puddle::print_member_types<C> pdm;
 
 	pdm(std::cout, true) << std::endl;
 	pdm(std::cout,false) << std::endl;
