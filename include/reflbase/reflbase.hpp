@@ -98,6 +98,9 @@ template <typename X>
 using get_data_members_m = typename get_data_members<X>::type;
 
 template <typename X>
+using get_public_data_members_m = typename get_public_data_members<X>::type;
+
+template <typename X>
 using get_base_classes_m = typename get_base_classes<X>::type;
 
 template <typename X>

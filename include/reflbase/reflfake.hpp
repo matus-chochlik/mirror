@@ -286,6 +286,10 @@ struct get_member_types;
 template <typename X>
 struct get_data_members;
 
+// get_public_data_members
+template <typename X>
+struct get_public_data_members;
+
 // get_base_classes
 template <typename X>
 struct get_base_classes;

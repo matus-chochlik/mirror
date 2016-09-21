@@ -16,6 +16,7 @@
 #include <mirror/is_union.hpp>
 #include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
+#include <mirror/get_public_data_members.hpp>
 #include <mirror/get_member_types.hpp>
 #include <puddle/enable_if.hpp>
 
@@ -59,6 +60,14 @@ auto get_data_members(X)
 noexcept
 {
 	return mirror::get_data_members<X>{};
+}
+
+template <typename X, typename = enable_if_opt_metaobject<X>>
+static constexpr inline
+auto get_public_data_members(X)
+noexcept
+{
+	return mirror::get_public_data_members<X>{};
 }
 
 template <typename X, typename = enable_if_opt_metaobject<X>>
