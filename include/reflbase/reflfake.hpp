@@ -298,6 +298,10 @@ struct get_public_data_members;
 template <typename X>
 struct get_base_classes;
 
+// get_public_base_classes
+template <typename X>
+struct get_public_base_classes;
+
 // get_reflected_type
 template <typename X>
 struct get_reflected_type;

@@ -14,7 +14,6 @@
 #include <mirror/is_class.hpp>
 #include <mirror/is_struct.hpp>
 #include <mirror/is_union.hpp>
-#include <mirror/get_base_classes.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/get_public_data_members.hpp>
 #include <mirror/get_member_types.hpp>
@@ -45,14 +44,6 @@ auto is_union(X)
 noexcept
 {
 	return mirror::is_union<X>{};
-}
-
-template <typename X, typename = enable_if_opt_metaobject<X>>
-static constexpr inline
-auto get_base_classes(X)
-noexcept
-{
-	return mirror::get_base_classes<X>{};
 }
 
 template <typename X, typename = enable_if_opt_metaobject<X>>

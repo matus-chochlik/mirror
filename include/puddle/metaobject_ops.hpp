@@ -19,6 +19,7 @@
 #include "meta_scoped_ops.hpp"
 #include "meta_type_ops.hpp"
 #include "meta_record_ops.hpp"
+#include "meta_class_ops.hpp"
 #include "meta_enum_ops.hpp"
 #include "meta_variable_ops.hpp"
 #include "meta_constant_ops.hpp"

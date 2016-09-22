@@ -107,6 +107,9 @@ template <typename X>
 using get_base_classes_m = typename get_base_classes<X>::type;
 
 template <typename X>
+using get_public_base_classes_m = typename get_public_base_classes<X>::type;
+
+template <typename X>
 using get_reflected_type_t = typename get_reflected_type<X>::type;
 
 template <typename X>
