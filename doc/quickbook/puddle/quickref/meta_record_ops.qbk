@@ -30,6 +30,7 @@ the following functions:
 [heading:base_classes operation [^base_classes]]
 [/---------------------------------------------]
 [puddle_op_get_base_classes]
+[puddle_op_get_public_base_classes]
 
 [heading:member_types operation [^member_types]]
 [/---------------------------------------------]

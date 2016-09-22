@@ -208,6 +208,10 @@ reflexpr.quickref.c_Record.ops std::meta::get_public_data_members_m]]
 reflexpr.quickref.c_Class.ops std::meta::get_base_classes]]
 [def __std_meta_get_base_classes_m [link
 reflexpr.quickref.c_Class.ops std::meta::get_base_classes_m]]
+[def __std_meta_get_public_base_classes [link
+reflexpr.quickref.c_Class.ops std::meta::get_public_base_classes]]
+[def __std_meta_get_public_base_classes_m [link
+reflexpr.quickref.c_Class.ops std::meta::get_public_base_classes_m]]
 
 [/basic metaobject operations ScopeMember]
 [def __std_meta_get_scope [link
@@ -341,6 +345,7 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_get_member_types [link mirror.quickref.get_member_types mirror::get_member_types]]
 [def __mirror_get_public_member_types [link mirror.quickref.get_public_member_types mirror::get_public_member_types]]
 [def __mirror_get_base_classes [link mirror.quickref.get_base_classes mirror::get_base_classes]]
+[def __mirror_get_public_base_classes [link mirror.quickref.get_public_base_classes mirror::get_public_base_classes]]
 
 [def __mirror_get_pointer [link mirror.quickref.get_pointer mirror::get_pointer]]
 [def __mirror_get_constant [link mirror.quickref.get_constant mirror::get_constant]]

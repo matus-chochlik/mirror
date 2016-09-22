@@ -510,6 +510,7 @@ struct get_base_classes {
 	using type = __ObjectSequence; /*<
 	A [^meta::__ObjectSequence] containing [^meta::__Inheritance]
 	metaobjects reflecting the individual base class declarations
+	(all including the private and protected ones)
 	of the [^class] or [^struct] reflected by [^T].
 	>*/
 };
@@ -517,6 +518,20 @@ struct get_base_classes {
 template <__Class T>
 using get_base_classes_m
  = typename get_base_classes<T>::type;
+
+// get_public_base_classes
+template <__Class T>
+struct get_public_base_classes {
+	using type = __ObjectSequence; /*<
+	A [^meta::__ObjectSequence] containing [^meta::__Inheritance]
+	metaobjects reflecting only the public base class declarations
+	of the [^class] or [^struct] reflected by [^T].
+	>*/
+};
+
+template <__Class T>
+using get_public_base_classes_m
+ = typename get_public_base_classes<T>::type;
 //]
 
 //[reflexpr_header_operations_ScopeMember

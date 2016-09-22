@@ -42,6 +42,7 @@ library.
 [include quickref/meta_type_ops.qbk]
 [include quickref/meta_enum_ops.qbk]
 [include quickref/meta_record_ops.qbk]
+[include quickref/meta_class_ops.qbk]
 [include quickref/meta_variable_ops.qbk]
 [include quickref/meta_constant_ops.qbk]
 [include quickref/meta_inheritance_ops.qbk]

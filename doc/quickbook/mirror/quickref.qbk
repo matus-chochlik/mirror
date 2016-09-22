@@ -75,6 +75,7 @@ library.
 [include quickref/get_data_members.qbk]
 [include quickref/get_public_data_members.qbk]
 [include quickref/get_base_classes.qbk]
+[include quickref/get_public_base_classes.qbk]
 [include quickref/get_scope.qbk]
 [include quickref/get_pointer.qbk]
 [include quickref/get_constant.qbk]

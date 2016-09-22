@@ -99,6 +99,7 @@
 [def __get_member_types [link mirror.quickref.get_member_types get_member_types]]
 [def __get_public_member_types [link mirror.quickref.get_public_member_types get_public_member_types]]
 [def __get_base_classes [link mirror.quickref.get_base_classes get_base_classes]]
+[def __get_public_base_classes [link mirror.quickref.get_public_base_classes get_public_base_classes]]
 [def __get_scope [link mirror.quickref.get_scope get_scope]]
 [def __get_pointer [link mirror.quickref.get_pointer get_pointer]]
 [def __get_constant [link mirror.quickref.get_constant get_constant]]
