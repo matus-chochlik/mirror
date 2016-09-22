@@ -41,17 +41,39 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Class.html" title="Class">Class</a> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">get_base_classes_m</span>
  <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_base_classes</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+
+<span class="comment">// get_public_base_classes</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Class.html" title="Class">Class</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">get_public_base_classes</span> <span class="special">{</span>
+	<span class="keyword">using</span> <span class="identifier">type</span> <span class="special">=</span> <a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a><span class="special">;</span> <a class="co" name="reflexpr.quickref.c_Class.c2" href="c_Class.html#reflexpr.quickref.c_Class.c3"><img src="../../images/callouts/2.png" alt="2" border="0"></a>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="c_Class.html" title="Class">Class</a> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">get_public_base_classes_m</span>
+ <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">get_public_base_classes</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
 </pre>
-<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
 <td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Class.c1"></a><a href="#reflexpr.quickref.c_Class.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
               A <code class="literal">meta::<a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a></code>
               containing <code class="literal">meta::<a class="link" href="c_Inheritance.html" title="Inheritance">Inheritance</a></code>
-              metaobjects reflecting the individual base class declarations of the
+              metaobjects reflecting the individual base class declarations (all
+              including the private and protected ones) of the <code class="literal">class</code>
+              or <code class="literal">struct</code> reflected by <code class="literal">T</code>.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="reflexpr.quickref.c_Class.c3"></a><a href="#reflexpr.quickref.c_Class.c2"><img src="../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              A <code class="literal">meta::<a class="link" href="c_ObjectSequence.html" title="ObjectSequence">ObjectSequence</a></code>
+              containing <code class="literal">meta::<a class="link" href="c_Inheritance.html" title="Inheritance">Inheritance</a></code>
+              metaobjects reflecting only the public base class declarations of the
               <code class="literal">class</code> or <code class="literal">struct</code> reflected by
               <code class="literal">T</code>.
             </p></td>
-</tr></table></div>
+</tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
