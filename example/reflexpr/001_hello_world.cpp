@@ -21,9 +21,9 @@ int main(void)
 
 	assert(is_metaobject_v<meta_HW>);
 
-	cout << meta::get_base_name_v<meta::get_scope_m<meta_HW>>;
+	cout << meta::get_base_name<meta::get_scope_m<meta_HW>>();
 	cout << ", ";
-	cout << meta::get_base_name_v<meta_HW>;
+	cout << meta::get_base_name<meta_HW>();
 	cout << "." << std::endl;
 
 	return 0;

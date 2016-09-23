@@ -33,7 +33,7 @@ private:
 
 			map<string, Enum> res;
 			_eat(res.emplace(
-				meta::get_base_name_v<MEC>,
+				string(meta::get_base_name<MEC>()),
 				meta::get_constant_v<MEC>
 			).second...);
 			return res;

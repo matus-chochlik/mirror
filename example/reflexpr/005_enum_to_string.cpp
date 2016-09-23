@@ -34,7 +34,7 @@ private:
 			map<Enum, string> res;
 			_eat(res.emplace(
 				meta::get_constant_v<MEC>,
-				meta::get_base_name_v<MEC>
+				string(meta::get_base_name<MEC>())
 			).second...);
 			return res;
 		}
