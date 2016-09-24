@@ -130,6 +130,9 @@ puddle/example/print_data_members.html
 puddle/example/print_pub_data_members.html
 puddle/example/print_pub_member_types.html
 lagoon.html
+lagoon/intro.html
+lagoon/quickref.html
+lagoon/quickref/metaobject.html
 papers.html
 papers/proposals.html
 implement.html
