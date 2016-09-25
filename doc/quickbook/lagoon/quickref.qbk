@@ -26,4 +26,6 @@ reflection library.
 [/--------]
 
 [include quickref/tribool.qbk]
+[include quickref/fingerprint.qbk]
+[include quickref/any_constant.qbk]
 [include quickref/metaobject.qbk]

@@ -47,6 +47,18 @@ public:
 	friend constexpr
 	bool operator <  (weak_bool a, weak_bool b)
 	noexcept;
+
+	friend constexpr
+	bool operator >  (weak_bool a, weak_bool b)
+	noexcept;
+
+	friend constexpr
+	bool operator <= (weak_bool a, weak_bool b)
+	noexcept;
+
+	friend constexpr
+	bool operator >= (weak_bool a, weak_bool b)
+	noexcept;
 };
 //]
 //[lagoon_weak_bool_2
@@ -108,6 +120,10 @@ public:
 
 	friend constexpr
 	bool operator <  (tribool a, tribool b)
+	noexcept;
+
+	friend constexpr
+	bool operator >  (tribool a, tribool b)
 	noexcept;
 };
 //]

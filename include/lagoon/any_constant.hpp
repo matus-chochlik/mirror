@@ -42,6 +42,7 @@ private:
 
 	// TODO: some kind of type-info
 public:
+	using value_type = raw_const_t;
 
 	constexpr inline
 	any_constant(void)
@@ -59,7 +60,7 @@ public:
 	{ }
 
 	constexpr inline
-	raw_const_t get(void) const
+	value_type get(void) const
 	noexcept
 	{
 		return _v;

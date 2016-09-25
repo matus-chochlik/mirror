@@ -13,6 +13,8 @@ public:
 	explicit operator bool (void) const; /*< Same as [^!is_none();] >*/
 	bool operator ! (void) const /*< Same as [^is_none();] >*/
 
+	__fingerprint get_fingerprint(void) const;
+
 	__tribool has_source_info (void) const;
 	tribool reflects_specifier (void) const;
 	tribool reflects_global_scope (void) const;
@@ -42,7 +44,7 @@ public:
 	std::string_view get_full_name(void) const;
 	std::string_view get_display_name(void) const;
 
-	any_constant get_constant(void) const;
+	__any_constant get_constant(void) const;
 
 	shared_metaobject get_type(void) const;
 	shared_metaobject get_scope(void) const;
