@@ -25,7 +25,7 @@ public:
 	tribool reflects_record_member (void) const;
 	tribool reflects_inheritance (void) const;
 
-	tribool is_anonymous (void) const;
+	__tribool is_anonymous (void) const;
 	tribool is_class (void) const;
 	tribool is_struct (void) const;
 	tribool is_union (void) const;

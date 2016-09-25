@@ -25,4 +25,5 @@ reflection library.
 [/Sections]
 [/--------]
 
+[include quickref/tribool.qbk]
 [include quickref/metaobject.qbk]

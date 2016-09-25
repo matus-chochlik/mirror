@@ -16,6 +16,10 @@
 [/Quick reference links]
 [/---------------------]
 
+[def __tribool [link lagoon.quickref.tribool tribool]]
+[def __weak_bool [link lagoon.quickref.tribool.weak_bool weak_bool]]
+[def __none [link lagoon.quickref.tribool.none none]]
+
 [def __shared_metaobject [link lagoon.quickref.metaobject shared_metaobject]]
 [def __shared_metaobject_sequence [link lagoon.quickref.metaobject shared_metaobject_sequence]]
 
