@@ -161,6 +161,18 @@ public:
 	friend constexpr
 	bool operator <  (weak_bool a, weak_bool b)
 	noexcept { return a._v <  b._v; }
+
+	friend constexpr
+	bool operator >  (weak_bool a, weak_bool b)
+	noexcept { return a._v >  b._v; }
+
+	friend constexpr
+	bool operator <= (weak_bool a, weak_bool b)
+	noexcept { return a._v <= b._v; }
+
+	friend constexpr
+	bool operator >= (weak_bool a, weak_bool b)
+	noexcept { return a._v >= b._v; }
 };
 
 static constexpr inline
@@ -239,6 +251,10 @@ public:
 
 	friend constexpr
 	bool operator <  (tribool a, tribool b)
+	noexcept { return a._v <  b._v; }
+
+	friend constexpr
+	bool operator >  (tribool a, tribool b)
 	noexcept { return a._v <  b._v; }
 };
 
