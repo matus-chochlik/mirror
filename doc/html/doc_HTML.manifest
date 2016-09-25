@@ -133,6 +133,8 @@ lagoon.html
 lagoon/intro.html
 lagoon/quickref.html
 lagoon/quickref/tribool.html
+lagoon/quickref/fingerprint.html
+lagoon/quickref/any_constant.html
 lagoon/quickref/metaobject.html
 papers.html
 papers/proposals.html
