@@ -8,15 +8,11 @@ file(WRITE "${PROJECT_BINARY_DIR}/SOURCE_DIR" "${PROJECT_SOURCE_DIR}")
 file(WRITE "${PROJECT_BINARY_DIR}/REFLEXPR_DIR" "${REFLEXPR_INCLUDE_DIR}")
 
 configure_file(
-	"${PROJECT_SOURCE_DIR}/config/tools/complete-run_test"
+	"${PROJECT_SOURCE_DIR}/config/tools/bash-complete-mirror"
 	"${PROJECT_BINARY_DIR}/" COPYONLY
 )
 configure_file(
 	"${PROJECT_SOURCE_DIR}/config/tools/run_test-mirror"
-	"${PROJECT_BINARY_DIR}/" COPYONLY
-)
-configure_file(
-	"${PROJECT_SOURCE_DIR}/config/tools/complete-run_example"
 	"${PROJECT_BINARY_DIR}/" COPYONLY
 )
 configure_file(
