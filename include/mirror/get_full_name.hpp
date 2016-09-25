@@ -61,9 +61,8 @@ struct do_get_scope_spec
 
 template <typename MO>
 struct op_get_scope_spec<metaobject<MO>>
- : do_get_scope_spec<
- 	metaobject<reflbase::get_underlying_object_m<MO>>
-> { };
+ : do_get_scope_spec<metaobject<MO>>
+{ };
 
 template <typename X>
 struct op_get_full_name;
@@ -108,110 +107,120 @@ using apply_decor_params  = eval<typename decor<MO, T>::template params<S>>;
 template <typename MO, typename T>
 struct decor<MO, T*>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
+
+	template <typename Str>
+	struct base : apply_decor_base<MT, T, Str> { };
 
 	template <typename Str>
 	struct right
 	 : apply_decor_right<
-		MO, T, concat<string<'*'>, Str>
+		MT, T, concat<string<'*'>, Str>
 	> { };
 
 	template <typename Str>
-	struct extent : apply_decor_extent<MO, T, Str> { };
+	struct extent : apply_decor_extent<MT, T, Str> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename T>
 struct decor<MO, T&>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
+
+	template <typename Str>
+	struct base : apply_decor_base<MT, T, Str> { };
 
 	template <typename Str>
 	struct right
 	 : apply_decor_right<
-		MO, T, concat<string<'&'>, Str>
+		MT, T, concat<string<'&'>, Str>
 	> { };
 
 	template <typename Str>
-	struct extent : apply_decor_extent<MO, T, Str> { };
+	struct extent : apply_decor_extent<MT, T, Str> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename T>
 struct decor<MO, T const>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
+
+	template <typename Str>
+	struct base : apply_decor_base<MT, T, Str> { };
 
 	template <typename Str>
 	struct right
 	 : apply_decor_right<
-		MO, T, concat<
+		MT, T, concat<
 			string<' ','c','o','n','s','t'>,
 			Str
 		>
 	> { };
 
 	template <typename Str>
-	struct extent : apply_decor_extent<MO, T, Str> { };
+	struct extent : apply_decor_extent<MT, T, Str> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename T>
 struct decor<MO, T volatile>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
+
+	template <typename Str>
+	struct base : apply_decor_base<MT, T, Str> { };
 
 	template <typename Str>
 	struct right
 	 : apply_decor_right<
-		MO, T, concat<
+		MT, T, concat<
 			string<' ','v','o','l','a','t','i','l','e'>,
 			Str
 		>
 	> { };
 
 	template <typename Str>
-	struct extent : apply_decor_extent<MO, T, Str> { };
+	struct extent : apply_decor_extent<MT, T, Str> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename T>
 struct decor<MO, T const volatile>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
+
+	template <typename Str>
+	struct base : apply_decor_base<MT, T, Str> { };
 
 	template <typename Str>
 	struct right
 	 : apply_decor_right<
-		MO, T, concat<
+		MT, T, concat<
 			string<' ','c','o','n','s','t'>,
 			string<' ','v','o','l','a','t','i','l','e'>,
 			Str
@@ -219,52 +228,56 @@ struct decor<MO, T const volatile>
 	> { };
 
 	template <typename Str>
-	struct extent : apply_decor_extent<MO, T, Str> { };
+	struct extent : apply_decor_extent<MT, T, Str> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename T>
 struct decor<MO, T[]>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
 
 	template <typename Str>
-	struct right : apply_decor_right<MO, T, Str> { };
+	struct base : apply_decor_base<MT, T, Str> { };
+
+	template <typename Str>
+	struct right : apply_decor_right<MT, T, Str> { };
 
 	template <typename Str>
 	struct extent : apply_decor_extent<
-		MO, T, concat<Str, string<'[',']'>>
+		MT, T, concat<Str, string<'[',']'>>
 	> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename T, unsigned N>
 struct decor<MO, T[N]>
 {
-	template <typename Str>
-	struct left : apply_decor_left<MO, T, Str> { };
+	using MT = get_aliased<MIRRORED(T)>;
 
 	template <typename Str>
-	struct base : apply_decor_base<MO, T, Str> { };
+	struct left : apply_decor_left<MT, T, Str> { };
 
 	template <typename Str>
-	struct right : apply_decor_right<MO, T, Str> { };
+	struct base : apply_decor_base<MT, T, Str> { };
+
+	template <typename Str>
+	struct right : apply_decor_right<MT, T, Str> { };
 
 	template <typename Str>
 	struct extent : apply_decor_extent<
-		MO, T, concat<Str, string<'['>, uint_to_dec_str<N>, string<']'>>
+		MT, T, concat<Str, string<'['>, uint_to_dec_str<N>, string<']'>>
 	> { };
 
 	template <typename Str>
-	struct params : apply_decor_params<MO, T, Str> { };
+	struct params : apply_decor_params<MT, T, Str> { };
 };
 
 template <typename MO, typename R, typename ... P>
