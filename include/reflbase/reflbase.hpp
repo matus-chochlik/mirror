@@ -40,9 +40,6 @@ template <typename X>
 constexpr const auto get_source_column_v = get_source_column<X>::value;
 
 template <typename X>
-using get_underlying_object_m = typename get_underlying_object<X>::type;
-
-template <typename X>
 constexpr const auto get_size_v = get_size<X>::value;
 
 template <typename X, unsigned I>

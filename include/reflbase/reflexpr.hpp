@@ -46,8 +46,6 @@ using std::meta::get_source_file;
 using std::meta::get_source_line;
 using std::meta::get_source_column;
 
-using std::meta::get_underlying_object;
-
 using std::meta::get_size;
 using std::meta::get_element;
 using std::meta::unpack_sequence;

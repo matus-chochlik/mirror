@@ -234,10 +234,6 @@ struct is_anonymous
  : std::integral_constant<bool, get_base_name<X>::size == 0>
 { };
 
-// get_underlying_object
-template <typename X>
-struct get_underlying_object;
-
 // get_aliased
 template <typename X>
 struct get_aliased;
