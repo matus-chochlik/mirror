@@ -22,32 +22,32 @@ BOOST_AUTO_TEST_SUITE(mirror_to_string)
 
 struct sl_abcde
 {
-	static constexpr const char value[] = "abcde";
+	static constexpr const char value[6] = "abcde";
 };
 
 struct sl_foo
 {
-	static constexpr const char value[] = "foo";
+	static constexpr const char value[4] = "foo";
 };
 
 BOOST_AUTO_TEST_CASE(mirror_to_string_1)
 {
 	using namespace mirror;
 
-	BOOST_CHECK((value<equal<
+	BOOST_CHECK_EQUAL((value<equal<
 		to_string<sl_abcde>,
 		string<'a','b','c','d','e'>
-	>>));
-	BOOST_CHECK((value<equal<
+	>>), true);
+	BOOST_CHECK_EQUAL((value<equal<
 		to_string<sl_foo>,
 		string<'f','o','o'>
-	>>));
+	>>), true);
 
 	using sl_int = std::meta::get_base_name<reflexpr(int)>;
-	BOOST_CHECK((value<equal<
+	BOOST_CHECK_EQUAL((value<equal<
 		to_string<sl_int>,
 		string<'i','n','t'>
-	>>));
+	>>), true);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

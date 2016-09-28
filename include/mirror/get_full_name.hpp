@@ -40,7 +40,7 @@ struct op_get_scope_spec<none>
 { };
 
 template <typename MO>
-struct do_get_scope_spec
+struct op_get_scope_spec
  : lazy_conditional<
 	is_none<get_scope<MO>>,
 	get_base_name<MO>,
@@ -58,11 +58,6 @@ struct do_get_scope_spec
 		>, string<':',':'>, get_base_name<MO>
 	>
 > { };
-
-template <typename MO>
-struct op_get_scope_spec<metaobject<MO>>
- : do_get_scope_spec<metaobject<MO>>
-{ };
 
 template <typename X>
 struct op_get_full_name;

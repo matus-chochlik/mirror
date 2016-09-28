@@ -17,7 +17,7 @@ endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	set(CPP_COMPILER_OPTIONS
-		-std=c++14
+		-std=c++1z
 		-isystem "${REFLEXPR_INCLUDE_DIR}"
 		-Xclang -freflection
 	)

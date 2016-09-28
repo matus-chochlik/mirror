@@ -26,8 +26,10 @@ struct op_c_str<basic_string<Char, C...>>
 	static constexpr const Char value[sizeof...(C)+1] = {C...,Char(0)};
 };
 
+/*TODO #if std < c++1z
 template <typename Char, Char ... C>
 const Char op_c_str<basic_string<Char, C...>>::value[sizeof...(C)+1];
+*/
 
 } // namespace _aux
 
