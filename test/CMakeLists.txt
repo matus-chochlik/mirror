@@ -9,6 +9,7 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 if(Boost_FOUND)
 	enable_testing()
+	add_subdirectory("reflexpr")
 	add_subdirectory("mirror")
 	add_subdirectory("puddle")
 	add_subdirectory("lagoon")
