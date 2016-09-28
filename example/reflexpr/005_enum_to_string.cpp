@@ -27,7 +27,7 @@ private:
 	{
 		static void _eat(bool ...) { }
 
-		static std::map<Enum, std::string> _make_map(void)
+		static auto _make_map(void)
 		{
 			using namespace std;
 

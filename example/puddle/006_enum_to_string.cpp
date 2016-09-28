@@ -1,5 +1,5 @@
 /**
- * @example puddle/005_enum_to_string.cpp
+ * @example puddle/006_enum_to_string.cpp
  * @brief Shows how to implement a enumerator-to-string conversion
  *
  * Copyright Matus Chochlik.
@@ -30,8 +30,7 @@ private:
 	static void _eat(bool ...) { }
 
 	template <typename ... MEC>
-	static
-	std::map<Enum, std::string_view> _do_make_map(MEC ... mec)
+	static auto _do_make_map(MEC ... mec)
 	{
 		std::map<Enum, std::string_view> res;
 		_eat(res.emplace(
@@ -42,17 +41,26 @@ private:
 	}
 
 	template <typename ... MEC>
-	static
-	std::map<Enum, std::string_view> _make_map(mirror::range<MEC...>)
+	static auto _make_map(mirror::range<MEC...>)
 	{
 		return _do_make_map(MEC{}...);
 	}
-public:
-	std::string_view operator()(Enum e) const
+
+	static auto _make_map(void)
 	{
 		auto MECs = unpack(get_enumerators(PUDDLED(Enum)));
-		static auto m = _make_map(MECs);
-		return m[e];
+		return _make_map(MECs);
+	}
+
+	const std::map<Enum, std::string_view> _map;
+public:
+	enum_to_string(void)
+	 : _map(_make_map())
+	{ }
+
+	std::string_view operator()(Enum e) const
+	{
+		return _map.find(e)->second;
 	}
 };
 

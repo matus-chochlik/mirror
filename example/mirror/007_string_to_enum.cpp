@@ -1,5 +1,5 @@
 /**
- * @example reflexpr/006_string_to_enum.cpp
+ * @example mirror/007_string_to_enum.cpp
  * @brief Shows how to implement a string-to-enumerator conversion
  *
  * Copyright Matus Chochlik.
@@ -8,7 +8,14 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#include <reflexpr>
+#include <mirror/get_constant.hpp>
+#include <mirror/get_base_name.hpp>
+#include <mirror/get_enumerators.hpp>
+#include <mirror/c_str.hpp>
+#include <mirror/value.hpp>
+#include <mirror/reflection.hpp>
+#include <mirror/range.hpp>
+#include <mirror/unpack.hpp>
 #include <iostream>
 #include <stdexcept>
 #include <map>
@@ -18,49 +25,58 @@ enum class E : char
 	a = 'a', b = 'b', c = 'c', d = 'd', e = 'e'
 };
 
+namespace mirror {
+
 template <typename Enum>
 class string_to_enum
 {
 private:
+	template <typename Rng>
+	struct _hlpr;
+
 	template <typename ... MEC>
-	struct _hlpr
+	struct _hlpr<range<MEC...>>
 	{
 		static void _eat(bool ...) { }
 
-		static std::map<std::string, Enum> _make_map(void)
+		static auto _make_map(void)
 		{
-			using namespace std;
-
-			map<string, Enum> res;
+			std::map<std::string, Enum> res;
 			_eat(res.emplace(
-				string(meta::get_base_name<MEC>()),
-				meta::get_constant_v<MEC>
+				c_str<get_base_name<MEC>>,
+				value<get_constant<MEC>>
 			).second...);
 			return res;
 		}
 	};
+
+	static auto _make_map(void)
+	{
+		using MECs = unpack<get_enumerators<MIRRORED(Enum)>>;
+		return _hlpr<MECs>::_make_map();
+	}
+
+	const std::map<std::string, Enum> _map;
 public:
+	string_to_enum(void)
+	 : _map(_make_map())
+	{ }
+
 	Enum operator()(const std::string& s) const
 	{
-		using namespace std;
-
-		using ME = reflexpr(Enum);
-		using hlpr = meta::unpack_sequence_t<
-			meta::get_enumerators_m<ME>,
-			_hlpr
-		>;
-		static auto m = hlpr::_make_map();
-		auto p = m.find(s);
-		if(p == m.end()) {
-			throw runtime_error("Invalid enumerator name");
+		auto p = _map.find(s);
+		if(p == _map.end()) {
+			throw std::runtime_error("Invalid enumerator name");
 		}
 		return p->second;
 	}
 };
 
+} // namespace mirror
+
 int main(void)
 {
-	string_to_enum<E> ste;
+	mirror::string_to_enum<E> ste;
 
 	try {
 		std::cout << char(ste("a")) << std::endl;

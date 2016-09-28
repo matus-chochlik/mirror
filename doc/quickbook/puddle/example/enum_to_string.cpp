@@ -30,8 +30,7 @@ private:
 	static void _eat(bool ...) { }
 
 	template <typename ... MEC>
-	static
-	std::map<Enum, std::string_view> _do_make_map(MEC ... mec)
+	static auto _do_make_map(MEC ... mec)
 	{
 		std::map<Enum, std::string_view> res;
 		_eat(res.emplace(
@@ -42,8 +41,7 @@ private:
 	}
 
 	template <typename ... MEC>
-	static
-	std::map<Enum, std::string_view> _make_map(__mirror_range<MEC...>)
+	static auto _make_map(__mirror_range<MEC...>)
 	{
 		return _do_make_map(MEC{}...);
 	}

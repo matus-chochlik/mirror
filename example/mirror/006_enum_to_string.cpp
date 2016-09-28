@@ -1,5 +1,5 @@
 /**
- * @example mirror/005_enum_to_string.cpp
+ * @example mirror/006_enum_to_string.cpp
  * @brief Shows how to implement a enumerator-to-string conversion
  *
  * Copyright Matus Chochlik.
@@ -38,7 +38,7 @@ private:
 	{
 		static void _eat(bool ...) { }
 
-		static std::map<Enum, std::string_view> _make_map(void)
+		static auto _make_map(void)
 		{
 			std::map<Enum, std::string_view> res;
 			_eat(res.emplace(
@@ -48,12 +48,22 @@ private:
 			return res;
 		}
 	};
-public:
-	std::string_view operator()(Enum e) const
+
+	static auto _make_map(void)
 	{
 		using MECs = unpack<get_enumerators<MIRRORED(Enum)>>;
-		static auto m = _hlpr<MECs>::_make_map();
-		return m[e];
+		return _hlpr<MECs>::_make_map();
+	}
+
+	const std::map<Enum, std::string_view> _map;
+public:
+	enum_to_string(void)
+	 : _map(_make_map())
+	{ }
+
+	std::string_view operator()(Enum e) const
+	{
+		return _map.find(e)->second;
 	}
 };
 

@@ -38,7 +38,7 @@ private:
 	{
 		static void _eat(bool ...) { }
 
-		static std::map<Enum, std::string_view> _make_map(void)
+		static auto _make_map(void)
 		{
 			std::map<Enum, std::string_view> res;
 			_eat(res.emplace(
