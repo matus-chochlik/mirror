@@ -148,6 +148,30 @@ struct decor<MO, T&>
 };
 
 template <typename MO, typename T>
+struct decor<MO, T&&>
+{
+	using MT = get_aliased<MIRRORED(T)>;
+
+	template <typename Str>
+	struct left : apply_decor_left<MT, T, Str> { };
+
+	template <typename Str>
+	struct base : apply_decor_base<MT, T, Str> { };
+
+	template <typename Str>
+	struct right
+	 : apply_decor_right<
+		MT, T, concat<string<'&','&'>, Str>
+	> { };
+
+	template <typename Str>
+	struct extent : apply_decor_extent<MT, T, Str> { };
+
+	template <typename Str>
+	struct params : apply_decor_params<MT, T, Str> { };
+};
+
+template <typename MO, typename T>
 struct decor<MO, T const>
 {
 	using MT = get_aliased<MIRRORED(T)>;

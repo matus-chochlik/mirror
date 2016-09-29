@@ -41,6 +41,10 @@ int main(void)
 	>> << std::endl;
 
 	std::cout << c_str<get_full_name<
+		MIRRORED(foo::bar&&)
+	>> << std::endl;
+
+	std::cout << c_str<get_full_name<
 		MIRRORED(const foo::bar&)
 	>> << std::endl;
 
