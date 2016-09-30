@@ -372,6 +372,9 @@ basic reflection facility showing, that it can be used as the foundation
 for reflection-based utilities and applications using various programming
 paradigms.
 
+The source code repository for the ['Mirror reflection utilities] can be
+found at [@https://github.com/matus-chochlik/mirror].
+
 [note The external libraries are at the moment and in the current form
 [*not] part of the proposal for standard C++ reflection.]
 
