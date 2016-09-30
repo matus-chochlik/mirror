@@ -59,8 +59,7 @@
 	<span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">_eat</span><span class="special">(</span><span class="keyword">bool</span> <span class="special">...)</span> <span class="special">{</span> <span class="special">}</span>
 
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">MEC</span><span class="special">&gt;</span>
-	<span class="keyword">static</span>
-	<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">Enum</span><span class="special">&gt;</span> <span class="identifier">_do_make_map</span><span class="special">(</span><span class="identifier">MEC</span> <span class="special">...</span> <span class="identifier">mec</span><span class="special">)</span>
+	<span class="keyword">static</span> <span class="keyword">auto</span> <span class="identifier">_do_make_map</span><span class="special">(</span><span class="identifier">MEC</span> <span class="special">...</span> <span class="identifier">mec</span><span class="special">)</span>
 	<span class="special">{</span>
 		<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">Enum</span><span class="special">&gt;</span> <span class="identifier">res</span><span class="special">;</span>
 		<span class="identifier">_eat</span><span class="special">(</span><span class="identifier">res</span><span class="special">.</span><span class="identifier">emplace</span><span class="special">(</span>
@@ -71,8 +70,7 @@
 	<span class="special">}</span>
 
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">MEC</span><span class="special">&gt;</span>
-	<span class="keyword">static</span>
-	<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">Enum</span><span class="special">&gt;</span> <span class="identifier">_make_map</span><span class="special">(</span><a class="link" href="../../mirror/quickref/range.html" title="Compile-time ranges">mirror::range</a><span class="special">&lt;</span><span class="identifier">MEC</span><span class="special">...&gt;)</span>
+	<span class="keyword">static</span> <span class="keyword">auto</span> <span class="identifier">_make_map</span><span class="special">(</span><a class="link" href="../../mirror/quickref/range.html" title="Compile-time ranges">mirror::range</a><span class="special">&lt;</span><span class="identifier">MEC</span><span class="special">...&gt;)</span>
 	<span class="special">{</span>
 		<span class="keyword">return</span> <span class="identifier">_do_make_map</span><span class="special">(</span><span class="identifier">MEC</span><span class="special">{}...);</span>
 	<span class="special">}</span>
