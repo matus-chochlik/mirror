@@ -1,5 +1,5 @@
 /**
- * @example reflexpr/004_aliased.cpp
+ * @example reflexpr/006_aliased.cpp
  * @brief Basic examples of the get_aliased operation.
  *
  * Copyright Matus Chochlik.
