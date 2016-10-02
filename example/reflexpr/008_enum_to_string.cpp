@@ -1,5 +1,5 @@
 /**
- * @example reflexpr/005_enum_to_string.cpp
+ * @example reflexpr/008_enum_to_string.cpp
  * @brief Shows how to implement a enumerator-to-string conversion
  *
  * Copyright Matus Chochlik.
