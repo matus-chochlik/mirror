@@ -1,0 +1,25 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:metaobject Metaobject wrappers]
+[/=====================================]
+
+[header metaobject]
+[import metaobject.cpp]
+
+[heading [^shared_metaobject]]
+[/---------------------------]
+[lagoon_shared_metaobject_1]
+
+TODO
+
+[heading [^shared_metaobject_sequence]]
+[/------------------------------------]
+[lagoon_shared_metaobject_sequence_1]
+
+TODO
+
+[endsect]

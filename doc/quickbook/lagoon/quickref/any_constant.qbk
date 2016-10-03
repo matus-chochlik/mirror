@@ -1,0 +1,18 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===========================================]
+[section:any_constant [^any_constant] wrapper]
+[/===========================================]
+
+[header any_constant]
+[import any_constant.cpp]
+
+The [^any_constant] class is a type-erasure for various integral and enumeration
+constant types.
+
+[lagoon_any_constant_1]
+
+[endsect]

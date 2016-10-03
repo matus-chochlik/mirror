@@ -1,0 +1,22 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:identity [^identity] operation]
+[/=====================================]
+
+[header identity]
+
+The [^identity] template is used both as a type wrapper and unary no-op
+operation.
+
+``
+template <typename T>
+struct identity {
+	using type = T;
+};
+``
+
+[endsect]

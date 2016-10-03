@@ -1,0 +1,23 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/======================================]
+[section:meta_class_ops Class operations]
+[/======================================]
+
+[header metaobject_ops]
+
+[header meta_class_ops]
+[import meta_class_ops.cpp]
+
+The class-related operations are implemented by
+the following functions:
+
+[heading:base_classes operation [^base_classes]]
+[/---------------------------------------------]
+[puddle_op_get_base_classes]
+[puddle_op_get_public_base_classes]
+
+[endsect]

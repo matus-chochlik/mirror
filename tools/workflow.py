@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
-#  Copyright 2012-2013 Matus Chochlik. Distributed under the Boost
-#  Software License, Version 1.0. (See accompanying file
-#  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
 
 # globally enables/disables the "dry-run" mode
 dry_run = False
@@ -35,9 +36,9 @@ def current_version(root_dir = get_root_dir()):
 def version_string(version_numbers):
 	return "%d.%d.%d" % tuple(version_numbers)
 
-def bumped_version_number(version_numbers, number):
-	version_numbers[number] += 1
-	return version_numbers
+def bumped_version_number(version_numbers, idx):
+
+	return [n if i < idx else n+1 if i== idx else 0 for i, n in enumerate(version_numbers)]
 
 def next_release(root_dir = get_root_dir()):
 	return bumped_version_number(current_version(root_dir), 1)
@@ -105,7 +106,6 @@ def git_has_remote_branch(branch_name, root_dir=get_root_dir):
 			False
 		).strip()
 	)
-
 
 # Begins a new release
 def action_begin_release():
@@ -193,16 +193,6 @@ def action_finish_hotfix():
 # creates the command line argument parser
 def get_argument_parser():
 	import argparse
-	import datetime
-
-	def BoolArgValue(arg):
-		if(arg in ("True", "true", "Yes", "yes", "Y", "On", "1")):
-			return True
-		elif(arg in ("False", "false", "No", "no", "N", "Off", "0")):
-			return False
-		else:
-			msg = "'%s' is not a valid boolean value" % str(arg)
-			raise argparse.ArgumentTypeError(msg)
 
 	argparser = argparse.ArgumentParser(
 		prog="workflow",
@@ -210,11 +200,11 @@ def get_argument_parser():
 			Git Workflow utility script
 		""",
 		epilog="""
-			Copyright (c) 2012 - %(year)d Matúš Chochlík.
+			Copyright (c) Matúš Chochlík.
 			Permission is granted to copy, distribute and/or modify this document
 			under the terms of the Boost Software License, Version 1.0.
 			(See a copy at http://www.boost.org/LICENSE_1_0.txt)
-		""" % { "year": datetime.datetime.now().year }
+		"""
 	)
 
 	argparser.add_argument(
@@ -228,6 +218,7 @@ def get_argument_parser():
 	)
 
 	argparser_action_group = argparser.add_mutually_exclusive_group()
+
 	argparser_action_group.add_argument(
 		"--begin-release",
 		dest="action",

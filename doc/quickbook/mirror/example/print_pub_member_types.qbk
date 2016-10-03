@@ -1,0 +1,37 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=============================================================]
+[section:print_pub_member_types Print public class member types]
+[/=============================================================]
+
+This example shows how to iterate and print the names of all or public-only
+class member types.
+
+[import print_pub_member_types.cpp]
+
+We need to include the following headers:
+[mirror_example_print_pub_member_types_1]
+
+We'll demonstrate the functionality on the following classes:
+[mirror_example_print_pub_member_types_2]
+
+The [^print_pub_member_types] template uses the [^__for_each] operation
+to traverse the sequence of metaobjects reflecting class data members
+and the other metaobject operations to get the required metadata.
+
+The difference between [^__get_member_types] and [^__get_public_member_types]
+is that the latter returns a metaobject sequence containing only public
+class member types.
+[mirror_example_print_pub_member_types_3]
+
+Let's try the printer on instances of [^S] and [^C].
+[mirror_example_print_pub_member_types_4]
+
+Running the example produces the following output:
+
+[mirror_example_print_pub_member_types_output]
+
+[endsect]

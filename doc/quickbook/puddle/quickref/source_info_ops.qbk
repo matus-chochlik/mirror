@@ -1,0 +1,34 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=============================================================]
+[section:source_info_ops Source location information operations]
+[/=============================================================]
+
+[header metaobject_ops]
+
+[header source_info_ops]
+[import source_info_ops.cpp]
+
+The metaobject source location operations are implemented by the following
+functions:
+
+[heading:has_source_info operation [^has_source_info]]
+[/---------------------------------------------------]
+[puddle_op_has_source_info]
+
+[heading:get_source_file operation [^get_source_file]]
+[/---------------------------------------------------]
+[puddle_op_get_source_file]
+
+[heading:get_source_line operation [^get_source_line]]
+[/---------------------------------------------------]
+[puddle_op_get_source_line]
+
+[heading:get_source_column operation [^get_source_column]]
+[/-------------------------------------------------------]
+[puddle_op_get_source_column]
+
+[endsect]

@@ -1,0 +1,27 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===================================]
+[section:int_const Integral constants]
+[/===================================]
+
+[header int_const]
+[import int_const.cpp]
+
+The ['Puddle] library turns the [link mirror.quickref.int_const ['Mirror]'s
+integral_constant class templates] into the following constexpr
+['variable templates]:
+
+[puddle_int_const_1]
+
+The ['Mirror]'s [^value] template alias is implemented as an constexpr function:
+
+[puddle_int_const_2]
+
+The ['Puddle] library also provides the basic comparison operators
+([^==], [^!=], [^<], [^>], [^<=], [^>=]) arithmetic operators
+([^+], [^-], [^*], [^/]) and the operator [^<<] for output to [^std::ostream].
+
+[endsect]

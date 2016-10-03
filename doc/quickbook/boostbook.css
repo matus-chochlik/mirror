@@ -1,0 +1,97 @@
+/*
+ * Copyright Matus Chochlik.
+ * Distributed under the Boost Software License, Version 1.0.
+ * See accompanying file LICENSE_1_0.txt or copy at
+ *  http://www.boost.org/LICENSE_1_0.txt
+ */
+html {
+	background-color: #446688;
+}
+
+body {
+	background-color: white;
+	margin: 2em;
+	border: solid #202020 2px;
+	padding: 1em;
+	box-shadow: 1px 1px 4px 4px #103050;
+}
+
+body hr {
+	display: none;
+}
+
+body > .spirit-nav {
+	border: solid #CC9900 1px;
+	background-color: #FFBB00;
+	padding: 0.5em;
+	box-shadow: inset 1px 1px 1px 1px #DDAA00;
+}
+
+.spirit-nav a img {
+	margin: 3px;
+}
+
+.calloutlist {
+	border: solid #E8E8E8 1px;
+	background-color: #F0F0E8;
+}
+
+.calloutlist table {
+	font-size: 75%;
+}
+
+pre.programlisting {
+	margin-top: 0;
+	margin-bottom: 0;
+	border: solid #E0E0E0 1px;
+	background-color: #E8E8E4;
+	padding-right: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.programlisting .preprocessor {
+	font-weight: 600;
+	color: #303090;
+}
+.programlisting .keyword {
+	font-weight: 500;
+	color: #4040A0;
+}
+.programlisting .identifier {
+	font-weight: 400;
+	color: #101020;
+}
+.programlisting .string {
+	font-weight: 600;
+	color: #303080;
+}
+
+code.literal {
+	font-weight: 600;
+	color: #101020;
+}
+
+a:link {
+	color: #6060A0;
+}
+
+code.literal a:link,
+.programlisting a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	color: #404080;
+}
+
+a:hover {
+	color: #202040;
+	text-decoration: underline;
+	text-shadow: 1px 1px 1px rgba(40, 40, 40, 0.5);
+}
+
+div.copyright-footer {
+	font-size: 65%;
+}
+

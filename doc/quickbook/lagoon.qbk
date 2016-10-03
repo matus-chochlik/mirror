@@ -1,0 +1,43 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[part Lagoon run-time reflection library
+	[quickbook 1.6]
+	[id lagoon]
+]
+
+[/------]
+[/Macros]
+[/------]
+
+[/---------------------]
+[/Quick reference links]
+[/---------------------]
+
+[def __tribool [link lagoon.quickref.tribool tribool]]
+[def __weak_bool [link lagoon.quickref.tribool.weak_bool weak_bool]]
+[def __none [link lagoon.quickref.tribool.none none]]
+
+[def __fingerprint [link lagoon.quickref.fingerprint fingerprint]]
+[def __get_fingerprint [link lagoon.quickref.fingerprint get_fingerprint]]
+
+[def __any_constant [link lagoon.quickref.any_constant any_constant]]
+
+[def __shared_metaobject [link lagoon.quickref.metaobject shared_metaobject]]
+[def __shared_metaobject_sequence [link lagoon.quickref.metaobject shared_metaobject_sequence]]
+
+[/---------]
+[/Templates]
+[/---------]
+
+
+[/--------]
+[/Chapters]
+[/--------]
+
+TODO
+
+[include lagoon/intro.qbk]
+[include lagoon/quickref.qbk]

@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:is_class operation [^is_class]]
+[/=====================================]
+
+[header is_class]
+
+The [^is_class] operation indicates if the passed argument is a metaobject
+reflecting a [^class], as shown in the following pseudocode.
+
+[import is_class.cpp]
+
+[mirror_op_is_class]
+
+[endsect]

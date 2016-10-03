@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=================================]
+[section:unpack operation [^unpack]]
+[/=================================]
+
+[header unpack]
+
+The [^unpack] operation converts a lazy [^__metaobject_sequence] into
+a [^__range] containing the individual [^__metaobject]s
+from the metaobject sequence as shown in the following pseudocode.
+
+[import unpack.cpp]
+
+[mirror_op_unpack]
+
+[endsect]

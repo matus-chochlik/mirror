@@ -1,0 +1,14 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=========================]
+[section:intro Introduction]
+[/=========================]
+
+The following sections show several working examples of use of the ['Puddle]
+library. Further examples can be found
+[@https://github.com/matus-chochlik/mirror/tree/develop/example/puddle in the repository].
+
+[endsect]

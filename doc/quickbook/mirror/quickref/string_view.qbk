@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===========================================]
+[section:string_view operation [^string_view]]
+[/===========================================]
+
+[header string_view]
+
+The [^string] operation returns a [^std::__basic_string_view] from
+a compile-time [^__basic_string] as shown in the following pseudocode:
+
+``
+template <typename Char, Char ... C>
+constexpr std::string_view string_view<__basic_string<Char, C...>> = __unspecified;
+``
+
+[endsect]

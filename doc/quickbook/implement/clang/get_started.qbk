@@ -1,0 +1,38 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/==================================]
+[section:get_started Getting started]
+[/==================================]
+
+In order to build modified version of __clang__ follow the 
+[@http://clang.llvm.org/get_started.html instructions posted here], but
+instead of checking out the code from the official repository, do the following:
+
+``
+__prompt__ cd llvm/tools
+__prompt__ git clone https://github.com/matus-chochlik/clang.git
+__prompt__ cd clang
+__prompt__ git checkout reflexpr
+__prompt__ cd ../../..
+``
+
+Note however that the commits made on the [^reflexpr] branch are occasionally
+rebased against the official master branch, amended and force-pushed to
+the forked repository. In order to apply the latest changes made in the remote
+repository to the local repository, instead of plain
+
+``
+__prompt__ git pull
+``
+
+you need to do the following on the [^reflexpr] branch:
+
+``
+__prompt__ git fetch origin
+__prompt__ git reset --hard origin/reflexpr
+``
+
+[endsect]

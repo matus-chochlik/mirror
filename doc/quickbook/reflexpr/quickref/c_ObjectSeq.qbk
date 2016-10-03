@@ -1,0 +1,23 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/-----------------------------------------]
+[section:c_ObjectSequence [^ObjectSequence]]
+[/-----------------------------------------]
+
+[^__meta::ObjectSequence] is a concept for lazy metaobject sequences.
+
+[import header.cpp]
+
+[reflexpr_header_concepts_ObjectSequence]
+
+[heading:ops Operations]
+[/---------------------]
+Operations applicable to metaobject sequences — types conforming
+to the [^meta::__ObjectSequence] concept:
+
+[reflexpr_header_operations_ObjectSequence]
+
+[endsect]

@@ -1,0 +1,45 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Quick reference
+	[quickbook 1.6]
+	[id reflexpr.quickref]
+]
+
+[section:intro Introduction]
+
+This quick reference describes the public API of the standard reflection
+facility as proposed in the [link papers.proposals recent proposals] for
+the C++ standardization committee.
+
+[endsect]
+
+[include quickref/operator.qbk]
+[include quickref/header.qbk]
+[include quickref/is_metaobject.qbk]
+[include quickref/ns_meta.qbk]
+[include quickref/c_Object.qbk]
+[include quickref/c_ObjectSeq.qbk]
+[include quickref/c_Reversible.qbk]
+[include quickref/c_Named.qbk]
+[include quickref/c_Alias.qbk]
+[include quickref/c_Typed.qbk]
+[include quickref/c_Scope.qbk]
+[include quickref/c_Namespace.qbk]
+[include quickref/c_GlobalScope.qbk]
+[include quickref/c_Type.qbk]
+[include quickref/c_TagType.qbk]
+[include quickref/c_Enum.qbk]
+[include quickref/c_Record.qbk]
+[include quickref/c_Class.qbk]
+[include quickref/c_ScopeMember.qbk]
+[include quickref/c_EnumMember.qbk]
+[include quickref/c_RecordMember.qbk]
+[include quickref/c_Variable.qbk]
+[include quickref/c_Constant.qbk]
+[include quickref/c_Specifier.qbk]
+[include quickref/c_Inheritance.qbk]
+
+[include quickref/o_Other.qbk]

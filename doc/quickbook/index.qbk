@@ -1,0 +1,389 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[book cpp-reflection
+	[quickbook 1.6]
+	[lang en]
+	[id index]
+	[authors [Chochlík, Matúš]]
+	[copyright 2016 Matúš Chochlík]
+	[source-mode c++]
+	[license
+		Distributed under the Boost Software License, Version 1.0.
+		See accompanying file LICENSE_1_0.txt or copy at
+		[@http://www.boost.org/LICENSE_1_0.txt]
+	]
+]
+
+[/------]
+[/Macros]
+[/------]
+
+[def __clang__ [@ http://clang.llvm.org/ clang]]
+[def __llvm__ [@ http://llvm.org/ llvm]]
+
+[def __prompt__ $>]
+
+[def __pseudocode__ ['pseudocode]]
+[def __unspecified ['unspecified]]
+[def __implementation_defined ['implementation-defined]]
+
+[def __integral_constant [@ http://en.cppreference.com/w/cpp/types/integral_constant integral_constant]]
+[def __basic_string_view [@ http://en.cppreference.com/w/cpp/string/basic_string_view basic_string_view]]
+
+[def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
+[def __reflexpr [link reflexpr.quickref.operator reflexpr]]
+
+[def __MIRRORED [link mirror.quickref.operator MIRRORED]]
+[def __PUDDLED [link puddle.quickref.operator PUDDLED]]
+
+[def __std_meta [link reflexpr.quickref.ns_meta std::meta]]
+
+[def __std_is_metaobject [link reflexpr.quickref.is_metaobject std::is_metaobject]]
+[def __std_is_metaobject_v [link reflexpr.quickref.is_metaobject std::is_metaobject_v]]
+
+[/basic metaobject concepts]
+[def __std_meta_Object [link
+reflexpr.quickref.c_Object std::meta::Object]]
+[def __std_meta_ObjectSequence [link
+reflexpr.quickref.c_ObjectSequence std::meta::ObjectSequence]]
+[def __std_meta_Reversible [link
+reflexpr.quickref.c_Reversible std::meta::Reversible]]
+[def __std_meta_Named [link
+reflexpr.quickref.c_Named std::meta::Named]]
+[def __std_meta_Alias [link
+reflexpr.quickref.c_Alias std::meta::Alias]]
+[def __std_meta_Typed [link
+reflexpr.quickref.c_Typed std::meta::Typed]]
+[def __std_meta_Scope [link
+reflexpr.quickref.c_Scope std::meta::Scope]]
+[def __std_meta_Namespace [link
+reflexpr.quickref.c_Namespace std::meta::Namespace]]
+[def __std_meta_GlobalScope [link
+reflexpr.quickref.c_GlobalScope std::meta::GlobalScope]]
+[def __std_meta_Type [link
+reflexpr.quickref.c_Type std::meta::Type]]
+[def __std_meta_TagType [link
+reflexpr.quickref.c_TagType std::meta::TagType]]
+[def __std_meta_Record [link
+reflexpr.quickref.c_Record std::meta::Record]]
+[def __std_meta_Enum [link
+reflexpr.quickref.c_Enum std::meta::Enum]]
+[def __std_meta_Class [link
+reflexpr.quickref.c_Class std::meta::Class]]
+[def __std_meta_ScopeMember [link
+reflexpr.quickref.c_ScopeMember std::meta::ScopeMember]]
+[def __std_meta_EnumMember [link
+reflexpr.quickref.c_EnumMember std::meta::EnumMember]]
+[def __std_meta_RecordMember [link
+reflexpr.quickref.c_RecordMember std::meta::RecordMember]]
+[def __std_meta_Variable [link
+reflexpr.quickref.c_Variable std::meta::Variable]]
+[def __std_meta_Constant [link
+reflexpr.quickref.c_Constant std::meta::Constant]]
+[def __std_meta_Specifier [link
+reflexpr.quickref.c_Specifier std::meta::Specifier]]
+[def __std_meta_Inheritance [link
+reflexpr.quickref.c_Inheritance std::meta::Inheritance]]
+
+[/basic metaobject operations Object]
+[def __std_meta_reflects_same [link
+reflexpr.quickref.c_Object.ops std::meta::reflects_same]]
+[def __std_meta_reflects_same_v [link
+reflexpr.quickref.c_Object.ops std::meta::reflects_same_v]]
+[def __std_meta_get_source_file [link
+reflexpr.quickref.c_Object.ops std::meta::get_source_file]]
+[def __std_meta_get_source_file_v [link
+reflexpr.quickref.c_Object.ops std::meta::get_source_file_v]]
+[def __std_meta_get_source_line [link
+reflexpr.quickref.c_Object.ops std::meta::get_source_line]]
+[def __std_meta_get_source_line_v [link
+reflexpr.quickref.c_Object.ops std::meta::get_source_line_v]]
+[def __std_meta_get_source_column [link
+reflexpr.quickref.c_Object.ops std::meta::get_source_column]]
+[def __std_meta_get_source_column_v [link
+reflexpr.quickref.c_Object.ops std::meta::get_source_column_v]]
+
+[/basic metaobject operations ObjectSequence]
+[def __std_meta_get_size [link
+reflexpr.quickref.c_ObjectSequence.ops std::meta::get_size]]
+[def __std_meta_get_size_v [link
+reflexpr.quickref.c_ObjectSequence.ops std::meta::get_size_v]]
+[def __std_meta_get_element [link
+reflexpr.quickref.c_ObjectSequence.ops std::meta::get_element]]
+[def __std_meta_get_element_m [link
+reflexpr.quickref.c_ObjectSequence.ops std::meta::get_element_m]]
+[def __std_meta_unpack_sequence [link
+reflexpr.quickref.c_ObjectSequence.ops std::meta::unpack_sequence]]
+[def __std_meta_unpack_sequence_t [link
+reflexpr.quickref.c_ObjectSequence.ops std::meta::unpack_sequence_t]]
+
+[/basic metaobject operations Named]
+[def __std_meta_is_anonymous [link
+reflexpr.quickref.c_Named.ops std::meta::is_anonymous]]
+[def __std_meta_is_anonymous_v [link
+reflexpr.quickref.c_Named.ops meta::is_anonumoys_v]]
+[def __std_meta_get_base_name [link
+reflexpr.quickref.c_Named.ops std::meta::get_base_name]]
+[def __std_meta_get_base_name_v [link
+reflexpr.quickref.c_Named.ops std::meta::get_base_name_v]]
+[def __std_meta_get_display_name [link
+reflexpr.quickref.c_Named.ops std::meta::get_display_name]]
+[def __std_meta_get_display_name_v [link
+reflexpr.quickref.c_Named.ops std::meta::get_display_name_v]]
+
+[/basic metaobject operations Alias]
+[def __std_meta_get_aliased [link
+reflexpr.quickref.c_Alias.ops std::meta::get_aliased]]
+[def __std_meta_get_aliased_m [link
+reflexpr.quickref.c_Alias.ops std::meta::get_aliased_m]]
+
+[/basic metaobject operations Typed]
+[def __std_meta_get_type [link
+reflexpr.quickref.c_Typed.ops std::meta::get_type]]
+[def __std_meta_get_type_m [link
+reflexpr.quickref.c_Typed.ops std::meta::get_type_m]]
+
+[/basic metaobject operations Type]
+[def __std_meta_get_reflected_type [link
+reflexpr.quickref.c_Type.ops std::meta::get_reflected_type]]
+[def __std_meta_get_reflected_type_t [link
+reflexpr.quickref.c_Type.ops std::meta::get_reflected_type_t]]
+
+[/basic metaobject operations TagType]
+[def __std_meta_is_enum [link
+reflexpr.quickref.c_TagType.ops std::meta::is_enum]]
+[def __std_meta_is_enum_v [link
+reflexpr.quickref.c_TagType.ops std::meta::is_enum_v]]
+[def __std_meta_is_union [link
+reflexpr.quickref.c_TagType.ops std::meta::is_union]]
+[def __std_meta_is_union_v [link
+reflexpr.quickref.c_TagType.ops std::meta::is_union_v]]
+[def __std_meta_is_struct [link
+reflexpr.quickref.c_TagType.ops std::meta::is_struct]]
+[def __std_meta_is_struct_v [link
+reflexpr.quickref.c_TagType.ops std::meta::is_struct_v]]
+[def __std_meta_is_class [link
+reflexpr.quickref.c_TagType.ops std::meta::is_class]]
+[def __std_meta_is_class_v [link
+reflexpr.quickref.c_TagType.ops std::meta::is_class_v]]
+[def __std_meta_get_elaborated_type_specifier [link
+reflexpr.quickref.c_TagType.ops std::meta::get_elaborated_type_specifier]]
+[def __std_meta_get_elaborated_type_specifier_m [link
+reflexpr.quickref.c_TagType.ops std::meta::get_elaborated_type_specifier_m]]
+
+[/basic metaobject operations Enum]
+[def __std_meta_is_scoped_enum [link
+reflexpr.quickref.c_Enum.ops std::meta::is_scoped_enum]]
+[def __std_meta_is_scoped_enum_v [link
+reflexpr.quickref.c_Enum.ops std::meta::is_scoped_enum_v]]
+[def __std_meta_get_enumerators [link
+reflexpr.quickref.c_Enum.ops std::meta::get_enumerators]]
+[def __std_meta_get_enumerators_m [link
+reflexpr.quickref.c_Enum.ops std::meta::get_enumerators_m]]
+
+[/basic metaobject operations Record]
+[def __std_meta_get_member_types [link
+reflexpr.quickref.c_Record.ops std::meta::get_member_types]]
+[def __std_meta_get_member_types_m [link
+reflexpr.quickref.c_Record.ops std::meta::get_member_types_m]]
+[def __std_meta_get_public_member_types [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_member_types]]
+[def __std_meta_get_public_member_types_m [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_member_types_m]]
+
+[def __std_meta_get_data_members [link
+reflexpr.quickref.c_Record.ops std::meta::get_data_members]]
+[def __std_meta_get_data_members_m [link
+reflexpr.quickref.c_Record.ops std::meta::get_data_members_m]]
+[def __std_meta_get_public_data_members [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_data_members]]
+[def __std_meta_get_public_data_members_m [link
+reflexpr.quickref.c_Record.ops std::meta::get_public_data_members_m]]
+
+[/basic metaobject operations Class]
+[def __std_meta_get_base_classes [link
+reflexpr.quickref.c_Class.ops std::meta::get_base_classes]]
+[def __std_meta_get_base_classes_m [link
+reflexpr.quickref.c_Class.ops std::meta::get_base_classes_m]]
+[def __std_meta_get_public_base_classes [link
+reflexpr.quickref.c_Class.ops std::meta::get_public_base_classes]]
+[def __std_meta_get_public_base_classes_m [link
+reflexpr.quickref.c_Class.ops std::meta::get_public_base_classes_m]]
+
+[/basic metaobject operations ScopeMember]
+[def __std_meta_get_scope [link
+reflexpr.quickref.c_ScopeMember.ops std::meta::get_scope]]
+[def __std_meta_get_scope_m [link
+reflexpr.quickref.c_ScopeMember.ops std::meta::get_scope_m]]
+
+[/basic metaobject operations Variable]
+[def __std_meta_get_pointer [link
+reflexpr.quickref.c_Variable.ops std::meta::get_pointer]]
+[def __std_meta_get_pointer_v [link
+reflexpr.quickref.c_Variable.ops std::meta::get_pointer_v]]
+
+[/basic metaobject operations Constant]
+[def __std_meta_get_constant [link
+reflexpr.quickref.c_Constant.ops std::meta::get_constant]]
+[def __std_meta_get_constant_v [link
+reflexpr.quickref.c_Constant.ops std::meta::get_constant_v]]
+
+[/basic metaobject operations Inheritance]
+[def __std_meta_get_base_class [link
+reflexpr.quickref.c_Inheritance.ops std::meta::get_base_class]]
+[def __std_meta_get_base_class_m [link
+reflexpr.quickref.c_Inheritance.ops std::meta::get_base_class_m]]
+
+[/basic metaobject operations access]
+[def __std_meta_is_private [link
+reflexpr.quickref.other_ops std::meta::is_private]]
+[def __std_meta_is_private_v [link
+reflexpr.quickref.other_ops std::meta::is_private_v]]
+[def __std_meta_is_protected [link
+reflexpr.quickref.other_ops std::meta::is_protected]]
+[def __std_meta_is_protected_v [link
+reflexpr.quickref.other_ops std::meta::is_protected_v]]
+[def __std_meta_is_public [link
+reflexpr.quickref.other_ops std::meta::is_public]]
+[def __std_meta_is_public_v [link
+reflexpr.quickref.other_ops std::meta::is_public_v]]
+[def __std_meta_get_access_specifier [link
+reflexpr.quickref.other_ops std::meta::get_access_specifier]]
+[def __std_meta_get_access_specifier_m [link
+reflexpr.quickref.other_ops std::meta::get_access_specifier_m]]
+
+[/basic metaobject operations virtual]
+[def __std_meta_is_virtual [link
+reflexpr.quickref.other_ops std::meta::is_virtual]]
+[def __std_meta_is_virtual_v [link
+reflexpr.quickref.other_ops std::meta::is_virtual_v]]
+
+[/basic metaobject operations static]
+[def __std_meta_is_static [link
+reflexpr.quickref.other_ops std::meta::is_static]]
+[def __std_meta_is_static_v [link
+reflexpr.quickref.other_ops std::meta::is_static_v]]
+
+[/Mirror]
+[def __mirror_metaobject [link mirror.quickref.metaobject mirror::metaobject]]
+[def __mirror_metaobject_sequence [link mirror.quickref.metaobject mirror::metaobject_sequence]]
+
+[def __mirror_int_const [link mirror.quickref.int_const mirror::int_const]]
+[def __mirror_bool_ [link mirror.quickref.int_const mirror::bool_]]
+[def __mirror_true_ [link mirror.quickref.int_const mirror::true_]]
+[def __mirror_false_ [link mirror.quickref.int_const mirror::false_]]
+[def __mirror_char_ [link mirror.quickref.int_const mirror::char_]]
+[def __mirror_int_ [link mirror.quickref.int_const mirror::int_]]
+[def __mirror_unsigned_ [link mirror.quickref.int_const mirror::unsigned_]]
+[def __mirror_size_const [link mirror.quickref.int_const mirror::size_const]]
+
+[def __mirror_basic_string [link mirror.quickref.string mirror::basic_string]]
+[def __mirror_string [link mirror.quickref.string mirror::string]]
+[def __mirror_empty_string [link mirror.quickref.string mirror::empty_string]]
+
+[def __mirror_range [link mirror.quickref.range mirror::range]]
+[def __mirror_empty_range [link mirror.quickref.range mirror::empty_range]]
+
+[def __mirror_none [link mirror.quickref.none mirror::none]]
+
+[def __mirror_is_int_const [link mirror.quickref.traits.is_int_const mirror::is_int_const]]
+[def __mirror_is_string [link mirror.quickref.traits.is_string mirror::is_string]]
+[def __mirror_is_range [link mirror.quickref.traits.is_range mirror::is_range]]
+[def __mirror_is_none [link mirror.quickref.traits.is_none mirror::is_none]]
+[def __mirror_is_metaobject [link mirror.quickref.traits.is_metaobject mirror::is_metaobject]]
+[def __mirror_is_metaobject_sequence [link mirror.quickref.traits.is_metaobject_sequence mirror::is_metaobject_sequence]]
+
+[def __mirror_reflects_alias [link mirror.quickref.traits.reflects_alias mirror::reflects_alias]]
+[def __mirror_reflects_global_scope [link mirror.quickref.traits.reflects_global_scope mirror::reflects_global_scope]]
+[def __mirror_reflects_namespace [link mirror.quickref.traits.reflects_namespace mirror::reflects_namespace]]
+[def __mirror_reflects_type [link mirror.quickref.traits.reflects_type mirror::reflects_type]]
+[def __mirror_reflects_tag_type [link mirror.quickref.traits.reflects_tag_type mirror::reflects_tag_type]]
+[def __mirror_reflects_enum_member [link mirror.quickref.traits.reflects_enum_member mirror::reflects_enum_member]]
+[def __mirror_reflects_record_member [link mirror.quickref.traits.reflects_record_member mirror::reflects_record_member]]
+[def __mirror_reflects_variable [link mirror.quickref.traits.reflects_variable mirror::reflects_variable]]
+[def __mirror_reflects_constant [link mirror.quickref.traits.reflects_constant mirror::reflects_constant]]
+[def __mirror_reflects_specifier [link mirror.quickref.traits.reflects_specifier mirror::reflects_specifier]]
+[def __mirror_reflects_inheritance [link mirror.quickref.traits.reflects_inheritance mirror::reflects_inheritance]]
+
+[def __mirror_identity [link mirror.quickref.identity mirror::identity]]
+[def __mirror_value [link mirror.quickref.value mirror::value]]
+[def __mirror_c_str [link mirror.quickref.c_str mirror::c_str]]
+[def __mirror_string_view [link mirror.quickref.string_view mirror::string_view]]
+
+[def __mirror_is_empty [link mirror.quickref.is_empty mirror::is_empty]]
+[def __mirror_size [link mirror.quickref.get_size mirror::size]]
+[def __mirror_get_size [link mirror.quickref.get_size mirror::get_size]]
+[def __mirror_get_element [link mirror.quickref.get_element mirror::get_element]]
+[def __mirror_unpack [link mirror.quickref.unpack mirror::unpack]]
+
+[def __mirror_has_source_info [link mirror.quickref.has_source_info mirror::has_source_info]]
+[def __mirror_get_source_file [link mirror.quickref.get_source_file mirror::get_source_file]]
+[def __mirror_get_source_line [link mirror.quickref.get_source_line mirror::get_source_line]]
+[def __mirror_get_source_column [link mirror.quickref.get_source_column mirror::get_source_column]]
+[def __mirror_is_anonymous [link mirror.quickref.is_anonymous mirror::is_anonymous]]
+[def __mirror_get_base_name [link mirror.quickref.get_base_name mirror::get_base_name]]
+[def __mirror_get_full_name [link mirror.quickref.get_full_name mirror::get_full_name]]
+[def __mirror_get_display_name [link mirror.quickref.get_display_name mirror::get_display_name]]
+[def __mirror_get_aliased [link mirror.quickref.get_aliased mirror::get_aliased]]
+[def __mirror_get_scope [link mirror.quickref.get_scope mirror::get_scope]]
+[def __mirror_get_type [link mirror.quickref.get_type mirror::get_type]]
+
+[def __mirror_get_reflected_type [link mirror.quickref.get_reflected_type mirror::get_reflected_type]]
+
+[def __mirror_is_enum [link mirror.quickref.is_enum mirror::is_enum]]
+[def __mirror_is_scoped_enum [link mirror.quickref.is_scoped_enum mirror::is_scoped_enum]]
+[def __mirror_get_enumerators [link mirror.quickref.get_enumerators mirror::get_enumerators]]
+
+[def __mirror_is_class [link mirror.quickref.is_class mirror::is_class]]
+[def __mirror_is_struct [link mirror.quickref.is_struct mirror::is_struct]]
+[def __mirror_is_union [link mirror.quickref.is_union mirror::is_union]]
+[def __mirror_get_data_members [link mirror.quickref.get_data_members mirror::get_data_members]]
+[def __mirror_get_public_data_members [link mirror.quickref.get_public_data_members mirror::get_public_data_members]]
+[def __mirror_get_member_types [link mirror.quickref.get_member_types mirror::get_member_types]]
+[def __mirror_get_public_member_types [link mirror.quickref.get_public_member_types mirror::get_public_member_types]]
+[def __mirror_get_base_classes [link mirror.quickref.get_base_classes mirror::get_base_classes]]
+[def __mirror_get_public_base_classes [link mirror.quickref.get_public_base_classes mirror::get_public_base_classes]]
+
+[def __mirror_get_pointer [link mirror.quickref.get_pointer mirror::get_pointer]]
+[def __mirror_get_constant [link mirror.quickref.get_constant mirror::get_constant]]
+
+[def __mirror_get_base_class [link mirror.quickref.get_base_class mirror::get_base_class]]
+
+[def __mirror_get_elaborated_type_specifier [link mirror.quickref.get_elaborated_type_specifier mirror::get_elaborated_type_specifier]]
+[def __mirror_get_access_specifier [link mirror.quickref.get_access_specifier mirror::get_access_specifier]]
+[def __mirror_is_public [link mirror.quickref.is_public mirror::is_public]]
+[def __mirror_is_protected [link mirror.quickref.is_protected mirror::is_protected]]
+[def __mirror_is_private [link mirror.quickref.is_private mirror::is_private]]
+[def __mirror_is_static [link mirror.quickref.is_virtual mirror::is_static]]
+[def __mirror_is_virtual [link mirror.quickref.is_virtual mirror::is_virtual]]
+
+[/--------]
+[/Chapters]
+[/--------]
+
+This is the documentation for the C++ reflection factility proposed
+for standardization by a series of [link papers.proposals papers],
+its [link implement implementation(s)]
+and a set of external libraries build on top of the
+basic reflection facility showing, that it can be used as the foundation
+for reflection-based utilities and applications using various programming
+paradigms.
+
+The source code repository for the ['Mirror reflection utilities] can be
+found at [@https://github.com/matus-chochlik/mirror].
+
+[note The external libraries are at the moment and in the current form
+[*not] part of the proposal for standard C++ reflection.]
+
+[warning This documentation is work-in progress and currently does not
+cover many of the implemented features.]
+
+[include reflexpr.qbk]
+[include mirror.qbk]
+[include puddle.qbk]
+[include lagoon.qbk]
+[include papers.qbk]
+[include implement.qbk]

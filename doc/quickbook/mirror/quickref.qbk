@@ -1,0 +1,90 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Quick reference
+	[quickbook 1.6]
+	[id mirror.quickref]
+]
+
+[section:intro Introduction]
+
+This quick reference describes the public API of the ['Mirror] reflection
+library.
+
+[endsect]
+
+[/---------]
+[/Templates]
+[/---------]
+
+[template header [name] [^#include <'''<ulink url="https://github.com/matus-chochlik/mirror/blob/develop/include/mirror/'''[name]'''.hpp">mirror/'''[name]'''.hpp</ulink>'''>]]
+
+[/--------]
+[/Sections]
+[/--------]
+
+[include quickref/metaobject.qbk]
+[include quickref/int_const.qbk]
+[include quickref/string.qbk]
+[include quickref/range.qbk]
+[include quickref/none.qbk]
+
+[include quickref/traits.qbk]
+
+[include quickref/identity.qbk]
+[include quickref/wrap.qbk]
+
+[include quickref/value.qbk]
+[include quickref/c_str.qbk]
+[include quickref/string_view.qbk]
+
+[include quickref/equal.qbk]
+[include quickref/concat.qbk]
+[include quickref/pop_front.qbk]
+[include quickref/push_back.qbk]
+
+[include quickref/for_each.qbk]
+
+[include quickref/is_empty.qbk]
+[include quickref/get_size.qbk]
+[include quickref/get_element.qbk]
+[include quickref/unpack.qbk]
+
+[include quickref/has_source_info.qbk]
+[include quickref/get_source_file.qbk]
+[include quickref/get_source_line.qbk]
+[include quickref/get_source_column.qbk]
+[include quickref/is_anonymous.qbk]
+[include quickref/get_base_name.qbk]
+[include quickref/get_full_name.qbk]
+[include quickref/get_display_name.qbk]
+[include quickref/get_aliased.qbk]
+[include quickref/get_type.qbk]
+[include quickref/get_reflected_type.qbk]
+[include quickref/get_elaborated_type_specifier.qbk]
+[include quickref/is_class.qbk]
+[include quickref/is_struct.qbk]
+[include quickref/is_union.qbk]
+[include quickref/is_enum.qbk]
+[include quickref/is_scoped_enum.qbk]
+[include quickref/get_enumerators.qbk]
+[include quickref/get_member_types.qbk]
+[include quickref/get_public_member_types.qbk]
+[include quickref/get_data_members.qbk]
+[include quickref/get_public_data_members.qbk]
+[include quickref/get_base_classes.qbk]
+[include quickref/get_public_base_classes.qbk]
+[include quickref/get_scope.qbk]
+[include quickref/get_pointer.qbk]
+[include quickref/get_constant.qbk]
+[include quickref/is_static.qbk]
+[include quickref/get_base_class.qbk]
+[include quickref/get_access_specifier.qbk]
+[include quickref/is_public.qbk]
+[include quickref/is_protected.qbk]
+[include quickref/is_private.qbk]
+[include quickref/is_virtual.qbk]
+
+[include quickref/operator.qbk]

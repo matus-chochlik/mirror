@@ -1,0 +1,33 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=====================================]
+[section:for_each operation [^for_each]]
+[/=====================================]
+
+[header for_each]
+
+[import for_each.cpp]
+
+The [^apply] static member function of the [^for_each] template calls
+the functor passed as the argument to [^apply] on each element in the
+sequence passed as the template argument to [^for_each].
+
+If the sequence is a [^__none], the the function is not called.
+
+[mirror_op_for_each_none]
+
+If the sequence is a [^__range], then the function is called on the instances
+of all types in the range wrapped by the [^__wrap_if_not_special] operation.
+
+[mirror_op_for_each_range]
+
+If the sequence is a [^__basic_string], then the function is called on
+the instances of all characters in the string wrapped by the [^__int_const]
+template.
+
+[mirror_op_for_each_string]
+
+[endsect]

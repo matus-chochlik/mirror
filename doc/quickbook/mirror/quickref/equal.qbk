@@ -1,0 +1,20 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===============================]
+[section:equal operation [^equal]]
+[/===============================]
+
+[header equal]
+
+The [^equal] operation returns [^true] if the pair of [^__basic_string]s,
+[^__range]s or [^int_const]s passed as arguments are equal, [^false]
+otherwise, as shown in the following pseudocode.
+
+[import equal.cpp]
+
+[mirror_op_equal]
+
+[endsect]

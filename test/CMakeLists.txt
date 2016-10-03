@@ -1,13 +1,18 @@
-#  Copyright 2010-2013 Matus Chochlik. Distributed under the Boost
-#  Software License, Version 1.0. (See accompanying file
-#  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#  Copyright Matus Chochlik.
+#  Distributed under the Boost Software License, Version 1.0.
+#  See accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt
 #
 cmake_minimum_required(VERSION 2.8)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 if(Boost_FOUND)
-	add_subdirectory("mire")
+	enable_testing()
+	add_subdirectory("reflexpr")
+	add_subdirectory("mirror")
+	add_subdirectory("puddle")
+	add_subdirectory("lagoon")
 else()
 	message(WARNING "Boost.Test required for testing but not found")
 endif()

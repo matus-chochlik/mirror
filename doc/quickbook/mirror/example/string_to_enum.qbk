@@ -1,0 +1,38 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/====================================]
+[section:string_to_enum String to enum]
+[/====================================]
+
+This example shows how to implement a string-to-[^enum] converter.
+
+[import string_to_enum.cpp]
+
+We need to include the following headers:
+[mirror_example_string_to_enum_1]
+
+We'll demonstrate the functionality on the following enum:
+[mirror_example_string_to_enum_2]
+
+The [^string_to_enum] template creates a static instance of a [^std::map]
+mapping from all names of enumerators of the [^Enum] passed as argument
+to their values.
+
+The function call operator throws an exception if the name specified
+as the argument is not contained in the map.
+
+[mirror_example_string_to_enum_3]
+
+Now let's try to print the enumerator values (converted to [^char]s)
+to standard output:
+
+[mirror_example_string_to_enum_4]
+
+The example produces the following output:
+
+[mirror_example_string_to_enum_output]
+
+[endsect]

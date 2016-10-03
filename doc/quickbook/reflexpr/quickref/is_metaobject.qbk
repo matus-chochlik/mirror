@@ -1,0 +1,23 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/================================================]
+[section:is_metaobject [^is_metaobject] type-trait]
+[/================================================]
+
+[import header.cpp]
+
+The [^std::is_metaobject] type-trait is used to distinguish between
+[link reflexpr.intro.metaobjects metaobject types] and all other types.
+
+[reflexpr_header_is_metaobject]
+
+[heading Examples]
+[/---------------]
+
+[import example.cpp]
+[reflexpr_example_is_metaobject]
+
+[endsect]

@@ -1,0 +1,37 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=============================]
+[section:metaobject Metaobjects]
+[/=============================]
+
+[header metaobject]
+
+The ['Mirror] library wraps the [link reflexpr.intro.metaobjects anonymous
+metaobject types] returned by the [^__reflexpr] operator into the following
+two templates.
+
+``
+template <__std_meta_Object T>
+struct metaobject {
+	using type = T;
+};
+
+template <__std_meta_ObjectSequence T>
+struct metaobject_sequence {
+	using type = T;
+};
+``
+
+[note Unlike the [link reflexpr basic C++ reflection facility] which has a more
+strict interface, all ['Mirror]'s metaobject operations are applicable to
+all specializations of the [^__metaobject] template and all metaobject sequence
+operations are applicable to all specializations of the [^__metaobject_sequence]
+template. If the underlying operation is not applicable to the wrapped
+basic metaobject type, then a suitable default value or the [^__none] type
+is ["returned] as the result of the operation.
+]
+
+[endsect]

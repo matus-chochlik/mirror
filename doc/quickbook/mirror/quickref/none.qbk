@@ -1,0 +1,21 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/========================]
+[section:none [^none] type]
+[/========================]
+
+[header none]
+
+The [^none] type is used as a ['nil] or ['not-applicable] return value in
+various string, type-list and metaobject operations.
+
+``
+struct none {
+	using type = none;
+};
+``
+
+[endsect]

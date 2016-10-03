@@ -1,0 +1,24 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/---------------------]
+[section:c_Enum [^Enum]]
+[/---------------------]
+
+Metaobjects modelling the [^__meta::Enum] concept reflect both scoped
+and non-scoped enumerations.
+
+[import header.qbk]
+
+[reflexpr_header_concepts_Enum]
+
+[heading:ops Operations]
+[/---------------------]
+Operations applicable to metaobjects conforming to the [^meta::__Enum]
+concept:
+
+[reflexpr_header_operations_Enum]
+
+[endsect]

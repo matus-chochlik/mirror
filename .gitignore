@@ -1,18 +1,10 @@
-/_build
-
-# editor swap files
+/BINARY_DIR
+/doc/quickbook/bin
+/doc/quickbook/html
+/_*
 .*.swp
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+*.sdf
+*.user
+*.opensdf
+*.suo
+*.pyc

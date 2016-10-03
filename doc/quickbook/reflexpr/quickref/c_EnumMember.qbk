@@ -1,0 +1,17 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/---------------------------------]
+[section:c_EnumMember [^EnumMember]]
+[/---------------------------------]
+
+Enumerated type members (enumerators) are reflected by metaobjects modelling
+the [^__meta::EnumMember] concept.
+
+[import header.cpp]
+
+[reflexpr_header_concepts_EnumMember]
+
+[endsect]

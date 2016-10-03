@@ -1,0 +1,218 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/====================================]
+[section:description Brief description]
+[/====================================]
+
+The reflection implementation represents the metaobjects with compile-time
+constants wrapped in a class template.
+
+[heading:metaobject_id Metaobject IDs]
+[/-----------------------------------]
+
+It adds a new native integral [^__metaobject_id] type which has the same
+bit-width as the [^std::uintptr_t] type on the platform for which the compiler
+is built (this allows values of [^__metaobject_id] to represent pointers
+in the compiler). Unlike other integral types, [^__metaobject_id] does
+not have any arithmetic operators and no conversions to other integral types.
+
+[heading:metaobjects Metaobjects]
+[/------------------------------]
+
+The [link reflexpr.intro.metaobjects metaobjects] are represented as
+specializations of the [^std::__metaobject] template:
+
+``
+namespace std {
+
+template <__metaobject_id MoId>
+struct __metaobject
+{
+	__metaobject() = default;
+	__metaobject(const metaobject&) = default;
+};
+
+} // namespace std
+``
+
+The metaobject ID can be obtained from a metaobject (type) by using
+the internal helper template [^__unwrap_id]:
+
+``
+namespace std {
+
+template <typename T>
+struct __unwrap_id;
+
+template <__metaobject_id MoId>
+struct __unwrap_id<__metaobject<MoId>>
+{
+	static constexpr __metaobject_id value = MoId;
+};
+
+template <typename T>
+constexpr __metaobject_id __unwrap_id_v = __unwrap_id<T>::value;
+
+} // namespace std
+``
+
+[heading:is_metaobject The [^is_metaobject] trait]
+[/-----------------------------------------------]
+
+The [^__std_is_metaobject] trait can then be implemented as follows:
+
+``
+namespace std {
+
+template <typename T>
+struct is_metaobject : false_type { };
+
+template <__metaobject_id MoId>
+struct is_metaobject<__metaobject<MoId>> : true_type { }
+
+} // namespace std
+``
+
+The invocation of the [^__reflexpr] operator yields specializations
+of the [^std::__metaobject] template, where the value of the [^MoId] argument
+is a handle to a representation of the metaobject inside of the compiler,
+as described below.
+
+[heading:metaobject_ops Metaobject operations]
+[/-------------------------------------------]
+
+The metaobject operations and concepts are implemented with the help of compiler
+built-ins which take one or several arguments where at least one which is a
+['metaobject ID] (i.e. a compile-time constant of the [^__metaobject_id] type).
+
+These built-ins are then used in the definition of the class templates,
+template aliases and concepts which implement the public interface of
+the metaobject.
+
+The built-ins can yield compile-time constant ['values] of the following types:
+
+[itemized_list
+[['boolean constants] -- used mostly by the metaobject concept definitions
+like [^__std_meta_Named], [^__std_meta_ScopeMember], etc. and operations
+like [^__std_meta_is_anonymous].]
+
+[['integral constants] -- for operations like [^__std_meta_get_source_line] or
+[^__std_meta_get_size] and [^__std_meta_get_constant].]
+
+[['pointer constants] -- for operations like [^__std_meta_get_pointer].]
+
+[['c-string literals] -- for operations like [^__std_meta_get_source_file]
+or [^__std_meta_get_base_name].]
+
+[['metaobject IDs] -- for operations like [^__std_meta_get_scope],
+[^__std_meta_get_base_classes] or [^__std_meta_get_element].]
+]
+
+So for example the [^Named] concept is implemented with the help of the
+[^__metaobject_is_meta_named] compiler built-in which returns a boolean
+compile time constant (equivalent to the following pseudocode):
+
+``
+constexpr bool __metaobject_is_meta_named(__metaobject_id moid);
+``
+
+The concept as defined in the specification can be then implemented in the
+following manner:
+
+``
+namespace std {
+namespace meta {
+
+template <typename T>
+concept bool Object = is_metaobject<T>;
+
+template <Object T>
+concept bool Named = __metaobject_is_meta_named(__unwrap_id<T>);
+
+} // namespace meta
+} // namespace std
+
+``
+
+The [^get_base_name] operation is implemented with the help of the
+[^__metaobject_get_base_name] built-in resulting in a constexpr [^char] array:
+
+``
+constexpr const char [] __metaobject_get_base_name(__metaobject_id moid);
+``
+
+``
+namespace std {
+namespace meta {
+
+template <Named T>
+struct get_base_name
+{
+	constexpr const char value[] =
+		__metaobject_get_base_name(__unwrap_id_v<T>);
+};
+
+} // namespace meta
+} // namespace std
+``
+
+There is also the [^__std_meta_get_reflected_type] operation which instead
+of a compile-time constant ['value], yields a ['type].
+This operation is implemented by the [^__unrefltype] built-in operator:
+
+``
+unspecified-type __unrefltype(__metaobject_id);
+``
+
+The template [^get_reflected_type] is then implemented as follows:
+
+``
+namespace std {
+namespace meta {
+
+template <Type T>
+struct get_reflected_type
+{
+	using type = __unrefltype(__unwrap_id_v<T>);
+};
+
+} // namespace meta
+} // namespace std
+
+``
+
+[heading:internal_rep Internal representation]
+[/-------------------------------------------]
+
+The implementation adds the following new expression types to ['clang]:
+
+[itemized_list
+[[^ReflexprExpr] -- this class internally represents the
+[link reflexpr.intro.metaobjects metaobjects]. Instances of this expression
+class are generated when the [^__reflexpr] operator is parsed in the input
+source code or by some of the metaobject operations which return other
+metaobjects.
+	[itemized_list
+	[In the compiled source code these expressions are represented
+	by ['metaobject IDs] -- compile-time integral constants of the
+	[^__metaobject_id] the which can be mapped back to the instances
+	of [^ReflexprExpr] maintained by the compiler.]
+	[The metaobject IDs are however hashed and randomized between
+	different translation units, so that it is very unlikely that
+	two metaobject IDs, even in two different translation units will have
+	the same value.]
+	]
+]
+[[^MetaobjectIdExpr] -- this expression type represents an ["empty] literal
+of [^__metaobject_id] type.
+]
+[[^UnaryMetaobjectOpExpr] -- represents compiler built-ins implementing
+unary metaobject operations.]
+[[^NaryMetaobjectOpExpr] -- represents compiler built-ins implementing
+metaobject operations with arity higher than one (binary, etc.).]
+]
+
+[endsect]
