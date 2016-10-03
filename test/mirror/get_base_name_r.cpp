@@ -24,15 +24,15 @@ BOOST_AUTO_TEST_CASE(mirror_get_base_name)
 {
 	using namespace mirror;
 
-	BOOST_CHECK(( value<equal<
+	BOOST_CHECK_EQUAL(( value<equal<
 		get_base_name<MIRRORED(int)>,
 		string<'i','n','t'>
-	>>));
+	>>), true);
 
-	BOOST_CHECK(( value<equal<
+	BOOST_CHECK_EQUAL(( value<equal<
 		get_base_name<MIRRORED(double)>,
 		string<'d','o','u','b','l','e'>
-	>>));
+	>>), true);
 	// TODO
 }
 
