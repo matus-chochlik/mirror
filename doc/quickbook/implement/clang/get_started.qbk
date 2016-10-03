@@ -31,7 +31,7 @@ __prompt__ git pull
 you need to do the following on the [^reflexpr] branch:
 
 ``
-__prompt__ git fetch origin
+__prompt__ git fetch --all
 __prompt__ git reset --hard origin/reflexpr
 ``
 

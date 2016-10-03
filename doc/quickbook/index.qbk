@@ -23,6 +23,7 @@
 
 [def __clang__ [@ http://clang.llvm.org/ clang]]
 [def __llvm__ [@ http://llvm.org/ llvm]]
+[def __cmake__ [@ https://cmake.org/ cmake]]
 
 [def __prompt__ $>]
 
@@ -360,10 +361,6 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_is_static [link mirror.quickref.is_virtual mirror::is_static]]
 [def __mirror_is_virtual [link mirror.quickref.is_virtual mirror::is_virtual]]
 
-[/--------]
-[/Chapters]
-[/--------]
-
 This is the documentation for the C++ reflection factility proposed
 for standardization by a series of [link papers.proposals papers],
 its [link implement implementation(s)]
@@ -380,6 +377,44 @@ found at [@https://github.com/matus-chochlik/mirror].
 
 [warning This documentation is work-in progress and currently does not
 cover many of the implemented features.]
+
+[/----------------------]
+[section Building mirror]
+[/----------------------]
+
+[import index.cpp]
+
+In order to use the ['Mirror reflection utilities] you need
+a [link implement compiler with reflection support]. ['Mirror] is a header-only
+library, but to build the examples and tests it uses a __cmake__-based build
+system with a user-friendly [^configure] Python script. You also need to specify
+the path to the directory where the [^__reflexpr__] header file implementing
+metaobject operations is located by passing the [^--reflexpr-include-dir]
+option to [^configure.py].
+
+For example on a Linux system with a [^bash] shell you need to do the following:
+
+[index_configure_basic]
+
+To configure and build in the default build directory do:
+
+[index_configure_build]
+
+Invoke [^configure.py] with the [^--help] argument to see the list of all
+available command-line options.
+
+Users with the [^bash] shell can also use the ['command-line completion] feature
+for the configuration script by including the [^config/bash-complete] file
+and using the [^mirror-config] forwarding script:
+
+[index_configure_bash_complete]
+
+
+[endsect]
+
+[/-----]
+[/Parts]
+[/-----]
 
 [include reflexpr.qbk]
 [include mirror.qbk]
