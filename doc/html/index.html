@@ -92,9 +92,61 @@
       the implemented features.
     </p></td></tr>
 </table></div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="index.building_mirror"></a><a class="link" href="index.html#index.building_mirror" title="Building mirror">Building mirror</a>
+</h2></div></div></div>
+<p>
+      In order to use the <span class="emphasis"><em>Mirror reflection utilities</em></span> you need
+      a <a class="link" href="implement.html" title="Part&#160;VI.&#160;Implementation">compiler with reflection support</a>. <span class="emphasis"><em>Mirror</em></span>
+      is a header-only library, but to build the examples and tests it uses a <a href="https://cmake.org/" target="_top">cmake</a>-based build system with a user-friendly
+      <code class="literal">configure</code> Python script. You also need to specify the path
+      to the directory where the <code class="literal"><a class="link" href="reflexpr/quickref/header.html" title="reflexpr header">reflexpr</a></code>
+      header file implementing metaobject operations is located by passing the <code class="literal">--reflexpr-include-dir</code>
+      option to <code class="literal">configure.py</code>.
+    </p>
+<p>
+      For example on a Linux system with a <code class="literal">bash</code> shell you need
+      to do the following:
+    </p>
+<pre class="programlisting">$&gt; <span class="identifier">cd</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">source</span>
+$&gt; <span class="keyword">export</span> <span class="identifier">CXX</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">modified</span><span class="special">/</span><span class="identifier">clang</span><span class="special">++</span>
+$&gt; <span class="special">./</span><span class="identifier">configure</span><span class="special">.</span><span class="identifier">py</span> <span class="special">--</span><span class="identifier">reflexpr</span><span class="special">-</span><span class="identifier">include</span><span class="special">-</span><span class="identifier">dir</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">reflexpr</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span> <span class="special">--</span><span class="identifier">build</span><span class="special">-</span><span class="identifier">dir</span> <span class="identifier">_build</span>
+$&gt; <span class="identifier">cd</span> <span class="identifier">_build</span>
+$&gt; <span class="identifier">make</span>
+</pre>
+<p>
+      To configure and build in the default build directory do:
+    </p>
+<pre class="programlisting">$&gt; <span class="identifier">cd</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">source</span>
+$&gt; <span class="keyword">export</span> <span class="identifier">CXX</span><span class="special">=/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">modified</span><span class="special">/</span><span class="identifier">clang</span><span class="special">++</span>
+$&gt; <span class="special">./</span><span class="identifier">configure</span><span class="special">.</span><span class="identifier">py</span> <span class="special">--</span><span class="identifier">reflexpr</span><span class="special">-</span><span class="identifier">include</span><span class="special">-</span><span class="identifier">dir</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">reflexpr</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span> <span class="special">--</span><span class="identifier">build</span>
+</pre>
+<p>
+      Invoke <code class="literal">configure.py</code> with the <code class="literal">--help</code> argument
+      to see the list of all available command-line options.
+    </p>
+<p>
+      Users with the <code class="literal">bash</code> shell can also use the <span class="emphasis"><em>command-line
+      completion</em></span> feature for the configuration script by including the
+      <code class="literal">config/bash-complete</code> file and using the <code class="literal">mirror-config</code>
+      forwarding script:
+    </p>
+<pre class="programlisting">$&gt; <span class="identifier">cd</span> <span class="special">/</span><span class="identifier">path</span><span class="special">/</span><span class="identifier">to</span><span class="special">/</span><span class="identifier">mirror</span><span class="special">/</span><span class="identifier">source</span>
+$&gt; <span class="identifier">source</span> <span class="identifier">config</span><span class="special">/</span><span class="identifier">bash</span><span class="special">-</span><span class="identifier">complete</span>
+$&gt; <span class="special">./</span><span class="identifier">mirror</span><span class="special">-</span><span class="identifier">config</span> <a class="co" name="index.building_mirror.c0" href="index.html#index.building_mirror.c1"><img src="images/callouts/1.png" alt="1" border="0"></a>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="index.building_mirror.c1"></a><a href="#index.building_mirror.c0"><img src="images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+          Pressing the <span class="emphasis"><em>TAB</em></span> key here activates the command-line
+          option completion
+        </p></td>
+</tr></table></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: September 30, 2016 at 06:26:58 GMT</small></p></td>
+<td align="left"><p><small>Last revised: October 04, 2016 at 18:33:08 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
