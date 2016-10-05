@@ -25,7 +25,9 @@ struct S {
 
 const int S::a;
 
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename T>
 class print_data_members
@@ -66,11 +68,11 @@ public:
 	}
 };
 
-} // namespace puddle
+} // namespace
 
 int main(void)
 {
-	puddle::print_data_members<S> pdm;
+	print_data_members<S> pdm;
 
 	S x = {false, 'X', 1234.56, 78.9f};
 	S y = {true, 'Y', 11.1111, 2222.22f};

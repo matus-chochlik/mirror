@@ -37,7 +37,9 @@ public:
 	using z = _y*;
 };
 
-namespace mirror {
+namespace {
+
+using namespace mirror;
 
 template <typename T>
 class print_member_types
@@ -74,11 +76,11 @@ public:
 	}
 };
 
-} // namespace mirror
+} // namespace
 
 void print_S(void)
 {
-	mirror::print_member_types<S> pdm;
+	print_member_types<S> pdm;
 
 	pdm(std::cout, true) << std::endl;
 	pdm(std::cout,false) << std::endl;
@@ -86,7 +88,7 @@ void print_S(void)
 
 void print_C(void)
 {
-	mirror::print_member_types<C> pdm;
+	print_member_types<C> pdm;
 
 	pdm(std::cout, true) << std::endl;
 	pdm(std::cout,false) << std::endl;

@@ -31,7 +31,9 @@ struct S {
 
 const int S::a;
 
-namespace mirror {
+namespace {
+
+using namespace mirror;
 
 template <typename T>
 class print_data_members
@@ -72,11 +74,11 @@ public:
 	}
 };
 
-} // namespace mirror
+} // namespace
 
 int main(void)
 {
-	mirror::print_data_members<S> pdm;
+	print_data_members<S> pdm;
 
 	S x = {false, 'X', 1234.56, 78.9f};
 	S y = {true, 'Y', 11.1111, 2222.22f};

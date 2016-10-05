@@ -20,7 +20,9 @@ enum class E
 	a, b, c, d, e
 };
 
-namespace lagoon {
+namespace {
+
+using namespace lagoon;
 
 template <typename Enum>
 class enum_to_string
@@ -53,14 +55,14 @@ public:
 	}
 };
 
-} // namespace lagoon
+} // namespace
 
 int main(void)
 {
 	lagoon::metaobject_registry reg;
 
 	reg.reg_enumerators(PUDDLED(E));
-	lagoon::enum_to_string<E> ets(reg.reg(PUDDLED(E)));
+	enum_to_string<E> ets(reg.reg(PUDDLED(E)));
 
 	std::cout << ets(E::a) << std::endl;
 	std::cout << ets(E::b) << std::endl;

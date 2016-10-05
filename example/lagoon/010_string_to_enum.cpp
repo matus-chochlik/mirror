@@ -20,7 +20,9 @@ enum class E : char
 	a = 'a', b = 'b', c = 'c', d = 'd', e = 'e'
 };
 
-namespace lagoon {
+namespace {
+
+using namespace lagoon;
 
 template <typename Enum>
 class string_to_enum
@@ -58,14 +60,14 @@ public:
 	}
 };
 
-} // namespace lagoon
+} // namespace
 
 int main(void)
 {
 	lagoon::metaobject_registry reg;
 
 	reg.reg_enumerators(PUDDLED(E));
-	lagoon::string_to_enum<E> ste(reg.reg(PUDDLED(E)));
+	string_to_enum<E> ste(reg.reg(PUDDLED(E)));
 
 	try {
 		std::cout << char(ste("a")) << std::endl;

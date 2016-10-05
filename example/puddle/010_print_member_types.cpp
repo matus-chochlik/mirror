@@ -30,7 +30,9 @@ public:
 	using z = _y*;
 };
 
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename T>
 class print_member_types
@@ -67,11 +69,11 @@ public:
 	}
 };
 
-} // namespace puddle
+} // namespace
 
 void print_S(void)
 {
-	puddle::print_member_types<S> pdm;
+	print_member_types<S> pdm;
 
 	pdm(std::cout, true) << std::endl;
 	pdm(std::cout,false) << std::endl;
@@ -79,7 +81,7 @@ void print_S(void)
 
 void print_C(void)
 {
-	puddle::print_member_types<C> pdm;
+	print_member_types<C> pdm;
 
 	pdm(std::cout, true) << std::endl;
 	pdm(std::cout,false) << std::endl;
