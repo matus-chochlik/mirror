@@ -55,18 +55,6 @@ private:
 		T& v;
 
 		template <typename MO>
-		void _print_value(MO mo, mirror::true_/*is_static*/) const
-		{
-			out << (*value(get_pointer(mo)));
-		}
-
-		template <typename MO>
-		void _print_value(MO mo, mirror::false_/*is_static*/) const
-		{
-			out << (v.*value(get_pointer(mo)));
-		}
-
-		template <typename MO>
 		void operator()(MO mo) const
 		{
 			if(is_static(mo)) {
@@ -76,7 +64,12 @@ private:
 			out << " ";
 			out << c_str(get_base_name(mo));
 			out << " = ";
-			_print_value(mo, is_static(mo));
+
+			if constexpr(is_static(mo)) {
+				out << (*value(get_pointer(mo)));
+			} else {
+				out << (v.*value(get_pointer(mo)));
+			}
 			out << std::endl;
 		}
 	};
