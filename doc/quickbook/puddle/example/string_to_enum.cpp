@@ -22,7 +22,9 @@ enum class E : char
 };
 //]
 //[puddle_example_string_to_enum_3
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename Enum>
 class string_to_enum
@@ -59,12 +61,12 @@ public:
 	}
 };
 
-} // namespace puddle
+} // namespace
 //]
 //[puddle_example_string_to_enum_4
 int main(void)
 {
-	puddle::string_to_enum<E> ste;
+	string_to_enum<E> ste;
 
 	try {
 		std::cout << char(ste("a")) << std::endl;

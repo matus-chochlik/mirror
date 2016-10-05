@@ -44,7 +44,9 @@ public:
 bool C::_b = false;
 //]
 //[puddle_example_print_pub_data_members_3
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename T>
 class print_pub_data_members
@@ -94,11 +96,14 @@ public:
 		}
 		return out;
 	}
-};//]
+};
+
+} // namespace
+//]
 //[puddle_example_print_pub_data_members_4
 void print_S(void)
 {
-	puddle::print_pub_data_members<S> pdm;
+	print_pub_data_members<S> pdm;
 
 	S x = {false, 'X', 1234.56, 78.9f};
 	S y = {true, 'Y', 11.1111, 2222.22f};
@@ -109,7 +114,7 @@ void print_S(void)
 
 void print_C(void)
 {
-	puddle::print_pub_data_members<C> pdm;
+	print_pub_data_members<C> pdm;
 
 	C x(0, 'A', 2345.67, 8.9f);
 	C y(1, 'B', 22.2222, 3333.33f);
