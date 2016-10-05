@@ -61,7 +61,9 @@
           is that the latter returns a metaobject sequence containing only public
           class member types.
         </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">puddle</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="special">{</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">puddle</span><span class="special">;</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">print_member_types</span>
@@ -98,14 +100,14 @@
 	<span class="special">}</span>
 <span class="special">};</span>
 
-<span class="special">}</span> <span class="comment">// namespace puddle</span>
+<span class="special">}</span> <span class="comment">// namespace</span>
 </pre>
 <p>
           Let's try the printer on instances of <code class="literal">S</code> and <code class="literal">C</code>.
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">print_S</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">print_member_types</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+	<span class="identifier">print_member_types</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
 
 	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -113,7 +115,7 @@
 
 <span class="keyword">void</span> <span class="identifier">print_C</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">print_member_types</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+	<span class="identifier">print_member_types</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
 
 	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 	<span class="identifier">pdm</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">,</span><span class="keyword">false</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>

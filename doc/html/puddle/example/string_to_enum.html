@@ -50,7 +50,9 @@
           The function call operator throws an exception if the name specified as
           the argument is not contained in the map.
         </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">puddle</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="special">{</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">puddle</span><span class="special">;</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Enum</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">string_to_enum</span>
@@ -87,7 +89,7 @@
 	<span class="special">}</span>
 <span class="special">};</span>
 
-<span class="special">}</span> <span class="comment">// namespace puddle</span>
+<span class="special">}</span> <span class="comment">// namespace</span>
 </pre>
 <p>
           Now let's try to print the enumerator values (converted to <code class="literal">char</code>s)
@@ -95,7 +97,7 @@
         </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">string_to_enum</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;</span> <span class="identifier">ste</span><span class="special">;</span>
+	<span class="identifier">string_to_enum</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;</span> <span class="identifier">ste</span><span class="special">;</span>
 
 	<span class="keyword">try</span> <span class="special">{</span>
 		<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">char</span><span class="special">(</span><span class="identifier">ste</span><span class="special">(</span><span class="string">"a"</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>

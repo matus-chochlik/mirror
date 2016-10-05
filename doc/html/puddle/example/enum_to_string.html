@@ -45,7 +45,9 @@
           of a <code class="literal">std::map</code> mapping from all enumerators of the <code class="literal">Enum</code>
           passed as argument to the names of the enumerators.
         </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">puddle</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="special">{</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">puddle</span><span class="special">;</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Enum</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">enum_to_string</span>
@@ -78,14 +80,14 @@
 	<span class="special">}</span>
 <span class="special">};</span>
 
-<span class="special">}</span> <span class="comment">// namespace puddle</span>
+<span class="special">}</span> <span class="comment">// namespace</span>
 </pre>
 <p>
           Now let's try to print the enumerator names to standard output:
         </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">puddle</span><span class="special">::</span><span class="identifier">enum_to_string</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;</span> <span class="identifier">ets</span><span class="special">;</span>
+	<span class="identifier">enum_to_string</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;</span> <span class="identifier">ets</span><span class="special">;</span>
 
 	<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ets</span><span class="special">(</span><span class="identifier">E</span><span class="special">::</span><span class="identifier">a</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 	<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ets</span><span class="special">(</span><span class="identifier">E</span><span class="special">::</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>

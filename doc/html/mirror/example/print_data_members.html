@@ -56,7 +56,9 @@
           to traverse the sequence of metaobjects reflecting class data members and
           the other metaobject operations to get the required metadata.
         </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">mirror</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="special">{</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">mirror</span><span class="special">;</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">print_data_members</span>
@@ -104,14 +106,14 @@
 	<span class="special">}</span>
 <span class="special">};</span>
 
-<span class="special">}</span> <span class="comment">// namespace mirror</span>
+<span class="special">}</span> <span class="comment">// namespace</span>
 </pre>
 <p>
           Let's try the printer on two instances of the <code class="literal">S</code> structure.
         </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">mirror</span><span class="special">::</span><span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+	<span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
 
 	<span class="identifier">S</span> <span class="identifier">x</span> <span class="special">=</span> <span class="special">{</span><span class="keyword">false</span><span class="special">,</span> <span class="char">'X'</span><span class="special">,</span> <span class="number">1234.56</span><span class="special">,</span> <span class="number">78.9f</span><span class="special">};</span>
 	<span class="identifier">S</span> <span class="identifier">y</span> <span class="special">=</span> <span class="special">{</span><span class="keyword">true</span><span class="special">,</span> <span class="char">'Y'</span><span class="special">,</span> <span class="number">11.1111</span><span class="special">,</span> <span class="number">2222.22f</span><span class="special">};</span>

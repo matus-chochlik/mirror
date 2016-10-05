@@ -82,7 +82,9 @@
           is that the latter returns a metaobject sequence containing only public
           class data members.
         </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">mirror</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="special">{</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">mirror</span><span class="special">;</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">print_pub_data_members</span>
@@ -136,7 +138,7 @@
 	<span class="special">}</span>
 <span class="special">};</span>
 
-<span class="special">}</span> <span class="comment">// namespace mirror</span>
+<span class="special">}</span> <span class="comment">// namespace</span>
 </pre>
 <p>
           Let's try the printer on two instances of the <code class="literal">S</code> structure
@@ -144,7 +146,7 @@
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">print_S</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">mirror</span><span class="special">::</span><span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+	<span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
 
 	<span class="identifier">S</span> <span class="identifier">x</span> <span class="special">=</span> <span class="special">{</span><span class="keyword">false</span><span class="special">,</span> <span class="char">'X'</span><span class="special">,</span> <span class="number">1234.56</span><span class="special">,</span> <span class="number">78.9f</span><span class="special">};</span>
 	<span class="identifier">S</span> <span class="identifier">y</span> <span class="special">=</span> <span class="special">{</span><span class="keyword">true</span><span class="special">,</span> <span class="char">'Y'</span><span class="special">,</span> <span class="number">11.1111</span><span class="special">,</span> <span class="number">2222.22f</span><span class="special">};</span>
@@ -155,7 +157,7 @@
 
 <span class="keyword">void</span> <span class="identifier">print_C</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
 <span class="special">{</span>
-	<span class="identifier">mirror</span><span class="special">::</span><span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
+	<span class="identifier">print_data_members</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span> <span class="identifier">pdm</span><span class="special">;</span>
 
 	<span class="identifier">C</span> <span class="identifier">x</span><span class="special">(</span><span class="number">0</span><span class="special">,</span> <span class="char">'A'</span><span class="special">,</span> <span class="number">2345.67</span><span class="special">,</span> <span class="number">8.9f</span><span class="special">);</span>
 	<span class="identifier">C</span> <span class="identifier">y</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="char">'B'</span><span class="special">,</span> <span class="number">22.2222</span><span class="special">,</span> <span class="number">3333.33f</span><span class="special">);</span>
