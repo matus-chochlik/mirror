@@ -18,6 +18,7 @@ include(config/Tools.cmake)
 
 include(config/CppReflection.cmake)
 include(config/CppIncludes.cmake)
+include(config/StdFixes.cmake)
 include(config/Warnings.cmake)
 
 include_directories(include)

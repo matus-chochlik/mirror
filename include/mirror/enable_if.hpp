@@ -11,14 +11,14 @@
 #ifndef MIRROR_ENABLE_IF_1105240825_HPP
 #define MIRROR_ENABLE_IF_1105240825_HPP
 
-#include <type_traits>
+#include <reflbase/type_traits_fixes.hpp>
 #include "int_const.hpp"
 #include "or.hpp"
 
 namespace mirror {
 
 template <typename ... Bool>
-using enable_if_any = typename std::enable_if<or_<Bool...>::value>::type;
+using enable_if_any = std::enable_if_t<or_<Bool...>::value>;
 
 } // namespace mirror
 

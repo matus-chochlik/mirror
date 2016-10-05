@@ -16,6 +16,7 @@
 #include <mirror/reflection.hpp>
 #include <mirror/range.hpp>
 #include <mirror/unpack.hpp>
+#include <mirror/enable_if.hpp>
 #include <iostream>
 
 template <typename T>
@@ -98,10 +99,10 @@ struct has_operator_equal
 
 template <typename T>
 struct has_operator_equal<T,
-	typename std::enable_if<
+	std::enable_if_t<
 		true,
 		decltype(std::declval<T&>() == std::declval<T&>(), (void)0)
-	>::type
+	>
 > : true_
 { };
 

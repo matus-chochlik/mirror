@@ -1,0 +1,15 @@
+#include <utility>
+#ifdef MIRROR_TEST_STD_FEATURE_FIX
+#include <reflbase/int_sequence_fix.hpp>
+#endif
+
+template <typename T, T ... I>
+int foo(std::integer_sequence<T, I...>)
+{
+	return 0;
+}
+
+int main(void)
+{
+	return foo(std::make_index_sequence<10>());
+}
