@@ -11,9 +11,9 @@
 #ifndef MIRROR_ENABLE_IF_1105240825_HPP
 #define MIRROR_ENABLE_IF_1105240825_HPP
 
-#include <reflbase/type_traits_fixes.hpp>
 #include "int_const.hpp"
 #include "or.hpp"
+#include <reflbase/type_traits_fixes.hpp>
 
 namespace mirror {
 
