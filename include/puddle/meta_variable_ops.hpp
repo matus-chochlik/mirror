@@ -12,6 +12,7 @@
 #define PUDDLE_META_VARIABLE_OPS_1105240825_HPP
 
 #include <mirror/get_pointer.hpp>
+#include <mirror/dereference.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -22,6 +23,13 @@ auto get_pointer(X)
 noexcept
 {
 	return mirror::get_pointer<X>{};
+}
+
+template <typename MO, typename T, typename = enable_if_metaobject<MO>>
+static constexpr inline
+auto& dereference(MO, T& inst)
+{
+	return mirror::dereference<MO>::apply(inst);
 }
 
 } // namespace puddle
