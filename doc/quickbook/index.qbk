@@ -320,6 +320,8 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_get_element [link mirror.quickref.get_element mirror::get_element]]
 [def __mirror_unpack [link mirror.quickref.unpack mirror::unpack]]
 
+[def __mirror_for_each [link mirror.quickref.for_each mirror::for_each]]
+
 [def __mirror_has_source_info [link mirror.quickref.has_source_info mirror::has_source_info]]
 [def __mirror_get_source_file [link mirror.quickref.get_source_file mirror::get_source_file]]
 [def __mirror_get_source_line [link mirror.quickref.get_source_line mirror::get_source_line]]
@@ -349,6 +351,7 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_get_public_base_classes [link mirror.quickref.get_public_base_classes mirror::get_public_base_classes]]
 
 [def __mirror_get_pointer [link mirror.quickref.get_pointer mirror::get_pointer]]
+[def __mirror_dereference [link mirror.quickref.dereference mirror::dereference]]
 [def __mirror_get_constant [link mirror.quickref.get_constant mirror::get_constant]]
 
 [def __mirror_get_base_class [link mirror.quickref.get_base_class mirror::get_base_class]]

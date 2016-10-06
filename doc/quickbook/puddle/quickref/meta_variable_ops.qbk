@@ -18,4 +18,9 @@ The variable-related operations are implemented by the following functions:
 [/-------------------------------------------]
 [puddle_op_get_pointer]
 
+[heading:dereference operation [^dereference]]
+[/-------------------------------------------]
+[puddle_op_dereference_0]
+[puddle_op_dereference_inst]
+
 [endsect]

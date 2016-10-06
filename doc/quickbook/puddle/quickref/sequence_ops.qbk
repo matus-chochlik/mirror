@@ -30,4 +30,8 @@ the following functions:
 [/---------------------------------]
 [puddle_op_unpack]
 
+[heading:for_each operation [^for_each]]
+[/-------------------------------------]
+[puddle_op_for_each]
+
 [endsect]

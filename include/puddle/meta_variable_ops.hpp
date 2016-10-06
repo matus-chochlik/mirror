@@ -25,6 +25,13 @@ noexcept
 	return mirror::get_pointer<X>{};
 }
 
+template <typename MO, typename = enable_if_metaobject<MO>>
+static constexpr inline
+auto& dereference(MO)
+{
+	return mirror::dereference<MO>::apply();
+}
+
 template <typename MO, typename T, typename = enable_if_metaobject<MO>>
 static constexpr inline
 auto& dereference(MO, T& inst)

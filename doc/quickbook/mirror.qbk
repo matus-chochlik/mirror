@@ -102,6 +102,7 @@
 [def __get_public_base_classes [link mirror.quickref.get_public_base_classes get_public_base_classes]]
 [def __get_scope [link mirror.quickref.get_scope get_scope]]
 [def __get_pointer [link mirror.quickref.get_pointer get_pointer]]
+[def __dereference [link mirror.quickref.dereference dereference]]
 [def __get_constant [link mirror.quickref.get_constant get_constant]]
 [def __is_static [link mirror.quickref.is_static is_static]]
 [def __get_base_class [link mirror.quickref.get_base_class get_base_class]]

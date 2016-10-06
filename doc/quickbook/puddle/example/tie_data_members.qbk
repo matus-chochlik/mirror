@@ -1,0 +1,29 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/============================================================]
+[section:tie_data_members Tie references to class data members]
+[/============================================================]
+
+This example shows how to tie references to data members from a class instance
+into a tuple.
+
+[import tie_data_members.cpp]
+
+We need to include the following headers:
+[puddle_example_tie_data_members_1]
+
+The [^tie_data_members] template uses the [^__dereference] function
+to get the references to data members inside of the given instance.
+[puddle_example_tie_data_members_2]
+
+We'll demonstrate the functionality on the following structure.
+We also implement a helper adding the elements of three tuples.
+[puddle_example_tie_data_members_3]
+
+Now we can try to use the implemented functionality.
+[puddle_example_tie_data_members_4]
+
+[endsect]

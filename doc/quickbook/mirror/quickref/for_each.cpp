@@ -6,7 +6,7 @@
  */
 //[mirror_op_for_each_none
 template <>
-class for_each<__none>
+struct for_each<__none>
 {
 public:
 	template <typename Func>
@@ -17,7 +17,7 @@ public:
 //]
 //[mirror_op_for_each_range
 template <typename ... P>
-class for_each<__range<P...>>
+struct for_each<__range<P...>>
 {
 public:
 	template <typename Func>
@@ -32,7 +32,7 @@ public:
 //]
 //[mirror_op_for_each_string
 template <typename Char, Char ... C>
-class for_each<__basic_string<Char, C...>>
+struct for_each<__basic_string<Char, C...>>
 {
 public:
 	template <typename Func>
