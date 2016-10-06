@@ -69,6 +69,25 @@
 <a class="link" href="../../mirror/quickref/unpack.html" title="operation unpack">mirror::unpack</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">unpack</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
 <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
+<h4>
+<a name="puddle.quickref.sequence_ops.h4"></a>
+          <span class="phrase"><a name="puddle.quickref.sequence_ops.for_each"></a></span><a class="link" href="sequence_ops.html#puddle.quickref.sequence_ops.for_each">operation
+          <code class="literal">for_each</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Rng</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Func</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<span class="identifier">Func</span> <span class="identifier">for_each</span><span class="special">(</span><span class="identifier">Rng</span><span class="special">,</span> <span class="identifier">Func</span> <span class="identifier">func</span><span class="special">)</span> <a class="co" name="puddle.quickref.sequence_ops.c0" href="sequence_ops.html#puddle.quickref.sequence_ops.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a><span class="special">;</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="puddle.quickref.sequence_ops.c1"></a><a href="#puddle.quickref.sequence_ops.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left">
+<p>
+              Equivalent to:
+            </p>
+<pre class="programlisting"><a class="link" href="../../mirror/quickref/for_each.html" title="operation for_each">mirror::for_each</a><span class="special">&lt;</span><span class="identifier">Rng</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">(</span><span class="identifier">func</span><span class="special">);</span>
+</pre>
+</td>
+</tr></table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

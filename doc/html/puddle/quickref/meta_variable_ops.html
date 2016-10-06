@@ -36,6 +36,39 @@
 <a class="link" href="../../mirror/quickref/get_pointer.html" title="operation get_pointer">mirror::get_pointer</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">get_pointer</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
 <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
+<h4>
+<a name="puddle.quickref.meta_variable_ops.h1"></a>
+          <span class="phrase"><a name="puddle.quickref.meta_variable_ops.dereference"></a></span><a class="link" href="meta_variable_ops.html#puddle.quickref.meta_variable_ops.dereference">operation
+          <code class="literal">dereference</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">MO</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<span class="keyword">auto</span><span class="special">&amp;</span> <span class="identifier">dereference</span><span class="special">(</span><span class="identifier">MO</span><span class="special">);</span> <a class="co" name="puddle.quickref.meta_variable_ops.c0" href="meta_variable_ops.html#puddle.quickref.meta_variable_ops.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="puddle.quickref.meta_variable_ops.c1"></a><a href="#puddle.quickref.meta_variable_ops.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left">
+<p>
+              Equivalent to:
+            </p>
+<pre class="programlisting"><a class="link" href="../../mirror/quickref/dereference.html" title="operation dereference">mirror::dereference</a><span class="special">&lt;</span><span class="identifier">MO</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">();</span>
+</pre>
+</td>
+</tr></table></div>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">MO</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<span class="keyword">auto</span><span class="special">&amp;</span> <span class="identifier">dereference</span><span class="special">(</span><span class="identifier">MO</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">inst</span><span class="special">);</span> <a class="co" name="puddle.quickref.meta_variable_ops.c2" href="meta_variable_ops.html#puddle.quickref.meta_variable_ops.c3"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="puddle.quickref.meta_variable_ops.c3"></a><a href="#puddle.quickref.meta_variable_ops.c2"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left">
+<p>
+              Equivalent to:
+            </p>
+<pre class="programlisting"><a class="link" href="../../mirror/quickref/dereference.html" title="operation dereference">mirror::dereference</a><span class="special">&lt;</span><span class="identifier">MO</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">(</span><span class="identifier">inst</span><span class="special">);</span>
+</pre>
+</td>
+</tr></table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -81,8 +81,9 @@ mirror/quickref/get_public_data_members.html
 mirror/quickref/get_base_classes.html
 mirror/quickref/get_public_base_classes.html
 mirror/quickref/get_scope.html
-mirror/quickref/get_pointer.html
 mirror/quickref/get_constant.html
+mirror/quickref/get_pointer.html
+mirror/quickref/dereference.html
 mirror/quickref/is_static.html
 mirror/quickref/get_base_class.html
 mirror/quickref/get_access_specifier.html
@@ -94,6 +95,7 @@ mirror/quickref/operator.html
 mirror/example.html
 mirror/example/enum_to_string.html
 mirror/example/string_to_enum.html
+mirror/example/tie_data_members.html
 mirror/example/print_data_members.html
 mirror/example/print_pub_data_members.html
 mirror/example/print_pub_member_types.html
@@ -126,6 +128,7 @@ puddle/quickref/operator.html
 puddle/example.html
 puddle/example/enum_to_string.html
 puddle/example/string_to_enum.html
+puddle/example/tie_data_members.html
 puddle/example/print_data_members.html
 puddle/example/print_pub_data_members.html
 puddle/example/print_pub_member_types.html

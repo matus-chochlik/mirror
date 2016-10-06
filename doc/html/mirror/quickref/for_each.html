@@ -30,7 +30,7 @@
           the the function is not called.
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
-<span class="keyword">class</span> <span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="none.html" title="none type">none</a><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="none.html" title="none type">none</a><span class="special">&gt;</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Func</span><span class="special">&gt;</span>
@@ -53,7 +53,7 @@
           operation.
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="special">...</span> <span class="identifier">P</span><span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="range.html" title="Compile-time ranges">range</a><span class="special">&lt;</span><span class="identifier">P</span><span class="special">...&gt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="range.html" title="Compile-time ranges">range</a><span class="special">&lt;</span><span class="identifier">P</span><span class="special">...&gt;&gt;</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Func</span><span class="special">&gt;</span>
@@ -78,7 +78,7 @@
           template.
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="identifier">Char</span> <span class="special">...</span> <span class="identifier">C</span><span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="string.html" title="Compile-time strings">basic_string</a><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">C</span><span class="special">...&gt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">for_each</span><span class="special">&lt;</span><a class="link" href="string.html" title="Compile-time strings">basic_string</a><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">C</span><span class="special">...&gt;&gt;</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Func</span><span class="special">&gt;</span>
