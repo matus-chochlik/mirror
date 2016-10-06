@@ -21,17 +21,15 @@ using namespace puddle;
 template <typename T>
 struct tie_data_members
 {
-private:
-	template <typename ... MDMs>
-	static auto _do_tie(T& v, mirror::range<MDMs...>)
-	{
-		return std::tie(dereference(MDMs{}, v)...);
-	}
-public:
 	auto operator()(T& v) const
 	{
-		auto MDMs = unpack(get_data_members(PUDDLED(T)));
-		return _do_tie(v, MDMs);
+		return apply_on(
+			get_data_members(PUDDLED(T)),
+			[&v](auto ... mdm)
+			{
+				return std::tie(dereference(mdm, v)...);
+			}
+		);
 	}
 };
 
