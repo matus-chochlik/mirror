@@ -20,6 +20,8 @@ include(config/CppReflection.cmake)
 include(config/StdFixes.cmake)
 include(config/Warnings.cmake)
 
+include(config/Install.cmake)
+
 include_directories(include)
 include_directories(implement)
 include_directories(${PROJECT_BINARY_DIR}/include)
