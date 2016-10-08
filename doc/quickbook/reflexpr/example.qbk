@@ -9,5 +9,6 @@
 ]
 
 [include example/intro.qbk]
+[include example/concepts.qbk]
 [include example/enum_to_string.qbk]
 [include example/string_to_enum.qbk]
