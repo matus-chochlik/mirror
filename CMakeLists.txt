@@ -17,12 +17,12 @@ option(MIRROR_NO_DOCS "Don't build and install the documentation" Off)
 include(config/Tools.cmake)
 
 include(config/CppReflection.cmake)
-include(config/CppIncludes.cmake)
 include(config/StdFixes.cmake)
 include(config/Warnings.cmake)
 
 include_directories(include)
 include_directories(implement)
+include_directories(${PROJECT_BINARY_DIR}/include)
 
 if(NOT MIRROR_NO_DOCS)
 	# TODO

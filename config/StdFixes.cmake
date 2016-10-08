@@ -102,3 +102,4 @@ function(make_missing_std_feature_fix FEATURE FILENAME)
 endfunction()
 
 make_missing_std_feature_fix("integer_sequence" int_sequence)
+make_missing_std_feature_fix("string_view" string_view)

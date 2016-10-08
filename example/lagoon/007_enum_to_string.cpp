@@ -11,7 +11,7 @@
 #include <lagoon/metaobject_registry.hpp>
 #include <lagoon/metaobject.hpp>
 #include <puddle/reflection.hpp>
-#include <string_view>
+#include <puddle/string.hpp>
 #include <iostream>
 #include <map>
 

@@ -14,10 +14,10 @@
 #include "metaobject_traits.hpp"
 #include "any_constant.hpp"
 #include "tribool.hpp"
+#include <reflbase/string_view_fix.hpp>
 #include <memory>
 #include <utility>
 #include <iterator>
-#include <string_view>
 #include <cassert>
 
 namespace lagoon {
