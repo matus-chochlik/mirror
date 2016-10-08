@@ -51,8 +51,8 @@ private:
 
 	static auto _make_map(void)
 	{
-		auto MECs = unpack(get_enumerators(PUDDLED(Enum)));
-		return _make_map(MECs);
+		auto mecs = unpack(get_enumerators(PUDDLED(Enum)));
+		return _make_map(mecs);
 	}
 
 	const std::map<std::string, Enum> _map;

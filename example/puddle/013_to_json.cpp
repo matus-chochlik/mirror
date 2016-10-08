@@ -1,6 +1,6 @@
 /**
- * @example mirror/011_to_json.cpp
- * @brief Example of simple serialization to JSON
+ * @example puddle/013_to_json.cpp
+ * @brief Example of serialization to JSON
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -8,14 +8,11 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#include <mirror/for_each.hpp>
-#include <mirror/dereference.hpp>
-#include <mirror/get_base_name.hpp>
-#include <mirror/get_data_members.hpp>
-#include <mirror/c_str.hpp>
-#include <mirror/value.hpp>
-#include <mirror/reflection.hpp>
-#include <mirror/range.hpp>
+#include <puddle/metaobject_ops.hpp>
+#include <puddle/sequence_ops.hpp>
+#include <puddle/reflection.hpp>
+#include <puddle/int_const.hpp>
+#include <puddle/string.hpp>
 #include <iostream>
 
 template <typename T>
@@ -32,10 +29,9 @@ struct Triangle
 };
 
 struct Tetrahedron
-{
-	Triangle base;
-	Point apex;
-};
+ : Triangle
+ , Point
+{ };
 
 int main(void)
 {
@@ -50,41 +46,46 @@ int main(void)
 
 namespace {
 
-using namespace mirror;
+using namespace puddle;
 
 template <typename T>
 struct json_writer
 {
-private:
-	struct _writer {
-		std::ostream& out;
-		const T& v;
-		bool first;
+	std::ostream& operator()(std::ostream& out, const T& v) const
+	{
+		auto mt = PUDDLED(T);
 
-		template <typename MO>
-		void operator()(MO)
+		out << '{';
+
+		bool first = true;
+
+		auto write = [&out,&v,&first](auto mo)
 		{
 			if(first) first = false;
 			else out << ", ";
 
 			out << '"';
-			out << c_str<get_base_name<MO>>;
+			out << c_str(get_base_name(mo));
 			out << '"';
 			out << ": ";
 
-			to_json(out, dereference<MO>::apply(v));
-		}
-	};
-public:
-	std::ostream& operator()(std::ostream& out, const T& v) const
-	{
-		_writer write{out, v, true};
+			to_json(out, dereference(mo, v));
+		};
 
-		using MT = MIRRORED(T);
+		for_each(
+			get_base_classes(mt),
+			[&write,&first](auto mi)
+			{
+				first = true;
+				for_each(
+					get_data_members(get_base_class(mi)),
+					write
+				);
+			}
+		);
 
-		out << '{';
-
-		for_each<get_data_members<MT>>::apply(write);
+		first = true;
+		for_each(get_data_members(mt), write);
 
 		return out << '}';
 	}

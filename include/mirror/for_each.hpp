@@ -47,7 +47,7 @@ public:
 	template <typename Func>
 	static Func apply(Func func)
 	{
-		_eat(_single(func, wrap_if_not_special<P>{})...);
+		_eat(true, _single(func, wrap_if_not_special<P>{})...);
 		return func;
 	}
 };

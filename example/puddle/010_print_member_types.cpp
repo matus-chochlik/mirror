@@ -58,12 +58,12 @@ public:
 	{
 		_printer print{out};
 
-		auto MT = PUDDLED(T);
+		auto mt = PUDDLED(T);
 
 		if(all) {
-			for_each(get_member_types(MT), print);
+			for_each(get_member_types(mt), print);
 		} else {
-			for_each(get_public_member_types(MT), print);
+			for_each(get_public_member_types(mt), print);
 		}
 		return out;
 	}

@@ -59,10 +59,10 @@ private:
 public:
 	std::ostream& operator()(std::ostream& out, S& v) const
 	{
-		auto MDMs = unpack(get_data_members(PUDDLED(T)));
+		auto mdms = unpack(get_data_members(PUDDLED(T)));
 		_printer print{out, v};
 
-		for_each(MDMs, print);
+		for_each(mdms, print);
 
 		return out;
 	}

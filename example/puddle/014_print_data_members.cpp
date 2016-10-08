@@ -80,12 +80,12 @@ public:
 	{
 		_printer print{out, v};
 
-		auto MT = PUDDLED(T);
+		auto mt = PUDDLED(T);
 
 		if(all) {
-			for_each(get_data_members(MT), print);
+			for_each(get_data_members(mt), print);
 		} else {
-			for_each(get_public_data_members(MT), print);
+			for_each(get_public_data_members(mt), print);
 		}
 		return out;
 	}
