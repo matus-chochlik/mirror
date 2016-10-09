@@ -94,6 +94,7 @@ mirror/quickref/is_private.html
 mirror/quickref/is_virtual.html
 mirror/quickref/operator.html
 mirror/example.html
+mirror/example/categorization.html
 mirror/example/enum_to_string.html
 mirror/example/string_to_enum.html
 mirror/example/tie_data_members.html

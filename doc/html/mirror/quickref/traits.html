@@ -142,6 +142,39 @@
 </pre>
 <h4>
 <a name="mirror.quickref.traits.h11"></a>
+          <span class="phrase"><a name="mirror.quickref.traits.reflects_enum"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_enum"><code class="literal">reflects_enum</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">reflects_enum</span><span class="special">&lt;</span><a class="link" href="metaobject.html" title="Metaobjects">metaobject</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;</span>
+ <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">bool_</a><span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Enum.html" title="Enum">std::meta::Enum</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">reflects_enum</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
+</pre>
+<h4>
+<a name="mirror.quickref.traits.h12"></a>
+          <span class="phrase"><a name="mirror.quickref.traits.reflects_record"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_record"><code class="literal">reflects_record</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">reflects_record</span><span class="special">&lt;</span><a class="link" href="metaobject.html" title="Metaobjects">metaobject</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;</span>
+ <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">bool_</a><span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Record.html" title="Record">std::meta::Record</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">reflects_record</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
+</pre>
+<h4>
+<a name="mirror.quickref.traits.h13"></a>
+          <span class="phrase"><a name="mirror.quickref.traits.reflects_class"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_class"><code class="literal">reflects_class</code></a>
+        </h4>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">reflects_class</span><span class="special">&lt;</span><a class="link" href="metaobject.html" title="Metaobjects">metaobject</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;</span>
+ <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">bool_</a><span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Class.html" title="Class">std::meta::Class</a><span class="special">&lt;</span><span class="identifier">O</span><span class="special">&gt;&gt;;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">using</span> <span class="identifier">reflects_class</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
+</pre>
+<h4>
+<a name="mirror.quickref.traits.h14"></a>
           <span class="phrase"><a name="mirror.quickref.traits.reflects_enum_member"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_enum_member"><code class="literal">reflects_enum_member</code></a>
         </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
@@ -152,7 +185,7 @@
 <span class="keyword">using</span> <span class="identifier">reflects_enum_member</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
 </pre>
 <h4>
-<a name="mirror.quickref.traits.h12"></a>
+<a name="mirror.quickref.traits.h15"></a>
           <span class="phrase"><a name="mirror.quickref.traits.reflects_record_member"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_record_member"><code class="literal">reflects_record_member</code></a>
         </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
@@ -163,7 +196,7 @@
 <span class="keyword">using</span> <span class="identifier">reflects_record_member</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
 </pre>
 <h4>
-<a name="mirror.quickref.traits.h13"></a>
+<a name="mirror.quickref.traits.h16"></a>
           <span class="phrase"><a name="mirror.quickref.traits.reflects_variable"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_variable"><code class="literal">reflects_variable</code></a>
         </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
@@ -174,7 +207,7 @@
 <span class="keyword">using</span> <span class="identifier">reflects_variable</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
 </pre>
 <h4>
-<a name="mirror.quickref.traits.h14"></a>
+<a name="mirror.quickref.traits.h17"></a>
           <span class="phrase"><a name="mirror.quickref.traits.reflects_constant"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_constant"><code class="literal">reflects_constant</code></a>
         </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
@@ -185,7 +218,7 @@
 <span class="keyword">using</span> <span class="identifier">reflects_constant</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
 </pre>
 <h4>
-<a name="mirror.quickref.traits.h15"></a>
+<a name="mirror.quickref.traits.h18"></a>
           <span class="phrase"><a name="mirror.quickref.traits.reflects_specifier"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_specifier"><code class="literal">reflects_specifier</code></a>
         </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
@@ -196,7 +229,7 @@
 <span class="keyword">using</span> <span class="identifier">reflects_specifier</span> <span class="special">=</span> <a class="link" href="int_const.html" title="Integral constants">false_</a><span class="special">;</span>
 </pre>
 <h4>
-<a name="mirror.quickref.traits.h16"></a>
+<a name="mirror.quickref.traits.h19"></a>
           <span class="phrase"><a name="mirror.quickref.traits.reflects_inheritance"></a></span><a class="link" href="traits.html#mirror.quickref.traits.reflects_inheritance"><code class="literal">reflects_inheritance</code></a>
         </h4>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><a class="link" href="../../reflexpr/quickref/c_Object.html" title="Object">std::meta::Object</a> <span class="identifier">O</span><span class="special">&gt;</span>
