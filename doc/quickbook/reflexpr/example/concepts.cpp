@@ -6,7 +6,7 @@
  */
 //[reflexpr_example_concepts_1
 #include <reflexpr>
-#include <iostream>
+#include <cstdint>
 //]
 //[reflexpr_example_concepts_2
 enum E { a, b, c };
@@ -33,8 +33,8 @@ int main(void)
 	static_assert( Namespace<reflexpr(std)>);
 
 	static_assert( __Type<reflexpr(int)>);
-	static_assert( Type<reflexpr(size_t)>);
-	static_assert( __Alias<reflexpr(size_t)>); /*<
+	static_assert( Type<reflexpr(std::size_t)>);
+	static_assert( __Alias<reflexpr(std::size_t)>); /*<
 	The reflection of [^size_t] is both a [^__Type] and an [^__Alias].
 	>*/
 
@@ -57,7 +57,6 @@ int main(void)
 	static_assert( Record<reflexpr(S)>);
 	static_assert( Record<reflexpr(U)>);
 	static_assert( __Class<reflexpr(C)>);
-	static_assert( Class<reflexpr(S)>);
 	static_assert( Class<reflexpr(S)>);
 
 	static_assert( __Variable<reflexpr(i)>); /*<

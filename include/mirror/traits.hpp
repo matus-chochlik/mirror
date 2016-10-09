@@ -136,6 +136,36 @@ struct op_reflects_tag_type<metaobject<MO>>
 { };
 
 template <typename X>
+struct op_reflects_enum
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_enum<metaobject<MO>>
+ : bool_<reflbase::Enum<MO>>
+{ };
+
+template <typename X>
+struct op_reflects_record
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_record<metaobject<MO>>
+ : bool_<reflbase::Record<MO>>
+{ };
+
+template <typename X>
+struct op_reflects_class
+ : false_
+{ };
+
+template <typename MO>
+struct op_reflects_class<metaobject<MO>>
+ : bool_<reflbase::Class<MO>>
+{ };
+
+template <typename X>
 struct op_reflects_enum_member
  : false_
 { };
@@ -229,6 +259,15 @@ using reflects_type = eval<_aux::op_reflects_type<X>>;
 
 template <typename X>
 using reflects_tag_type = eval<_aux::op_reflects_tag_type<X>>;
+
+template <typename X>
+using reflects_enum = eval<_aux::op_reflects_enum<X>>;
+
+template <typename X>
+using reflects_record = eval<_aux::op_reflects_record<X>>;
+
+template <typename X>
+using reflects_class = eval<_aux::op_reflects_class<X>>;
 
 template <typename X>
 using reflects_enum_member = eval<_aux::op_reflects_enum_member<X>>;

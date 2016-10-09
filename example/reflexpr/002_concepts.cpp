@@ -8,7 +8,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 #include <reflexpr>
-#include <iostream>
+#include <cstdint>
 
 enum E { a, b, c };
 class C { public: long l; short s; struct X { }; };
@@ -27,8 +27,8 @@ int main(void)
 	static_assert( Namespace<reflexpr(std)>);
 
 	static_assert( Type<reflexpr(int)>);
-	static_assert( Type<reflexpr(size_t)>);
-	static_assert( Alias<reflexpr(size_t)>);
+	static_assert( Type<reflexpr(std::size_t)>);
+	static_assert( Alias<reflexpr(std::size_t)>);
 
 	static_assert( Type<reflexpr(C::X)>);
 	static_assert( RecordMember<reflexpr(C::X)>);
@@ -47,7 +47,6 @@ int main(void)
 	static_assert( Record<reflexpr(S)>);
 	static_assert( Record<reflexpr(U)>);
 	static_assert( Class<reflexpr(C)>);
-	static_assert( Class<reflexpr(S)>);
 	static_assert( Class<reflexpr(S)>);
 
 	static_assert( Variable<reflexpr(i)>);
