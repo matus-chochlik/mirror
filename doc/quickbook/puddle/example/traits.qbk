@@ -8,23 +8,23 @@
 [/===============================================]
 
 This example shows various expressions which can be used as arguments
-for the [^__MIRRORED] operator and the use metaobject categorization traits.
+for the [^__PUDDLED] operator and the use metaobject categorization traits.
 
 [import traits.cpp]
 
 We need to include the following header files:
-[mirror_example_traits_1]
+[puddle_example_traits_1]
 
 We'll demonstrate the functionality on the following declarations:
-[mirror_example_traits_2]
+[puddle_example_traits_2]
 
 We reflect various declarations and test if the returned
-[link mirror.intro.metaobjects metaobjects] conform to various metaobject
+[link puddle.intro.metaobjects metaobjects] conform to various metaobject
 concepts.
 
-[mirror_example_traits_3]
-[mirror_example_traits_4]
-[mirror_example_traits_end]
+[puddle_example_traits_3]
+[puddle_example_traits_4]
+[puddle_example_traits_end]
 
 
 [endsect]

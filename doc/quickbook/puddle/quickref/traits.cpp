@@ -63,6 +63,26 @@ noexcept;
 
 template <typename X>
 static constexpr inline
+__mirror_reflects_enum<X> reflects_enum(X)
+noexcept;
+
+template <typename X>
+static constexpr inline
+__mirror_reflects_record<X> reflects_record(X)
+noexcept;
+
+template <typename X>
+static constexpr inline
+__mirror_reflects_class<X> reflects_class(X)
+noexcept;
+
+template <typename X>
+static constexpr inline
+__mirror_reflects_tag_type<X> reflects_tag_type(X)
+noexcept;
+
+template <typename X>
+static constexpr inline
 __mirror_reflects_enum_member<X> reflects_enum_member(X)
 noexcept;
 
