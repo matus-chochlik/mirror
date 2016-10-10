@@ -128,6 +128,7 @@ puddle/quickref/meta_specifier_ops.html
 puddle/quickref/sequence_ops.html
 puddle/quickref/operator.html
 puddle/example.html
+puddle/example/categorization.html
 puddle/example/enum_to_string.html
 puddle/example/string_to_enum.html
 puddle/example/tie_data_members.html

@@ -81,6 +81,26 @@
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
 <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<span class="identifier">__mirror_reflects_enum</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_enum</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<span class="identifier">__mirror_reflects_record</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_record</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<span class="identifier">__mirror_reflects_class</span><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_class</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
+<a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_tag_type">mirror::reflects_tag_type</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_tag_type</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
+<span class="keyword">noexcept</span><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">X</span><span class="special">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">inline</span>
 <a class="link" href="../../mirror/quickref/traits.html#mirror.quickref.traits.reflects_enum_member">mirror::reflects_enum_member</a><span class="special">&lt;</span><span class="identifier">X</span><span class="special">&gt;</span> <span class="identifier">reflects_enum_member</span><span class="special">(</span><span class="identifier">X</span><span class="special">)</span>
 <span class="keyword">noexcept</span><span class="special">;</span>
 
