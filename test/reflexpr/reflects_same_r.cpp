@@ -1,6 +1,5 @@
 /**
  *  .file test/reflexpr/reflects_same_r.cpp
- *  .brief Test case for compile-time `reflects_same` operation
  *
  *  .author Matus Chochlik
  *
