@@ -289,7 +289,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Scope)
 	BOOST_CHECK(( Scope<reflexpr(S)>));
 	BOOST_CHECK(( Scope<reflexpr(U)>));
 	BOOST_CHECK(( Scope<reflexpr(V)>));
-	//TODO BOOST_CHECK(( Scope<reflexpr(Z)>));
+	BOOST_CHECK(( Scope<reflexpr(Z)>));
 	BOOST_CHECK((!Scope<reflexpr(Z&&)>));
 
 	BOOST_CHECK((!Scope<reflexpr(a)>));
@@ -590,7 +590,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
 	BOOST_CHECK(( Record<reflexpr(U)>));
 	BOOST_CHECK(( Record<reflexpr(V)>));
 	BOOST_CHECK((!Record<reflexpr(V**)>));
-	// TODO BOOST_CHECK(( Record<reflexpr(Z)>));
+	BOOST_CHECK(( Record<reflexpr(Z)>));
 	BOOST_CHECK((!Record<reflexpr(Z&&)>));
 
 	BOOST_CHECK((!Record<reflexpr(a)>));
@@ -633,7 +633,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Class)
 	// TODO BOOST_CHECK((!Class<reflexpr(U)>));
 	BOOST_CHECK((!Class<reflexpr(V)>));
 	BOOST_CHECK((!Class<reflexpr(V**)>));
-	// TODO BOOST_CHECK(( Class<reflexpr(Z)>));
+	BOOST_CHECK(( Class<reflexpr(Z)>));
 	BOOST_CHECK((!Class<reflexpr(Z&&)>));
 
 	BOOST_CHECK((!Class<reflexpr(a)>));
