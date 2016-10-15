@@ -36,6 +36,8 @@ struct W
 
 using Z = W<int>;
 
+static const int i = 123;
+
 BOOST_AUTO_TEST_CASE(mirror_concepts_not_Object)
 {
 	using namespace std::meta;
@@ -47,6 +49,8 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_not_Object)
 	BOOST_CHECK((!Object<S>));
 	BOOST_CHECK((!Object<U>));
 	BOOST_CHECK((!Object<V>));
+
+	BOOST_CHECK_EQUAL(i, 123); // unused variable
 }
 
 BOOST_AUTO_TEST_CASE(mirror_concepts_Object)
@@ -74,6 +78,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Object)
 	BOOST_CHECK(( Object<reflexpr(C::s)>));
 	BOOST_CHECK(( Object<reflexpr(S::x)>));
 	BOOST_CHECK(( Object<reflexpr(U::d)>));
+	BOOST_CHECK(( Object<reflexpr(i)>));
 
 	BOOST_CHECK(( Object<reflexpr(S::T)>));
 	BOOST_CHECK(( Object<reflexpr(C::X)>));
@@ -114,6 +119,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ObjectSequence)
 	BOOST_CHECK((!ObjectSequence<reflexpr(C::s)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(S::x)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(U::d)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(i)>));
 
 	BOOST_CHECK((!ObjectSequence<reflexpr(S::T)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(C::X)>));
@@ -167,6 +173,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Named)
 	BOOST_CHECK(( Named<reflexpr(C::s)>));
 	BOOST_CHECK(( Named<reflexpr(S::x)>));
 	BOOST_CHECK(( Named<reflexpr(U::d)>));
+	BOOST_CHECK(( Named<reflexpr(i)>));
 
 	BOOST_CHECK(( Named<reflexpr(S::T)>));
 	BOOST_CHECK(( Named<reflexpr(C::X)>));
@@ -208,6 +215,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Alias)
 	BOOST_CHECK((!Alias<reflexpr(C::s)>));
 	BOOST_CHECK((!Alias<reflexpr(S::x)>));
 	BOOST_CHECK((!Alias<reflexpr(U::d)>));
+	BOOST_CHECK((!Alias<reflexpr(i)>));
 
 	BOOST_CHECK(( Alias<reflexpr(S::T)>));
 	BOOST_CHECK((!Alias<reflexpr(C::X)>));
@@ -248,6 +256,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Typed)
 	BOOST_CHECK(( Typed<reflexpr(C::s)>));
 	BOOST_CHECK(( Typed<reflexpr(S::x)>));
 	BOOST_CHECK(( Typed<reflexpr(U::d)>));
+	BOOST_CHECK(( Typed<reflexpr(i)>));
 
 	BOOST_CHECK((!Typed<reflexpr(S::T)>));
 	BOOST_CHECK((!Typed<reflexpr(C::X)>));
@@ -288,6 +297,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Scope)
 	BOOST_CHECK((!Scope<reflexpr(C::s)>));
 	BOOST_CHECK((!Scope<reflexpr(S::x)>));
 	BOOST_CHECK((!Scope<reflexpr(U::d)>));
+	BOOST_CHECK((!Scope<reflexpr(i)>));
 
 	BOOST_CHECK((!Scope<reflexpr(S::T)>));
 	BOOST_CHECK(( Scope<reflexpr(C::X)>));
@@ -330,6 +340,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ScopeMember)
 	BOOST_CHECK(( ScopeMember<reflexpr(C::s)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(S::x)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(U::d)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(i)>));
 
 	BOOST_CHECK(( ScopeMember<reflexpr(S::T)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(C::X)>));
@@ -372,6 +383,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_RecordMember)
 	BOOST_CHECK(( RecordMember<reflexpr(C::s)>));
 	BOOST_CHECK(( RecordMember<reflexpr(S::x)>));
 	BOOST_CHECK(( RecordMember<reflexpr(U::d)>));
+	BOOST_CHECK((!RecordMember<reflexpr(i)>));
 
 	BOOST_CHECK(( RecordMember<reflexpr(S::T)>));
 	BOOST_CHECK(( RecordMember<reflexpr(C::X)>));
@@ -414,6 +426,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_EnumMember)
 	BOOST_CHECK((!EnumMember<reflexpr(C::s)>));
 	BOOST_CHECK((!EnumMember<reflexpr(S::x)>));
 	BOOST_CHECK((!EnumMember<reflexpr(U::d)>));
+	BOOST_CHECK((!EnumMember<reflexpr(i)>));
 
 	BOOST_CHECK((!EnumMember<reflexpr(S::T)>));
 	BOOST_CHECK((!EnumMember<reflexpr(C::X)>));
@@ -456,6 +469,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Namespace)
 	BOOST_CHECK((!Namespace<reflexpr(C::s)>));
 	BOOST_CHECK((!Namespace<reflexpr(S::x)>));
 	BOOST_CHECK((!Namespace<reflexpr(U::d)>));
+	BOOST_CHECK((!Namespace<reflexpr(i)>));
 
 	BOOST_CHECK((!Namespace<reflexpr(S::T)>));
 	BOOST_CHECK((!Namespace<reflexpr(C::X)>));
@@ -498,6 +512,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_GlobalScope)
 	BOOST_CHECK((!GlobalScope<reflexpr(C::s)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(S::x)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(U::d)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(i)>));
 
 	BOOST_CHECK((!GlobalScope<reflexpr(S::T)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(C::X)>));
@@ -540,6 +555,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Type)
 	BOOST_CHECK((!Type<reflexpr(C::s)>));
 	BOOST_CHECK((!Type<reflexpr(S::x)>));
 	BOOST_CHECK((!Type<reflexpr(U::d)>));
+	BOOST_CHECK((!Type<reflexpr(i)>));
 
 	BOOST_CHECK(( Type<reflexpr(S::T)>));
 	BOOST_CHECK(( Type<reflexpr(C::X)>));
@@ -582,6 +598,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
 	BOOST_CHECK((!Record<reflexpr(C::s)>));
 	BOOST_CHECK((!Record<reflexpr(S::x)>));
 	BOOST_CHECK((!Record<reflexpr(U::d)>));
+	BOOST_CHECK((!Record<reflexpr(i)>));
 
 	BOOST_CHECK((!Record<reflexpr(S::T)>));
 	BOOST_CHECK(( Record<reflexpr(C::X)>));
@@ -595,6 +612,264 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
 
 	BOOST_CHECK((!Record<meta_DbA>));
 	BOOST_CHECK((!Record<meta_DbB>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_concepts_Class)
+{
+	using namespace std::meta;
+
+	BOOST_CHECK((!Class<reflexpr()>));
+	BOOST_CHECK((!Class<reflexpr(::)>));
+	BOOST_CHECK((!Class<reflexpr(std)>));
+	BOOST_CHECK((!Class<reflexpr(int)>));
+	BOOST_CHECK((!Class<reflexpr(int[10])>));
+	BOOST_CHECK((!Class<reflexpr(E)>));
+	BOOST_CHECK((!Class<reflexpr(E*)>));
+	BOOST_CHECK((!Class<reflexpr(F)>));
+	BOOST_CHECK(( Class<reflexpr(C)>));
+	BOOST_CHECK((!Class<reflexpr(C*)>));
+	BOOST_CHECK(( Class<reflexpr(S)>));
+	BOOST_CHECK((!Class<reflexpr(S&)>));
+	// TODO BOOST_CHECK((!Class<reflexpr(U)>));
+	BOOST_CHECK((!Class<reflexpr(V)>));
+	BOOST_CHECK((!Class<reflexpr(V**)>));
+	// TODO BOOST_CHECK(( Class<reflexpr(Z)>));
+	BOOST_CHECK((!Class<reflexpr(Z&&)>));
+
+	BOOST_CHECK((!Class<reflexpr(a)>));
+	BOOST_CHECK((!Class<reflexpr(F::m)>));
+	BOOST_CHECK((!Class<reflexpr(C::s)>));
+	BOOST_CHECK((!Class<reflexpr(S::x)>));
+	BOOST_CHECK((!Class<reflexpr(U::d)>));
+	BOOST_CHECK((!Class<reflexpr(i)>));
+
+	BOOST_CHECK((!Class<reflexpr(S::T)>));
+	BOOST_CHECK(( Class<reflexpr(C::X)>));
+	BOOST_CHECK((!Class<reflexpr(Z::T)>));
+
+	BOOST_CHECK((!Class<reflexpr(static)>));
+	BOOST_CHECK((!Class<reflexpr(public)>));
+
+	using meta_DbA = get_element_m<get_base_classes_m<reflexpr(D)>, 0>; 
+	using meta_DbB = get_element_m<get_base_classes_m<reflexpr(D)>, 1>; 
+
+	BOOST_CHECK((!Class<meta_DbA>));
+	BOOST_CHECK((!Class<meta_DbB>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_concepts_Enum)
+{
+	using namespace std::meta;
+
+	BOOST_CHECK((!Enum<reflexpr()>));
+	BOOST_CHECK((!Enum<reflexpr(::)>));
+	BOOST_CHECK((!Enum<reflexpr(std)>));
+	BOOST_CHECK((!Enum<reflexpr(int)>));
+	BOOST_CHECK((!Enum<reflexpr(int[10])>));
+	BOOST_CHECK(( Enum<reflexpr(E)>));
+	BOOST_CHECK((!Enum<reflexpr(E*)>));
+	BOOST_CHECK(( Enum<reflexpr(F)>));
+	BOOST_CHECK((!Enum<reflexpr(C)>));
+	BOOST_CHECK((!Enum<reflexpr(C*)>));
+	BOOST_CHECK((!Enum<reflexpr(S)>));
+	BOOST_CHECK((!Enum<reflexpr(S&)>));
+	BOOST_CHECK((!Enum<reflexpr(U)>));
+	BOOST_CHECK((!Enum<reflexpr(V)>));
+	BOOST_CHECK((!Enum<reflexpr(V**)>));
+	BOOST_CHECK((!Enum<reflexpr(Z)>));
+	BOOST_CHECK((!Enum<reflexpr(Z&&)>));
+
+	BOOST_CHECK((!Enum<reflexpr(a)>));
+	BOOST_CHECK((!Enum<reflexpr(F::m)>));
+	BOOST_CHECK((!Enum<reflexpr(C::s)>));
+	BOOST_CHECK((!Enum<reflexpr(S::x)>));
+	BOOST_CHECK((!Enum<reflexpr(U::d)>));
+	BOOST_CHECK((!Enum<reflexpr(i)>));
+
+	BOOST_CHECK((!Enum<reflexpr(S::T)>));
+	BOOST_CHECK((!Enum<reflexpr(C::X)>));
+	BOOST_CHECK((!Enum<reflexpr(Z::T)>));
+
+	BOOST_CHECK((!Enum<reflexpr(static)>));
+	BOOST_CHECK((!Enum<reflexpr(public)>));
+
+	using meta_DbA = get_element_m<get_base_classes_m<reflexpr(D)>, 0>; 
+	using meta_DbB = get_element_m<get_base_classes_m<reflexpr(D)>, 1>; 
+
+	BOOST_CHECK((!Enum<meta_DbA>));
+	BOOST_CHECK((!Enum<meta_DbB>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_concepts_Constant)
+{
+	using namespace std::meta;
+
+	BOOST_CHECK((!Constant<reflexpr()>));
+	BOOST_CHECK((!Constant<reflexpr(::)>));
+	BOOST_CHECK((!Constant<reflexpr(std)>));
+	BOOST_CHECK((!Constant<reflexpr(int)>));
+	BOOST_CHECK((!Constant<reflexpr(int[10])>));
+	BOOST_CHECK((!Constant<reflexpr(E)>));
+	BOOST_CHECK((!Constant<reflexpr(E*)>));
+	BOOST_CHECK((!Constant<reflexpr(F)>));
+	BOOST_CHECK((!Constant<reflexpr(C)>));
+	BOOST_CHECK((!Constant<reflexpr(C*)>));
+	BOOST_CHECK((!Constant<reflexpr(S)>));
+	BOOST_CHECK((!Constant<reflexpr(S&)>));
+	BOOST_CHECK((!Constant<reflexpr(U)>));
+	BOOST_CHECK((!Constant<reflexpr(V)>));
+	BOOST_CHECK((!Constant<reflexpr(V**)>));
+	BOOST_CHECK((!Constant<reflexpr(Z)>));
+	BOOST_CHECK((!Constant<reflexpr(Z&&)>));
+
+	BOOST_CHECK(( Constant<reflexpr(a)>));
+	BOOST_CHECK(( Constant<reflexpr(F::m)>));
+	BOOST_CHECK((!Constant<reflexpr(C::s)>));
+	BOOST_CHECK((!Constant<reflexpr(S::x)>));
+	BOOST_CHECK((!Constant<reflexpr(U::d)>));
+	BOOST_CHECK((!Constant<reflexpr(i)>));
+
+	BOOST_CHECK((!Constant<reflexpr(S::T)>));
+	BOOST_CHECK((!Constant<reflexpr(C::X)>));
+	BOOST_CHECK((!Constant<reflexpr(Z::T)>));
+
+	BOOST_CHECK((!Constant<reflexpr(static)>));
+	BOOST_CHECK((!Constant<reflexpr(public)>));
+
+	using meta_DbA = get_element_m<get_base_classes_m<reflexpr(D)>, 0>; 
+	using meta_DbB = get_element_m<get_base_classes_m<reflexpr(D)>, 1>; 
+
+	BOOST_CHECK((!Constant<meta_DbA>));
+	BOOST_CHECK((!Constant<meta_DbB>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_concepts_Variable)
+{
+	using namespace std::meta;
+
+	BOOST_CHECK((!Variable<reflexpr()>));
+	BOOST_CHECK((!Variable<reflexpr(::)>));
+	BOOST_CHECK((!Variable<reflexpr(std)>));
+	BOOST_CHECK((!Variable<reflexpr(int)>));
+	BOOST_CHECK((!Variable<reflexpr(int[10])>));
+	BOOST_CHECK((!Variable<reflexpr(E)>));
+	BOOST_CHECK((!Variable<reflexpr(E*)>));
+	BOOST_CHECK((!Variable<reflexpr(F)>));
+	BOOST_CHECK((!Variable<reflexpr(C)>));
+	BOOST_CHECK((!Variable<reflexpr(C*)>));
+	BOOST_CHECK((!Variable<reflexpr(S)>));
+	BOOST_CHECK((!Variable<reflexpr(S&)>));
+	BOOST_CHECK((!Variable<reflexpr(U)>));
+	BOOST_CHECK((!Variable<reflexpr(V)>));
+	BOOST_CHECK((!Variable<reflexpr(V**)>));
+	BOOST_CHECK((!Variable<reflexpr(Z)>));
+	BOOST_CHECK((!Variable<reflexpr(Z&&)>));
+
+	BOOST_CHECK((!Variable<reflexpr(a)>));
+	BOOST_CHECK((!Variable<reflexpr(F::m)>));
+	BOOST_CHECK(( Variable<reflexpr(C::s)>));
+	BOOST_CHECK(( Variable<reflexpr(S::x)>));
+	BOOST_CHECK(( Variable<reflexpr(U::d)>));
+	BOOST_CHECK(( Variable<reflexpr(i)>));
+
+	BOOST_CHECK((!Variable<reflexpr(S::T)>));
+	BOOST_CHECK((!Variable<reflexpr(C::X)>));
+	BOOST_CHECK((!Variable<reflexpr(Z::T)>));
+
+	BOOST_CHECK((!Variable<reflexpr(static)>));
+	BOOST_CHECK((!Variable<reflexpr(public)>));
+
+	using meta_DbA = get_element_m<get_base_classes_m<reflexpr(D)>, 0>; 
+	using meta_DbB = get_element_m<get_base_classes_m<reflexpr(D)>, 1>; 
+
+	BOOST_CHECK((!Variable<meta_DbA>));
+	BOOST_CHECK((!Variable<meta_DbB>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_concepts_Specifier)
+{
+	using namespace std::meta;
+
+	BOOST_CHECK((!Specifier<reflexpr()>));
+	BOOST_CHECK((!Specifier<reflexpr(::)>));
+	BOOST_CHECK((!Specifier<reflexpr(std)>));
+	BOOST_CHECK((!Specifier<reflexpr(int)>));
+	BOOST_CHECK((!Specifier<reflexpr(int[10])>));
+	BOOST_CHECK((!Specifier<reflexpr(E)>));
+	BOOST_CHECK((!Specifier<reflexpr(E*)>));
+	BOOST_CHECK((!Specifier<reflexpr(F)>));
+	BOOST_CHECK((!Specifier<reflexpr(C)>));
+	BOOST_CHECK((!Specifier<reflexpr(C*)>));
+	BOOST_CHECK((!Specifier<reflexpr(S)>));
+	BOOST_CHECK((!Specifier<reflexpr(S&)>));
+	BOOST_CHECK((!Specifier<reflexpr(U)>));
+	BOOST_CHECK((!Specifier<reflexpr(V)>));
+	BOOST_CHECK((!Specifier<reflexpr(V**)>));
+	BOOST_CHECK((!Specifier<reflexpr(Z)>));
+	BOOST_CHECK((!Specifier<reflexpr(Z&&)>));
+
+	BOOST_CHECK((!Specifier<reflexpr(a)>));
+	BOOST_CHECK((!Specifier<reflexpr(F::m)>));
+	BOOST_CHECK((!Specifier<reflexpr(C::s)>));
+	BOOST_CHECK((!Specifier<reflexpr(S::x)>));
+	BOOST_CHECK((!Specifier<reflexpr(U::d)>));
+	BOOST_CHECK((!Specifier<reflexpr(i)>));
+
+	BOOST_CHECK((!Specifier<reflexpr(S::T)>));
+	BOOST_CHECK((!Specifier<reflexpr(C::X)>));
+	BOOST_CHECK((!Specifier<reflexpr(Z::T)>));
+
+	BOOST_CHECK(( Specifier<reflexpr(static)>));
+	BOOST_CHECK(( Specifier<reflexpr(public)>));
+
+	using meta_DbA = get_element_m<get_base_classes_m<reflexpr(D)>, 0>; 
+	using meta_DbB = get_element_m<get_base_classes_m<reflexpr(D)>, 1>; 
+
+	BOOST_CHECK((!Specifier<meta_DbA>));
+	BOOST_CHECK((!Specifier<meta_DbB>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_concepts_Inheritance)
+{
+	using namespace std::meta;
+
+	BOOST_CHECK((!Inheritance<reflexpr()>));
+	BOOST_CHECK((!Inheritance<reflexpr(::)>));
+	BOOST_CHECK((!Inheritance<reflexpr(std)>));
+	BOOST_CHECK((!Inheritance<reflexpr(int)>));
+	BOOST_CHECK((!Inheritance<reflexpr(int[10])>));
+	BOOST_CHECK((!Inheritance<reflexpr(E)>));
+	BOOST_CHECK((!Inheritance<reflexpr(E*)>));
+	BOOST_CHECK((!Inheritance<reflexpr(F)>));
+	BOOST_CHECK((!Inheritance<reflexpr(C)>));
+	BOOST_CHECK((!Inheritance<reflexpr(C*)>));
+	BOOST_CHECK((!Inheritance<reflexpr(S)>));
+	BOOST_CHECK((!Inheritance<reflexpr(S&)>));
+	BOOST_CHECK((!Inheritance<reflexpr(U)>));
+	BOOST_CHECK((!Inheritance<reflexpr(V)>));
+	BOOST_CHECK((!Inheritance<reflexpr(V**)>));
+	BOOST_CHECK((!Inheritance<reflexpr(Z)>));
+	BOOST_CHECK((!Inheritance<reflexpr(Z&&)>));
+
+	BOOST_CHECK((!Inheritance<reflexpr(a)>));
+	BOOST_CHECK((!Inheritance<reflexpr(F::m)>));
+	BOOST_CHECK((!Inheritance<reflexpr(C::s)>));
+	BOOST_CHECK((!Inheritance<reflexpr(S::x)>));
+	BOOST_CHECK((!Inheritance<reflexpr(U::d)>));
+	BOOST_CHECK((!Inheritance<reflexpr(i)>));
+
+	BOOST_CHECK((!Inheritance<reflexpr(S::T)>));
+	BOOST_CHECK((!Inheritance<reflexpr(C::X)>));
+	BOOST_CHECK((!Inheritance<reflexpr(Z::T)>));
+
+	BOOST_CHECK((!Inheritance<reflexpr(static)>));
+	BOOST_CHECK((!Inheritance<reflexpr(public)>));
+
+	using meta_DbA = get_element_m<get_base_classes_m<reflexpr(D)>, 0>; 
+	using meta_DbB = get_element_m<get_base_classes_m<reflexpr(D)>, 1>; 
+
+	BOOST_CHECK(( Inheritance<meta_DbA>));
+	BOOST_CHECK(( Inheritance<meta_DbB>));
 }
 
 // TODO
