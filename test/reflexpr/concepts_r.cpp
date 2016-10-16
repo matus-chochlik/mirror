@@ -22,9 +22,11 @@ struct D : A, B { };
 
 enum E { a, b, c };
 enum class F { m, n, o };
-class C { public: long l; short s; struct X { }; };
-struct S { using T = int; T x, y, z; };
-union U { float f; double d; };
+using G = F;
+
+class C { public: long l; short s; struct X { }; using Y = X; };
+struct S { using T = int; T x, y, z; union U {int i; float f;}; using V = U; };
+union U { float f; double d; enum E {g,h,i}; using F = E; };
 
 using V = U;
 
@@ -65,6 +67,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Object)
 	BOOST_CHECK(( Object<reflexpr(E)>));
 	BOOST_CHECK(( Object<reflexpr(E*)>));
 	BOOST_CHECK(( Object<reflexpr(F)>));
+	BOOST_CHECK(( Object<reflexpr(G)>));
 	BOOST_CHECK(( Object<reflexpr(C)>));
 	BOOST_CHECK(( Object<reflexpr(C&)>));
 	BOOST_CHECK(( Object<reflexpr(S)>));
@@ -81,7 +84,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Object)
 	BOOST_CHECK(( Object<reflexpr(i)>));
 
 	BOOST_CHECK(( Object<reflexpr(S::T)>));
+	BOOST_CHECK(( Object<reflexpr(S::U)>));
+	BOOST_CHECK(( Object<reflexpr(S::V)>));
 	BOOST_CHECK(( Object<reflexpr(C::X)>));
+	BOOST_CHECK(( Object<reflexpr(C::Y)>));
+	BOOST_CHECK(( Object<reflexpr(U::E)>));
+	BOOST_CHECK(( Object<reflexpr(U::F)>));
 	BOOST_CHECK(( Object<reflexpr(Z::T)>));
 
 	BOOST_CHECK(( Object<reflexpr(static)>));
@@ -106,6 +114,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ObjectSequence)
 	BOOST_CHECK((!ObjectSequence<reflexpr(E)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(E*)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(F)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(G)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(C)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(C&)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(S)>));
@@ -122,7 +131,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ObjectSequence)
 	BOOST_CHECK((!ObjectSequence<reflexpr(i)>));
 
 	BOOST_CHECK((!ObjectSequence<reflexpr(S::T)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(S::U)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(S::V)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(C::X)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(C::Y)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(U::E)>));
+	BOOST_CHECK((!ObjectSequence<reflexpr(U::F)>));
 	BOOST_CHECK((!ObjectSequence<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!ObjectSequence<reflexpr(static)>));
@@ -160,6 +174,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Named)
 	BOOST_CHECK(( Named<reflexpr(E)>));
 	BOOST_CHECK(( Named<reflexpr(E*)>));
 	BOOST_CHECK(( Named<reflexpr(F)>));
+	BOOST_CHECK(( Named<reflexpr(G)>));
 	BOOST_CHECK(( Named<reflexpr(C)>));
 	BOOST_CHECK(( Named<reflexpr(C&)>));
 	BOOST_CHECK(( Named<reflexpr(S)>));
@@ -176,7 +191,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Named)
 	BOOST_CHECK(( Named<reflexpr(i)>));
 
 	BOOST_CHECK(( Named<reflexpr(S::T)>));
+	BOOST_CHECK(( Named<reflexpr(S::U)>));
+	BOOST_CHECK(( Named<reflexpr(S::V)>));
 	BOOST_CHECK(( Named<reflexpr(C::X)>));
+	BOOST_CHECK(( Named<reflexpr(C::Y)>));
+	BOOST_CHECK(( Named<reflexpr(U::E)>));
+	BOOST_CHECK(( Named<reflexpr(U::F)>));
 	BOOST_CHECK(( Named<reflexpr(Z::T)>));
 
 	BOOST_CHECK(( Named<reflexpr(static)>));
@@ -201,6 +221,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Alias)
 	BOOST_CHECK((!Alias<reflexpr(E)>));
 	BOOST_CHECK((!Alias<reflexpr(E*)>));
 	BOOST_CHECK((!Alias<reflexpr(F)>));
+	BOOST_CHECK(( Alias<reflexpr(G)>));
 	BOOST_CHECK((!Alias<reflexpr(C)>));
 	BOOST_CHECK((!Alias<reflexpr(C&)>));
 	BOOST_CHECK((!Alias<reflexpr(S)>));
@@ -218,7 +239,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Alias)
 	BOOST_CHECK((!Alias<reflexpr(i)>));
 
 	BOOST_CHECK(( Alias<reflexpr(S::T)>));
+	BOOST_CHECK((!Alias<reflexpr(S::U)>));
+	BOOST_CHECK(( Alias<reflexpr(S::V)>));
 	BOOST_CHECK((!Alias<reflexpr(C::X)>));
+	BOOST_CHECK(( Alias<reflexpr(C::Y)>));
+	BOOST_CHECK((!Alias<reflexpr(U::E)>));
+	BOOST_CHECK(( Alias<reflexpr(U::F)>));
 	BOOST_CHECK(( Alias<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Alias<reflexpr(static)>));
@@ -243,6 +269,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Typed)
 	BOOST_CHECK((!Typed<reflexpr(E)>));
 	BOOST_CHECK((!Typed<reflexpr(E*)>));
 	BOOST_CHECK((!Typed<reflexpr(F)>));
+	BOOST_CHECK((!Typed<reflexpr(G)>));
 	BOOST_CHECK((!Typed<reflexpr(C)>));
 	BOOST_CHECK((!Typed<reflexpr(C&)>));
 	BOOST_CHECK((!Typed<reflexpr(S)>));
@@ -259,7 +286,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Typed)
 	BOOST_CHECK(( Typed<reflexpr(i)>));
 
 	BOOST_CHECK((!Typed<reflexpr(S::T)>));
+	BOOST_CHECK((!Typed<reflexpr(S::U)>));
+	BOOST_CHECK((!Typed<reflexpr(S::V)>));
 	BOOST_CHECK((!Typed<reflexpr(C::X)>));
+	BOOST_CHECK((!Typed<reflexpr(C::Y)>));
+	BOOST_CHECK((!Typed<reflexpr(U::E)>));
+	BOOST_CHECK((!Typed<reflexpr(U::F)>));
 	BOOST_CHECK((!Typed<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Typed<reflexpr(static)>));
@@ -284,6 +316,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Scope)
 	BOOST_CHECK(( Scope<reflexpr(E)>));
 	BOOST_CHECK((!Scope<reflexpr(E*)>));
 	BOOST_CHECK(( Scope<reflexpr(F)>));
+	BOOST_CHECK(( Scope<reflexpr(G)>));
 	BOOST_CHECK(( Scope<reflexpr(C)>));
 	BOOST_CHECK((!Scope<reflexpr(C&)>));
 	BOOST_CHECK(( Scope<reflexpr(S)>));
@@ -300,7 +333,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Scope)
 	BOOST_CHECK((!Scope<reflexpr(i)>));
 
 	BOOST_CHECK((!Scope<reflexpr(S::T)>));
+	BOOST_CHECK(( Scope<reflexpr(S::U)>));
+	BOOST_CHECK(( Scope<reflexpr(S::V)>));
 	BOOST_CHECK(( Scope<reflexpr(C::X)>));
+	BOOST_CHECK(( Scope<reflexpr(C::Y)>));
+	BOOST_CHECK(( Scope<reflexpr(U::E)>));
+	BOOST_CHECK(( Scope<reflexpr(U::F)>));
 	BOOST_CHECK((!Scope<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Scope<reflexpr(static)>));
@@ -325,6 +363,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ScopeMember)
 	BOOST_CHECK(( ScopeMember<reflexpr(E)>));
 	BOOST_CHECK((!ScopeMember<reflexpr(E*)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(F)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(G)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(C)>));
 	BOOST_CHECK((!ScopeMember<reflexpr(C*)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(S)>));
@@ -343,7 +382,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ScopeMember)
 	BOOST_CHECK(( ScopeMember<reflexpr(i)>));
 
 	BOOST_CHECK(( ScopeMember<reflexpr(S::T)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(S::U)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(S::V)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(C::X)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(C::Y)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(U::E)>));
+	BOOST_CHECK(( ScopeMember<reflexpr(U::F)>));
 	BOOST_CHECK(( ScopeMember<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!ScopeMember<reflexpr(static)>));
@@ -368,6 +412,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_RecordMember)
 	BOOST_CHECK((!RecordMember<reflexpr(E)>));
 	BOOST_CHECK((!RecordMember<reflexpr(E*)>));
 	BOOST_CHECK((!RecordMember<reflexpr(F)>));
+	BOOST_CHECK((!RecordMember<reflexpr(G)>));
 	BOOST_CHECK((!RecordMember<reflexpr(C)>));
 	BOOST_CHECK((!RecordMember<reflexpr(C*)>));
 	BOOST_CHECK((!RecordMember<reflexpr(S)>));
@@ -386,7 +431,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_RecordMember)
 	BOOST_CHECK((!RecordMember<reflexpr(i)>));
 
 	BOOST_CHECK(( RecordMember<reflexpr(S::T)>));
+	BOOST_CHECK(( RecordMember<reflexpr(S::U)>));
+	BOOST_CHECK(( RecordMember<reflexpr(S::V)>));
 	BOOST_CHECK(( RecordMember<reflexpr(C::X)>));
+	BOOST_CHECK(( RecordMember<reflexpr(C::Y)>));
+	BOOST_CHECK(( RecordMember<reflexpr(U::E)>));
+	BOOST_CHECK(( RecordMember<reflexpr(U::F)>));
 	BOOST_CHECK(( RecordMember<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!RecordMember<reflexpr(static)>));
@@ -411,6 +461,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_EnumMember)
 	BOOST_CHECK((!EnumMember<reflexpr(E)>));
 	BOOST_CHECK((!EnumMember<reflexpr(E*)>));
 	BOOST_CHECK((!EnumMember<reflexpr(F)>));
+	BOOST_CHECK((!EnumMember<reflexpr(G)>));
 	BOOST_CHECK((!EnumMember<reflexpr(C)>));
 	BOOST_CHECK((!EnumMember<reflexpr(C*)>));
 	BOOST_CHECK((!EnumMember<reflexpr(S)>));
@@ -429,7 +480,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_EnumMember)
 	BOOST_CHECK((!EnumMember<reflexpr(i)>));
 
 	BOOST_CHECK((!EnumMember<reflexpr(S::T)>));
+	BOOST_CHECK((!EnumMember<reflexpr(S::U)>));
+	BOOST_CHECK((!EnumMember<reflexpr(S::V)>));
 	BOOST_CHECK((!EnumMember<reflexpr(C::X)>));
+	BOOST_CHECK((!EnumMember<reflexpr(C::Y)>));
+	BOOST_CHECK((!EnumMember<reflexpr(U::E)>));
+	BOOST_CHECK((!EnumMember<reflexpr(U::F)>));
 	BOOST_CHECK((!EnumMember<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!EnumMember<reflexpr(static)>));
@@ -454,6 +510,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Namespace)
 	BOOST_CHECK((!Namespace<reflexpr(E)>));
 	BOOST_CHECK((!Namespace<reflexpr(E*)>));
 	BOOST_CHECK((!Namespace<reflexpr(F)>));
+	BOOST_CHECK((!Namespace<reflexpr(G)>));
 	BOOST_CHECK((!Namespace<reflexpr(C)>));
 	BOOST_CHECK((!Namespace<reflexpr(C*)>));
 	BOOST_CHECK((!Namespace<reflexpr(S)>));
@@ -472,7 +529,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Namespace)
 	BOOST_CHECK((!Namespace<reflexpr(i)>));
 
 	BOOST_CHECK((!Namespace<reflexpr(S::T)>));
+	BOOST_CHECK((!Namespace<reflexpr(S::U)>));
+	BOOST_CHECK((!Namespace<reflexpr(S::V)>));
 	BOOST_CHECK((!Namespace<reflexpr(C::X)>));
+	BOOST_CHECK((!Namespace<reflexpr(C::Y)>));
+	BOOST_CHECK((!Namespace<reflexpr(U::E)>));
+	BOOST_CHECK((!Namespace<reflexpr(U::F)>));
 	BOOST_CHECK((!Namespace<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Namespace<reflexpr(static)>));
@@ -497,6 +559,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_GlobalScope)
 	BOOST_CHECK((!GlobalScope<reflexpr(E)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(E*)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(F)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(G)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(C)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(C*)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(S)>));
@@ -515,7 +578,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_GlobalScope)
 	BOOST_CHECK((!GlobalScope<reflexpr(i)>));
 
 	BOOST_CHECK((!GlobalScope<reflexpr(S::T)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(S::U)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(S::V)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(C::X)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(C::Y)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(U::E)>));
+	BOOST_CHECK((!GlobalScope<reflexpr(U::F)>));
 	BOOST_CHECK((!GlobalScope<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!GlobalScope<reflexpr(static)>));
@@ -540,6 +608,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Type)
 	BOOST_CHECK(( Type<reflexpr(E)>));
 	BOOST_CHECK(( Type<reflexpr(E*)>));
 	BOOST_CHECK(( Type<reflexpr(F)>));
+	BOOST_CHECK(( Type<reflexpr(G)>));
 	BOOST_CHECK(( Type<reflexpr(C)>));
 	BOOST_CHECK(( Type<reflexpr(C*)>));
 	BOOST_CHECK(( Type<reflexpr(S)>));
@@ -558,7 +627,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Type)
 	BOOST_CHECK((!Type<reflexpr(i)>));
 
 	BOOST_CHECK(( Type<reflexpr(S::T)>));
+	BOOST_CHECK(( Type<reflexpr(S::U)>));
+	BOOST_CHECK(( Type<reflexpr(S::V)>));
 	BOOST_CHECK(( Type<reflexpr(C::X)>));
+	BOOST_CHECK(( Type<reflexpr(C::Y)>));
+	BOOST_CHECK(( Type<reflexpr(U::E)>));
+	BOOST_CHECK(( Type<reflexpr(U::F)>));
 	BOOST_CHECK(( Type<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Type<reflexpr(static)>));
@@ -583,6 +657,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
 	BOOST_CHECK((!Record<reflexpr(E)>));
 	BOOST_CHECK((!Record<reflexpr(E*)>));
 	BOOST_CHECK((!Record<reflexpr(F)>));
+	BOOST_CHECK((!Record<reflexpr(G)>));
 	BOOST_CHECK(( Record<reflexpr(C)>));
 	BOOST_CHECK((!Record<reflexpr(C*)>));
 	BOOST_CHECK(( Record<reflexpr(S)>));
@@ -601,7 +676,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
 	BOOST_CHECK((!Record<reflexpr(i)>));
 
 	BOOST_CHECK((!Record<reflexpr(S::T)>));
+	BOOST_CHECK(( Record<reflexpr(S::U)>));
+	BOOST_CHECK(( Record<reflexpr(S::V)>));
 	BOOST_CHECK(( Record<reflexpr(C::X)>));
+	BOOST_CHECK(( Record<reflexpr(C::Y)>));
+	BOOST_CHECK((!Record<reflexpr(U::E)>));
+	BOOST_CHECK((!Record<reflexpr(U::F)>));
 	BOOST_CHECK((!Record<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Record<reflexpr(static)>));
@@ -626,11 +706,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Class)
 	BOOST_CHECK((!Class<reflexpr(E)>));
 	BOOST_CHECK((!Class<reflexpr(E*)>));
 	BOOST_CHECK((!Class<reflexpr(F)>));
+	BOOST_CHECK((!Class<reflexpr(G)>));
 	BOOST_CHECK(( Class<reflexpr(C)>));
 	BOOST_CHECK((!Class<reflexpr(C*)>));
 	BOOST_CHECK(( Class<reflexpr(S)>));
 	BOOST_CHECK((!Class<reflexpr(S&)>));
-	// TODO BOOST_CHECK((!Class<reflexpr(U)>));
+	BOOST_CHECK((!Class<reflexpr(U)>));
 	BOOST_CHECK((!Class<reflexpr(V)>));
 	BOOST_CHECK((!Class<reflexpr(V**)>));
 	BOOST_CHECK(( Class<reflexpr(Z)>));
@@ -644,7 +725,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Class)
 	BOOST_CHECK((!Class<reflexpr(i)>));
 
 	BOOST_CHECK((!Class<reflexpr(S::T)>));
+	BOOST_CHECK((!Class<reflexpr(S::U)>));
+	BOOST_CHECK((!Class<reflexpr(S::V)>));
 	BOOST_CHECK(( Class<reflexpr(C::X)>));
+	BOOST_CHECK(( Class<reflexpr(C::Y)>));
+	BOOST_CHECK((!Class<reflexpr(U::E)>));
+	BOOST_CHECK((!Class<reflexpr(U::F)>));
 	BOOST_CHECK((!Class<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Class<reflexpr(static)>));
@@ -669,6 +755,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Enum)
 	BOOST_CHECK(( Enum<reflexpr(E)>));
 	BOOST_CHECK((!Enum<reflexpr(E*)>));
 	BOOST_CHECK(( Enum<reflexpr(F)>));
+	BOOST_CHECK(( Enum<reflexpr(G)>));
 	BOOST_CHECK((!Enum<reflexpr(C)>));
 	BOOST_CHECK((!Enum<reflexpr(C*)>));
 	BOOST_CHECK((!Enum<reflexpr(S)>));
@@ -687,7 +774,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Enum)
 	BOOST_CHECK((!Enum<reflexpr(i)>));
 
 	BOOST_CHECK((!Enum<reflexpr(S::T)>));
+	BOOST_CHECK((!Enum<reflexpr(S::U)>));
+	BOOST_CHECK((!Enum<reflexpr(S::V)>));
 	BOOST_CHECK((!Enum<reflexpr(C::X)>));
+	BOOST_CHECK((!Enum<reflexpr(C::Y)>));
+	BOOST_CHECK(( Enum<reflexpr(U::E)>));
+	BOOST_CHECK(( Enum<reflexpr(U::F)>));
 	BOOST_CHECK((!Enum<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Enum<reflexpr(static)>));
@@ -712,6 +804,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Constant)
 	BOOST_CHECK((!Constant<reflexpr(E)>));
 	BOOST_CHECK((!Constant<reflexpr(E*)>));
 	BOOST_CHECK((!Constant<reflexpr(F)>));
+	BOOST_CHECK((!Constant<reflexpr(G)>));
 	BOOST_CHECK((!Constant<reflexpr(C)>));
 	BOOST_CHECK((!Constant<reflexpr(C*)>));
 	BOOST_CHECK((!Constant<reflexpr(S)>));
@@ -730,7 +823,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Constant)
 	BOOST_CHECK((!Constant<reflexpr(i)>));
 
 	BOOST_CHECK((!Constant<reflexpr(S::T)>));
+	BOOST_CHECK((!Constant<reflexpr(S::U)>));
+	BOOST_CHECK((!Constant<reflexpr(S::V)>));
 	BOOST_CHECK((!Constant<reflexpr(C::X)>));
+	BOOST_CHECK((!Constant<reflexpr(C::Y)>));
+	BOOST_CHECK((!Constant<reflexpr(U::E)>));
+	BOOST_CHECK((!Constant<reflexpr(U::F)>));
 	BOOST_CHECK((!Constant<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Constant<reflexpr(static)>));
@@ -755,6 +853,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Variable)
 	BOOST_CHECK((!Variable<reflexpr(E)>));
 	BOOST_CHECK((!Variable<reflexpr(E*)>));
 	BOOST_CHECK((!Variable<reflexpr(F)>));
+	BOOST_CHECK((!Variable<reflexpr(G)>));
 	BOOST_CHECK((!Variable<reflexpr(C)>));
 	BOOST_CHECK((!Variable<reflexpr(C*)>));
 	BOOST_CHECK((!Variable<reflexpr(S)>));
@@ -773,7 +872,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Variable)
 	BOOST_CHECK(( Variable<reflexpr(i)>));
 
 	BOOST_CHECK((!Variable<reflexpr(S::T)>));
+	BOOST_CHECK((!Variable<reflexpr(S::U)>));
+	BOOST_CHECK((!Variable<reflexpr(S::V)>));
 	BOOST_CHECK((!Variable<reflexpr(C::X)>));
+	BOOST_CHECK((!Variable<reflexpr(C::Y)>));
+	BOOST_CHECK((!Variable<reflexpr(U::E)>));
+	BOOST_CHECK((!Variable<reflexpr(U::F)>));
 	BOOST_CHECK((!Variable<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Variable<reflexpr(static)>));
@@ -798,6 +902,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Specifier)
 	BOOST_CHECK((!Specifier<reflexpr(E)>));
 	BOOST_CHECK((!Specifier<reflexpr(E*)>));
 	BOOST_CHECK((!Specifier<reflexpr(F)>));
+	BOOST_CHECK((!Specifier<reflexpr(G)>));
 	BOOST_CHECK((!Specifier<reflexpr(C)>));
 	BOOST_CHECK((!Specifier<reflexpr(C*)>));
 	BOOST_CHECK((!Specifier<reflexpr(S)>));
@@ -816,7 +921,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Specifier)
 	BOOST_CHECK((!Specifier<reflexpr(i)>));
 
 	BOOST_CHECK((!Specifier<reflexpr(S::T)>));
+	BOOST_CHECK((!Specifier<reflexpr(S::U)>));
+	BOOST_CHECK((!Specifier<reflexpr(S::V)>));
 	BOOST_CHECK((!Specifier<reflexpr(C::X)>));
+	BOOST_CHECK((!Specifier<reflexpr(C::Y)>));
+	BOOST_CHECK((!Specifier<reflexpr(U::E)>));
+	BOOST_CHECK((!Specifier<reflexpr(U::F)>));
 	BOOST_CHECK((!Specifier<reflexpr(Z::T)>));
 
 	BOOST_CHECK(( Specifier<reflexpr(static)>));
@@ -841,6 +951,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Inheritance)
 	BOOST_CHECK((!Inheritance<reflexpr(E)>));
 	BOOST_CHECK((!Inheritance<reflexpr(E*)>));
 	BOOST_CHECK((!Inheritance<reflexpr(F)>));
+	BOOST_CHECK((!Inheritance<reflexpr(G)>));
 	BOOST_CHECK((!Inheritance<reflexpr(C)>));
 	BOOST_CHECK((!Inheritance<reflexpr(C*)>));
 	BOOST_CHECK((!Inheritance<reflexpr(S)>));
@@ -859,7 +970,12 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Inheritance)
 	BOOST_CHECK((!Inheritance<reflexpr(i)>));
 
 	BOOST_CHECK((!Inheritance<reflexpr(S::T)>));
+	BOOST_CHECK((!Inheritance<reflexpr(S::U)>));
+	BOOST_CHECK((!Inheritance<reflexpr(S::V)>));
 	BOOST_CHECK((!Inheritance<reflexpr(C::X)>));
+	BOOST_CHECK((!Inheritance<reflexpr(C::Y)>));
+	BOOST_CHECK((!Inheritance<reflexpr(U::E)>));
+	BOOST_CHECK((!Inheritance<reflexpr(U::F)>));
 	BOOST_CHECK((!Inheritance<reflexpr(Z::T)>));
 
 	BOOST_CHECK((!Inheritance<reflexpr(static)>));
