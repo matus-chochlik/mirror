@@ -1,0 +1,23 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/-----------------------------------------------]
+[section:enum_to_string Enum-to-string conversion]
+[/-----------------------------------------------]
+
+[import enum_to_string.cpp]
+
+The [^make_enum_to_string_map] function returns a [^__std_map], mapping
+from enumerators of [^enum] type [^T] to strings containing the
+[link reflexpr.quickref.c_Named.ops base names] of the enumerators.
+
+[refltool_make_enum_to_string_map]
+
+The [^enum_to_string] function returns a [^__std_string] containing  the base
+name of the enumerator [^v] of [^enum] type [^T].
+
+[refltool_enum_to_string]
+
+[endsect]
