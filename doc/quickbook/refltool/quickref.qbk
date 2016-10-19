@@ -8,6 +8,16 @@
 	[id refltool.quickref]
 ]
 
+[/---------]
+[/Templates]
+[/---------]
+
+[template header [name] [^#include <'''<ulink url="https://github.com/matus-chochlik/mirror/blob/develop/include/refltool/'''[name]'''.hpp">refltool/'''[name]'''.hpp</ulink>'''>]]
+
+[/--------]
+[/Sections]
+[/--------]
+
 [section:intro Introduction]
 
 This quick reference describes the public API of the reflection-based
@@ -15,4 +25,6 @@ utilities.
 
 [endsect]
 
+[include quickref/tie_enumerators.qbk]
 [include quickref/enum_to_string.qbk]
+[include quickref/string_to_enum.qbk]

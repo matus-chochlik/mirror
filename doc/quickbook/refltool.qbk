@@ -16,7 +16,9 @@
 [/Quick reference links]
 [/---------------------]
 
+[def __tie_enumerators [link refltool.quickref.tie_enumerators tie_enumerators]]
 [def __enum_to_string [link refltool.quickref.enum_to_string enum_to_string]]
+[def __string_to_enum [link refltool.quickref.string_to_enum string_to_enum]]
 
 [/---------]
 [/Templates]
@@ -31,3 +33,4 @@ TODO
 
 [include refltool/intro.qbk]
 [include refltool/quickref.qbk]
+[include refltool/example.qbk]

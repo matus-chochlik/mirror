@@ -1,0 +1,29 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/====================================]
+[section:string_to_enum String to enum]
+[/====================================]
+
+This example shows how to convert strings containing enumerator names to 
+into enumerators.
+
+[import string_to_enum.cpp]
+
+We need to include the following headers:
+[refltool_example_string_to_enum_1]
+
+We'll demonstrate the functionality on the following enum:
+[refltool_example_string_to_enum_2]
+
+The [^string_to_enum] function returns an enumerator from its ['basic name].
+
+[refltool_example_string_to_enum_3]
+
+Running the example produces the following output:
+
+[refltool_example_string_to_enum_output]
+
+[endsect]

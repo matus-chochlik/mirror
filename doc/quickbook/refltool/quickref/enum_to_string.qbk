@@ -3,9 +3,11 @@
 [/ See accompanying file LICENSE_1_0.txt or copy at                 ]
 [/  http://www.boost.org/LICENSE_1_0.txt                            ]
 
-[/-----------------------------------------------]
-[section:enum_to_string Enum-to-string conversion]
-[/-----------------------------------------------]
+[/------------------------------------------------]
+[section:enum_to_string [^enum_to_string] function]
+[/------------------------------------------------]
+
+[header enum_to_string]
 
 [import enum_to_string.cpp]
 
