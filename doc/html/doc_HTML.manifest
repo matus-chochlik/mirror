@@ -145,7 +145,12 @@ lagoon/quickref/metaobject.html
 refltool.html
 refltool/intro.html
 refltool/quickref.html
+refltool/quickref/tie_enumerators.html
 refltool/quickref/enum_to_string.html
+refltool/quickref/string_to_enum.html
+refltool/example.html
+refltool/example/enum_to_string.html
+refltool/example/string_to_enum.html
 papers.html
 papers/proposals.html
 implement.html
