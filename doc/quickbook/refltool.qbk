@@ -17,6 +17,8 @@
 [/---------------------]
 
 [def __tie_enumerators [link refltool.quickref.tie_enumerators tie_enumerators]]
+[def __tie_data_members [link refltool.quickref.tie_data_members tie_data_members]]
+[def __tie_public_data_members [link refltool.quickref.tie_data_members tie_public_data_members]]
 [def __enum_to_string [link refltool.quickref.enum_to_string enum_to_string]]
 [def __string_to_enum [link refltool.quickref.string_to_enum string_to_enum]]
 

@@ -12,7 +12,7 @@
 [import tie_enumerators.cpp]
 
 The [^tie_enumerators] function returns a [^__std_array], containing
-all enumerators of an [^enum] type [^T].
+all enumerators of an [^enum] type [^E].
 
 [refltool_tie_enumerators]
 

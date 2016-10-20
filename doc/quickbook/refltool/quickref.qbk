@@ -26,5 +26,7 @@ utilities.
 [endsect]
 
 [include quickref/tie_enumerators.qbk]
+[include quickref/tie_data_members.qbk]
+[include quickref/data_member_cmp.qbk]
 [include quickref/enum_to_string.qbk]
 [include quickref/string_to_enum.qbk]

@@ -5,7 +5,7 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 //[refltool_tie_enumerators
-template <typename T>
-constexpr __std_array<T, __unspecified__> tie_enumerators(void);
+template <typename E>
+constexpr __std_array<E, __unspecified> tie_enumerators(void);
 //]
 

@@ -37,6 +37,7 @@
 [def __std_string [@ http://en.cppreference.com/w/cpp/string/basic_string std::string]]
 [def __std_map [@ http://en.cppreference.com/w/cpp/container/map std::map]]
 [def __std_array [@ http://en.cppreference.com/w/cpp/container/array std::array]]
+[def __std_tuple [@ http://en.cppreference.com/w/cpp/utility/tuple std::tuple]]
 [def __std_invalid_argument [@ http://en.cppreference.com/w/cpp/error/invalid_argument std::invalid_argument]]
 
 [def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
