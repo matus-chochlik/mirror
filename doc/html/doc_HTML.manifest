@@ -146,6 +146,8 @@ refltool.html
 refltool/intro.html
 refltool/quickref.html
 refltool/quickref/tie_enumerators.html
+refltool/quickref/tie_data_members.html
+refltool/quickref/data_member_cmp.html
 refltool/quickref/enum_to_string.html
 refltool/quickref/string_to_enum.html
 refltool/example.html
