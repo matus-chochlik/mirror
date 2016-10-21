@@ -21,6 +21,12 @@
 [def __tie_public_data_members [link refltool.quickref.tie_data_members tie_public_data_members]]
 [def __enum_to_string [link refltool.quickref.enum_to_string enum_to_string]]
 [def __string_to_enum [link refltool.quickref.string_to_enum string_to_enum]]
+[def __data_members_equal [link refltool.quickref.data_member_cmp.equal data_members_equal]]
+[def __data_members_not_equal [link refltool.quickref.data_member_cmp.not_equal data_members_not_equal]]
+[def __data_members_less [link refltool.quickref.data_member_cmp.less data_members_less]]
+[def __data_members_less_equal [link refltool.quickref.data_member_cmp.less_equal data_members_less_equal]]
+[def __data_members_greater [link refltool.quickref.data_member_cmp.greater data_members_greater]]
+[def __data_members_greater_equal [link refltool.quickref.data_member_cmp.greater_equal data_members_greater_equal]]
 
 [/---------]
 [/Templates]

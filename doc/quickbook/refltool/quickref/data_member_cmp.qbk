@@ -11,14 +11,58 @@
 
 [import data_member_cmp.cpp]
 
-The call operator of [^data_members_equal] can be used to equality-compare
+[heading:equal equal]
+[/---------------------]
+
+The call operator of [^equal_data_members] can be used to equality-compare
 the data members of the instances [^a] and [^b] of a class [^T].
 
 [refltool_equal_data_members]
 
-The call operator of [^not_data_members_equal] can be used to non-equality-compare
+[heading:not_equal not equal]
+[/--------------------------]
+
+The call operator of [^not_equal_data_members] can be used to non-equality-compare
 the data members of the instances [^a] and [^b] of a class [^T].
 
 [refltool_not_equal_data_members]
+
+[heading:less less-than]
+[/---------------------]
+
+The call operator of [^less_data_members] can be used to less-than-compare
+the data members of the instances [^a] and [^b] of a class [^T].
+The data members are compared in the order in which they appear in the class.
+
+[refltool_less_data_members]
+
+[heading:less_equal less-than or equal]
+[/------------------------------------]
+
+The call operator of [^less_equal_data_members] can be used to
+less-than-or-equal-compare the data members of the instances [^a] and [^b]
+of a class [^T].
+The data members are compared in the order in which they appear in the class.
+
+[refltool_less_equal_data_members]
+
+[heading:greater greater-than]
+[/----------------------------]
+
+The call operator of [^greater_data_members] can be used to greater-than-compare
+the data members of the instances [^a] and [^b] of a class [^T].
+The data members are compared in the order in which they appear in the class.
+
+[refltool_greater_data_members]
+
+[heading:greater_equal greater-than or equal]
+[/------------------------------------------]
+
+The call operator of [^greater_equal_data_members] can be used to
+greater-than-or-equal-compare the data members of the instances [^a] and [^b]
+of a class [^T].
+The data members are compared in the order in which they appear in the class.
+
+[refltool_greater_equal_data_members]
 
 [endsect]
