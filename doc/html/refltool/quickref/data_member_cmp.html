@@ -20,8 +20,12 @@
 <p>
           <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/refltool/data_member_cmp.hpp" target="_top">refltool/data_member_cmp.hpp</a>&gt;</code>
         </p>
+<h4>
+<a name="refltool.quickref.data_member_cmp.h0"></a>
+          <span class="phrase"><a name="refltool.quickref.data_member_cmp.equal"></a></span><a class="link" href="data_member_cmp.html#refltool.quickref.data_member_cmp.equal">equal</a>
+        </h4>
 <p>
-          The call operator of <code class="literal">data_members_equal</code> can be used
+          The call operator of <code class="literal">equal_data_members</code> can be used
           to equality-compare the data members of the instances <code class="literal">a</code>
           and <code class="literal">b</code> of a class <code class="literal">T</code>.
         </p>
@@ -40,8 +44,13 @@
 
 <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">equal_data_members</span><span class="special">&lt;&gt;</span> <span class="identifier">data_members_equal</span> <span class="special">=</span> <span class="special">{};</span>
 </pre>
+<h4>
+<a name="refltool.quickref.data_member_cmp.h1"></a>
+          <span class="phrase"><a name="refltool.quickref.data_member_cmp.not_equal"></a></span><a class="link" href="data_member_cmp.html#refltool.quickref.data_member_cmp.not_equal">not
+          equal</a>
+        </h4>
 <p>
-          The call operator of <code class="literal">not_data_members_equal</code> can be used
+          The call operator of <code class="literal">not_equal_data_members</code> can be used
           to non-equality-compare the data members of the instances <code class="literal">a</code>
           and <code class="literal">b</code> of a class <code class="literal">T</code>.
         </p>
@@ -59,6 +68,109 @@
 <span class="special">};</span>
 
 <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">not_equal_data_members</span><span class="special">&lt;&gt;</span> <span class="identifier">data_members_not_equal</span> <span class="special">=</span> <span class="special">{};</span>
+</pre>
+<h4>
+<a name="refltool.quickref.data_member_cmp.h2"></a>
+          <span class="phrase"><a name="refltool.quickref.data_member_cmp.less"></a></span><a class="link" href="data_member_cmp.html#refltool.quickref.data_member_cmp.less">less-than</a>
+        </h4>
+<p>
+          The call operator of <code class="literal">less_data_members</code> can be used to
+          less-than-compare the data members of the instances <code class="literal">a</code>
+          and <code class="literal">b</code> of a class <code class="literal">T</code>. The data members
+          are compared in the order in which they appear in the class.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">less_data_members</span>
+<span class="special">{</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">less_data_members</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span>
+<span class="special">{</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">less_data_members</span><span class="special">&lt;&gt;</span> <span class="identifier">data_members_less</span> <span class="special">=</span> <span class="special">{};</span>
+</pre>
+<h4>
+<a name="refltool.quickref.data_member_cmp.h3"></a>
+          <span class="phrase"><a name="refltool.quickref.data_member_cmp.less_equal"></a></span><a class="link" href="data_member_cmp.html#refltool.quickref.data_member_cmp.less_equal">less-than
+          or equal</a>
+        </h4>
+<p>
+          The call operator of <code class="literal">less_equal_data_members</code> can be
+          used to less-than-or-equal-compare the data members of the instances <code class="literal">a</code>
+          and <code class="literal">b</code> of a class <code class="literal">T</code>. The data members
+          are compared in the order in which they appear in the class.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">less_equal_data_members</span>
+<span class="special">{</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">less_equal_data_members</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span>
+<span class="special">{</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">less_equal_data_members</span><span class="special">&lt;&gt;</span> <span class="identifier">data_members_less_equal</span> <span class="special">=</span> <span class="special">{};</span>
+</pre>
+<h4>
+<a name="refltool.quickref.data_member_cmp.h4"></a>
+          <span class="phrase"><a name="refltool.quickref.data_member_cmp.greater"></a></span><a class="link" href="data_member_cmp.html#refltool.quickref.data_member_cmp.greater">greater-than</a>
+        </h4>
+<p>
+          The call operator of <code class="literal">greater_data_members</code> can be used
+          to greater-than-compare the data members of the instances <code class="literal">a</code>
+          and <code class="literal">b</code> of a class <code class="literal">T</code>. The data members
+          are compared in the order in which they appear in the class.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">greater_data_members</span>
+<span class="special">{</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">greater_data_members</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span>
+<span class="special">{</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">greater_data_members</span><span class="special">&lt;&gt;</span> <span class="identifier">data_members_greater</span> <span class="special">=</span> <span class="special">{};</span>
+</pre>
+<h4>
+<a name="refltool.quickref.data_member_cmp.h5"></a>
+          <span class="phrase"><a name="refltool.quickref.data_member_cmp.greater_equal"></a></span><a class="link" href="data_member_cmp.html#refltool.quickref.data_member_cmp.greater_equal">greater-than
+          or equal</a>
+        </h4>
+<p>
+          The call operator of <code class="literal">greater_equal_data_members</code> can
+          be used to greater-than-or-equal-compare the data members of the instances
+          <code class="literal">a</code> and <code class="literal">b</code> of a class <code class="literal">T</code>.
+          The data members are compared in the order in which they appear in the
+          class.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">greater_equal_data_members</span>
+<span class="special">{</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">greater_equal_data_members</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span>
+<span class="special">{</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+	<span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="identifier">greater_equal_data_members</span><span class="special">&lt;&gt;</span> <span class="identifier">data_members_greater_equal</span> <span class="special">=</span> <span class="special">{};</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
