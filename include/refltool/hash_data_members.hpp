@@ -22,7 +22,7 @@ namespace refltool {
 
 template <typename T>
 static constexpr inline
-auto hash_data_members(T& v)
+auto hash_data_members(const T& v)
 {
 	using namespace puddle;
 

@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/------------------------------------------------------]
+[section:hash_data_members [^hash_data_members] function]
+[/------------------------------------------------------]
+
+[header hash_data_members]
+
+[import hash_data_members.cpp]
+
+The [^hash_data_members] function returns a [^std::size_t] combining the
+[^std::hash]es of all data members of the given instance [^v] of a class [^T].
+
+[refltool_hash_data_members]
+
+[endsect]
