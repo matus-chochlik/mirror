@@ -54,6 +54,9 @@ function(make_std_type_traits_fixes)
 		${PROJECT_SOURCE_DIR}/config/reflbase/${HEADER}_fixes.hpp.in
 		${FIXES_HPP}
 	)
+	fix_other_std_type_trait(remove_const "${FIXES_HPP}")
+	fix_other_std_type_trait(remove_volatile "${FIXES_HPP}")
+	fix_other_std_type_trait(remove_reference "${FIXES_HPP}")
 	fix_other_std_type_trait(enable_if "${FIXES_HPP}")
 
 	file(APPEND ${FIXES_HPP} "} // namespace std\n")
