@@ -14,7 +14,7 @@
 
 #include <reflexpr>
 
-BOOST_AUTO_TEST_SUITE(reflexpr_reflects_same)
+BOOST_AUTO_TEST_SUITE(reflexpr_concepts)
 
 struct A { };
 struct B { };
@@ -40,7 +40,7 @@ using Z = W<int>;
 
 static const int i = 123;
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_not_Object)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_not_Object)
 {
 	using namespace std::meta;
 
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_not_Object)
 	BOOST_CHECK_EQUAL(i, 123); // unused variable
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Object)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Object)
 {
 	using namespace std::meta;
 
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Object)
 	BOOST_CHECK(( Object<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_ObjectSequence)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_ObjectSequence)
 {
 	using namespace std::meta;
 
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ObjectSequence)
 	BOOST_CHECK((!ObjectSequence<get_element_m<meta_Db, 1>>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Named)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Named)
 {
 	using namespace std::meta;
 
@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Named)
 	BOOST_CHECK((!Named<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Alias)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Alias)
 {
 	using namespace std::meta;
 
@@ -257,7 +257,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Alias)
 	BOOST_CHECK((!Alias<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Typed)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Typed)
 {
 	using namespace std::meta;
 
@@ -304,7 +304,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Typed)
 	BOOST_CHECK((!Typed<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Scope)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Scope)
 {
 	using namespace std::meta;
 
@@ -351,7 +351,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Scope)
 	BOOST_CHECK((!Scope<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_ScopeMember)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_ScopeMember)
 {
 	using namespace std::meta;
 
@@ -400,7 +400,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_ScopeMember)
 	BOOST_CHECK((!ScopeMember<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_RecordMember)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_RecordMember)
 {
 	using namespace std::meta;
 
@@ -449,7 +449,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_RecordMember)
 	BOOST_CHECK((!RecordMember<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_EnumMember)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_EnumMember)
 {
 	using namespace std::meta;
 
@@ -498,7 +498,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_EnumMember)
 	BOOST_CHECK((!EnumMember<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Namespace)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Namespace)
 {
 	using namespace std::meta;
 
@@ -547,7 +547,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Namespace)
 	BOOST_CHECK((!Namespace<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_GlobalScope)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_GlobalScope)
 {
 	using namespace std::meta;
 
@@ -596,7 +596,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_GlobalScope)
 	BOOST_CHECK((!GlobalScope<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Type)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Type)
 {
 	using namespace std::meta;
 
@@ -645,7 +645,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Type)
 	BOOST_CHECK((!Type<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Record)
 {
 	using namespace std::meta;
 
@@ -694,7 +694,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Record)
 	BOOST_CHECK((!Record<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Class)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Class)
 {
 	using namespace std::meta;
 
@@ -743,7 +743,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Class)
 	BOOST_CHECK((!Class<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Enum)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Enum)
 {
 	using namespace std::meta;
 
@@ -792,7 +792,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Enum)
 	BOOST_CHECK((!Enum<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Constant)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Constant)
 {
 	using namespace std::meta;
 
@@ -841,7 +841,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Constant)
 	BOOST_CHECK((!Constant<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Variable)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Variable)
 {
 	using namespace std::meta;
 
@@ -890,7 +890,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Variable)
 	BOOST_CHECK((!Variable<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Specifier)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Specifier)
 {
 	using namespace std::meta;
 
@@ -939,7 +939,7 @@ BOOST_AUTO_TEST_CASE(mirror_concepts_Specifier)
 	BOOST_CHECK((!Specifier<meta_DbB>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_concepts_Inheritance)
+BOOST_AUTO_TEST_CASE(reflexpr_concepts_Inheritance)
 {
 	using namespace std::meta;
 

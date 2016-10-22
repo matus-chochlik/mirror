@@ -17,7 +17,7 @@
 
 BOOST_AUTO_TEST_SUITE(reflexpr_reflects_same)
 
-BOOST_AUTO_TEST_CASE(mirror_reflects_same_1)
+BOOST_AUTO_TEST_CASE(reflexpr_reflects_same_1)
 {
 	using namespace std::meta;
 
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE(mirror_reflects_same_1)
 	>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_reflects_same_2)
+BOOST_AUTO_TEST_CASE(reflexpr_reflects_same_2)
 {
 	using namespace std::meta;
 
