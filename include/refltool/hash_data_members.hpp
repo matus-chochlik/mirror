@@ -16,6 +16,7 @@
 #include <puddle/meta_variable_ops.hpp>
 #include <puddle/meta_record_ops.hpp>
 #include <reflbase/type_traits_fixes.hpp>
+#include <functional>
 #include <climits>
 
 namespace refltool {
