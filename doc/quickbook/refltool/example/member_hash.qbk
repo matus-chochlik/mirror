@@ -1,0 +1,33 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/========================================]
+[section:member_hash Data member hash]
+[/========================================]
+
+This example shows how to hash all class data members and how to use it
+to implement specializations of [^std::hash] used by [^std::unordered_set].
+
+[import member_hash.cpp]
+
+We need to include the following headers:
+[refltool_example_member_hash_1]
+
+We'll demonstrate the functionality on two classes -- [^Point] and [^Triangle].
+We use the [^data_members_equal] operation and the [^hash_data_members] function
+to implement their equality comparison operators and specializations of
+[^std::hash]:
+[refltool_example_member_hash_2]
+[refltool_example_member_hash_3]
+
+Now we can demonstrate their functionality.
+
+[refltool_example_member_hash_4]
+
+Running the example produces the following output:
+
+[refltool_example_member_hash_output]
+
+[endsect]
