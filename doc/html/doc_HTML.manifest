@@ -147,6 +147,7 @@ refltool/intro.html
 refltool/quickref.html
 refltool/quickref/tie_enumerators.html
 refltool/quickref/tie_data_members.html
+refltool/quickref/hash_data_members.html
 refltool/quickref/data_member_cmp.html
 refltool/quickref/enum_to_string.html
 refltool/quickref/string_to_enum.html
@@ -154,6 +155,7 @@ refltool/example.html
 refltool/example/enum_to_string.html
 refltool/example/string_to_enum.html
 refltool/example/member_cmp.html
+refltool/example/member_hash.html
 papers.html
 papers/proposals.html
 implement.html

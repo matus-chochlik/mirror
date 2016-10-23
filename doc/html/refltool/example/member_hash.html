@@ -1,0 +1,130 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Data member hash</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../example.html" title="Chapter&#160;14.&#160;Examples">
+<link rel="prev" href="member_cmp.html" title="Data members comparison">
+<link rel="next" href="../../papers.html" title="Part&#160;VI.&#160;Papers">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="member_cmp.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../papers.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="refltool.example.member_hash"></a><a class="link" href="member_hash.html" title="Data member hash">Data member hash</a>
+</h4></div></div></div>
+<p>
+          This example shows how to hash all class data members and how to use it
+          to implement specializations of <code class="literal">std::hash</code> used by <code class="literal">std::unordered_set</code>.
+        </p>
+<p>
+          We need to include the following headers:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">refltool</span><span class="special">/</span><span class="identifier">data_member_cmp</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">refltool</span><span class="special">/</span><span class="identifier">hash_data_members</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">unordered_set</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+</pre>
+<p>
+          We'll demonstrate the functionality on two classes -- <code class="literal">Point</code>
+          and <code class="literal">Triangle</code>. We use the <code class="literal">data_members_equal</code>
+          operation and the <code class="literal">hash_data_members</code> function to implement
+          their equality comparison operators and specializations of <code class="literal">std::hash</code>:
+        </p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Point</span>
+<span class="special">{</span>
+	<span class="keyword">int</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">y</span><span class="special">,</span> <span class="identifier">z</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">bool</span> <span class="keyword">operator</span> <span class="special">==</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">Point</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Point</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span>
+<span class="special">{</span> <span class="keyword">return</span> <span class="identifier">refltool</span><span class="special">::</span><a class="link" href="../quickref/data_member_cmp.html#refltool.quickref.data_member_cmp.equal">data_members_equal</a><span class="special">(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">);</span> <span class="special">}</span>
+
+<span class="keyword">namespace</span> <span class="identifier">std</span> <span class="special">{</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">hash</span><span class="special">&lt;</span><span class="identifier">Point</span><span class="special">&gt;</span>
+<span class="special">{</span>
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">Point</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">)</span> <span class="keyword">const</span>
+	<span class="special">{</span> <span class="keyword">return</span> <span class="identifier">refltool</span><span class="special">::</span><a class="link" href="../quickref/hash_data_members.html" title="hash_data_members function">hash_data_members</a><span class="special">(</span><span class="identifier">p</span><span class="special">);</span> <span class="special">}</span>
+<span class="special">};</span>
+
+<span class="special">}</span> <span class="comment">// namespace std</span>
+</pre>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Triangle</span>
+<span class="special">{</span>
+	<span class="identifier">Point</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">c</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">bool</span> <span class="keyword">operator</span> <span class="special">==</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">Triangle</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Triangle</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span>
+<span class="special">{</span> <span class="keyword">return</span> <span class="identifier">refltool</span><span class="special">::</span><a class="link" href="../quickref/data_member_cmp.html#refltool.quickref.data_member_cmp.equal">data_members_equal</a><span class="special">(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">);</span> <span class="special">}</span>
+
+<span class="keyword">namespace</span> <span class="identifier">std</span> <span class="special">{</span>
+
+<span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">hash</span><span class="special">&lt;</span><span class="identifier">Triangle</span><span class="special">&gt;</span>
+<span class="special">{</span>
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="keyword">operator</span><span class="special">()(</span><span class="keyword">const</span> <span class="identifier">Triangle</span><span class="special">&amp;</span> <span class="identifier">t</span><span class="special">)</span> <span class="keyword">const</span>
+	<span class="special">{</span> <span class="keyword">return</span> <span class="identifier">refltool</span><span class="special">::</span><a class="link" href="../quickref/hash_data_members.html" title="hash_data_members function">hash_data_members</a><span class="special">(</span><span class="identifier">t</span><span class="special">);</span> <span class="special">}</span>
+<span class="special">};</span>
+
+<span class="special">}</span> <span class="comment">// namespace std</span>
+</pre>
+<p>
+          Now we can demonstrate their functionality.
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span>
+<span class="special">{</span>
+	<span class="identifier">Point</span> <span class="identifier">i</span><span class="special">{</span><span class="number">1</span><span class="special">,</span><span class="number">0</span><span class="special">,</span><span class="number">0</span><span class="special">},</span> <span class="identifier">j</span><span class="special">{</span><span class="number">0</span><span class="special">,</span><span class="number">1</span><span class="special">,</span><span class="number">0</span><span class="special">},</span> <span class="identifier">k</span><span class="special">{</span><span class="number">0</span><span class="special">,</span><span class="number">0</span><span class="special">,</span><span class="number">1</span><span class="special">},</span> <span class="identifier">l</span><span class="special">{</span><span class="number">1</span><span class="special">,</span><span class="number">1</span><span class="special">,</span><span class="number">1</span><span class="special">};</span>
+
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">unordered_set</span><span class="special">&lt;</span><span class="identifier">Triangle</span><span class="special">&gt;</span> <span class="identifier">s</span><span class="special">;</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">k</span><span class="special">});</span> <a class="co" name="refltool.example.member_hash.c0" href="member_hash.html#refltool.example.member_hash.c1"><img src="../../images/callouts/1.png" alt="1" border="0"></a>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">j</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">k</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">l</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">k</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">k</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">i</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">j</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">i</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">k</span><span class="special">,</span><span class="identifier">i</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">i</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">j</span><span class="special">,</span><span class="identifier">k</span><span class="special">});</span>
+	<span class="identifier">s</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Triangle</span><span class="special">{</span><span class="identifier">l</span><span class="special">,</span><span class="identifier">i</span><span class="special">,</span><span class="identifier">j</span><span class="special">});</span>
+
+	<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+	<span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list"><tr>
+<td width="5%" valign="top" align="left"><p><a name="refltool.example.member_hash.c1"></a><a href="#refltool.example.member_hash.c0"><img src="../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              We insert 14 different instances of <code class="literal">Triangle</code> which
+              (should) have 14 different hashes.
+            </p></td>
+</tr></table></div>
+<p>
+          Running the example produces the following output:
+        </p>
+<pre class="programlisting"><span class="number">14</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="member_cmp.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../example.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../../papers.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
