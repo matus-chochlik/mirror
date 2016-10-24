@@ -24,7 +24,9 @@ enum class E
 	a, b, c, d, e
 };
 
-namespace mirror {
+namespace {
+
+using namespace mirror;
 
 template <typename Enum>
 class enum_to_string
@@ -67,11 +69,11 @@ public:
 	}
 };
 
-} // namespace mirror
+} // namespace
 
 int main(void)
 {
-	mirror::enum_to_string<E> ets;
+	enum_to_string<E> ets;
 
 	std::cout << ets(E::a) << std::endl;
 	std::cout << ets(E::b) << std::endl;

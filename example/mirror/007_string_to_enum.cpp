@@ -25,7 +25,9 @@ enum class E : char
 	a = 'a', b = 'b', c = 'c', d = 'd', e = 'e'
 };
 
-namespace mirror {
+namespace {
+
+using namespace mirror;
 
 template <typename Enum>
 class string_to_enum
@@ -72,11 +74,11 @@ public:
 	}
 };
 
-} // namespace mirror
+} // namespace
 
 int main(void)
 {
-	mirror::string_to_enum<E> ste;
+	string_to_enum<E> ste;
 
 	try {
 		std::cout << char(ste("a")) << std::endl;

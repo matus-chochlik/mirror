@@ -22,7 +22,9 @@ enum class E : char
 	a = 'a', b = 'b', c = 'c', d = 'd', e = 'e'
 };
 
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename Enum>
 class string_to_enum
@@ -49,8 +51,8 @@ private:
 
 	static auto _make_map(void)
 	{
-		auto MECs = unpack(get_enumerators(PUDDLED(Enum)));
-		return _make_map(MECs);
+		auto mecs = unpack(get_enumerators(PUDDLED(Enum)));
+		return _make_map(mecs);
 	}
 
 	const std::map<std::string, Enum> _map;
@@ -69,11 +71,11 @@ public:
 	}
 };
 
-} // namespace puddle
+} // namespace
 
 int main(void)
 {
-	puddle::string_to_enum<E> ste;
+	string_to_enum<E> ste;
 
 	try {
 		std::cout << char(ste("a")) << std::endl;

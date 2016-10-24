@@ -1,0 +1,15 @@
+#ifdef MIRROR_TEST_STD_FEATURE_FIX
+#include <reflbase/string_view_fix.hpp>
+#endif
+
+inline std::string_view foo(void) { return "foo"; }
+
+int main(void)
+{
+	auto v = foo();
+	bool r = (v.size() == 3);
+	r &= (v.data()[0] == 'f');
+	r &= (v.data()[1] == 'o');
+	r &= (v.data()[2] == 'o');
+	return r?0:1;
+}

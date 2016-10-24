@@ -21,7 +21,9 @@ enum class E
 	a, b, c, d, e
 };
 
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename Enum>
 class enum_to_string
@@ -48,8 +50,8 @@ private:
 
 	static auto _make_map(void)
 	{
-		auto MECs = unpack(get_enumerators(PUDDLED(Enum)));
-		return _make_map(MECs);
+		auto mecs = unpack(get_enumerators(PUDDLED(Enum)));
+		return _make_map(mecs);
 	}
 
 	const std::map<Enum, std::string_view> _map;
@@ -64,11 +66,11 @@ public:
 	}
 };
 
-} // namespace puddle
+} // namespace
 
 int main(void)
 {
-	puddle::enum_to_string<E> ets;
+	enum_to_string<E> ets;
 
 	std::cout << ets(E::a) << std::endl;
 	std::cout << ets(E::b) << std::endl;

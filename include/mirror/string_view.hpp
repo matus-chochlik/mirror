@@ -12,7 +12,7 @@
 #define MIRROR_STRING_VIEW_1105240825_HPP
 
 #include "c_str.hpp"
-#include <string_view>
+#include <reflbase/string_view_fix.hpp>
 
 namespace mirror {
 namespace _aux {

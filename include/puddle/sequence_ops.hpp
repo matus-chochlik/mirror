@@ -17,6 +17,7 @@
 #include <mirror/get_size.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
+#include <mirror/apply_on.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -77,6 +78,13 @@ static constexpr inline
 Func for_each(Rng, Func func)
 {
 	return mirror::for_each<Rng>::apply(func);
+}
+
+template <typename Rng, typename Func>
+static constexpr inline
+auto apply_on(Rng, Func func)
+{
+	return mirror::apply_on<Rng>::apply(func);
 }
 
 } // namespace puddle

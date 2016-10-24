@@ -86,6 +86,30 @@ using reflects_tag_type<__metaobject<O>>
 template <typename X>
 using reflects_tag_type = __false_;
 //]
+//[mirror_tr_reflects_enum
+template <__std_meta_Object O>
+using reflects_enum<__metaobject<O>>
+ = __bool_<__std_meta_Enum<O>>;
+
+template <typename X>
+using reflects_enum = __false_;
+//]
+//[mirror_tr_reflects_record
+template <__std_meta_Object O>
+using reflects_record<__metaobject<O>>
+ = __bool_<__std_meta_Record<O>>;
+
+template <typename X>
+using reflects_record = __false_;
+//]
+//[mirror_tr_reflects_class
+template <__std_meta_Object O>
+using reflects_class<__metaobject<O>>
+ = __bool_<__std_meta_Class<O>>;
+
+template <typename X>
+using reflects_class = __false_;
+//]
 //[mirror_tr_reflects_enum_member
 template <__std_meta_Object O>
 using reflects_enum_member<__metaobject<O>>

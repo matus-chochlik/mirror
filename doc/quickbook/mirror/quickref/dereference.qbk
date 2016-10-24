@@ -1,0 +1,19 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===========================================]
+[section:dereference operation [^dereference]]
+[/===========================================]
+
+[header dereference]
+
+[import dereference.cpp]
+
+The [^apply] static member function of the [^dereference] template returns
+a reference to the variable reflected by a member variable.
+
+[mirror_op_dereference_metaobject]
+
+[endsect]

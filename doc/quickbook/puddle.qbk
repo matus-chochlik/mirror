@@ -48,6 +48,9 @@
 [def __reflects_namespace [link puddle.quickref.traits reflects_namespace]]
 [def __reflects_type [link puddle.quickref.traits reflects_type]]
 [def __reflects_tag_type [link puddle.quickref.traits reflects_tag_type]]
+[def __reflects_enum [link puddle.quickref.traits reflects_enum]]
+[def __reflects_record [link puddle.quickref.traits reflects_record]]
+[def __reflects_class [link puddle.quickref.traits reflects_class]]
 [def __reflects_enum_member [link puddle.quickref.traits reflects_enum_member]]
 [def __reflects_record_member [link puddle.quickref.traits reflects_record_member]]
 [def __reflects_variable [link puddle.quickref.traits reflects_variable]]
@@ -91,8 +94,9 @@
 [def __get_base_classes [link puddle.quickref.meta_class_ops get_base_classes]]
 [def __get_public_base_classes [link puddle.quickref.meta_class_ops get_public_base_classes]]
 
-[def __get_pointer [link puddle.quickref.meta_variable_ops get_pointer]]
 [def __get_constant [link puddle.quickref.meta_constant_ops get_constant]]
+[def __get_pointer [link puddle.quickref.meta_variable_ops get_pointer]]
+[def __dereference [link puddle.quickref.meta_variable_ops dereference]]
 
 [def __get_elaborated_type_specifier [link puddle.quickref.meta_specifier_ops get_elaborated_type_specifier]]
 [def __get_access_specifier [link puddle.quickref.meta_specifier_ops get_access_specifier]]

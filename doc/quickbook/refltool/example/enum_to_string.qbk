@@ -1,0 +1,31 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/====================================]
+[section:enum_to_string Enum to string]
+[/====================================]
+
+This example shows how to traverse all enumerators in an [^enum] type
+and how to convert enum values to strings.
+
+[import enum_to_string.cpp]
+
+We need to include the following headers:
+[refltool_example_enum_to_string_1]
+
+We'll demonstrate the functionality on the following enum:
+[refltool_example_enum_to_string_2]
+
+The [^tie_enumerators] function returns a [^std::array] containing
+all enumerators in the specified enum type. The [^enum_to_string]
+function returns the ['basic name] of an enumerator.
+
+[refltool_example_enum_to_string_3]
+
+Running the example produces the following output:
+
+[refltool_example_enum_to_string_output]
+
+[endsect]

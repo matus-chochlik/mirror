@@ -23,6 +23,7 @@
 
 [def __clang__ [@ http://clang.llvm.org/ clang]]
 [def __llvm__ [@ http://llvm.org/ llvm]]
+[def __cmake__ [@ https://cmake.org/ cmake]]
 
 [def __prompt__ $>]
 
@@ -32,6 +33,12 @@
 
 [def __integral_constant [@ http://en.cppreference.com/w/cpp/types/integral_constant integral_constant]]
 [def __basic_string_view [@ http://en.cppreference.com/w/cpp/string/basic_string_view basic_string_view]]
+
+[def __std_string [@ http://en.cppreference.com/w/cpp/string/basic_string std::string]]
+[def __std_map [@ http://en.cppreference.com/w/cpp/container/map std::map]]
+[def __std_array [@ http://en.cppreference.com/w/cpp/container/array std::array]]
+[def __std_tuple [@ http://en.cppreference.com/w/cpp/utility/tuple std::tuple]]
+[def __std_invalid_argument [@ http://en.cppreference.com/w/cpp/error/invalid_argument std::invalid_argument]]
 
 [def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
 [def __reflexpr [link reflexpr.quickref.operator reflexpr]]
@@ -319,6 +326,8 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_get_element [link mirror.quickref.get_element mirror::get_element]]
 [def __mirror_unpack [link mirror.quickref.unpack mirror::unpack]]
 
+[def __mirror_for_each [link mirror.quickref.for_each mirror::for_each]]
+
 [def __mirror_has_source_info [link mirror.quickref.has_source_info mirror::has_source_info]]
 [def __mirror_get_source_file [link mirror.quickref.get_source_file mirror::get_source_file]]
 [def __mirror_get_source_line [link mirror.quickref.get_source_line mirror::get_source_line]]
@@ -348,6 +357,7 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_get_public_base_classes [link mirror.quickref.get_public_base_classes mirror::get_public_base_classes]]
 
 [def __mirror_get_pointer [link mirror.quickref.get_pointer mirror::get_pointer]]
+[def __mirror_dereference [link mirror.quickref.dereference mirror::dereference]]
 [def __mirror_get_constant [link mirror.quickref.get_constant mirror::get_constant]]
 
 [def __mirror_get_base_class [link mirror.quickref.get_base_class mirror::get_base_class]]
@@ -359,10 +369,6 @@ reflexpr.quickref.other_ops std::meta::is_static_v]]
 [def __mirror_is_private [link mirror.quickref.is_private mirror::is_private]]
 [def __mirror_is_static [link mirror.quickref.is_virtual mirror::is_static]]
 [def __mirror_is_virtual [link mirror.quickref.is_virtual mirror::is_virtual]]
-
-[/--------]
-[/Chapters]
-[/--------]
 
 This is the documentation for the C++ reflection factility proposed
 for standardization by a series of [link papers.proposals papers],
@@ -381,9 +387,48 @@ found at [@https://github.com/matus-chochlik/mirror].
 [warning This documentation is work-in progress and currently does not
 cover many of the implemented features.]
 
+[/----------------------]
+[section Building mirror]
+[/----------------------]
+
+[import index.cpp]
+
+In order to use the ['Mirror reflection utilities] you need
+a [link implement compiler with reflection support]. ['Mirror] is a header-only
+library, but to build the examples and tests it uses a __cmake__-based build
+system with a user-friendly [^configure] Python script. You also need to specify
+the path to the directory where the [^__reflexpr__] header file implementing
+metaobject operations is located by passing the [^--reflexpr-include-dir]
+option to [^configure.py].
+
+For example on a Linux system with a [^bash] shell you need to do the following:
+
+[index_configure_basic]
+
+To configure and build in the default build directory do:
+
+[index_configure_build]
+
+Invoke [^configure.py] with the [^--help] argument to see the list of all
+available command-line options.
+
+Users with the [^bash] shell can also use the ['command-line completion] feature
+for the configuration script by including the [^config/bash-complete] file
+and using the [^mirror-config] forwarding script:
+
+[index_configure_bash_complete]
+
+
+[endsect]
+
+[/-----]
+[/Parts]
+[/-----]
+
 [include reflexpr.qbk]
 [include mirror.qbk]
 [include puddle.qbk]
 [include lagoon.qbk]
+[include refltool.qbk]
 [include papers.qbk]
 [include implement.qbk]

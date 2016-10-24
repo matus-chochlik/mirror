@@ -64,7 +64,6 @@ int main(void)
 //------------------------------------------------------------------------------
 
 #include <reflexpr>
-#include <tuple>
 
 namespace {
 
@@ -256,7 +255,7 @@ void make_type_name(
 
 	right += '*';
 
-	std::make_tuple(f(type<P>{})...);
+	(void)(... , f(type<P>{}));
 
 	params = ')' + params + '(' + plist + ')' + rparams;
 }
@@ -283,7 +282,7 @@ void make_type_name(
 		return 0;
 	};
 
-	std::make_tuple(f(type<P>{})...);
+	(void)(... , f(type<P>{}));
 
 	params += '(' + plist + ')' + rparams;
 }
@@ -308,7 +307,7 @@ void make_type_name(
 		plist += get_full_type_name(t);
 		return 0;
 	};
-	std::make_tuple(f(type<P>{})...);
+	(void)(... , f(type<P>{}));
 
 	right += '<' + plist + '>';
 }

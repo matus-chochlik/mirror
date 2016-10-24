@@ -17,12 +17,11 @@
 namespace mirror {
 
 template <typename X>
-class for_each;
+struct for_each;
 
 template <>
-class for_each<none>
+struct for_each<none>
 {
-public:
 	template <typename Func>
 	static constexpr inline
 	Func apply(Func func)
@@ -32,7 +31,7 @@ public:
 };
 
 template <typename ... P>
-class for_each<range<P...>>
+struct for_each<range<P...>>
 {
 private:
 	static constexpr inline void _eat(bool ...) { }
@@ -48,13 +47,13 @@ public:
 	template <typename Func>
 	static Func apply(Func func)
 	{
-		_eat(_single(func, wrap_if_not_special<P>{})...);
+		_eat(true, _single(func, wrap_if_not_special<P>{})...);
 		return func;
 	}
 };
 
 template <typename Char, Char ... C>
-class for_each<basic_string<Char, C...>>
+struct for_each<basic_string<Char, C...>>
 {
 private:
 	static constexpr inline void _eat(bool ...) { }
@@ -76,8 +75,8 @@ public:
 };
 
 template <typename S>
-class for_each<metaobject_sequence<S>>
- : public for_each<unpack<metaobject_sequence<S>>>
+struct for_each<metaobject_sequence<S>>
+ : for_each<unpack<metaobject_sequence<S>>>
 { };
 
 } // namespace mirror

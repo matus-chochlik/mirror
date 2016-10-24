@@ -21,7 +21,9 @@ enum class E
 };
 //]
 //[puddle_example_enum_to_string_3
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename Enum>
 class enum_to_string
@@ -54,12 +56,12 @@ public:
 	}
 };
 
-} // namespace puddle
+} // namespace
 //]
 //[puddle_example_enum_to_string_4
 int main(void)
 {
-	puddle::enum_to_string<E> ets;
+	enum_to_string<E> ets;
 
 	std::cout << ets(E::a) << std::endl;
 	std::cout << ets(E::b) << std::endl;

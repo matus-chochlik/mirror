@@ -21,6 +21,10 @@ using enable_if_int_const
  = mirror::enable_if_any<mirror::is_int_const<X>>;
 
 template <typename X>
+using enable_if_metaobject
+ = mirror::enable_if_any<mirror::is_metaobject<X>>;
+
+template <typename X>
 using enable_if_opt_metaobject
  = mirror::enable_if_any<mirror::is_metaobject<X>, mirror::is_none<X>>;
 

@@ -31,7 +31,9 @@ struct S {
 
 const int S::a;
 
-namespace mirror {
+namespace {
+
+using namespace mirror;
 
 template <typename T>
 class print_data_members
@@ -42,19 +44,7 @@ private:
 		T& v;
 
 		template <typename MO>
-		void _print_value(MO, true_/*is_static*/) const
-		{
-			out << (*value<get_pointer<MO>>);
-		}
-
-		template <typename MO>
-		void _print_value(MO, false_/*is_static*/) const
-		{
-			out << (v.*value<get_pointer<MO>>);
-		}
-
-		template <typename MO>
-		void operator()(MO mo) const
+		void operator()(MO) const
 		{
 			if(value<is_static<MO>>) {
 				out << "static ";
@@ -63,7 +53,12 @@ private:
 			out << " ";
 			out << c_str<get_base_name<MO>>;
 			out << " = ";
-			_print_value(mo, is_static<MO>{});
+
+			if constexpr(value<is_static<MO>>) {
+				out << (*value<get_pointer<MO>>);
+			} else {
+				out << (v.*value<get_pointer<MO>>);
+			}
 			out << std::endl;
 		}
 	};
@@ -79,11 +74,11 @@ public:
 	}
 };
 
-} // namespace mirror
+} // namespace
 
 int main(void)
 {
-	mirror::print_data_members<S> pdm;
+	print_data_members<S> pdm;
 
 	S x = {false, 'X', 1234.56, 78.9f};
 	S y = {true, 'Y', 11.1111, 2222.22f};

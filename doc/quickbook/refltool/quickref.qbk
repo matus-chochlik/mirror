@@ -1,0 +1,33 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Quick reference
+	[quickbook 1.6]
+	[id refltool.quickref]
+]
+
+[/---------]
+[/Templates]
+[/---------]
+
+[template header [name] [^#include <'''<ulink url="https://github.com/matus-chochlik/mirror/blob/develop/include/refltool/'''[name]'''.hpp">refltool/'''[name]'''.hpp</ulink>'''>]]
+
+[/--------]
+[/Sections]
+[/--------]
+
+[section:intro Introduction]
+
+This quick reference describes the public API of the reflection-based
+utilities.
+
+[endsect]
+
+[include quickref/tie_enumerators.qbk]
+[include quickref/tie_data_members.qbk]
+[include quickref/hash_data_members.qbk]
+[include quickref/data_member_cmp.qbk]
+[include quickref/enum_to_string.qbk]
+[include quickref/string_to_enum.qbk]

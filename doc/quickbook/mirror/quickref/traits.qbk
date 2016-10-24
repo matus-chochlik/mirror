@@ -70,6 +70,21 @@ as shown in the following pseudocode.
 
 [mirror_tr_reflects_tag_type]
 
+[heading:reflects_enum [^reflects_enum]]
+[/-------------------------------------]
+
+[mirror_tr_reflects_enum]
+
+[heading:reflects_record [^reflects_record]]
+[/-----------------------------------------]
+
+[mirror_tr_reflects_record]
+
+[heading:reflects_class [^reflects_class]]
+[/---------------------------------------]
+
+[mirror_tr_reflects_class]
+
 [heading:reflects_enum_member [^reflects_enum_member]]
 [/---------------------------------------------------]
 

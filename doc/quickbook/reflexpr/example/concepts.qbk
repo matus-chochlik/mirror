@@ -1,0 +1,31 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/===============================================]
+[section:categorization Metaobject categorization]
+[/===============================================]
+
+This example shows various expressions which can be used as arguments
+for the [^__reflexpr] operator and the use concepts defined in the
+[^__reflexpr__] header.
+
+[import concepts.cpp]
+
+We need to include the following two header files:
+[reflexpr_example_concepts_1]
+
+We'll demonstrate the functionality on the following declarations:
+[reflexpr_example_concepts_2]
+
+We reflect various declarations and test if the returned
+[link reflexpr.intro.metaobjects metaobjects] conform to the metaobject
+concepts.
+
+[reflexpr_example_concepts_3]
+[reflexpr_example_concepts_4]
+[reflexpr_example_concepts_end]
+
+
+[endsect]

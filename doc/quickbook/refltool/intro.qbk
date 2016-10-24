@@ -1,0 +1,15 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[chapter Introduction
+	[quickbook 1.6]
+	[id refltool.intro]
+]
+
+This section describes several high-level utilities like [^__enum_to_string],
+[^__string_to_enum], etc. based on top of the [link reflexpr basic reflection
+facility] or the [link mirror ['Mirror]] or [link puddle ['Puddle]] reflection
+libraries.
+

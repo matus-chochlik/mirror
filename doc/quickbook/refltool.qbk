@@ -1,0 +1,45 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[part High-level reflection-based tools
+	[quickbook 1.6]
+	[id refltool]
+]
+
+[/------]
+[/Macros]
+[/------]
+
+[/---------------------]
+[/Quick reference links]
+[/---------------------]
+
+[def __tie_enumerators [link refltool.quickref.tie_enumerators tie_enumerators]]
+[def __tie_data_members [link refltool.quickref.tie_data_members tie_data_members]]
+[def __tie_public_data_members [link refltool.quickref.tie_data_members tie_public_data_members]]
+[def __hash_data_members [link refltool.quickref.hash_data_members hash_data_members]]
+[def __enum_to_string [link refltool.quickref.enum_to_string enum_to_string]]
+[def __string_to_enum [link refltool.quickref.string_to_enum string_to_enum]]
+[def __data_members_equal [link refltool.quickref.data_member_cmp.equal data_members_equal]]
+[def __data_members_not_equal [link refltool.quickref.data_member_cmp.not_equal data_members_not_equal]]
+[def __data_members_less [link refltool.quickref.data_member_cmp.less data_members_less]]
+[def __data_members_less_equal [link refltool.quickref.data_member_cmp.less_equal data_members_less_equal]]
+[def __data_members_greater [link refltool.quickref.data_member_cmp.greater data_members_greater]]
+[def __data_members_greater_equal [link refltool.quickref.data_member_cmp.greater_equal data_members_greater_equal]]
+
+[/---------]
+[/Templates]
+[/---------]
+
+
+[/--------]
+[/Chapters]
+[/--------]
+
+TODO
+
+[include refltool/intro.qbk]
+[include refltool/quickref.qbk]
+[include refltool/example.qbk]

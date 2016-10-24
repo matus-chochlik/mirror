@@ -25,7 +25,9 @@ struct S {
 
 const int S::a;
 
-namespace puddle {
+namespace {
+
+using namespace puddle;
 
 template <typename T>
 class print_data_members
@@ -34,18 +36,6 @@ private:
 	struct _printer {
 		std::ostream& out;
 		T& v;
-
-		template <typename MO>
-		void _print_value(MO mo, mirror::true_/*is_static*/) const
-		{
-			out << (*value(get_pointer(mo)));
-		}
-
-		template <typename MO>
-		void _print_value(MO mo, mirror::false_/*is_static*/) const
-		{
-			out << (v.*value(get_pointer(mo)));
-		}
 
 		template <typename MO>
 		void operator()(MO mo) const
@@ -57,27 +47,32 @@ private:
 			out << " ";
 			out << c_str(get_base_name(mo));
 			out << " = ";
-			_print_value(mo, is_static(mo));
+
+			if constexpr(is_static(mo)) {
+				out << (*value(get_pointer(mo)));
+			} else {
+				out << (v.*value(get_pointer(mo)));
+			}
 			out << std::endl;
 		}
 	};
 public:
 	std::ostream& operator()(std::ostream& out, S& v) const
 	{
-		auto MDMs = unpack(get_data_members(PUDDLED(T)));
+		auto mdms = unpack(get_data_members(PUDDLED(T)));
 		_printer print{out, v};
 
-		for_each(MDMs, print);
+		for_each(mdms, print);
 
 		return out;
 	}
 };
 
-} // namespace puddle
+} // namespace
 
 int main(void)
 {
-	puddle::print_data_members<S> pdm;
+	print_data_members<S> pdm;
 
 	S x = {false, 'X', 1234.56, 78.9f};
 	S y = {true, 'Y', 11.1111, 2222.22f};

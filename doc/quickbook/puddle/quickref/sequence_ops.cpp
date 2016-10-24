@@ -34,8 +34,12 @@ __mirror_unpack<X> unpack(X)
 noexcept;
 //]
 //[puddle_op_for_each
-template <typename X>
+template <typename Rng, typename Func>
 static constexpr inline
-__mirror_for_each<X> for_each(X)
-noexcept;
+Func for_each(Rng, Func func) /*<
+Equivalent to:
+``
+__mirror_for_each<Rng>::apply(func);
+``
+>*/;
 //]
