@@ -1,6 +1,8 @@
 /BINARY_DIR
 /doc/quickbook/bin
 /doc/quickbook/html
+/doc/CMakeLists.txt
+/doc/doxygen
 /_*
 .*.swp
 *.sdf
