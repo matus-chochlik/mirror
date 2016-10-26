@@ -15,9 +15,11 @@
 #include <mirror/is_empty.hpp>
 #include <mirror/get_empty.hpp>
 #include <mirror/get_size.hpp>
+#include <mirror/get_front.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
+#include <mirror/wrap.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -52,6 +54,14 @@ auto size(X)
 noexcept
 {
 	return mirror::size<X>{};
+}
+
+template <typename X, typename = enable_if_any_opt_sequence<X>>
+static constexpr inline
+auto get_front(X)
+noexcept
+{
+	return mirror::wrap_if_not_special<mirror::get_front<X>>{};
 }
 
 template <
