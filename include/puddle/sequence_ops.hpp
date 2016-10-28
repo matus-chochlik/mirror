@@ -16,6 +16,8 @@
 #include <mirror/get_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/get_front.hpp>
+#include <mirror/get_head.hpp>
+#include <mirror/get_tail.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
@@ -62,6 +64,30 @@ auto get_front(X)
 noexcept
 {
 	return mirror::wrap_if_not_special<mirror::get_front<X>>{};
+}
+
+template <
+	typename X,
+	typename I,
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_int_const<I>
+> static constexpr inline
+auto get_head(X, I)
+noexcept
+{
+	return mirror::get_head<X, I>{};
+}
+
+template <
+	typename X,
+	typename I,
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_int_const<I>
+> static constexpr inline
+auto get_tail(X, I)
+noexcept
+{
+	return mirror::get_tail<X, I>{};
 }
 
 template <

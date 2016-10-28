@@ -12,6 +12,7 @@
 #define PUDDLE_RANGE_1105240825_HPP
 
 #include <mirror/range.hpp>
+#include <mirror/range_ops.hpp>
 
 namespace puddle {
 
