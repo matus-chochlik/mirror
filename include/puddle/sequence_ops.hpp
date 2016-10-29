@@ -18,6 +18,8 @@
 #include <mirror/get_front.hpp>
 #include <mirror/get_head.hpp>
 #include <mirror/get_tail.hpp>
+#include <mirror/starts_with.hpp>
+#include <mirror/ends_with.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
@@ -88,6 +90,30 @@ auto get_tail(X, I)
 noexcept
 {
 	return mirror::get_tail<X, I>{};
+}
+
+template <
+	typename X,
+	typename Y,
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_any_opt_sequence<Y>
+> static constexpr inline
+auto starts_with(X, Y)
+noexcept
+{
+	return mirror::starts_with<X, Y>{};
+}
+
+template <
+	typename X,
+	typename Y,
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_any_opt_sequence<Y>
+> static constexpr inline
+auto ends_with(X, Y)
+noexcept
+{
+	return mirror::ends_with<X, Y>{};
 }
 
 template <
