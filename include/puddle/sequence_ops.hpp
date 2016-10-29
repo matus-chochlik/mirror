@@ -19,6 +19,7 @@
 #include <mirror/get_head.hpp>
 #include <mirror/get_tail.hpp>
 #include <mirror/skip.hpp>
+#include <mirror/slice.hpp>
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
 #include <mirror/get_element.hpp>
@@ -103,6 +104,20 @@ auto skip(X, I)
 noexcept
 {
 	return mirror::skip<X, I>{};
+}
+
+template <
+	typename X,
+	typename I,
+	typename L,
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_int_const<I>,
+	typename = enable_if_int_const<L>
+> static constexpr inline
+auto slice(X, I, L)
+noexcept
+{
+	return mirror::slice<X, I, L>{};
 }
 
 template <
