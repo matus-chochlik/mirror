@@ -18,6 +18,7 @@
 #include <mirror/get_front.hpp>
 #include <mirror/get_head.hpp>
 #include <mirror/get_tail.hpp>
+#include <mirror/skip.hpp>
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
 #include <mirror/get_element.hpp>
@@ -90,6 +91,18 @@ auto get_tail(X, I)
 noexcept
 {
 	return mirror::get_tail<X, I>{};
+}
+
+template <
+	typename X,
+	typename I,
+	typename = enable_if_any_opt_sequence<X>,
+	typename = enable_if_int_const<I>
+> static constexpr inline
+auto skip(X, I)
+noexcept
+{
+	return mirror::skip<X, I>{};
 }
 
 template <
