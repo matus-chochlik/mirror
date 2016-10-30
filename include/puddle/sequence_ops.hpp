@@ -154,6 +154,14 @@ noexcept
 	return mirror::concat<X...>{};
 }
 
+template <typename S, typename ... X>
+static constexpr inline
+auto join(S, X...)
+noexcept
+{
+	return mirror::join<S, X...>{};
+}
+
 template <
 	typename X, typename I,
 	typename = enable_if_any_opt_sequence<X>,
