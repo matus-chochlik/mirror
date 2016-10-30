@@ -22,6 +22,8 @@
 #include <mirror/slice.hpp>
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
+#include <mirror/concat.hpp>
+#include <mirror/join.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
@@ -142,6 +144,14 @@ auto ends_with(X, Y)
 noexcept
 {
 	return mirror::ends_with<X, Y>{};
+}
+
+template <typename ... X>
+static constexpr inline
+auto concat(X...)
+noexcept
+{
+	return mirror::concat<X...>{};
 }
 
 template <
