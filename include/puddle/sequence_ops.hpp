@@ -23,6 +23,8 @@
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
 #include <mirror/push_back.hpp>
+#include <mirror/push_front.hpp>
+#include <mirror/pop_front.hpp>
 #include <mirror/concat.hpp>
 #include <mirror/join.hpp>
 #include <mirror/get_element.hpp>
@@ -157,6 +159,27 @@ auto push_back(X, E)
 noexcept
 {
 	return mirror::push_back<X, mirror::unwrap_identity<E>>{};
+}
+
+template <
+	typename X,
+	typename E,
+	typename = enable_if_opt_eager_sequence<X>
+> static constexpr inline
+auto push_front(X, E)
+noexcept
+{
+	return mirror::push_front<X, mirror::unwrap_identity<E>>{};
+}
+
+template <
+	typename X,
+	typename = enable_if_opt_eager_sequence<X>
+> static constexpr inline
+auto pop_front(X)
+noexcept
+{
+	return mirror::pop_front<X>{};
 }
 
 template <typename ... X>
