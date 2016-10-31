@@ -22,12 +22,14 @@
 #include <mirror/slice.hpp>
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
+#include <mirror/push_back.hpp>
 #include <mirror/concat.hpp>
 #include <mirror/join.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
 #include <mirror/wrap.hpp>
+#include <mirror/unwrap.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -144,6 +146,17 @@ auto ends_with(X, Y)
 noexcept
 {
 	return mirror::ends_with<X, Y>{};
+}
+
+template <
+	typename X,
+	typename E,
+	typename = enable_if_opt_eager_sequence<X>
+> static constexpr inline
+auto push_back(X, E)
+noexcept
+{
+	return mirror::push_back<X, mirror::unwrap_identity<E>>{};
 }
 
 template <typename ... X>
