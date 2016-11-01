@@ -356,5 +356,351 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_range_4)
 
 }
 
+BOOST_AUTO_TEST_CASE(mirror_split_head_string_1)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, empty_string>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'b'>>,
+		string<'a'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'c'>>,
+		string<'a','b'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'d'>>,
+		string<'a','b','c'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'e'>>,
+		string<'a','b','c','d'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'f'>>,
+		string<'a','b','c','d','e'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'g'>>,
+		string<'a','b','c','d','e','f'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'h'>>,
+		string<'a','b','c','d','e','f','g'>
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_head_string_2)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b','c'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b','c','d'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b','c','d','e'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b','c','d','e','f'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b','c','d','e','f','g'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'a','b','c','d','e','f','g','h'>>,
+		empty_string
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_head_string_3)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'b','x'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'b','c','x'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'c','d','e','x'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'d','e','f','g','h','x'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'e','f','x'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'f','g','h','x'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'h','x'>>,
+		s1
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_head_string_4)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'b','c'>>,
+		string<'a'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'c','d','e','f','g'>>,
+		string<'a','b'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'d','e','f','g','h'>>,
+		string<'a','b','c'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'e'>>,
+		string<'a','b','c','d'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'g','h'>>,
+		string<'a','b','c','d','e','f'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_head<s1, string<'h'>>,
+		string<'a','b','c','d','e','f','g'>
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_tail_string_1)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, empty_string>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'b'>>,
+		string<'b','c','d','e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'c'>>,
+		string<'c','d','e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'d'>>,
+		string<'d','e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'e'>>,
+		string<'e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'f'>>,
+		string<'f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'g'>>,
+		string<'g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'h'>>,
+		string<'h'>
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_tail_string_2)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b','c'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b','c','d'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b','c','d','e'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b','c','d','e','f'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b','c','d','e','f','g'>>,
+		s1
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'a','b','c','d','e','f','g','h'>>,
+		s1
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_tail_string_3)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'b','x'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'b','c','x'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'c','d','e','x'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'d','e','f','g','h','x'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'e','f','x'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'f','g','h','x'>>,
+		empty_string
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'h','x'>>,
+		empty_string
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_split_tail_string_4)
+{
+	using namespace mirror;
+
+	using s1 = string<'a','b','c','d','e','f','g','h'>;
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'b','c'>>,
+		string<'b','c','d','e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'c','d','e','f','g'>>,
+		string<'c','d','e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'d','e','f','g','h'>>,
+		string<'d','e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'e'>>,
+		string<'e','f','g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'g','h'>>,
+		string<'g','h'>
+	>>));
+
+	BOOST_CHECK((value<equal<
+		get_split_tail<s1, string<'h'>>,
+		string<'h'>
+	>>));
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
