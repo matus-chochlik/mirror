@@ -27,6 +27,7 @@
 #include <mirror/pop_front.hpp>
 #include <mirror/concat.hpp>
 #include <mirror/join.hpp>
+#include <mirror/contains.hpp>
 #include <mirror/get_element.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
@@ -196,6 +197,17 @@ auto join(S, X...)
 noexcept
 {
 	return mirror::join<S, X...>{};
+}
+
+template <
+	typename X,
+	typename S,
+	typename = enable_if_any_opt_sequence<S>
+> static constexpr inline
+auto contains(X, S)
+noexcept
+{
+	return mirror::contains<X, S>{};
 }
 
 template <
