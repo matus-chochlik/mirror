@@ -25,15 +25,17 @@ BOOST_AUTO_TEST_CASE(mirror_range_contains_1)
 	using r1 = range<double, float, long, int, short, char, bool, void>;
 
 	BOOST_CHECK(( value<contains<r1, empty_range>>));
+	BOOST_CHECK(( value<contains<r1, identity<double>>>));
 	BOOST_CHECK(( value<contains<r1, range<double>>>));
 	BOOST_CHECK(( value<contains<r1, range<float>>>));
-	BOOST_CHECK(( value<contains<r1, range<long>>>));
+	BOOST_CHECK(( value<contains<r1, identity<long>>>));
 	BOOST_CHECK(( value<contains<r1, range<int>>>));
-	BOOST_CHECK(( value<contains<r1, range<short>>>));
+	BOOST_CHECK(( value<contains<r1, identity<short>>>));
 	BOOST_CHECK(( value<contains<r1, range<char>>>));
-	BOOST_CHECK(( value<contains<r1, range<bool>>>));
+	BOOST_CHECK(( value<contains<r1, identity<bool>>>));
 	BOOST_CHECK(( value<contains<r1, range<void>>>));
-	BOOST_CHECK((!value<contains<r1, range<wchar_t>>>));
+	BOOST_CHECK((!value<contains<r1, identity<wchar_t>>>));
+	BOOST_CHECK((!value<contains<r1, identity<unsigned>>>));
 
 	BOOST_CHECK(( value<contains<empty_range, empty_range>>));
 	BOOST_CHECK((!value<contains<empty_range, range<double>>>));
@@ -64,15 +66,17 @@ BOOST_AUTO_TEST_CASE(mirror_string_contains_1)
 
 	using s1 = string<'a','b','c','d','e','f','g','h'>;
 
+	BOOST_CHECK(( value<contains<s1, char_<'a'>>>));
 	BOOST_CHECK(( value<contains<s1, string<'a'>>>));
 	BOOST_CHECK(( value<contains<s1, string<'b'>>>));
-	BOOST_CHECK(( value<contains<s1, string<'c'>>>));
+	BOOST_CHECK(( value<contains<s1, char_<'c'>>>));
 	BOOST_CHECK(( value<contains<s1, string<'d'>>>));
 	BOOST_CHECK(( value<contains<s1, string<'e'>>>));
-	BOOST_CHECK(( value<contains<s1, string<'f'>>>));
+	BOOST_CHECK(( value<contains<s1, char_<'f'>>>));
 	BOOST_CHECK(( value<contains<s1, string<'g'>>>));
 	BOOST_CHECK(( value<contains<s1, string<'h'>>>));
-	BOOST_CHECK((!value<contains<s1, string<'y'>>>));
+	BOOST_CHECK((!value<contains<s1, string<'x'>>>));
+	BOOST_CHECK((!value<contains<s1, char_<'y'>>>));
 
 	BOOST_CHECK(( value<contains<empty_string, empty_string>>));
 	BOOST_CHECK((!value<contains<empty_string, string<'a'>>>));

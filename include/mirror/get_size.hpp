@@ -11,11 +11,7 @@
 #ifndef MIRROR_GET_SIZE_1105240825_HPP
 #define MIRROR_GET_SIZE_1105240825_HPP
 
-#include "int_const.hpp"
-#include "range.hpp"
-#include "string.hpp"
-#include "none.hpp"
-#include "metaobject.hpp"
+#include "to_container.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -46,7 +42,7 @@ struct op_get_size<metaobject_sequence<MO>>
 } // namespace _aux
 
 template <typename X>
-using get_size = eval<_aux::op_get_size<X>>;
+using get_size = eval<_aux::op_get_size<to_container<X>>>;
 
 template <typename X>
 using size = get_size<X>;

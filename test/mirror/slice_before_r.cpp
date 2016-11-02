@@ -31,6 +31,11 @@ BOOST_AUTO_TEST_CASE(mirror_slice_before_range)
 	>>));
 
 	BOOST_CHECK(( value<equal<
+		slice_before<r1, identity<void>>,
+		r1
+	>>));
+
+	BOOST_CHECK(( value<equal<
 		slice_before<r1, range<void>>,
 		r1
 	>>));
@@ -51,7 +56,7 @@ BOOST_AUTO_TEST_CASE(mirror_slice_before_range)
 	>>));
 
 	BOOST_CHECK(( value<equal<
-		slice_before<r1, range<long>>,
+		slice_before<r1, identity<long>>,
 		range<double, float>
 	>>));
 
@@ -63,6 +68,11 @@ BOOST_AUTO_TEST_CASE(mirror_slice_before_range)
 	BOOST_CHECK(( value<equal<
 		slice_before<r1, range<int, short, bool>>,
 		r1
+	>>));
+
+	BOOST_CHECK(( value<equal<
+		slice_before<r1, identity<char>>,
+		range<double, float, long, int, short>
 	>>));
 
 	BOOST_CHECK(( value<equal<

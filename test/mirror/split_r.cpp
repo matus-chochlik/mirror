@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<r1, range<bool>>,
+		get_split_head<r1, identity<bool>>,
 		range<void>
 	>>));
 
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<r1, range<short>>,
+		get_split_head<r1, identity<short>>,
 		range<void, bool, char>
 	>>));
 
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<r1, range<long>>,
+		get_split_head<r1, identity<long>>,
 		range<void, bool, char, short, int>
 	>>));
 
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<r1, range<double>>,
+		get_split_head<r1, identity<double>>,
 		range<void, bool, char, short, int, long, float>
 	>>));
 }
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<r1, range<void>>,
+		get_split_tail<r1, identity<void>>,
 		r1
 	>>));
 
@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<r1, range<char>>,
+		get_split_tail<r1, identity<char>>,
 		range<char, short, int, long, float, double>
 	>>));
 
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_range_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<r1, range<int>>,
+		get_split_tail<r1, identity<int>>,
 		range<int, long, float, double>
 	>>));
 
@@ -373,7 +373,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<s1, string<'b'>>,
+		get_split_head<s1, char_<'b'>>,
 		string<'a'>
 	>>));
 
@@ -383,7 +383,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<s1, string<'d'>>,
+		get_split_head<s1, char_<'d'>>,
 		string<'a','b','c'>
 	>>));
 
@@ -393,7 +393,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<s1, string<'f'>>,
+		get_split_head<s1, char_<'f'>>,
 		string<'a','b','c','d','e'>
 	>>));
 
@@ -403,7 +403,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<s1, string<'h'>>,
+		get_split_head<s1, char_<'h'>>,
 		string<'a','b','c','d','e','f','g'>
 	>>));
 }
@@ -514,7 +514,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_head_string_4)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_head<s1, string<'e'>>,
+		get_split_head<s1, char_<'e'>>,
 		string<'a','b','c','d'>
 	>>));
 
@@ -546,7 +546,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<s1, string<'b'>>,
+		get_split_tail<s1, char_<'b'>>,
 		string<'b','c','d','e','f','g','h'>
 	>>));
 
@@ -556,7 +556,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<s1, string<'d'>>,
+		get_split_tail<s1, char_<'d'>>,
 		string<'d','e','f','g','h'>
 	>>));
 
@@ -571,7 +571,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_string_1)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<s1, string<'g'>>,
+		get_split_tail<s1, char_<'g'>>,
 		string<'g','h'>
 	>>));
 
@@ -687,7 +687,7 @@ BOOST_AUTO_TEST_CASE(mirror_split_tail_string_4)
 	>>));
 
 	BOOST_CHECK((value<equal<
-		get_split_tail<s1, string<'e'>>,
+		get_split_tail<s1, char_<'e'>>,
 		string<'e','f','g','h'>
 	>>));
 

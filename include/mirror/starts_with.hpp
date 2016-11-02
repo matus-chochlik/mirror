@@ -18,7 +18,10 @@
 namespace mirror {
 
 template <typename Range, typename Prefix>
-using starts_with = equal<get_head<Range, get_size<Prefix>>, Prefix>;
+using starts_with = equal<
+	get_head<Range, get_size<Prefix>>,
+	to_container<Prefix>
+>;
 
 } // namespace mirror
 

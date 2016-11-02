@@ -15,6 +15,7 @@
 #include "pop_front.hpp"
 #include "get_front.hpp"
 #include "starts_with.hpp"
+#include "to_container.hpp"
 #include "get_empty.hpp"
 #include "is_empty.hpp"
 #include "or.hpp"
@@ -45,13 +46,13 @@ struct op_split<H, T, Srch, false_>
 
 template <typename X, typename SX>
 using get_split_head = typename _aux::op_split<
-	get_empty<X>, X, SX,
+	get_empty<X>, X, to_container<SX>,
 	or_<is_empty<X>, starts_with<X, SX>>
 >::head; 
 
 template <typename X, typename SX>
 using get_split_tail = typename _aux::op_split<
-	get_empty<X>, X, SX,
+	get_empty<X>, X, to_container<SX>,
 	or_<is_empty<X>, starts_with<X, SX>>
 >::tail; 
 
