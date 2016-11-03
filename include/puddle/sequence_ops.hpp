@@ -20,6 +20,7 @@
 #include <mirror/get_tail.hpp>
 #include <mirror/skip.hpp>
 #include <mirror/slice.hpp>
+#include <mirror/slice_before.hpp>
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
 #include <mirror/push_back.hpp>
@@ -129,6 +130,17 @@ noexcept
 
 template <
 	typename X,
+	typename S,
+	typename = enable_if_any_opt_sequence<X>
+> static constexpr inline
+auto slice_before(X, S)
+noexcept
+{
+	return mirror::slice_before<X, S>{};
+}
+
+template <
+	typename X,
 	typename Y,
 	typename = enable_if_any_opt_sequence<X>,
 	typename = enable_if_any_opt_sequence<Y>
@@ -202,7 +214,7 @@ noexcept
 template <
 	typename X,
 	typename S,
-	typename = enable_if_any_opt_sequence<S>
+	typename = enable_if_any_opt_sequence<X>
 > static constexpr inline
 auto contains(X, S)
 noexcept
