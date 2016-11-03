@@ -19,7 +19,6 @@
 #include <puddle/int_const.hpp>
 #include <puddle/type.hpp>
 
-
 BOOST_AUTO_TEST_SUITE(puddle_slice_before)
 
 BOOST_AUTO_TEST_CASE(puddle_slice_before_range)

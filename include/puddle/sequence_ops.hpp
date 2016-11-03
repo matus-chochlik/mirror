@@ -21,6 +21,7 @@
 #include <mirror/skip.hpp>
 #include <mirror/slice.hpp>
 #include <mirror/slice_before.hpp>
+#include <mirror/slice_after.hpp>
 #include <mirror/starts_with.hpp>
 #include <mirror/ends_with.hpp>
 #include <mirror/push_back.hpp>
@@ -137,6 +138,17 @@ auto slice_before(X, S)
 noexcept
 {
 	return mirror::slice_before<X, S>{};
+}
+
+template <
+	typename X,
+	typename S,
+	typename = enable_if_any_opt_sequence<X>
+> static constexpr inline
+auto slice_after(X, S)
+noexcept
+{
+	return mirror::slice_after<X, S>{};
 }
 
 template <
