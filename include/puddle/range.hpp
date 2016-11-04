@@ -21,6 +21,11 @@ constexpr mirror::range<P...> range = {};
 
 constexpr mirror::empty_range empty_range = {};
 
+template <typename ... P>
+static constexpr inline
+mirror::range<P...> make_range(P...)
+noexcept { return {}; }
+
 } // namespace puddle
 
 #endif //include guard
