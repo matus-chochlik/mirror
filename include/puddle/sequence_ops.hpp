@@ -260,6 +260,13 @@ Func for_each(Rng, Func func)
 	return mirror::for_each<Rng>::apply(func);
 }
 
+template <typename Rng, typename Func, typename SepFunc>
+static constexpr inline
+Func for_each(Rng, Func func, SepFunc sep_func)
+{
+	return mirror::for_each<Rng>::apply(func, sep_func);
+}
+
 template <typename Rng, typename Func>
 static constexpr inline
 auto apply_on(Rng, Func func)

@@ -15,6 +15,30 @@
 #include "unpack.hpp"
 
 namespace mirror {
+namespace _aux {
+
+struct op_for_each
+{
+protected:
+	static constexpr inline void _eat(bool ...) { }
+
+	template <typename Func, typename Pa>
+	static bool _single(Func& func, Pa pa)
+	{
+		func(pa);
+		return true;
+	}
+
+	template <typename Func, typename SepFn, typename Pa>
+	static bool _single(Func& func, SepFn& sepfn, Pa pa)
+	{
+		sepfn();
+		func(pa);
+		return true;
+	}
+};
+
+} // namespace _aux
 
 template <typename X>
 struct for_each;
@@ -28,51 +52,76 @@ struct for_each<none>
 	{
 		return func;
 	}
-};
 
-template <typename ... P>
-struct for_each<range<P...>>
-{
-private:
-	static constexpr inline void _eat(bool ...) { }
-
-
-	template <typename Func, typename Pa>
-	static bool _single(Func& func, Pa pa)
+	template <typename Func, typename SepFunc>
+	static constexpr inline
+	Func apply(Func func, SepFunc)
 	{
-		func(pa);
-		return true;
-	}
-public:
-	template <typename Func>
-	static Func apply(Func func)
-	{
-		_eat(true, _single(func, wrap_if_not_special<P>{})...);
 		return func;
 	}
 };
 
-template <typename Char, Char ... C>
-struct for_each<basic_string<Char, C...>>
+template <typename H, typename ... T>
+struct for_each<range<H, T...>>
+ : _aux::op_for_each
 {
-private:
-	static constexpr inline void _eat(bool ...) { }
-
-
-	template <typename Func, typename Pa>
-	static bool _single(Func& func, Pa pa)
-	{
-		func(pa);
-		return true;
-	}
 public:
 	template <typename Func>
 	static Func apply(Func func)
 	{
-		_eat(_single(func, int_const<Char, C>{})...);
+		_eat(
+			_single(func, wrap_if_not_special<H>{}),
+			_single(func, wrap_if_not_special<T>{})...
+		);
+		return func;
+	}
+
+	template <typename Func, typename SepFunc>
+	static Func apply(Func func, SepFunc sep_func)
+	{
+		_eat(
+			_single(func, wrap_if_not_special<H>{}),
+			_single(func, sep_func, wrap_if_not_special<T>{})...
+		);
 		return func;
 	}
 };
+
+template <>
+struct for_each<range<>>
+ : for_each<none>
+{ };
+
+template <typename Char, Char H, Char ... T>
+struct for_each<basic_string<Char, H, T...>>
+ : _aux::op_for_each
+{
+public:
+	template <typename Func>
+	static Func apply(Func func)
+	{
+		_eat(
+			_single(func, int_const<Char, H>{}),
+			_single(func, int_const<Char, T>{})...
+		);
+		return func;
+	}
+
+	template <typename Func, typename SepFunc>
+	static Func apply(Func func, SepFunc sep_func)
+	{
+		_eat(
+			_single(func, int_const<Char, H>{}),
+			_single(func, sep_func, int_const<Char, T>{})...
+		);
+		return func;
+	}
+};
+
+template <typename Char>
+struct for_each<basic_string<Char>>
+ : for_each<none>
+{ };
 
 template <typename S>
 struct for_each<metaobject_sequence<S>>
