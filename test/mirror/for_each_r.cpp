@@ -20,7 +20,23 @@
 
 BOOST_AUTO_TEST_SUITE(mirror_for_each)
 
-BOOST_AUTO_TEST_CASE(mirror_for_each_1)
+BOOST_AUTO_TEST_CASE(mirror_for_each_none)
+{
+	using namespace mirror;
+
+	using n1 = none;
+
+	std::stringstream ss;
+	auto func = [&ss](auto x) { ss << value<decltype(x)>; };
+
+	ss << "<";
+	for_each<n1>::apply(func);
+	ss << ">";
+
+	BOOST_CHECK_EQUAL(ss.str(), "<>");
+}
+
+BOOST_AUTO_TEST_CASE(mirror_for_each_str_1)
 {
 	using namespace mirror;
 
@@ -34,7 +50,7 @@ BOOST_AUTO_TEST_CASE(mirror_for_each_1)
 	BOOST_CHECK_EQUAL(ss.str(), "abcdefgh");
 }
 
-BOOST_AUTO_TEST_CASE(mirror_for_each_2)
+BOOST_AUTO_TEST_CASE(mirror_for_each_str_2)
 {
 	using namespace mirror;
 
@@ -48,8 +64,7 @@ BOOST_AUTO_TEST_CASE(mirror_for_each_2)
 	BOOST_CHECK_EQUAL(ss.str(), "String!");
 }
 
-
-BOOST_AUTO_TEST_CASE(mirror_for_each_3)
+BOOST_AUTO_TEST_CASE(mirror_for_each_str_3)
 {
 	using namespace mirror;
 
@@ -64,7 +79,40 @@ BOOST_AUTO_TEST_CASE(mirror_for_each_3)
 	BOOST_CHECK_EQUAL(ss.str(), "X,Y,Z");
 }
 
-BOOST_AUTO_TEST_CASE(mirror_for_each_4)
+BOOST_AUTO_TEST_CASE(mirror_for_each_str_4)
+{
+	using namespace mirror;
+
+	using s1 = empty_string;
+
+	std::stringstream ss;
+	auto func = [&ss](auto chr) { ss << value<decltype(chr)>; };
+
+	ss << "[";
+	for_each<s1>::apply(func);
+	ss << "]";
+
+	BOOST_CHECK_EQUAL(ss.str(), "[]");
+}
+
+BOOST_AUTO_TEST_CASE(mirror_for_each_str_5)
+{
+	using namespace mirror;
+
+	using s1 = empty_string;
+
+	std::stringstream ss;
+	auto func = [&ss](auto chr) { ss << value<decltype(chr)>; };
+	auto sepf = [&ss](void) { ss << ","; };
+
+	ss << "{";
+	for_each<s1>::apply(func, sepf);
+	ss << "}";
+
+	BOOST_CHECK_EQUAL(ss.str(), "{}");
+}
+
+BOOST_AUTO_TEST_CASE(mirror_for_each_rng_1)
 {
 	using namespace mirror;
 
@@ -84,7 +132,7 @@ BOOST_AUTO_TEST_CASE(mirror_for_each_4)
 	BOOST_CHECK_EQUAL(ss.str(), "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 }
 
-BOOST_AUTO_TEST_CASE(mirror_for_each_5)
+BOOST_AUTO_TEST_CASE(mirror_for_each_rng_2)
 {
 	using namespace mirror;
 
@@ -102,6 +150,39 @@ BOOST_AUTO_TEST_CASE(mirror_for_each_5)
 	for_each<r1>::apply(func, sepf);
 
 	BOOST_CHECK_EQUAL(ss.str(), "/usr/local/include");
+}
+
+BOOST_AUTO_TEST_CASE(mirror_for_each_rng_3)
+{
+	using namespace mirror;
+
+	using r1 = empty_range;
+
+	std::stringstream ss;
+	auto func = [&ss](auto str) { ss << c_str<decltype(str)>; };
+
+	ss << "`";
+	for_each<r1>::apply(func);
+	ss << "'";
+
+	BOOST_CHECK_EQUAL(ss.str(), "`'");
+}
+
+BOOST_AUTO_TEST_CASE(mirror_for_each_rng_4)
+{
+	using namespace mirror;
+
+	using r1 = empty_range;
+
+	std::stringstream ss;
+	auto func = [&ss](auto str) { ss << c_str<decltype(str)>; };
+	auto sepf = [&ss](void) { ss << "|"; };
+
+	ss << "^";
+	for_each<r1>::apply(func, sepf);
+	ss << "$";
+
+	BOOST_CHECK_EQUAL(ss.str(), "^$");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
