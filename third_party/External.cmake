@@ -5,7 +5,7 @@
 #
 option(MIRROR_NO_RAPIDJSON "Don't use the RapidJSON library" On)
 
-add_custom_target(mirror-external-deps)
+add_custom_target(mire-external-deps)
 
 include(ExternalProject)
 
@@ -22,7 +22,8 @@ if(NOT MIRROR_NO_RAPIDJSON)
 		ExternalProject_Get_Property(rapidjson INSTALL_DIR)
 		include_directories("${INSTALL_DIR}/include")
 
-		add_dependencies(mirror-external-deps rapidjson)
+		add_custom_target(mire-dep-RAPIDJSON)
+		add_dependencies(mire-external-deps mire-dep-RAPIDJSON)
 	endfunction()
 
 	mirror_add_rapidjson()
