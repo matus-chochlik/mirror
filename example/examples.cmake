@@ -16,7 +16,7 @@ function(add_example LIBRARY EXAMPLE_DIR EXAMPLE_NAME)
 			EXAMPLE_DEPENDENCIES
 		)
 		foreach(DEPENDENCY ${EXAMPLE_DEPENDENCIES})
-			add_dependency(
+			add_dependencies(
 				${LIBRARY}-${EXAMPLE_NAME}
 				mire-dep-${DEPENDENCY}
 			)
