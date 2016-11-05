@@ -9,7 +9,8 @@ import os, sys, stat, getopt, shutil, subprocess
 from tools import args
 from tools import paths
 
-# initial values for the configuration options
+# list of optional external libraries
+external_deps = ["rapidjson"]
 
 def get_argument_parser():
 	import argparse
@@ -179,6 +180,29 @@ def get_argument_parser():
 			to the values specified by --library-dir.
 		"""
 	)
+	for ext_dep in external_deps:
+		argparser.add_argument(
+			"--with-%s" % ext_dep,
+			dest="with_%s" % ext_dep,
+			action="store_true",
+			default=False,
+			help="""
+				Indicates that the '%s' external library
+				should be fetched, compiled and used
+				(default = False).
+			""" % ext_dep
+		)
+		argparser.add_argument(
+			"--without-%s" % ext_dep,
+			dest="with_%s" % ext_dep,
+			action="store_false",
+			help="""
+				Indicates that the '%s' external library
+				should not be fetched, compiled and used
+				(default = False).
+			""" % ext_dep
+		)
+
 	argparser.add_argument(
 		"--config-type",
 		dest="config_types",
@@ -482,6 +506,16 @@ def main(argv):
 		cmake_options.append("-DCMAKE_BUILD_TYPE="+options.config_types[0])
 	elif(len(options.config_types) > 1):
 		cmake_options.append("-DCMAKE_CONFIGURATION_TYPES="+";".join(options.config_types))
+
+	# enable/disable external libraries
+	for ext_dep in external_deps:
+		try:
+			val = vars(options)["with_%s" % ext_dep]
+			cmake_options.append("-DMIRROR_NO_%(EXT)s=%(VAL)s" % {
+				"EXT" : ext_dep.upper(),
+				"VAL" : ("Off" if val else "On")
+			})
+		except KeyError: pass
 
 	# remove the build dir if it was requested
 	if(options.clean and os.path.exists(options.build_dir)):

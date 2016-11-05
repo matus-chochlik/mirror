@@ -16,6 +16,7 @@ function(add_example LIBRARY EXAMPLE_NAME)
 			COMMAND ${LIBRARY}-${EXAMPLE_NAME} > ${LIBRARY}-${EXAMPLE_NAME}.out.txt
 			DEPENDS ${LIBRARY}-${EXAMPLE_NAME}
 		)
+		add_dependencies(${LIBRARY}-${EXAMPLE_NAME} mirror-external-deps)
 		add_custom_target(
 			${LIBRARY}-${EXAMPLE_NAME}-output
 			DEPENDS ${LIBRARY}-${EXAMPLE_NAME}.out.txt
