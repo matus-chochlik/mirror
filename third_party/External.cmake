@@ -22,7 +22,7 @@ if(NOT MIRROR_NO_RAPIDJSON)
 		ExternalProject_Get_Property(rapidjson INSTALL_DIR)
 		include_directories("${INSTALL_DIR}/include")
 
-		add_custom_target(mire-dep-RAPIDJSON)
+		add_custom_target(mire-dep-RAPIDJSON DEPENDS rapidjson)
 		add_dependencies(mire-external-deps mire-dep-RAPIDJSON)
 	endfunction()
 

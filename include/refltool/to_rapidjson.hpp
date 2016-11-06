@@ -297,7 +297,10 @@ struct rapidjson_compositor<std::string>
 		rapidjson::GenericValue<Encoding, Allocator>& rjv,
 		Allocator& alloc,
 		const std::string& v
-	) const { rjv.SetString(v.data(), v.length(), alloc); }
+	) const {
+		using namespace rapidjson;
+		rjv.SetString(StringRef(v.data(), v.length()), alloc);
+	}
 };
 
 // to_rapidjson

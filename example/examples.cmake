@@ -5,6 +5,18 @@
 #
 function(add_example LIBRARY EXAMPLE_DIR EXAMPLE_NAME)
 
+	if(EXISTS "${EXAMPLE_DIR}/dependencies/${EXAMPLE_NAME}.txt")
+		file(STRINGS
+			"${EXAMPLE_DIR}/dependencies/${EXAMPLE_NAME}.txt"
+			EXAMPLE_DEPENDENCIES
+		)
+		foreach(DEPENDENCY ${EXAMPLE_DEPENDENCIES})
+			if(MIRROR_NO_${DEPENDENCY})
+				return()
+			endif()
+		endforeach()
+	endif()
+
 	string(REGEX REPLACE "/" "-" LIB_PREFIX ${LIBRARY})
 	add_executable(${LIBRARY}-${EXAMPLE_NAME} EXCLUDE_FROM_ALL ${EXAMPLE_NAME}.cpp)
 	add_dependencies(examples-${LIB_PREFIX} ${LIBRARY}-${EXAMPLE_NAME})
