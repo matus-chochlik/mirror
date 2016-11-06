@@ -11,6 +11,7 @@
 #ifndef REFLTOOL_TO_RAPIDJSON_1105240825_HPP
 #define REFLTOOL_TO_RAPIDJSON_1105240825_HPP
 
+#include "enum_to_string.hpp"
 #include <puddle/reflection.hpp>
 #include <puddle/sequence_ops.hpp>
 #include <puddle/meta_named_ops.hpp>
@@ -20,12 +21,50 @@
 #include <puddle/meta_class_ops.hpp>
 #include <puddle/meta_enum_ops.hpp>
 #include <puddle/string.hpp>
+#include <reflbase/type_traits_fixes.hpp>
 #include <rapidjson/document.h>
+#include <cstddef>
 
 namespace refltool {
 
 template <typename T>
 struct rapidjson_compositor;
+
+template <typename T>
+struct rapidjson_compositor<const T>
+ : rapidjson_compositor<T>
+{ };
+
+template <typename T>
+struct rapidjson_compositor<T*>
+{
+private:
+	rapidjson_compositor<T> _comp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		T* v
+	) const {
+		if(v) {
+			_comp(rjv, alloc, *v);
+		} else {
+			rjv.SetNull();
+		}
+	}
+};
+
+template <>
+struct rapidjson_compositor<std::nullptr_t>
+{
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator&,
+		std::nullptr_t
+	) const { rjv.SetNull(); }
+};
 
 template <>
 struct rapidjson_compositor<bool>
@@ -36,6 +75,39 @@ struct rapidjson_compositor<bool>
 		Allocator&,
 		bool v
 	) const { rjv.SetBool(v); }
+};
+
+template <>
+struct rapidjson_compositor<char>
+{
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		char v
+	) const { rjv.SetString(&v, 1, alloc); }
+};
+
+template <>
+struct rapidjson_compositor<short>
+{
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator&,
+		short v
+	) const { rjv.SetInt(v); }
+};
+
+template <>
+struct rapidjson_compositor<unsigned short>
+{
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator&,
+		unsigned short v
+	) const { rjv.SetUint(v); }
 };
 
 template <>
@@ -104,6 +176,31 @@ struct rapidjson_compositor<double>
 	) const { rjv.SetDouble(v); }
 };
 
+// const char*
+template <>
+struct rapidjson_compositor<char*>
+{
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const char* v
+	) const { rjv.SetString(v, alloc); }
+};
+
+// const char[N]
+template <std::size_t N>
+struct rapidjson_compositor<char[N]>
+{
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const char* v
+	) const { rjv.SetString(v, (N>0 && v[N-1])?N:N-1, alloc); }
+};
+
+// string
 template <>
 struct rapidjson_compositor<std::string>
 {
@@ -115,6 +212,7 @@ struct rapidjson_compositor<std::string>
 	) const { rjv.SetString(v.data(), v.length(), alloc); }
 };
 
+// to_rapidjson
 template <typename Encoding, typename Allocator, typename T>
 static
 rapidjson::GenericValue<Encoding, Allocator>& to_rapidjson(
@@ -124,7 +222,7 @@ rapidjson::GenericValue<Encoding, Allocator>& to_rapidjson(
 );
 
 template <typename T>
-struct rapidjson_compositor
+struct rapidjson_compositor_class
 {
 	template <typename Encoding, typename Allocator>
 	void operator()(
@@ -152,6 +250,39 @@ struct rapidjson_compositor
 	}
 };
 
+template <typename T>
+struct rapidjson_compositor_enum
+{	
+private:
+	const enum_to_string_map_t<T> _e2smap;
+public:
+	rapidjson_compositor_enum(void)
+	 : _e2smap(make_enum_to_string_map<T>())
+	{ }
+
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const T& v
+	) const {
+		using namespace puddle;
+		using namespace rapidjson;
+
+		auto s = _e2smap.find(v)->second;
+		rjv.SetString(StringRef(s.data(), s.length()), alloc);
+	}
+};
+
+template <typename T>
+struct rapidjson_compositor
+ : std::conditional_t<
+	std::is_enum<T>::value,
+	rapidjson_compositor_enum<T>,
+	rapidjson_compositor_class<T>
+> { };
+
+// to_rapidjson
 template <typename Encoding, typename Allocator, typename T>
 static inline
 rapidjson::GenericValue<Encoding, Allocator>& to_rapidjson(
@@ -164,6 +295,7 @@ rapidjson::GenericValue<Encoding, Allocator>& to_rapidjson(
 	return rjv;
 }
 
+// to_rapidjson
 template <typename Encoding, typename T>
 static inline
 rapidjson::GenericDocument<Encoding>& to_rapidjson(
