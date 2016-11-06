@@ -57,13 +57,8 @@ struct json_writer
 
 		out << '{';
 
-		bool first = true;
-
-		auto write = [&out,&v,&first](auto mo)
+		auto write = [&out,&v](auto mo)
 		{
-			if(first) first = false;
-			else out << ", ";
-
 			out << '"';
 			out << c_str(get_base_name(mo));
 			out << '"';
@@ -72,20 +67,20 @@ struct json_writer
 			to_json(out, dereference(mo, v));
 		};
 
+		auto separate = [&out](void) { out << ", "; };
+
 		for_each(
 			get_base_classes(mt),
-			[&write,&first](auto mi)
+			[&write,&separate](auto mi)
 			{
-				first = true;
 				for_each(
 					get_data_members(get_base_class(mi)),
-					write
+					write, separate
 				);
-			}
+			}, separate
 		);
 
-		first = true;
-		for_each(get_data_members(mt), write);
+		for_each(get_data_members(mt), write, separate);
 
 		return out << '}';
 	}

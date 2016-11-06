@@ -1,6 +1,6 @@
 /**
- * @file mirror/int_const.hpp
- * @brief Compile-time integers
+ * @file mirror/int_ops.hpp
+ * @brief Compile-time integer operations
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.

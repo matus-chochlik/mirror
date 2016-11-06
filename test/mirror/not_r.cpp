@@ -16,9 +16,9 @@
 #include <mirror/not.hpp>
 #include <mirror/value.hpp>
 
-BOOST_AUTO_TEST_SUITE(mirror_or)
+BOOST_AUTO_TEST_SUITE(mirror_not)
 
-BOOST_AUTO_TEST_CASE(mirror_or_1)
+BOOST_AUTO_TEST_CASE(mirror_not_1)
 {
 	using namespace mirror;
 

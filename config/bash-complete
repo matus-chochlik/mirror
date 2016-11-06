@@ -51,6 +51,8 @@ function _mirror_config()
 		--reflexpr-include-dir -R \
 		--use-cxxflags \
 		--use-ldflags \
+		--with-rapidjson \
+		--without-rapidjson \
 		--debug \
 		--release \
 		--build-docs \

@@ -35,6 +35,9 @@ constexpr mirror::int_<I> int_ = {};
 template <unsigned U>
 constexpr mirror::unsigned_<U> unsigned_ = {};
 
+template <std::size_t S>
+constexpr mirror::size_const<S> size_c = {};
+
 template <typename I>
 static inline constexpr
 auto value(I)

@@ -8,7 +8,6 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#include <mirror/for_each.hpp>
 #include <mirror/get_pointer.hpp>
 #include <mirror/get_data_members.hpp>
 #include <mirror/is_static.hpp>

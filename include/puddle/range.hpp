@@ -12,6 +12,7 @@
 #define PUDDLE_RANGE_1105240825_HPP
 
 #include <mirror/range.hpp>
+#include <mirror/range_ops.hpp>
 
 namespace puddle {
 
@@ -19,6 +20,11 @@ template <typename ... P>
 constexpr mirror::range<P...> range = {};
 
 constexpr mirror::empty_range empty_range = {};
+
+template <typename ... P>
+static constexpr inline
+mirror::range<P...> make_range(P...)
+noexcept { return {}; }
 
 } // namespace puddle
 

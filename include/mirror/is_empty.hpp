@@ -11,11 +11,7 @@
 #ifndef MIRROR_IS_EMPTY_1105240825_HPP
 #define MIRROR_IS_EMPTY_1105240825_HPP
 
-#include "int_const.hpp"
-#include "range.hpp"
-#include "string.hpp"
-#include "none.hpp"
-#include "metaobject.hpp"
+#include "to_container.hpp"
 
 namespace mirror {
 namespace _aux {
@@ -46,7 +42,7 @@ struct op_is_empty<metaobject_sequence<MO>>
 } // namespace _aux
 
 template <typename X>
-using is_empty = eval<_aux::op_is_empty<X>>;
+using is_empty = eval<_aux::op_is_empty<to_container<X>>>;
 
 } // namespace mirror
 

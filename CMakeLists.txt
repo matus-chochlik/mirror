@@ -14,6 +14,8 @@ endif()
 
 option(MIRROR_NO_DOCS "Don't build and install the documentation" Off)
 
+include(third_party/External.cmake)
+
 include(config/Tools.cmake)
 
 include(config/CppReflection.cmake)

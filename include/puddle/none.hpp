@@ -12,6 +12,7 @@
 #define PUDDLE_NONE_1105240825_HPP
 
 #include <mirror/none.hpp>
+#include <mirror/none_ops.hpp>
 
 namespace puddle {
 
