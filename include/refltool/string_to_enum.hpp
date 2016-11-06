@@ -25,6 +25,9 @@
 namespace refltool {
 
 template <typename T>
+using string_to_enum_map_t = std::map<std::string, const T>;
+
+template <typename T>
 static constexpr inline
 auto make_string_to_enum_map(void)
 {
@@ -34,7 +37,7 @@ auto make_string_to_enum_map(void)
 		get_enumerators(PUDDLED(T)),
 		[](auto ... mec)
 		{
-			std::map<std::string, const T> res;
+			string_to_enum_map_t<T> res;
 
 			(void)(... && res.emplace(
 				c_str(get_base_name(mec)),
