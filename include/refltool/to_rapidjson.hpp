@@ -22,7 +22,11 @@
 #include <puddle/meta_enum_ops.hpp>
 #include <puddle/string.hpp>
 #include <reflbase/type_traits_fixes.hpp>
+#include <reflbase/int_sequence_fix.hpp>
 #include <rapidjson/document.h>
+#include <tuple>
+#include <array>
+#include <vector>
 #include <cstddef>
 
 namespace refltool {
@@ -200,6 +204,90 @@ struct rapidjson_compositor<char[N]>
 	) const { rjv.SetString(v, (N>0 && v[N-1])?N:N-1, alloc); }
 };
 
+// arrays / ranges
+template <typename T>
+struct rapidjson_compositor_range
+{
+private:
+	rapidjson_compositor<T> _comp;
+public:
+	template <typename Encoding, typename Allocator, typename Range>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rja,
+		Allocator& alloc,
+		const Range& r
+	) const {
+		using namespace puddle;
+
+		rja.SetArray();
+		for(const auto& e : r) {
+			rapidjson::Value rje;
+			_comp(rje, alloc, e);
+			rja.PushBack(rje, alloc);
+		}
+	}
+};
+
+template <typename T, std::size_t N>
+struct rapidjson_compositor<std::array<T, N>>
+ : rapidjson_compositor_range<T>
+{ };
+
+template <typename T, typename A>
+struct rapidjson_compositor<std::vector<T, A>>
+ : rapidjson_compositor_range<T>
+{ };
+
+// tuple
+template <typename ... T>
+struct rapidjson_compositor<std::tuple<T...>>
+{
+private:
+	std::tuple<rapidjson_compositor<T>...> _comps;
+
+	template <typename Enc, typename Alloc, typename E>
+	bool _compose_element(
+		rapidjson::GenericValue<Enc, Alloc>& rja,
+		Alloc& alloc,
+		const E& e,
+		rapidjson_compositor<E> comp
+	) const {
+		rapidjson::Value rje;
+		comp(rje, alloc, e);
+		rja.PushBack(rje, alloc);
+		return true;
+	}
+
+	template <typename Enc, typename Alloc, std::size_t ... I>
+	bool _compose_tuple(
+		rapidjson::GenericValue<Enc, Alloc>& rja,
+		Alloc& alloc,
+		const std::tuple<T...>& t,
+		std::index_sequence<I...>
+	) const {
+		return (... && _compose_element(
+			rja, alloc,
+			std::get<I>(t),
+			std::get<I>(_comps)
+		));
+
+	}
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rja,
+		Allocator& alloc,
+		const std::tuple<T...>& tup
+	) const {
+		rja.SetArray();
+		_compose_tuple(
+			rja, alloc, tup,
+			std::make_index_sequence<sizeof...(T)>{}
+		);
+	}
+};
+
+
 // string
 template <>
 struct rapidjson_compositor<std::string>
@@ -252,7 +340,7 @@ struct rapidjson_compositor_class
 
 template <typename T>
 struct rapidjson_compositor_enum
-{	
+{
 private:
 	const enum_to_string_map_t<T> _e2smap;
 public:
