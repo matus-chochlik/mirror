@@ -1,6 +1,6 @@
 /**
  * @file refltool/to_rapidjson.hpp
- * @brief Implementation to serialization to JSON using RapidJSON
+ * @brief Implementation of serialization to JSON using RapidJSON
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -250,7 +250,7 @@ private:
 		rapidjson::GenericValue<Enc, Alloc>& rja,
 		Alloc& alloc,
 		const E& e,
-		rapidjson_compositor<E> comp
+		const rapidjson_compositor<E>& comp
 	) const {
 		rapidjson::Value rje;
 		comp(rje, alloc, e);
