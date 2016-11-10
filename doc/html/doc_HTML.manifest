@@ -152,12 +152,14 @@ refltool/quickref/data_member_cmp.html
 refltool/quickref/enum_to_string.html
 refltool/quickref/string_to_enum.html
 refltool/quickref/to_rapidjson.html
+refltool/quickref/from_rapidjson.html
 refltool/example.html
 refltool/example/enum_to_string.html
 refltool/example/string_to_enum.html
 refltool/example/member_cmp.html
 refltool/example/member_hash.html
 refltool/example/to_rapidjson.html
+refltool/example/from_rapidjson.html
 papers.html
 papers/proposals.html
 implement.html

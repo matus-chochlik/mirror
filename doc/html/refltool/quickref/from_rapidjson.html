@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>from_rapidjson function</title>
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="cpp-reflection">
+<link rel="up" href="../quickref.html" title="Chapter&#160;13.&#160;Quick reference">
+<link rel="prev" href="to_rapidjson.html" title="to_rapidjson function">
+<link rel="next" href="../example.html" title="Chapter&#160;14.&#160;Examples">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="to_rapidjson.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../example.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="refltool.quickref.from_rapidjson"></a><a class="link" href="from_rapidjson.html" title="from_rapidjson function"><code class="literal">from_rapidjson</code>
+        function</a>
+</h4></div></div></div>
+<p>
+          <code class="literal">#include &lt;<a href="https://github.com/matus-chochlik/mirror/blob/develop/include/refltool/from_rapidjson.hpp" target="_top">refltool/from_rapidjson.hpp</a>&gt;</code>
+        </p>
+<p>
+          The <code class="literal">from_rapidjson</code> function loads the the specified
+          instance <code class="literal">val</code> of type <code class="literal">T</code> from the specified
+          <code class="literal"><a href="http://rapidjson.org/classrapidjson_1_1_generic_value.html" target="_top">rapidjson::GenericValue</a></code>
+          <code class="literal">rjval</code>. Returns <code class="literal">true</code> on success <code class="literal">false</code>
+          otherwise.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Encoding</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">bool</span> <span class="identifier">from_rapidjson</span><span class="special">(</span>
+	<span class="keyword">const</span> <a href="http://rapidjson.org/classrapidjson_1_1_generic_value.html" target="_top">rapidjson::GenericValue</a><span class="special">&lt;</span><span class="identifier">Encoding</span><span class="special">,</span> <span class="identifier">Allocator</span><span class="special">&gt;&amp;</span> <span class="identifier">rjval</span><span class="special">,</span>
+	<span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span>
+<span class="special">);</span>
+</pre>
+<p>
+          The <code class="literal">from_rapidjson</code> function uses the <code class="literal">rapidjson_loader</code>
+          template and reflection to support various C++ types (classes, enums, standard
+          containers and tuples, etc.) out of the box.
+        </p>
+<p>
+          Support for deserialization of other types can be implemented by providing
+          a specialization of the <code class="literal">rapidjson_loader</code> template.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">rapidjson_loader</span>
+<span class="special">{</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Encoding</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Allocator</span><span class="special">&gt;</span>
+	<span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">()(</span>
+		<span class="keyword">const</span> <a href="http://rapidjson.org/classrapidjson_1_1_generic_value.html" target="_top">rapidjson::GenericValue</a><span class="special">&lt;</span><span class="identifier">Encoding</span><span class="special">,</span> <span class="identifier">Allocator</span><span class="special">&gt;&amp;</span> <span class="identifier">rjval</span><span class="special">,</span>
+		<span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">val</span>
+	<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016 Mat&#250;&#353; Chochl&#237;k<p>
+        Distributed under the Boost Software License, Version 1.0. See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="to_rapidjson.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../quickref.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="../example.html"><img src="../../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
