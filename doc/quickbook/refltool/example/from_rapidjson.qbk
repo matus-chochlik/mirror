@@ -1,0 +1,34 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/======================================================]
+[section:from_rapidjson De-serialization using RapidJSON]
+[/======================================================]
+
+This example shows how to use the [^__from_rapidjson] utility to load 
+instances of ['nearly] arbitrary types from JSON with the __RapidJSON__ library.
+
+[import from_rapidjson.cpp]
+
+We need to include the following headers:
+[refltool_example_from_rapidjson_1]
+
+We'll demonstrate the functionality on instances of the following types:
+[refltool_example_from_rapidjson_2]
+
+The [^from_rapidjson] function loads a RapidJSON [^Value] hierarchy
+into the specified instance.
+
+[refltool_example_from_rapidjson_3]
+
+Running the example produces this output:
+
+[refltool_example_from_rapidjson_output]
+
+if given the following input string:
+
+[refltool_example_from_rapidjson_input]
+
+[endsect]

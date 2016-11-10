@@ -1,0 +1,29 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/------------------------------------------------]
+[section:from_rapidjson [^from_rapidjson] function]
+[/------------------------------------------------]
+
+[header from_rapidjson]
+
+[import from_rapidjson.cpp]
+
+The [^from_rapidjson] function loads the the specified instance [^val] of type
+[^T] from the specified [^__rapidjson_GenericValue] [^rjval]. Returns [^true]
+on success [^false] otherwise.
+
+[refltool_from_rapidjson_value]
+
+The [^from_rapidjson] function uses the [^rapidjson_loader] template
+and reflection to support various C++ types (classes, enums, standard containers
+and tuples, etc.) out of the box.
+
+Support for deserialization of other types can be implemented by providing
+a specialization of the [^rapidjson_loader] template.
+
+[refltool_rapidjson_loader]
+
+[endsect]

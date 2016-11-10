@@ -14,3 +14,4 @@
 [include example/member_cmp.qbk]
 [include example/member_hash.qbk]
 [include example/to_rapidjson.qbk]
+[include example/from_rapidjson.qbk]

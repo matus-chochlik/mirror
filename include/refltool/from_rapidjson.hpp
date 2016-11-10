@@ -280,7 +280,7 @@ struct rapidjson_loader<std::string>
 	}
 };
 
-// to_rapidjson
+// from_rapidjson
 template <typename Encoding, typename Allocator, typename T>
 static
 bool from_rapidjson(
@@ -367,7 +367,7 @@ struct rapidjson_loader
 	rapidjson_loader_class<T>
 > { };
 
-// to_rapidjson
+// from_rapidjson
 template <typename Encoding, typename Allocator, typename T>
 static inline
 bool from_rapidjson(

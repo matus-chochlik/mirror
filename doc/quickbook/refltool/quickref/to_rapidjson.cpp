@@ -7,7 +7,6 @@
 //[refltool_to_rapidjson_value
 // to_rapidjson
 template <typename Encoding, typename Allocator, typename T>
-static inline
 __rapidjson_GenericValue<Encoding, Allocator>& to_rapidjson(
 	__rapidjson_GenericValue<Encoding, Allocator>& rjval,
 	Allocator& alloc,
@@ -16,7 +15,6 @@ __rapidjson_GenericValue<Encoding, Allocator>& to_rapidjson(
 //]
 //[refltool_to_rapidjson_doc
 template <typename Encoding, typename T>
-static inline
 __rapidjson_GenericDocument<Encoding>& to_rapidjson(
 	__rapidjson_GenericDocument<Encoding>& rjdoc,
 	const T& val

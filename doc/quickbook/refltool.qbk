@@ -29,6 +29,7 @@
 [def __data_members_greater [link refltool.quickref.data_member_cmp.greater data_members_greater]]
 [def __data_members_greater_equal [link refltool.quickref.data_member_cmp.greater_equal data_members_greater_equal]]
 [def __to_rapidjson [link refltool.quickref.to_rapidjson to_rapidjson]]
+[def __from_rapidjson [link refltool.quickref.from_rapidjson from_rapidjson]]
 
 [/---------]
 [/Templates]

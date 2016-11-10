@@ -50,7 +50,7 @@ int main(void)
 
 	// compose rapidjson document
 	rapidjson::Document doc;
-	to_rapidjson(doc, pers);
+	__to_rapidjson(doc, pers);
 
 	// write to stdout
 	rapidjson::OStreamWrapper osw(std::cout);

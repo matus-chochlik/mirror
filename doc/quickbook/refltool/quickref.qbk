@@ -32,3 +32,4 @@ utilities.
 [include quickref/enum_to_string.qbk]
 [include quickref/string_to_enum.qbk]
 [include quickref/to_rapidjson.qbk]
+[include quickref/from_rapidjson.qbk]
