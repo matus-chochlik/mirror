@@ -1,0 +1,30 @@
+[/ Copyright Matus Chochlik.                                        ]
+[/ Distributed under the Boost Software License, Version 1.0.       ]
+[/ See accompanying file LICENSE_1_0.txt or copy at                 ]
+[/  http://www.boost.org/LICENSE_1_0.txt                            ]
+
+[/=================================================]
+[section:to_rapidjson Serialization using RapidJSON]
+[/=================================================]
+
+This example shows how to use the [^__to_rapidjson] utility to serialize
+instances of ['nearly] arbitrary types to JSON with the __RapidJSON__ library.
+
+[import to_rapidjson.cpp]
+
+We need to include the following headers:
+[refltool_example_to_rapidjson_1]
+
+We'll demonstrate the functionality on instances of the following types:
+[refltool_example_to_rapidjson_2]
+
+The [^to_rapidjson] function composes a RapidJSON [^Value] hierarchy
+representing the serialized instances.
+
+[refltool_example_to_rapidjson_3]
+
+Running the example produces the following output:
+
+[refltool_example_to_rapidjson_output]
+
+[endsect]

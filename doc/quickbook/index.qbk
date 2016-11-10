@@ -25,6 +25,8 @@
 [def __llvm__ [@ http://llvm.org/ llvm]]
 [def __cmake__ [@ https://cmake.org/ cmake]]
 
+[def __RapidJSON__ [@ http://rapidjson.org/ RapidJSON]]
+
 [def __prompt__ $>]
 
 [def __pseudocode__ ['pseudocode]]
@@ -39,6 +41,9 @@
 [def __std_array [@ http://en.cppreference.com/w/cpp/container/array std::array]]
 [def __std_tuple [@ http://en.cppreference.com/w/cpp/utility/tuple std::tuple]]
 [def __std_invalid_argument [@ http://en.cppreference.com/w/cpp/error/invalid_argument std::invalid_argument]]
+
+[def __rapidjson_GenericDocument [@ http://rapidjson.org/classrapidjson_1_1_generic_document.html rapidjson::GenericDocument]]
+[def __rapidjson_GenericValue [@ http://rapidjson.org/classrapidjson_1_1_generic_value.html rapidjson::GenericValue]]
 
 [def __reflexpr__ [link reflexpr.quickref.header reflexpr]]
 [def __reflexpr [link reflexpr.quickref.operator reflexpr]]
