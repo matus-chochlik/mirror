@@ -25,6 +25,7 @@
 #include <reflbase/int_sequence_fix.hpp>
 #include <rapidjson/document.h>
 #include <map>
+#include <set>
 #include <tuple>
 #include <array>
 #include <vector>
@@ -214,6 +215,36 @@ public:
 	}
 };
 
+// set
+template <typename T, typename C, typename A>
+struct rapidjson_loader<std::set<T, C, A>>
+{
+private:
+	rapidjson_loader<T> _loader;
+public:
+	template <typename Encoding, typename Allocator>
+	bool operator()(
+		const rapidjson::GenericValue<Encoding, Allocator>& rja,
+		std::set<T, C, A>& c
+	) const {
+		using namespace puddle;
+
+		if(rja.IsArray()) {
+			const rapidjson::SizeType n = rja.Size();
+
+			for(rapidjson::SizeType i=0; i<n; ++i) {
+				T tmpval;
+				if(!_loader(rja[i], tmpval)) {
+					return false;
+				}
+				c.emplace(std::move(tmpval));
+			}
+			return true;
+		}
+		return false;
+	}
+};
+
 // map
 template <typename K, typename V, typename C, typename A>
 struct rapidjson_loader<std::map<K, V, C, A>>
@@ -231,7 +262,7 @@ public:
 	template <typename Encoding, typename Allocator>
 	bool operator()(
 		const rapidjson::GenericValue<Encoding, Allocator>& rjo,
-		std::map<K, V, C, A>& r
+		std::map<K, V, C, A>& c
 	) const {
 		using namespace puddle;
 
@@ -245,7 +276,7 @@ public:
 				if(!_valldr(i->value, tmpval)) {
 					return false;
 				}
-				r.emplace(
+				c.emplace(
 					std::move(tmpkey),
 					std::move(tmpval)
 				);

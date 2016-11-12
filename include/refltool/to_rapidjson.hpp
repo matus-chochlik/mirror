@@ -25,6 +25,7 @@
 #include <reflbase/int_sequence_fix.hpp>
 #include <rapidjson/document.h>
 #include <map>
+#include <set>
 #include <tuple>
 #include <array>
 #include <vector>
@@ -266,12 +267,12 @@ public:
 	void operator()(
 		rapidjson::GenericValue<Encoding, Allocator>& rjo,
 		Allocator& alloc,
-		const std::map<K, V, C, A>& r
+		const std::map<K, V, C, A>& c
 	) const {
 		using namespace puddle;
 
 		rjo.SetObject();
-		for(const auto& p : r) {
+		for(const auto& p : c) {
 			rapidjson::Value rjk;
 			_keycomp(rjk, alloc, p.first);
 			rapidjson::Value rjv;
@@ -283,13 +284,13 @@ public:
 };
 
 // arrays / ranges
-template <typename T>
+template <typename T, typename Range>
 struct rapidjson_compositor_range
 {
 private:
 	rapidjson_compositor<T> _comp;
 public:
-	template <typename Encoding, typename Allocator, typename Range>
+	template <typename Encoding, typename Allocator>
 	void operator()(
 		rapidjson::GenericValue<Encoding, Allocator>& rja,
 		Allocator& alloc,
@@ -306,16 +307,22 @@ public:
 	}
 };
 
+// set
+template <typename T, typename C, typename A>
+struct rapidjson_compositor<std::set<T, C, A>>
+ : rapidjson_compositor_range<T, std::set<T, C, A>>
+{ };
+
 // array
 template <typename T, std::size_t N>
 struct rapidjson_compositor<std::array<T, N>>
- : rapidjson_compositor_range<T>
+ : rapidjson_compositor_range<T, std::array<T, N>>
 { };
 
 // vector
 template <typename T, typename A>
 struct rapidjson_compositor<std::vector<T, A>>
- : rapidjson_compositor_range<T>
+ : rapidjson_compositor_range<T, std::vector<T, A>>
 { };
 
 // tuple
