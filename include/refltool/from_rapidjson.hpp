@@ -24,6 +24,7 @@
 #include <reflbase/type_traits_fixes.hpp>
 #include <reflbase/int_sequence_fix.hpp>
 #include <rapidjson/document.h>
+#include <map>
 #include <tuple>
 #include <array>
 #include <vector>
@@ -157,6 +158,48 @@ struct rapidjson_loader<double>
 			v = rjv.GetDouble();
 			return true;
 		} else { return false; }
+	}
+};
+
+// map
+template <typename K, typename V, typename C, typename A>
+struct rapidjson_loader<std::map<K, V, C, A>>
+{
+private:
+	static_assert(
+		std::is_same<K, std::string>::value ||
+		std::is_enum<K>::value,
+		"Map key must be a string on enum type"
+	);
+
+	rapidjson_loader<K> _keyldr;
+	rapidjson_loader<V> _valldr;
+public:
+	template <typename Encoding, typename Allocator>
+	bool operator()(
+		const rapidjson::GenericValue<Encoding, Allocator>& rjo,
+		std::map<K, V, C, A>& r
+	) const {
+		using namespace puddle;
+
+		if(rjo.IsObject()) {
+			for(auto i=rjo.MemberBegin(); i!=rjo.MemberEnd(); ++i) {
+				K tmpkey;
+				if(!_keyldr(i->name, tmpkey)) {
+					return false;
+				}
+				V tmpval;
+				if(!_valldr(i->value, tmpval)) {
+					return false;
+				}
+				r.emplace(
+					std::move(tmpkey),
+					std::move(tmpval)
+				);
+			}
+			return true;
+		}
+		return false;
 	}
 };
 

@@ -24,6 +24,7 @@
 #include <reflbase/type_traits_fixes.hpp>
 #include <reflbase/int_sequence_fix.hpp>
 #include <rapidjson/document.h>
+#include <map>
 #include <tuple>
 #include <array>
 #include <vector>
@@ -204,6 +205,40 @@ struct rapidjson_compositor<char[N]>
 	) const { rjv.SetString(v, (N>0 && v[N-1])?N:N-1, alloc); }
 };
 
+// map
+template <typename K, typename V, typename C, typename A>
+struct rapidjson_compositor<std::map<K, V, C, A>>
+{
+private:
+	static_assert(
+		std::is_same<K, std::string>::value ||
+		std::is_enum<K>::value,
+		"Map key must be a string on enum type"
+	);
+
+	rapidjson_compositor<K> _keycomp;
+	rapidjson_compositor<V> _valcomp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjo,
+		Allocator& alloc,
+		const std::map<K, V, C, A>& r
+	) const {
+		using namespace puddle;
+
+		rjo.SetObject();
+		for(const auto& p : r) {
+			rapidjson::Value rjk;
+			_keycomp(rjk, alloc, p.first);
+			rapidjson::Value rjv;
+			_valcomp(rjv, alloc, p.second);
+
+			rjo.AddMember(rjk, rjv, alloc);
+		}
+	}
+};
+
 // arrays / ranges
 template <typename T>
 struct rapidjson_compositor_range
@@ -228,11 +263,13 @@ public:
 	}
 };
 
+// array
 template <typename T, std::size_t N>
 struct rapidjson_compositor<std::array<T, N>>
  : rapidjson_compositor_range<T>
 { };
 
+// vector
 template <typename T, typename A>
 struct rapidjson_compositor<std::vector<T, A>>
  : rapidjson_compositor_range<T>

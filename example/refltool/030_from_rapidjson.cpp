@@ -10,8 +10,6 @@
 
 #include <refltool/from_rapidjson.hpp>
 #include <refltool/enum_to_string.hpp>
-#include <rapidjson/ostreamwrapper.h>
-#include <rapidjson/prettywriter.h>
 #include <algorithm>
 #include <iostream>
 
