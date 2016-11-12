@@ -28,3 +28,6 @@ if(NOT MIRROR_NO_RAPIDJSON)
 
 	mirror_add_rapidjson()
 endif()
+
+
+include_directories("${PROJECT_SOURCE_DIR}/third_party/rapidxml")
