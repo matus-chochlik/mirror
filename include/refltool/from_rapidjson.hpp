@@ -28,6 +28,7 @@
 #include <tuple>
 #include <array>
 #include <vector>
+#include <memory>
 #include <cstddef>
 
 namespace refltool {
@@ -158,6 +159,58 @@ struct rapidjson_loader<double>
 			v = rjv.GetDouble();
 			return true;
 		} else { return false; }
+	}
+};
+
+// unique_ptr
+template <typename T, typename D>
+struct rapidjson_loader<std::unique_ptr<T, D>>
+{
+private:
+	rapidjson_loader<T> _loader;
+public:
+	template <typename Encoding, typename Allocator>
+	bool operator()(
+		const rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		std::unique_ptr<T, D>& v
+	) const {
+		if(rjv.IsNull()) {
+			v.reset();
+			return true;
+		} else {
+			T tmpval;
+			if(_loader(rjv, tmpval)) {
+				v.reset(new T(std::move(tmpval)));
+				return true;
+			}
+		}
+		return false;
+	}
+};
+
+// shared_ptr
+template <typename T>
+struct rapidjson_loader<std::shared_ptr<T>>
+{
+private:
+	rapidjson_loader<T> _loader;
+public:
+	template <typename Encoding, typename Allocator>
+	bool operator()(
+		const rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		std::shared_ptr<T>& v
+	) const {
+		if(rjv.IsNull()) {
+			v.reset();
+			return true;
+		} else {
+			T tmpval;
+			if(_loader(rjv, tmpval)) {
+				v.reset(new T(std::move(tmpval)));
+				return true;
+			}
+		}
+		return false;
 	}
 };
 

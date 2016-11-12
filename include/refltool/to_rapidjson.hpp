@@ -28,6 +28,7 @@
 #include <tuple>
 #include <array>
 #include <vector>
+#include <memory>
 #include <cstddef>
 
 namespace refltool {
@@ -52,7 +53,7 @@ public:
 		Allocator& alloc,
 		T* v
 	) const {
-		if(v) {
+		if(bool(v)) {
 			_comp(rjv, alloc, *v);
 		} else {
 			rjv.SetNull();
@@ -203,6 +204,48 @@ struct rapidjson_compositor<char[N]>
 		Allocator& alloc,
 		const char* v
 	) const { rjv.SetString(v, (N>0 && v[N-1])?N:N-1, alloc); }
+};
+
+// unique_ptr
+template <typename T, typename D>
+struct rapidjson_compositor<std::unique_ptr<T, D>>
+{
+private:
+	rapidjson_compositor<T> _comp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const std::unique_ptr<T, D>& v
+	) const {
+		if(bool(v)) {
+			_comp(rjv, alloc, *v);
+		} else {
+			rjv.SetNull();
+		}
+	}
+};
+
+// shared_ptr
+template <typename T>
+struct rapidjson_compositor<std::shared_ptr<T>>
+{
+private:
+	rapidjson_compositor<T> _comp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const std::shared_ptr<T>& v
+	) const {
+		if(bool(v)) {
+			_comp(rjv, alloc, *v);
+		} else {
+			rjv.SetNull();
+		}
+	}
 };
 
 // map
