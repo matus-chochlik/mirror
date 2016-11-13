@@ -22,6 +22,18 @@
 #endif
 
 #include <reflbase/string_view_fix.hpp>
+#include <reflbase/tuple_apply_fix.hpp>
+
+#include <puddle/meta_named_ops.hpp>
+#include <puddle/meta_variable_ops.hpp>
+#include <puddle/meta_record_ops.hpp>
+#include <puddle/string.hpp>
+
+#include <mirror/reflection.hpp>
+#include <mirror/get_type.hpp>
+#include <mirror/transform.hpp>
+#include <mirror/repack.hpp>
+
 #include "string_to_enum.hpp"
 
 #include <cstring>
@@ -496,7 +508,58 @@ public:
 template <typename T>
 struct rapidxml_loader_class
 {
-	//TODO
+private:
+	template <typename MA>
+	struct _attrldr_t
+	{
+	private:
+		using AT = mirror::get_reflected_type<mirror::get_type<MA>>;
+		rapidxml_loader<AT> _ldr;
+	public:
+		template <typename Char>
+		bool operator()(
+			const rapidxml::xml_node<Char>& rxn,
+			T& v,
+			bool from_name
+		) const {
+			using namespace puddle;
+
+			MA ma;
+			auto n = rxn.first_node(c_str(get_base_name(ma)));
+			if(n != nullptr) {
+				if(_ldr(*n, dereference(ma, v), from_name)) {
+					return true;
+				}
+			}
+			auto a = rxn.first_attribute(c_str(get_base_name(ma)));
+			if(a != nullptr) {
+				if(_ldr(*a, dereference(ma, v), from_name)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	};
+
+	mirror::repack<
+		mirror::transform<
+			mirror::get_data_members<MIRRORED(T)>,
+			_attrldr_t
+		>, std::tuple
+	> _attrldrs;
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>& rxb,
+		T& v,
+		bool from_name
+	) const {
+		return std::apply(
+			[&rxb,&v,from_name](auto ... fn) {
+				return (... && fn(rxb, v, from_name));
+			}, _attrldrs
+		);
+	}
 };
 
 template <typename T>

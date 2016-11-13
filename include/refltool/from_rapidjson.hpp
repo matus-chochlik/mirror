@@ -373,7 +373,6 @@ private:
 			std::get<I>(t),
 			std::get<I>(_loaders)
 		));
-
 	}
 public:
 	template <typename Encoding, typename Allocator>
