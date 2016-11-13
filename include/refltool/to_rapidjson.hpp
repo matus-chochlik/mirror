@@ -255,6 +255,7 @@ struct rapidjson_compositor<std::map<K, V, C, A>>
 {
 private:
 	static_assert(
+		std::is_same<K, char>::value ||
 		std::is_same<K, std::string>::value ||
 		std::is_enum<K>::value,
 		"Map key must be a string on enum type"

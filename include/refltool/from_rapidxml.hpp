@@ -22,6 +22,7 @@
 #endif
 
 #include <reflbase/string_view_fix.hpp>
+#include "string_to_enum.hpp"
 
 #include <cstring>
 #include <cstddef>
@@ -428,7 +429,25 @@ public:
 
 		c.clear();
 
-		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+		for(
+			auto* a = rxn.first_attribute();
+			a; a = a->next_attribute()
+		) {
+			K tmpkey;
+			if(!_keyldr(*a, tmpkey, true)) {
+				return false;
+			}
+			V tmpval;
+			if(!_valldr(*a, tmpval, false)) {
+				return false;
+			}
+			c.emplace(std::move(tmpkey), std::move(tmpval));
+		}
+
+		for(
+			auto* n = rxn.first_node();
+			n; n = n->next_sibling()
+		) {
 			K tmpkey;
 			if(!_keyldr(*n, tmpkey, true)) {
 				return false;
@@ -442,6 +461,51 @@ public:
 		return true;
 	}
 };
+
+template <typename T>
+struct rapidxml_loader_enum
+{
+private:
+	string_to_enum_map_t<T> _map;
+public:
+	rapidxml_loader_enum(void)
+	 : _map(make_string_to_enum_map<T>())
+	{ }
+
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_base<Char>& rxb,
+		T& v,
+		bool from_name
+	) const {
+		std::string tmp;
+		if(from_name) {
+			tmp.assign(rxb.name(), rxb.name_size());
+		} else {
+			tmp.assign(rxb.value(), rxb.value_size());
+		}
+		auto p = _map.find(tmp);
+		if(p == _map.end()) {
+			return false;
+		}
+		v = p->second;
+		return true;
+	}
+};
+
+template <typename T>
+struct rapidxml_loader_class
+{
+	//TODO
+};
+
+template <typename T>
+struct rapidxml_loader
+ : std::conditional_t<
+	std::is_enum<T>::value,
+	rapidxml_loader_enum<T>,
+	rapidxml_loader_class<T>
+> { };
 
 // from_rapidxml (node)
 template <typename Char, typename T>
