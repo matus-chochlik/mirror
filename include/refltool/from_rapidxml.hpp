@@ -50,6 +50,33 @@ namespace refltool {
 template <typename T>
 struct rapidxml_loader;
 
+template <typename T>
+struct rapidxml_opt_loader
+{
+private:
+	rapidxml_loader<T> _ldr;
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>* rxn,
+		T& v,
+		bool from_name
+	) const {
+		if(rxn == nullptr) { return false; }
+		return _ldr(*rxn, v, from_name);
+	}
+
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_attribute<Char>* rxa,
+		T& v,
+		bool from_name
+	) const {
+		if(rxa == nullptr) { return false; }
+		return _ldr(*rxa, v, from_name);
+	}
+};
+
 struct rapidxml_loader_utils
 {
 protected:
@@ -347,7 +374,11 @@ public:
 		if(from_name) return false;
 
 		std::size_t i = 0;
-		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+		for(
+			auto* n = rxn.first_node();
+			n != nullptr;
+			n = n->next_sibling()
+		) {
 			if(!_loader(*n, r[i], false)) {
 				return false;
 			}
@@ -373,13 +404,18 @@ public:
 		if(from_name) return false;
 
 		std::size_t i = 0;
-		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
-			++i;
-		} 
+		for(
+			auto* n = rxn.first_node();
+			n != nullptr; n = n->next_sibling()
+		) { ++i; } 
+
 		r.resize(i);
 
 		i = 0;
-		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+		for(
+			auto* n = rxn.first_node();
+			n != nullptr; n = n->next_sibling()
+		) {
 			if(i >= r.size()) {
 				return false;
 			}
@@ -410,7 +446,10 @@ public:
 
 		c.clear();
 
-		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+		for(
+			auto* n = rxn.first_node();
+			n != nullptr; n = n->next_sibling()
+		) {
 			T tmpval;
 			if(
 				!_loader(*n, tmpval, false) &&
@@ -526,7 +565,7 @@ private:
 	{
 	private:
 		using AT = mirror::get_reflected_type<mirror::get_type<MA>>;
-		rapidxml_loader<AT> _ldr;
+		rapidxml_opt_loader<AT> _ldr;
 	public:
 		template <typename Char>
 		bool operator()(
@@ -547,10 +586,8 @@ private:
 					name.data(),
 					name.size()
 				);
-				if(n != nullptr) {
-					if(_ldr(*n, ref, from_name)) {
-						return true;
-					}
+				if(_ldr(n, ref, from_name)) {
+					return true;
 				}
 			}
 			if(load_attr) {
@@ -558,10 +595,8 @@ private:
 					name.data(),
 					name.size()
 				);
-				if(a != nullptr) {
-					if(_ldr(*a, ref, from_name)) {
-						return true;
-					}
+				if(_ldr(a, ref, from_name)) {
+					return true;
 				}
 			}
 			return false;
@@ -608,21 +643,21 @@ struct rapidxml_loader
 template <typename Char, typename T>
 static inline
 bool from_rapidxml(
-	const rapidxml::xml_node<Char>& rxn,
+	const rapidxml::xml_node<Char>* rxn,
 	T& v
 ) {
-	rapidxml_loader<T> rxl;
+	rapidxml_opt_loader<T> rxl;
 	return rxl(rxn, v, false) || rxl(rxn, v, true);
 }
 
 template <typename Char, typename T>
 static inline
 bool from_rapidxml(
-	const rapidxml::xml_node<Char>& rxn,
+	const rapidxml::xml_node<Char>* rxn,
 	T& v,
 	bool from_name
 ) {
-	rapidxml_loader<T> rxl;
+	rapidxml_opt_loader<T> rxl;
 	return rxl(rxn, v, from_name);
 }
 
@@ -630,11 +665,11 @@ bool from_rapidxml(
 template <typename Char, typename T>
 static inline
 bool from_rapidxml(
-	const rapidxml::xml_attribute<Char>& rxa,
+	const rapidxml::xml_attribute<Char>* rxa,
 	T& v,
 	bool from_name
 ) {
-	rapidxml_loader<T> rxl;
+	rapidxml_opt_loader<T> rxl;
 	return rxl(rxa, v, from_name);
 }
 
