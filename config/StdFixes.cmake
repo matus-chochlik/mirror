@@ -107,3 +107,4 @@ endfunction()
 
 make_missing_std_feature_fix("integer_sequence" int_sequence)
 make_missing_std_feature_fix("string_view" string_view)
+make_missing_std_feature_fix("tuple apply" tuple_apply)

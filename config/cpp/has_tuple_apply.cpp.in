@@ -1,0 +1,18 @@
+#ifdef MIRROR_TEST_STD_FEATURE_FIX
+#include <reflbase/tuple_apply_fix.hpp>
+#else
+#include <tuple>
+#endif
+
+struct mirror_test_add {
+	template <typename ... T>
+	auto operator()(T ... x)
+	{
+		return (... + x);
+	}
+};
+
+int main(void)
+{
+	return std::apply(mirror_test_add(), std::make_tuple(1,2,3,-6));
+}

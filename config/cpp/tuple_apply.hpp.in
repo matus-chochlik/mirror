@@ -1,0 +1,43 @@
+/**
+ * Copyright Matus Chochlik.
+ * Distributed under the Boost Software License, Version 1.0.
+ * See accompanying file LICENSE_1_0.txt or copy at
+ *  http://www.boost.org/LICENSE_1_0.txt
+ */
+
+#ifndef MIRROR_STD_TUPLE_APPLY_1105240825_HPP
+#define MIRROR_STD_TUPLE_APPLY_1105240825_HPP
+
+#include <tuple>
+#include <utility>
+#include <type_traits>
+#include "int_sequence_fix.hpp"
+
+namespace std {
+namespace detail {
+
+template <class F, class Tuple, size_t... I>
+static constexpr inline
+decltype(auto) apply_impl(F &&f, Tuple &&t, index_sequence<I...>) 
+{
+	return f(get<I>(forward<Tuple>(t))...);
+}
+
+} // namespace detail
+
+template <class F, class Tuple>
+static constexpr inline
+decltype(auto) apply(F &&f, Tuple &&t) 
+{
+	return detail::apply_impl(
+		forward<F>(f),
+		forward<Tuple>(t),
+		make_index_sequence<
+			tuple_size<typename decay<Tuple>::type>::value
+		>{}
+	);
+}
+
+} // namespace std
+
+#endif
