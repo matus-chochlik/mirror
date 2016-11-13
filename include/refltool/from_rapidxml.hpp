@@ -27,6 +27,10 @@
 #include <cstddef>
 #include <cstdlib>
 #include <limits>
+#include <array>
+#include <vector>
+#include <set>
+#include <map>
 
 namespace refltool {
 
@@ -53,8 +57,16 @@ protected:
 		return _str_eq({rxb.value(), rxb.value_size()}, str);
 	}
 
+	template <typename Char>
+	static inline bool _name_equal_to(
+		const rapidxml::xml_base<Char>& rxb,
+		const std::string_view& str
+	) noexcept {
+		return _str_eq({rxb.name(), rxb.name_size()}, str);
+	}
+
 	template <typename Char, typename Num>
-	static inline bool _strtonum(
+	static inline bool _valtonum(
 		const rapidxml::xml_base<Char>& rxb,
 		Num (*strtox)(const Char*, Char**),
 		Num& v
@@ -68,7 +80,7 @@ protected:
 	}
 
 	template <typename Char, typename Num>
-	static inline bool _strtonum(
+	static inline bool _valtonum(
 		const rapidxml::xml_base<Char>& rxb,
 		Num (*strtox)(const Char*, Char**, int),
 		Num& v
@@ -82,13 +94,13 @@ protected:
 	}
 
 	template <typename Char, typename Tmp, typename Num>
-	static inline bool _strtonumc(
+	static inline bool _valtonumc(
 		const rapidxml::xml_base<Char>& rxb,
 		Tmp (*strtox)(const Char*, Char**, int),
 		Num& v
 	) noexcept {
 		Tmp tmp;
-		if(_strtonum(rxb, strtox, tmp)) {
+		if(_valtonum(rxb, strtox, tmp)) {
 			using nl = std::numeric_limits<Num>;
 			if(tmp < Tmp(nl::lowest())) {
 				return false;
@@ -110,13 +122,22 @@ struct rapidxml_loader<bool>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		bool& v
+		bool& v,
+		bool from_name
 	) const {
-		if(_value_equal_to(rxb, {"true", 4})) {
-			v = true;
-		} else if(_value_equal_to(rxb, {"false", 5})) {
-			v = false;
-		} else { return false; } 
+		if(from_name) {
+			if(_name_equal_to(rxb, {"true", 4})) {
+				v = true;
+			} else if(_name_equal_to(rxb, {"false", 5})) {
+				v = false;
+			} else { return false; } 
+		} else {
+			if(_value_equal_to(rxb, {"true", 4})) {
+				v = true;
+			} else if(_value_equal_to(rxb, {"false", 5})) {
+				v = false;
+			} else { return false; } 
+		}
 
 		return true;
 	}
@@ -129,11 +150,19 @@ struct rapidxml_loader<char>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		char& v
+		char& v,
+		bool from_name
 	) const {
-		if((rxb.value_size() == 1) && (rxb.value() != nullptr)) {
-			v = *rxb.value();
-			return true;
+		if(from_name) {
+			if((rxb.name_size() == 1) && (rxb.name())) {
+				v = *rxb.name();
+				return true;
+			}
+		} else {
+			if((rxb.value_size() == 1) && (rxb.value())) {
+				v = *rxb.value();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -146,8 +175,9 @@ struct rapidxml_loader<short>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		short& v
-	) const { return _strtonumc(rxb, &std::strtol, v); }
+		short& v,
+		bool from_name
+	) const { return !from_name && _valtonumc(rxb, &std::strtol, v); }
 };
 
 template <>
@@ -157,8 +187,9 @@ struct rapidxml_loader<unsigned short>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		unsigned short& v
-	) const { return _strtonumc(rxb, &std::strtoul, v); }
+		unsigned short& v,
+		bool from_name
+	) const { return !from_name && _valtonumc(rxb, &std::strtoul, v); }
 };
 
 template <>
@@ -168,8 +199,9 @@ struct rapidxml_loader<int>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		int& v
-	) const { return _strtonumc(rxb, &std::strtol, v); }
+		int& v,
+		bool from_name
+	) const { return !from_name && _valtonumc(rxb, &std::strtol, v); }
 };
 
 template <>
@@ -179,8 +211,9 @@ struct rapidxml_loader<unsigned>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		unsigned& v
-	) const { return _strtonumc(rxb, &std::strtoul, v); }
+		unsigned& v,
+		bool from_name
+	) const { return !from_name && _valtonumc(rxb, &std::strtoul, v); }
 };
 
 template <>
@@ -190,8 +223,9 @@ struct rapidxml_loader<long>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		long& v
-	) const { return _strtonum(rxb, &std::strtol, v); }
+		long& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtol, v); }
 };
 
 template <>
@@ -201,8 +235,9 @@ struct rapidxml_loader<unsigned long>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		unsigned long& v
-	) const { return _strtonum(rxb, &std::strtoul, v); }
+		unsigned long& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtoul, v); }
 };
 
 template <>
@@ -212,8 +247,9 @@ struct rapidxml_loader<long long>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		long long& v
-	) const { return _strtonum(rxb, &std::strtoll, v); }
+		long long& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtoll, v); }
 };
 
 template <>
@@ -223,8 +259,9 @@ struct rapidxml_loader<unsigned long long>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		unsigned long long& v
-	) const { return _strtonum(rxb, &std::strtoull, v); }
+		unsigned long long& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtoull, v); }
 };
 
 template <>
@@ -234,8 +271,9 @@ struct rapidxml_loader<float>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		float& v
-	) const { return _strtonum(rxb, &std::strtof, v); }
+		float& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtof, v); }
 };
 
 template <>
@@ -245,8 +283,9 @@ struct rapidxml_loader<double>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		double& v
-	) const { return _strtonum(rxb, &std::strtod, v); }
+		double& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtod, v); }
 };
 
 template <>
@@ -256,8 +295,9 @@ struct rapidxml_loader<long double>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		long double& v
-	) const { return _strtonum(rxb, &std::strtold, v); }
+		long double& v,
+		bool from_name
+	) const { return !from_name && _valtonum(rxb, &std::strtold, v); }
 };
 
 template <>
@@ -266,9 +306,139 @@ struct rapidxml_loader<std::string>
 	template <typename Char>
 	bool operator()(
 		const rapidxml::xml_base<Char>& rxb,
-		std::string& v
+		std::string& v,
+		bool from_name
 	) const {
-		v.assign(rxb.value(), rxb.value_size());
+		if(from_name) {
+			v.assign(rxb.name(), rxb.name_size());
+		} else {
+			v.assign(rxb.value(), rxb.value_size());
+		}
+		return true;
+	}
+};
+
+// array
+template <typename T, std::size_t N>
+struct rapidxml_loader<std::array<T, N>>
+{
+private:
+	rapidxml_loader<T> _loader;
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>& rxn,
+		std::array<T, N>& r,
+		bool from_name
+	) const {
+		if(from_name) return false;
+
+		std::size_t i = 0;
+		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+			if(!_loader(*n, r[i], false)) {
+				return false;
+			}
+			++i;
+		}
+		return i == N;
+	}
+};
+
+// vector
+template <typename T, typename A>
+struct rapidxml_loader<std::vector<T, A>>
+{
+private:
+	rapidxml_loader<T> _loader;
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>& rxn,
+		std::vector<T, A>& r,
+		bool from_name
+	) const {
+		if(from_name) return false;
+
+		std::size_t i = 0;
+		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+			++i;
+		} 
+		r.resize(i);
+
+		i = 0;
+		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+			if(i >= r.size()) {
+				return false;
+			}
+			if(
+				!_loader(*n, r[i], false) &&
+				!_loader(*n, r[i], true)
+			) { return false; }
+			++i;
+		}
+		return true;
+	}
+};
+
+// set
+template <typename T, typename C, typename A>
+struct rapidxml_loader<std::set<T, C, A>>
+{
+private:
+	rapidxml_loader<T> _loader;
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>& rxn,
+		std::set<T, C, A>& c,
+		bool from_name
+	) const {
+		if(from_name) return false;
+
+		c.clear();
+
+		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+			T tmpval;
+			if(
+				!_loader(*n, tmpval, false) &&
+				!_loader(*n, tmpval, true)
+			) { return false; }
+
+			c.emplace(std::move(tmpval));
+		}
+		return true;
+	}
+};
+
+// map
+template <typename K, typename V, typename C, typename A>
+struct rapidxml_loader<std::map<K, V, C, A>>
+{
+private:
+	rapidxml_loader<K> _keyldr;
+	rapidxml_loader<V> _valldr;
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>& rxn,
+		std::map<K, V, C, A>& c,
+		bool from_name
+	) const {
+		if(from_name) return false;
+
+		c.clear();
+
+		for(auto* n = rxn.first_node(); n; n = n->next_sibling()) {
+			K tmpkey;
+			if(!_keyldr(*n, tmpkey, true)) {
+				return false;
+			}
+			V tmpval;
+			if(!_valldr(*n, tmpval, false)) {
+				return false;
+			}
+			c.emplace(std::move(tmpkey), std::move(tmpval));
+		}
 		return true;
 	}
 };
@@ -281,7 +451,7 @@ bool from_rapidxml(
 	T& v
 ) {
 	rapidxml_loader<T> rxl;
-	return rxl(rxn, v);
+	return rxl(rxn, v, false) || rxl(rxn, v, true);
 }
 
 // from_rapidxml
@@ -292,7 +462,7 @@ bool from_rapidxml(
 	T& v
 ) {
 	rapidxml_loader<T> rxl;
-	return rxl(rxa, v);
+	return rxl(rxa, v, false);
 }
 
 } // namespace refltool

@@ -37,11 +37,6 @@ namespace refltool {
 template <typename T>
 struct rapidjson_loader;
 
-template <typename T>
-struct rapidjson_loader<const T>
- : rapidjson_loader<T>
-{ };
-
 template <>
 struct rapidjson_loader<bool>
 {
@@ -230,6 +225,8 @@ public:
 		using namespace puddle;
 
 		if(rja.IsArray()) {
+			c.clear();
+
 			const rapidjson::SizeType n = rja.Size();
 
 			for(rapidjson::SizeType i=0; i<n; ++i) {
@@ -267,6 +264,8 @@ public:
 		using namespace puddle;
 
 		if(rjo.IsObject()) {
+			c.clear();
+
 			for(auto i=rjo.MemberBegin(); i!=rjo.MemberEnd(); ++i) {
 				K tmpkey;
 				if(!_keyldr(i->name, tmpkey)) {
