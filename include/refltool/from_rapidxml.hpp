@@ -435,40 +435,52 @@ public:
 	bool operator()(
 		const rapidxml::xml_node<Char>& rxn,
 		std::map<K, V, C, A>& c,
-		bool from_name
+		const bool from_name,
+		const bool load_elem = true,
+		const bool load_attr = true
 	) const {
 		if(from_name) return false;
 
 		c.clear();
 
-		for(
-			auto* a = rxn.first_attribute();
-			a; a = a->next_attribute()
-		) {
-			K tmpkey;
-			if(!_keyldr(*a, tmpkey, true)) {
-				return false;
+		if(load_attr) {
+			for(
+				auto* a = rxn.first_attribute();
+				a != nullptr; a = a->next_attribute()
+			) {
+				K tmpkey;
+				if(!_keyldr(*a, tmpkey, true)) {
+					return false;
+				}
+				V tmpval;
+				if(!_valldr(*a, tmpval, false)) {
+					return false;
+				}
+				c.emplace(
+					std::move(tmpkey),
+					std::move(tmpval)
+				);
 			}
-			V tmpval;
-			if(!_valldr(*a, tmpval, false)) {
-				return false;
-			}
-			c.emplace(std::move(tmpkey), std::move(tmpval));
 		}
 
-		for(
-			auto* n = rxn.first_node();
-			n; n = n->next_sibling()
-		) {
-			K tmpkey;
-			if(!_keyldr(*n, tmpkey, true)) {
-				return false;
+		if(load_elem) {
+			for(
+				auto* n = rxn.first_node();
+				n != nullptr; n = n->next_sibling()
+			) {
+				K tmpkey;
+				if(!_keyldr(*n, tmpkey, true)) {
+					return false;
+				}
+				V tmpval;
+				if(!_valldr(*n, tmpval, false)) {
+					return false;
+				}
+				c.emplace(
+					std::move(tmpkey),
+					std::move(tmpval)
+				);
 			}
-			V tmpval;
-			if(!_valldr(*n, tmpval, false)) {
-				return false;
-			}
-			c.emplace(std::move(tmpkey), std::move(tmpval));
 		}
 		return true;
 	}
@@ -520,21 +532,36 @@ private:
 		bool operator()(
 			const rapidxml::xml_node<Char>& rxn,
 			T& v,
-			bool from_name
+			const bool from_name,
+			const bool load_elem,
+			const bool load_attr
 		) const {
 			using namespace puddle;
 
 			MA ma;
-			auto n = rxn.first_node(c_str(get_base_name(ma)));
-			if(n != nullptr) {
-				if(_ldr(*n, dereference(ma, v), from_name)) {
-					return true;
+			const auto name = string_view(get_base_name(ma));
+			AT& ref = dereference(ma, v);
+
+			if(load_elem) {
+				auto n = rxn.first_node(
+					name.data(),
+					name.size()
+				);
+				if(n != nullptr) {
+					if(_ldr(*n, ref, from_name)) {
+						return true;
+					}
 				}
 			}
-			auto a = rxn.first_attribute(c_str(get_base_name(ma)));
-			if(a != nullptr) {
-				if(_ldr(*a, dereference(ma, v), from_name)) {
-					return true;
+			if(load_attr) {
+				auto a = rxn.first_attribute(
+					name.data(),
+					name.size()
+				);
+				if(a != nullptr) {
+					if(_ldr(*a, ref, from_name)) {
+						return true;
+					}
 				}
 			}
 			return false;
@@ -552,11 +579,18 @@ public:
 	bool operator()(
 		const rapidxml::xml_node<Char>& rxb,
 		T& v,
-		bool from_name
+		const bool from_name,
+		const bool load_elem = true,
+		const bool load_attr = true
 	) const {
 		return std::apply(
-			[&rxb,&v,from_name](auto ... fn) {
-				return (... && fn(rxb, v, from_name));
+			[&rxb,&v,from_name,load_elem,load_attr](auto ... fn) {
+				return (... && fn(
+					rxb, v,
+					from_name,
+					load_elem,
+					load_attr
+				));
 			}, _attrldrs
 		);
 	}
