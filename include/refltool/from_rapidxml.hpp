@@ -443,7 +443,7 @@ public:
 	}
 };
 
-// from_rapidxml
+// from_rapidxml (node)
 template <typename Char, typename T>
 static inline
 bool from_rapidxml(
@@ -454,15 +454,27 @@ bool from_rapidxml(
 	return rxl(rxn, v, false) || rxl(rxn, v, true);
 }
 
-// from_rapidxml
+template <typename Char, typename T>
+static inline
+bool from_rapidxml(
+	const rapidxml::xml_node<Char>& rxn,
+	T& v,
+	bool from_name
+) {
+	rapidxml_loader<T> rxl;
+	return rxl(rxn, v, from_name);
+}
+
+// from_rapidxml (attribute)
 template <typename Char, typename T>
 static inline
 bool from_rapidxml(
 	const rapidxml::xml_attribute<Char>& rxa,
-	T& v
+	T& v,
+	bool from_name
 ) {
 	rapidxml_loader<T> rxl;
-	return rxl(rxa, v, false);
+	return rxl(rxa, v, from_name);
 }
 
 } // namespace refltool
