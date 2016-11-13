@@ -12,6 +12,7 @@
 #define REFLTOOL_TO_RAPIDJSON_1105240825_HPP
 
 #include "enum_to_string.hpp"
+
 #include <puddle/reflection.hpp>
 #include <puddle/sequence_ops.hpp>
 #include <puddle/meta_named_ops.hpp>
@@ -21,8 +22,16 @@
 #include <puddle/meta_class_ops.hpp>
 #include <puddle/meta_enum_ops.hpp>
 #include <puddle/string.hpp>
+
+#include <mirror/reflection.hpp>
+#include <mirror/get_type.hpp>
+#include <mirror/transform.hpp>
+#include <mirror/repack.hpp>
+
 #include <reflbase/type_traits_fixes.hpp>
 #include <reflbase/int_sequence_fix.hpp>
+#include <reflbase/tuple_apply_fix.hpp>
+
 #include <rapidjson/document.h>
 #include <map>
 #include <set>
@@ -391,41 +400,57 @@ struct rapidjson_compositor<std::string>
 	}
 };
 
-// to_rapidjson
-template <typename Encoding, typename Allocator, typename T>
-static
-rapidjson::GenericValue<Encoding, Allocator>& to_rapidjson(
-	rapidjson::GenericValue<Encoding, Allocator>& rjv,
-	Allocator& alloc,
-	const T& v
-);
-
 template <typename T>
 struct rapidjson_compositor_class
 {
+private:
+	template <typename MA>
+	struct _attrcomp_t
+	{
+	private:
+		using AT = mirror::get_reflected_type<mirror::get_type<MA>>;
+		rapidjson_compositor<AT> _comp;
+	public:
+		template <typename Encoding, typename Allocator>
+		bool operator()(
+			rapidjson::GenericValue<Encoding, Allocator>& rjv,
+			Allocator& alloc,
+			const T& v
+		) const {
+			using namespace puddle;
+			using namespace rapidjson;
+
+			MA ma;
+			Value mem;
+			_comp(mem, alloc, dereference(ma, v));
+
+			auto name = StringRef(c_str(get_base_name(ma)));
+			rjv.AddMember(name, mem, alloc);
+
+			return true;
+		}
+	};
+
+	mirror::repack<
+		mirror::transform<
+			mirror::get_data_members<MIRRORED(T)>,
+			_attrcomp_t
+		>, std::tuple
+	> _attrcomps;
+public:
 	template <typename Encoding, typename Allocator>
 	void operator()(
 		rapidjson::GenericValue<Encoding, Allocator>& rjv,
 		Allocator& alloc,
 		const T& v
-	) const
-	{
-		using namespace puddle;
-
+	) const {
 		rjv.SetObject();
-		auto write = [&rjv,&alloc,&v](auto mo)
-		{
-			using namespace rapidjson;
 
-			Value mem;
-			to_rapidjson(mem, alloc, dereference(mo, v));
-
-			auto name = StringRef(c_str(get_base_name(mo)));
-			rjv.AddMember(name, mem, alloc);
-		};
-
-		auto mt = PUDDLED(T);
-		for_each(get_data_members(mt), write);
+		std::apply(
+			[&rjv,&alloc,&v](auto ... fn) {
+				return (... && fn(rjv, alloc, v));
+			}, _attrcomps
+		);
 	}
 };
 
