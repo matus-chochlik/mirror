@@ -8,8 +8,8 @@
  *  http://www.boost.org/LICENSE_1_0.txt
  */
 
-#ifndef REFLTOOL_FROM_RAPIDJSON_1105240825_HPP
-#define REFLTOOL_FROM_RAPIDJSON_1105240825_HPP
+#ifndef REFLTOOL_FROM_RAPIDXML_1105240825_HPP
+#define REFLTOOL_FROM_RAPIDXML_1105240825_HPP
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -21,8 +21,7 @@
 #pragma clang diagnostic pop
 #endif
 
-#include <reflbase/string_view_fix.hpp>
-#include <reflbase/tuple_apply_fix.hpp>
+#include "string_to_enum.hpp"
 
 #include <puddle/meta_named_ops.hpp>
 #include <puddle/meta_variable_ops.hpp>
@@ -34,7 +33,8 @@
 #include <mirror/transform.hpp>
 #include <mirror/repack.hpp>
 
-#include "string_to_enum.hpp"
+#include <reflbase/string_view_fix.hpp>
+#include <reflbase/tuple_apply_fix.hpp>
 
 #include <cstring>
 #include <cstddef>
@@ -478,10 +478,10 @@ template <typename T>
 struct rapidxml_loader_enum
 {
 private:
-	string_to_enum_map_t<T> _map;
+	const string_to_enum_map_t<T> _s2emap;
 public:
 	rapidxml_loader_enum(void)
-	 : _map(make_string_to_enum_map<T>())
+	 : _s2emap(make_string_to_enum_map<T>())
 	{ }
 
 	template <typename Char>
@@ -496,8 +496,8 @@ public:
 		} else {
 			tmp.assign(rxb.value(), rxb.value_size());
 		}
-		auto p = _map.find(tmp);
-		if(p == _map.end()) {
+		auto p = _s2emap.find(tmp);
+		if(p == _s2emap.end()) {
 			return false;
 		}
 		v = p->second;

@@ -12,6 +12,7 @@
 #define REFLTOOL_FROM_RAPIDJSON_1105240825_HPP
 
 #include "string_to_enum.hpp"
+
 #include <puddle/reflection.hpp>
 #include <puddle/sequence_ops.hpp>
 #include <puddle/meta_named_ops.hpp>
@@ -21,8 +22,16 @@
 #include <puddle/meta_class_ops.hpp>
 #include <puddle/meta_enum_ops.hpp>
 #include <puddle/string.hpp>
+
+#include <mirror/reflection.hpp>
+#include <mirror/get_type.hpp>
+#include <mirror/transform.hpp>
+#include <mirror/repack.hpp>
+
 #include <reflbase/type_traits_fixes.hpp>
 #include <reflbase/int_sequence_fix.hpp>
+#include <reflbase/tuple_apply_fix.hpp>
+
 #include <rapidjson/document.h>
 #include <map>
 #include <set>
@@ -406,52 +415,56 @@ struct rapidjson_loader<std::string>
 	}
 };
 
-// from_rapidjson
-template <typename Encoding, typename Allocator, typename T>
-static
-bool from_rapidjson(
-	const rapidjson::GenericValue<Encoding, Allocator>& rjv,
-	T& v
-);
-
 template <typename T>
 struct rapidjson_loader_class
 {
+private:
+	template <typename MA>
+	struct _attrldr_t
+	{
+	private:
+		using AT = mirror::get_reflected_type<mirror::get_type<MA>>;
+		rapidjson_loader<AT> _ldr;
+	public:
+		template <typename Encoding, typename Allocator>
+		bool operator()(
+			const rapidjson::GenericValue<Encoding, Allocator>& rjv,
+			T& v
+		) const {
+			using namespace puddle;
+
+			MA ma;
+			auto name = c_str(get_base_name(ma));
+			auto pos = rjv.FindMember(name);
+
+			if(pos == rjv.MemberEnd()) {
+				return false;
+			}
+			return _ldr(pos->value, dereference(ma, v));
+		}
+	};
+
+	mirror::repack<
+		mirror::transform<
+			mirror::get_data_members<MIRRORED(T)>,
+			_attrldr_t
+		>, std::tuple
+	> _attrldrs;
+public:
 	template <typename Encoding, typename Allocator>
 	bool operator()(
 		const rapidjson::GenericValue<Encoding, Allocator>& rjv,
 		T& v
-	) const
-	{
+	) const {
 		using namespace puddle;
 
 		if(!rjv.IsObject()) { return false; }
 
-		bool result = true;
-
-		auto write = [&rjv,&v,&result](auto mo)
-		{
-			using namespace rapidjson;
-
-			if(result) {
-				auto name = c_str(get_base_name(mo));
-				auto pos = rjv.FindMember(name);
-
-				if(pos == rjv.MemberEnd()) {
-					result = false;
-				} else {
-					result = from_rapidjson(
-						pos->value,
-						dereference(mo, v)
-					);
-				}
-			}
-		};
-
-		auto mt = PUDDLED(T);
-		for_each(get_data_members(mt), write);
-
-		return result;
+		return std::apply(
+			[&rjv,&v](auto ... fn) {
+				return (... && fn(rjv, v));
+			}, _attrldrs
+		);
 	}
 };
 
