@@ -40,6 +40,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <limits>
+#include <memory>
 #include <array>
 #include <vector>
 #include <set>
@@ -356,6 +357,86 @@ struct rapidxml_loader<std::string>
 		}
 		return true;
 	}
+};
+
+// unique_ptr
+template <typename T, typename D>
+struct rapidxml_opt_loader<std::unique_ptr<T, D>>
+{
+private:
+	rapidxml_loader<T> _loader;
+
+	template <typename RXB>
+	bool _load(
+		const RXB* rxb,
+		std::unique_ptr<T, D>& v,
+		bool from_name
+	) const {
+		if(rxb == nullptr) {
+			v.reset();
+			return true;
+		}
+		T tmp;
+		if(!_loader(*rxb, tmp, from_name)) {
+			return false;
+		}
+		v.reset(new T(std::move(tmp)));
+		return true;
+	}
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>* rxn,
+		std::unique_ptr<T, D>& v,
+		bool from_name
+	) const { return _load(rxn, v, from_name); }
+
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_attribute<Char>* rxa,
+		std::unique_ptr<T, D>& v,
+		bool from_name
+	) const { return _load(rxa, v, from_name); }
+};
+
+// shared_ptr
+template <typename T>
+struct rapidxml_opt_loader<std::shared_ptr<T>>
+{
+private:
+	rapidxml_loader<T> _loader;
+
+	template <typename RXB>
+	bool _load(
+		const RXB* rxb,
+		std::shared_ptr<T>& v,
+		bool from_name
+	) const {
+		if(rxb == nullptr) {
+			v.reset();
+			return true;
+		}
+		T tmp;
+		if(!_loader(*rxb, tmp, from_name)) {
+			return false;
+		}
+		v.reset(new T(std::move(tmp)));
+		return true;
+	}
+public:
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_node<Char>* rxn,
+		std::shared_ptr<T>& v,
+		bool from_name
+	) const { return _load(rxn, v, from_name); }
+
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_attribute<Char>* rxa,
+		std::shared_ptr<T>& v,
+		bool from_name
+	) const { return _load(rxa, v, from_name); }
 };
 
 // array
