@@ -1,6 +1,6 @@
 /**
  * @file refltool/to_rapidjson.hpp
- * @brief Implementation to serialization to JSON using RapidJSON
+ * @brief Implementation of serialization to JSON using RapidJSON
  *
  * Copyright Matus Chochlik.
  * Distributed under the Boost Software License, Version 1.0.
@@ -12,6 +12,7 @@
 #define REFLTOOL_TO_RAPIDJSON_1105240825_HPP
 
 #include "enum_to_string.hpp"
+
 #include <puddle/reflection.hpp>
 #include <puddle/sequence_ops.hpp>
 #include <puddle/meta_named_ops.hpp>
@@ -21,12 +22,23 @@
 #include <puddle/meta_class_ops.hpp>
 #include <puddle/meta_enum_ops.hpp>
 #include <puddle/string.hpp>
+
+#include <mirror/reflection.hpp>
+#include <mirror/get_type.hpp>
+#include <mirror/transform.hpp>
+#include <mirror/repack.hpp>
+
 #include <reflbase/type_traits_fixes.hpp>
 #include <reflbase/int_sequence_fix.hpp>
+#include <reflbase/tuple_apply_fix.hpp>
+
 #include <rapidjson/document.h>
+#include <map>
+#include <set>
 #include <tuple>
 #include <array>
 #include <vector>
+#include <memory>
 #include <cstddef>
 
 namespace refltool {
@@ -51,7 +63,7 @@ public:
 		Allocator& alloc,
 		T* v
 	) const {
-		if(v) {
+		if(bool(v)) {
 			_comp(rjv, alloc, *v);
 		} else {
 			rjv.SetNull();
@@ -204,14 +216,91 @@ struct rapidjson_compositor<char[N]>
 	) const { rjv.SetString(v, (N>0 && v[N-1])?N:N-1, alloc); }
 };
 
-// arrays / ranges
+// unique_ptr
+template <typename T, typename D>
+struct rapidjson_compositor<std::unique_ptr<T, D>>
+{
+private:
+	rapidjson_compositor<T> _comp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const std::unique_ptr<T, D>& v
+	) const {
+		if(bool(v)) {
+			_comp(rjv, alloc, *v);
+		} else {
+			rjv.SetNull();
+		}
+	}
+};
+
+// shared_ptr
 template <typename T>
+struct rapidjson_compositor<std::shared_ptr<T>>
+{
+private:
+	rapidjson_compositor<T> _comp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjv,
+		Allocator& alloc,
+		const std::shared_ptr<T>& v
+	) const {
+		if(bool(v)) {
+			_comp(rjv, alloc, *v);
+		} else {
+			rjv.SetNull();
+		}
+	}
+};
+
+// map
+template <typename K, typename V, typename C, typename A>
+struct rapidjson_compositor<std::map<K, V, C, A>>
+{
+private:
+	static_assert(
+		std::is_same<K, char>::value ||
+		std::is_same<K, std::string>::value ||
+		std::is_enum<K>::value,
+		"Map key must be a string on enum type"
+	);
+
+	rapidjson_compositor<K> _keycomp;
+	rapidjson_compositor<V> _valcomp;
+public:
+	template <typename Encoding, typename Allocator>
+	void operator()(
+		rapidjson::GenericValue<Encoding, Allocator>& rjo,
+		Allocator& alloc,
+		const std::map<K, V, C, A>& c
+	) const {
+		using namespace puddle;
+
+		rjo.SetObject();
+		for(const auto& p : c) {
+			rapidjson::Value rjk;
+			_keycomp(rjk, alloc, p.first);
+			rapidjson::Value rjv;
+			_valcomp(rjv, alloc, p.second);
+
+			rjo.AddMember(rjk, rjv, alloc);
+		}
+	}
+};
+
+// arrays / ranges
+template <typename T, typename Range>
 struct rapidjson_compositor_range
 {
 private:
 	rapidjson_compositor<T> _comp;
 public:
-	template <typename Encoding, typename Allocator, typename Range>
+	template <typename Encoding, typename Allocator>
 	void operator()(
 		rapidjson::GenericValue<Encoding, Allocator>& rja,
 		Allocator& alloc,
@@ -228,14 +317,22 @@ public:
 	}
 };
 
-template <typename T, std::size_t N>
-struct rapidjson_compositor<std::array<T, N>>
- : rapidjson_compositor_range<T>
+// set
+template <typename T, typename C, typename A>
+struct rapidjson_compositor<std::set<T, C, A>>
+ : rapidjson_compositor_range<T, std::set<T, C, A>>
 { };
 
+// array
+template <typename T, std::size_t N>
+struct rapidjson_compositor<std::array<T, N>>
+ : rapidjson_compositor_range<T, std::array<T, N>>
+{ };
+
+// vector
 template <typename T, typename A>
 struct rapidjson_compositor<std::vector<T, A>>
- : rapidjson_compositor_range<T>
+ : rapidjson_compositor_range<T, std::vector<T, A>>
 { };
 
 // tuple
@@ -250,7 +347,7 @@ private:
 		rapidjson::GenericValue<Enc, Alloc>& rja,
 		Alloc& alloc,
 		const E& e,
-		rapidjson_compositor<E> comp
+		const rapidjson_compositor<E>& comp
 	) const {
 		rapidjson::Value rje;
 		comp(rje, alloc, e);
@@ -303,41 +400,57 @@ struct rapidjson_compositor<std::string>
 	}
 };
 
-// to_rapidjson
-template <typename Encoding, typename Allocator, typename T>
-static
-rapidjson::GenericValue<Encoding, Allocator>& to_rapidjson(
-	rapidjson::GenericValue<Encoding, Allocator>& rjv,
-	Allocator& alloc,
-	const T& v
-);
-
 template <typename T>
 struct rapidjson_compositor_class
 {
+private:
+	template <typename MA>
+	struct _attrcomp_t
+	{
+	private:
+		using AT = mirror::get_reflected_type<mirror::get_type<MA>>;
+		rapidjson_compositor<AT> _comp;
+	public:
+		template <typename Encoding, typename Allocator>
+		bool operator()(
+			rapidjson::GenericValue<Encoding, Allocator>& rjv,
+			Allocator& alloc,
+			const T& v
+		) const {
+			using namespace puddle;
+			using namespace rapidjson;
+
+			MA ma;
+			Value mem;
+			_comp(mem, alloc, dereference(ma, v));
+
+			auto name = StringRef(c_str(get_base_name(ma)));
+			rjv.AddMember(name, mem, alloc);
+
+			return true;
+		}
+	};
+
+	mirror::repack<
+		mirror::transform<
+			mirror::get_data_members<MIRRORED(T)>,
+			_attrcomp_t
+		>, std::tuple
+	> _attrcomps;
+public:
 	template <typename Encoding, typename Allocator>
 	void operator()(
 		rapidjson::GenericValue<Encoding, Allocator>& rjv,
 		Allocator& alloc,
 		const T& v
-	) const
-	{
-		using namespace puddle;
-
+	) const {
 		rjv.SetObject();
-		auto write = [&rjv,&alloc,&v](auto mo)
-		{
-			using namespace rapidjson;
 
-			Value mem;
-			to_rapidjson(mem, alloc, dereference(mo, v));
-
-			auto name = StringRef(c_str(get_base_name(mo)));
-			rjv.AddMember(name, mem, alloc);
-		};
-
-		auto mt = PUDDLED(T);
-		for_each(get_data_members(mt), write);
+		std::apply(
+			[&rjv,&alloc,&v](auto ... fn) {
+				return (... && fn(rjv, alloc, v));
+			}, _attrcomps
+		);
 	}
 };
 
