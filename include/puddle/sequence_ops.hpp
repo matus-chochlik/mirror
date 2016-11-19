@@ -35,6 +35,7 @@
 #include <mirror/apply_on.hpp>
 #include <mirror/wrap.hpp>
 #include <mirror/unwrap.hpp>
+#include <mirror/transform.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -232,6 +233,16 @@ auto contains(X, S)
 noexcept
 {
 	return mirror::contains<X, S>{};
+}
+
+template <
+	template <class> class T, typename X,
+	typename = enable_if_any_opt_sequence<X>
+> static constexpr inline
+auto transform(X)
+noexcept
+{
+	return mirror::transform<T, X>{};
 }
 
 template <
