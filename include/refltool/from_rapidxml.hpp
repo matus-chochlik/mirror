@@ -686,8 +686,8 @@ private:
 
 	mirror::repack<
 		mirror::transform<
-			mirror::get_data_members<MIRRORED(T)>,
-			_attrldr_t
+			_attrldr_t,
+			mirror::get_data_members<MIRRORED(T)>
 		>, std::tuple
 	> _attrldrs;
 public:

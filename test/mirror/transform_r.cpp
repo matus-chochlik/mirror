@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(mirror_transform_range_1)
 	using rt = range<int*, float*, double*, long*>;
 
 	BOOST_CHECK((value<equal<
-		transform<ro, std::add_pointer_t>, rt
+		transform<std::add_pointer_t, ro>, rt
 	>>));
 }
 
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(mirror_transform_range_2)
 	using rt = range<int, float, double, long>;
 
 	BOOST_CHECK((value<equal<
-		transform<ro, std::remove_reference_t>, rt
+		transform<std::remove_reference_t, ro>, rt
 	>>));
 }
 
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(mirror_transform_string_1)
 	using st = string<'A','B','C','D','E','F'>;
 
 	BOOST_CHECK((value<equal<
-		transform<so, test_to_upper>, st
+		transform<test_to_upper, so>, st
 	>>));
 }
 
