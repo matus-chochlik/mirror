@@ -467,6 +467,13 @@ public:
 		}
 		return i == N;
 	}
+
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_attribute<Char>&,
+		std::array<T, N>&,
+		bool
+	) const { return true; }
 };
 
 // vector
@@ -508,6 +515,13 @@ public:
 		}
 		return true;
 	}
+
+	template <typename Char>
+	bool operator()(
+		const rapidxml::xml_attribute<Char>&,
+		std::vector<T, A>&,
+		bool
+	) const { return true; }
 };
 
 // set
