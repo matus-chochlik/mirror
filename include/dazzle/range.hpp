@@ -15,6 +15,7 @@
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/for_each.hpp>
+#include "envelope.hpp"
 
 namespace dazzle {
 
@@ -27,17 +28,17 @@ struct wrapped<mirror::range<P...>>
 	using impl = mirror::range<P...>;
 
 	static constexpr auto is_empty(void) {
-		return wrapped<mirror::is_empty<impl>>{};
+		return envelope<mirror::is_empty<impl>>{};
 	}
 	static constexpr auto empty(void) {
-		return wrapped<mirror::is_empty<impl>>{};
+		return envelope<mirror::is_empty<impl>>{};
 	}
 
 	static constexpr auto get_size(void) {
-		return wrapped<mirror::get_size<impl>>{};
+		return envelope<mirror::get_size<impl>>{};
 	}
 	static constexpr auto size(void) {
-		return wrapped<mirror::size<impl>>{};
+		return envelope<mirror::size<impl>>{};
 	}
 
 	template <typename Func>

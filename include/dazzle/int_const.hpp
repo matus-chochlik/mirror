@@ -13,11 +13,9 @@
 
 #include <mirror/int_const.hpp>
 #include <mirror/value.hpp>
+#include "envelope.hpp"
 
 namespace dazzle {
-
-template <typename X>
-struct wrapped;
 
 template <typename Int, Int I>
 struct wrapped<mirror::int_const<Int, I>>
