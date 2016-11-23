@@ -16,6 +16,8 @@
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
 #include "envelope.hpp"
+#include "int_const.hpp"
+#include <string>
 
 namespace dazzle {
 
@@ -27,27 +29,54 @@ struct wrapped<mirror::basic_string<Char, C...>>
 {
 	using impl = mirror::basic_string<Char, C...>;
 
-	static constexpr auto c_str(void) {
+	static constexpr auto is_empty(void) noexcept {
+		return envelope<mirror::is_empty<impl>>{};
+	}
+	static constexpr auto empty(void) noexcept {
+		return envelope<mirror::is_empty<impl>>{};
+	}
+
+	static constexpr auto get_size(void) noexcept {
+		return envelope<mirror::get_size<impl>>{};
+	}
+	static constexpr auto size(void) noexcept {
+		return envelope<mirror::size<impl>>{};
+	}
+
+	static constexpr auto c_str(void) noexcept {
 		return mirror::c_str<impl>;
 	}
-	static constexpr auto data(void) {
+	static constexpr auto data(void) noexcept {
 		return c_str();
 	}
 
-	static constexpr auto is_empty(void) {
-		return envelope<mirror::is_empty<impl>>{};
+	static std::string str(void) noexcept {
+		return {data(), size()};
 	}
-	static constexpr auto empty(void) {
-		return envelope<mirror::is_empty<impl>>{};
-	}
-
-	static constexpr auto get_size(void) {
-		return envelope<mirror::get_size<impl>>{};
-	}
-	static constexpr auto size(void) {
-		return envelope<mirror::size<impl>>{};
+	operator std::string (void) const noexcept {
+		return str();
 	}
 };
+
+template <typename Char, Char ... C1, Char ... C2>
+static constexpr inline
+envelope<mirror::basic_string<Char, C1..., C2...>> operator + (
+	wrapped<mirror::basic_string<Char, C1...>>,
+	wrapped<mirror::basic_string<Char, C2...>>
+) noexcept { return {}; }
+
+template <typename OStream, typename Char, Char ... C>
+static inline OStream& operator << (
+	OStream& out,
+	wrapped<mirror::basic_string<Char, C...>> s
+) { return out.write(s.data(), s.size()); }
+
+// "constructors"
+template <typename Char, Char ... C>
+constexpr envelope<mirror::basic_string<Char, C...>> basic_string = {};
+
+template <char ... C>
+constexpr envelope<mirror::string<C...>> string = {};
 
 } // namespace dazzle
 
