@@ -65,6 +65,20 @@ envelope<mirror::basic_string<Char, C1..., C2...>> operator + (
 	wrapped<mirror::basic_string<Char, C2...>>
 ) noexcept { return {}; }
 
+template <typename Char, Char ... C>
+static constexpr inline
+envelope<mirror::true_> operator == (
+	wrapped<mirror::basic_string<Char, C...>>,
+	wrapped<mirror::basic_string<Char, C...>>
+) noexcept { return {}; }
+
+template <typename Char, Char ... C1, Char ... C2>
+static constexpr inline
+envelope<mirror::false_> operator == (
+	wrapped<mirror::basic_string<Char, C1...>>,
+	wrapped<mirror::basic_string<Char, C2...>>
+) noexcept { return {}; }
+
 template <typename OStream, typename Char, Char ... C>
 static inline OStream& operator << (
 	OStream& out,
