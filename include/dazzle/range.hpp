@@ -15,7 +15,9 @@
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/for_each.hpp>
+#include <mirror/apply_on.hpp>
 #include "envelope.hpp"
+#include "wrap.hpp"
 
 namespace dazzle {
 
@@ -34,12 +36,17 @@ struct wrapped<mirror::range<P...>>
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {
-		return mirror::for_each<impl>::apply(func);
+		return mirror::for_each<impl>::apply(wrap_args_of(func));
 	}
 
 	template <typename Func, typename Sep>
 	static constexpr auto for_each(Func func, Sep sep) {
-		return mirror::for_each<impl>::apply(func, sep);
+		return mirror::for_each<impl>::apply(wrap_args_of(func), sep);
+	}
+
+	template <typename Func>
+	static constexpr auto apply_on(Func func) {
+		return mirror::apply_on<impl>::apply(wrap_args_of(func));
 	}
 };
 

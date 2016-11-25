@@ -29,6 +29,7 @@
 #include <mirror/get_base_class.hpp>
 #include <mirror/get_constant.hpp>
 #include <mirror/get_pointer.hpp>
+#include <mirror/dereference.hpp>
 
 #include <mirror/get_elaborated_type_specifier.hpp>
 #include <mirror/get_access_specifier.hpp>
@@ -49,8 +50,10 @@
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/for_each.hpp>
+#include <mirror/apply_on.hpp>
 #include "envelope.hpp"
 #include "type.hpp"
+#include "wrap.hpp"
 
 namespace dazzle {
 
@@ -76,6 +79,11 @@ struct wrapped<mirror::metaobject<MO>>
 
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_constant)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_pointer)
+
+	template <typename T>
+	static constexpr auto& dereference(T& inst) {
+		return mirror::dereference<impl>::apply(inst);
+	}
 
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_elaborated_type_specifier)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_access_specifier)
@@ -106,12 +114,17 @@ struct wrapped<mirror::metaobject_sequence<MoS>>
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {
-		return mirror::for_each<impl>::apply(func);
+		return mirror::for_each<impl>::apply(wrap_args_of(func));
 	}
 
 	template <typename Func, typename Sep>
 	static constexpr auto for_each(Func func, Sep sep) {
-		return mirror::for_each<impl>::apply(func, sep);
+		return mirror::for_each<impl>::apply(wrap_args_of(func), sep);
+	}
+
+	template <typename Func>
+	static constexpr auto apply_on(Func func) {
+		return mirror::apply_on<impl>::apply(wrap_args_of(func));
 	}
 };
 
