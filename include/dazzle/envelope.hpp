@@ -85,6 +85,11 @@ struct envelope
 	}
 };
 
+#define DAZZLE_MEMFN_ENVELOP_MIRROR_OP(NAME)\
+	static constexpr auto NAME(void) {\
+		return envelope<mirror::NAME<impl>>{};\
+	}
+
 } // namespace dazzle
 
 #endif //include guard

@@ -29,19 +29,10 @@ struct wrapped<mirror::basic_string<Char, C...>>
 {
 	using impl = mirror::basic_string<Char, C...>;
 
-	static constexpr auto is_empty(void) noexcept {
-		return envelope<mirror::is_empty<impl>>{};
-	}
-	static constexpr auto empty(void) noexcept {
-		return envelope<mirror::is_empty<impl>>{};
-	}
-
-	static constexpr auto get_size(void) noexcept {
-		return envelope<mirror::get_size<impl>>{};
-	}
-	static constexpr auto size(void) noexcept {
-		return envelope<mirror::size<impl>>{};
-	}
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(is_empty)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(empty)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_size)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
 
 	static constexpr auto c_str(void) noexcept {
 		return mirror::c_str<impl>;

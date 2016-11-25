@@ -44,6 +44,9 @@ struct op_is_empty<metaobject_sequence<MO>>
 template <typename X>
 using is_empty = eval<_aux::op_is_empty<to_container<X>>>;
 
+template <typename X>
+using empty = is_empty<X>;
+
 } // namespace mirror
 
 #endif //include guard

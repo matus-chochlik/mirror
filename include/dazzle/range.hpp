@@ -27,19 +27,10 @@ struct wrapped<mirror::range<P...>>
 {
 	using impl = mirror::range<P...>;
 
-	static constexpr auto is_empty(void) {
-		return envelope<mirror::is_empty<impl>>{};
-	}
-	static constexpr auto empty(void) {
-		return envelope<mirror::is_empty<impl>>{};
-	}
-
-	static constexpr auto get_size(void) {
-		return envelope<mirror::get_size<impl>>{};
-	}
-	static constexpr auto size(void) {
-		return envelope<mirror::size<impl>>{};
-	}
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(is_empty)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(empty)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_size)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {
