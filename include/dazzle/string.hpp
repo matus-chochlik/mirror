@@ -74,6 +74,20 @@ envelope<mirror::false_> operator == (
 	wrapped<mirror::basic_string<Char, C2...>>
 ) noexcept { return {}; }
 
+template <typename Char, Char ... C>
+static constexpr inline
+envelope<mirror::false_> operator != (
+	wrapped<mirror::basic_string<Char, C...>>,
+	wrapped<mirror::basic_string<Char, C...>>
+) noexcept { return {}; }
+
+template <typename Char, Char ... C1, Char ... C2>
+static constexpr inline
+envelope<mirror::true_> operator != (
+	wrapped<mirror::basic_string<Char, C1...>>,
+	wrapped<mirror::basic_string<Char, C2...>>
+) noexcept { return {}; }
+
 template <typename OStream, typename Char, Char ... C>
 static inline OStream& operator << (
 	OStream& out,
@@ -86,6 +100,8 @@ constexpr envelope<mirror::basic_string<Char, C...>> basic_string = {};
 
 template <char ... C>
 constexpr envelope<mirror::string<C...>> string = {};
+
+constexpr envelope<mirror::empty_string> empty_string = {};
 
 } // namespace dazzle
 

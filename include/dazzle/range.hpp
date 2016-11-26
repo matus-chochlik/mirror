@@ -16,6 +16,7 @@
 #include <mirror/get_size.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
+#include "int_const.hpp"
 #include "envelope.hpp"
 #include "wrap.hpp"
 
@@ -49,6 +50,39 @@ struct wrapped<mirror::range<P...>>
 		return mirror::apply_on<impl>::apply(wrap_args_of(func));
 	}
 };
+
+template <typename ... P>
+static constexpr inline
+envelope<mirror::true_> operator == (
+	wrapped<mirror::range<P...>>,
+	wrapped<mirror::range<P...>>
+) noexcept { return {}; }
+
+template <typename ... P, typename ... R>
+static constexpr inline
+envelope<mirror::false_> operator == (
+	wrapped<mirror::range<P...>>,
+	wrapped<mirror::range<R...>>
+) noexcept { return {}; }
+
+template <typename ... P>
+static constexpr inline
+envelope<mirror::false_> operator != (
+	wrapped<mirror::range<P...>>,
+	wrapped<mirror::range<P...>>
+) noexcept { return {}; }
+
+template <typename ... P, typename ... R>
+static constexpr inline
+envelope<mirror::true_> operator != (
+	wrapped<mirror::range<P...>>,
+	wrapped<mirror::range<R...>>
+) noexcept { return {}; }
+
+template <typename ... P>
+constexpr envelope<mirror::range<P...>> range = {};
+
+constexpr envelope<mirror::empty_range> empty_range = {};
 
 } // namespace dazzle
 
