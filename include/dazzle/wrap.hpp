@@ -17,8 +17,11 @@ template <typename X>
 struct wrapped;
 
 template <typename X>
+struct envelope;
+
+template <typename X>
 static constexpr inline
-wrapped<X> wrap(X)
+envelope<X> wrap(X)
 noexcept { return {}; }
 
 template <typename Func>

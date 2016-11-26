@@ -13,6 +13,7 @@
 
 #include <mirror/string.hpp>
 #include <mirror/c_str.hpp>
+#include <mirror/string_view.hpp>
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
 #include "envelope.hpp"
@@ -39,6 +40,9 @@ struct wrapped<mirror::basic_string<Char, C...>>
 	}
 	static constexpr auto data(void) noexcept {
 		return c_str();
+	}
+	static constexpr auto string_view(void) noexcept {
+		return mirror::string_view<impl>;
 	}
 
 	static std::string str(void) noexcept {

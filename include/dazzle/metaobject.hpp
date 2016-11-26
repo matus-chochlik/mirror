@@ -123,7 +123,7 @@ struct wrapped<mirror::metaobject_sequence<MoS>>
 	}
 
 	template <typename Func>
-	static constexpr auto apply_on(Func func) {
+	static constexpr auto apply(Func func) {
 		return mirror::apply_on<impl>::apply(wrap_args_of(func));
 	}
 };

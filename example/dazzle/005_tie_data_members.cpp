@@ -22,12 +22,11 @@ struct tie_data_members
 {
 	auto operator()(T& v) const
 	{
-		return DAZZLED(T).get_data_members().apply_on(
-			[&v](auto ... mdm)
-			{
-				return std::tie(mdm.dereference(v)...);
-			}
-		);
+		auto do_tie = [&v](auto ... mdm) {
+			return std::tie(mdm.dereference(v)...);
+		};
+
+		return DAZZLED(T).get_data_members().apply(do_tie);
 	}
 };
 
