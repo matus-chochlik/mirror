@@ -12,6 +12,7 @@
 #define DAZZLE_NONE_1105240825_HPP
 
 #include <mirror/none.hpp>
+#include "sequence_ops.hpp"
 
 namespace dazzle {
 
@@ -20,9 +21,10 @@ struct wrapped;
 
 template <>
 struct wrapped<mirror::none>
-{
-	using impl = mirror::none;
-};
+ : sequence_ops<mirror::none>
+{ };
+
+constexpr wrapped<mirror::none> none = {};
 
 } // namespace dazzle
 

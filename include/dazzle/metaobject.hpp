@@ -47,13 +47,8 @@
 
 #include <mirror/get_reflected_type.hpp>
 
-#include <mirror/is_empty.hpp>
-#include <mirror/get_size.hpp>
-#include <mirror/for_each.hpp>
-#include <mirror/apply_on.hpp>
-#include "envelope.hpp"
+#include "sequence_ops.hpp"
 #include "type.hpp"
-#include "wrap.hpp"
 
 namespace dazzle {
 
@@ -104,29 +99,8 @@ struct wrapped<mirror::metaobject<MO>>
 
 template <typename MoS>
 struct wrapped<mirror::metaobject_sequence<MoS>>
-{
-	using impl = mirror::metaobject_sequence<MoS>;
-
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(is_empty)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(empty)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_size)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
-
-	template <typename Func>
-	static constexpr auto for_each(Func func) {
-		return mirror::for_each<impl>::apply(wrap_args_of(func));
-	}
-
-	template <typename Func, typename Sep>
-	static constexpr auto for_each(Func func, Sep sep) {
-		return mirror::for_each<impl>::apply(wrap_args_of(func), sep);
-	}
-
-	template <typename Func>
-	static constexpr auto apply(Func func) {
-		return mirror::apply_on<impl>::apply(wrap_args_of(func));
-	}
-};
+ : sequence_ops<mirror::metaobject_sequence<MoS>>
+{ };
 
 } // namespace dazzle
 
