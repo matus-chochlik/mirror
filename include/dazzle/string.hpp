@@ -16,8 +16,9 @@
 #include <mirror/string_view.hpp>
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
-#include "envelope.hpp"
+#include "sequence_ops.hpp"
 #include "int_const.hpp"
+#include "envelope.hpp"
 #include <string>
 
 namespace dazzle {
@@ -27,13 +28,10 @@ struct wrapped;
 
 template <typename Char, Char ... C>
 struct wrapped<mirror::basic_string<Char, C...>>
+ : sequence_ops<mirror::basic_string<Char, C...>>
 {
 	using impl = mirror::basic_string<Char, C...>;
-
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(is_empty)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(empty)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_size)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
+	using sequence_ops<mirror::basic_string<Char, C...>>::size;
 
 	static constexpr auto c_str(void) noexcept {
 		return mirror::c_str<impl>;

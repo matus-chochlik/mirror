@@ -26,6 +26,9 @@ struct wrapped<mirror::identity<T>>
 };
 
 template <typename T>
+constexpr wrapped<mirror::identity<T>> type = {};
+
+template <typename T>
 static constexpr inline
 envelope<mirror::true_>
 operator == (wrapped<mirror::identity<T>>, wrapped<mirror::identity<T>>)

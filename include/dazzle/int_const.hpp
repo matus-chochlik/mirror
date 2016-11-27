@@ -31,6 +31,61 @@ struct wrapped<mirror::int_const<Int, I>>
 	}
 };
 
+template <typename Int1, Int1 I1, typename Int2, Int2 I2>
+static constexpr inline
+wrapped<mirror::int_const<decltype(I1 == I2), (I1 == I2)>> operator == (
+	wrapped<mirror::int_const<Int1, I1>>,
+	wrapped<mirror::int_const<Int2, I2>>
+) noexcept { return {}; }
+
+template <typename Int1, Int1 I1, typename Int2, Int2 I2>
+static constexpr inline
+wrapped<mirror::int_const<decltype(I1 != I2), (I1 != I2)>> operator != (
+	wrapped<mirror::int_const<Int1, I1>>,
+	wrapped<mirror::int_const<Int2, I2>>
+) noexcept { return {}; }
+
+template <typename Int1, Int1 I1, typename Int2, Int2 I2>
+static constexpr inline
+wrapped<mirror::int_const<decltype(I1 <  I2), (I1 <  I2)>> operator <  (
+	wrapped<mirror::int_const<Int1, I1>>,
+	wrapped<mirror::int_const<Int2, I2>>
+) noexcept { return {}; }
+
+template <typename Int1, Int1 I1, typename Int2, Int2 I2>
+static constexpr inline
+wrapped<mirror::int_const<decltype(I1 <= I2), (I1 <= I2)>> operator <= (
+	wrapped<mirror::int_const<Int1, I1>>,
+	wrapped<mirror::int_const<Int2, I2>>
+) noexcept { return {}; }
+
+template <typename Int1, Int1 I1, typename Int2, Int2 I2>
+static constexpr inline
+wrapped<mirror::int_const<decltype(I1 >  I2), (I1 >  I2)>> operator >  (
+	wrapped<mirror::int_const<Int1, I1>>,
+	wrapped<mirror::int_const<Int2, I2>>
+) noexcept { return {}; }
+
+template <typename Int1, Int1 I1, typename Int2, Int2 I2>
+static constexpr inline
+wrapped<mirror::int_const<decltype(I1 >= I2), (I1 >= I2)>> operator >= (
+	wrapped<mirror::int_const<Int1, I1>>,
+	wrapped<mirror::int_const<Int2, I2>>
+) noexcept { return {}; }
+
+
+template <bool B>
+constexpr envelope<mirror::bool_<B>> bool_ = {};
+
+template <char C>
+constexpr envelope<mirror::char_<C>> char_ = {};
+
+template <int I>
+constexpr envelope<mirror::int_<I>> int_ = {};
+
+template <unsigned U>
+constexpr envelope<mirror::unsigned_<U>> unsigned_ = {};
+
 } // namespace dazzle
 
 #endif //include guard

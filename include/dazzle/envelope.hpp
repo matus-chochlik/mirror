@@ -23,70 +23,80 @@ struct envelope
  : wrapped<X>
 {
 	static constexpr auto is_int_const(void) {
-		return mirror::is_int_const<X>{};
+		return envelope<mirror::is_int_const<X>>{};
 	}
 	static constexpr auto is_string(void) {
-		return mirror::is_string<X>{};
+		return envelope<mirror::is_string<X>>{};
 	}
 	static constexpr auto is_range(void) {
-		return mirror::is_range<X>{};
+		return envelope<mirror::is_range<X>>{};
 	}
 	static constexpr auto is_none(void) {
-		return mirror::is_none<X>{};
+		return envelope<mirror::is_none<X>>{};
 	}
 	static constexpr auto is_metaobject(void) {
-		return mirror::is_metaobject<X>{};
+		return envelope<mirror::is_metaobject<X>>{};
 	}
 	static constexpr auto is_metaobject_sequence(void) {
-		return mirror::is_metaobject_sequence<X>{};
+		return envelope<mirror::is_metaobject_sequence<X>>{};
 	}
 
 	static constexpr auto reflects_alias(void) {
-		return mirror::reflects_alias<X>{};
+		return envelope<mirror::reflects_alias<X>>{};
 	}
 	static constexpr auto reflects_global_scope(void) {
-		return mirror::reflects_global_scope<X>{};
+		return envelope<mirror::reflects_global_scope<X>>{};
 	}
 	static constexpr auto reflects_namespace(void) {
-		return mirror::reflects_namespace<X>{};
+		return envelope<mirror::reflects_namespace<X>>{};
 	}
 	static constexpr auto reflects_type(void) {
-		return mirror::reflects_type<X>{};
+		return envelope<mirror::reflects_type<X>>{};
 	}
 	static constexpr auto reflects_tag_type(void) {
-		return mirror::reflects_tag_type<X>{};
+		return envelope<mirror::reflects_tag_type<X>>{};
 	}
 	static constexpr auto reflects_enum(void) {
-		return mirror::reflects_enum<X>{};
+		return envelope<mirror::reflects_enum<X>>{};
 	}
 	static constexpr auto reflects_record(void) {
-		return mirror::reflects_record<X>{};
+		return envelope<mirror::reflects_record<X>>{};
 	}
 	static constexpr auto reflects_class(void) {
-		return mirror::reflects_class<X>{};
+		return envelope<mirror::reflects_class<X>>{};
 	}
 	static constexpr auto reflects_enum_member(void) {
-		return mirror::reflects_enum_member<X>{};
+		return envelope<mirror::reflects_enum_member<X>>{};
 	}
 	static constexpr auto reflects_record_member(void) {
-		return mirror::reflects_record_member<X>{};
+		return envelope<mirror::reflects_record_member<X>>{};
 	}
 	static constexpr auto reflects_variable(void) {
-		return mirror::reflects_variable<X>{};
+		return envelope<mirror::reflects_variable<X>>{};
 	}
 	static constexpr auto reflects_constant(void) {
-		return mirror::reflects_constant<X>{};
+		return envelope<mirror::reflects_constant<X>>{};
 	}
 	static constexpr auto reflects_specifier(void) {
-		return mirror::reflects_specifier<X>{};
+		return envelope<mirror::reflects_specifier<X>>{};
 	}
 	static constexpr auto reflects_inheritance(void) {
-		return mirror::reflects_inheritance<X>{};
+		return envelope<mirror::reflects_inheritance<X>>{};
 	}
 };
 
+template <typename X>
+static constexpr inline
+envelope<X> wrap(X = {})
+noexcept { return {}; }
+
+template <typename Func>
+static constexpr inline
+auto wrap_args_of(Func func)
+noexcept { return [=](auto ... x) { return func(wrap(x)...); }; }
+
 #define DAZZLE_MEMFN_ENVELOP_MIRROR_OP(NAME)\
-	static constexpr auto NAME(void) {\
+	static constexpr auto NAME(void) noexcept {\
 		return envelope<mirror::NAME<impl>>{};\
 	}
 

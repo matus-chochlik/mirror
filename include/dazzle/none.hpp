@@ -13,18 +13,17 @@
 
 #include <mirror/none.hpp>
 #include "sequence_ops.hpp"
+#include "int_const.hpp"
+#include "envelope.hpp"
 
 namespace dazzle {
-
-template <typename X>
-struct wrapped;
 
 template <>
 struct wrapped<mirror::none>
  : sequence_ops<mirror::none>
 { };
 
-constexpr wrapped<mirror::none> none = {};
+constexpr envelope<mirror::none> none = {};
 
 } // namespace dazzle
 

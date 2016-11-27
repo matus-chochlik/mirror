@@ -13,10 +13,10 @@
 
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
+#include <mirror/get_front.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
 #include "envelope.hpp"
-#include "wrap.hpp"
 
 namespace dazzle {
 
@@ -29,6 +29,12 @@ struct sequence_ops
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(empty)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_size)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
+
+	static constexpr auto get_front(void) {
+		return envelope<
+			mirror::wrap_if_not_special<mirror::get_front<impl>>
+		>{};
+	}
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {
