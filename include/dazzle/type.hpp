@@ -13,11 +13,9 @@
 
 #include <mirror/identity.hpp>
 #include "int_const.hpp"
+#include "envelope.hpp"
 
 namespace dazzle {
-
-template <typename X>
-struct wrapped;
 
 template <typename T>
 struct wrapped<mirror::identity<T>>
@@ -26,7 +24,7 @@ struct wrapped<mirror::identity<T>>
 };
 
 template <typename T>
-constexpr wrapped<mirror::identity<T>> type = {};
+constexpr envelope<mirror::identity<T>> type = {};
 
 template <typename T>
 static constexpr inline
