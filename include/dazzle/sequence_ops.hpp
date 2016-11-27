@@ -16,6 +16,10 @@
 #include <mirror/get_front.hpp>
 #include <mirror/get_head.hpp>
 #include <mirror/get_tail.hpp>
+#include <mirror/starts_with.hpp>
+#include <mirror/ends_with.hpp>
+#include <mirror/contains.hpp>
+
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
 #include "envelope.hpp"
@@ -38,8 +42,11 @@ struct sequence_ops
 		>{};
 	}
 
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_N(get_head)
-	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_N(get_tail)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(get_head)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(get_tail)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(starts_with)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(ends_with)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(contains)
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {
