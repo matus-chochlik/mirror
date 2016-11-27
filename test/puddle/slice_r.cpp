@@ -30,12 +30,12 @@ BOOST_AUTO_TEST_CASE(puddle_slice_range)
 	auto rc = range<long, float, short>;
 	auto rl = range<int, long, float, short, char>;
 
-	auto s0 = size_c<0>;
-	auto s1 = size_c<1>;
-	auto s2 = size_c<2>;
-	auto s3 = size_c<3>;
-	auto s4 = size_c<4>;
-	auto s5 = size_c<5>;
+	auto s0 = size_t_<0>;
+	auto s1 = size_t_<1>;
+	auto s2 = size_t_<2>;
+	auto s3 = size_t_<3>;
+	auto s4 = size_t_<4>;
+	auto s5 = size_t_<5>;
 
 	BOOST_CHECK(( value(slice(er, s0, s0) == er)));
 	BOOST_CHECK(( value(slice(er, s1, s0) == er)));
@@ -66,12 +66,12 @@ BOOST_AUTO_TEST_CASE(puddle_slice_string)
 	auto cde = string<'c','d','e'>;
 	auto bcd = string<'b','c','d'>;
 
-	auto s0 = size_c<0>;
-	auto s1 = size_c<1>;
-	auto s2 = size_c<2>;
-	auto s3 = size_c<3>;
-	auto s4 = size_c<4>;
-	auto s5 = size_c<5>;
+	auto s0 = size_t_<0>;
+	auto s1 = size_t_<1>;
+	auto s2 = size_t_<2>;
+	auto s3 = size_t_<3>;
+	auto s4 = size_t_<4>;
+	auto s5 = size_t_<5>;
 
 	BOOST_CHECK(( value(slice(e, s0, s0) == e)));
 	BOOST_CHECK(( value(slice(e, s2, s1) == e)));

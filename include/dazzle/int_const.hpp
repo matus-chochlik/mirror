@@ -86,6 +86,9 @@ constexpr envelope<mirror::int_<I>> int_ = {};
 template <unsigned U>
 constexpr envelope<mirror::unsigned_<U>> unsigned_ = {};
 
+template <std::size_t S>
+constexpr envelope<mirror::size_t_<S>> size_t_ = {};
+
 } // namespace dazzle
 
 #endif //include guard

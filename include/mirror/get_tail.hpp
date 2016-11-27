@@ -38,8 +38,8 @@ struct op_get_tail<Count, true_, Tail>
 template <typename Count, typename Tail>
 struct op_get_tail<Count, false_, Tail>
  : op_get_tail<
-	minus<Count, size_const<1>>, 
-	or_<is_empty<Tail>, equal<Count, size_const<1>>>,
+	minus<Count, size_t_<1>>, 
+	or_<is_empty<Tail>, equal<Count, size_t_<1>>>,
 	pop_front<Tail>
 > { };
 

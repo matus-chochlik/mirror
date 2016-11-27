@@ -14,6 +14,8 @@
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
 #include <mirror/get_front.hpp>
+#include <mirror/get_head.hpp>
+#include <mirror/get_tail.hpp>
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
 #include "envelope.hpp"
@@ -35,6 +37,9 @@ struct sequence_ops
 			mirror::wrap_if_not_special<mirror::get_front<impl>>
 		>{};
 	}
+
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_N(get_head)
+	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_N(get_tail)
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {

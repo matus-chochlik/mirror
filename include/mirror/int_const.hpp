@@ -36,7 +36,7 @@ template <unsigned U>
 using unsigned_ = int_const<unsigned, U>;
 
 template <std::size_t S>
-using size_const = int_const<std::size_t, S>;
+using size_t_= int_const<std::size_t, S>;
 
 } // namespace mirror
 

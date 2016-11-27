@@ -38,8 +38,8 @@ struct op_get_head<Count, true_, Head, Tail>
 template <typename Count, typename Head, typename Tail>
 struct op_get_head<Count, false_, Head, Tail>
  : op_get_head<
-	minus<Count, size_const<1>>, 
-	or_<is_empty<Tail>, equal<Count, size_const<1>>>,
+	minus<Count, size_t_<1>>, 
+	or_<is_empty<Tail>, equal<Count, size_t_<1>>>,
 	push_back<Head, get_front<Tail>>,
 	pop_front<Tail>
 > { };
@@ -49,7 +49,7 @@ struct op_get_head<Count, false_, Head, Tail>
 template <typename X, typename Length>
 using get_head = eval<_aux::op_get_head<
 	Length,
-	or_<is_empty<X>, equal<Length, size_const<0>>>,
+	or_<is_empty<X>, equal<Length, size_t_<0>>>,
 	get_empty<X>, X
 >>; 
 } // namespace mirror

@@ -100,6 +100,12 @@ noexcept { return [=](auto ... x) { return func(wrap(x)...); }; }
 		return envelope<mirror::NAME<impl>>{};\
 	}
 
+#define DAZZLE_MEMFN_ENVELOP_MIRROR_OP_N(NAME)\
+	template <typename N> \
+	static constexpr auto NAME(envelope<N>) noexcept {\
+		return envelope<mirror::NAME<impl, N>>{};\
+	}
+
 } // namespace dazzle
 
 #endif //include guard
