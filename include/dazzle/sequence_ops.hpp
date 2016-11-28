@@ -13,6 +13,7 @@
 
 #include <mirror/is_empty.hpp>
 #include <mirror/get_size.hpp>
+#include <mirror/get_element.hpp>
 #include <mirror/get_front.hpp>
 #include <mirror/get_head.hpp>
 #include <mirror/get_tail.hpp>
@@ -39,10 +40,17 @@ struct sequence_ops
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(get_size)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
 
+	template <typename W>
+	static constexpr auto get_element(envelope<W>) {
+		return envelope<mirror::wrap_if_not_special<
+			mirror::get_element<impl, W>
+		>>{};
+	}
+
 	static constexpr auto get_front(void) {
-		return envelope<
-			mirror::wrap_if_not_special<mirror::get_front<impl>>
-		>{};
+		return envelope<mirror::wrap_if_not_special<
+			mirror::get_front<impl>
+		>>{};
 	}
 
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(get_head)

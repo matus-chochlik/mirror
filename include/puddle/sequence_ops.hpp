@@ -253,7 +253,7 @@ template <
 auto get_element(X, I)
 noexcept
 {
-	return mirror::get_element<X, I>{};
+	return mirror::wrap_if_not_special<mirror::get_element<X, I>>{};
 }
 
 template <typename X, typename = enable_if_opt_metaobject_sequence<X>>

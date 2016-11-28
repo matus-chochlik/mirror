@@ -25,6 +25,38 @@ struct wrapped<mirror::none>
 
 constexpr envelope<mirror::none> none = {};
 
+static constexpr inline
+envelope<mirror::true_> operator == (
+	envelope<mirror::none>,
+	envelope<mirror::none>
+) noexcept { return {}; }
+
+template <typename X>
+static constexpr inline
+envelope<mirror::false_> operator == (envelope<mirror::none>, envelope<X>)
+noexcept { return {}; }
+
+template <typename X>
+static constexpr inline
+envelope<mirror::false_> operator == (envelope<X>, envelope<mirror::none>)
+noexcept { return {}; }
+
+static constexpr inline
+envelope<mirror::false_> operator != (
+	envelope<mirror::none>,
+	envelope<mirror::none>
+) noexcept { return {}; }
+
+template <typename X>
+static constexpr inline
+envelope<mirror::true_> operator != (envelope<mirror::none>, envelope<X>)
+noexcept { return {}; }
+
+template <typename X>
+static constexpr inline
+envelope<mirror::true_> operator != (envelope<X>, envelope<mirror::none>)
+noexcept { return {}; }
+
 } // namespace dazzle
 
 #endif //include guard
