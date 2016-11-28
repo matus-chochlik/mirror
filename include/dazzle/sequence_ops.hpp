@@ -24,6 +24,8 @@
 #include <mirror/ends_with.hpp>
 #include <mirror/contains.hpp>
 
+#include <mirror/transform.hpp>
+
 #include <mirror/for_each.hpp>
 #include <mirror/apply_on.hpp>
 #include "envelope.hpp"
@@ -61,6 +63,11 @@ struct sequence_ops
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(starts_with)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(ends_with)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(contains)
+
+	template <template <class> class Transf>
+	static constexpr auto transform(void) {
+		return envelope<mirror::transform<Transf, impl>>{};
+	}
 
 	template <typename Func>
 	static constexpr auto for_each(Func func) {
