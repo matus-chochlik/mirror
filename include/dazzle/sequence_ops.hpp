@@ -24,6 +24,7 @@
 #include <mirror/ends_with.hpp>
 #include <mirror/contains.hpp>
 
+#include <mirror/join.hpp>
 #include <mirror/transform.hpp>
 
 #include <mirror/for_each.hpp>
@@ -43,13 +44,17 @@ struct sequence_ops
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP(size)
 
 	template <typename W>
-	static constexpr auto get_element(envelope<W>) {
+	static constexpr
+	auto get_element(envelope<W>)
+	noexcept {
 		return envelope<mirror::wrap_if_not_special<
 			mirror::get_element<impl, W>
 		>>{};
 	}
 
-	static constexpr auto get_front(void) {
+	static constexpr
+	auto get_front(void)
+	noexcept {
 		return envelope<mirror::wrap_if_not_special<
 			mirror::get_front<impl>
 		>>{};
@@ -64,23 +69,35 @@ struct sequence_ops
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(ends_with)
 	DAZZLE_MEMFN_ENVELOP_MIRROR_OP_1(contains)
 
+	template <typename ... P>
+	static constexpr
+	auto join(envelope<P>...)
+	noexcept {
+		return envelope<mirror::join<impl, P...>>{};
+	}
+
 	template <template <class> class Transf>
-	static constexpr auto transform(void) {
+	static constexpr
+	auto transform(void)
+	noexcept {
 		return envelope<mirror::transform<Transf, impl>>{};
 	}
 
 	template <typename Func>
-	static constexpr auto for_each(Func func) {
+	static constexpr
+	auto for_each(Func func) {
 		return mirror::for_each<impl>::apply(wrap_args_of(func));
 	}
 
 	template <typename Func, typename Sep>
-	static constexpr auto for_each(Func func, Sep sep) {
+	static constexpr
+	auto for_each(Func func, Sep sep) {
 		return mirror::for_each<impl>::apply(wrap_args_of(func), sep);
 	}
 
 	template <typename Func>
-	static constexpr auto apply(Func func) {
+	static constexpr
+	auto apply(Func func) {
 		return mirror::apply_on<impl>::apply(wrap_args_of(func));
 	}
 };
