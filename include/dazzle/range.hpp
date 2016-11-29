@@ -58,6 +58,11 @@ constexpr envelope<mirror::range<P...>> range = {};
 
 constexpr envelope<mirror::empty_range> empty_range = {};
 
+template <typename ... P>
+static constexpr inline
+envelope<mirror::range<P...>> make_range(envelope<P>...)
+noexcept { return {}; }
+
 } // namespace dazzle
 
 #endif //include guard

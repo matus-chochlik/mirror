@@ -87,7 +87,7 @@ envelope<mirror::true_> operator != (
 ) noexcept { return {}; }
 
 template <typename OStream, typename Char, Char ... C>
-static inline OStream& operator << (
+static inline auto& operator << (
 	OStream& out,
 	wrapped<mirror::basic_string<Char, C...>> s
 ) { return out.write(s.data(), s.size()); }

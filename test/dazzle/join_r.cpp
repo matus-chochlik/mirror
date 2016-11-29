@@ -13,7 +13,6 @@
 #define BOOST_TEST_MODULE DAZZLE_join
 #include <boost/test/unit_test.hpp>
 
-#include <dazzle/sequence_ops.hpp>
 #include <dazzle/int_const.hpp>
 #include <dazzle/string.hpp>
 #include <dazzle/range.hpp>
