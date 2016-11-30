@@ -38,6 +38,9 @@ using unsigned_ = int_const<unsigned, U>;
 template <std::size_t S>
 using size_t_= int_const<std::size_t, S>;
 
+template <typename T>
+using sizeof_ = size_t_<sizeof(T)>;
+
 } // namespace mirror
 
 #endif //include guard
