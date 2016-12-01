@@ -55,17 +55,10 @@ using namespace mirror;
 template <typename T>
 struct json_writer
 {
-private:
-	struct _writer {
-		std::ostream& out;
-		const T& v;
-		bool first;
-
-		template <typename MO>
-		void operator()(MO)
-		{
-			if(first) first = false;
-			else out << ", ";
+	std::ostream& operator()(std::ostream& out, const T& v) const
+	{
+		auto write = [&out, &v](auto mo) {
+			using MO = decltype(mo);
 
 			out << '"';
 			out << c_str<get_base_name<MO>>;
@@ -73,18 +66,15 @@ private:
 			out << ": ";
 
 			to_json(out, dereference<MO>::apply(v));
-		}
-	};
-public:
-	std::ostream& operator()(std::ostream& out, const T& v) const
-	{
-		_writer write{out, v, true};
+		};
+
+		auto separate = [&out](void) { out << ", "; };
 
 		using MT = MIRRORED(T);
 
 		out << '{';
 
-		for_each<get_data_members<MT>>::apply(write);
+		for_each<get_data_members<MT>>::apply(write, separate);
 
 		return out << '}';
 	}

@@ -36,7 +36,7 @@ template <unsigned U>
 constexpr mirror::unsigned_<U> unsigned_ = {};
 
 template <std::size_t S>
-constexpr mirror::size_const<S> size_c = {};
+constexpr mirror::size_t_<S> size_t_ = {};
 
 template <typename I>
 static inline constexpr

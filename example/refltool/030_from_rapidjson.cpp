@@ -42,69 +42,13 @@ struct nobel_prize
 	std::vector<prize_laureate> laureates;
 };
 
+static std::string get_json(void);
+
 int main(void)
 {
 	using namespace refltool;
 
-	const std::string input("[{\
-		\"category\" : \"physics\",\
-		\"year\" : 2016,\
-		\"laureates\" : [{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"David J. Thouless\"\
-		},{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"F. Duncan M. Haldane\"\
-		},{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"J. Michael Kosterlitz\"\
-		}]\
-	},{\
-		\"category\" : \"chemistry\",\
-		\"year\" : 2016,\
-		\"laureates\" : [{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"Jean-Pierre Sauvage\"\
-		},{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"Sir J. Fraser Stoddart\"\
-		},{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"Bernard L. Feringa\"\
-		}]\
-	},{\
-		\"category\" : \"medicine\",\
-		\"year\" : 2016,\
-		\"laureates\" : [{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"Yoshinori Ohsumi\"\
-		}]\
-	},{\
-		\"category\" : \"literature\",\
-		\"year\" : 2016,\
-		\"laureates\" : [{\
-			\"kind\" : \"individual\",\
-			\"name\" : \"Bob Dylan\"\
-		}]\
-	},{\
-		\"category\" : \"peace\",\
-		\"year\" : 2015,\
-		\"laureates\" : [{\
-			\"kind\" : \"organization\",\
-			\"name\" : \"National Dialogue Quartet\"\
-		}]\
-	},{\
-		\"category\" : \"peace\",\
-		\"year\" : 2007,\
-		\"laureates\" : [{\
-			\"kind\" : \"organization\",\
-			\"name\" :\"Intergovernmental Panel on Climate Change\"\
-		},{\
-			\"kind\" : \"individual\",\
-			\"name\" :\"Albert Arnold Gore Jr.\"\
-		}]\
-	}]");
-
+	const std::string input = get_json();
 
 	// parse rapidjson document
 	rapidjson::Document doc;
@@ -162,3 +106,63 @@ int main(void)
 	return 0;
 }
 
+static std::string get_json(void) {
+	return "[{\
+		\"category\" : \"physics\",\
+		\"year\" : 2016,\
+		\"laureates\" : [{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"David J. Thouless\"\
+		},{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"F. Duncan M. Haldane\"\
+		},{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"J. Michael Kosterlitz\"\
+		}]\
+	},{\
+		\"category\" : \"chemistry\",\
+		\"year\" : 2016,\
+		\"laureates\" : [{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"Jean-Pierre Sauvage\"\
+		},{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"Sir J. Fraser Stoddart\"\
+		},{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"Bernard L. Feringa\"\
+		}]\
+	},{\
+		\"category\" : \"medicine\",\
+		\"year\" : 2016,\
+		\"laureates\" : [{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"Yoshinori Ohsumi\"\
+		}]\
+	},{\
+		\"category\" : \"literature\",\
+		\"year\" : 2016,\
+		\"laureates\" : [{\
+			\"kind\" : \"individual\",\
+			\"name\" : \"Bob Dylan\"\
+		}]\
+	},{\
+		\"category\" : \"peace\",\
+		\"year\" : 2015,\
+		\"laureates\" : [{\
+			\"kind\" : \"organization\",\
+			\"name\" : \"National Dialogue Quartet\"\
+		}]\
+	},{\
+		\"category\" : \"peace\",\
+		\"year\" : 2007,\
+		\"laureates\" : [{\
+			\"kind\" : \"organization\",\
+			\"name\" :\"Intergovernmental Panel on Climate Change\"\
+		},{\
+			\"kind\" : \"individual\",\
+			\"name\" :\"Albert Arnold Gore Jr.\"\
+		}]\
+	}]";
+}

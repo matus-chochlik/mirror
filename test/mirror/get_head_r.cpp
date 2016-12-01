@@ -28,11 +28,11 @@ BOOST_AUTO_TEST_CASE(mirror_get_head_range)
 	using r2 = range<int, long>;
 	using r3 = range<int, long, char>;
 
-	using s0 = size_const<0>;
-	using s1 = size_const<1>;
-	using s2 = size_const<2>;
-	using s3 = size_const<3>;
-	using s4 = size_const<4>;
+	using s0 = size_t_<0>;
+	using s1 = size_t_<1>;
+	using s2 = size_t_<2>;
+	using s3 = size_t_<3>;
+	using s4 = size_t_<4>;
 
 	BOOST_CHECK(( value<equal<get_head<er, s0>, er>>));
 	BOOST_CHECK(( value<equal<get_head<er, s1>, er>>));
@@ -59,11 +59,11 @@ BOOST_AUTO_TEST_CASE(mirror_get_head_string)
 	using ab = string<'a','b'>;
 	using abc = string<'a','b','c'>;
 
-	using s0 = size_const<0>;
-	using s1 = size_const<1>;
-	using s2 = size_const<2>;
-	using s3 = size_const<3>;
-	using s4 = size_const<4>;
+	using s0 = size_t_<0>;
+	using s1 = size_t_<1>;
+	using s2 = size_t_<2>;
+	using s3 = size_t_<3>;
+	using s4 = size_t_<4>;
 
 	BOOST_CHECK(( value<equal<get_head<e, s0>, e>>));
 	BOOST_CHECK(( value<equal<get_head<a, s0>, e>>));

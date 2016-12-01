@@ -35,6 +35,7 @@
 #include <mirror/apply_on.hpp>
 #include <mirror/wrap.hpp>
 #include <mirror/unwrap.hpp>
+#include <mirror/transform.hpp>
 #include <puddle/enable_if.hpp>
 
 namespace puddle {
@@ -235,6 +236,16 @@ noexcept
 }
 
 template <
+	template <class> class T, typename X,
+	typename = enable_if_any_opt_sequence<X>
+> static constexpr inline
+auto transform(X)
+noexcept
+{
+	return mirror::transform<T, X>{};
+}
+
+template <
 	typename X, typename I,
 	typename = enable_if_any_opt_sequence<X>,
 	typename = enable_if_int_const<I>
@@ -242,7 +253,7 @@ template <
 auto get_element(X, I)
 noexcept
 {
-	return mirror::get_element<X, I>{};
+	return mirror::wrap_if_not_special<mirror::get_element<X, I>>{};
 }
 
 template <typename X, typename = enable_if_opt_metaobject_sequence<X>>

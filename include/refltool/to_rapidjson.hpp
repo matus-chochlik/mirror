@@ -433,8 +433,8 @@ private:
 
 	mirror::repack<
 		mirror::transform<
-			mirror::get_data_members<MIRRORED(T)>,
-			_attrcomp_t
+			_attrcomp_t,
+			mirror::get_data_members<MIRRORED(T)>
 		>, std::tuple
 	> _attrcomps;
 public:

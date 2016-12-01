@@ -22,33 +22,33 @@
 namespace mirror {
 namespace _aux {
 
-template <typename X, template <class> class Transf>
+template <template <class> class Transf, typename X>
 struct op_transform;
 
 template <template <class> class Transf>
-struct op_transform<none, Transf>
+struct op_transform<Transf, none>
  : none
 { };
 
-template <typename ... P, template <class> class Transf>
-struct op_transform<range<P...>, Transf>
+template <template <class> class Transf, typename ... P>
+struct op_transform<Transf, range<P...>>
  : range<Transf<P>...>
 { };
 
-template <typename Char, Char ... C, template <class> class Transf>
-struct op_transform<basic_string<Char, C...>, Transf>
+template <template <class> class Transf, typename Char, Char ... C>
+struct op_transform<Transf, basic_string<Char, C...>>
  : basic_string<Char, Transf<int_const<Char, C>>::value...>
 { };
 
-template <typename MoS, template <class> class Transf>
-struct op_transform<metaobject_sequence<MoS>, Transf>
- : op_transform<unpack<metaobject_sequence<MoS>>, Transf>
+template <template <class> class Transf, typename MoS>
+struct op_transform<Transf, metaobject_sequence<MoS>>
+ : op_transform<Transf, unpack<metaobject_sequence<MoS>>>
 { };
 
 } // namespace _aux
 
-template <typename X, template <class> class Transf>
-using transform = eval<_aux::op_transform<X, Transf>>;
+template <template <class> class Transf, typename X>
+using transform = eval<_aux::op_transform<Transf, X>>;
 
 } // namespace mirror
 

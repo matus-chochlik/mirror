@@ -25,47 +25,47 @@ BOOST_AUTO_TEST_CASE(puddle_get_head_range)
 	using namespace puddle;
 
 	BOOST_CHECK( value(
-		get_head(empty_range, size_c<0>) ==
+		get_head(empty_range, size_t_<0>) ==
 		empty_range
 	));
 
 	BOOST_CHECK( value(
-		get_head(empty_range, size_c<10>) ==
+		get_head(empty_range, size_t_<10>) ==
 		empty_range
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<0>) ==
+		get_head(range<long, int, char, bool>, size_t_<0>) ==
 		empty_range
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<1>) ==
+		get_head(range<long, int, char, bool>, size_t_<1>) ==
 		range<long>
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<2>) ==
+		get_head(range<long, int, char, bool>, size_t_<2>) ==
 		range<long, int>
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<3>) ==
+		get_head(range<long, int, char, bool>, size_t_<3>) ==
 		range<long, int, char>
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<4>) ==
+		get_head(range<long, int, char, bool>, size_t_<4>) ==
 		range<long, int, char, bool>
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<5>) ==
+		get_head(range<long, int, char, bool>, size_t_<5>) ==
 		range<long, int, char, bool>
 	));
 
 	BOOST_CHECK( value(
-		get_head(range<long, int, char, bool>, size_c<100>) ==
+		get_head(range<long, int, char, bool>, size_t_<100>) ==
 		range<long, int, char, bool>
 	));
 }
@@ -75,52 +75,52 @@ BOOST_AUTO_TEST_CASE(puddle_get_head_string)
 	using namespace puddle;
 
 	BOOST_CHECK( value(
-		get_head(empty_string, size_c<0>) ==
+		get_head(empty_string, size_t_<0>) ==
 		empty_string
 	));
 
 	BOOST_CHECK( value(
-		get_head(empty_string, size_c<12>) ==
+		get_head(empty_string, size_t_<12>) ==
 		empty_string
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<0>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<0>) ==
 		empty_string
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<1>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<1>) ==
 		string<'a'>
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<2>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<2>) ==
 		string<'a','b'>
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<3>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<3>) ==
 		string<'a','b','c'>
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<4>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<4>) ==
 		string<'a','b','c','d'>
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<5>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<5>) ==
 		string<'a','b','c','d','e'>
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<6>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<6>) ==
 		string<'a','b','c','d','e'>
 	));
 
 	BOOST_CHECK( value(
-		get_head(string<'a','b','c','d','e'>, size_c<100>) ==
+		get_head(string<'a','b','c','d','e'>, size_t_<100>) ==
 		string<'a','b','c','d','e'>
 	));
 

@@ -29,12 +29,12 @@ BOOST_AUTO_TEST_CASE(mirror_slice_range)
 	using rc = range<long, float, short>;
 	using rl = range<int, long, float, short, char>;
 
-	using s0 = size_const<0>;
-	using s1 = size_const<1>;
-	using s2 = size_const<2>;
-	using s3 = size_const<3>;
-	using s4 = size_const<4>;
-	using s5 = size_const<5>;
+	using s0 = size_t_<0>;
+	using s1 = size_t_<1>;
+	using s2 = size_t_<2>;
+	using s3 = size_t_<3>;
+	using s4 = size_t_<4>;
+	using s5 = size_t_<5>;
 
 	BOOST_CHECK(( value<equal<slice<er, s0, s0>, er>>));
 	BOOST_CHECK(( value<equal<slice<er, s1, s0>, er>>));
@@ -65,12 +65,12 @@ BOOST_AUTO_TEST_CASE(mirror_slice_string)
 	using cde = string<'c','d','e'>;
 	using bcd = string<'b','c','d'>;
 
-	using s0 = size_const<0>;
-	using s1 = size_const<1>;
-	using s2 = size_const<2>;
-	using s3 = size_const<3>;
-	using s4 = size_const<4>;
-	using s5 = size_const<5>;
+	using s0 = size_t_<0>;
+	using s1 = size_t_<1>;
+	using s2 = size_t_<2>;
+	using s3 = size_t_<3>;
+	using s4 = size_t_<4>;
+	using s5 = size_t_<5>;
 
 	BOOST_CHECK(( value<equal<slice<e, s0, s0>, e>>));
 	BOOST_CHECK(( value<equal<slice<e, s2, s1>, e>>));

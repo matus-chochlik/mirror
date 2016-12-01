@@ -29,11 +29,11 @@ BOOST_AUTO_TEST_CASE(puddle_skip_range)
 	auto r2 = range<long, char>;
 	auto r3 = range<int, long, char>;
 
-	auto s0 = size_c<0>;
-	auto s1 = size_c<1>;
-	auto s2 = size_c<2>;
-	auto s3 = size_c<3>;
-	auto s4 = size_c<4>;
+	auto s0 = size_t_<0>;
+	auto s1 = size_t_<1>;
+	auto s2 = size_t_<2>;
+	auto s3 = size_t_<3>;
+	auto s4 = size_t_<4>;
 
 	BOOST_CHECK(( value(skip(er, s0) == er)));
 	BOOST_CHECK(( value(skip(er, s1) == er)));
@@ -62,11 +62,11 @@ BOOST_AUTO_TEST_CASE(puddle_skip_string)
 	auto bc = string<'b','c'>;
 	auto abc = string<'a','b','c'>;
 
-	auto s0 = size_c<0>;
-	auto s1 = size_c<1>;
-	auto s2 = size_c<2>;
-	auto s3 = size_c<3>;
-	auto s4 = size_c<4>;
+	auto s0 = size_t_<0>;
+	auto s1 = size_t_<1>;
+	auto s2 = size_t_<2>;
+	auto s3 = size_t_<3>;
+	auto s4 = size_t_<4>;
 
 	BOOST_CHECK(( value(skip(e, s0) == e)));
 	BOOST_CHECK(( value(skip(e, s1) == e)));

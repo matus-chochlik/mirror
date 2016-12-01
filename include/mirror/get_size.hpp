@@ -21,22 +21,22 @@ struct op_get_size;
 
 template <>
 struct op_get_size<none>
- : size_const<0u>
+ : size_t_<0u>
 { };
 
 template <typename ... P>
 struct op_get_size<range<P...>>
- : size_const<sizeof ... (P)>
+ : size_t_<sizeof ... (P)>
 { };
 
 template <typename Char, Char ... C>
 struct op_get_size<basic_string<Char, C...>>
- : size_const<sizeof ... (C)>
+ : size_t_<sizeof ... (C)>
 { };
 
 template <typename MO>
 struct op_get_size<metaobject_sequence<MO>>
- : size_const<reflbase::get_size_v<MO>>
+ : size_t_<reflbase::get_size_v<MO>>
 { };
 
 } // namespace _aux

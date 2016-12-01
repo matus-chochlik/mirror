@@ -24,7 +24,7 @@ using skip = get_tail<
 	lazy_conditional<
 		less<Count, get_size<Range>>,
 		minus<get_size<Range>, Count>,
-		size_const<0>
+		size_t_<0>
 	>
 >;
 

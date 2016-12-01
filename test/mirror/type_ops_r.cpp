@@ -14,7 +14,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include <mirror/type_ops.hpp>
-#include <reflexpr>
 
 BOOST_AUTO_TEST_SUITE(mirror_type_ops)
 
