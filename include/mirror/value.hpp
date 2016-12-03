@@ -25,6 +25,11 @@ struct op_value<int_const<Int, I>>
  : int_const<Int, I>
 { };
 
+template <typename Int, Int I>
+struct op_value<int_const<const Int, I>>
+ : int_const<Int, I>
+{ };
+
 template <>
 struct op_value<none>
  : int_const<int, 0>
