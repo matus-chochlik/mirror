@@ -35,6 +35,7 @@
 #include <mirror/apply_on.hpp>
 #include <mirror/wrap.hpp>
 #include <mirror/unwrap.hpp>
+#include <mirror/foldl.hpp>
 #include <mirror/transform.hpp>
 #include <puddle/enable_if.hpp>
 
@@ -43,40 +44,35 @@ namespace puddle {
 template <typename X, typename = enable_if_any_opt_sequence<X>>
 static constexpr inline
 auto is_empty(X)
-noexcept
-{
+noexcept {
 	return mirror::is_empty<X>{};
 }
 
 template <typename X, typename = enable_if_opt_eager_sequence<X>>
 static constexpr inline
 auto get_empty(X)
-noexcept
-{
+noexcept {
 	return mirror::get_empty<X>{};
 }
 
 template <typename X, typename = enable_if_any_opt_sequence<X>>
 static constexpr inline
 auto get_size(X)
-noexcept
-{
+noexcept {
 	return mirror::get_size<X>{};
 }
 
 template <typename X, typename = enable_if_any_opt_sequence<X>>
 static constexpr inline
 auto size(X)
-noexcept
-{
+noexcept {
 	return mirror::size<X>{};
 }
 
 template <typename X, typename = enable_if_any_opt_sequence<X>>
 static constexpr inline
 auto get_front(X)
-noexcept
-{
+noexcept {
 	return mirror::wrap_if_not_special<mirror::get_front<X>>{};
 }
 
@@ -87,8 +83,7 @@ template <
 	typename = enable_if_int_const<I>
 > static constexpr inline
 auto get_head(X, I)
-noexcept
-{
+noexcept {
 	return mirror::get_head<X, I>{};
 }
 
@@ -99,8 +94,7 @@ template <
 	typename = enable_if_int_const<I>
 > static constexpr inline
 auto get_tail(X, I)
-noexcept
-{
+noexcept {
 	return mirror::get_tail<X, I>{};
 }
 
@@ -111,8 +105,7 @@ template <
 	typename = enable_if_int_const<I>
 > static constexpr inline
 auto skip(X, I)
-noexcept
-{
+noexcept {
 	return mirror::skip<X, I>{};
 }
 
@@ -125,8 +118,7 @@ template <
 	typename = enable_if_int_const<L>
 > static constexpr inline
 auto slice(X, I, L)
-noexcept
-{
+noexcept {
 	return mirror::slice<X, I, L>{};
 }
 
@@ -136,8 +128,7 @@ template <
 	typename = enable_if_any_opt_sequence<X>
 > static constexpr inline
 auto slice_before(X, S)
-noexcept
-{
+noexcept {
 	return mirror::slice_before<X, S>{};
 }
 
@@ -147,8 +138,7 @@ template <
 	typename = enable_if_any_opt_sequence<X>
 > static constexpr inline
 auto slice_after(X, S)
-noexcept
-{
+noexcept {
 	return mirror::slice_after<X, S>{};
 }
 
@@ -159,8 +149,7 @@ template <
 	typename = enable_if_any_opt_sequence<Y>
 > static constexpr inline
 auto starts_with(X, Y)
-noexcept
-{
+noexcept {
 	return mirror::starts_with<X, Y>{};
 }
 
@@ -171,8 +160,7 @@ template <
 	typename = enable_if_any_opt_sequence<Y>
 > static constexpr inline
 auto ends_with(X, Y)
-noexcept
-{
+noexcept {
 	return mirror::ends_with<X, Y>{};
 }
 
@@ -182,8 +170,7 @@ template <
 	typename = enable_if_opt_eager_sequence<X>
 > static constexpr inline
 auto push_back(X, E)
-noexcept
-{
+noexcept {
 	return mirror::push_back<X, mirror::unwrap_identity<E>>{};
 }
 
@@ -193,8 +180,7 @@ template <
 	typename = enable_if_opt_eager_sequence<X>
 > static constexpr inline
 auto push_front(X, E)
-noexcept
-{
+noexcept {
 	return mirror::push_front<X, mirror::unwrap_identity<E>>{};
 }
 
@@ -203,24 +189,21 @@ template <
 	typename = enable_if_opt_eager_sequence<X>
 > static constexpr inline
 auto pop_front(X)
-noexcept
-{
+noexcept {
 	return mirror::pop_front<X>{};
 }
 
 template <typename ... X>
 static constexpr inline
 auto concat(X...)
-noexcept
-{
+noexcept {
 	return mirror::concat<X...>{};
 }
 
 template <typename S, typename ... X>
 static constexpr inline
 auto join(S, X...)
-noexcept
-{
+noexcept {
 	return mirror::join<S, X...>{};
 }
 
@@ -230,9 +213,17 @@ template <
 	typename = enable_if_any_opt_sequence<X>
 > static constexpr inline
 auto contains(X, S)
-noexcept
-{
+noexcept {
 	return mirror::contains<X, S>{};
+}
+
+template <
+	template <class, class> class T, typename X, typename I,
+	typename = enable_if_any_opt_sequence<X>
+> static constexpr inline
+auto foldl(X, I)
+noexcept {
+	return mirror::foldl<T, X, I>{};
 }
 
 template <
@@ -240,8 +231,7 @@ template <
 	typename = enable_if_any_opt_sequence<X>
 > static constexpr inline
 auto transform(X)
-noexcept
-{
+noexcept {
 	return mirror::transform<T, X>{};
 }
 
@@ -251,37 +241,32 @@ template <
 	typename = enable_if_int_const<I>
 > static constexpr inline
 auto get_element(X, I)
-noexcept
-{
+noexcept {
 	return mirror::wrap_if_not_special<mirror::get_element<X, I>>{};
 }
 
 template <typename X, typename = enable_if_opt_metaobject_sequence<X>>
 static constexpr inline
 auto unpack(X)
-noexcept
-{
+noexcept {
 	return mirror::unpack<X>{};
 }
 
 template <typename Rng, typename Func>
 static constexpr inline
-Func for_each(Rng, Func func)
-{
+Func for_each(Rng, Func func) {
 	return mirror::for_each<Rng>::apply(func);
 }
 
 template <typename Rng, typename Func, typename SepFunc>
 static constexpr inline
-Func for_each(Rng, Func func, SepFunc sep_func)
-{
+Func for_each(Rng, Func func, SepFunc sep_func) {
 	return mirror::for_each<Rng>::apply(func, sep_func);
 }
 
 template <typename Rng, typename Func>
 static constexpr inline
-auto apply_on(Rng, Func func)
-{
+auto apply_on(Rng, Func func) {
 	return mirror::apply_on<Rng>::apply(func);
 }
 
