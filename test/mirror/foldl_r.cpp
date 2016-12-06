@@ -17,7 +17,9 @@
 #include <mirror/value.hpp>
 #include <mirror/equal.hpp>
 #include <mirror/add.hpp>
+#include <mirror/minimum.hpp>
 #include <mirror/push_back.hpp>
+#include <reflbase/type_traits_fixes.hpp>
 
 BOOST_AUTO_TEST_SUITE(mirror_foldl)
 
@@ -54,7 +56,43 @@ BOOST_AUTO_TEST_CASE(mirror_foldl_1)
 	>),11+sizeof(float)+sizeof(unsigned)+sizeof(wchar_t)+sizeof(double));
 }
 
+template <typename A, typename B>
+using mirror_pick_bigger = std::conditional_t<(sizeof(A) > sizeof(B)), A, B>;
+
 BOOST_AUTO_TEST_CASE(mirror_foldl_2)
+{
+	using namespace mirror;
+
+	BOOST_CHECK((value<std::is_same<
+		foldl<
+			mirror_pick_bigger,
+			range<char[4], char[7], char[9], char[2], char[5]>
+		>, char[9]
+	>>));
+
+	BOOST_CHECK((value<std::is_same<
+		foldl<
+			mirror_pick_bigger,
+			range<char[1], char[2], char[3], char[4], char[5]>
+		>, char[5]
+	>>));
+
+	BOOST_CHECK((value<std::is_same<
+		foldl<
+			mirror_pick_bigger,
+			range<char[8], char[6], char[4], char[2], char[1]>
+		>, char[8]
+	>>));
+
+	BOOST_CHECK((value<std::is_same<
+		foldl<
+			mirror_pick_bigger,
+			range<char[4], char[4], char[4], char[4]>
+		>, char[4]
+	>>));
+};
+
+BOOST_AUTO_TEST_CASE(mirror_foldl_3)
 {
 	using namespace mirror;
 
@@ -91,7 +129,7 @@ BOOST_AUTO_TEST_CASE(mirror_foldl_2)
 	>>));
 }
 
-BOOST_AUTO_TEST_CASE(mirror_foldl_3)
+BOOST_AUTO_TEST_CASE(mirror_foldl_4)
 {
 	using namespace mirror;
 
@@ -125,6 +163,18 @@ BOOST_AUTO_TEST_CASE(mirror_foldl_3)
 			string<'A','B','C','D'>,
 			string<'E','F','G','H'>
 		>, string<'E','F','G','H','A','B','C','D'>
+	>>));
+}
+
+BOOST_AUTO_TEST_CASE(mirror_foldl_5)
+{
+	using namespace mirror;
+
+	BOOST_CHECK((value<equal<
+		foldl<
+			minimum,
+			string<'A','B','C','D'>
+		>, char_<'A'>
 	>>));
 }
 
