@@ -32,7 +32,7 @@ noexcept
  , _fpt(lagoon::get_fingerprint(mo))
  , _ts(mo)
 {
-	static_assert(puddle::is_metaobject(mo), "");
+	static_assert(puddle::is_metaobject(mo));
 }
 
 template <class Traits>

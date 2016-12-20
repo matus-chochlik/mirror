@@ -25,50 +25,31 @@ enum class tribool : unsigned char
 
 static constexpr inline
 tribool make_tribool(void)
-noexcept
-{
-	return tribool::none;
-}
-
+noexcept { return tribool::none;
+} 
 static constexpr inline
 tribool make_tribool(bool b)
-noexcept
-{
-	return b?tribool::true_:tribool::false_;
-}
+noexcept { return b?tribool::true_:tribool::false_; }
 
 static constexpr inline
 tribool make_tribool(mirror::none)
-noexcept
-{
-	return tribool::none;
-}
+noexcept { return tribool::none; }
 
 static constexpr inline
 bool is_true(tribool t)
-noexcept
-{
-	return t == tribool::true_;
-}
+noexcept { return t == tribool::true_; }
 
 static constexpr inline
 bool is_false(tribool t)
-noexcept
-{
-	return t == tribool::false_;
-}
+noexcept { return t == tribool::false_; }
 
 static constexpr inline
 bool is_none(tribool t)
-noexcept
-{
-	return t == tribool::none;
-}
+noexcept { return t == tribool::none; }
 
 static constexpr inline
 bool strong_equal(tribool a, tribool b)
-noexcept
-{
+noexcept {
 	return (a == b) &&
 		(a != tribool::none) &&
 		(b != tribool::none);
@@ -76,8 +57,7 @@ noexcept
 
 static constexpr inline
 bool strong_nonequal(tribool a, tribool b)
-noexcept
-{
+noexcept {
 	return (a != b) &&
 		(a != tribool::none) &&
 		(b != tribool::none);
@@ -85,8 +65,7 @@ noexcept
 
 static constexpr inline
 tribool tri_or(tribool a, tribool b)
-noexcept
-{
+noexcept {
 	return (!is_true(a) && is_none(b)) || (!is_true(b) && is_none(a))?
 		make_tribool():
 		make_tribool(is_true(a) || is_true(b));
@@ -94,8 +73,7 @@ noexcept
 
 static constexpr inline
 tribool tri_and(tribool a, tribool b)
-noexcept
-{
+noexcept {
 	return (!is_false(a) && is_none(b)) || (!is_false(b) && is_none(a))?
 		make_tribool():
 		make_tribool(!(is_false(a) || is_false(b)));
@@ -177,10 +155,7 @@ public:
 
 static constexpr inline
 bool is_none(weak_bool w)
-noexcept
-{
-	return w.is_none();
-}
+noexcept { return w.is_none(); }
 
 class tribool
 {
@@ -260,8 +235,7 @@ public:
 
 static constexpr inline
 bool is_none(tribool t)
-noexcept
-{
+noexcept {
 	return t.is_none();
 }
 

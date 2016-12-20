@@ -67,8 +67,8 @@ noexcept
 ) {
 	static_assert(
 		puddle::is_none(mos) ||
-		puddle::is_metaobject_sequence(mos),
-	"");
+		puddle::is_metaobject_sequence(mos)
+	);
 }
 
 template <typename PMO, typename ... MO>
@@ -91,8 +91,8 @@ noexcept
 ) {
 	static_assert(
 		puddle::is_none(mos) ||
-		puddle::is_metaobject_sequence(mos),
-	"");
+		puddle::is_metaobject_sequence(mos)
+	);
 }
 
 } // namespace lagoon

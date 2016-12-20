@@ -21,8 +21,8 @@ int main(void)
 
 	metaobject_registry reg;
 
-	reg.reg(PUDDLED(Hello));
-	auto mo = reg.reg(PUDDLED(Hello::World));
+	reg.add(PUDDLED(Hello));
+	auto mo = reg.add(PUDDLED(Hello::World));
 
 	std::string_view hello = mo.get_scope().get_base_name();
 	std::string_view world = mo.get_base_name();

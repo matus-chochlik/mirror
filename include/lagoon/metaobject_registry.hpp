@@ -25,43 +25,43 @@ private:
 	static void _eat(X ...) { }
 
 	template <typename MO>
-	shared_metaobject reg(fingerprint, MO);
+	shared_metaobject _add(fingerprint, MO);
 
-	void reg_range(mirror::none) { }
+	void _add_range(mirror::none) { }
 
 	template <typename ... MO>
-	void reg_range(mirror::range<MO...>);
+	void _add_range(mirror::range<MO...>);
 
 	template <typename PMO>
-	void reg_inh_range(PMO, mirror::none) { }
+	void _add_inh_range(PMO, mirror::none) { }
 
 	template <typename PMO, typename ... MO>
-	void reg_inh_range(PMO, mirror::range<MO...>);
+	void _add_inh_range(PMO, mirror::range<MO...>);
 public:
-	shared_metaobject reg(mirror::none);
+	shared_metaobject add(mirror::none);
 
 	template <typename MO>
-	shared_metaobject reg(MO);
+	shared_metaobject add(MO);
 
 	template <typename MO>
-	void reg_base_classes(MO);
+	void add_base_classes(MO);
 
 	template <typename MO>
-	void reg_data_members(MO);
+	void add_data_members(MO);
 
 	template <typename MO>
-	void reg_member_types(MO);
+	void add_member_types(MO);
 
 	template <typename MO>
-	void reg_enumerators(MO);
+	void add_enumerators(MO);
 
-	shared_metaobject_sequence get_seq(mirror::none);
+	shared_metaobject_sequence wrap_sequence(mirror::none);
 
 	template <typename MOS>
-	shared_metaobject_sequence make_seq(MOS);
+	shared_metaobject_sequence wrap_sequence(MOS);
 
 	template <typename PMO, typename MOS>
-	shared_metaobject_sequence make_inh_seq(PMO, MOS);
+	shared_metaobject_sequence wrap_inheritance_sequence(PMO, MOS);
 };
 
 } // namespace lagoon

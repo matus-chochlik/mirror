@@ -45,25 +45,25 @@ int main(void)
 
 	metaobject_registry r;
 
-	r.reg(PUDDLED(public));
-	r.reg(PUDDLED(int));
-	r.reg(PUDDLED(bool));
-	r.reg(PUDDLED(char));
-	r.reg(PUDDLED(double));
-	r.reg(PUDDLED(float));
-	r.reg(PUDDLED(A));
-	r.reg(PUDDLED(B));
-	r.reg(PUDDLED(C));
-	r.reg(PUDDLED(D));
+	r.add(PUDDLED(public));
+	r.add(PUDDLED(int));
+	r.add(PUDDLED(bool));
+	r.add(PUDDLED(char));
+	r.add(PUDDLED(double));
+	r.add(PUDDLED(float));
+	r.add(PUDDLED(A));
+	r.add(PUDDLED(B));
+	r.add(PUDDLED(C));
+	r.add(PUDDLED(D));
 
-	r.reg_data_members(PUDDLED(A));
-	r.reg_data_members(PUDDLED(B));
-	r.reg_data_members(PUDDLED(C));
-	r.reg_data_members(PUDDLED(D));
-	r.reg_base_classes(PUDDLED(ABCDE));
-	r.reg_data_members(PUDDLED(ABCDE));
+	r.add_data_members(PUDDLED(A));
+	r.add_data_members(PUDDLED(B));
+	r.add_data_members(PUDDLED(C));
+	r.add_data_members(PUDDLED(D));
+	r.add_base_classes(PUDDLED(ABCDE));
+	r.add_data_members(PUDDLED(ABCDE));
 
-	auto m_abcde = r.reg(PUDDLED(ABCDE));
+	auto m_abcde = r.add(PUDDLED(ABCDE));
 
 	for(auto m_b : m_abcde.get_base_classes())
 	{

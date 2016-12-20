@@ -17,19 +17,12 @@
 
 namespace lagoon {
 
-inline
-shared_metaobject
-metaobject_registry::reg(mirror::none)
-{
-	return get_none();
-}
-
 template <typename MO>
 inline
 shared_metaobject
-metaobject_registry::reg(fingerprint fp, MO mo)
+metaobject_registry::_add(fingerprint fp, MO mo)
 {
-	static_assert(puddle::is_metaobject(mo), "");
+	static_assert(puddle::is_metaobject(mo));
 	auto p = _mos.find(fp);
 	if (p == _mos.end())
 	{
@@ -60,65 +53,72 @@ metaobject_registry::reg(fingerprint fp, MO mo)
 	return p->second;
 }
 
-template <typename MO>
-inline
-shared_metaobject
-metaobject_registry::reg(MO mo)
-{
-	return reg(get_fingerprint(mo), mo);
-}
-
 template <typename ... MO>
 inline
 void
-metaobject_registry::reg_range(mirror::range<MO...>)
+metaobject_registry::_add_range(mirror::range<MO...>)
 {
-	_eat(reg(MO{})...);
+	_eat(add(MO{})...);
 }
 
 template <typename PMO, typename ... MO>
 inline
 void
-metaobject_registry::reg_inh_range(PMO pmo, mirror::range<MO...>)
+metaobject_registry::_add_inh_range(PMO pmo, mirror::range<MO...>)
 {
-	_eat(reg(get_fingerprint(pmo, puddle::get_base_class(MO{})), MO{})...);
+	_eat(_add(get_fingerprint(pmo, puddle::get_base_class(MO{})), MO{})...);
+}
+
+inline
+shared_metaobject
+metaobject_registry::add(mirror::none)
+{
+	return get_none();
+}
+
+template <typename MO>
+inline
+shared_metaobject
+metaobject_registry::add(MO mo)
+{
+	return _add(get_fingerprint(mo), mo);
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_base_classes(MO pmo)
+metaobject_registry::add_base_classes(MO pmo)
 {
-	reg_inh_range(pmo, puddle::unpack(puddle::get_base_classes(pmo)));
+	_add_inh_range(pmo, puddle::unpack(puddle::get_base_classes(pmo)));
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_data_members(MO mo)
+metaobject_registry::add_data_members(MO mo)
 {
-	reg_range(puddle::unpack(puddle::get_data_members(mo)));
+	_add_range(puddle::unpack(puddle::get_data_members(mo)));
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_member_types(MO mo)
+metaobject_registry::add_member_types(MO mo)
 {
-	reg_range(puddle::unpack(puddle::get_member_types(mo)));
+	_add_range(puddle::unpack(puddle::get_member_types(mo)));
 }
 
 template <typename MO>
 inline
 void
-metaobject_registry::reg_enumerators(MO mo)
+metaobject_registry::add_enumerators(MO mo)
 {
-	reg_range(puddle::unpack(puddle::get_enumerators(mo)));
+	_add_range(puddle::unpack(puddle::get_enumerators(mo)));
 }
 
 inline
 shared_metaobject_sequence
-metaobject_registry::get_seq(mirror::none)
+metaobject_registry::wrap_sequence(mirror::none)
 {
 	return get_none_seq();
 }
@@ -126,12 +126,12 @@ metaobject_registry::get_seq(mirror::none)
 template <typename MOS>
 inline
 shared_metaobject_sequence
-metaobject_registry::make_seq(MOS mos)
+metaobject_registry::wrap_sequence(MOS mos)
 {
 	static_assert(
 		puddle::is_none(mos) ||
-		puddle::is_metaobject_sequence(mos),
-	"");
+		puddle::is_metaobject_sequence(mos)
+	);
 	return make_shared_sequence<concrete_metaobject_sequence>(
 		mos, *this
 	);
@@ -140,12 +140,12 @@ metaobject_registry::make_seq(MOS mos)
 template <typename PMO, typename MOS>
 inline
 shared_metaobject_sequence
-metaobject_registry::make_inh_seq(PMO pmo, MOS mos)
+metaobject_registry::wrap_inheritance_sequence(PMO pmo, MOS mos)
 {
 	static_assert(
 		puddle::is_none(mos) ||
-		puddle::is_metaobject_sequence(mos),
-	"");
+		puddle::is_metaobject_sequence(mos)
+	);
 	return make_shared_sequence<concrete_inh_metaobject_sequence>(
 		pmo, mos, *this
 	);

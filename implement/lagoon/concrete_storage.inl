@@ -145,9 +145,9 @@ template <typename MO>
 inline
 mo_record_data<true>::mo_record_data(MO mo, metaobject_registry& reg)
  : _store{
-	reg.make_inh_seq(mo, puddle::get_base_classes(mo)),
-	reg.make_seq(puddle::get_data_members(mo)),
-	reg.make_seq(puddle::get_member_types(mo))
+	reg.wrap_inheritance_sequence(mo, puddle::get_base_classes(mo)),
+	reg.wrap_sequence(puddle::get_data_members(mo)),
+	reg.wrap_sequence(puddle::get_member_types(mo))
  } { }
 
 inline
@@ -175,7 +175,7 @@ mo_record_data<false>::_memb_typs(void) const
 template <typename MO>
 inline
 mo_enum_data<true>::mo_enum_data(MO mo, metaobject_registry& reg)
- : _store{reg.make_seq(puddle::get_enumerators(mo))}
+ : _store{reg.wrap_sequence(puddle::get_enumerators(mo))}
 { }
 
 inline

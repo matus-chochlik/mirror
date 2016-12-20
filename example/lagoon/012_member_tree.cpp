@@ -75,28 +75,28 @@ int main(void)
 
 	metaobject_registry r;
 
-	r.reg(PUDDLED(int));
-	r.reg(PUDDLED(bool));
-	r.reg(PUDDLED(unsigned));
-	r.reg(PUDDLED(float));
+	r.add(PUDDLED(int));
+	r.add(PUDDLED(bool));
+	r.add(PUDDLED(unsigned));
+	r.add(PUDDLED(float));
 
-	r.reg(PUDDLED(foo));
-	r.reg(PUDDLED(foo::A));
-	r.reg_data_members(PUDDLED(foo::A));
-	//r.reg_member_types(PUDDLED(foo::A));
-	r.reg(PUDDLED(foo::B));
-	r.reg_data_members(PUDDLED(foo::B));
-	//r.reg_member_types(PUDDLED(foo::B));
-	r.reg(PUDDLED(foo::bar));
-	r.reg(PUDDLED(foo::bar::C));
-	r.reg(PUDDLED(foo::bar::D));
-	r.reg(PUDDLED(foo::bar::baz));
-	r.reg(PUDDLED(foo::bar::baz::E));
-	r.reg_enumerators(PUDDLED(foo::bar::baz::E));
-	r.reg(PUDDLED(foo::bar::U));
-	r.reg_data_members(PUDDLED(foo::bar::U));
+	r.add(PUDDLED(foo));
+	r.add(PUDDLED(foo::A));
+	r.add_data_members(PUDDLED(foo::A));
+	//r.add_member_types(PUDDLED(foo::A));
+	r.add(PUDDLED(foo::B));
+	r.add_data_members(PUDDLED(foo::B));
+	//r.add_member_types(PUDDLED(foo::B));
+	r.add(PUDDLED(foo::bar));
+	r.add(PUDDLED(foo::bar::C));
+	r.add(PUDDLED(foo::bar::D));
+	r.add(PUDDLED(foo::bar::baz));
+	r.add(PUDDLED(foo::bar::baz::E));
+	r.add_enumerators(PUDDLED(foo::bar::baz::E));
+	r.add(PUDDLED(foo::bar::U));
+	r.add_data_members(PUDDLED(foo::bar::U));
 
-	print_members(r.reg(PUDDLED(::)));
+	print_members(r.add(PUDDLED(::)));
 
 	return 0;
 }
