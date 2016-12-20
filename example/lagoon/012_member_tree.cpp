@@ -75,28 +75,26 @@ int main(void)
 
 	metaobject_registry r;
 
-	r.add(PUDDLED(int));
-	r.add(PUDDLED(bool));
-	r.add(PUDDLED(unsigned));
-	r.add(PUDDLED(float));
+	r << PUDDLED(int);
+	r << PUDDLED(bool);
+	r << PUDDLED(unsigned);
+	r << PUDDLED(float);
 
-	r.add(PUDDLED(foo));
-	r.add(PUDDLED(foo::A));
-	r.add_data_members(PUDDLED(foo::A));
-	//r.add_member_types(PUDDLED(foo::A));
-	r.add(PUDDLED(foo::B));
-	r.add_data_members(PUDDLED(foo::B));
-	//r.add_member_types(PUDDLED(foo::B));
-	r.add(PUDDLED(foo::bar));
-	r.add(PUDDLED(foo::bar::C));
-	r.add(PUDDLED(foo::bar::D));
-	r.add(PUDDLED(foo::bar::baz));
-	r.add(PUDDLED(foo::bar::baz::E));
-	r.add_enumerators(PUDDLED(foo::bar::baz::E));
-	r.add(PUDDLED(foo::bar::U));
-	r.add_data_members(PUDDLED(foo::bar::U));
+	r << PUDDLED(foo);
+	r << PUDDLED(foo::A);
+	r.data_members << PUDDLED(foo::A);
+	r << PUDDLED(foo::B);
+	r.data_members << PUDDLED(foo::B);
+	r << PUDDLED(foo::bar);
+	r << PUDDLED(foo::bar::C);
+	r << PUDDLED(foo::bar::D);
+	r << PUDDLED(foo::bar::baz);
+	r << PUDDLED(foo::bar::baz::E);
+	r.enumerators << PUDDLED(foo::bar::baz::E);
+	r << PUDDLED(foo::bar::U);
+	r.data_members << PUDDLED(foo::bar::U);
 
-	print_members(r.add(PUDDLED(::)));
+	print_members(r << PUDDLED(::));
 
 	return 0;
 }

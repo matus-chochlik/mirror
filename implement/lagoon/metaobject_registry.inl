@@ -87,7 +87,7 @@ metaobject_registry::add(MO mo)
 template <typename MO>
 inline
 void
-metaobject_registry::add_base_classes(MO pmo)
+metaobject_registry::add_base_classes_of(MO pmo)
 {
 	_add_inh_range(pmo, puddle::unpack(puddle::get_base_classes(pmo)));
 }
@@ -95,7 +95,7 @@ metaobject_registry::add_base_classes(MO pmo)
 template <typename MO>
 inline
 void
-metaobject_registry::add_data_members(MO mo)
+metaobject_registry::add_data_members_of(MO mo)
 {
 	_add_range(puddle::unpack(puddle::get_data_members(mo)));
 }
@@ -103,7 +103,7 @@ metaobject_registry::add_data_members(MO mo)
 template <typename MO>
 inline
 void
-metaobject_registry::add_member_types(MO mo)
+metaobject_registry::add_member_types_of(MO mo)
 {
 	_add_range(puddle::unpack(puddle::get_member_types(mo)));
 }
@@ -111,7 +111,7 @@ metaobject_registry::add_member_types(MO mo)
 template <typename MO>
 inline
 void
-metaobject_registry::add_enumerators(MO mo)
+metaobject_registry::add_enumerators_of(MO mo)
 {
 	_add_range(puddle::unpack(puddle::get_enumerators(mo)));
 }

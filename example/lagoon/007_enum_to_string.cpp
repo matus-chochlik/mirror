@@ -61,8 +61,8 @@ int main(void)
 {
 	lagoon::metaobject_registry reg;
 
-	reg.add_enumerators(PUDDLED(E));
-	enum_to_string<E> ets(reg.add(PUDDLED(E)));
+	reg.enumerators << PUDDLED(E);
+	enum_to_string<E> ets(reg << PUDDLED(E));
 
 	std::cout << ets(E::a) << std::endl;
 	std::cout << ets(E::b) << std::endl;

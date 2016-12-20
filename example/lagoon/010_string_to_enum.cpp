@@ -66,7 +66,7 @@ int main(void)
 {
 	lagoon::metaobject_registry reg;
 
-	reg.add_enumerators(PUDDLED(E));
+	reg.add_enumerators_of(PUDDLED(E));
 	string_to_enum<E> ste(reg.add(PUDDLED(E)));
 
 	try {

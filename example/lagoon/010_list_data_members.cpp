@@ -56,12 +56,12 @@ int main(void)
 	r.add(PUDDLED(C));
 	r.add(PUDDLED(D));
 
-	r.add_data_members(PUDDLED(A));
-	r.add_data_members(PUDDLED(B));
-	r.add_data_members(PUDDLED(C));
-	r.add_data_members(PUDDLED(D));
-	r.add_base_classes(PUDDLED(ABCDE));
-	r.add_data_members(PUDDLED(ABCDE));
+	r.add_data_members_of(PUDDLED(A));
+	r.add_data_members_of(PUDDLED(B));
+	r.add_data_members_of(PUDDLED(C));
+	r.add_data_members_of(PUDDLED(D));
+	r.add_base_classes_of(PUDDLED(ABCDE));
+	r.add_data_members_of(PUDDLED(ABCDE));
 
 	auto m_abcde = r.add(PUDDLED(ABCDE));
 
