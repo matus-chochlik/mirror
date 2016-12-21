@@ -19,6 +19,10 @@ noexcept
  , reflects_global_scope{false}
  , reflects_namespace{false}
  , reflects_type{false}
+ , reflects_tag_type{false}
+ , reflects_record{false}
+ , reflects_class{false}
+ , reflects_enum{false}
  , reflects_alias{false}
  , reflects_variable{false}
  , reflects_constant{false}
@@ -45,6 +49,10 @@ noexcept
  , reflects_global_scope{puddle::reflects_global_scope(mo)}
  , reflects_namespace{puddle::reflects_namespace(mo)}
  , reflects_type{puddle::reflects_type(mo)}
+ , reflects_tag_type{puddle::reflects_tag_type(mo)}
+ , reflects_record{puddle::reflects_record(mo)}
+ , reflects_class{puddle::reflects_class(mo)}
+ , reflects_enum{puddle::reflects_enum(mo)}
  , reflects_alias{puddle::reflects_type(mo)}
  , reflects_variable{puddle::reflects_variable(mo)}
  , reflects_constant{puddle::reflects_constant(mo)}
