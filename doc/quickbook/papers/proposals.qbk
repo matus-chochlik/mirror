@@ -24,6 +24,10 @@ documentation.
    [*P0194R0] — Static reflection (revision 4)]]
 [ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0194r1.html
    [*P0194R1] — Static reflection (revision 5)]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0194r2.html
+   [*P0194R2] — Static reflection (revision 6)]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0194r3.html
+   [*P0194R3] — Static reflection (revision 7)]]
 ]
 
 
@@ -34,6 +38,10 @@ documentation.
 [ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0385r0.pdf
    [*P0385R0] — Static reflection. Rationale, design and evolution] —
    design paper for [*P0194R1]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0385r1.pdf
+   [*P0385R1] — Static reflection. Rationale, design and evolution]]
+[ [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0385r2.pdf
+   [*P0385R2] — Static reflection. Rationale, design and evolution]]
 ]
 
 TODO
