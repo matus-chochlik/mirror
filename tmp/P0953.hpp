@@ -82,6 +82,10 @@ struct object_ops<Derived, true> {
 		return __metaobject_is_meta_named(MIRROR_GET_MOID(this));
 	}
 
+	constexpr bool is_typed() const noexcept {
+		return __metaobject_is_meta_typed(MIRROR_GET_MOID(this));
+	}
+
 	constexpr bool is_scope() const noexcept {
 		return __metaobject_is_meta_scope(MIRROR_GET_MOID(this));
 	}
@@ -90,8 +94,64 @@ struct object_ops<Derived, true> {
 		return __metaobject_is_meta_scope_member(MIRROR_GET_MOID(this));
 	}
 
+	constexpr bool is_inheritance() const noexcept {
+		return __metaobject_is_meta_inheritance(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_template() const noexcept {
+		return __metaobject_is_meta_template(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_parameter() const noexcept {
+		return __metaobject_is_meta_parameter(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_record_member() const noexcept {
+		return __metaobject_is_meta_record_member(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_alias() const noexcept {
+		return __metaobject_is_meta_alias(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_constant() const noexcept {
+		return __metaobject_is_meta_constant(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_variable() const noexcept {
+		return __metaobject_is_meta_variable(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_namespace() const noexcept {
+		return __metaobject_is_meta_namespace(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_global_scope() const noexcept {
+		return __metaobject_is_meta_global_scope(MIRROR_GET_MOID(this));
+	}
+
 	constexpr bool is_type() const noexcept {
 		return __metaobject_is_meta_type(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_tag_type() const noexcept {
+		return __metaobject_is_meta_tag_type(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_enum() const noexcept {
+		return __metaobject_is_meta_enum(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_record() const noexcept {
+		return __metaobject_is_meta_record(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_class() const noexcept {
+		return __metaobject_is_meta_class(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_function() const noexcept {
+		return __metaobject_is_meta_function(MIRROR_GET_MOID(this));
 	}
 };
 
