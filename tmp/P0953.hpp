@@ -2,7 +2,6 @@
 #define P0953_HPP_
 
 namespace meta {
-namespace _dtl {
 //------------------------------------------------------------------------------
 enum class category_bits : unsigned {
 	cat_object = 0,
@@ -50,7 +49,7 @@ enum class category_bits : unsigned {
 	cat_enumerator = cat_constant | cat_named | cat_enum_member
 };
 //------------------------------------------------------------------------------
-#define MIRROR_CAT_BITS(CAT) unsigned(meta::_dtl::category_bits::cat_##CAT)
+#define MIRROR_CAT_BITS(CAT) unsigned(meta::category_bits::cat_##CAT)
 
 #define MIRROR_OBJ_IS(BITS, CAT) \
 	((BITS & MIRROR_CAT_BITS(CAT)) == MIRROR_CAT_BITS(CAT))
@@ -74,11 +73,32 @@ struct object_sequence_ops {};
 template <class Derived, bool isNamed>
 struct named_ops {};
 //------------------------------------------------------------------------------
+template <class Derived, bool isTyped>
+struct typed_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isScope>
+struct scope_ops {};
+//------------------------------------------------------------------------------
 template <class Derived, bool isScopeMember>
 struct scope_member_ops {};
 //------------------------------------------------------------------------------
+template <class Derived, bool isEnumMember>
+struct enum_member_ops {};
+//------------------------------------------------------------------------------
 template <class Derived, bool isAlias>
 struct alias_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isType>
+struct type_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isTagType>
+struct tag_type_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isEnum>
+struct enum_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isRecord>
+struct record_ops {};
 //------------------------------------------------------------------------------
 template <class Derived, bool isClass>
 struct class_ops {};
@@ -89,12 +109,20 @@ struct class_ops {};
 template <unsigned CatBits>
 struct metaobject
   : moid_holder
-  , object_ops<metaobject<CatBits>, true>
+  , MIRROR_IMPL_OBJ_OPS(object)
   , MIRROR_IMPL_OBJ_OPS(object_sequence)
   , MIRROR_IMPL_OBJ_OPS(named)
+  , MIRROR_IMPL_OBJ_OPS(typed)
   , MIRROR_IMPL_OBJ_OPS(scope_member)
+  , MIRROR_IMPL_OBJ_OPS(enum_member)
+  , MIRROR_IMPL_OBJ_OPS(scope)
   , MIRROR_IMPL_OBJ_OPS(alias)
+  , MIRROR_IMPL_OBJ_OPS(type)
+  , MIRROR_IMPL_OBJ_OPS(tag_type)
+  , MIRROR_IMPL_OBJ_OPS(enum)
+  , MIRROR_IMPL_OBJ_OPS(record)
   , MIRROR_IMPL_OBJ_OPS(class) {
+
 	constexpr metaobject(__metaobject_id moid) noexcept
 	  : moid_holder{moid} {
 	}
@@ -232,18 +260,16 @@ struct class_ops<Derived, true> {
 	}
 };
 //------------------------------------------------------------------------------
-#define reflexpr(...)                                     \
-	meta::_dtl::metaobject<__metaobject_get_concept_bits( \
-	  __reflexpr(__VA_ARGS__))> {                         \
-		__reflexpr(__VA_ARGS__)                           \
+#define reflexpr(...)                                                          \
+	meta::metaobject<__metaobject_get_concept_bits(__reflexpr(__VA_ARGS__))> { \
+		__reflexpr(__VA_ARGS__)                                                \
 	}
 //------------------------------------------------------------------------------
-#define downcast(METAOBJECT)                                \
-	meta::_dtl::metaobject<METAOBJECT.get_concept_bits()> { \
-		METAOBJECT._moid                                    \
+#define downcast(METAOBJECT)                          \
+	meta::metaobject<METAOBJECT.get_concept_bits()> { \
+		METAOBJECT._moid                              \
 	}
 //------------------------------------------------------------------------------
-} // namespace _dtl
 } // namespace meta
 
 #endif // P0953_HPP_
