@@ -3,8 +3,9 @@
 
 namespace meta {
 namespace _dtl {
-
+//------------------------------------------------------------------------------
 enum class category_bits : unsigned {
+	cat_object = 0,
 	cat_object_sequence = (1 << 0),
 	cat_reversible = (1 << 1),
 	cat_named = (1 << 2),
@@ -28,7 +29,8 @@ enum class category_bits : unsigned {
 	cat_class = (1 << 20) | cat_record,
 	cat_function = (1 << 21) | cat_scope | cat_scope_member,
 	cat_specifier = (1 << 22) | cat_named,
-	cat_template_type_param = cat_template | cat_type | cat_parameter | cat_alias,
+	cat_template_type_param =
+	  cat_template | cat_type | cat_parameter | cat_alias,
 	cat_namespace_alias = cat_namespace | cat_alias,
 	cat_type_alias = cat_type | cat_alias | cat_scope_member,
 	cat_enum_alias = cat_enum | cat_alias,
@@ -47,11 +49,12 @@ enum class category_bits : unsigned {
 	cat_member_function = cat_record_member | cat_named_function,
 	cat_enumerator = cat_constant | cat_named | cat_enum_member
 };
-
+//------------------------------------------------------------------------------
 #define MIRROR_CAT_BITS(CAT) unsigned(meta::_dtl::category_bits::cat_##CAT)
 
-#define MIRROR_OBJ_IS(BITS, CAT) ((BITS & MIRROR_CAT_BITS(CAT)) == MIRROR_CAT_BITS(CAT))
-
+#define MIRROR_OBJ_IS(BITS, CAT) \
+	((BITS & MIRROR_CAT_BITS(CAT)) == MIRROR_CAT_BITS(CAT))
+//------------------------------------------------------------------------------
 struct moid_holder {
 	constexpr moid_holder(__metaobject_id moid) noexcept
 	  : _moid{moid} {
@@ -59,15 +62,44 @@ struct moid_holder {
 
 	const __metaobject_id _moid{};
 };
-
+//------------------------------------------------------------------------------
 #define MIRROR_GET_MOID(THIS) static_cast<const Derived*>(THIS)->_moid
-
-template <unsigned CatBits>
-struct metaobject;
-
+//------------------------------------------------------------------------------
 template <class Derived, bool isObject>
 struct object_ops {};
-
+//------------------------------------------------------------------------------
+template <class Derived, bool isObjectSequence>
+struct object_sequence_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isNamed>
+struct named_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isScopeMember>
+struct scope_member_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isAlias>
+struct alias_ops {};
+//------------------------------------------------------------------------------
+template <class Derived, bool isClass>
+struct class_ops {};
+//------------------------------------------------------------------------------
+#define MIRROR_IMPL_OBJ_OPS(CONCEPT) \
+	CONCEPT##_ops<metaobject<CatBits>, MIRROR_OBJ_IS(CatBits, CONCEPT)>
+//------------------------------------------------------------------------------
+template <unsigned CatBits>
+struct metaobject
+  : moid_holder
+  , object_ops<metaobject<CatBits>, true>
+  , MIRROR_IMPL_OBJ_OPS(object_sequence)
+  , MIRROR_IMPL_OBJ_OPS(named)
+  , MIRROR_IMPL_OBJ_OPS(scope_member)
+  , MIRROR_IMPL_OBJ_OPS(alias)
+  , MIRROR_IMPL_OBJ_OPS(class) {
+	constexpr metaobject(__metaobject_id moid) noexcept
+	  : moid_holder{moid} {
+	}
+};
+//------------------------------------------------------------------------------
 template <class Derived>
 struct object_ops<Derived, true> {
 	constexpr auto get_concept_bits() const noexcept {
@@ -154,20 +186,14 @@ struct object_ops<Derived, true> {
 		return __metaobject_is_meta_function(MIRROR_GET_MOID(this));
 	}
 };
-
-template <class Derived, bool isObjectSequence>
-struct object_sequence_ops {};
-
+//------------------------------------------------------------------------------
 template <class Derived>
 struct object_sequence_ops<Derived, true> {
 	constexpr auto size() const noexcept {
 		return __metaobject_get_size(MIRROR_GET_MOID(this));
 	}
 };
-
-template <class Derived, bool isNamed>
-struct named_ops {};
-
+//------------------------------------------------------------------------------
 template <class Derived>
 struct named_ops<Derived, true> {
 	constexpr auto base_name_length() const noexcept {
@@ -178,70 +204,45 @@ struct named_ops<Derived, true> {
 		return __metaobject_display_name_length(MIRROR_GET_MOID(this));
 	}
 };
-
-template <class Derived, bool isScopeMember>
-struct scope_member_ops {};
-
+//------------------------------------------------------------------------------
 template <class Derived>
 struct scope_member_ops<Derived, true> {
-	constexpr metaobject<MIRROR_CAT_BITS(scope)> get_scope() const noexcept;
+	constexpr metaobject<MIRROR_CAT_BITS(scope)> get_scope() const noexcept {
+		return {__metaobject_get_scope(MIRROR_GET_MOID(this))};
+	}
 };
-
-template <class Derived, bool isAlias>
-struct alias_ops {};
-
+//------------------------------------------------------------------------------
 template <class Derived>
 struct alias_ops<Derived, true> {
-	constexpr metaobject<MIRROR_CAT_BITS(named)> get_aliased() const noexcept;
+	constexpr metaobject<MIRROR_CAT_BITS(named)> get_aliased() const noexcept {
+		return {__metaobject_get_aliased(MIRROR_GET_MOID(this))};
+	}
 };
-
-template <class Derived, bool isClass>
-struct class_ops {};
-
+//------------------------------------------------------------------------------
 template <class Derived>
 struct class_ops<Derived, true> {
-	constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> get_base_classes() const noexcept;
-};
-
-#define MIRROR_IMPL_OBJ_OPS(CONCEPT) \
-	CONCEPT##_ops<metaobject<CatBits>, MIRROR_OBJ_IS(CatBits, CONCEPT)>
-
-template <unsigned CatBits>
-struct metaobject
-  : moid_holder
-  , object_ops<metaobject<CatBits>, true>
-  , MIRROR_IMPL_OBJ_OPS(object_sequence)
-  , MIRROR_IMPL_OBJ_OPS(named)
-  , MIRROR_IMPL_OBJ_OPS(scope_member)
-  , MIRROR_IMPL_OBJ_OPS(alias)
-  , MIRROR_IMPL_OBJ_OPS(class) {
-	constexpr metaobject(__metaobject_id moid) noexcept
-	  : moid_holder{moid} {
-	}
-};
-
-template <class Derived>
-constexpr metaobject<MIRROR_CAT_BITS(scope)> scope_member_ops<Derived, true>::get_scope() const
-  noexcept {
-	return {__metaobject_get_scope(MIRROR_GET_MOID(this))};
-}
-
-template <class Derived>
-constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> class_ops<Derived, true>::get_base_classes()
-  const noexcept {
-	return {__metaobject_get_base_classes(MIRROR_GET_MOID(this))};
-}
-
-#define reflexpr(...)                                                                \
-	meta::_dtl::metaobject<__metaobject_get_concept_bits(__reflexpr(__VA_ARGS__))> { \
-		__reflexpr(__VA_ARGS__)                                                      \
+	constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> get_base_classes()
+	  const noexcept {
+		return {__metaobject_get_base_classes(MIRROR_GET_MOID(this))};
 	}
 
+	constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> get_member_types()
+	  const noexcept {
+		return {__metaobject_get_member_types(MIRROR_GET_MOID(this))};
+	}
+};
+//------------------------------------------------------------------------------
+#define reflexpr(...)                                     \
+	meta::_dtl::metaobject<__metaobject_get_concept_bits( \
+	  __reflexpr(__VA_ARGS__))> {                         \
+		__reflexpr(__VA_ARGS__)                           \
+	}
+//------------------------------------------------------------------------------
 #define downcast(METAOBJECT)                                \
 	meta::_dtl::metaobject<METAOBJECT.get_concept_bits()> { \
 		METAOBJECT._moid                                    \
 	}
-
+//------------------------------------------------------------------------------
 } // namespace _dtl
 } // namespace meta
 
