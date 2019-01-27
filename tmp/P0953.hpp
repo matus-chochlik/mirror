@@ -79,6 +79,9 @@ struct typed_ops {};
 template <class Derived, bool isScope>
 struct scope_ops {};
 //------------------------------------------------------------------------------
+template <class Derived, bool isInheritance>
+struct inheritance_ops {};
+//------------------------------------------------------------------------------
 template <class Derived, bool isScopeMember>
 struct scope_member_ops {};
 //------------------------------------------------------------------------------
@@ -113,6 +116,7 @@ struct metaobject
   , MIRROR_IMPL_OBJ_OPS(object_sequence)
   , MIRROR_IMPL_OBJ_OPS(named)
   , MIRROR_IMPL_OBJ_OPS(typed)
+  , MIRROR_IMPL_OBJ_OPS(inheritance)
   , MIRROR_IMPL_OBJ_OPS(scope_member)
   , MIRROR_IMPL_OBJ_OPS(enum_member)
   , MIRROR_IMPL_OBJ_OPS(scope)
@@ -213,6 +217,14 @@ struct object_ops<Derived, true> {
 	constexpr bool is_function() const noexcept {
 		return __metaobject_is_meta_function(MIRROR_GET_MOID(this));
 	}
+
+	constexpr auto get_source_line() const noexcept {
+		return __metaobject_get_source_line(MIRROR_GET_MOID(this));
+	}
+
+	constexpr auto get_source_column() const noexcept {
+		return __metaobject_get_source_column(MIRROR_GET_MOID(this));
+	}
 };
 //------------------------------------------------------------------------------
 template <class Derived>
@@ -234,6 +246,13 @@ struct named_ops<Derived, true> {
 };
 //------------------------------------------------------------------------------
 template <class Derived>
+struct typed_ops<Derived, true> {
+	constexpr metaobject<MIRROR_CAT_BITS(type)> get_type() const noexcept {
+		return {__metaobject_get_type(MIRROR_GET_MOID(this))};
+	}
+};
+//------------------------------------------------------------------------------
+template <class Derived>
 struct scope_member_ops<Derived, true> {
 	constexpr metaobject<MIRROR_CAT_BITS(scope)> get_scope() const noexcept {
 		return {__metaobject_get_scope(MIRROR_GET_MOID(this))};
@@ -248,6 +267,37 @@ struct alias_ops<Derived, true> {
 };
 //------------------------------------------------------------------------------
 template <class Derived>
+struct tag_type_ops<Derived, true> {
+	constexpr bool is_enum() const noexcept {
+		return __metaobject_is_enum(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_class() const noexcept {
+		return __metaobject_is_class(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_struct() const noexcept {
+		return __metaobject_is_struct(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_union() const noexcept {
+		return __metaobject_is_union(MIRROR_GET_MOID(this));
+	}
+};
+//------------------------------------------------------------------------------
+template <class Derived>
+struct enum_ops<Derived, true> {
+	constexpr bool is_scoped_enum() const noexcept {
+		return __metaobject_is_scoped_enum(MIRROR_GET_MOID(this));
+	}
+
+	constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> get_enumerators()
+	  const noexcept {
+		return {__metaobject_get_enumerators(MIRROR_GET_MOID(this))};
+	}
+};
+//------------------------------------------------------------------------------
+template <class Derived>
 struct class_ops<Derived, true> {
 	constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> get_base_classes()
 	  const noexcept {
@@ -257,6 +307,14 @@ struct class_ops<Derived, true> {
 	constexpr metaobject<MIRROR_CAT_BITS(object_sequence)> get_member_types()
 	  const noexcept {
 		return {__metaobject_get_member_types(MIRROR_GET_MOID(this))};
+	}
+};
+//------------------------------------------------------------------------------
+template <class Derived>
+struct inheritance_ops<Derived, true> {
+	constexpr metaobject<MIRROR_CAT_BITS(class)> get_base_class() const
+	  noexcept {
+		return {__metaobject_get_base_class(MIRROR_GET_MOID(this))};
 	}
 };
 //------------------------------------------------------------------------------
