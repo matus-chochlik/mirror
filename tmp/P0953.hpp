@@ -88,6 +88,9 @@ struct scope_member_ops {};
 template <class Derived, bool isEnumMember>
 struct enum_member_ops {};
 //------------------------------------------------------------------------------
+template <class Derived, bool isRecordMember>
+struct record_member_ops {};
+//------------------------------------------------------------------------------
 template <class Derived, bool isAlias>
 struct alias_ops {};
 //------------------------------------------------------------------------------
@@ -260,6 +263,24 @@ struct scope_member_ops<Derived, true> {
 };
 //------------------------------------------------------------------------------
 template <class Derived>
+struct enum_member_ops<Derived, true> {};
+//------------------------------------------------------------------------------
+template <class Derived>
+struct record_member_ops<Derived, true> {
+	constexpr bool is_private() const noexcept {
+		return __metaobject_is_private(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_protected() const noexcept {
+		return __metaobject_is_protected(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_public() const noexcept {
+		return __metaobject_is_public(MIRROR_GET_MOID(this));
+	}
+};
+//------------------------------------------------------------------------------
+template <class Derived>
 struct alias_ops<Derived, true> {
 	constexpr metaobject<MIRROR_CAT_BITS(named)> get_aliased() const noexcept {
 		return {__metaobject_get_aliased(MIRROR_GET_MOID(this))};
@@ -315,6 +336,18 @@ struct inheritance_ops<Derived, true> {
 	constexpr metaobject<MIRROR_CAT_BITS(class)> get_base_class() const
 	  noexcept {
 		return {__metaobject_get_base_class(MIRROR_GET_MOID(this))};
+	}
+
+	constexpr bool is_private() const noexcept {
+		return __metaobject_is_private(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_protected() const noexcept {
+		return __metaobject_is_protected(MIRROR_GET_MOID(this));
+	}
+
+	constexpr bool is_public() const noexcept {
+		return __metaobject_is_public(MIRROR_GET_MOID(this));
 	}
 };
 //------------------------------------------------------------------------------
