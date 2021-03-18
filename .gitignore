@@ -1,4 +1,5 @@
 /_build
+/LLVM_PREFIX
 
 # editor swap files
 .*.swp
