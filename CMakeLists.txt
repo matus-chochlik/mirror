@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.10)
 
 include(config/Policies.cmake)
 include(config/Defaults.cmake)
+include(config/BuildType.cmake)
 include(config/Executable.cmake)
 
 project(Mirror)
