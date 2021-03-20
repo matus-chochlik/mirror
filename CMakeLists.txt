@@ -5,11 +5,11 @@
 #
 cmake_minimum_required(VERSION 3.10)
 
+project(Mirror CXX)
+
 include(config/Policies.cmake)
 include(config/Defaults.cmake)
 include(config/BuildType.cmake)
 include(config/Executable.cmake)
-
-project(Mirror)
 
 add_subdirectory(example)
