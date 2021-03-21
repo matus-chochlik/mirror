@@ -64,6 +64,7 @@ compiler_opts = [
     '-Wno-c++20-compat',
     '-Wno-c++2a-extensions',
     '-Wno-padded',
+    '-Wno-weak-vtables',
     '-Wno-documentation-unknown-command',
     '-std=c++2a',
     '-freflection',
