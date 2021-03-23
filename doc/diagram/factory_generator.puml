@@ -1,0 +1,72 @@
+@startuml
+class meta::Parameter {
+    +getName() : string
+}
+
+class meta::Constructor {
+    +getParameters()
+}
+
+class meta::Class {
+    +getName() : string
+    
+}
+
+class InputData {
+}
+
+class Product {
+    +Product()
+    +Product(...)
+}
+
+class Factory<T> {
+    +make() : T
+}
+
+class "Factory<Product, Traits>" as Product_Factory  {
+    +make() : Product
+}
+
+class FactoryConstructor {
+}
+
+class FactoryTraits {
+}
+
+class FactoryUnit {
+    +pickConstructor() : int
+}
+
+class ConstructorUnit {
+    +make() : Product
+}
+
+class ParameterUnit {
+    +makeArgument() : T
+}
+
+Product_Factory --|> Factory : specializes
+meta::Class o-- meta::Constructor : has
+meta::Constructor o-- meta::Parameter : has
+meta::Class --> Product : reflects
+Product_Factory ..> Product : instantiates
+ConstructorUnit --> meta::Constructor : uses
+ParameterUnit --> meta::Parameter : uses
+Product_Factory *-- FactoryConstructor : contains
+Product_Factory --> FactoryTraits : uses
+FactoryConstructor *-- FactoryUnit : contains
+FactoryUnit *-- ConstructorUnit : contains
+ConstructorUnit *-- ParameterUnit : contains
+ConstructorUnit ..> Product : constructs
+FactoryTraits --> FactoryUnit : provides
+FactoryTraits --> ConstructorUnit : provides
+FactoryTraits --> ParameterUnit : provides
+ParameterUnit --> Factory : uses
+
+FactoryUnit --> InputData
+note on link : picks\nconstructor
+
+ParameterUnit --> InputData
+note on link : decodes\nargument
+@enduml
