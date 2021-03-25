@@ -10,7 +10,7 @@
 #define MIRROR_INTERFACE_HPP
 
 namespace mirror {
-
+//------------------------------------------------------------------------------
 /// @brief Base template for abstract interfaces, implements common functionality.
 /// @see copyable_interface
 template <typename Derived>
@@ -33,7 +33,7 @@ protected:
     constexpr interface(interface&&) noexcept = default;
     virtual ~interface() noexcept = default;
 };
-
+//------------------------------------------------------------------------------
 /// @brief Base template for polymorphic classes, implements common functionality.
 /// @see interface
 template <typename Derived>
@@ -55,7 +55,7 @@ protected:
     auto operator=(const abstract&) noexcept -> abstract& = default;
     virtual ~abstract() noexcept = default;
 };
-
+//------------------------------------------------------------------------------
 } // namespace mirror
 
 #endif // MIRROR_INTERFACE_HPP
