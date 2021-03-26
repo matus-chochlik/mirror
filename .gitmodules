@@ -1,0 +1,4 @@
+[submodule "third_party/llvm"]
+	path = third_party/llvm
+	url = https://github.com/lock3/meta.git
+	branch = paper/p2320
