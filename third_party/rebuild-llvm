@@ -1,6 +1,7 @@
 #!/bin/bash
 SRC_DIR=$(realpath $(dirname ${0}))
 BLD_DIR=${1:-/opt/build/llvm}
+PREFIX=${2:-/opt/mirror/llvm}
 mkdir -p "${BLD_DIR}" && \
 pushd "${BLD_DIR}" && \
 cmake \
@@ -8,7 +9,7 @@ cmake \
 	-DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi" \
 	-DLLVM_USE_LINKER=gold \
 	-DLLVM_USE_SPLIT_DWARF=ON \
-	-DCMAKE_INSTALL_PREFIX=/opt/llvm \
+	-DCMAKE_INSTALL_PREFIX=${PREFIX} \
 	-DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=gold" \
 	-DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=gold" \
 	-DCMAKE_BUILD_TYPE=Release \
