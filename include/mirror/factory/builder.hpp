@@ -20,23 +20,48 @@ struct factory_constructor_parameter;
 struct factory_constructor;
 struct factory;
 //------------------------------------------------------------------------------
-template <typename Traits, typename Product>
-using factory_builder_unit_t = typename Traits::template builder_unit<Product>;
+template <typename Traits, typename Product, bool isAtomic, bool isCopy>
+struct get_parameter_unit;
 
 template <typename Traits, typename Product>
-using factory_unit_t = typename Traits::template factory_unit<Product>;
+struct get_parameter_unit<Traits, Product, true, false> {
+    using type = typename Traits::template atomic_unit<Product>;
+};
+
+template <typename Traits, typename Product>
+struct get_parameter_unit<Traits, Product, false, false> {
+    using type = typename Traits::template composite_unit<Product>;
+};
+
+template <typename Traits, typename Product, bool isAtomic>
+struct get_parameter_unit<Traits, Product, isAtomic, true> {
+    using type = typename Traits::template copy_unit<Product>;
+};
+
+template <typename Traits, typename Product, bool isCopy = false>
+using factory_product_unit_t = typename get_parameter_unit<
+  Traits,
+  std::remove_reference_t<Product>,
+  Traits::template is_atomic<std::remove_cv_t<std::remove_reference_t<Product>>>,
+  isCopy>::type;
+//------------------------------------------------------------------------------
+template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
+using factory_parameter_unit_t = factory_product_unit_t<
+  Traits,
+  typename factory_utils<
+    Product>::template constructor_parameter_type<CtrIdx, ParamIdx>,
+  factory_utils<Product>::is_copy_constructor(CtrIdx) ||
+    factory_utils<Product>::is_move_constructor(CtrIdx)>;
 
 template <typename Traits, typename Product>
 using factory_constructor_unit_t =
   typename Traits::template constructor_unit<Product>;
 
-template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
-using factory_parameter_unit_t =
-  typename Traits::template product_unit<typename factory_utils<
-    Product>::template constructor_parameter_type<CtrIdx, ParamIdx>>;
+template <typename Traits, typename Product>
+using factory_unit_t = typename Traits::template factory_unit<Product>;
 
 template <typename Traits, typename Product>
-using factory_product_unit_t = typename Traits::template product_unit<Product>;
+using factory_builder_unit_t = typename Traits::template builder_unit<Product>;
 //------------------------------------------------------------------------------
 struct object_builder : interface<object_builder> {
     virtual auto as_parameter() const noexcept
@@ -62,11 +87,23 @@ class factory_constructor_parameter_impl
         return *this;
     }
 
+    auto base_parameter() const -> const factory_constructor_parameter& {
+        return *this;
+    }
+
+    auto base_builder() -> object_builder& {
+        return *this;
+    }
+
 public:
     factory_constructor_parameter_impl(
       factory_constructor_unit_t<Traits, Product>& parent,
       const factory_constructor& parent_constructor)
-      : factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx>{parent}
+      : factory_parameter_unit_t<
+          Traits,
+          Product,
+          CtrIdx,
+          ParamIdx>{parent, base_builder()}
       , _parent_constructor{parent_constructor} {}
 
     auto parent_constructor() const noexcept
@@ -87,8 +124,8 @@ public:
         return utils::constructor_parameter_name(CtrIdx, ParamIdx);
     }
 
-    auto get() -> decltype(base_unit().get()) {
-        return base_unit().get();
+    auto get() -> decltype(base_unit().get(base_parameter())) {
+        return base_unit().get(base_parameter());
     }
 
 private:
