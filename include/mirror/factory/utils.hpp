@@ -34,6 +34,18 @@ struct factory_utils {
         return *advance(constructors().begin(), i);
     }
 
+    consteval static auto is_default_constructor(size_t i) {
+        return std::experimental::meta::is_default_constructor(constructor(i));
+    }
+
+    consteval static auto is_move_constructor(size_t i) {
+        return std::experimental::meta::is_move_constructor(constructor(i));
+    }
+
+    consteval static auto is_copy_constructor(size_t i) {
+        return std::experimental::meta::is_copy_constructor(constructor(i));
+    }
+
     consteval static auto constructor_parameters(size_t i) {
         return std::experimental::meta::parameters_of(constructor(i));
     }
@@ -54,6 +66,12 @@ struct factory_utils {
     consteval static auto constructor_parameter_name(size_t i, size_t j) {
         return std::experimental::meta::name_of(constructor_parameter(i, j));
     }
+
+    template <size_t I, size_t J>
+    using constructor_parameter_type =
+      // clang-format off
+    typename [: std::experimental::meta::type_of(constructor_parameter(I, J)) :];
+    // clang-format on
 };
 //------------------------------------------------------------------------------
 } // namespace mirror
