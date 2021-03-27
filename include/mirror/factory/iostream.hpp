@@ -1,0 +1,132 @@
+/// @file
+///
+/// Copyright Matus Chochlik.
+/// Distributed under the Boost Software License, Version 1.0.
+/// See accompanying file LICENSE_1_0.txt or copy at
+///  http://www.boost.org/LICENSE_1_0.txt
+///
+
+#ifndef MIRROR_FACTORY_IOSTREAM_HPP
+#define MIRROR_FACTORY_IOSTREAM_HPP
+
+namespace mirror {
+//------------------------------------------------------------------------------
+struct iostream_factory_traits {
+
+    template <typename Product>
+    struct builder_unit {
+        builder_unit(std::istream& i, std::ostream& o)
+          : in{i}
+          , out{o} {}
+
+        std::istream& in;
+        std::ostream& out;
+    };
+
+    template <typename Product>
+    struct factory_unit {
+        factory_unit(const builder_unit<Product>& parent)
+          : in{parent.in}
+          , out{parent.out} {}
+
+        auto select_constructor(const factory& fac) -> size_t {
+            size_t pick = 0U;
+            auto bad_pick = [](const auto& ctr) {
+                return ctr.is_copy_constructor() || ctr.is_move_constructor();
+            };
+
+            while(true) {
+                out << "select constructor:" << std::endl;
+                const auto ctr_count = fac.constructor_count();
+                for(size_t c = 0; c < ctr_count; ++c) {
+                    const auto& ctr = fac.constructor(c);
+                    if(!bad_pick(ctr)) {
+                        out << "  " << c << ": " << fac.product_type_name()
+                            << "(";
+                        const auto param_count = ctr.parameter_count();
+                        for(size_t p = 0; p < param_count; ++p) {
+                            if(p) {
+                                out << ", ";
+                            }
+                            out << ctr.parameter(p).type_name();
+                            out << " ";
+                            out << ctr.parameter(p).name();
+                        }
+                        out << ")" << std::endl;
+                    }
+                }
+                in >> pick;
+                if(pick < ctr_count) {
+                    if(!bad_pick(fac.constructor(pick))) {
+                        break;
+                    }
+                }
+            }
+            return pick;
+        }
+
+        std::istream& in;
+        std::ostream& out;
+    };
+
+    template <typename Product>
+    struct constructor_unit {
+        constructor_unit(const factory_unit<Product>& parent)
+          : in{parent.in}
+          , out{parent.out} {}
+
+        std::istream& in;
+        std::ostream& out;
+    };
+
+    template <typename T>
+    static constexpr bool is_atomic = std::is_floating_point_v<T>;
+
+    template <typename T>
+    struct atomic_unit {
+        template <typename P>
+        atomic_unit(const constructor_unit<P>& parent, const object_builder&)
+          : in{parent.in}
+          , out{parent.out} {}
+
+        auto get(const factory_constructor_parameter& p) {
+            std::remove_reference_t<T> result{};
+            out << "get " << p.name() << ": " << std::flush;
+            if(!(in >> result)) {
+                throw std::runtime_error("blah");
+            }
+            return result;
+        }
+
+        std::istream& in;
+        std::ostream& out;
+    };
+
+    template <typename T>
+    struct composite_unit {
+        template <typename P>
+        composite_unit(const constructor_unit<P>&, const object_builder& builder)
+          : factory{*this, builder} {}
+
+        auto get(const factory_constructor_parameter&) {
+            return factory.construct();
+        }
+
+        built_factory_type<iostream_factory_traits, T> factory;
+    };
+
+    template <typename T>
+    struct copy_unit {
+        template <typename P>
+        copy_unit(const constructor_unit<P>&, const object_builder&) {}
+
+        auto get(const factory_constructor_parameter&) -> T {
+            return T{};
+        }
+    };
+};
+//------------------------------------------------------------------------------
+} // namespace mirror
+
+#endif // MIRROR_FACTORY_IOSTREAM_HPP
+
