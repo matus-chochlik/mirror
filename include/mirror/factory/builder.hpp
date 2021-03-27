@@ -11,6 +11,7 @@
 
 #include "../interface.hpp"
 #include "utils.hpp"
+#include <array>
 #include <string_view>
 
 namespace mirror {

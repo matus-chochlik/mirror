@@ -9,6 +9,8 @@
 #ifndef MIRROR_FACTORY_IOSTREAM_HPP
 #define MIRROR_FACTORY_IOSTREAM_HPP
 
+#include <iostream>
+
 namespace mirror {
 //------------------------------------------------------------------------------
 struct iostream_factory_traits {
