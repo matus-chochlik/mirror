@@ -20,6 +20,24 @@ struct factory_constructor_parameter;
 struct factory_constructor;
 struct factory;
 //------------------------------------------------------------------------------
+template <typename Traits, typename Product>
+using factory_builder_unit_t = typename Traits::template builder_unit<Product>;
+
+template <typename Traits, typename Product>
+using factory_unit_t = typename Traits::template factory_unit<Product>;
+
+template <typename Traits, typename Product>
+using factory_constructor_unit_t =
+  typename Traits::template constructor_unit<Product>;
+
+template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
+using factory_parameter_unit_t =
+  typename Traits::template product_unit<typename factory_utils<
+    Product>::template constructor_parameter_type<CtrIdx, ParamIdx>>;
+
+template <typename Traits, typename Product>
+using factory_product_unit_t = typename Traits::template product_unit<Product>;
+//------------------------------------------------------------------------------
 struct object_builder : interface<object_builder> {
     virtual auto as_parameter() const noexcept
       -> const factory_constructor_parameter* = 0;
@@ -35,20 +53,20 @@ struct factory_constructor_parameter : object_builder {
 template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
 class factory_constructor_parameter_impl
   : public factory_constructor_parameter
-  , private Traits::template parameter_unit<typename factory_utils<
-      Product>::template constructor_parameter_type<CtrIdx, ParamIdx>> {
+  , private factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx> {
 
     using utils = factory_utils<Product>;
-    using param_type =
-      typename utils::template constructor_parameter_type<CtrIdx, ParamIdx>;
-    using parent_unit = typename Traits::template constructor_unit<Product>;
-    using base_unit = typename Traits::template parameter_unit<param_type>;
+
+    auto base_unit()
+      -> factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx>& {
+        return *this;
+    }
 
 public:
     factory_constructor_parameter_impl(
-      parent_unit& parent,
+      factory_constructor_unit_t<Traits, Product>& parent,
       const factory_constructor& parent_constructor)
-      : base_unit{parent}
+      : factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx>{parent}
       , _parent_constructor{parent_constructor} {}
 
     auto parent_constructor() const noexcept
@@ -69,8 +87,8 @@ public:
         return utils::constructor_parameter_name(CtrIdx, ParamIdx);
     }
 
-    auto get() -> decltype(std::declval<base_unit>().get()) {
-        return static_cast<base_unit*>(this)->get();
+    auto get() -> decltype(base_unit().get()) {
+        return base_unit().get();
     }
 
 private:
@@ -100,25 +118,39 @@ class factory_constructor_impl<
   CtrIdx,
   std::index_sequence<ParamIdx...>>
   : public factory_constructor
-  , private Traits::template constructor_unit<Product>
+  , private factory_constructor_unit_t<Traits, Product>
   , private factory_constructor_parameter_impl<
       Traits,
       Product,
       CtrIdx,
       ParamIdx>... {
 
-    using parent_unit = typename Traits::template factory_unit<Product>;
-    using base_unit = typename Traits::template constructor_unit<Product>;
     using utils = factory_utils<Product>;
 
     template <size_t Idx>
     using _param =
       factory_constructor_parameter_impl<Traits, Product, CtrIdx, Idx>;
 
+    auto base_unit() noexcept -> factory_constructor_unit_t<Traits, Product>& {
+        return *this;
+    }
+
+    template <size_t Idx>
+    auto base_param() noexcept -> _param<Idx>* {
+        return this;
+    }
+
+    template <size_t Idx>
+    auto base_param() const noexcept -> const _param<Idx>* {
+        return this;
+    }
+
 public:
-    factory_constructor_impl(parent_unit& parent, const factory& parent_factory)
-      : base_unit{parent}
-      , _param<ParamIdx>{static_cast<base_unit&>(*this), *this}...
+    factory_constructor_impl(
+      factory_unit_t<Traits, Product>& parent,
+      const factory& parent_factory)
+      : factory_constructor_unit_t<Traits, Product>{parent}
+      , _param<ParamIdx>{base_unit(), *this}...
       , _parent_factory{parent_factory} {}
 
     auto parent_factory() const noexcept -> const factory& final {
@@ -145,12 +177,12 @@ public:
       -> const factory_constructor_parameter& final {
         const std::
           array<const factory_constructor_parameter*, sizeof...(ParamIdx)>
-            _parameters{{static_cast<const _param<ParamIdx>*>(this)...}};
+            _parameters{{base_param<ParamIdx>()...}};
         return *_parameters[index];
     }
 
     auto construct() -> Product {
-        return Product(static_cast<_param<ParamIdx>*>(this)->get()...);
+        return Product(base_param<ParamIdx>()->get()...);
     }
 
 private:
@@ -172,7 +204,7 @@ class factory_impl;
 template <typename Traits, typename Product, size_t... CtrIdx>
 class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
   : public factory
-  , private Traits::template factory_unit<Product>
+  , private factory_unit_t<Traits, Product>
   , private factory_constructor_impl<
       Traits,
       Product,
@@ -182,9 +214,6 @@ class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
 
     static_assert(sizeof...(CtrIdx) > 0, "Product must have constructors");
 
-    using builder_unit = typename Traits::template builder_unit<Product>;
-    using parameter_unit = typename Traits::template parameter_unit<Product>;
-    using base_unit = typename Traits::template factory_unit<Product>;
     using utils = factory_utils<Product>;
 
     template <size_t Idx>
@@ -194,15 +223,33 @@ class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
       Idx,
       typename utils::template constructor_parameter_indices<Idx>>;
 
+    auto base_unit() noexcept -> factory_unit_t<Traits, Product>& {
+        return *this;
+    }
+
+    template <size_t Idx>
+    auto base_ctr() noexcept -> _ctr<Idx>* {
+        return this;
+    }
+
+    template <size_t Idx>
+    auto base_ctr() const noexcept -> const _ctr<Idx>* {
+        return this;
+    }
+
 public:
-    factory_impl(builder_unit& parent, const object_builder& parent_builder)
-      : base_unit{parent}
-      , _ctr<CtrIdx>{static_cast<base_unit&>(*this), *this}...
+    factory_impl(
+      factory_builder_unit_t<Traits, Product>& parent,
+      const object_builder& parent_builder)
+      : factory_unit_t<Traits, Product>{parent}
+      , _ctr<CtrIdx>{base_unit(), *this}...
       , _parent_builder{parent_builder} {}
 
-    factory_impl(parameter_unit& parent, const object_builder& parent_builder)
-      : base_unit{parent}
-      , _ctr<CtrIdx>{static_cast<base_unit&>(*this), *this}...
+    factory_impl(
+      factory_product_unit_t<Traits, Product>& parent,
+      const object_builder& parent_builder)
+      : factory_unit_t<Traits, Product>{parent}
+      , _ctr<CtrIdx>{base_unit(), *this}...
       , _parent_builder{parent_builder} {}
 
     auto product_type_name() const noexcept -> std::string_view final {
@@ -216,21 +263,20 @@ public:
     auto constructor(size_t index) const noexcept
       -> const factory_constructor& final {
         std::array<const factory_constructor*, sizeof...(CtrIdx)> ctrs{
-          {static_cast<const _ctr<CtrIdx>*>(this)...}};
+          {base_ctr<CtrIdx>()...}};
         return *ctrs[index];
     }
 
     auto construct() -> Product {
         return _dispatch_constructor(
-          static_cast<base_unit*>(this)->select_constructor(
-            *static_cast<factory*>(this)),
+          base_unit().select_constructor(*static_cast<factory*>(this)),
           std::integer_sequence<size_t, sizeof...(CtrIdx) - 1U>{});
     }
 
 private:
     template <size_t Idx>
     auto _do_construct(std::integer_sequence<size_t, Idx>) -> Product {
-        return static_cast<_ctr<Idx>*>(this)->construct();
+        return base_ctr<Idx>()->construct();
     }
 
     auto _dispatch_constructor(size_t, std::integer_sequence<size_t, 0U> tag)
@@ -255,20 +301,24 @@ private:
 template <typename Traits, typename Product>
 class factory_builder
   : public object_builder
-  , private Traits::template builder_unit<Product> {
-    using base_unit = typename Traits::template builder_unit<Product>;
+  , private factory_builder_unit_t<Traits, Product> {
     using utils = factory_utils<Product>;
+
+    auto base_unit() noexcept -> factory_builder_unit_t<Traits, Product>& {
+        return *this;
+    }
 
 public:
     template <typename... Args>
     factory_builder(std::string name, Args&&... args)
-      : base_unit{args...}
+      : factory_builder_unit_t<Traits, Product>{args...}
       , _name{std::move(name)} {}
 
+    using factory_type =
+      factory_impl<Traits, Product, typename utils::constructor_indices>;
+
     auto build() noexcept {
-        using impl =
-          factory_impl<Traits, Product, typename utils::constructor_indices>;
-        return impl{static_cast<base_unit&>(*this), *this};
+        return factory_type{base_unit(), *this};
     }
 
     auto as_parameter() const noexcept
@@ -287,6 +337,10 @@ public:
 private:
     std::string _name;
 };
+//------------------------------------------------------------------------------
+template <typename Traits, typename Product>
+using built_factory_type =
+  typename factory_builder<Traits, Product>::factory_type;
 //------------------------------------------------------------------------------
 } // namespace mirror
 
