@@ -18,6 +18,11 @@ namespace mirror {
 //------------------------------------------------------------------------------
 template <typename T>
 struct factory_utils {
+
+    consteval static auto product_type_name() {
+        return std::experimental::meta::name_of(^T);
+    }
+
     consteval static auto constructors() {
         return std::experimental::meta::members_of(
           ^T, std::experimental::meta::is_constructor);
@@ -61,6 +66,11 @@ struct factory_utils {
     consteval static auto constructor_parameter(size_t i, size_t j)
       -> std::experimental::meta::info {
         return *advance(constructor_parameters(i).begin(), j);
+    }
+
+    consteval static auto constructor_parameter_type_name(size_t i, size_t j) {
+        return std::experimental::meta::name_of(
+          std::experimental::meta::type_of(constructor_parameter(i, j)));
     }
 
     consteval static auto constructor_parameter_name(size_t i, size_t j) {
