@@ -90,6 +90,10 @@ public:
         return vector(a.x() - b.x(), a.y() - b.y(), a.z() - b.z());
     }
 
+    auto direction() const noexcept {
+        return *this - point{0.F};
+    }
+
 private:
     float _x{0.F};
     float _y{0.F};
