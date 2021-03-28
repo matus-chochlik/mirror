@@ -14,11 +14,11 @@ int main() {
     using namespace mirror;
 
     using iostream_factory_builder =
-      factory_builder<iostream_factory_traits, test::point>;
-    auto f = iostream_factory_builder("iof", std::cin, std::cout).build();
+      factory_builder<iostream_factory_traits, test::tetrahedron>;
+    auto fac = iostream_factory_builder("iof", std::cin, std::cout).build();
 
-    auto p = f.construct();
+    auto obj = fac.construct();
 
-    std::cout << p.x() << ", " << p.y() << ", " << p.z() << std::endl;
+    std::cout << "volume of the tetrahedron is: " << obj.volume() << std::endl;
     return 0;
 }

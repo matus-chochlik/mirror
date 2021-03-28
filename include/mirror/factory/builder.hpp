@@ -228,6 +228,8 @@ private:
 };
 //------------------------------------------------------------------------------
 struct factory : interface<factory> {
+    virtual auto parent_builder() const noexcept -> const object_builder& = 0;
+
     virtual auto product_type_name() const noexcept -> std::string_view = 0;
 
     virtual auto constructor_count() const noexcept -> std::size_t = 0;
@@ -289,6 +291,10 @@ public:
       : factory_unit_t<Traits, Product>{parent}
       , _ctr<CtrIdx>{base_unit(), *this}...
       , _parent_builder{parent_builder} {}
+
+    auto parent_builder() const noexcept -> const object_builder& final {
+        return _parent_builder;
+    }
 
     auto product_type_name() const noexcept -> std::string_view final {
         return {utils::product_type_name()};

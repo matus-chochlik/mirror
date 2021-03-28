@@ -14,6 +14,23 @@
 namespace mirror {
 //------------------------------------------------------------------------------
 struct iostream_factory_traits {
+    template <typename Product>
+    struct builder_unit;
+
+    template <typename Product>
+    struct factory_unit;
+
+    template <typename Product>
+    struct constructor_unit;
+
+    template <typename T>
+    struct atomic_unit;
+
+    template <typename T>
+    struct composite_unit;
+
+    template <typename T>
+    struct copy_unit;
 
     template <typename Product>
     struct builder_unit {
@@ -28,6 +45,10 @@ struct iostream_factory_traits {
     template <typename Product>
     struct factory_unit {
         factory_unit(const builder_unit<Product>& parent)
+          : in{parent.in}
+          , out{parent.out} {}
+
+        factory_unit(const composite_unit<Product>& parent)
           : in{parent.in}
           , out{parent.out} {}
 
@@ -82,7 +103,25 @@ struct iostream_factory_traits {
     };
 
     template <typename T>
-    static constexpr bool is_atomic = std::is_floating_point_v<T>;
+    static constexpr bool is_atomic =
+      std::is_floating_point_v<T> || std::is_integral_v<T> ||
+      std::is_same_v<T, std::string>;
+
+    static auto make_path_of(const factory_constructor_parameter& param) {
+        auto path = std::string(param.name());
+        auto* pparam = &param;
+        while(true) {
+            pparam = pparam->parent_constructor()
+                       .parent_factory()
+                       .parent_builder()
+                       .as_parameter();
+            if(!pparam) {
+                break;
+            }
+            path = std::string(pparam->name()) + "." + path;
+        }
+        return path;
+    }
 
     template <typename T>
     struct atomic_unit {
@@ -93,9 +132,13 @@ struct iostream_factory_traits {
 
         auto get(const factory_constructor_parameter& p) {
             std::remove_reference_t<T> result{};
-            out << "get " << p.name() << ": " << std::flush;
-            if(!(in >> result)) {
-                throw std::runtime_error("blah");
+            const auto path = make_path_of(p);
+            while(true) {
+                out << "get " << path << " (" << p.type_name()
+                    << "): " << std::flush;
+                if(in >> result) {
+                    break;
+                }
             }
             return result;
         }
@@ -107,13 +150,19 @@ struct iostream_factory_traits {
     template <typename T>
     struct composite_unit {
         template <typename P>
-        composite_unit(const constructor_unit<P>&, const object_builder& builder)
-          : factory{*this, builder} {}
+        composite_unit(
+          const constructor_unit<P>& parent,
+          const object_builder& builder)
+          : in{parent.in}
+          , out{parent.out}
+          , factory{*this, builder} {}
 
         auto get(const factory_constructor_parameter&) {
             return factory.construct();
         }
 
+        std::istream& in;
+        std::ostream& out;
         built_factory_type<iostream_factory_traits, T> factory;
     };
 
