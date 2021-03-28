@@ -111,11 +111,7 @@ struct iostream_factory_traits {
         auto path = std::string(param.name());
         auto* pparam = &param;
         while(true) {
-            pparam = pparam->parent_constructor()
-                       .parent_factory()
-                       .parent_builder()
-                       .as_parameter();
-            if(!pparam) {
+            if(!(pparam = pparam->parent_parameter())) {
                 break;
             }
             path = std::string(pparam->name()) + "." + path;

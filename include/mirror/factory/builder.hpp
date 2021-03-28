@@ -74,6 +74,9 @@ struct object_builder : interface<object_builder> {
 struct factory_constructor_parameter : object_builder {
     virtual auto parent_constructor() const noexcept
       -> const factory_constructor& = 0;
+
+    auto parent_parameter() const noexcept
+      -> const factory_constructor_parameter*;
 };
 //------------------------------------------------------------------------------
 template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
@@ -381,6 +384,11 @@ public:
 private:
     std::string _name;
 };
+//------------------------------------------------------------------------------
+inline auto factory_constructor_parameter::parent_parameter() const noexcept
+  -> const factory_constructor_parameter* {
+    return parent_constructor().parent_factory().parent_builder().as_parameter();
+}
 //------------------------------------------------------------------------------
 template <typename Traits, typename Product>
 using built_factory_type =
