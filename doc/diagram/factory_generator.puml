@@ -1,72 +1,117 @@
 @startuml
 class meta::Parameter {
-    +getName() : string
+    +get_name() : string
 }
 
 class meta::Constructor {
-    +getParameters()
+    +get_parameters()
 }
 
 class meta::Class {
-    +getName() : string
+    +get_name() : string
     
 }
 
 class InputData {
 }
 
-class Product {
-    +Product()
-    +Product(...)
+class product {
+    +product()
+    +product(...)
 }
 
-class Factory<T> {
-    +make() : T
+class factory_builder<Product, Traits> {
+    +type_name() : string
+    +name() : string
+    +build() : factory<T>
 }
 
-class "Factory<Product, Traits>" as Product_Factory  {
+class factory<Product, Traits> {
+    +product_type_name() : string
+    +constructor_count() : integer
+    +constructor(integer)
+    +construct() : Product
+}
+
+
+class factory_constructor<Product, Traits> {
+    +is_default_constructor() : boolean
+    +is_move_constructor() : boolean
+    +is_copy_constructor() : boolean
+    +parameter_count() : interger
+    +parameter(integer)
+    +construct() : Product
+}
+
+class factory_parameter<T, Traits> {
+    +type_name() : string
+    +name() : string
+    +get() : T
+}
+
+class factory_traits {
+}
+
+class builder_unit {
+}
+
+class factory_unit {
+    +select_constructor() : integer
+}
+
+class constructor_unit {
     +make() : Product
 }
 
-class FactoryConstructor {
+class parameter_unit<T> {
+    +get() : T
 }
 
-class FactoryTraits {
+class atomic_unit<T> {
+    +get() : T
 }
 
-class FactoryUnit {
-    +pickConstructor() : int
+class composite_unit<T> {
+    -factory<T>: fac
+    +get() : T
 }
 
-class ConstructorUnit {
-    +make() : Product
-}
-
-class ParameterUnit {
-    +makeArgument() : T
-}
-
-Product_Factory --|> Factory : specializes
 meta::Class o-- meta::Constructor : has
 meta::Constructor o-- meta::Parameter : has
-meta::Class --> Product : reflects
-Product_Factory ..> Product : instantiates
-ConstructorUnit --> meta::Constructor : uses
-ParameterUnit --> meta::Parameter : uses
-Product_Factory *-- FactoryConstructor : contains
-Product_Factory --> FactoryTraits : uses
-FactoryConstructor *-- FactoryUnit : contains
-FactoryUnit *-- ConstructorUnit : contains
-ConstructorUnit *-- ParameterUnit : contains
-ConstructorUnit ..> Product : constructs
-FactoryTraits --> FactoryUnit : provides
-FactoryTraits --> ConstructorUnit : provides
-FactoryTraits --> ParameterUnit : provides
-ParameterUnit --> Factory : uses
+meta::Class --> product : reflects
 
-FactoryUnit --> InputData
-note on link : picks\nconstructor
+factory_builder *-- factory
+factory_builder --> builder_unit
+factory *-- factory_constructor
+factory --> factory_unit
+factory ..> product : instantiates
+factory_constructor *-- factory_parameter
+factory_constructor --> constructor_unit
+factory_parameter --> parameter_unit
 
-ParameterUnit --> InputData
+factory --> meta::Class
+factory_constructor --> meta::Constructor
+factory_parameter --> meta::Parameter
+
+builder_unit <.. factory_traits
+factory_unit <.. factory_traits
+constructor_unit <.. factory_traits
+composite_unit <.. factory_traits
+atomic_unit <.. factory_traits
+
+factory_builder --> factory_traits : uses
+
+parameter_unit <|-- atomic_unit
+parameter_unit <|-- composite_unit
+
+builder_unit <-- factory_unit : parent
+factory_unit <-- constructor_unit : parent
+constructor_unit <-- parameter_unit : parent
+factory --* composite_unit
+
+factory_unit --> InputData
+note on link : selects\nconstructor
+
+InputData <-- atomic_unit
 note on link : decodes\nargument
 @enduml
