@@ -1,84 +1,104 @@
 @startuml
-class meta::Parameter {
-    +get_name() : string
+
+package "Metaobjects" #D0E0F0 {
+	class meta::Parameter {
+		+get_name() : string
+	}
+
+	class meta::Constructor {
+		+get_parameters()
+	}
+
+	class meta::Class {
+		+get_name() : string
+	}
 }
 
-class meta::Constructor {
-    +get_parameters()
+package "Product-related" #D0D0D0 {
+	class product {
+		+product()
+		+product(...)
+	}
+
+	class ExternalRepresentation {
+	}
+
+	note right of ExternalRepresentation : XML,JSON,\nRDBS,GUI,\netc.
 }
 
-class meta::Class {
-    +get_name() : string
-    
+package "Reusable factory builder framework" #D0F0E0 {
+	class factory_builder<Product, Traits> {
+		+type_name() : string
+		+name() : string
+		+build() : factory<T>
+	}
+
+	class factory<Product, Traits> {
+		+product_type_name() : string
+		+constructor_count() : integer
+		+constructor(integer)
+		+construct() : Product
+	}
+
+	class factory_constructor<Product, Traits> {
+		+is_default_constructor() : boolean
+		+is_move_constructor() : boolean
+		+is_copy_constructor() : boolean
+		+parameter_count() : interger
+		+parameter(integer)
+		+construct() : Product
+	}
+
+	class factory_parameter<T, Traits> {
+		+type_name() : string
+		+name() : string
+		+get() : T
+	}
 }
 
-class InputData {
-}
+note left of factory_builder : Creates a reusable factory.
 
-class product {
-    +product()
-    +product(...)
-}
+note left of factory : Can be used\nto construct multiple\ninstances\nof the Product type.
 
-class factory_builder<Product, Traits> {
-    +type_name() : string
-    +name() : string
-    +build() : factory<T>
-}
-
-class factory<Product, Traits> {
-    +product_type_name() : string
-    +constructor_count() : integer
-    +constructor(integer)
-    +construct() : Product
-}
-
-
-class factory_constructor<Product, Traits> {
-    +is_default_constructor() : boolean
-    +is_move_constructor() : boolean
-    +is_copy_constructor() : boolean
-    +parameter_count() : interger
-    +parameter(integer)
-    +construct() : Product
-}
-
-class factory_parameter<T, Traits> {
-    +type_name() : string
-    +name() : string
-    +get() : T
-}
+note bottom of factory_parameter : Gets a parameter\nfor a constructor.
 
 class factory_traits {
 }
 
-class builder_unit {
-}
+note top of factory_traits : Determine how\nexternal representation\nis handled, converted\ninto C++ representation\nand used as input\nfor constructors.
 
-class factory_unit {
-    +select_constructor() : integer
-}
+package "Provided by factory traits" #F0F0E0 {
+	class builder_unit {
+	}
 
-class constructor_unit {
-    +make() : Product
-}
+	class factory_unit {
+		+select_constructor() : integer
+	}
 
-class parameter_unit<T> {
-    +get() : T
-}
+	class constructor_unit {
+		+make() : Product
+	}
 
-class atomic_unit<T> {
-    +get() : T
-}
+	class parameter_unit<T> {
+		+get() : T
+	}
 
-class composite_unit<T> {
-    -factory<T>: fac
-    +get() : T
+	class atomic_unit<T> {
+		+get() : T
+	}
+
+	class composite_unit<T> {
+		-factory<T>: fac
+		+get() : T
+	}
 }
 
 meta::Class o-- meta::Constructor : has
 meta::Constructor o-- meta::Parameter : has
 meta::Class --> product : reflects
+
+product <-- ExternalRepresentation
+note on link : Represents\nan instance\nof the product\ntype.
 
 factory_builder *-- factory
 factory_builder --> builder_unit
@@ -93,11 +113,7 @@ factory --> meta::Class
 factory_constructor --> meta::Constructor
 factory_parameter --> meta::Parameter
 
-builder_unit <.. factory_traits
-factory_unit <.. factory_traits
-constructor_unit <.. factory_traits
-composite_unit <.. factory_traits
-atomic_unit <.. factory_traits
+factory_traits ..> "Provided by factory traits" : provides
 
 factory_builder --> factory_traits : uses
 
@@ -109,9 +125,9 @@ factory_unit <-- constructor_unit : parent
 constructor_unit <-- parameter_unit : parent
 factory --* composite_unit
 
-factory_unit --> InputData
-note on link : selects\nconstructor
+factory_unit --> ExternalRepresentation
+note on link : Selects\nthe best\nconstructor.
 
-InputData <-- atomic_unit
-note on link : decodes\nargument
+ExternalRepresentation <-- atomic_unit
+note on link : Converts\nargument\nfrom external\nrepresentation.
 @enduml
