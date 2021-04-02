@@ -2,3 +2,6 @@
 	path = third_party/llvm
 	url = https://github.com/lock3/meta.git
 	branch = paper/p2320
+[submodule "third_party/rapidjson"]
+	path = third_party/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
