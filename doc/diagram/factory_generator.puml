@@ -1,7 +1,7 @@
 @startuml
 
 package "Metaobjects" #D0E0F0 {
-	class meta::Parameter {
+	class meta::Class {
 		+get_name() : string
 	}
 
@@ -9,7 +9,7 @@ package "Metaobjects" #D0E0F0 {
 		+get_parameters()
 	}
 
-	class meta::Class {
+	class meta::Parameter {
 		+get_name() : string
 	}
 }
@@ -20,13 +20,15 @@ package "Product-related" #D0D0D0 {
 		+product(...)
 	}
 
+	note right of product : We want to create\ninstances of this\ntype, from external\nrepresentation.
+
 	class ExternalRepresentation {
 	}
 
 	note right of ExternalRepresentation : XML,JSON,\nRDBS,GUI,\netc.
 }
 
-package "Reusable factory builder framework" #D0F0E0 {
+package "Factory builder framework" #D0F0E0 {
 	class factory_builder<Product, Traits> {
 		+type_name() : string
 		+name() : string
@@ -54,28 +56,28 @@ package "Reusable factory builder framework" #D0F0E0 {
 		+name() : string
 		+get() : T
 	}
+
+	note left of factory_builder : Creates a reusable factory.
+
+	note left of factory : Can be used\nto construct multiple\ninstances\nof the Product type.
+
+	note left of factory_parameter : Gets a parameter\nfor a constructor.
 }
-
-note left of factory_builder : Creates a reusable factory.
-
-note left of factory : Can be used\nto construct multiple\ninstances\nof the Product type.
-
-note bottom of factory_parameter : Gets a parameter\nfor a constructor.
 
 class factory_traits {
 }
 
-note top of factory_traits : Determine how\nexternal representation\nis handled, converted\ninto C++ representation\nand used as input\nfor constructors.
+note left of factory_traits : Determine how\nexternal representation\nis handled, converted\ninto C++ representation\nand used as input\nfor constructors.
 
 package "Provided by factory traits" #F0F0E0 {
-	class builder_unit {
+	class builder_unit<Product> {
 	}
 
-	class factory_unit {
+	class factory_unit<Product> {
 		+select_constructor() : integer
 	}
 
-	class constructor_unit {
+	class constructor_unit<Product> {
 		+make() : Product
 	}
 
@@ -115,7 +117,7 @@ factory_parameter --> meta::Parameter
 
 factory_traits ..> "Provided by factory traits" : provides
 
-factory_builder --> factory_traits : uses
+factory_traits <-- factory_builder : uses
 
 parameter_unit <|-- atomic_unit
 parameter_unit <|-- composite_unit
@@ -128,6 +130,6 @@ factory --* composite_unit
 factory_unit --> ExternalRepresentation
 note on link : Selects\nthe best\nconstructor.
 
-ExternalRepresentation <-- atomic_unit
+atomic_unit --> ExternalRepresentation 
 note on link : Converts\nargument\nfrom external\nrepresentation.
 @enduml
