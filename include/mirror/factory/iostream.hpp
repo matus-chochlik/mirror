@@ -106,7 +106,10 @@ struct iostream_factory_traits {
     template <typename T>
     struct atomic_unit {
         template <typename P>
-        atomic_unit(const constructor_unit<P>&, const object_builder&) {}
+        atomic_unit(
+          const constructor_unit<P>&,
+          const object_builder&,
+          const factory_constructor&) {}
 
         auto
         get(construction_context& ctx, const factory_constructor_parameter& p) {
@@ -126,7 +129,10 @@ struct iostream_factory_traits {
     template <typename T>
     struct composite_unit {
         template <typename P>
-        composite_unit(const constructor_unit<P>&, const object_builder& builder)
+        composite_unit(
+          const constructor_unit<P>&,
+          const object_builder& builder,
+          const factory_constructor&)
           : fac{*this, builder} {}
 
         auto
@@ -140,7 +146,10 @@ struct iostream_factory_traits {
     template <typename T>
     struct copy_unit {
         template <typename P>
-        copy_unit(const constructor_unit<P>&, const object_builder&) {}
+        copy_unit(
+          const constructor_unit<P>&,
+          const object_builder&,
+          const factory_constructor&) {}
 
         auto get(construction_context&, const factory_constructor_parameter&)
           -> T {

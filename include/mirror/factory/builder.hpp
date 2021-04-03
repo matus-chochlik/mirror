@@ -110,7 +110,7 @@ public:
           Traits,
           Product,
           CtrIdx,
-          ParamIdx>{parent, base_builder()}
+          ParamIdx>{parent, base_builder(), parent_constructor}
       , _parent_constructor{parent_constructor} {}
 
     auto parent_constructor() const noexcept
