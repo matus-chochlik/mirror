@@ -91,16 +91,55 @@ struct rapidjson_factory_traits {
         }
 
         template <typename T>
+        static constexpr bool is_atomic =
+          std::is_floating_point_v<T> || std::is_integral_v<T> ||
+          std::is_same_v<T, std::string>;
+
+        template <typename T>
         static auto type_match(const T*, construction_context&) noexcept
-          -> std::tuple<int, int> {
+          -> std::enable_if_t<!is_atomic<T>, std::tuple<int, int>> {
             return {true, true};
         }
 
-        static auto type_match(float*, construction_context& ctx) noexcept
+        static auto type_match(const bool*, construction_context& ctx) noexcept
           -> std::tuple<bool, bool> {
+            return {
+              ctx.value.IsBool() || ctx.value.IsString(), ctx.value.IsBool()};
+        }
+
+        template <typename T>
+        static auto type_match(const T*, construction_context& ctx) noexcept
+          -> std::enable_if_t<
+            std::is_integral_v<T> && std::is_signed_v<T>,
+            std::tuple<bool, bool>> {
+            return {
+              ctx.value.IsInt64() || ctx.value.IsInt(),
+              ctx.value.IsInt64() || ctx.value.IsInt()};
+        }
+
+        template <typename T>
+        static auto type_match(const T*, construction_context& ctx) noexcept
+          -> std::enable_if_t<
+            std::is_integral_v<T> && std::is_unsigned_v<T>,
+            std::tuple<bool, bool>> {
+            return {
+              ctx.value.IsUint64() || ctx.value.IsUint(),
+              ctx.value.IsUint64() || ctx.value.IsUint()};
+        }
+
+        template <typename T>
+        static auto type_match(const T*, construction_context& ctx) noexcept
+          -> std::
+            enable_if_t<std::is_floating_point_v<T>, std::tuple<bool, bool>> {
             return {
               ctx.value.IsDouble() || ctx.value.IsInt64() || ctx.value.IsInt(),
               ctx.value.IsDouble()};
+        }
+
+        static auto
+        type_match(const std::string*, construction_context& ctx) noexcept
+          -> std::tuple<bool, bool> {
+            return {true, ctx.value.IsString()};
         }
 
         auto match(construction_context& ctx, const factory_constructor& ctr)
@@ -177,13 +216,68 @@ struct rapidjson_factory_traits {
           const factory_constructor& ctr) noexcept
           : _info{builder, ctr} {}
 
-        static void fetch(float& dest, const rapidjson::Value& v) {
-            if(v.IsDouble()) {
-                dest = static_cast<float>(v.GetDouble());
-            } else if(v.IsInt64()) {
-                dest = static_cast<float>(v.GetInt64());
+        static auto fetch(bool& dest, const rapidjson::Value& v) -> void {
+            if(v.IsBool()) {
+                dest = v.GetBool();
+            } else if(v.IsString()) {
+                if(v.GetString() == rapidjson::StringRef("true")) {
+                    dest = true;
+                } else if(v.GetString() == rapidjson::StringRef("false")) {
+                    dest = false;
+                }
+            }
+        }
+
+        template <typename V>
+        static auto fetch(V& dest, const rapidjson::Value& v)
+          -> std::enable_if_t<std::is_integral_v<V> && std::is_signed_v<V>> {
+            if(v.IsInt64()) {
+                dest = static_cast<V>(v.GetInt64());
             } else if(v.IsInt()) {
-                dest = static_cast<float>(v.GetInt());
+                dest = static_cast<V>(v.GetInt());
+            }
+        }
+
+        template <typename V>
+        static auto fetch(V& dest, const rapidjson::Value& v)
+          -> std::enable_if_t<std::is_integral_v<V> && std::is_unsigned_v<V>> {
+            if(v.IsUint64()) {
+                dest = static_cast<V>(v.GetUint64());
+            } else if(v.IsUint()) {
+                dest = static_cast<V>(v.GetUint());
+            }
+        }
+
+        template <typename V>
+        static auto fetch(V& dest, const rapidjson::Value& v)
+          -> std::enable_if_t<std::is_floating_point_v<V>> {
+            if(v.IsDouble()) {
+                dest = static_cast<V>(v.GetDouble());
+            } else if(v.IsInt64()) {
+                dest = static_cast<V>(v.GetInt64());
+            } else if(v.IsInt()) {
+                dest = static_cast<V>(v.GetInt());
+            }
+        }
+
+        static auto fetch(std::string& dest, const rapidjson::Value& v)
+          -> void {
+            if(v.IsString()) {
+                dest = v.GetString();
+            } else if(v.IsDouble()) {
+                dest = std::to_string(v.GetDouble());
+            } else if(v.IsUint64()) {
+                dest = std::to_string(v.GetUint64());
+            } else if(v.IsInt64()) {
+                dest = std::to_string(v.GetInt64());
+            } else if(v.IsUint()) {
+                dest = std::to_string(v.GetUint());
+            } else if(v.IsInt()) {
+                dest = std::to_string(v.GetInt());
+            } else if(v.IsBool()) {
+                dest = v.GetBool() ? std::string("true") : std::string("false");
+            } else if(v.IsNull()) {
+                dest.clear();
             }
         }
 
