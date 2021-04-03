@@ -100,6 +100,8 @@ class factory_constructor_parameter_impl
     }
 
 public:
+    using construction_context = typename Traits::construction_context;
+
     factory_constructor_parameter_impl(
       factory_constructor_unit_t<Traits, Product>& parent,
       const factory_constructor& parent_constructor)
@@ -128,8 +130,9 @@ public:
         return utils::constructor_parameter_name(CtrIdx, ParamIdx);
     }
 
-    auto get() -> decltype(base_unit().get(base_parameter())) {
-        return base_unit().get(base_parameter());
+    auto get(construction_context context)
+      -> decltype(base_unit().get(context, base_parameter())) {
+        return base_unit().get(context, base_parameter());
     }
 
 private:
@@ -187,6 +190,8 @@ class factory_constructor_impl<
     }
 
 public:
+    using construction_context = typename Traits::construction_context;
+
     factory_constructor_impl(
       factory_unit_t<Traits, Product>& parent,
       const factory& parent_factory)
@@ -222,8 +227,8 @@ public:
         return *_parameters[index];
     }
 
-    auto construct() -> Product {
-        return Product(base_param<ParamIdx>()->get()...);
+    auto construct(construction_context context) -> Product {
+        return Product(base_param<ParamIdx>()->get(context)...);
     }
 
 private:
@@ -281,6 +286,8 @@ class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
     }
 
 public:
+    using construction_context = typename Traits::construction_context;
+
     factory_impl(
       factory_builder_unit_t<Traits, Product>& parent,
       const object_builder& parent_builder)
@@ -314,32 +321,38 @@ public:
         return *ctrs[index];
     }
 
-    auto construct() -> Product {
+    auto construct(construction_context context) -> Product {
         return _dispatch_constructor(
-          base_unit().select_constructor(*static_cast<factory*>(this)),
+          context,
+          base_unit().select_constructor(context, *static_cast<factory*>(this)),
           std::integer_sequence<size_t, sizeof...(CtrIdx) - 1U>{});
     }
 
 private:
     template <size_t Idx>
-    auto _do_construct(std::integer_sequence<size_t, Idx>) -> Product {
-        return base_ctr<Idx>()->construct();
+    auto _do_construct(
+      construction_context context,
+      std::integer_sequence<size_t, Idx>) -> Product {
+        return base_ctr<Idx>()->construct(context);
     }
 
-    auto _dispatch_constructor(size_t, std::integer_sequence<size_t, 0U> tag)
-      -> Product {
-        return _do_construct(tag);
+    auto _dispatch_constructor(
+      construction_context context,
+      size_t,
+      std::integer_sequence<size_t, 0U> tag) -> Product {
+        return _do_construct(context, tag);
     }
 
     template <size_t Idx>
-    auto
-    _dispatch_constructor(size_t index, std::integer_sequence<size_t, Idx> tag)
-      -> Product {
+    auto _dispatch_constructor(
+      construction_context context,
+      size_t index,
+      std::integer_sequence<size_t, Idx> tag) -> Product {
         if(index == Idx) {
-            return _do_construct(tag);
+            return _do_construct(context, tag);
         }
         return _dispatch_constructor(
-          index, std::integer_sequence<size_t, Idx - 1>{});
+          context, index, std::integer_sequence<size_t, Idx - 1>{});
     }
 
     const object_builder& _parent_builder;

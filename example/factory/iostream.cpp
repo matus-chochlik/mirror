@@ -15,9 +15,9 @@ int main() {
 
     using iostream_factory_builder =
       factory_builder<iostream_factory_traits, test::tetrahedron>;
-    auto fac = iostream_factory_builder("iof", std::cin, std::cout).build();
+    auto fac = iostream_factory_builder("iof").build();
 
-    auto teh = fac.construct();
+    auto teh = fac.construct({std::cin, std::cout});
 
     std::cout << "volume of the tetrahedron is: " << teh.volume() << std::endl;
     std::cout << "area of its base is: " << teh.base().area() << std::endl;
