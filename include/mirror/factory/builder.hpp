@@ -73,6 +73,7 @@ struct object_builder : interface<object_builder> {
 struct factory_constructor_parameter : object_builder {
     virtual auto parent_constructor() const noexcept
       -> const factory_constructor& = 0;
+    virtual auto parameter_index() const noexcept -> size_t = 0;
 
     virtual auto type_name() const noexcept -> std::string_view = 0;
 
@@ -118,6 +119,10 @@ public:
         return _parent_constructor;
     }
 
+    auto parameter_index() const noexcept -> size_t final {
+        return ParamIdx;
+    }
+
     auto as_parameter() const noexcept
       -> const factory_constructor_parameter* final {
         return this;
@@ -142,12 +147,13 @@ private:
 //------------------------------------------------------------------------------
 struct factory_constructor : interface<factory_constructor> {
     virtual auto parent_factory() const noexcept -> const factory& = 0;
+    virtual auto constructor_index() const noexcept -> size_t = 0;
 
     virtual auto is_default_constructor() const noexcept -> bool = 0;
     virtual auto is_move_constructor() const noexcept -> bool = 0;
     virtual auto is_copy_constructor() const noexcept -> bool = 0;
 
-    virtual auto parameter_count() const noexcept -> std::size_t = 0;
+    virtual auto parameter_count() const noexcept -> size_t = 0;
 
     virtual auto parameter(size_t index) const noexcept
       -> const factory_constructor_parameter& = 0;
@@ -204,6 +210,10 @@ public:
         return _parent_factory;
     }
 
+    auto constructor_index() const noexcept -> size_t final {
+        return CtrIdx;
+    }
+
     auto is_default_constructor() const noexcept -> bool final {
         return utils::is_default_constructor(CtrIdx);
     }
@@ -216,7 +226,7 @@ public:
         return utils::is_copy_constructor(CtrIdx);
     }
 
-    auto parameter_count() const noexcept -> std::size_t final {
+    auto parameter_count() const noexcept -> size_t final {
         return sizeof...(ParamIdx);
     }
 
@@ -241,7 +251,7 @@ struct factory : interface<factory> {
 
     virtual auto product_type_name() const noexcept -> std::string_view = 0;
 
-    virtual auto constructor_count() const noexcept -> std::size_t = 0;
+    virtual auto constructor_count() const noexcept -> size_t = 0;
 
     virtual auto constructor(size_t index) const noexcept
       -> const factory_constructor& = 0;
