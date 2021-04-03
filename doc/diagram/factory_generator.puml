@@ -92,6 +92,10 @@ package "Provided by factory traits" as units #F0F0E0 {
 		-factory<T>: fac
 		+get(context) : T
 	}
+
+	class copy_unit<T> {
+		+get(context) : T
+	}
 }
 
 class construction_context {
@@ -119,8 +123,8 @@ framework --> construction_context
 construction_context <-- units
 
 meta::Type <-- factory
-meta::Constructor <-- factory_constructor 
-meta::Parameter <-- factory_parameter 
+meta::Constructor <-- factory_constructor
+meta::Parameter <-- factory_parameter
 
 factory_traits ..> units : provides
 factory_traits ..> construction_context : provides
@@ -135,6 +139,7 @@ factory --* composite_unit
 
 parameter_unit <|-- atomic_unit
 parameter_unit <|-- composite_unit
+parameter_unit <|-- copy_unit
 
 external_representation <-- construction_context
 
