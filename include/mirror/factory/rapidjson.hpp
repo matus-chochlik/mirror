@@ -20,7 +20,6 @@
 
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
-#include <rapidjson/pointer.h>
 #include <rapidjson/rapidjson.h>
 
 #if defined(__clang__)
@@ -179,7 +178,7 @@ struct rapidjson_factory_traits {
           const object_builder& builder,
           const factory_constructor& ctr) noexcept
           : _name{builder.name()}
-          , _index{ctr.constructor_index()}
+          , _index{builder.index()}
           , _is_default{ctr.is_default_constructor()}
           , _is_move{ctr.is_move_constructor()}
           , _is_copy{ctr.is_copy_constructor()} {}
@@ -193,8 +192,11 @@ struct rapidjson_factory_traits {
                     }
                 }
             }
-            // TODO: Handle JSON arrays
-            // TODO: Handle nullptr -> default constructor
+            if(ctx.value.IsArray()) {
+                if(_index < ctx.value.Size()) {
+                    return {ctx.value[rapidjson::SizeType(_index)]};
+                }
+            }
             return ctx;
         }
 
@@ -216,7 +218,8 @@ struct rapidjson_factory_traits {
           const factory_constructor& ctr) noexcept
           : _info{builder, ctr} {}
 
-        static auto fetch(bool& dest, const rapidjson::Value& v) -> void {
+        static auto fetch(bool& dest, const rapidjson::Value& v) noexcept
+          -> void {
             if(v.IsBool()) {
                 dest = v.GetBool();
             } else if(v.IsString()) {
@@ -229,7 +232,7 @@ struct rapidjson_factory_traits {
         }
 
         template <typename V>
-        static auto fetch(V& dest, const rapidjson::Value& v)
+        static auto fetch(V& dest, const rapidjson::Value& v) noexcept
           -> std::enable_if_t<std::is_integral_v<V> && std::is_signed_v<V>> {
             if(v.IsInt64()) {
                 dest = static_cast<V>(v.GetInt64());
@@ -239,7 +242,7 @@ struct rapidjson_factory_traits {
         }
 
         template <typename V>
-        static auto fetch(V& dest, const rapidjson::Value& v)
+        static auto fetch(V& dest, const rapidjson::Value& v) noexcept
           -> std::enable_if_t<std::is_integral_v<V> && std::is_unsigned_v<V>> {
             if(v.IsUint64()) {
                 dest = static_cast<V>(v.GetUint64());
@@ -249,7 +252,7 @@ struct rapidjson_factory_traits {
         }
 
         template <typename V>
-        static auto fetch(V& dest, const rapidjson::Value& v)
+        static auto fetch(V& dest, const rapidjson::Value& v) noexcept
           -> std::enable_if_t<std::is_floating_point_v<V>> {
             if(v.IsDouble()) {
                 dest = static_cast<V>(v.GetDouble());
@@ -260,7 +263,7 @@ struct rapidjson_factory_traits {
             }
         }
 
-        static auto fetch(std::string& dest, const rapidjson::Value& v)
+        static auto fetch(std::string& dest, const rapidjson::Value& v) noexcept
           -> void {
             if(v.IsString()) {
                 dest = v.GetString();
@@ -281,8 +284,9 @@ struct rapidjson_factory_traits {
             }
         }
 
-        auto
-        get(construction_context& ctx, const factory_constructor_parameter&) {
+        auto get(
+          construction_context& ctx,
+          const factory_constructor_parameter&) noexcept -> T {
             T result{};
             fetch(result, _info.nested(ctx).value);
             return result;
@@ -323,8 +327,9 @@ struct rapidjson_factory_traits {
           const factory_constructor& ctr)
           : _info{builder, ctr} {}
 
-        auto get(construction_context&, const factory_constructor_parameter&)
-          -> T {
+        auto get(
+          construction_context& ctx,
+          const factory_constructor_parameter&) noexcept -> T {
             return T{};
         }
 
