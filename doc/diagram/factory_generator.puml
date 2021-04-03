@@ -29,20 +29,19 @@ package "Product-related" #D0D0D0 {
 }
 
 package "Factory builder framework" as framework #D0F0E0 {
-	class factory_builder<Product, Traits> {
-		+type_name() : string
+	class factory_builder<Traits> {
 		+name() : string
-		+build() : factory<T>
+		+build<T>() : factory<T>
 	}
 
-	class factory<Product, Traits> {
+	class factory<Traits, Product> {
 		+product_type_name() : string
 		+constructor_count() : integer
 		+constructor(integer)
 		+construct(context) : Product
 	}
 
-	class factory_constructor<Product, Traits> {
+	class factory_constructor<Traits, Product> {
 		+is_default_constructor() : boolean
 		+is_move_constructor() : boolean
 		+is_copy_constructor() : boolean
@@ -51,7 +50,7 @@ package "Factory builder framework" as framework #D0F0E0 {
 		+construct() : Product
 	}
 
-	class factory_parameter<T, Traits> {
+	class factory_parameter<Traits, T> {
 		+type_name() : string
 		+name() : string
 		+get() : T
@@ -70,7 +69,7 @@ class factory_traits {
 note right of factory_traits : Determine how\nexternal representation\nis handled, converted\ninto C++ representation\nand used as input\nfor constructors.
 
 package "Provided by factory traits" as units #F0F0E0 {
-	class builder_unit<Product> {
+	class builder_unit {
 	}
 
 	class factory_unit<Product> {

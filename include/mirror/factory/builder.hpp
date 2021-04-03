@@ -67,13 +67,14 @@ using factory_builder_unit_t = typename Traits::builder_unit;
 struct object_builder : interface<object_builder> {
     virtual auto as_parameter() const noexcept
       -> const factory_constructor_parameter* = 0;
-    virtual auto type_name() const noexcept -> std::string_view = 0;
     virtual auto name() const noexcept -> std::string_view = 0;
 };
 //------------------------------------------------------------------------------
 struct factory_constructor_parameter : object_builder {
     virtual auto parent_constructor() const noexcept
       -> const factory_constructor& = 0;
+
+    virtual auto type_name() const noexcept -> std::string_view = 0;
 
     auto parent_parameter() const noexcept
       -> const factory_constructor_parameter*;
@@ -387,10 +388,6 @@ public:
     auto as_parameter() const noexcept
       -> const factory_constructor_parameter* final {
         return nullptr;
-    }
-
-    auto type_name() const noexcept -> std::string_view final {
-        return {};
     }
 
     auto name() const noexcept -> std::string_view final {
