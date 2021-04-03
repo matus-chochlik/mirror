@@ -15,7 +15,7 @@ int main() {
     auto json_str = R"({
 		"base": {
 			"a": {
-				"x": 1.0,
+				"x": 2.0,
 				"y": 0.0,
 				"z": 0.0
 			},
@@ -42,7 +42,7 @@ int main() {
         using rapidjson_factory_builder =
           factory_builder<rapidjson_factory_traits>;
 
-        auto fac = rapidjson_factory_builder("iof").build<test::tetrahedron>();
+        auto fac = rapidjson_factory_builder("rjf").build<test::tetrahedron>();
         auto teh = fac.construct({json_doc});
 
         std::cout << "volume of the tetrahedron is: " << teh.volume()
