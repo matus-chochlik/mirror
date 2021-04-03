@@ -61,8 +61,8 @@ using factory_constructor_unit_t =
 template <typename Traits, typename Product>
 using factory_unit_t = typename Traits::template factory_unit<Product>;
 
-template <typename Traits, typename Product>
-using factory_builder_unit_t = typename Traits::template builder_unit<Product>;
+template <typename Traits>
+using factory_builder_unit_t = typename Traits::builder_unit;
 //------------------------------------------------------------------------------
 struct object_builder : interface<object_builder> {
     virtual auto as_parameter() const noexcept
@@ -289,7 +289,7 @@ public:
     using construction_context = typename Traits::construction_context;
 
     factory_impl(
-      factory_builder_unit_t<Traits, Product>& parent,
+      factory_builder_unit_t<Traits>& parent,
       const object_builder& parent_builder)
       : factory_unit_t<Traits, Product>{parent}
       , _ctr<CtrIdx>{base_unit(), *this}...
@@ -358,27 +358,30 @@ private:
     const object_builder& _parent_builder;
 };
 //------------------------------------------------------------------------------
-template <typename Traits, typename Product>
+template <typename Traits>
 class factory_builder
   : public object_builder
-  , private factory_builder_unit_t<Traits, Product> {
-    using utils = factory_utils<Product>;
+  , private factory_builder_unit_t<Traits> {
 
-    auto base_unit() noexcept -> factory_builder_unit_t<Traits, Product>& {
+    auto base_unit() noexcept -> factory_builder_unit_t<Traits>& {
         return *this;
     }
 
 public:
     template <typename... Args>
     factory_builder(std::string name, Args&&... args)
-      : factory_builder_unit_t<Traits, Product>{args...}
+      : factory_builder_unit_t<Traits>{args...}
       , _name{std::move(name)} {}
 
-    using factory_type =
-      factory_impl<Traits, Product, typename utils::constructor_indices>;
+    template <typename Product>
+    using factory_type = factory_impl<
+      Traits,
+      Product,
+      typename factory_utils<Product>::constructor_indices>;
 
+    template <typename Product>
     auto build() noexcept {
-        return factory_type{base_unit(), *this};
+        return factory_type<Product>{base_unit(), *this};
     }
 
     auto as_parameter() const noexcept
@@ -387,7 +390,7 @@ public:
     }
 
     auto type_name() const noexcept -> std::string_view final {
-        return utils::product_type_name();
+        return {};
     }
 
     auto name() const noexcept -> std::string_view final {
@@ -405,7 +408,7 @@ inline auto factory_constructor_parameter::parent_parameter() const noexcept
 //------------------------------------------------------------------------------
 template <typename Traits, typename Product>
 using built_factory_type =
-  typename factory_builder<Traits, Product>::factory_type;
+  typename factory_builder<Traits>::template factory_type<Product>;
 //------------------------------------------------------------------------------
 } // namespace mirror
 

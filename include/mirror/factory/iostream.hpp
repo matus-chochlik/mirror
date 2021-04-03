@@ -14,7 +14,6 @@
 namespace mirror {
 //------------------------------------------------------------------------------
 struct iostream_factory_traits {
-    template <typename Product>
     struct builder_unit;
 
     template <typename Product>
@@ -37,12 +36,11 @@ struct iostream_factory_traits {
         std::ostream& out;
     };
 
-    template <typename Product>
     struct builder_unit {};
 
     template <typename Product>
     struct factory_unit {
-        factory_unit(const builder_unit<Product>&) {}
+        factory_unit(const builder_unit&) {}
         factory_unit(const composite_unit<Product>&) {}
 
         auto select_constructor(construction_context& ctx, const factory& fac)

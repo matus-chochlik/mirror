@@ -105,7 +105,8 @@ system_include_dirs = scanForSystemIncludeDirs()
 project_include_dirs = [
     os.path.join(llvmPrefixDir(), "include"),
     os.path.join(binaryDir(), "include"),
-    'include'
+    os.path.join("third_party", "rapidjson", "include"),
+    "include"
 ]
 #------------------------------------------------------------------------------#
 def FlagsForFile(filename, ** kwargs):

@@ -14,7 +14,17 @@ macro(mirror_add_executable TARGETNAME)
 	target_compile_options(${TARGETNAME} PRIVATE -Wno-padded)
 	target_compile_options(${TARGETNAME} PRIVATE -Wno-weak-vtables)
 	target_compile_options(${TARGETNAME} PRIVATE -Wno-documentation-unknown-command)
-	target_include_directories(${TARGETNAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
-	target_include_directories(${TARGETNAME} PRIVATE ${MIRROR_LLVM_PREFIX}/include)
+	target_include_directories(
+		${TARGETNAME}
+		PRIVATE ${PROJECT_SOURCE_DIR}/include
+	)
+	target_include_directories(
+		${TARGETNAME}
+		PRIVATE ${PROJECT_SOURCE_DIR}/third_party/rapidjson/include
+	)
+	target_include_directories(
+		${TARGETNAME}
+		PRIVATE ${MIRROR_LLVM_PREFIX}/include
+	)
 endmacro()
 

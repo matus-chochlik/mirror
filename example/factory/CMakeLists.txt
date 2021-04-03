@@ -4,3 +4,4 @@
 #  http://www.boost.org/LICENSE_1_0.txt
 #
 mirror_add_executable(factory_iostream iostream.cpp)
+mirror_add_executable(factory_rapidjson rapidjson.cpp)

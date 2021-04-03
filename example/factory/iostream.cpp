@@ -13,10 +13,9 @@
 int main() {
     using namespace mirror;
 
-    using iostream_factory_builder =
-      factory_builder<iostream_factory_traits, test::tetrahedron>;
-    auto fac = iostream_factory_builder("iof").build();
+    using iostream_factory_builder = factory_builder<iostream_factory_traits>;
 
+    auto fac = iostream_factory_builder("iof").build<test::tetrahedron>();
     auto teh = fac.construct({std::cin, std::cout});
 
     std::cout << "volume of the tetrahedron is: " << teh.volume() << std::endl;
