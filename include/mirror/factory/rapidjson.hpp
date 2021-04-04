@@ -9,6 +9,7 @@
 #ifndef MIRROR_FACTORY_RAPIDJSON_HPP
 #define MIRROR_FACTORY_RAPIDJSON_HPP
 
+#include "../testdecl.hpp"
 #include <cassert>
 #include <tuple>
 #include <vector>
@@ -65,7 +66,8 @@ struct rapidjson_factory_traits {
             std::tuple<int, int> best_match{0, 0};
             for(size_t i = 0; i < _children.size(); ++i) {
                 const auto match = _children[i]->match(ctx, fac.constructor(i));
-                if(match > best_match) {
+                if(best_match < match) {
+                    best_match = match;
                     count = 1;
                     result = i;
                 } else if(match == best_match) {
@@ -143,27 +145,35 @@ struct rapidjson_factory_traits {
 
         auto match(construction_context& ctx, const factory_constructor& ctr)
           const noexcept -> std::tuple<int, int> {
-            const std::tuple<int, int> no_match{-1, 0};
-            int result = 0;
-            int exact = 0;
-            const size_t n = ctr.parameter_count();
-            for(size_t i = 0; i < n; ++i) {
-                auto& param = ctr.parameter(i);
-                auto pos = ctx.value.FindMember(param.name().data());
-                if(pos == ctx.value.MemberEnd()) {
-                    return no_match;
+            if(ctr.is_move_constructor()) {
+                if(ctx.value.IsString()) {
+                    return {1, 1};
                 }
-                const auto [match, exact_match] =
-                  type_match(static_cast<Product*>(nullptr), ctx);
-                if(!match) {
-                    return no_match;
-                }
-                if(exact_match) {
-                    ++exact;
-                }
-                ++result;
             }
-            return {result, exact};
+            const std::tuple<int, int> no_match{-1, 0};
+            if(ctx.value.IsObject()) {
+                int result = 0;
+                int exact = 0;
+                const size_t n = ctr.parameter_count();
+                for(size_t i = 0; i < n; ++i) {
+                    auto& param = ctr.parameter(i);
+                    auto pos = ctx.value.FindMember(param.name().data());
+                    if(pos == ctx.value.MemberEnd()) {
+                        return no_match;
+                    }
+                    const auto [match, exact_match] =
+                      type_match(static_cast<Product*>(nullptr), ctx);
+                    if(!match) {
+                        return no_match;
+                    }
+                    if(exact_match) {
+                        ++exact;
+                    }
+                    ++result;
+                }
+                return {result, exact};
+            }
+            return no_match;
         }
     };
 
@@ -327,10 +337,30 @@ struct rapidjson_factory_traits {
           const factory_constructor& ctr)
           : _info{builder, ctr} {}
 
+        template <typename V>
+        static auto fetch(V&, const rapidjson::Value&) noexcept {}
+
+        static auto fetch(test::point& dest, const rapidjson::Value& v) noexcept
+          -> void {
+            if(v.IsString()) {
+                if(std::strcmp(v.GetString(), "origin") == 0) {
+                    dest = {};
+                } else if(std::strcmp(v.GetString(), "i") == 0) {
+                    dest = {1.F, 0.F, 0.F};
+                } else if(std::strcmp(v.GetString(), "j") == 0) {
+                    dest = {0.F, 1.F, 0.F};
+                } else if(std::strcmp(v.GetString(), "k") == 0) {
+                    dest = {0.F, 0.F, 1.F};
+                }
+            }
+        }
+
         auto get(
-          construction_context&,
+          construction_context& ctx,
           const factory_constructor_parameter&) noexcept -> T {
-            return T{};
+            T result{};
+            fetch(result, _info.nested(ctx).value);
+            return result;
         }
 
     private:

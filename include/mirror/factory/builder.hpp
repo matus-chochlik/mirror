@@ -346,7 +346,7 @@ public:
         return _dispatch_constructor(
           context,
           base_unit().select_constructor(context, *static_cast<factory*>(this)),
-          std::integer_sequence<size_t, sizeof...(CtrIdx) - 1U>{});
+          std::integer_sequence<size_t, sizeof...(CtrIdx)>{});
     }
 
 private:
@@ -354,7 +354,10 @@ private:
     auto _do_construct(
       construction_context context,
       std::integer_sequence<size_t, Idx>) -> Product {
-        return base_ctr<Idx>()->construct(context);
+        if constexpr(Idx < sizeof...(CtrIdx)) {
+            return base_ctr<Idx>()->construct(context);
+        }
+        throw std::runtime_error("failed to pick constructor");
     }
 
     auto _dispatch_constructor(
