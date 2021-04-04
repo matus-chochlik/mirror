@@ -328,7 +328,7 @@ struct rapidjson_factory_traits {
           : _info{builder, ctr} {}
 
         auto get(
-          construction_context& ctx,
+          construction_context&,
           const factory_constructor_parameter&) noexcept -> T {
             return T{};
         }
