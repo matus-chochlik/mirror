@@ -98,11 +98,6 @@ class factory_constructor_parameter_impl
 
     using utils = factory_utils<Product>;
 
-    auto base_unit()
-      -> factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx>& {
-        return *this;
-    }
-
     auto base_parameter() const -> const factory_constructor_parameter& {
         return *this;
     }
@@ -113,6 +108,11 @@ class factory_constructor_parameter_impl
 
 public:
     using construction_context = typename Traits::construction_context;
+
+    auto base_unit()
+      -> factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx>& {
+        return *this;
+    }
 
     factory_constructor_parameter_impl(
       factory_constructor_unit_t<Traits, Product>& parent,
@@ -192,10 +192,6 @@ class factory_constructor_impl<
     using _param =
       factory_constructor_parameter_impl<Traits, Product, CtrIdx, Idx>;
 
-    auto base_unit() noexcept -> factory_constructor_unit_t<Traits, Product>& {
-        return *this;
-    }
-
     template <size_t Idx>
     auto base_param() noexcept -> _param<Idx>* {
         return this;
@@ -208,6 +204,10 @@ class factory_constructor_impl<
 
 public:
     using construction_context = typename Traits::construction_context;
+
+    auto base_unit() noexcept -> factory_constructor_unit_t<Traits, Product>& {
+        return *this;
+    }
 
     factory_constructor_impl(
       factory_unit_t<Traits, Product>& parent,
@@ -292,10 +292,6 @@ class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
       Idx,
       typename utils::template constructor_parameter_indices<Idx>>;
 
-    auto base_unit() noexcept -> factory_unit_t<Traits, Product>& {
-        return *this;
-    }
-
     template <size_t Idx>
     auto base_ctr() noexcept -> _ctr<Idx>* {
         return this;
@@ -308,6 +304,10 @@ class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
 
 public:
     using construction_context = typename Traits::construction_context;
+
+    auto base_unit() noexcept -> factory_unit_t<Traits, Product>& {
+        return *this;
+    }
 
     factory_impl(
       factory_builder_unit_t<Traits>& parent,
@@ -387,11 +387,11 @@ class factory_builder
   : public object_builder
   , private factory_builder_unit_t<Traits> {
 
+public:
     auto base_unit() noexcept -> factory_builder_unit_t<Traits>& {
         return *this;
     }
 
-public:
     template <typename... Args>
     factory_builder(std::string name, Args&&... args)
       : factory_builder_unit_t<Traits>{args...}

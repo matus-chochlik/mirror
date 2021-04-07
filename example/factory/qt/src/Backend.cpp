@@ -9,9 +9,11 @@
 //------------------------------------------------------------------------------
 Backend::Backend()
   : QObject{nullptr}
-  , _builder{"qt5", this} {}
+  , _builder{"qt5"}
+  , _pointFactory{_builder.build<test::point>()}
+  , _triangleFactory{_builder.build<test::triangle>()} {}
 //------------------------------------------------------------------------------
 auto Backend::getBuilder() -> BuilderViewModel* {
-    return nullptr;
+    return &_builder.base_unit().view_model();
 }
 //------------------------------------------------------------------------------

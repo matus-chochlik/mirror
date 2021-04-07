@@ -6,6 +6,10 @@
 #define MIRROR_FACTORY_QT5_TRAITS_HPP
 
 #include "BuilderViewModel.hpp"
+#include "ConstructorViewModel.hpp"
+#include "FactoryViewModel.hpp"
+#include "ParameterViewModel.hpp"
+#include <memory>
 #include <mirror/factory/builder.hpp>
 
 namespace mirror {
@@ -55,13 +59,27 @@ struct qt5_factory_traits {
 //------------------------------------------------------------------------------
 class qt5_factory_builder_unit {
 public:
-    qt5_factory_builder_unit(QObject*) {}
+    qt5_factory_builder_unit(qt5_factory_builder_unit&&) noexcept = default;
+    qt5_factory_builder_unit(const qt5_factory_builder_unit&) = delete;
+    auto operator=(qt5_factory_builder_unit&&) = delete;
+    auto operator=(const qt5_factory_builder_unit&) = delete;
+    qt5_factory_builder_unit() = default;
+
+    auto view_model() const noexcept -> auto& {
+        return *_view_model;
+    }
+
+private:
+    std::unique_ptr<BuilderViewModel> _view_model{
+      std::make_unique<BuilderViewModel>()};
 };
 //------------------------------------------------------------------------------
 template <typename Product>
 class qt5_factory_unit {
 public:
-    qt5_factory_unit(const qt5_factory_builder_unit&) {}
+    qt5_factory_unit(const qt5_factory_builder_unit& parent_unit) {
+        parent_unit.view_model().addFactory(view_model());
+    }
     qt5_factory_unit(const qt5_factory_composite_unit<Product>&) {}
 
     auto select_constructor(qt5_factory_construction_context&, const factory&)
@@ -69,15 +87,30 @@ public:
         return 0;
     }
 
+    auto view_model() const noexcept -> auto& {
+        return *_view_model;
+    }
+
 private:
+    std::unique_ptr<FactoryViewModel> _view_model{
+      std::make_unique<FactoryViewModel>(
+        QString(factory_utils<Product>::product_type_name()))};
 };
 //------------------------------------------------------------------------------
 template <typename Product>
 class qt5_factory_constructor_unit {
 public:
-    qt5_factory_constructor_unit(const qt5_factory_unit<Product>&) {}
+    qt5_factory_constructor_unit(const qt5_factory_unit<Product>& parent_unit) {
+        parent_unit.view_model().addConstructor(view_model());
+    }
+
+    auto view_model() const noexcept -> auto& {
+        return *_view_model;
+    }
 
 private:
+    std::unique_ptr<ConstructorViewModel> _view_model{
+      std::make_unique<ConstructorViewModel>()};
 };
 //------------------------------------------------------------------------------
 template <typename T>
@@ -85,9 +118,14 @@ class qt5_factory_atomic_unit {
 public:
     template <typename P>
     qt5_factory_atomic_unit(
-      const qt5_factory_constructor_unit<P>&,
-      const object_builder&,
-      const factory_constructor&) {}
+      const qt5_factory_constructor_unit<P>& parent_unit,
+      const object_builder& builder,
+      const factory_constructor&)
+      : _view_model{std::make_unique<ParameterViewModel>(
+          QString(factory_utils<P>::product_type_name()),
+          QString(builder.name().data()))} {
+        parent_unit.view_model().addParameter(view_model());
+    }
 
     auto get(
       qt5_factory_construction_context&,
@@ -95,6 +133,14 @@ public:
         std::remove_reference_t<T> result{};
         return result;
     }
+
+    auto view_model() const noexcept -> auto& {
+        return *_view_model;
+    }
+
+private:
+    std::unique_ptr<ParameterViewModel> _view_model{
+      std::make_unique<ParameterViewModel>()};
 };
 //------------------------------------------------------------------------------
 template <typename T>
@@ -102,10 +148,15 @@ class qt5_factory_composite_unit {
 public:
     template <typename P>
     qt5_factory_composite_unit(
-      const qt5_factory_constructor_unit<P>&,
+      const qt5_factory_constructor_unit<P>& parent_unit,
       const object_builder& builder,
       const factory_constructor&)
-      : fac{*this, builder} {}
+      : fac{*this, builder}
+      , _view_model{std::make_unique<ParameterViewModel>(
+          QString(factory_utils<P>::product_type_name()),
+          QString(builder.name().data()))} {
+        parent_unit.view_model().addParameter(view_model());
+    }
 
     auto get(
       qt5_factory_construction_context& ctx,
@@ -113,8 +164,13 @@ public:
         return fac.construct(ctx);
     }
 
+    auto view_model() const noexcept -> auto& {
+        return *_view_model;
+    }
+
 private:
     built_factory_type<qt5_factory_traits, T> fac;
+    std::unique_ptr<ParameterViewModel> _view_model;
 };
 //------------------------------------------------------------------------------
 template <typename T>

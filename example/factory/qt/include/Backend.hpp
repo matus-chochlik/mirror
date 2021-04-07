@@ -7,22 +7,25 @@
 
 #include "factory_traits.hpp"
 #include <QtCore>
+#include <mirror/testdecl.hpp>
 
 class BuilderViewModel;
 //------------------------------------------------------------------------------
 class Backend : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(BuilderViewModel* builder READ getBuilder NOTIFY builderChanged)
+    Q_PROPERTY(BuilderViewModel* builder READ getBuilder CONSTANT)
 public:
     Backend();
 
     auto getBuilder() -> BuilderViewModel*;
-signals:
-    void builderChanged();
 public slots:
 private:
     mirror::factory_builder<mirror::qt5_factory_traits> _builder;
+    mirror::built_factory_type<mirror::qt5_factory_traits, test::point>
+      _pointFactory;
+    mirror::built_factory_type<mirror::qt5_factory_traits, test::triangle>
+      _triangleFactory;
 };
 //------------------------------------------------------------------------------
 #endif

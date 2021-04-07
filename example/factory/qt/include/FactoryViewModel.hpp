@@ -5,7 +5,6 @@
 #ifndef MIRROR_FACTORY_BUILDER_QT_FACTORY_VIEW_MODEL_HPP
 #define MIRROR_FACTORY_BUILDER_QT_FACTORY_VIEW_MODEL_HPP
 
-#include <QList>
 #include <QtCore>
 
 class ConstructorViewModel;
@@ -13,16 +12,29 @@ class ConstructorViewModel;
 class FactoryViewModel : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(QList<ConstructorViewModel*> constructors READ getConstructors
-                 NOTIFY constructorsChanged)
+    Q_PROPERTY(QString label READ getLabel() CONSTANT)
+    Q_PROPERTY(QStringList constructorLabels READ getConstructorLabels NOTIFY
+                 constructorsChanged)
+    Q_PROPERTY(ConstructorViewModel* selectedConstructor READ
+                 getSelectedConstructor NOTIFY constructorSelected)
 public:
-    FactoryViewModel(QObject* parent);
+    FactoryViewModel(QString label);
 
-    auto getConstructors() -> QList<ConstructorViewModel*>;
+    auto getLabel() -> QString;
+
+    void addConstructor(ConstructorViewModel& viewModel);
+    auto getConstructorLabels() -> QStringList;
+    auto getSelectedConstructor() -> ConstructorViewModel*;
 signals:
     void constructorsChanged();
+    void constructorSelected();
 public slots:
+    void selectConstructor(int index);
+
 private:
+    QString _label;
+    std::vector<ConstructorViewModel*> _constructorViewModels;
+    int _selectedIndex{0};
 };
 //------------------------------------------------------------------------------
 #endif

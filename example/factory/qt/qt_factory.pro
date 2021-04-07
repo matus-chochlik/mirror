@@ -15,6 +15,7 @@ QMAKE_CXXFLAGS   += -std=c++2a \
 					-Wno-global-constructors \
 					-Wno-exit-time-destructors \
 					-Wno-extra-semi-stmt \
+					-Wno-redundant-parens \
 					-Wno-documentation-unknown-command
 
 TEMPLATE          = app
@@ -30,11 +31,13 @@ SOURCES          += src/Backend.cpp \
 					src/BuilderViewModel.cpp \
 					src/FactoryViewModel.cpp \
 					src/ConstructorViewModel.cpp \
+					src/ParameterViewModel.cpp \
 					main.cpp
 
 HEADERS          += include/Backend.hpp \
 					include/BuilderViewModel.hpp \
 					include/FactoryViewModel.hpp \
-					include/ConstructorViewModel.hpp
+					include/ConstructorViewModel.hpp \
+					include/ParameterViewModel.hpp
 
 RESOURCES        += qt_factory.qrc

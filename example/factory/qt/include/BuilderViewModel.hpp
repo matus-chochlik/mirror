@@ -5,24 +5,34 @@
 #ifndef MIRROR_FACTORY_BUILDER_QT_BUILDER_VIEW_MODEL_HPP
 #define MIRROR_FACTORY_BUILDER_QT_BUILDER_VIEW_MODEL_HPP
 
-#include <QList>
+#include <QStringList>
 #include <QtCore>
+#include <vector>
 
 class FactoryViewModel;
 //------------------------------------------------------------------------------
 class BuilderViewModel : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(QList<FactoryViewModel*> factories READ getFactories NOTIFY
-                 factoriesChanged)
+    Q_PROPERTY(
+      QStringList factoryLabels READ getFactoryLabels NOTIFY factoriesChanged)
+    Q_PROPERTY(FactoryViewModel* selectedFactory READ getSelectedFactory NOTIFY
+                 factorySelected)
 public:
-    BuilderViewModel(QObject* parent);
+    BuilderViewModel();
 
-    auto getFactories() -> QList<FactoryViewModel*>;
+    void addFactory(FactoryViewModel& viewModel);
+    auto getFactoryLabels() -> QStringList;
+    auto getSelectedFactory() -> FactoryViewModel*;
 signals:
     void factoriesChanged();
+    void factorySelected();
 public slots:
+    void selectFactory(int index);
+
 private:
+    std::vector<FactoryViewModel*> _factoryViewModels;
+    int _selectedIndex{0};
 };
 //------------------------------------------------------------------------------
 #endif

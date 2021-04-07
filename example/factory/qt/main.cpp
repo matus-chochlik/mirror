@@ -6,6 +6,7 @@
 #include "BuilderViewModel.hpp"
 #include "ConstructorViewModel.hpp"
 #include "FactoryViewModel.hpp"
+#include "ParameterViewModel.hpp"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -20,6 +21,8 @@ int main(int argc, char* argv[]) {
       "com.github.matus-chochlik", 1, 0, "FactoryViewModel", {});
     qmlRegisterUncreatableType<ConstructorViewModel>(
       "com.github.matus-chochlik", 1, 0, "ConstructorViewModel", {});
+    qmlRegisterUncreatableType<ParameterViewModel>(
+      "com.github.matus-chochlik", 1, 0, "ParameterViewModel", {});
 
     Backend backend;
     QQmlApplicationEngine engine;

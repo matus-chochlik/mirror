@@ -13,16 +13,21 @@ class ParameterViewModel;
 class ConstructorViewModel : public QObject {
     Q_OBJECT
 
+    Q_PROPERTY(QString label READ getLabel() NOTIFY parametersChanged)
     Q_PROPERTY(QList<ParameterViewModel*> constructors READ getParameters NOTIFY
-                 constructorsChanged)
+                 parametersChanged)
 public:
-    ConstructorViewModel(QObject* parent);
+    ConstructorViewModel();
 
+    auto getLabel() -> QString;
+
+    void addParameter(ParameterViewModel& viewModel);
     auto getParameters() -> QList<ParameterViewModel*>;
 signals:
-    void constructorsChanged();
+    void parametersChanged();
 public slots:
 private:
+    std::vector<ParameterViewModel*> _parameterViewModels;
 };
 //------------------------------------------------------------------------------
 #endif

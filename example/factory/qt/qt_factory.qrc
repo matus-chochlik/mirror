@@ -2,8 +2,8 @@
 <qresource>
 	<file>main.qml</file>
 	<file>qtquickcontrols2.conf</file>
-	<file>common/BuilderUnit.qml</file>
-	<file>common/FactoryUnit.qml</file>
-	<file>common/ConstructorUnit.qml</file>
+	<file>qml_units/BuilderUnit.qml</file>
+	<file>qml_units/FactoryUnit.qml</file>
+	<file>qml_units/ConstructorUnit.qml</file>
 </qresource>
 </RCC>
