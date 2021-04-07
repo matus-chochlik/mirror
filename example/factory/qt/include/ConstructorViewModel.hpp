@@ -16,7 +16,7 @@ class ConstructorViewModel : public QObject {
     Q_PROPERTY(QList<ParameterViewModel*> constructors READ getParameters NOTIFY
                  constructorsChanged)
 public:
-    ConstructorViewModel(QObject* parent = 0);
+    ConstructorViewModel(QObject* parent);
 
     auto getParameters() -> QList<ParameterViewModel*>;
 signals:

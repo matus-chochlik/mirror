@@ -16,7 +16,7 @@ class BuilderViewModel : public QObject {
     Q_PROPERTY(QList<FactoryViewModel*> factories READ getFactories NOTIFY
                  factoriesChanged)
 public:
-    BuilderViewModel(QObject* parent = 0);
+    BuilderViewModel(QObject* parent);
 
     auto getFactories() -> QList<FactoryViewModel*>;
 signals:

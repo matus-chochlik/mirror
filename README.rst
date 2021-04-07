@@ -7,8 +7,8 @@ Collection of reflection utilities based on top of the current reflection
 proposal as described in P2320Rx and implemented by https://github.com/lock3/meta
 .
 
-Cloning the repo
-================
+Cloning the repository
+======================
 
 This repository uses git submodules, so don't forget to use the ``--recursive``
 flag while cloning:
@@ -50,3 +50,6 @@ Copyright 2008-2021 Matus Chochlik. Distributed under the Boost
 Software License, Version 1.0. (See accompanying file
 LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+Parts of the code using the Qt5 library are distributed under
+the GNU GENERAL PUBLIC LICENSE version 3. (See
+[http://www.gnu.org/licenses/gpl-3.0.txt](http://www.gnu.org/licenses/gpl-3.0.txt)).

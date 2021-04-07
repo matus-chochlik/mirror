@@ -14,12 +14,12 @@ int main(int argc, char* argv[]) {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<BuilderViewModel>(
-      "com.github.matus-chochlik", 1, 0, "BuilderViewModel");
-    qmlRegisterType<FactoryViewModel>(
-      "com.github.matus-chochlik", 1, 0, "FactoryViewModel");
-    qmlRegisterType<ConstructorViewModel>(
-      "com.github.matus-chochlik", 1, 0, "ConstructorViewModel");
+    qmlRegisterUncreatableType<BuilderViewModel>(
+      "com.github.matus-chochlik", 1, 0, "BuilderViewModel", {});
+    qmlRegisterUncreatableType<FactoryViewModel>(
+      "com.github.matus-chochlik", 1, 0, "FactoryViewModel", {});
+    qmlRegisterUncreatableType<ConstructorViewModel>(
+      "com.github.matus-chochlik", 1, 0, "ConstructorViewModel", {});
 
     Backend backend;
     QQmlApplicationEngine engine;

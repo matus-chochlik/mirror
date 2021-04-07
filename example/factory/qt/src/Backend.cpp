@@ -7,8 +7,9 @@
 //------------------------------------------------------------------------------
 // Backend
 //------------------------------------------------------------------------------
-Backend::Backend(QObject* parent)
-  : QObject{parent} {}
+Backend::Backend()
+  : QObject{nullptr}
+  , _builder{"qt5", this} {}
 //------------------------------------------------------------------------------
 auto Backend::getBuilder() -> BuilderViewModel* {
     return nullptr;

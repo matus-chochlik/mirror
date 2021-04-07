@@ -5,6 +5,7 @@
 #ifndef MIRROR_FACTORY_BUILDER_QT_BACKEND_HPP
 #define MIRROR_FACTORY_BUILDER_QT_BACKEND_HPP
 
+#include "factory_traits.hpp"
 #include <QtCore>
 
 class BuilderViewModel;
@@ -14,13 +15,14 @@ class Backend : public QObject {
 
     Q_PROPERTY(BuilderViewModel* builder READ getBuilder NOTIFY builderChanged)
 public:
-    Backend(QObject* parent = 0);
+    Backend();
 
     auto getBuilder() -> BuilderViewModel*;
 signals:
     void builderChanged();
 public slots:
 private:
+    mirror::factory_builder<mirror::qt5_factory_traits> _builder;
 };
 //------------------------------------------------------------------------------
 #endif

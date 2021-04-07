@@ -16,7 +16,7 @@ class FactoryViewModel : public QObject {
     Q_PROPERTY(QList<ConstructorViewModel*> constructors READ getConstructors
                  NOTIFY constructorsChanged)
 public:
-    FactoryViewModel(QObject* parent = 0);
+    FactoryViewModel(QObject* parent);
 
     auto getConstructors() -> QList<ConstructorViewModel*>;
 signals:
