@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file>main.qml</file>
+	<file>qtquickcontrols2.conf</file>
+	<file>common/BuilderUnit.qml</file>
+	<file>common/FactoryUnit.qml</file>
+	<file>common/ConstructorUnit.qml</file>
+</qresource>
+</RCC>
