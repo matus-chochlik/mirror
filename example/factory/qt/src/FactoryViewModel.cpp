@@ -17,6 +17,7 @@ auto FactoryViewModel::getLabel() -> QString {
 //------------------------------------------------------------------------------
 void FactoryViewModel::addConstructor(ConstructorViewModel& viewModel) {
     _constructorViewModels.push_back(&viewModel);
+    emit constructorsChanged();
 }
 //------------------------------------------------------------------------------
 auto FactoryViewModel::getConstructorLabels() -> QStringList {

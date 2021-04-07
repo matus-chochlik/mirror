@@ -122,8 +122,9 @@ public:
       const object_builder& builder,
       const factory_constructor&)
       : _view_model{std::make_unique<ParameterViewModel>(
-          QString(factory_utils<P>::product_type_name()),
-          QString(builder.name().data()))} {
+          QString(builder.type_name().data()),
+          QString(builder.name().data()),
+          _unit(static_cast<T*>(nullptr)))} {
         parent_unit.view_model().addParameter(view_model());
     }
 
@@ -139,6 +140,15 @@ public:
     }
 
 private:
+    template <typename X>
+    static auto _unit(X*) -> QString {
+        return "String";
+    }
+
+    static auto _unit(bool*) -> QString {
+        return "Bool";
+    }
+
     std::unique_ptr<ParameterViewModel> _view_model{
       std::make_unique<ParameterViewModel>()};
 };
@@ -153,8 +163,9 @@ public:
       const factory_constructor&)
       : fac{*this, builder}
       , _view_model{std::make_unique<ParameterViewModel>(
-          QString(factory_utils<P>::product_type_name()),
-          QString(builder.name().data()))} {
+          QString(builder.type_name().data()),
+          QString(builder.name().data()),
+          QString("Composite"))} {
         parent_unit.view_model().addParameter(view_model());
     }
 

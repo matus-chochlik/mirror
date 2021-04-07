@@ -30,9 +30,14 @@ auto ConstructorViewModel::getLabel() -> QString {
 //------------------------------------------------------------------------------
 void ConstructorViewModel::addParameter(ParameterViewModel& viewModel) {
     _parameterViewModels.push_back(&viewModel);
+    emit parametersChanged();
 }
 //------------------------------------------------------------------------------
-auto ConstructorViewModel::getParameters() -> QList<ParameterViewModel*> {
-    return {};
+auto ConstructorViewModel::getParameters() -> QList<QObject*> {
+    QList<QObject*> result;
+    for(auto* viewModel : _parameterViewModels) {
+        result.push_back(viewModel);
+    }
+    return result;
 }
 //------------------------------------------------------------------------------

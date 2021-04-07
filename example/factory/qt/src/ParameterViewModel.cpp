@@ -6,10 +6,18 @@
 //------------------------------------------------------------------------------
 // ParameterViewModel
 //------------------------------------------------------------------------------
-ParameterViewModel::ParameterViewModel(QString typeName, QString name)
+ParameterViewModel::ParameterViewModel(
+  QString typeName,
+  QString name,
+  QString unit)
   : QObject{}
   , _typeName{std::move(typeName)}
-  , _name{std::move(name)} {}
+  , _name{std::move(name)}
+  , _unit{std::move(unit)} {}
+//------------------------------------------------------------------------------
+auto ParameterViewModel::getUnitUrl() -> QUrl {
+    return {"qrc:///qml_units/" + _unit + "Unit.qml"};
+}
 //------------------------------------------------------------------------------
 auto ParameterViewModel::getTypeName() -> QString {
     return _typeName;

@@ -8,12 +8,11 @@
 // BuilderViewModel
 //------------------------------------------------------------------------------
 BuilderViewModel::BuilderViewModel()
-  : QObject{} {
-    emit factoriesChanged();
-}
+  : QObject{} {}
 //------------------------------------------------------------------------------
 void BuilderViewModel::addFactory(FactoryViewModel& viewModel) {
     _factoryViewModels.push_back(&viewModel);
+    emit factoriesChanged();
 }
 //------------------------------------------------------------------------------
 auto BuilderViewModel::getFactoryLabels() -> QStringList {

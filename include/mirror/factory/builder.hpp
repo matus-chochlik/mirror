@@ -70,6 +70,8 @@ struct object_builder : interface<object_builder> {
 
     auto index() const noexcept -> size_t;
 
+    auto type_name() const noexcept -> std::string_view;
+
     virtual auto name() const noexcept -> std::string_view = 0;
 };
 //------------------------------------------------------------------------------
@@ -78,7 +80,7 @@ struct factory_constructor_parameter : object_builder {
       -> const factory_constructor& = 0;
     virtual auto parameter_index() const noexcept -> size_t = 0;
 
-    virtual auto type_name() const noexcept -> std::string_view = 0;
+    virtual auto parameter_type_name() const noexcept -> std::string_view = 0;
 
     auto parent_parameter() const noexcept
       -> const factory_constructor_parameter*;
@@ -89,6 +91,13 @@ inline auto object_builder::index() const noexcept -> size_t {
         return param->parameter_index();
     }
     return 0;
+}
+//------------------------------------------------------------------------------
+inline auto object_builder::type_name() const noexcept -> std::string_view {
+    if(auto param = dynamic_cast<const factory_constructor_parameter*>(this)) {
+        return param->parameter_type_name();
+    }
+    return {};
 }
 //------------------------------------------------------------------------------
 template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
@@ -138,7 +147,7 @@ public:
         return this;
     }
 
-    auto type_name() const noexcept -> std::string_view final {
+    auto parameter_type_name() const noexcept -> std::string_view final {
         return utils::constructor_parameter_type_name(CtrIdx, ParamIdx);
     }
 

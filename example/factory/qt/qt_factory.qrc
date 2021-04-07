@@ -5,5 +5,8 @@
 	<file>qml_units/BuilderUnit.qml</file>
 	<file>qml_units/FactoryUnit.qml</file>
 	<file>qml_units/ConstructorUnit.qml</file>
+	<file>qml_units/CompositeUnit.qml</file>
+	<file>qml_units/BoolUnit.qml</file>
+	<file>qml_units/StringUnit.qml</file>
 </qresource>
 </RCC>

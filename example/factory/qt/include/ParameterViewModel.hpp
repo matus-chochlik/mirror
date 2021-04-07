@@ -11,11 +11,13 @@
 class ParameterViewModel : public QObject {
     Q_OBJECT
 
+    Q_PROPERTY(QUrl unitUrl READ getUnitUrl() CONSTANT)
     Q_PROPERTY(QString typeName READ getTypeName() CONSTANT)
     Q_PROPERTY(QString name READ getName() CONSTANT)
 public:
-    ParameterViewModel(QString typeName, QString name);
+    ParameterViewModel(QString typeName, QString name, QString unit);
 
+    auto getUnitUrl() -> QUrl;
     auto getTypeName() -> QString;
     auto getName() -> QString;
 signals:
@@ -23,6 +25,7 @@ public slots:
 private:
     QString _typeName;
     QString _name;
+    QString _unit;
 };
 //------------------------------------------------------------------------------
 #endif
