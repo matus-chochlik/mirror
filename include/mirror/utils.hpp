@@ -9,10 +9,12 @@
 #ifndef MIRROR_UTILS_HPP
 #define MIRROR_UTILS_HPP
 
+#include <cstdint>
+
 namespace mirror {
 
 template <typename Iterator>
-consteval auto advance(Iterator it, size_t n) {
+consteval auto advance(Iterator it, std::size_t n) {
     while(n-- > 0) {
         ++it;
     }
