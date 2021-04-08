@@ -12,13 +12,177 @@
 \frame{\titlepage}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Factory builder}
+	\Huge
+	\centering{The goal}
+	\vfill
+	\LARGE
+	\centering{(Semi-)automate the implementation\\of the\\Factory design pattern}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{What is meant by \say{Factory} here?}
+  \Large
   \begin{itemize}
-	  \item{\LARGE{The goal}}
-      \begin{itemize}
-      \item{Automate the implementation of the Factory design pattern}
+	  \item Class that constructs instances of a \say{\larger Product} type.
+	  \item From some external representation:
+  	\begin{itemize}
+		\large
+	  \item XML,
+	  \item JSON,
+	  \item YAML,
+	  \item a GUI,
+	  \item a scripting language,
+	  \item a relational database,
+	  \item \ldots
+  	\end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Factory builder}
+	\Huge
+  \begin{itemize}
+	\item{Framework combining the following parts}
+	\begin{itemize}
+  	\LARGE
+	\item Meta-data 
+      	\begin{itemize}
+  		\Large
+		\item obtained from reflection.
+      	\end{itemize}
+	\item Traits
+      	\begin{itemize}
+  		\Large
+		\item units of code that handle various stages of construction,
+		\item specific to a particular external representation,
+		\item provided by user.
+		\end{itemize}
       \end{itemize}
   \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Factory builder}
+  \Huge
+	\begin{itemize}
+	\item{Used meta-data}
+      	\begin{itemize}
+		\Large
+		\item type name strings,
+		\item list of meta-objects reflecting constructors,
+		\item list of meta-objects reflecting constructor parameters,
+		\item parameter type,
+		\item parameter name,
+		\item \ldots
+      	\end{itemize}
+	\end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Factory builder}
+  \Huge
+  \begin{itemize}
+	\item{Units handling the stages of construction}
+      	\begin{itemize}
+		\Large
+		\item selecting the \say{best} constructor,
+		\item invoking the selected constructor,
+		\item conversion of parameter values from the external representation,
+		\item may recursively use factories for composite parameter types.
+		\end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Used reflection features}
+  \large
+	\begin{itemize}
+		\item \verb@^T@
+		\item \verb@[: :]@\footnote{to get back the reflected type}
+		\item \verb@meta::name_of@
+		\item \verb@meta::type_of@
+		\item \verb@meta::members_of@
+		\item \verb@meta::is_constructor@
+		\item \verb@meta::is_default_constructor@
+		\item \verb@meta::is_move_constructor@
+		\item \verb@meta::is_copy_constructor@
+		\item \verb@meta::parameters_of@
+		\item \verb@size(Range)@
+		\item range iterators
+	\end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection review}
+	\Huge
+	\begin{itemize}
+	\item{The good\footnote{great actually!}}
+		\begin{itemize}
+		\Large
+		\item{How extensive and powerful the API is}
+		\end{itemize}
+	\item{The bad}
+		\begin{itemize}
+		\Large
+		\item{Didn't find much\footnote{some details follow}}
+		\end{itemize}
+	\item{The ugly}
+		\begin{itemize}
+		\Large
+		\item{Some of the syntax\footnote{but I can live with it}}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{What is missing(?\footnote{maybe I overlooked something)}}
+	\Large
+	\begin{itemize}
+	\item The ability easily to unpack meta-objects from a range without un-reflecting them.
+	\item I used the following workaround + \verb@make_index_sequence@:
+	\end{itemize}
+  \begin{lstlisting}
+  template <typename Iterator>
+  consteval auto advance(Iterator it, size_t n) {
+    while(n-- > 0) {
+      ++it;
+    }
+    return it;
+  }
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+	\Huge
+	\centering{Kudos to the implementers}
+	\vfill
+	\LARGE
+	\centering{Some details on the factory builder follow}
+\end{frame}
+% - Details --------------------------------------------------------------------
+\section{Details}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{The mirror reflection utilities}
+	\Large
+	\begin{itemize}
+		\item \url{https://github.com/matus-chochlik/mirror}
+		\item implements the factory builder framework and some traits:
+		\begin{itemize}
+			\large
+			\item simple input from \verb@iostreams@,
+			\item input from JSON (using RapidJSON),
+			\item input from a GUI (using Qt5/QML),
+			\item others are planned.
+		\end{itemize}
+		\item plans for some additional use-cases:
+		\begin{itemize}
+			\large
+			\item serialization,
+			\item Python bindings,
+			\item \ldots
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
