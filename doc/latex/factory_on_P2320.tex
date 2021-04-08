@@ -129,7 +129,7 @@
     \item{The ugly}
         \begin{itemize}
         \Large
-        \item{Some of the syntax}
+        \item{Some of the syntax\footnote{but then this is a matter of personal preference}}
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -143,13 +143,13 @@
     \item I used the following workaround + \verb@make_index_sequence@:
     \end{itemize}
     \begin{lstlisting}[language=c++]
-  template <typename Iterator>
-  consteval auto advance(Iterator it, size_t n) {
-    while(n-- > 0) {
-      ++it;
+    template <typename Iterator>
+    consteval auto advance(Iterator it, size_t n) {
+      while(n-- > 0) {
+        ++it;
+      }
+      return it;
     }
-    return it;
-  }
     \end{lstlisting}
     \begin{itemize}
     \item Details follow\ldots
@@ -161,11 +161,11 @@
   \Large
   The goal is to unpack a metaobject range into a template like this:
     \begin{lstlisting}[language=c++]
-  template <meta::info... MO>
-  struct unpacked_range {
-    constexpr static auto count = sizeof...(MO);
-    // etc.
-  };
+    template <meta::info... MO>
+    struct unpacked_range {
+      constexpr static auto count = sizeof...(MO);
+      // etc.
+    };
     \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -177,61 +177,100 @@
   \vfill
   So we are using this helper function, which makes the whole thing less generic.
     \begin{lstlisting}[language=c++]
-  template <meta::info MO>
-  consteval auto constructors_of() {
-    return meta::members_of(
-      ^my_class, meta::is_constructor);
-  }
+    template <meta::info MO>
+    consteval auto constructors_of() {
+      return meta::members_of(
+        ^my_class, meta::is_constructor);
+    }
     \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
 \frametitle{Metaobject range unpacking (cont.)}
-	\large
-	A helper:
+    \large
+    A helper:
     \begin{lstlisting}[language=c++]
-  template <meta::info MO, std::size_t... I>
-  consteval auto do_unpack_range(std::index_sequence<I...>) {
-    return unpacked_range<*(*@\listinghl{advance}@*)(
-      (*@\listinghl{constructors\_of}@*)<MO>().begin(),
-      I)...>{};
-  }
+    template <meta::info MO, std::size_t... I>
+    consteval auto do_unpack_range(std::index_sequence<I...>) {
+      return unpacked_range<*(*@\listinghl{advance}@*)(
+        (*@\listinghl{constructors\_of}@*)<MO>().begin(),
+        I)...>{};
+    }
     \end{lstlisting}
     \vfill
-	The unpack function:
+    The unpack function:
     \begin{lstlisting}[language=c++]
-  template <meta::info MO>
-  consteval auto unpack_range() {
-    return do_unpack_range<MO>(
-      std::(*@\listinghl{make\_index\_sequence}@*)<
-        size((*@\listinghl{constructors\_of}@*)<MO>())
-      >{});
-  }
+    template <meta::info MO>
+    consteval auto unpack_range() {
+      return do_unpack_range<MO>(
+        std::(*@\listinghl{make\_index\_sequence}@*)<
+          size((*@\listinghl{constructors\_of}@*)<MO>())
+        >{});
+    }
     \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
 \frametitle{Metaobject range unpacking -- use case}
     \begin{lstlisting}[language=c++]
-	struct <typename Metaobjects>
-	struct my_derived;
+    template <meta::info>
+    class my_base;
+
+    template <typename Metaobjects>
+    class my_derived;
     \end{lstlisting}
 
     \begin{lstlisting}[language=c++]
-	template <meta::info ... MO>
-	struct my_derived<unpacked_range<MO...>>
-	 : my_base<MO>... {
+    template <meta::info ... MO>
+    class my_derived<unpacked_range<MO...>>
+     : public my_base<MO>... {
       // ...
-	};
+    };
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Make ranges a \say{thing}}
+    \Huge
+    \begin{itemize}
+        \item It would be great if the ranges were:
+        \begin{itemize}
+            \LARGE
+            \item either \verb@meta::info@ themselves or
+            \item had some public type like \verb@meta::range@
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Make ranges a \say{thing} (cont.)}
+    \Large
+    Instead of:
+    \begin{lstlisting}[language=c++]
+    template <typename Range>
+    class my_class;
+    \end{lstlisting}
+    either
+    \begin{lstlisting}[language=c++]
+    template <meta::info Range>
+    class my_class;
+    \end{lstlisting}
+    or
+    \begin{lstlisting}[language=c++]
+    template <meta::range Range>
+    class my_class;
     \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-    \Huge
-    \centering{Kudos to the implementers}
-    \vfill
     \LARGE
-    \centering{Some details on the factory builder follow}
+    \centering{But generally,}
+    \vfill
+    \Huge
+    \centering{kudos to the implementers!}
+    \vfill
+    \large
+    \centering{Some details on the factory builder follow\footnote{it there's interest}}
 \end{frame}
 % - Details --------------------------------------------------------------------
 \section{Details}
@@ -259,6 +298,118 @@
         \item There is an older implementation using manually-provided meta-data:
             \url{https://sourceforge.net/projects/mirror-lib/}
     \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Factory builder -- test classes}
+    \begin{lstlisting}[language=c++]
+    class point {
+    public:
+        point() noexcept = default;
+
+        point(float v) noexcept
+          : _x{v} , _y{v} , _z{v} {}
+
+        point(float x, float y, float z) noexcept
+          : _x{x} , _y{y} , _z{z} {}
+
+        // ...
+    private:
+        float _x{0.F};
+        float _y{0.F};
+        float _z{0.F};
+    };
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Factory builder -- test classes}
+    \begin{lstlisting}[language=c++]
+    class triangle {
+    public:
+        triangle() noexcept = default;
+
+        triangle(const point& a, const point& b, const point& c)
+          : _a{a}
+          , _b{b}
+          , _c{c} {}
+
+        // ...
+    private:
+        point _a;
+        point _b;
+        point _c;
+    };
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Factory builder -- test classes}
+    \begin{lstlisting}[language=c++]
+    class tetrahedron {
+    public:
+        tetrahedron() noexcept = default;
+        tetrahedron(const triangle& base, const point& apex)
+          : _base{base}
+          , _apex{apex} {}
+
+        // ...
+    private:
+        triangle _base;
+        point _apex;
+    };
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Factory builder -- JSON input}
+    \begin{lstlisting}[basicstyle=\scriptsize\ttfamily]
+    {
+        "base": {
+            "a": {
+                "x": 2.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        },
+        "apex": {
+            "v": 0.0
+        }
+    }
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Factory builder -- JSON factory, usage}
+    \large
+    Working example\footnote{
+        \url{https://github.com/matus-chochlik/mirror/blob/develop/example/factory/rapidjson.cpp}}:
+    \begin{lstlisting}[language=c++]
+    void print_info(const test::tetrahedron&);
+    const auto json_str = ...;
+
+    rapidjson::Document json_doc;
+    const rapidjson::ParseResult parse_result{
+        json_doc.Parse(json_str)};
+
+    if(parse_result) {
+        using namespace mirror;
+        (*@\listinghl{factory\_builder}@*)<rapidjson_factory_traits> builder;
+        auto factory = builder.(*@\listinghl{build}@*)<test::tetrahedron>();
+        print_info(factory.(*@\listinghl{construct}@*)({json_doc}));
+
+    }
+    \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
