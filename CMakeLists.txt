@@ -12,4 +12,5 @@ include(config/Defaults.cmake)
 include(config/BuildType.cmake)
 include(config/Executable.cmake)
 
+add_subdirectory(doc)
 add_subdirectory(example)

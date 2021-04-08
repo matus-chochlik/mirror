@@ -1,0 +1,41 @@
+\mode<presentation>
+
+\definecolor{mirrormajor}{RGB}{254,168,64}
+\definecolor{mirrorminor}{RGB}{38,16,2}
+\definecolor{mirrorpage}{RGB}{28,24,20}
+\definecolor{mirrortext}{RGB}{255, 250, 245}
+\definecolor{mirrorlisting}{RGB}{45,40,35}
+\definecolor{mirrorkeyword}{RGB}{192, 128, 32}
+\definecolor{mirrorcomment}{RGB}{192, 192, 203}
+
+\setbeamercolor{structure}{fg=mirrorminor}
+\setbeamercolor{background canvas}{bg=mirrorpage}
+\setbeamercolor{normal text}{fg=mirrortext}
+
+\setbeamercolor{palette primary}{fg=mirrorminor,bg=mirrormajor!70}
+\setbeamercolor{palette secondary}{fg=mirrorminor,bg=mirrormajor!75}
+\setbeamercolor{palette tertiary}{fg=mirrorminor,bg=mirrormajor!80}
+\setbeamercolor{palette quaternary}{fg=mirrorminor,bg=mirrormajor!90}
+
+\setbeamercolor{titlelike}{parent=palette quaternary}
+
+\setbeamercolor{block title}{fg=mirrorminor,bg=mirrormajor}
+\setbeamercolor{block title alerted}{use=alerted text,fg=mirrorminor,bg=alerted text.fg!75!bg}
+\setbeamercolor{block title example}{use=example text,fg=mirrorminor,bg=example text.fg!75!bg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
+\setbeamercolor{sidebar}{bg=mirrormajor!70}
+  
+\setbeamercolor{palette sidebar primary}{fg=mirrorminor}
+\setbeamercolor{palette sidebar secondary}{fg=mirrorminor!75}
+\setbeamercolor{palette sidebar tertiary}{fg=mirrorminor!75}
+\setbeamercolor{palette sidebar quaternary}{fg=mirrorminor}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\mode
+<all>
