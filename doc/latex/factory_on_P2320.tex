@@ -190,8 +190,8 @@
     \large
     A helper:
     \begin{lstlisting}[language=c++]
-    template <meta::info MO, std::size_t... I>
-    consteval auto do_unpack_range(std::index_sequence<I...>) {
+    template <meta::info MO, size_t... I>
+    consteval auto do_unpack_range(index_sequence<I...>) {
       return unpacked_range<*(*@\listinghl{advance}@*)(
         (*@\listinghl{constructors\_of}@*)<MO>().begin(),
         I)...>{};
@@ -203,7 +203,7 @@
     template <meta::info MO>
     consteval auto unpack_range() {
       return do_unpack_range<MO>(
-        std::(*@\listinghl{make\_index\_sequence}@*)<
+		(*@\listinghl{make\_index\_sequence}@*)<
           size((*@\listinghl{constructors\_of}@*)<MO>())
         >{});
     }
@@ -305,19 +305,19 @@
     \begin{lstlisting}[language=c++]
     class point {
     public:
-        point() noexcept = default;
+      point() noexcept = default;
 
-        point(float v) noexcept
-          : _x{v} , _y{v} , _z{v} {}
+      point(float v) noexcept
+        : _x{v} , _y{v} , _z{v} {}
 
-        point(float x, float y, float z) noexcept
-          : _x{x} , _y{y} , _z{z} {}
+      point(float x, float y, float z) noexcept
+        : _x{x} , _y{y} , _z{z} {}
 
-        // ...
+      // ...
     private:
-        float _x{0.F};
-        float _y{0.F};
-        float _z{0.F};
+      float _x{0.F};
+      float _y{0.F};
+      float _z{0.F};
     };
     \end{lstlisting}
 \end{frame}
@@ -327,18 +327,18 @@
     \begin{lstlisting}[language=c++]
     class triangle {
     public:
-        triangle() noexcept = default;
+      triangle() noexcept = default;
 
-        triangle(const point& a, const point& b, const point& c)
-          : _a{a}
-          , _b{b}
-          , _c{c} {}
+      triangle(point a, point b, point c)
+        : _a{a}
+        , _b{b}
+        , _c{c} {}
 
-        // ...
+      // ...
     private:
-        point _a;
-        point _b;
-        point _c;
+      point _a;
+      point _b;
+      point _c;
     };
     \end{lstlisting}
 \end{frame}
@@ -348,15 +348,15 @@
     \begin{lstlisting}[language=c++]
     class tetrahedron {
     public:
-        tetrahedron() noexcept = default;
-        tetrahedron(const triangle& base, const point& apex)
-          : _base{base}
-          , _apex{apex} {}
+      tetrahedron() noexcept = default;
+      tetrahedron(const triangle& base, const point& apex)
+        : _base{base}
+        , _apex{apex} {}
 
-        // ...
+      // ...
     private:
-        triangle _base;
-        point _apex;
+      triangle _base;
+      point _apex;
     };
     \end{lstlisting}
 \end{frame}
