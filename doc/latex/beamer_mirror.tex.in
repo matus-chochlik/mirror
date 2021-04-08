@@ -55,11 +55,10 @@
     tabsize=2,
     escapeinside={(*@}{@*)}
 }
-\lstdefinelanguage{cmake}{
+\lstdefinelanguage{c++}{
     alsodigit = {-},
     keywords = {
-        and, or, not,
-        if,endif
+		constexpr, consteval
    }
 }
 \lstset{style=mirrorcode}
