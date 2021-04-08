@@ -3,6 +3,7 @@
 /// See http://www.gnu.org/licenses/gpl-3.0.txt
 ///
 #include "ParameterViewModel.hpp"
+#include "FactoryViewModel.hpp"
 //------------------------------------------------------------------------------
 // ParameterViewModel
 //------------------------------------------------------------------------------
@@ -25,5 +26,14 @@ auto ParameterViewModel::getTypeName() -> QString {
 //------------------------------------------------------------------------------
 auto ParameterViewModel::getName() -> QString {
     return _name;
+}
+//------------------------------------------------------------------------------
+auto ParameterViewModel::getNested() -> QObject* {
+    return _nestedModel;
+}
+//------------------------------------------------------------------------------
+void ParameterViewModel::addFactory(FactoryViewModel& viewModel) {
+    _nestedModel = &viewModel;
+    emit nestedModelAdded();
 }
 //------------------------------------------------------------------------------

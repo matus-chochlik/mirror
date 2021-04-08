@@ -11,12 +11,14 @@ ColumnLayout {
 		Layout.fillWidth: true
 		text: model ? model.label : qsTr("N/A")
 	}
+
 	ComboBox {
 		id: constructorSelector
 		Layout.fillWidth: true
 		model: factoryUnit.model.constructorLabels
 		onActivated: factoryUnit.model.selectConstructor(currentIndex)
 	}
+
 	ConstructorUnit {
 		Layout.fillWidth: true
 		Layout.fillHeight: true

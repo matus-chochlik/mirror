@@ -7,6 +7,7 @@
 
 #include <QtCore>
 
+class FactoryViewModel;
 //------------------------------------------------------------------------------
 class ParameterViewModel : public QObject {
     Q_OBJECT
@@ -14,18 +15,24 @@ class ParameterViewModel : public QObject {
     Q_PROPERTY(QUrl unitUrl READ getUnitUrl() CONSTANT)
     Q_PROPERTY(QString typeName READ getTypeName() CONSTANT)
     Q_PROPERTY(QString name READ getName() CONSTANT)
+    Q_PROPERTY(QObject* nested READ getNested NOTIFY nestedModelAdded)
 public:
     ParameterViewModel(QString typeName, QString name, QString unit);
 
     auto getUnitUrl() -> QUrl;
     auto getTypeName() -> QString;
     auto getName() -> QString;
+    auto getNested() -> QObject*;
+
+    void addFactory(FactoryViewModel& viewModel);
 signals:
+    void nestedModelAdded();
 public slots:
 private:
     QString _typeName;
     QString _name;
     QString _unit;
+    QObject* _nestedModel{nullptr};
 };
 //------------------------------------------------------------------------------
 #endif

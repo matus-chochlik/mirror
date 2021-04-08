@@ -145,6 +145,14 @@ private:
         return "String";
     }
 
+    static auto _unit(float*) -> QString {
+        return "Float";
+    }
+
+    static auto _unit(double*) -> QString {
+        return "Float";
+    }
+
     static auto _unit(bool*) -> QString {
         return "Bool";
     }
@@ -161,18 +169,19 @@ public:
       const qt5_factory_constructor_unit<P>& parent_unit,
       const object_builder& builder,
       const factory_constructor&)
-      : fac{*this, builder}
+      : _factory{*this, builder}
       , _view_model{std::make_unique<ParameterViewModel>(
           QString(builder.type_name().data()),
           QString(builder.name().data()),
           QString("Composite"))} {
         parent_unit.view_model().addParameter(view_model());
+        view_model().addFactory(_factory.base_unit().view_model());
     }
 
     auto get(
       qt5_factory_construction_context& ctx,
       const factory_constructor_parameter&) {
-        return fac.construct(ctx);
+        return _factory.construct(ctx);
     }
 
     auto view_model() const noexcept -> auto& {
@@ -180,7 +189,7 @@ public:
     }
 
 private:
-    built_factory_type<qt5_factory_traits, T> fac;
+    built_factory_type<qt5_factory_traits, T> _factory;
     std::unique_ptr<ParameterViewModel> _view_model;
 };
 //------------------------------------------------------------------------------

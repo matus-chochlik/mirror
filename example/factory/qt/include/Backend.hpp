@@ -26,6 +26,8 @@ private:
       _pointFactory;
     mirror::built_factory_type<mirror::qt5_factory_traits, test::triangle>
       _triangleFactory;
+    mirror::built_factory_type<mirror::qt5_factory_traits, test::tetrahedron>
+      _tetrahedronFactory;
 };
 //------------------------------------------------------------------------------
 #endif

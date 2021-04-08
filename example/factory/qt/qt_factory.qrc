@@ -7,6 +7,7 @@
 	<file>qml_units/ConstructorUnit.qml</file>
 	<file>qml_units/CompositeUnit.qml</file>
 	<file>qml_units/BoolUnit.qml</file>
+	<file>qml_units/FloatUnit.qml</file>
 	<file>qml_units/StringUnit.qml</file>
 </qresource>
 </RCC>

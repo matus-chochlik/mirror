@@ -4,17 +4,15 @@ import QtQuick.Layouts 1.2
 import "qrc:///qml_units"
 
 RowLayout {
-    id: compositeUnit
+    id: floatUnit
     property variant model: null
 
 	Label {
-		Layout.fillWidth: true
-		text: compositeUnit.model.name
+		Layout.preferredWidth: 150
+		text: floatUnit.model.name
 	}
 
-	FactoryUnit {
+	TextField {
 		Layout.fillWidth: true
-		Layout.fillHeight: true
-		model: compositeUnit.model.nested
 	}
 }
