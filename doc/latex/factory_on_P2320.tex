@@ -135,7 +135,7 @@
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-\frametitle{What is missing(?\footnote{maybe I overlooked something})}
+\frametitle{What is missing}
     \Large
     \begin{itemize}
     \item The ability easily to unpack meta-objects from a range into a template,
@@ -179,8 +179,7 @@
     \begin{lstlisting}[language=c++]
     template <meta::info MO>
     consteval auto constructors_of() {
-      return meta::members_of(
-        ^my_class, meta::is_constructor);
+      return meta::members_of(MO, meta::is_constructor);
     }
     \end{lstlisting}
 \end{frame}
