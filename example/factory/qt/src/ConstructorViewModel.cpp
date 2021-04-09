@@ -7,11 +7,29 @@
 //------------------------------------------------------------------------------
 // ConstructorViewModel
 //------------------------------------------------------------------------------
-ConstructorViewModel::ConstructorViewModel()
-  : QObject{} {}
+ConstructorViewModel::ConstructorViewModel(
+  bool is_default,
+  bool is_move,
+  bool is_copy)
+  : QObject{}
+  , _is_default{is_default}
+  , _is_move{is_move}
+  , _is_copy{is_copy} {}
 //------------------------------------------------------------------------------
 auto ConstructorViewModel::getLabel() -> QString {
     QString label;
+    if(_is_default) {
+        return "<default>";
+    }
+
+    if(_is_move) {
+        return "<move>";
+    }
+
+    if(_is_copy) {
+        return "<copy>";
+    }
+
     label.append("(");
     bool first = true;
     for(auto* viewModel : _parameterViewModels) {

@@ -108,7 +108,11 @@ class qt5_factory_constructor_unit {
 public:
     qt5_factory_constructor_unit(
       const qt5_factory_unit<Product>& parent_unit,
-      const factory_constructor&) {
+      const factory_constructor& ctr)
+      : _view_model{std::make_unique<ConstructorViewModel>(
+          ctr.is_default_constructor(),
+          ctr.is_move_constructor(),
+          ctr.is_copy_constructor())} {
         parent_unit.view_model().addConstructor(view_model());
     }
 
@@ -117,8 +121,7 @@ public:
     }
 
 private:
-    std::unique_ptr<ConstructorViewModel> _view_model{
-      std::make_unique<ConstructorViewModel>()};
+    std::unique_ptr<ConstructorViewModel> _view_model;
 };
 //------------------------------------------------------------------------------
 template <typename T>

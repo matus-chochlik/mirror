@@ -17,7 +17,7 @@ class ConstructorViewModel : public QObject {
     Q_PROPERTY(
       QList<QObject*> parameters READ getParameters NOTIFY parametersChanged)
 public:
-    ConstructorViewModel();
+    ConstructorViewModel(bool is_default, bool is_move, bool is_copy);
 
     auto getLabel() -> QString;
 
@@ -28,6 +28,9 @@ signals:
 public slots:
 private:
     std::vector<ParameterViewModel*> _parameterViewModels;
+    bool _is_default;
+    bool _is_move;
+    bool _is_copy;
 };
 //------------------------------------------------------------------------------
 #endif
