@@ -5,6 +5,7 @@
 #ifndef MIRROR_FACTORY_QT5_TRAITS_HPP
 #define MIRROR_FACTORY_QT5_TRAITS_HPP
 
+#include "AtomicViewModel.hpp"
 #include "BuilderViewModel.hpp"
 #include "ConstructorViewModel.hpp"
 #include "FactoryViewModel.hpp"
@@ -77,10 +78,15 @@ private:
 template <typename Product>
 class qt5_factory_unit {
 public:
-    qt5_factory_unit(const qt5_factory_builder_unit& parent_unit) {
+    qt5_factory_unit(
+      const qt5_factory_builder_unit& parent_unit,
+      const factory&) {
         parent_unit.view_model().addFactory(view_model());
     }
-    qt5_factory_unit(const qt5_factory_composite_unit<Product>&) {}
+
+    qt5_factory_unit(
+      const qt5_factory_composite_unit<Product>&,
+      const factory&) {}
 
     auto select_constructor(qt5_factory_construction_context&, const factory&)
       -> size_t {
@@ -100,7 +106,9 @@ private:
 template <typename Product>
 class qt5_factory_constructor_unit {
 public:
-    qt5_factory_constructor_unit(const qt5_factory_unit<Product>& parent_unit) {
+    qt5_factory_constructor_unit(
+      const qt5_factory_unit<Product>& parent_unit,
+      const factory_constructor&) {
         parent_unit.view_model().addConstructor(view_model());
     }
 
@@ -119,12 +127,12 @@ public:
     template <typename P>
     qt5_factory_atomic_unit(
       const qt5_factory_constructor_unit<P>& parent_unit,
-      const object_builder& builder,
-      const factory_constructor&)
-      : _view_model{std::make_unique<ParameterViewModel>(
-          QString(builder.type_name().data()),
-          QString(builder.name().data()),
-          _unit(static_cast<T*>(nullptr)))} {
+      const factory_constructor_parameter& parameter)
+      : _atomic_model{_make_atomic(static_cast<T*>(nullptr))}
+      , _view_model{std::make_unique<ParameterViewModel>(
+          QString(parameter.type_name().data()),
+          QString(parameter.name().data()),
+          static_cast<QObject*>(_atomic_model.get()))} {
         parent_unit.view_model().addParameter(view_model());
     }
 
@@ -140,25 +148,17 @@ public:
     }
 
 private:
+    static auto _make_atomic(bool*) -> std::unique_ptr<AtomicViewModel> {
+        return std::make_unique<BoolViewModel>();
+    }
+
     template <typename X>
-    static auto _unit(X*) -> QString {
-        return "String";
+    static auto _make_atomic(X*) -> std::unique_ptr<AtomicViewModel> {
+        return std::make_unique<StringViewModel>();
     }
 
-    static auto _unit(float*) -> QString {
-        return "Float";
-    }
-
-    static auto _unit(double*) -> QString {
-        return "Float";
-    }
-
-    static auto _unit(bool*) -> QString {
-        return "Bool";
-    }
-
-    std::unique_ptr<ParameterViewModel> _view_model{
-      std::make_unique<ParameterViewModel>()};
+    std::unique_ptr<AtomicViewModel> _atomic_model;
+    std::unique_ptr<ParameterViewModel> _view_model;
 };
 //------------------------------------------------------------------------------
 template <typename T>
@@ -167,13 +167,11 @@ public:
     template <typename P>
     qt5_factory_composite_unit(
       const qt5_factory_constructor_unit<P>& parent_unit,
-      const object_builder& builder,
-      const factory_constructor&)
-      : _factory{*this, builder}
+      const factory_constructor_parameter& parameter)
+      : _factory{*this, parameter}
       , _view_model{std::make_unique<ParameterViewModel>(
-          QString(builder.type_name().data()),
-          QString(builder.name().data()),
-          QString("Composite"))} {
+          QString(parameter.type_name().data()),
+          QString(parameter.name().data()))} {
         parent_unit.view_model().addParameter(view_model());
         view_model().addFactory(_factory.base_unit().view_model());
     }
@@ -199,8 +197,7 @@ public:
     template <typename P>
     qt5_factory_copy_unit(
       const qt5_factory_constructor_unit<P>&,
-      const object_builder&,
-      const factory_constructor&) {}
+      const factory_constructor_parameter&) {}
 
     auto get(
       qt5_factory_construction_context,

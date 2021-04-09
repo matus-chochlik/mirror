@@ -9,7 +9,7 @@ ColumnLayout {
 
 	Label {
 		Layout.fillWidth: true
-		text: qsTr("Select factory")
+		text: qsTr("Select product type")
 	}
 
 	ComboBox {

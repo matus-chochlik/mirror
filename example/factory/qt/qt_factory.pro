@@ -32,12 +32,14 @@ SOURCES          += src/Backend.cpp \
 					src/FactoryViewModel.cpp \
 					src/ConstructorViewModel.cpp \
 					src/ParameterViewModel.cpp \
+					src/AtomicViewModel.cpp \
 					main.cpp
 
 HEADERS          += include/Backend.hpp \
 					include/BuilderViewModel.hpp \
 					include/FactoryViewModel.hpp \
 					include/ConstructorViewModel.hpp \
-					include/ParameterViewModel.hpp
+					include/ParameterViewModel.hpp \
+					include/AtomicViewModel.hpp
 
 RESOURCES        += qt_factory.qrc

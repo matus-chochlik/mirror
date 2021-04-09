@@ -12,6 +12,7 @@
 #include "../interface.hpp"
 #include "utils.hpp"
 #include <array>
+#include <functional>
 #include <string_view>
 
 namespace mirror {
@@ -103,6 +104,7 @@ inline auto object_builder::type_name() const noexcept -> std::string_view {
 template <typename Traits, typename Product, size_t CtrIdx, size_t ParamIdx>
 class factory_constructor_parameter_impl
   : public factory_constructor_parameter
+  , private std::reference_wrapper<const factory_constructor>
   , private factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx> {
 
     using utils = factory_utils<Product>;
@@ -126,16 +128,15 @@ public:
     factory_constructor_parameter_impl(
       factory_constructor_unit_t<Traits, Product>& parent,
       const factory_constructor& parent_constructor)
-      : factory_parameter_unit_t<
-          Traits,
-          Product,
-          CtrIdx,
-          ParamIdx>{parent, base_builder(), parent_constructor}
-      , _parent_constructor{parent_constructor} {}
+      : std::reference_wrapper<const factory_constructor>{parent_constructor}
+      , factory_parameter_unit_t<Traits, Product, CtrIdx, ParamIdx>{
+          parent,
+          base_parameter()} {}
 
     auto parent_constructor() const noexcept
       -> const factory_constructor& final {
-        return _parent_constructor;
+        using wrapper = std::reference_wrapper<const factory_constructor>;
+        return static_cast<const wrapper*>(this)->get();
     }
 
     auto parameter_index() const noexcept -> size_t final {
@@ -159,9 +160,6 @@ public:
       -> decltype(base_unit().get(context, base_parameter())) {
         return base_unit().get(context, base_parameter());
     }
-
-private:
-    const factory_constructor& _parent_constructor;
 };
 //------------------------------------------------------------------------------
 struct factory_constructor : interface<factory_constructor> {
@@ -201,6 +199,10 @@ class factory_constructor_impl<
     using _param =
       factory_constructor_parameter_impl<Traits, Product, CtrIdx, Idx>;
 
+    auto base_constructor() const noexcept -> const factory_constructor& {
+        return *this;
+    }
+
     template <size_t Idx>
     auto base_param() noexcept -> _param<Idx>* {
         return this;
@@ -221,7 +223,7 @@ public:
     factory_constructor_impl(
       factory_unit_t<Traits, Product>& parent,
       const factory& parent_factory)
-      : factory_constructor_unit_t<Traits, Product>{parent}
+      : factory_constructor_unit_t<Traits, Product>{parent, base_constructor()}
       , _param<ParamIdx>{base_unit(), *this}...
       , _parent_factory{parent_factory} {}
 
@@ -301,6 +303,10 @@ class factory_impl<Traits, Product, std::index_sequence<CtrIdx...>>
       Idx,
       typename utils::template constructor_parameter_indices<Idx>>;
 
+    auto base_factory() const noexcept -> const factory& {
+        return *this;
+    }
+
     template <size_t Idx>
     auto base_ctr() noexcept -> _ctr<Idx>* {
         return this;
@@ -321,14 +327,14 @@ public:
     factory_impl(
       factory_builder_unit_t<Traits>& parent,
       const object_builder& parent_builder)
-      : factory_unit_t<Traits, Product>{parent}
+      : factory_unit_t<Traits, Product>{parent, base_factory()}
       , _ctr<CtrIdx>{base_unit(), *this}...
       , _parent_builder{parent_builder} {}
 
     factory_impl(
       factory_product_unit_t<Traits, Product>& parent,
       const object_builder& parent_builder)
-      : factory_unit_t<Traits, Product>{parent}
+      : factory_unit_t<Traits, Product>{parent, base_factory()}
       , _ctr<CtrIdx>{base_unit(), *this}...
       , _parent_builder{parent_builder} {}
 

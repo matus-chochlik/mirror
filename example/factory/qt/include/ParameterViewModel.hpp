@@ -17,8 +17,12 @@ class ParameterViewModel : public QObject {
     Q_PROPERTY(QString name READ getName() CONSTANT)
     Q_PROPERTY(QObject* nested READ getNested NOTIFY nestedModelAdded)
 public:
-    ParameterViewModel(QString typeName, QString name, QString unit);
+    ParameterViewModel(
+      QString typeName,
+      QString name,
+      QObject* nestedModel = nullptr);
 
+    auto getUnitName() -> QString;
     auto getUnitUrl() -> QUrl;
     auto getTypeName() -> QString;
     auto getName() -> QString;

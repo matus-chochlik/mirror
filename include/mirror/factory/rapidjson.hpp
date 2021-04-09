@@ -56,8 +56,8 @@ struct rapidjson_factory_traits {
     template <typename Product>
     class factory_unit {
     public:
-        factory_unit(const builder_unit&) noexcept {}
-        factory_unit(const composite_unit<Product>&) noexcept {}
+        factory_unit(const builder_unit&, const factory&) noexcept {}
+        factory_unit(const composite_unit<Product>&, const factory&) noexcept {}
 
         auto select_constructor(construction_context& ctx, const factory& fac)
           -> size_t {
@@ -87,7 +87,9 @@ struct rapidjson_factory_traits {
     template <typename Product>
     class constructor_unit {
     public:
-        constructor_unit(factory_unit<Product>& parent) noexcept {
+        constructor_unit(
+          factory_unit<Product>& parent,
+          const factory_constructor&) noexcept {
             parent._children.emplace_back(this);
         }
 
@@ -185,10 +187,10 @@ struct rapidjson_factory_traits {
     class constructor_info {
     public:
         constructor_info(
-          const object_builder& builder,
+          const factory_constructor_parameter& param,
           const factory_constructor& ctr) noexcept
-          : _name{builder.name()}
-          , _index{builder.index()}
+          : _name{param.name()}
+          , _index{param.index()}
           , _is_default{ctr.is_default_constructor()}
           , _is_move{ctr.is_move_constructor()}
           , _is_copy{ctr.is_copy_constructor()} {}
@@ -224,9 +226,8 @@ struct rapidjson_factory_traits {
         template <typename P>
         atomic_unit(
           const constructor_unit<P>&,
-          const object_builder& builder,
-          const factory_constructor& ctr) noexcept
-          : _info{builder, ctr} {}
+          const factory_constructor_parameter& parameter) noexcept
+          : _info{parameter, parameter.parent_constructor()} {}
 
         static auto fetch(bool& dest, const rapidjson::Value& v) noexcept
           -> void {
@@ -312,10 +313,9 @@ struct rapidjson_factory_traits {
         template <typename P>
         composite_unit(
           const constructor_unit<P>&,
-          const object_builder& builder,
-          const factory_constructor& ctr) noexcept
-          : _info{builder, ctr}
-          , _fac{*this, builder} {}
+          const factory_constructor_parameter& parameter) noexcept
+          : _info{parameter, parameter.parent_constructor()}
+          , _fac{*this, parameter} {}
 
         auto
         get(construction_context& ctx, const factory_constructor_parameter&) {
@@ -333,9 +333,8 @@ struct rapidjson_factory_traits {
         template <typename P>
         copy_unit(
           const constructor_unit<P>&,
-          const object_builder& builder,
-          const factory_constructor& ctr)
-          : _info{builder, ctr} {}
+          const factory_constructor_parameter& parameter)
+          : _info{parameter, parameter.parent_constructor()} {}
 
         template <typename V>
         static auto fetch(V&, const rapidjson::Value&) noexcept {}

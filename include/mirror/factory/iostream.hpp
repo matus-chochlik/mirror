@@ -40,8 +40,8 @@ struct iostream_factory_traits {
 
     template <typename Product>
     struct factory_unit {
-        factory_unit(const builder_unit&) {}
-        factory_unit(const composite_unit<Product>&) {}
+        factory_unit(const builder_unit&, const factory&) {}
+        factory_unit(const composite_unit<Product>&, const factory&) {}
 
         auto select_constructor(construction_context& ctx, const factory& fac)
           -> size_t {
@@ -83,7 +83,9 @@ struct iostream_factory_traits {
 
     template <typename Product>
     struct constructor_unit {
-        constructor_unit(const factory_unit<Product>&) {}
+        constructor_unit(
+          const factory_unit<Product>&,
+          const factory_constructor&) {}
     };
 
     template <typename T>
@@ -106,10 +108,7 @@ struct iostream_factory_traits {
     template <typename T>
     struct atomic_unit {
         template <typename P>
-        atomic_unit(
-          const constructor_unit<P>&,
-          const object_builder&,
-          const factory_constructor&) {}
+        atomic_unit(const constructor_unit<P>&, const object_builder&) {}
 
         auto
         get(construction_context& ctx, const factory_constructor_parameter& p) {
@@ -129,10 +128,7 @@ struct iostream_factory_traits {
     template <typename T>
     struct composite_unit {
         template <typename P>
-        composite_unit(
-          const constructor_unit<P>&,
-          const object_builder& builder,
-          const factory_constructor&)
+        composite_unit(const constructor_unit<P>&, const object_builder& builder)
           : fac{*this, builder} {}
 
         auto
@@ -146,10 +142,7 @@ struct iostream_factory_traits {
     template <typename T>
     struct copy_unit {
         template <typename P>
-        copy_unit(
-          const constructor_unit<P>&,
-          const object_builder&,
-          const factory_constructor&) {}
+        copy_unit(const constructor_unit<P>&, const object_builder&) {}
 
         auto get(construction_context&, const factory_constructor_parameter&)
           -> T {
