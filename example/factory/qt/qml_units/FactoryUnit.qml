@@ -7,11 +7,6 @@ ColumnLayout {
     id: factoryUnit
     property variant model: null
 
-	Label {
-		Layout.fillWidth: true
-		text: model ? model.label : qsTr("N/A")
-	}
-
 	ComboBox {
 		id: constructorSelector
 		Layout.fillWidth: true

@@ -16,19 +16,19 @@ Backend::Backend()
 
     _pointFactory.base_unit().view_model().testFunc([this] {
         const auto p = _pointFactory.construct({});
-        return QString("Distance of point from origin: %1")
+        return QString("Distance of constructed point from origin: %1")
           .arg(QString::number(double(p.direction().length())));
     });
 
     _triangleFactory.base_unit().view_model().testFunc([this] {
         const auto t = _triangleFactory.construct({});
-        return QString("Area of triangle: %1")
+        return QString("Area of constructed triangle: %1")
           .arg(QString::number(double(t.area())));
     });
 
     _tetrahedronFactory.base_unit().view_model().testFunc([this] {
         const auto t = _tetrahedronFactory.construct({});
-        return QString("Volume of tetrahedron: %1")
+        return QString("Volume of constructed tetrahedron: %1")
           .arg(QString::number(double(t.volume())));
     });
 }
