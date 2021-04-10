@@ -14,5 +14,7 @@ RowLayout {
 
 	TextField {
 		Layout.fillWidth: true
+		text: floatUnit.model.nested.value
+		validator: DoubleValidator { }
 	}
 }

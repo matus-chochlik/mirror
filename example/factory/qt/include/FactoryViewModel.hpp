@@ -25,6 +25,7 @@ public:
     void addConstructor(ConstructorViewModel& viewModel);
     auto getConstructorLabels() -> QStringList;
     auto getSelectedConstructor() -> ConstructorViewModel*;
+    auto getSelectedIndex() -> size_t;
 signals:
     void constructorsChanged();
     void constructorSelected();

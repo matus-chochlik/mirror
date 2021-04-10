@@ -14,13 +14,43 @@ auto AtomicViewModel::getUnitName() -> QString {
     return _unit;
 }
 //------------------------------------------------------------------------------
-// BoolViewModel
+// StringBackedViewModel
 //------------------------------------------------------------------------------
-BoolViewModel::BoolViewModel()
-  : AtomicViewModel("Bool") {}
+StringBackedViewModel::StringBackedViewModel(QString unit)
+  : AtomicViewModel{std::move(unit)} {}
+//------------------------------------------------------------------------------
+void StringBackedViewModel::setValue(QString str) {
+    _value = str;
+}
+//------------------------------------------------------------------------------
+auto StringBackedViewModel::getValue() -> const QString& {
+    return _value;
+}
 //------------------------------------------------------------------------------
 // StringViewModel
 //------------------------------------------------------------------------------
 StringViewModel::StringViewModel()
-  : AtomicViewModel("String") {}
+  : StringBackedViewModel{"String"} {}
+//------------------------------------------------------------------------------
+auto StringViewModel::get(std::string*) -> std::string {
+    return getValue().toStdString();
+}
+//------------------------------------------------------------------------------
+// FloatViewModel
+//------------------------------------------------------------------------------
+FloatViewModel::FloatViewModel()
+  : StringBackedViewModel{"Float"} {}
+//------------------------------------------------------------------------------
+auto FloatViewModel::get(float*) -> float {
+    return getValue().toFloat();
+}
+//------------------------------------------------------------------------------
+auto FloatViewModel::get(double*) -> double {
+    return getValue().toDouble();
+}
+//------------------------------------------------------------------------------
+// BoolViewModel
+//------------------------------------------------------------------------------
+BoolViewModel::BoolViewModel()
+  : AtomicViewModel("Bool") {}
 //------------------------------------------------------------------------------

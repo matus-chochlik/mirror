@@ -90,7 +90,7 @@ public:
 
     auto select_constructor(qt5_factory_construction_context&, const factory&)
       -> size_t {
-        return 0;
+        return view_model().getSelectedIndex();
     }
 
     auto view_model() const noexcept -> auto& {
@@ -142,8 +142,8 @@ public:
     auto get(
       qt5_factory_construction_context&,
       const factory_constructor_parameter&) {
-        std::remove_reference_t<T> result{};
-        return result;
+        return _get_atomic(static_cast<T*>(nullptr))
+          .get(static_cast<T*>(nullptr));
     }
 
     auto view_model() const noexcept -> auto& {
@@ -151,13 +151,25 @@ public:
     }
 
 private:
-    static auto _make_atomic(bool*) -> std::unique_ptr<AtomicViewModel> {
-        return std::make_unique<BoolViewModel>();
-    }
+    template <typename X>
+    struct _get_atomic_model {
+        using type = std::conditional_t<
+          std::is_floating_point_v<X>,
+          FloatViewModel,
+          StringViewModel>;
+    };
+
+    template <typename X>
+    using _atomic_model_t = typename _get_atomic_model<X>::type;
 
     template <typename X>
     static auto _make_atomic(X*) -> std::unique_ptr<AtomicViewModel> {
-        return std::make_unique<StringViewModel>();
+        return std::make_unique<_atomic_model_t<X>>();
+    }
+
+    template <typename X>
+    auto _get_atomic(X*) -> typename _get_atomic_model<X>::type& {
+        return *static_cast<_atomic_model_t<X>*>(_atomic_model.get());
     }
 
     std::unique_ptr<AtomicViewModel> _atomic_model;

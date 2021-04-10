@@ -38,6 +38,15 @@ auto FactoryViewModel::getSelectedConstructor() -> ConstructorViewModel* {
     return nullptr;
 }
 //------------------------------------------------------------------------------
+auto FactoryViewModel::getSelectedIndex() -> size_t {
+    if(_selectedIndex >= 0) {
+        if(_selectedIndex < int(_constructorViewModels.size())) {
+            return static_cast<std::size_t>(_selectedIndex);
+        }
+    }
+    return 0;
+}
+//------------------------------------------------------------------------------
 void FactoryViewModel::selectConstructor(int index) {
     if(_selectedIndex != index) {
         _selectedIndex = index;

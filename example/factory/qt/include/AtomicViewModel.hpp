@@ -21,14 +21,48 @@ private:
     QString _unit;
 };
 //------------------------------------------------------------------------------
-class BoolViewModel : public AtomicViewModel {
+class StringBackedViewModel : public AtomicViewModel {
+    Q_OBJECT
+
+    Q_PROPERTY(QString value READ getValue WRITE setValue NOTIFY valueChanged)
 public:
-    BoolViewModel();
+    StringBackedViewModel(QString);
+
+    void setValue(QString);
+    auto getValue() -> const QString&;
+
+signals:
+    void valueChanged();
+
+private:
+    QString _value;
 };
 //------------------------------------------------------------------------------
-class StringViewModel : public AtomicViewModel {
+class StringViewModel : public StringBackedViewModel {
 public:
     StringViewModel();
+
+    auto get(std::string*) -> std::string;
+};
+//------------------------------------------------------------------------------
+class FloatViewModel : public StringBackedViewModel {
+public:
+    FloatViewModel();
+
+    auto get(float*) -> float;
+    auto get(double*) -> double;
+};
+//------------------------------------------------------------------------------
+class BoolViewModel : public AtomicViewModel {
+    Q_OBJECT
+
+public:
+    BoolViewModel();
+
+    auto get(bool*) -> bool;
+
+private:
+    bool _value;
 };
 //------------------------------------------------------------------------------
 #endif
