@@ -54,3 +54,11 @@ void FactoryViewModel::selectConstructor(int index) {
     }
 }
 //------------------------------------------------------------------------------
+void FactoryViewModel::testFunc(std::function<QString()> func) {
+    _doTest = func;
+}
+//------------------------------------------------------------------------------
+auto FactoryViewModel::test() -> QString {
+    return _doTest ? _doTest() : QString("N/A");
+}
+//------------------------------------------------------------------------------

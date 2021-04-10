@@ -6,6 +6,7 @@
 #define MIRROR_FACTORY_BUILDER_QT_FACTORY_VIEW_MODEL_HPP
 
 #include <QtCore>
+#include <functional>
 
 class ConstructorViewModel;
 //------------------------------------------------------------------------------
@@ -26,14 +27,17 @@ public:
     auto getConstructorLabels() -> QStringList;
     auto getSelectedConstructor() -> ConstructorViewModel*;
     auto getSelectedIndex() -> size_t;
+    void testFunc(std::function<QString()>);
 signals:
     void constructorsChanged();
     void constructorSelected();
 public slots:
     void selectConstructor(int index);
+    QString test();
 
 private:
     QString _label;
+    std::function<QString()> _doTest;
     std::vector<ConstructorViewModel*> _constructorViewModels;
     int _selectedIndex{0};
 };

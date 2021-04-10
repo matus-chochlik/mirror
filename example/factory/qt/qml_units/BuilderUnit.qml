@@ -19,9 +19,31 @@ ColumnLayout {
 		onActivated: builderUnit.model.selectFactory(currentIndex)
 	}
 
-	FactoryUnit {
+	ScrollView {
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		model: builderUnit.model.selectedFactory
+		clip: true
+		ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+		ColumnLayout {
+			FactoryUnit {
+				Layout.preferredWidth: builderUnit.width
+				Layout.fillHeight: true
+				model: builderUnit.model.selectedFactory
+			}
+		}
+	}
+
+	Button {
+		Layout.fillWidth: true
+		text: qsTr("construct")
+		onClicked: {
+			message.text = builderUnit.model.selectedFactory.test()
+		}
+	}
+
+	TextArea {
+		id: message
+		text: ""
+		readOnly: true
 	}
 }

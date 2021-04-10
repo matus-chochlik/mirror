@@ -15,5 +15,8 @@ RowLayout {
 	TextField {
 		Layout.fillWidth: true
 		text: stringUnit.model.nested.value
+		onEditingFinished: {
+			stringUnit.model.nested.value = text
+		}
 	}
 }

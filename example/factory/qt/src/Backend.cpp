@@ -12,7 +12,26 @@ Backend::Backend()
   , _builder{"qt5"}
   , _pointFactory{_builder.build<test::point>()}
   , _triangleFactory{_builder.build<test::triangle>()}
-  , _tetrahedronFactory{_builder.build<test::tetrahedron>()} {}
+  , _tetrahedronFactory{_builder.build<test::tetrahedron>()} {
+
+    _pointFactory.base_unit().view_model().testFunc([this] {
+        const auto p = _pointFactory.construct({});
+        return QString("Distance of point from origin: %1")
+          .arg(QString::number(double(p.direction().length())));
+    });
+
+    _triangleFactory.base_unit().view_model().testFunc([this] {
+        const auto t = _triangleFactory.construct({});
+        return QString("Area of triangle: %1")
+          .arg(QString::number(double(t.area())));
+    });
+
+    _tetrahedronFactory.base_unit().view_model().testFunc([this] {
+        const auto t = _tetrahedronFactory.construct({});
+        return QString("Volume of tetrahedron: %1")
+          .arg(QString::number(double(t.volume())));
+    });
+}
 //------------------------------------------------------------------------------
 auto Backend::getBuilder() -> BuilderViewModel* {
     return &_builder.base_unit().view_model();
