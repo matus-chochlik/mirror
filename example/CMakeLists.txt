@@ -40,3 +40,4 @@ function(mirror_add_simple_example EXAMPLE_NAME)
 endfunction()
 
 mirror_add_simple_example(next_weekday)
+mirror_add_simple_example(gen_puml_diagram)
