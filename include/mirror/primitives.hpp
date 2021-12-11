@@ -11,6 +11,7 @@
 
 #include <experimental/__config>
 #include <string_view>
+#include <type_traits>
 #include <__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
