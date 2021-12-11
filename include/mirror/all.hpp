@@ -9,7 +9,7 @@
 #ifndef MIRROR_ALL_HPP
 #define MIRROR_ALL_HPP
 
-#include "primitives.hpp"
+#include "enum_utils.hpp"
 
 #endif // MIRROR_ALL_HPP
 
