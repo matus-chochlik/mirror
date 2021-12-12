@@ -523,6 +523,13 @@ invoke(metaobject<_Mp>, _Ap&&... args) {
 template <
   __metaobject_id _Mp,
   typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
+consteval bool is_empty(metaobject<_Mp>) {
+    return __metaobject_is_empty(_Mp);
+}
+
+template <
+  __metaobject_id _Mp,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
 consteval size_t get_size(metaobject<_Mp>) {
     return __metaobject_get_size(_Mp);
 }
