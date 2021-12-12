@@ -33,7 +33,7 @@ function(mirror_add_simple_example EXAMPLE_NAME)
 	set_target_properties(
 		mirror-${EXAMPLE_NAME}
 		PROPERTIES
-	       		BUILD_RPATH "${MIRROR_LLVM_PREFIX}/lib"
+			BUILD_RPATH "${MIRROR_LIBCXX_RPATH}"
 			FOLDER "Example/Mirror"
 	)
 	mirror_install_example(mirror-${EXAMPLE_NAME})

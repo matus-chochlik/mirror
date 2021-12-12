@@ -18,7 +18,7 @@ target_compile_options(
 		-std=c++20 -stdlib=libc++
 		-freflection-ts -freflection-ext
 		-pedantic -Wall -Werror -Weverything
-	       	-Wno-language-extension-token
+		-Wno-language-extension-token
 		-Wno-c++98-compat -Wno-c++98-compat-pedantic
 		-Wno-c++20-compat -Wno-c++2a-extensions
 		-Wno-padded
