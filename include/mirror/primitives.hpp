@@ -687,6 +687,20 @@ constexpr auto get_captures(metaobject<_Mp>) {
 }
 
 template <
+  __metaobject_id _Mp,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
+constexpr auto hide_private(metaobject<_Mp>) {
+    return metaobject<__metaobject_hide_private(_Mp)>{};
+}
+
+template <
+  __metaobject_id _Mp,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
+constexpr auto hide_protected(metaobject<_Mp>) {
+    return metaobject<__metaobject_hide_protected(_Mp)>{};
+}
+
+template <
   size_t _I,
   __metaobject_id _Mp,
   typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
