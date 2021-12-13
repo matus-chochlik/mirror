@@ -3,4 +3,8 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 #  http://www.boost.org/LICENSE_1_0.txt
 #
-add_subdirectory(mirror)
+include(Example.cmake)
+
+mirror_add_simple_example(print_struct)
+mirror_add_simple_example(next_weekday)
+mirror_add_simple_example(gen_puml_diagram)
