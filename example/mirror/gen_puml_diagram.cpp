@@ -24,7 +24,7 @@ void print_type_puml(std::ostream& out, MT mt) {
             out << "  " << get_name(mo) << "\n";
         });
     } else {
-        for_each(get_member_functions(mt), [&](auto mo) {
+        for_each_info(get_member_functions(mt), [&](auto mo, auto info) {
             out << "  ";
             if(is_private(mo)) {
                 out << "-";
@@ -35,12 +35,10 @@ void print_type_puml(std::ostream& out, MT mt) {
             }
             out << get_name(get_type(mo)) << " ";
             out << get_name(mo) << "(";
-            bool first = true;
             for_each(get_parameters(mo), [&](auto mp) {
-                if(first)
-                    first = false;
-                else
+                if(!info.is_first()) {
                     out << ", ";
+                }
                 out << get_name(mp) << ": ";
                 out << get_name(get_type(mp));
             });

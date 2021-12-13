@@ -46,6 +46,8 @@ using std::type_identity;
 template <__metaobject_id _Mp>
 struct metaobject {};
 
+constinit const metaobject<__reflexpr_id()> no_metaobject{};
+
 template <__metaobject_id _Mp>
 consteval bool reflects_object(metaobject<_Mp>) {
     return __metaobject_is_meta_object(_Mp);
@@ -702,6 +704,7 @@ constexpr auto unpack(metaobject<_Mp>) {
 }
 
 // unpacked range operations
+// for each
 template <__metaobject_id... _Mp, typename _Fp>
 void for_each(unpacked_metaobject_sequence<_Mp...>, _Fp function) {
     (void)(..., function(metaobject<_Mp>{}));
@@ -715,6 +718,49 @@ void for_each(metaobject<_Mp> mo, _Fp function) {
     return for_each(unpack(mo), std::move(function));
 }
 
+// for each with iteration info
+class for_each_iteration_info {
+private:
+    std::size_t _index;
+    std::size_t _count;
+
+public:
+    constexpr for_each_iteration_info(
+      std::size_t index,
+      std::size_t count) noexcept
+      : _index{index}
+      , _count{count} {}
+
+    constexpr bool is_first() const noexcept {
+        return _index == 0Z;
+    }
+
+    constexpr bool is_last() const noexcept {
+        return _index + 1Z >= _count;
+    }
+
+    constexpr auto index() const noexcept {
+        return _index;
+    }
+
+    constexpr auto count() const noexcept {
+        return _count;
+    }
+};
+
+template <
+  __metaobject_id _Mp,
+  typename _Fp,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
+constexpr void for_each_info(metaobject<_Mp> mo, _Fp function) {
+    auto index{0Z};
+    const auto count{__metaobject_get_size(_Mp)};
+    return for_each(unpack(mo), [&](auto mo) {
+        function(mo, for_each_iteration_info(index++, count));
+    });
+}
+
+// select
 template <typename _Tp, __metaobject_id... _Mp, typename _Fp, typename... _Pp>
 _Tp select(
   unpacked_metaobject_sequence<_Mp...>,
