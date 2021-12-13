@@ -10,6 +10,7 @@
 #define MIRROR_ENUM_UTILS_HPP
 
 #include "primitives.hpp"
+#include <optional>
 
 namespace mirror {
 
@@ -27,7 +28,7 @@ string_view enum_to_string(E e) {
 }
 
 template <typename E>
-E string_to_enum(string_view s) {
+std::optional<E> string_to_enum(string_view s) {
     return select(
       get_enumerators(mirror(E)),
       [](auto& result, auto mo, auto n) {
@@ -35,7 +36,7 @@ E string_to_enum(string_view s) {
               result = get_constant(mo);
           }
       },
-      E{},
+      std::optional<E>{},
       s);
 }
 

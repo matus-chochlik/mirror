@@ -23,9 +23,10 @@ static weekdays next_day(weekdays d) {
 }
 
 static void print_next_day(std::string_view n) {
-    auto d = mirror::string_to_enum<weekdays>(n);
-    std::cout << n << " -> " << mirror::enum_to_string(next_day(d))
-              << std::endl;
+    if(auto opt_day{mirror::string_to_enum<weekdays>(n)}) {
+        std::cout << n << " -> " << mirror::enum_to_string(next_day(*opt_day))
+                  << std::endl;
+    }
 }
 
 int main() {

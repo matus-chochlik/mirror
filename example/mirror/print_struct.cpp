@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 #include <iostream>
-#include <mirror/enum_utils.hpp>
+#include <mirror/primitives.hpp>
 
 template <typename S>
 void print_struct(const S& x) {
