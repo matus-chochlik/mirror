@@ -14,10 +14,6 @@
 #include <type_traits>
 #include <__debug>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-#pragma GCC system_header
-#endif
-
 #ifdef _LIBCPP_HAS_NO_REFLECTION
 #if defined(_LIBCPP_WARNING)
 _LIBCPP_WARNING("mirror cannot be used with this compiler")
@@ -46,497 +42,493 @@ using std::type_identity;
 template <typename... T>
 struct type_list {};
 
-template <__metaobject_id _Mp>
+template <__metaobject_id M>
 struct metaobject {};
 
 constinit const metaobject<__reflexpr_id()> no_metaobject{};
 
-template <__metaobject_id _Mp>
-consteval bool reflects_object(metaobject<_Mp>) {
-    return __metaobject_is_meta_object(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_object(metaobject<M>) {
+    return __metaobject_is_meta_object(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_object_sequence(metaobject<_Mp>) {
-    return __metaobject_is_meta_object_sequence(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_object_sequence(metaobject<M>) {
+    return __metaobject_is_meta_object_sequence(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_named(metaobject<_Mp>) {
-    return __metaobject_is_meta_named(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_named(metaobject<M>) {
+    return __metaobject_is_meta_named(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_alias(metaobject<_Mp>) {
-    return __metaobject_is_meta_alias(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_alias(metaobject<M>) {
+    return __metaobject_is_meta_alias(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_scope(metaobject<_Mp>) {
-    return __metaobject_is_meta_scope(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_scope(metaobject<M>) {
+    return __metaobject_is_meta_scope(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_typed(metaobject<_Mp>) {
-    return __metaobject_is_meta_typed(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_typed(metaobject<M>) {
+    return __metaobject_is_meta_typed(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_scope_member(metaobject<_Mp>) {
-    return __metaobject_is_meta_scope_member(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_scope_member(metaobject<M>) {
+    return __metaobject_is_meta_scope_member(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_global_scope_member(metaobject<_Mp>) {
-    if constexpr(__metaobject_is_meta_scope_member(_Mp)) {
-        return __metaobject_is_meta_global_scope(__metaobject_get_scope(_Mp));
+template <__metaobject_id M>
+consteval bool reflects_global_scope_member(metaobject<M>) {
+    if constexpr(__metaobject_is_meta_scope_member(M)) {
+        return __metaobject_is_meta_global_scope(__metaobject_get_scope(M));
     } else {
         return false;
     }
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_enumerator(metaobject<_Mp>) {
-    return __metaobject_is_meta_enumerator(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_enumerator(metaobject<M>) {
+    return __metaobject_is_meta_enumerator(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_record_member(metaobject<_Mp>) {
-    return __metaobject_is_meta_record_member(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_record_member(metaobject<M>) {
+    return __metaobject_is_meta_record_member(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_base(metaobject<_Mp>) {
-    return __metaobject_is_meta_base(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_base(metaobject<M>) {
+    return __metaobject_is_meta_base(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_namespace(metaobject<_Mp>) {
-    return __metaobject_is_meta_namespace(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_namespace(metaobject<M>) {
+    return __metaobject_is_meta_namespace(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_inline_namespace(metaobject<_Mp>) {
-    if constexpr(__metaobject_is_meta_namespace(_Mp)) {
-        return __metaobject_is_inline(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_inline_namespace(metaobject<M>) {
+    if constexpr(__metaobject_is_meta_namespace(M)) {
+        return __metaobject_is_inline(M);
     } else {
         return false;
     }
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_global_scope(metaobject<_Mp>) {
-    return __metaobject_is_meta_global_scope(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_global_scope(metaobject<M>) {
+    return __metaobject_is_meta_global_scope(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_type(metaobject<_Mp>) {
-    return __metaobject_is_meta_type(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_type(metaobject<M>) {
+    return __metaobject_is_meta_type(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_enum(metaobject<_Mp>) {
-    return __metaobject_is_meta_enum(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_enum(metaobject<M>) {
+    return __metaobject_is_meta_enum(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_record(metaobject<_Mp>) {
-    return __metaobject_is_meta_record(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_record(metaobject<M>) {
+    return __metaobject_is_meta_record(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_class(metaobject<_Mp>) {
-    return __metaobject_is_meta_class(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_class(metaobject<M>) {
+    return __metaobject_is_meta_class(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_lambda(metaobject<_Mp>) {
-    return __metaobject_is_meta_lambda(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_lambda(metaobject<M>) {
+    return __metaobject_is_meta_lambda(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_constant(metaobject<_Mp>) {
-    return __metaobject_is_meta_constant(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_constant(metaobject<M>) {
+    return __metaobject_is_meta_constant(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_variable(metaobject<_Mp>) {
-    return __metaobject_is_meta_variable(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_variable(metaobject<M>) {
+    return __metaobject_is_meta_variable(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_lambda_capture(metaobject<_Mp>) {
-    return __metaobject_is_meta_lambda_capture(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_lambda_capture(metaobject<M>) {
+    return __metaobject_is_meta_lambda_capture(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_function_parameter(metaobject<_Mp>) {
-    return __metaobject_is_meta_function_parameter(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_function_parameter(metaobject<M>) {
+    return __metaobject_is_meta_function_parameter(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_callable(metaobject<_Mp>) {
-    return __metaobject_is_meta_callable(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_callable(metaobject<M>) {
+    return __metaobject_is_meta_callable(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_function(metaobject<_Mp>) {
-    return __metaobject_is_meta_function(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_function(metaobject<M>) {
+    return __metaobject_is_meta_function(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_member_function(metaobject<_Mp>) {
-    return __metaobject_is_meta_member_function(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_member_function(metaobject<M>) {
+    return __metaobject_is_meta_member_function(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_special_member_function(metaobject<_Mp>) {
-    return __metaobject_is_meta_special_member_function(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_special_member_function(metaobject<M>) {
+    return __metaobject_is_meta_special_member_function(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_constructor(metaobject<_Mp>) {
-    return __metaobject_is_meta_constructor(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_constructor(metaobject<M>) {
+    return __metaobject_is_meta_constructor(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_destructor(metaobject<_Mp>) {
-    return __metaobject_is_meta_destructor(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_destructor(metaobject<M>) {
+    return __metaobject_is_meta_destructor(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_operator(metaobject<_Mp>) {
-    return __metaobject_is_meta_operator(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_operator(metaobject<M>) {
+    return __metaobject_is_meta_operator(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_conversion_operator(metaobject<_Mp>) {
-    return __metaobject_is_meta_conversion_operator(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_conversion_operator(metaobject<M>) {
+    return __metaobject_is_meta_conversion_operator(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_expression(metaobject<_Mp>) {
-    return __metaobject_is_meta_expression(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_expression(metaobject<M>) {
+    return __metaobject_is_meta_expression(M);
 }
 
-template <__metaobject_id _Mp>
-consteval bool reflects_specifier(metaobject<_Mp>) {
-    return __metaobject_is_meta_specifier(_Mp);
+template <__metaobject_id M>
+consteval bool reflects_specifier(metaobject<M>) {
+    return __metaobject_is_meta_specifier(M);
 }
 
 // unary operations
 // boolean
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_variable(_Mp) || __metaobject_is_meta_callable(_Mp)>>
-consteval bool is_constexpr(metaobject<_Mp>) {
-    return __metaobject_is_constexpr(_Mp);
+    __metaobject_is_meta_variable(M) || __metaobject_is_meta_callable(M)>>
+consteval bool is_constexpr(metaobject<M>) {
+    return __metaobject_is_constexpr(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_constructor(_Mp) ||
-    __metaobject_is_meta_conversion_operator(_Mp)>>
-consteval bool is_explicit(metaobject<_Mp>) {
-    return __metaobject_is_explicit(_Mp);
+    __metaobject_is_meta_constructor(M) ||
+    __metaobject_is_meta_conversion_operator(M)>>
+consteval bool is_explicit(metaobject<M>) {
+    return __metaobject_is_explicit(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_namespace(_Mp) || __metaobject_is_meta_callable(_Mp)>>
-consteval bool is_inline(metaobject<_Mp>) {
-    return __metaobject_is_inline(_Mp);
+    __metaobject_is_meta_namespace(M) || __metaobject_is_meta_callable(M)>>
+consteval bool is_inline(metaobject<M>) {
+    return __metaobject_is_inline(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_variable(_Mp) ||
-    __metaobject_is_meta_member_function(_Mp)>>
-consteval bool is_static(metaobject<_Mp>) {
-    return __metaobject_is_static(_Mp);
+    __metaobject_is_meta_variable(M) || __metaobject_is_meta_member_function(M)>>
+consteval bool is_static(metaobject<M>) {
+    return __metaobject_is_static(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_base(_Mp) || __metaobject_is_meta_destructor(_Mp) ||
-    __metaobject_is_meta_member_function(_Mp)>>
-consteval bool is_virtual(metaobject<_Mp>) {
-    return __metaobject_is_virtual(_Mp);
+    __metaobject_is_meta_base(M) || __metaobject_is_meta_destructor(M) ||
+    __metaobject_is_meta_member_function(M)>>
+consteval bool is_virtual(metaobject<M>) {
+    return __metaobject_is_virtual(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_destructor(_Mp) ||
-    __metaobject_is_meta_member_function(_Mp)>>
-consteval bool is_pure_virtual(metaobject<_Mp>) {
-    return __metaobject_is_pure_virtual(_Mp);
+    __metaobject_is_meta_destructor(M) ||
+    __metaobject_is_meta_member_function(M)>>
+consteval bool is_pure_virtual(metaobject<M>) {
+    return __metaobject_is_pure_virtual(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_class(_Mp) || __metaobject_is_meta_member_function(_Mp)>>
-consteval bool is_final(metaobject<_Mp>) {
-    return __metaobject_is_final(_Mp);
+    __metaobject_is_meta_class(M) || __metaobject_is_meta_member_function(M)>>
+consteval bool is_final(metaobject<M>) {
+    return __metaobject_is_final(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_record_member(_Mp) || __metaobject_is_meta_base(_Mp)>>
-consteval bool is_private(metaobject<_Mp>) {
-    return __metaobject_is_private(_Mp);
+    __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)>>
+consteval bool is_private(metaobject<M>) {
+    return __metaobject_is_private(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_record_member(_Mp) || __metaobject_is_meta_base(_Mp)>>
-consteval bool is_protected(metaobject<_Mp>) {
-    return __metaobject_is_protected(_Mp);
+    __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)>>
+consteval bool is_protected(metaobject<M>) {
+    return __metaobject_is_protected(M);
 }
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_record_member(_Mp) || __metaobject_is_meta_base(_Mp)>>
-consteval bool is_public(metaobject<_Mp>) {
-    return __metaobject_is_public(_Mp);
+    __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)>>
+consteval bool is_public(metaobject<M>) {
+    return __metaobject_is_public(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_named(_Mp)>>
-consteval bool is_unnamed(metaobject<_Mp>) {
-    return __metaobject_is_unnamed(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_named(M)>>
+consteval bool is_unnamed(metaobject<M>) {
+    return __metaobject_is_unnamed(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_type(_Mp)>>
-consteval bool is_enum(metaobject<_Mp>) {
-    return __metaobject_is_enum(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
+consteval bool is_enum(metaobject<M>) {
+    return __metaobject_is_enum(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_type(_Mp)>>
-consteval bool is_scoped_enum(metaobject<_Mp>) {
-    return __metaobject_is_scoped_enum(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
+consteval bool is_scoped_enum(metaobject<M>) {
+    return __metaobject_is_scoped_enum(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_type(_Mp)>>
-consteval bool is_union(metaobject<_Mp>) {
-    return __metaobject_is_union(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
+consteval bool is_union(metaobject<M>) {
+    return __metaobject_is_union(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_type(_Mp)>>
-consteval bool uses_class_key(metaobject<_Mp>) {
-    return __metaobject_uses_class_key(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
+consteval bool uses_class_key(metaobject<M>) {
+    return __metaobject_uses_class_key(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_type(_Mp)>>
-consteval bool uses_struct_key(metaobject<_Mp>) {
-    return __metaobject_uses_struct_key(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
+consteval bool uses_struct_key(metaobject<M>) {
+    return __metaobject_uses_struct_key(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_lambda(_Mp)>>
-consteval bool uses_default_copy_capture(metaobject<_Mp>) {
-    return __metaobject_uses_default_copy_capture(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_lambda(M)>>
+consteval bool uses_default_copy_capture(metaobject<M>) {
+    return __metaobject_uses_default_copy_capture(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_lambda(_Mp)>>
-consteval bool uses_default_reference_capture(metaobject<_Mp>) {
-    return __metaobject_uses_default_reference_capture(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_lambda(M)>>
+consteval bool uses_default_reference_capture(metaobject<M>) {
+    return __metaobject_uses_default_reference_capture(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_lambda(_Mp)>>
-consteval bool is_call_operator_const(metaobject<_Mp>) {
-    return __metaobject_is_call_operator_const(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_lambda(M)>>
+consteval bool is_call_operator_const(metaobject<M>) {
+    return __metaobject_is_call_operator_const(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_member_function(_Mp)>>
-consteval bool is_const(metaobject<_Mp>) {
-    return __metaobject_is_const(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_member_function(M)>>
+consteval bool is_const(metaobject<M>) {
+    return __metaobject_is_const(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_member_function(_Mp)>>
-consteval bool is_volatile(metaobject<_Mp>) {
-    return __metaobject_is_volatile(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_member_function(M)>>
+consteval bool is_volatile(metaobject<M>) {
+    return __metaobject_is_volatile(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_member_function(_Mp)>>
-consteval bool has_lvalueref_qualifier(metaobject<_Mp>) {
-    return __metaobject_has_lvalueref_qualifier(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_member_function(M)>>
+consteval bool has_lvalueref_qualifier(metaobject<M>) {
+    return __metaobject_has_lvalueref_qualifier(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_member_function(_Mp)>>
-consteval bool has_rvalueref_qualifier(metaobject<_Mp>) {
-    return __metaobject_has_rvalueref_qualifier(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_member_function(M)>>
+consteval bool has_rvalueref_qualifier(metaobject<M>) {
+    return __metaobject_has_rvalueref_qualifier(M);
 }
 
-template <__metaobject_id _Ml, __metaobject_id _Mr>
-consteval bool reflects_same(metaobject<_Ml>, metaobject<_Mr>) {
-    return __metaobject_reflects_same(_Ml, _Mr);
+template <__metaobject_id Ml, __metaobject_id Mr>
+consteval bool reflects_same(metaobject<Ml>, metaobject<Mr>) {
+    return __metaobject_reflects_same(Ml, Mr);
 }
 
 // integer
-template <__metaobject_id _Mp>
-consteval size_t get_id(metaobject<_Mp>) {
-    return __metaobject_get_id_value(_Mp);
+template <__metaobject_id M>
+consteval size_t get_id(metaobject<M>) {
+    return __metaobject_get_id_value(M);
 }
 
-template <__metaobject_id _Mp>
-consteval size_t get_source_line(metaobject<_Mp>) {
-    return __metaobject_get_source_line(_Mp);
+template <__metaobject_id M>
+consteval size_t get_source_line(metaobject<M>) {
+    return __metaobject_get_source_line(M);
 }
 
-template <__metaobject_id _Mp>
-consteval size_t get_source_column(metaobject<_Mp>) {
-    return __metaobject_get_source_column(_Mp);
+template <__metaobject_id M>
+consteval size_t get_source_column(metaobject<M>) {
+    return __metaobject_get_source_column(M);
 }
 
-template <__metaobject_id _Mp>
+template <__metaobject_id M>
 struct _get_pointer
   : integral_constant<
-      __unrefltype(__metaobject_get_pointer(_Mp)),
-      __metaobject_get_pointer(_Mp)> {};
+      __unrefltype(__metaobject_get_pointer(M)),
+      __metaobject_get_pointer(M)> {};
 
 template <
-  __metaobject_id _Mp,
+  __metaobject_id M,
   typename = std::enable_if_t<
-    __metaobject_is_meta_variable(_Mp) || __metaobject_is_meta_function(_Mp)>>
-consteval auto get_pointer(metaobject<_Mp>) {
-    return _get_pointer<_Mp>::value;
+    __metaobject_is_meta_variable(M) || __metaobject_is_meta_function(M)>>
+consteval auto get_pointer(metaobject<M>) {
+    return _get_pointer<M>::value;
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_variable(_Mp)>>
-constexpr const auto& get_value(metaobject<_Mp>) {
-    return *_get_pointer<_Mp>::value;
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_variable(M)>>
+constexpr const auto& get_value(metaobject<M>) {
+    return *_get_pointer<M>::value;
 }
 
 template <
-  __metaobject_id _Mp,
-  class _Cp,
+  __metaobject_id M,
+  class C,
   typename = std::enable_if_t<
-    __metaobject_is_meta_record_member(_Mp) &&
-    __metaobject_is_meta_variable(_Mp)>>
-constexpr const auto& get_value(metaobject<_Mp>, const _Cp& obj) {
-    return obj.*_get_pointer<_Mp>::value;
+    __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)>>
+constexpr const auto& get_value(metaobject<M>, const C& obj) {
+    return obj.*_get_pointer<M>::value;
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_variable(_Mp)>>
-constexpr auto& get_reference(metaobject<_Mp>) {
-    return *_get_pointer<_Mp>::value;
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_variable(M)>>
+constexpr auto& get_reference(metaobject<M>) {
+    return *_get_pointer<M>::value;
 }
 
 template <
-  __metaobject_id _Mp,
-  class _Cp,
+  __metaobject_id M,
+  class C,
   typename = std::enable_if_t<
-    __metaobject_is_meta_record_member(_Mp) &&
-    __metaobject_is_meta_variable(_Mp)>>
-constexpr auto& get_reference(metaobject<_Mp>, _Cp& obj) {
-    return obj.*_get_pointer<_Mp>::value;
+    __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)>>
+constexpr auto& get_reference(metaobject<M>, C& obj) {
+    return obj.*_get_pointer<M>::value;
 }
 
-template <__metaobject_id _Mp>
+template <__metaobject_id M>
 struct _get_constant
   : integral_constant<
-      __unrefltype(__metaobject_get_constant(_Mp)),
-      __metaobject_get_constant(_Mp)> {};
+      __unrefltype(__metaobject_get_constant(M)),
+      __metaobject_get_constant(M)> {};
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_constant(_Mp)>>
-constexpr auto get_constant(metaobject<_Mp>) {
-    return _get_constant<_Mp>::value;
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_constant(M)>>
+constexpr auto get_constant(metaobject<M>) {
+    return _get_constant<M>::value;
 }
 
 template <
-  __metaobject_id _Mp,
-  typename _Cp,
-  typename... _Ap,
-  typename = std::enable_if_t<__metaobject_is_meta_member_function(_Mp)>>
-constexpr auto invoke_on(metaobject<_Mp> mo, _Cp& obj, _Ap&&... args) {
+  __metaobject_id M,
+  typename C,
+  typename... A,
+  typename = std::enable_if_t<__metaobject_is_meta_member_function(M)>>
+constexpr auto invoke_on(metaobject<M> mo, C& obj, A&&... args) {
     if constexpr(is_static(mo)) {
-        return (*_get_pointer<_Mp>::value)(std::forward<_Ap>(args)...);
+        return (*_get_pointer<M>::value)(std::forward<A>(args)...);
     } else {
-        return (obj.*_get_pointer<_Mp>::value)(std::forward<_Ap>(args)...);
+        return (obj.*_get_pointer<M>::value)(std::forward<A>(args)...);
     }
 }
 
 template <
-  __metaobject_id _Mp,
-  typename... _Ap,
+  __metaobject_id M,
+  typename... A,
   typename = std::enable_if_t<
-    __metaobject_is_meta_function(_Mp) ||
-    (__metaobject_is_meta_member_function(_Mp) && __metaobject_is_static(_Mp))>>
-constexpr auto invoke(metaobject<_Mp>, _Ap&&... args) {
-    return (*_get_pointer<_Mp>::value)(std::forward<_Ap>(args)...);
+    __metaobject_is_meta_function(M) ||
+    (__metaobject_is_meta_member_function(M) && __metaobject_is_static(M))>>
+constexpr auto invoke(metaobject<M>, A&&... args) {
+    return (*_get_pointer<M>::value)(std::forward<A>(args)...);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename _Cp,
-  typename... _Ap,
+  __metaobject_id M,
+  typename C,
+  typename... A,
   typename = std::enable_if_t<
-    __metaobject_is_meta_member_function(_Mp) && !__metaobject_is_static(_Mp)>>
-constexpr auto invoke(metaobject<_Mp>, _Cp& obj, _Ap&&... args) {
-    return (obj.*_get_pointer<_Mp>::value)(std::forward<_Ap>(args)...);
+    __metaobject_is_meta_member_function(M) && !__metaobject_is_static(M)>>
+constexpr auto invoke(metaobject<M>, C& obj, A&&... args) {
+    return (obj.*_get_pointer<M>::value)(std::forward<A>(args)...);
 }
 
-template <__metaobject_id _Mp, typename... _Ap>
+template <__metaobject_id M, typename... A>
 constexpr std::enable_if_t<
-  __metaobject_is_meta_constructor(_Mp),
-  __unrefltype(__metaobject_get_scope(_Mp))>
-invoke(metaobject<_Mp>, _Ap&&... args) {
-    return __unrefltype(__metaobject_get_scope(_Mp))(
-      std::forward<_Ap>(args)...);
+  __metaobject_is_meta_constructor(M),
+  __unrefltype(__metaobject_get_scope(M))>
+invoke(metaobject<M>, A&&... args) {
+    return __unrefltype(__metaobject_get_scope(M))(std::forward<A>(args)...);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-consteval bool is_empty(metaobject<_Mp>) {
-    return __metaobject_is_empty(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+consteval bool is_empty(metaobject<M>) {
+    return __metaobject_is_empty(M);
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-consteval size_t get_size(metaobject<_Mp>) {
-    return __metaobject_get_size(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+consteval size_t get_size(metaobject<M>) {
+    return __metaobject_get_size(M);
 }
 
 // string
@@ -546,9 +538,9 @@ consteval string_view get_source_file_name_view(__metaobject_id mo) {
       __metaobject_source_file_name_len(mo)};
 }
 
-template <__metaobject_id _Mp>
-consteval string_view get_source_file_name(metaobject<_Mp>) {
-    return get_source_file_name_view(_Mp);
+template <__metaobject_id M>
+consteval string_view get_source_file_name(metaobject<M>) {
+    return get_source_file_name_view(M);
 }
 
 consteval string_view get_name_view(__metaobject_id mo) {
@@ -556,10 +548,10 @@ consteval string_view get_name_view(__metaobject_id mo) {
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_named(_Mp)>>
-consteval string_view get_name(metaobject<_Mp>) {
-    return get_name_view(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_named(M)>>
+consteval string_view get_name(metaobject<M>) {
+    return get_name_view(M);
 }
 
 consteval string_view get_display_name_view(__metaobject_id mo) {
@@ -568,170 +560,170 @@ consteval string_view get_display_name_view(__metaobject_id mo) {
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_named(_Mp)>>
-consteval string_view get_display_name(metaobject<_Mp>) {
-    return get_display_name_view(_Mp);
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_named(M)>>
+consteval string_view get_display_name(metaobject<M>) {
+    return get_display_name_view(M);
 }
 
 // metaobject
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_scope_member(_Mp)>>
-constexpr auto get_scope(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_scope(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_scope_member(M)>>
+constexpr auto get_scope(metaobject<M>) {
+    return metaobject<__metaobject_get_scope(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_typed(_Mp)>>
-constexpr auto get_type(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_type(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_typed(M)>>
+constexpr auto get_type(metaobject<M>) {
+    return metaobject<__metaobject_get_type(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_enum(_Mp)>>
-constexpr auto get_underlying_type(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_underlying_type(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_enum(M)>>
+constexpr auto get_underlying_type(metaobject<M>) {
+    return metaobject<__metaobject_get_underlying_type(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_alias(_Mp)>>
-constexpr auto get_aliased(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_aliased(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_alias(M)>>
+constexpr auto get_aliased(metaobject<M>) {
+    return metaobject<__metaobject_get_aliased(M)>{};
 }
 
-template <__metaobject_id _Mp>
-constexpr auto remove_all_aliases(metaobject<_Mp> mo) {
-    if constexpr(__metaobject_is_meta_alias(_Mp)) {
-        return remove_all_aliases(metaobject<__metaobject_get_aliased(_Mp)>{});
+template <__metaobject_id M>
+constexpr auto remove_all_aliases(metaobject<M> mo) {
+    if constexpr(__metaobject_is_meta_alias(M)) {
+        return remove_all_aliases(metaobject<__metaobject_get_aliased(M)>{});
     } else {
         return mo;
     }
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_base(_Mp)>>
-constexpr auto get_class(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_class(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_base(M)>>
+constexpr auto get_class(metaobject<M>) {
+    return metaobject<__metaobject_get_class(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_class(_Mp)>>
-constexpr auto get_base_classes(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_base_classes(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_class(M)>>
+constexpr auto get_base_classes(metaobject<M>) {
+    return metaobject<__metaobject_get_base_classes(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_record(_Mp)>>
-constexpr auto get_member_types(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_member_types(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_record(M)>>
+constexpr auto get_member_types(metaobject<M>) {
+    return metaobject<__metaobject_get_member_types(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_record(_Mp)>>
-constexpr auto get_data_members(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_data_members(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_record(M)>>
+constexpr auto get_data_members(metaobject<M>) {
+    return metaobject<__metaobject_get_data_members(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_record(_Mp)>>
-constexpr auto get_member_functions(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_member_functions(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_record(M)>>
+constexpr auto get_member_functions(metaobject<M>) {
+    return metaobject<__metaobject_get_member_functions(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_record(_Mp)>>
-constexpr auto get_constructors(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_constructors(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_record(M)>>
+constexpr auto get_constructors(metaobject<M>) {
+    return metaobject<__metaobject_get_constructors(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_record(_Mp)>>
-constexpr auto get_destructors(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_destructors(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_record(M)>>
+constexpr auto get_destructors(metaobject<M>) {
+    return metaobject<__metaobject_get_destructors(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_record(_Mp)>>
-constexpr auto get_operators(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_operators(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_record(M)>>
+constexpr auto get_operators(metaobject<M>) {
+    return metaobject<__metaobject_get_operators(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_enum(_Mp)>>
-constexpr auto get_enumerators(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_enumerators(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_enum(M)>>
+constexpr auto get_enumerators(metaobject<M>) {
+    return metaobject<__metaobject_get_enumerators(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_callable(_Mp)>>
-constexpr auto get_parameters(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_parameters(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_callable(M)>>
+constexpr auto get_parameters(metaobject<M>) {
+    return metaobject<__metaobject_get_parameters(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_lambda(_Mp)>>
-constexpr auto get_captures(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_captures(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_lambda(M)>>
+constexpr auto get_captures(metaobject<M>) {
+    return metaobject<__metaobject_get_captures(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-constexpr auto hide_private(metaobject<_Mp>) {
-    return metaobject<__metaobject_hide_private(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+constexpr auto hide_private(metaobject<M>) {
+    return metaobject<__metaobject_hide_private(M)>{};
 }
 
 template <
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-constexpr auto hide_protected(metaobject<_Mp>) {
-    return metaobject<__metaobject_hide_protected(_Mp)>{};
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+constexpr auto hide_protected(metaobject<M>) {
+    return metaobject<__metaobject_hide_protected(M)>{};
 }
 
 template <
-  size_t _I,
-  __metaobject_id _Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-constexpr auto get_element(metaobject<_Mp>) {
-    return metaobject<__metaobject_get_element(_Mp, _I)>{};
+  size_t I,
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+constexpr auto get_element(metaobject<M>) {
+    return metaobject<__metaobject_get_element(M, I)>{};
 }
 
 // unpacking
-template <__metaobject_id... _Mp>
+template <__metaobject_id... M>
 struct unpacked_metaobject_sequence {};
 
-template <__metaobject_id _Mp>
-constexpr auto unpack(metaobject<_Mp>) {
-    return __unpack_metaobject_seq<unpacked_metaobject_sequence, _Mp>{};
+template <__metaobject_id M>
+constexpr auto unpack(metaobject<M>) {
+    return __unpack_metaobject_seq<unpacked_metaobject_sequence, M>{};
 }
 
 // unpacked range operations
 // for each
-template <__metaobject_id... _Mp, typename _Fp>
-void for_each(unpacked_metaobject_sequence<_Mp...>, _Fp function) {
-    (void)(..., function(metaobject<_Mp>{}));
+template <__metaobject_id... M, typename F>
+void for_each(unpacked_metaobject_sequence<M...>, F function) {
+    (void)(..., function(metaobject<M>{}));
 }
 
 template <
-  __metaobject_id _Mp,
-  typename _Fp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-void for_each(metaobject<_Mp> mo, _Fp function) {
+  __metaobject_id M,
+  typename F,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+void for_each(metaobject<M> mo, F function) {
     return for_each(unpack(mo), std::move(function));
 }
 
@@ -766,45 +758,45 @@ public:
 };
 
 template <
-  __metaobject_id _Mp,
-  typename _Fp,
-  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp)>>
-constexpr void for_each_info(metaobject<_Mp> mo, _Fp function) {
-    auto index{0Z};
-    const auto count{__metaobject_get_size(_Mp)};
-    return for_each(unpack(mo), [&](auto mo) {
-        function(mo, for_each_iteration_info(index++, count));
+  __metaobject_id M,
+  typename F,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+constexpr void for_each_info(metaobject<M> mo, F function) {
+    std::size_t index{0};
+    const auto count{__metaobject_get_size(M)};
+    return for_each(unpack(mo), [&](auto me) {
+        function(me, for_each_iteration_info(index++, count));
     });
 }
 
 // select
-template <typename _Tp, __metaobject_id... _Mp, typename _Fp, typename... _Pp>
-_Tp select(
-  unpacked_metaobject_sequence<_Mp...>,
-  _Fp function,
-  _Tp fallback,
-  _Pp&&... param) {
-    (..., function(fallback, metaobject<_Mp>{}, std::forward<_Pp>(param)...));
+template <typename T, __metaobject_id... M, typename F, typename... P>
+T select(
+  unpacked_metaobject_sequence<M...>,
+  F function,
+  T fallback,
+  P&&... param) {
+    (..., function(fallback, metaobject<M>{}, std::forward<P>(param)...));
     return fallback;
 }
 
-template <typename _Tp, __metaobject_id _Mp, typename _Fp, typename... _Pp>
-std::enable_if_t<__metaobject_is_meta_object_sequence(_Mp), _Tp>
-select(metaobject<_Mp> mo, _Fp function, _Tp fallback, _Pp&&... param) {
+template <typename T, __metaobject_id M, typename F, typename... P>
+std::enable_if_t<__metaobject_is_meta_object_sequence(M), T>
+select(metaobject<M> mo, F function, T fallback, P&&... param) {
     return select(
       unpack(mo),
       std::move(function),
       std::move(fallback),
-      std::forward<_Pp>(param)...);
+      std::forward<P>(param)...);
 }
 
 // type unreflection
-template <__metaobject_id _Mp>
-struct get_reflected_type : type_identity<__unrefltype(_Mp)> {};
+template <__metaobject_id M>
+struct get_reflected_type : type_identity<__unrefltype(M)> {};
 
-template <__metaobject_id _Mp>
-consteval auto get_reflected_type_id(metaobject<_Mp>) {
-    return get_reflected_type<_Mp>{};
+template <__metaobject_id M>
+consteval auto get_reflected_type_id(metaobject<M>) {
+    return get_reflected_type<M>{};
 }
 
 // reflection "operator"

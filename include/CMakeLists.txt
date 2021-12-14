@@ -15,7 +15,7 @@ target_include_directories(
 target_compile_options(
 	mirror-headers
 	INTERFACE
-		-std=c++20 -stdlib=libc++
+		-std=c++2b -stdlib=libc++
 		-freflection-ts -freflection-ext
 		-pedantic -Wall -Werror -Weverything
 		-Wno-language-extension-token
