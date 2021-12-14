@@ -15,7 +15,7 @@
 namespace mirror {
 
 template <typename E>
-string_view enum_to_string(E e) {
+auto enum_to_string(E e) noexcept -> string_view {
     return select(
       get_enumerators(mirror(E)),
       [](auto& result, auto mo, auto c) {
@@ -28,7 +28,7 @@ string_view enum_to_string(E e) {
 }
 
 template <typename E>
-std::optional<E> string_to_enum(string_view s) {
+auto string_to_enum(string_view s) noexcept -> std::optional<E> {
     return select(
       get_enumerators(mirror(E)),
       [](auto& result, auto mo, auto n) {
