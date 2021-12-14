@@ -8,7 +8,9 @@
 #include <iostream>
 #include <mirror/full_name.hpp>
 
-enum class weekdays : int {
+namespace calendar {
+
+enum class weekday : int {
     monday = 1,
     tuesday,
     wednesday,
@@ -18,10 +20,11 @@ enum class weekdays : int {
     sunday
 };
 
-namespace mirror {} // namespace mirror
+} // namespace calendar
 
 int main() {
-    std::cout << get_full_name(mirror(weekdays)) << std::endl;
+    std::cout << get_full_name(mirror(calendar::weekday)) << std::endl;
+    std::cout << get_full_name(mirror(calendar::weekday::monday)) << std::endl;
     std::cout << get_full_name(mirror(int)) << std::endl;
     std::cout << get_full_name(mirror(int&)) << std::endl;
     std::cout << get_full_name(mirror(int**)) << std::endl;

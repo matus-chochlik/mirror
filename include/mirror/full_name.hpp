@@ -139,54 +139,43 @@ struct decorate<T[N]> : decorate_defaults<T> {
     }
 };
 
-template <typename R>
-struct decorate<R()> : defaults {
+static inline std::string make_list(type_list<>) {
+    return {};
+}
+
+template <typename P1, typename... P>
+std::string make_list(type_list<P1, P...>) {
+    return (
+      get_full_name(mirror(P1)) + ... + (", " + get_full_name(mirror(P))));
+}
+
+template <typename R, typename... P>
+struct decorate<R(P...)> : defaults {
     static std::string left(std::string s = {}) {
         using DR = decorate<R>;
         return s + DR::left() + DR::base() + DR::right() + DR::extents();
     }
     static std::string params(std::string s = {}) {
         using DR = decorate<R>;
-        return s + "()" + DR::params();
+        return s + "(" + make_list(type_list<P...>{}) + ")" + DR::params();
     }
 };
 
-template <typename R>
-struct decorate<R() noexcept> : defaults {
+template <typename R, typename... P>
+struct decorate<R(P...) noexcept> : defaults {
     static std::string left(std::string s = {}) {
         using DR = decorate<R>;
         return s + DR::left() + DR::base() + DR::right() + DR::extents();
     }
     static std::string params(std::string s = {}) {
         using DR = decorate<R>;
-        return s + "() noexcept" + DR::params();
+        return s + "(" + make_list(type_list<P...>{}) + ") noexcept" +
+               DR::params();
     }
 };
 
-template <typename R, typename P1, typename... P>
-struct decorate<R(P1, P...)> : decorate<R()> {
-    static std::string params(std::string s = {}) {
-        using DR = decorate<R>;
-        return s + "(" +
-               (get_full_name(mirror(P1)) + ... +
-                (", " + get_full_name(mirror(P)))) +
-               ")" + DR::params();
-    }
-};
-
-template <typename R, typename P1, typename... P>
-struct decorate<R(P1, P...) noexcept> : decorate<R() noexcept> {
-    static std::string params(std::string s = {}) {
-        using DR = decorate<R>;
-        return s + "(" +
-               (get_full_name(mirror(P1)) + ... +
-                (", " + get_full_name(mirror(P)))) +
-               ") noexcept" + DR::params();
-    }
-};
-
-template <typename R>
-struct decorate<R (*)()> : defaults {
+template <typename R, typename... P>
+struct decorate<R (*)(P...)> : defaults {
     static std::string left(std::string s = {}) {
         using DR = decorate<R>;
         return s + DR::left() + DR::base() + DR::right() + DR::extents() + "(";
@@ -196,12 +185,13 @@ struct decorate<R (*)()> : defaults {
     }
     static std::string params(std::string s = {}) {
         using DR = decorate<R>;
-        return ")" + s + "()" + DR::params();
+        return ")" + s + "(" + make_list(type_list<P...>{}) + ")" +
+               DR::params();
     }
 };
 
-template <typename R>
-struct decorate<R (*)() noexcept> : defaults {
+template <typename R, typename... P>
+struct decorate<R (*)(P...) noexcept> : defaults {
     static std::string left(std::string s = {}) {
         using DR = decorate<R>;
         return s + DR::left() + DR::base() + DR::right() + DR::extents() + "(";
@@ -211,43 +201,19 @@ struct decorate<R (*)() noexcept> : defaults {
     }
     static std::string params(std::string s = {}) {
         using DR = decorate<R>;
-        return ")" + s + "() noexcept" + DR::params();
+        return ")" + s + "(" + make_list(type_list<P...>{}) + ") noexcept" +
+               DR::params();
     }
 };
 
-template <typename R, typename P1, typename... P>
-struct decorate<R (*)(P1, P...)> : decorate<R (*)()> {
-    static std::string params(std::string s = {}) {
-        using DR = decorate<R>;
-        return ")" + s + "(" +
-               (get_full_name(mirror(P1)) + ... +
-                (", " + get_full_name(mirror(P)))) +
-               ")" + DR::params();
-    }
-};
-
-template <typename R, typename P1, typename... P>
-struct decorate<R (*)(P1, P...) noexcept> : decorate<R (*)() noexcept> {
-    static std::string params(std::string s = {}) {
-        using DR = decorate<R>;
-        return ")" + s + "(" +
-               (get_full_name(mirror(P1)) + ... +
-                (", " + get_full_name(mirror(P)))) +
-               ") noexcept" + DR::params();
-    }
-};
-
-template <template <typename...> class T, typename P1, typename... P>
-struct decorate<T<P1, P...>> : defaults {
+template <template <typename...> class T, typename... P>
+struct decorate<T<P...>> : defaults {
     static std::string base(std::string = {}) {
-        return get_qualified_name(remove_all_aliases(mirror(T<P1, P...>)));
+        return get_qualified_name(remove_all_aliases(mirror(T<P...>)));
     }
 
     static std::string right(std::string s = {}) {
-        return "<" +
-               (get_full_name(mirror(P1)) + ... +
-                (", " + get_full_name(mirror(P)))) +
-               ">" + s;
+        return "<" + make_list(type_list<P...>{}) + ">" + s;
     }
 };
 

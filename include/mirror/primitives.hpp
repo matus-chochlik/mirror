@@ -43,6 +43,9 @@ using std::integral_constant;
 using std::string_view;
 using std::type_identity;
 
+template <typename... T>
+struct type_list {};
+
 template <__metaobject_id _Mp>
 struct metaobject {};
 
