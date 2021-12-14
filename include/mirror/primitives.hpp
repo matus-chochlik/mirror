@@ -822,7 +822,7 @@ auto select(metaobject<M> mo, F function, T fallback, P&&... param)
 
 // type unreflection
 template <__metaobject_id M>
-struct get_reflected_type : type_identity<__unrefltype(M)> {};
+using get_reflected_type = type_identity<__unrefltype(M)>;
 
 template <__metaobject_id M>
 consteval auto get_reflected_type_id(metaobject<M>) {
