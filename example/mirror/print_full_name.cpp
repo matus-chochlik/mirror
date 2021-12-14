@@ -72,5 +72,12 @@ int main() {
     (void)sizeof(F5*);
     std::cout << get_full_name(mirror(F5*)) << std::endl;
 
+    using A1 = decltype(&calendar::event::_day);
+    std::cout << get_full_name(mirror(A1)) << std::endl;
+
+    using F6 = A1(float);
+    (void)sizeof(F6*);
+    std::cout << get_full_name(mirror(F6*)) << std::endl;
+
     return 0;
 }
