@@ -553,6 +553,14 @@ consteval auto get_name(metaobject<M>) -> string_view {
     return get_name_view(M);
 }
 
+template <
+  __metaobject_id M,
+  size_t L,
+  typename = std::enable_if_t<__metaobject_is_meta_named(M)>>
+consteval auto has_name(metaobject<M>, const char (&str)[L]) -> bool {
+    return __builtin_strcmp(__metaobject_get_name(M), str) == 0;
+}
+
 consteval auto get_display_name_view(__metaobject_id mo) -> string_view {
     return {
       __metaobject_get_display_name(mo), __metaobject_display_name_len(mo)};
@@ -766,6 +774,29 @@ constexpr void for_each_info(metaobject<M> mo, F function) {
     return for_each(unpack(mo), [&](auto me) {
         function(me, for_each_iteration_info(index++, count));
     });
+}
+
+// find if
+template <typename F>
+constexpr auto find_if(unpacked_metaobject_sequence<>, F) {
+    return no_metaobject;
+}
+
+template <__metaobject_id M1, __metaobject_id... M, typename F>
+constexpr auto find_if(unpacked_metaobject_sequence<M1, M...>, F predicate) {
+    if constexpr(predicate(metaobject<M1>{})) {
+        return metaobject<M1>{};
+    } else {
+        return find_if(unpacked_metaobject_sequence<M...>{}, predicate);
+    }
+}
+
+template <
+  __metaobject_id M,
+  typename F,
+  typename = std::enable_if_t<__metaobject_is_meta_object_sequence(M)>>
+constexpr auto find_if(metaobject<M> mo, F predicate) {
+    return find_if(unpack(mo), predicate);
 }
 
 // select

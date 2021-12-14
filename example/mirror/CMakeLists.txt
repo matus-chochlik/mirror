@@ -5,6 +5,7 @@
 #
 include(Example.cmake)
 
+mirror_add_simple_example(find_if)
 mirror_add_simple_example(print_enumerators)
 mirror_add_simple_example(print_struct)
 mirror_add_simple_example(next_weekday)
