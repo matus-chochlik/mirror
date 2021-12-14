@@ -10,6 +10,7 @@
 #define MIRROR_ALL_HPP
 
 #include "enum_utils.hpp"
+#include "full_name.hpp"
 
 #endif // MIRROR_ALL_HPP
 
