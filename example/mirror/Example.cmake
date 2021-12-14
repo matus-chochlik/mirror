@@ -21,13 +21,11 @@ function(mirror_add_simple_example EXAMPLE_NAME)
 		mirror-${EXAMPLE_NAME}
 		EXCLUDE_FROM_ALL
 		"${EXAMPLE_NAME}.cpp"
-		${ARGN}
 	)
 	add_dependencies(mirror-examples mirror-${EXAMPLE_NAME})
 	target_link_libraries(
 		mirror-${EXAMPLE_NAME}
 		PUBLIC Mirror
-		PRIVATE ${ARGN}
 	)
 
 	set_target_properties(

@@ -3,8 +3,12 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 #  http://www.boost.org/LICENSE_1_0.txt
 #
+add_library(ReflectionTS INTERFACE IMPORTED GLOBAL)
+target_link_libraries(ReflectionTS INTERFACE reflexpr-headers)
+
 add_library(Mirror INTERFACE IMPORTED GLOBAL)
 target_link_libraries(Mirror INTERFACE mirror-headers)
+
 set(
 	MIRROR_EXPORT_TARGETS
 		mirror-headers
