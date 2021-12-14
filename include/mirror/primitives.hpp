@@ -829,6 +829,20 @@ consteval auto get_reflected_type_id(metaobject<M>) {
     return get_reflected_type<M>{};
 }
 
+template <typename T, __metaobject_id M>
+consteval auto is_type(metaobject<M>, type_identity<T> = {}) -> bool {
+    return std::is_same_v<__unrefltype(M), T>;
+}
+
+template <typename T, __metaobject_id M>
+consteval auto has_type(metaobject<M>, type_identity<T> = {}) -> bool {
+    if constexpr(__metaobject_is_meta_typed(M)) {
+        return std::is_same_v<__unrefltype(__metaobject_get_type(M)), T>;
+    } else {
+        return false;
+    }
+}
+
 // reflection "operator"
 #define mirror(...) \
     ::mirror::metaobject<__reflexpr_id(__VA_ARGS__)> {}

@@ -18,11 +18,20 @@ struct mystruct {
 int main() {
     mystruct x;
 
-    const auto found = find_if(get_data_members(mirror(mystruct)), [](auto me) {
-        return has_name(me, "f");
-    });
-    if(reflects_variable(found)) {
-        std::cout << get_value(found, x) << std::endl;
+    const auto found_by_name = find_if(
+      get_data_members(mirror(mystruct)),
+      [](auto me) { return has_name(me, "f"); });
+
+    if(reflects_variable(found_by_name)) {
+        std::cout << get_value(found_by_name, x) << std::endl;
+    }
+
+    const auto found_by_type = find_if(
+      get_data_members(mirror(mystruct)),
+      [](auto me) { return has_type<std::string>(me); });
+
+    if(reflects_variable(found_by_type)) {
+        std::cout << get_value(found_by_type, x) << std::endl;
     }
     return 0;
 }
