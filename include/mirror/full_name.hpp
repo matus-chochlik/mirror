@@ -206,6 +206,70 @@ struct decorate<R (*)(P...) noexcept> : defaults {
     }
 };
 
+template <typename R, typename C, typename... P>
+struct decorate<R (C::*)(P...)> : defaults {
+    static std::string left(std::string s = {}) {
+        using DR = decorate<R>;
+        return s + DR::left() + DR::base() + DR::right() + DR::extents() + "(";
+    }
+    static std::string right(std::string s = {}) {
+        return get_full_name(mirror(C)) + "::*" + s;
+    }
+    static std::string params(std::string s = {}) {
+        using DR = decorate<R>;
+        return ")" + s + "(" + make_list(type_list<P...>{}) + ")" +
+               DR::params();
+    }
+};
+
+template <typename R, typename C, typename... P>
+struct decorate<R (C::*)(P...) const> : defaults {
+    static std::string left(std::string s = {}) {
+        using DR = decorate<R>;
+        return s + DR::left() + DR::base() + DR::right() + DR::extents() + "(";
+    }
+    static std::string right(std::string s = {}) {
+        return get_full_name(mirror(C)) + "::*" + s;
+    }
+    static std::string params(std::string s = {}) {
+        using DR = decorate<R>;
+        return ")" + s + "(" + make_list(type_list<P...>{}) + ") const" +
+               DR::params();
+    }
+};
+
+template <typename R, typename C, typename... P>
+struct decorate<R (C::*)(P...) noexcept> : defaults {
+    static std::string left(std::string s = {}) {
+        using DR = decorate<R>;
+        return s + DR::left() + DR::base() + DR::right() + DR::extents() + "(";
+    }
+    static std::string right(std::string s = {}) {
+        return get_full_name(mirror(C)) + "::*" + s;
+    }
+    static std::string params(std::string s = {}) {
+        using DR = decorate<R>;
+        return ")" + s + "(" + make_list(type_list<P...>{}) + ") noexcept" +
+               DR::params();
+    }
+};
+
+template <typename R, typename C, typename... P>
+struct decorate<R (C::*)(P...) const noexcept> : defaults {
+    static std::string left(std::string s = {}) {
+        using DR = decorate<R>;
+        return s + DR::left() + DR::base() + DR::right() + DR::extents() + "(";
+    }
+    static std::string right(std::string s = {}) {
+        return get_full_name(mirror(C)) + "::*" + s;
+    }
+    static std::string params(std::string s = {}) {
+        using DR = decorate<R>;
+        return ")" + s + "(" + make_list(type_list<P...>{}) +
+               ") const noexcept" + DR::params();
+    }
+};
+
 template <template <typename...> class T, typename... P>
 struct decorate<T<P...>> : defaults {
     static std::string base(std::string = {}) {

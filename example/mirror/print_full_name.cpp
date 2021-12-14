@@ -20,6 +20,21 @@ enum class weekday : int {
     sunday
 };
 
+struct event {
+    weekday get_day() const {
+        return _day;
+    }
+
+    void set_time(int hour, int minute) noexcept {
+        _hour = hour;
+        _minute = minute;
+    }
+
+    weekday _day{weekday::monday};
+    int _hour{0};
+    int _minute{0};
+};
+
 } // namespace calendar
 
 int main() {
@@ -42,6 +57,20 @@ int main() {
     using F3 = F2*(int&, float volatile* const*);
     (void)sizeof(F3*);
     std::cout << get_full_name(mirror(F3)) << std::endl;
+
+    using M1 = decltype(&calendar::event::get_day);
+    std::cout << get_full_name(mirror(M1)) << std::endl;
+
+    using F4 = M1*(std::string);
+    (void)sizeof(F4*);
+    std::cout << get_full_name(mirror(F4*)) << std::endl;
+
+    using M2 = decltype(&calendar::event::set_time);
+    std::cout << get_full_name(mirror(M2)) << std::endl;
+
+    using F5 = M2(calendar::event) noexcept;
+    (void)sizeof(F5*);
+    std::cout << get_full_name(mirror(F5*)) << std::endl;
 
     return 0;
 }
