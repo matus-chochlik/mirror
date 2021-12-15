@@ -232,6 +232,13 @@ consteval auto is_constexpr(metaobject<M>) -> bool {
 
 template <
   __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_callable(M)>>
+consteval auto is_noexcept(metaobject<M>) -> bool {
+    return __metaobject_is_noexcept(M);
+}
+
+template <
+  __metaobject_id M,
   typename = std::enable_if_t<
     __metaobject_is_meta_constructor(M) ||
     __metaobject_is_meta_conversion_operator(M)>>
@@ -245,6 +252,13 @@ template <
     __metaobject_is_meta_namespace(M) || __metaobject_is_meta_callable(M)>>
 consteval auto is_inline(metaobject<M>) -> bool {
     return __metaobject_is_inline(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_variable(M)>>
+consteval auto is_thread_local(metaobject<M>) -> bool {
+    return __metaobject_is_thread_local(M);
 }
 
 template <
@@ -370,6 +384,13 @@ consteval auto is_call_operator_const(metaobject<M>) -> bool {
 
 template <
   __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_lambda_capture(M)>>
+consteval auto is_explicitly_captured(metaobject<M>) -> bool {
+    return __metaobject_is_explicitly_captured(M);
+}
+
+template <
+  __metaobject_id M,
   typename = std::enable_if_t<__metaobject_is_meta_member_function(M)>>
 consteval auto is_const(metaobject<M>) -> bool {
     return __metaobject_is_const(M);
@@ -408,6 +429,45 @@ template <
   typename = std::enable_if_t<__metaobject_is_meta_special_member_function(M)>>
 consteval auto is_defaulted(metaobject<M>) -> bool {
     return __metaobject_is_defaulted(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_callable(M)>>
+consteval auto is_deleted(metaobject<M>) -> bool {
+    return __metaobject_is_deleted(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_constructor(M)>>
+consteval auto is_copy_constructor(metaobject<M>) -> bool {
+    return __metaobject_is_copy_constructor(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_constructor(M)>>
+consteval auto is_move_constructor(metaobject<M>) -> bool {
+    return __metaobject_is_move_constructor(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<
+    __metaobject_is_meta_operator(M) &&
+    __metaobject_is_meta_special_member_function(M)>>
+consteval auto is_copy_assignment_operator(metaobject<M>) -> bool {
+    return __metaobject_is_copy_assignment_operator(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<
+    __metaobject_is_meta_operator(M) &&
+    __metaobject_is_meta_special_member_function(M)>>
+consteval auto is_move_assignment_operator(metaobject<M>) -> bool {
+    return __metaobject_is_move_assignment_operator(M);
 }
 
 template <__metaobject_id Ml, __metaobject_id Mr>
