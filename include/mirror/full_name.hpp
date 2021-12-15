@@ -16,10 +16,9 @@ namespace mirror {
 template <__metaobject_id M>
 auto get_full_name(metaobject<M>) -> std::string;
 
-template <
-  __metaobject_id Mp,
-  typename = std::enable_if_t<__metaobject_is_meta_named(Mp)>>
-auto get_qualified_name(metaobject<Mp> mo) -> std::string {
+template <__metaobject_id Mp>
+auto get_qualified_name(metaobject<Mp> mo) -> std::string
+  requires(__metaobject_is_meta_named(Mp)) {
     if constexpr(reflects_global_scope_member(mo) || !reflects_scope_member(mo)) {
         return std::string{get_name(mo)};
     } else {
