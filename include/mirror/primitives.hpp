@@ -396,6 +396,20 @@ consteval auto has_rvalueref_qualifier(metaobject<M>) -> bool {
     return __metaobject_has_rvalueref_qualifier(M);
 }
 
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_special_member_function(M)>>
+consteval auto is_implicitly_declared(metaobject<M>) -> bool {
+    return __metaobject_is_implicitly_declared(M);
+}
+
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_special_member_function(M)>>
+consteval auto is_defaulted(metaobject<M>) -> bool {
+    return __metaobject_is_defaulted(M);
+}
+
 template <__metaobject_id Ml, __metaobject_id Mr>
 consteval auto reflects_same(metaobject<Ml>, metaobject<Mr>) -> bool {
     return __metaobject_reflects_same(Ml, Mr);
@@ -824,12 +838,17 @@ auto select(metaobject<M> mo, F function, T fallback, P&&... param)
 template <__metaobject_id M>
 using get_reflected_type = type_identity<__unrefltype(M)>;
 
-template <__metaobject_id M>
+template <
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
 consteval auto get_reflected_type_id(metaobject<M>) {
     return get_reflected_type<M>{};
 }
 
-template <typename T, __metaobject_id M>
+template <
+  typename T,
+  __metaobject_id M,
+  typename = std::enable_if_t<__metaobject_is_meta_type(M)>>
 consteval auto is_type(metaobject<M>, type_identity<T> = {}) -> bool {
     return std::is_same_v<__unrefltype(M), T>;
 }
