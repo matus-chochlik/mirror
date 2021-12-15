@@ -105,6 +105,7 @@ system_include_dirs = scanForSystemIncludeDirs()
 #------------------------------------------------------------------------------#
 project_include_dirs = [
     os.path.join(llvmPrefixDir(), "include"),
+    os.path.join(llvmPrefixDir(), "include", "c++", "v1"),
     os.path.join(binaryDir(), "include"),
     'include'
 ]

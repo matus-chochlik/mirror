@@ -10,6 +10,7 @@ project(Mirror CXX)
 include(config/Policies.cmake)
 include(config/Defaults.cmake)
 include(config/BuildType.cmake)
-include(config/Executable.cmake)
 
+add_subdirectory(include)
+add_subdirectory(source)
 add_subdirectory(example)
