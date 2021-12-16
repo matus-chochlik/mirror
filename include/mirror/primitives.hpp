@@ -30,10 +30,14 @@ _LIBCPP_WARNING("mirror cannot be used without -freflection-ext ")
 #endif
 #endif
 
-#if !defined(_LIBCPP_HAS_NO_REFLECTION) && \
-  !defined(_LIBCPP_HAS_NO_REFLECTION_EXT)
+#if defined(MIRROR_YCM) || (!defined(_LIBCPP_HAS_NO_REFLECTION) && \
+                            !defined(_LIBCPP_HAS_NO_REFLECTION_EXT))
 
 namespace mirror {
+
+#if defined(MIRROR_YCM)
+using __metaobject_id = unsigned;
+#endif
 
 using std::integral_constant;
 using std::string_view;
@@ -896,8 +900,13 @@ consteval auto has_type(metaobject<M>, type_identity<T> = {}) -> bool {
 }
 
 // reflection "operator"
+#if defined(MIRROR_YCM)
+#define mirror(...) \
+    ::mirror::metaobject<0U> {}
+#else
 #define mirror(...) \
     ::mirror::metaobject<__reflexpr_id(__VA_ARGS__)> {}
+#endif
 
 } // namespace mirror
 
