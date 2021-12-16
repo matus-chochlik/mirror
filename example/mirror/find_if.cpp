@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 #include <iostream>
-#include <mirror/primitives.hpp>
+#include <mirror/placeholder.hpp>
 
 struct mystruct {
     using type = char;
@@ -20,35 +20,34 @@ struct mystruct {
 };
 
 int main() {
+    using mirror::_1;
     mystruct x;
 
-    const auto found_by_name = find_if(
-      get_data_members(mirror(mystruct)),
-      [](auto me) { return has_name(me, "f"); });
+    const auto ms = mirror(mystruct);
+
+    const auto found_by_name =
+      find_if(get_data_members(ms), [](auto me) { return has_name(me, "f"); });
 
     if(reflects_variable(found_by_name)) {
         std::cout << get_value(found_by_name, x) << std::endl;
     }
 
-    const auto found_by_having_type = find_if(
-      get_data_members(mirror(mystruct)),
-      [](auto me) { return has_type<std::string>(me); });
+    const auto found_by_having_type =
+      find_if(get_data_members(ms), has_type<std::string>(_1));
 
     if(reflects_variable(found_by_having_type)) {
         std::cout << get_value(found_by_having_type, x) << std::endl;
     }
 
-    const auto found_by_being_type = find_if(
-      get_member_types(mirror(mystruct)),
-      [](auto me) { return is_type<char>(me); });
+    const auto found_by_being_type =
+      find_if(get_member_types(ms), is_type<char>(_1));
 
     if(reflects_type(found_by_being_type)) {
         std::cout << get_name(found_by_being_type) << std::endl;
     }
 
     const auto found_default_ctr = find_if(
-      get_constructors(mirror(mystruct)),
-      [](auto me) { return is_empty(get_parameters(me)); });
+      transform(get_constructors(ms), get_parameters(_1)), is_empty(_1));
 
     if(reflects_object(found_default_ctr)) {
         std::cout << "has default constructor" << std::endl;

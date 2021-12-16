@@ -436,15 +436,15 @@ consteval auto is_move_assignment_operator(metaobject<M>) -> bool requires(
     return __metaobject_is_move_assignment_operator(M);
 }
 
-template <__metaobject_id Ml, __metaobject_id Mr>
-consteval auto reflects_same(metaobject<Ml>, metaobject<Mr>) -> bool {
-    return __metaobject_reflects_same(Ml, Mr);
-}
-
 template <__metaobject_id M>
 consteval auto is_empty(metaobject<M>)
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return __metaobject_is_empty(M);
+}
+
+template <__metaobject_id Ml, __metaobject_id Mr>
+consteval auto reflects_same(metaobject<Ml>, metaobject<Mr>) -> bool {
+    return __metaobject_reflects_same(Ml, Mr);
 }
 
 // integer
@@ -874,10 +874,10 @@ get_reflected_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
 template <template <typename T> class transform, __metaobject_id M>
 using _get_transformed_type = transform<__unrefltype(M)>;
 
-template <template <typename T> class transform, __metaobject_id M>
+template <template <typename T> class Transform, __metaobject_id M>
 consteval auto
 get_transformed_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
-    return _get_transformed_type<transform, M>{};
+    return _get_transformed_type<Transform, M>{};
 }
 
 template <typename T, __metaobject_id M>
