@@ -6,4 +6,5 @@
 include(Example.cmake)
 
 reflexpr_add_simple_example(enum_to_string)
+reflexpr_add_simple_example(enum_to_string_map)
 reflexpr_add_simple_example(string_to_enum)
