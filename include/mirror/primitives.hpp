@@ -45,6 +45,17 @@ struct type_list {};
 template <__metaobject_id M>
 struct metaobject {};
 
+template <typename>
+struct unwrap_metaobject;
+
+template <__metaobject_id M>
+struct unwrap_metaobject<metaobject<M>> {
+    static constexpr __metaobject_id value = M;
+};
+
+template <typename M>
+static constexpr const auto unwrap = unwrap_metaobject<M>::value;
+
 constinit const metaobject<__reflexpr_id()> no_metaobject{};
 
 template <__metaobject_id M>
@@ -700,14 +711,72 @@ constexpr auto unpack(metaobject<M>) {
 }
 
 // unpacked range operations
+// transform
+template <__metaobject_id... M, typename F>
+constexpr auto transform(unpacked_metaobject_sequence<M...>, F function) {
+    return unpacked_metaobject_sequence<
+      unwrap<decltype((function(metaobject<M>{})))>...>{};
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto transform(metaobject<M> mo, F function) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return transform(unpack(mo), function);
+}
+
+// transform types
+template <
+  template <typename...>
+  class Container,
+  template <typename>
+  class Transform,
+  __metaobject_id... M>
+constexpr auto store_transformed_types(unpacked_metaobject_sequence<M...>) {
+    return Container<typename Transform<__unrefltype(M)>::type...>{};
+}
+
+template <
+  template <typename...>
+  class Container,
+  template <typename>
+  class Transform,
+  __metaobject_id M>
+constexpr auto store_transformed_types(metaobject<M> mo) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return store_transformed_types(unpack(mo));
+}
+
+template <template <typename> class Transform, __metaobject_id... M>
+constexpr auto transform_types(unpacked_metaobject_sequence<M...> ms) {
+    return store_transformed_types<type_list, Transform>(ms);
+}
+
+template <template <typename> class Transform, __metaobject_id M>
+constexpr auto transform_types(metaobject<M> mo) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return store_transformed_types<type_list, Transform>(unpack(mo));
+}
+
+// extract types
+template <__metaobject_id... M>
+constexpr auto extract_types(unpacked_metaobject_sequence<M...> ms) {
+    return transform_types<std::type_identity>(ms);
+}
+
+template <__metaobject_id M>
+constexpr auto extract_types(metaobject<M> mo) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return transform_types<std::type_identity>(unpack(mo));
+}
+
 // for each
 template <__metaobject_id... M, typename F>
-void for_each(unpacked_metaobject_sequence<M...>, F function) {
+constexpr void for_each(unpacked_metaobject_sequence<M...>, F function) {
     (void)(..., function(metaobject<M>{}));
 }
 
 template <__metaobject_id M, typename F>
-void for_each(metaobject<M> mo, F function) requires(
+constexpr void for_each(metaobject<M> mo, F function) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return for_each(unpack(mo), std::move(function));
 }
@@ -775,18 +844,16 @@ constexpr auto find_if(metaobject<M> mo, F predicate) requires(
 
 // select
 template <typename T, __metaobject_id... M, typename F, typename... P>
-auto select(
-  unpacked_metaobject_sequence<M...>,
-  F function,
-  T fallback,
-  P&&... param) -> T {
+constexpr auto
+select(unpacked_metaobject_sequence<M...>, F function, T fallback, P&&... param)
+  -> T {
     (..., function(fallback, metaobject<M>{}, std::forward<P>(param)...));
     return fallback;
 }
 
 template <typename T, __metaobject_id M, typename F, typename... P>
-auto select(metaobject<M> mo, F function, T fallback, P&&... param) -> T
-  requires(__metaobject_is_meta_object_sequence(M)) {
+constexpr auto select(metaobject<M> mo, F function, T fallback, P&&... param)
+  -> T requires(__metaobject_is_meta_object_sequence(M)) {
     return select(
       unpack(mo),
       std::move(function),
@@ -796,12 +863,21 @@ auto select(metaobject<M> mo, F function, T fallback, P&&... param) -> T
 
 // type unreflection
 template <__metaobject_id M>
-using get_reflected_type = type_identity<__unrefltype(M)>;
+using _get_reflected_type = type_identity<__unrefltype(M)>;
 
 template <__metaobject_id M>
 consteval auto
-get_reflected_type_id(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
-    return get_reflected_type<M>{};
+get_reflected_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
+    return _get_reflected_type<M>{};
+}
+
+template <template <typename T> class transform, __metaobject_id M>
+using _get_transformed_type = transform<__unrefltype(M)>;
+
+template <template <typename T> class transform, __metaobject_id M>
+consteval auto
+get_transformed_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
+    return _get_transformed_type<transform, M>{};
 }
 
 template <typename T, __metaobject_id M>

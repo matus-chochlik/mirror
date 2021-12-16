@@ -90,7 +90,7 @@ do_get_related_type_name(std::type_identity<std::vector<T>>, MS ms) {
 
 template <typename MT, typename MS>
 std::string_view get_related_type_name(MT mt, MS ms) {
-    return do_get_related_type_name(get_reflected_type_id(mt), ms);
+    return do_get_related_type_name(get_reflected_type(mt), ms);
 }
 
 template <typename MT>
