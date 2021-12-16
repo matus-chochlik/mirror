@@ -11,6 +11,7 @@
 
 #include "enum_utils.hpp"
 #include "full_name.hpp"
+#include "make_array.hpp"
 
 #endif // MIRROR_ALL_HPP
 
