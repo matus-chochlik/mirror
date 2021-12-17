@@ -43,7 +43,7 @@ div#mirror-icon {
 div#mirror-top {
     height : 128px;
     border: solid black 5px;
-    background-image: linear-gradient(60deg, #4050a0, #5060b0, #8090e0, #5a69b2, #4050a0, #202020);
+    background-image: linear-gradient(40deg, #4050a0, #5060b0, #8090e0, #5a69b2, #4050a0, #404040, black);
     overflow: hidden;
     box-shadow: inset 1px 1px 1px 1px #808080;
 }

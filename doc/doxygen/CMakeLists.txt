@@ -23,7 +23,7 @@ add_custom_command(
 	ARGS Doxyfile-xml
 	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	MAIN_DEPENDENCY "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-xml"
-	DEPENDS ${DOC_INPUT_SOURCES}
+	DEPENDS doc-fixed-headers ${DOC_INPUT_SOURCES}
 		"${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-xml.in"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-xml"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-common.in"
@@ -37,7 +37,7 @@ add_custom_command(
 	ARGS Doxyfile-html
 	WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	MAIN_DEPENDENCY "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-html"
-	DEPENDS ${DOC_INPUT_SOURCES}
+	DEPENDS doc-fixed-headers ${DOC_INPUT_SOURCES}
 		"${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-html.in"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-html"
 		"${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile-common.in"
