@@ -19,6 +19,8 @@ namespace mirror {
 
 /// @defgroup classification Metaobject classification.
 
+/// @defgroup operations Metaobject operations.
+
 /// @defgroup utilities Utilities.
 
 } // namespace mirror

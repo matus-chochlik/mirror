@@ -1,4 +1,4 @@
-/// @example enum_to_string_map.cpp
+/// @example reflexpr/enum_to_string_map.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.

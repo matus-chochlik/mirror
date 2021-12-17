@@ -43,7 +43,7 @@ div#mirror-icon {
 div#mirror-top {
     height : 128px;
     border: solid black 5px;
-    background-color: #5a69b2;
+    background-image: linear-gradient(60deg, #4050a0, #5060b0, #8090e0, #5a69b2, #4050a0, #202020);
     overflow: hidden;
     box-shadow: inset 1px 1px 1px 1px #808080;
 }
@@ -65,23 +65,23 @@ div#mirror-caption {
 
 #mirror-brief {
     font: 350% arial,sans-serif;
-	font-weight: bold;
+    font-weight: bold;
     margin: 0px;
     padding: 0px;
-	text-shadow: -1px -1px 3px white,
-	              1px -1px 3px white,
-				 -1px  1px 3px white,
-				  1px  1px 3px white;
+    text-shadow: -1px -1px 3px white,
+                  1px -1px 3px white,
+                 -1px  1px 3px white,
+                  1px  1px 3px white;
 }
 
 #mirror-version {
     font: 70% arial,sans-serif;
     margin: 0px;
     padding: 0px;
-	text-shadow: -1px -1px 1px white,
-	              1px -1px 1px white,
-				 -1px  1px 1px white,
-				  1px  1px 1px white;
+    text-shadow: -1px -1px 1px white,
+                  1px -1px 1px white,
+                 -1px  1px 1px white,
+                  1px  1px 1px white;
 }
 
 div#mirror-content {
@@ -177,11 +177,11 @@ a:hover {
 }
 
 span.lineno {
-	padding-right: 4px;
-	text-align: right;
-	border-right: 2px solid #8080F0;
-	background-color: #404040;
-	white-space: pre;
+    padding-right: 4px;
+    text-align: right;
+    border-right: 2px solid #8080F0;
+    background-color: #404040;
+    white-space: pre;
 }
 span.lineno a {
     background-color: #383838;
@@ -197,29 +197,29 @@ span.lineno a:hover {
 }
 
 .fragment {
-	text-align: left;
-	direction: ltr;
-	overflow-x: auto;
-	overflow-y: hidden;
+    text-align: left;
+    direction: ltr;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 pre.fragment {
-	border: 1px solid #404040;
-	background-color: #303030;
-	padding: 4px 6px;
-	margin: 4px 8px 4px 2px;
-	overflow: auto;
-	word-wrap: break-word;
-	font-size:  9pt;
-	line-height: 125%;
-	font-family: monospace, fixed;
-	font-size: 105%;
+    border: 1px solid #404040;
+    background-color: #303030;
+    padding: 4px 6px;
+    margin: 4px 8px 4px 2px;
+    overflow: auto;
+    word-wrap: break-word;
+    font-size:  9pt;
+    line-height: 125%;
+    font-family: monospace, fixed;
+    font-size: 105%;
 }
 
 div.fragment {
-	padding: 0 0 1px 0;
-	margin: 4px 8px 4px 2px;
-	background-color: #303030;
+    padding: 0 0 1px 0;
+    margin: 4px 8px 4px 2px;
+    background-color: #303030;
 }
 
 .memproto, dl.reflist dt {
