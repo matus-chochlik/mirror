@@ -43,7 +43,7 @@ div#mirror-icon {
 div#mirror-top {
     height : 128px;
     border: solid black 5px;
-    background-color: #D8D8F0;
+    background-color: #5a69b2;
     overflow: hidden;
     box-shadow: inset 1px 1px 1px 1px #808080;
 }
@@ -64,15 +64,24 @@ div#mirror-caption {
 }
 
 #mirror-brief {
-    font: 220% arial,sans-serif;
+    font: 350% arial,sans-serif;
+	font-weight: bold;
     margin: 0px;
     padding: 0px;
+	text-shadow: -1px -1px 3px white,
+	              1px -1px 3px white,
+				 -1px  1px 3px white,
+				  1px  1px 3px white;
 }
 
 #mirror-version {
-    font: 50% arial,sans-serif;
+    font: 70% arial,sans-serif;
     margin: 0px;
     padding: 0px;
+	text-shadow: -1px -1px 1px white,
+	              1px -1px 1px white,
+				 -1px  1px 1px white,
+				  1px  1px 1px white;
 }
 
 div#mirror-content {

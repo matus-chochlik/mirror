@@ -30,14 +30,19 @@ _LIBCPP_WARNING("mirror cannot be used without -freflection-ext ")
 #endif
 #endif
 
-#if defined(MIRROR_YCM) || (!defined(_LIBCPP_HAS_NO_REFLECTION) && \
-                            !defined(_LIBCPP_HAS_NO_REFLECTION_EXT))
+#if defined(MIRROR_YCM) || defined(MIRROR_DOXYGEN) || \
+  (!defined(_LIBCPP_HAS_NO_REFLECTION) &&             \
+   !defined(_LIBCPP_HAS_NO_REFLECTION_EXT))
 
-namespace mirror {
-
-#if defined(MIRROR_YCM)
+#if defined(MIRROR_DOXYGEN)
+/// @brief Internal type, values of which represent metaobjects.
+/// @ingroup metaobjects
+using __metaobject_id = __unspecified;
+#elif defined(MIRROR_YCM)
 using __metaobject_id = unsigned;
 #endif
+
+namespace mirror {
 
 using std::integral_constant;
 using std::string_view;
@@ -46,6 +51,9 @@ using std::type_identity;
 template <typename... T>
 struct type_list {};
 
+/// @brief Template implementing the metaobject type reflecting base-level entities.
+/// @ingroup metaobjects
+/// @see no_metaobject
 template <__metaobject_id M>
 struct metaobject {};
 
@@ -60,43 +68,62 @@ struct unwrap_metaobject<metaobject<M>> {
 template <typename M>
 static constexpr const auto unwrap = unwrap_metaobject<M>::value;
 
+/// @brief Special instance of metaobject that does not reflect anything.
+/// @ingroup metaobjects
+/// @see metaobject
 constinit const metaobject<__reflexpr_id()> no_metaobject{};
 
+/// @brief Indicates if a metaobject reflects any base-level entity.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_object(metaobject<M>) -> bool {
     return __metaobject_is_meta_object(M);
 }
 
+/// @brief Indicates if the argument is a sequence of metaobjects.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_object_sequence(metaobject<M>) -> bool {
     return __metaobject_is_meta_object_sequence(M);
 }
 
+/// @brief Indicates if a metaobject reflects a named base-level entity.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_named(metaobject<M>) -> bool {
     return __metaobject_is_meta_named(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base-level alias.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_alias(metaobject<M>) -> bool {
     return __metaobject_is_meta_alias(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base-level scope.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_scope(metaobject<M>) -> bool {
     return __metaobject_is_meta_scope(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base-level entity with a type.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_typed(metaobject<M>) -> bool {
     return __metaobject_is_meta_typed(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base-level scope member.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_scope_member(metaobject<M>) -> bool {
     return __metaobject_is_meta_scope_member(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base-level global scope member.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_global_scope_member(metaobject<M>) -> bool {
     if constexpr(__metaobject_is_meta_scope_member(M)) {
@@ -106,26 +133,36 @@ consteval auto reflects_global_scope_member(metaobject<M>) -> bool {
     }
 }
 
+/// @brief Indicates if a metaobject reflects an enumerator.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_enumerator(metaobject<M>) -> bool {
     return __metaobject_is_meta_enumerator(M);
 }
 
+/// @brief Indicates if a metaobject reflects a record member.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_record_member(metaobject<M>) -> bool {
     return __metaobject_is_meta_record_member(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base class specifier.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_base(metaobject<M>) -> bool {
     return __metaobject_is_meta_base(M);
 }
 
+/// @brief Indicates if a metaobject reflects a namespace.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_namespace(metaobject<M>) -> bool {
     return __metaobject_is_meta_namespace(M);
 }
 
+/// @brief Indicates if a metaobject reflects an inline namespace.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_inline_namespace(metaobject<M>) -> bool {
     if constexpr(__metaobject_is_meta_namespace(M)) {
@@ -135,101 +172,141 @@ consteval auto reflects_inline_namespace(metaobject<M>) -> bool {
     }
 }
 
+/// @brief Indicates if a metaobject reflects the global scope.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_global_scope(metaobject<M>) -> bool {
     return __metaobject_is_meta_global_scope(M);
 }
 
+/// @brief Indicates if a metaobject reflects a type.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_type(metaobject<M>) -> bool {
     return __metaobject_is_meta_type(M);
 }
 
+/// @brief Indicates if a metaobject reflects an enumeration type.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_enum(metaobject<M>) -> bool {
     return __metaobject_is_meta_enum(M);
 }
 
+/// @brief Indicates if a metaobject reflects a record types (union or class).
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_record(metaobject<M>) -> bool {
     return __metaobject_is_meta_record(M);
 }
 
+/// @brief Indicates if a metaobject reflects a class.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_class(metaobject<M>) -> bool {
     return __metaobject_is_meta_class(M);
 }
 
+/// @brief Indicates if a metaobject reflects a lambda closure type.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_lambda(metaobject<M>) -> bool {
     return __metaobject_is_meta_lambda(M);
 }
 
+/// @brief Indicates if a metaobject reflects a constant.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_constant(metaobject<M>) -> bool {
     return __metaobject_is_meta_constant(M);
 }
 
+/// @brief Indicates if a metaobject reflects a variable.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_variable(metaobject<M>) -> bool {
     return __metaobject_is_meta_variable(M);
 }
 
+/// @brief Indicates if a metaobject reflects a lambda capture.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_lambda_capture(metaobject<M>) -> bool {
     return __metaobject_is_meta_lambda_capture(M);
 }
 
+/// @brief Indicates if a metaobject reflects a function parameter.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_function_parameter(metaobject<M>) -> bool {
     return __metaobject_is_meta_function_parameter(M);
 }
 
+/// @brief Indicates if a metaobject reflects a callable base-level entity.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_callable(metaobject<M>) -> bool {
     return __metaobject_is_meta_callable(M);
 }
 
+/// @brief Indicates if a metaobject reflects a function.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_function(metaobject<M>) -> bool {
     return __metaobject_is_meta_function(M);
 }
 
+/// @brief Indicates if a metaobject reflects a record member function.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_member_function(metaobject<M>) -> bool {
     return __metaobject_is_meta_member_function(M);
 }
 
+/// @brief Indicates if a metaobject reflects a special member function.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_special_member_function(metaobject<M>) -> bool {
     return __metaobject_is_meta_special_member_function(M);
 }
 
+/// @brief Indicates if a metaobject reflects a constructor.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_constructor(metaobject<M>) -> bool {
     return __metaobject_is_meta_constructor(M);
 }
 
+/// @brief Indicates if a metaobject reflects a destructor.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_destructor(metaobject<M>) -> bool {
     return __metaobject_is_meta_destructor(M);
 }
 
+/// @brief Indicates if a metaobject reflects an operator.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_operator(metaobject<M>) -> bool {
     return __metaobject_is_meta_operator(M);
 }
 
+/// @brief Indicates if a metaobject reflects a conversion operator.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_conversion_operator(metaobject<M>) -> bool {
     return __metaobject_is_meta_conversion_operator(M);
 }
 
+/// @brief Indicates if a metaobject reflects an expression.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_expression(metaobject<M>) -> bool {
     return __metaobject_is_meta_expression(M);
 }
 
+/// @brief Indicates if a metaobject reflects a specifier.
+/// @ingroup classification
 template <__metaobject_id M>
 consteval auto reflects_specifier(metaobject<M>) -> bool {
     return __metaobject_is_meta_specifier(M);

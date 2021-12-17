@@ -1,4 +1,4 @@
-/// @example find_if
+/// @example find_if.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.

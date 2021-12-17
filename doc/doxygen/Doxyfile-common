@@ -90,6 +90,8 @@ STRICT_PROTO_MATCHING   = NO
 ENABLE_PREPROCESSING    = YES
 MACRO_EXPANSION         = YES
 EXPAND_ONLY_PREDEF      = YES
+PREDEFINED             += "MIRROR_DOXYGEN=1"
+PREDEFINED             += "__unspecified=unspecified"
 
 QUIET                   = YES
 WARN_IF_DOC_ERROR       = YES

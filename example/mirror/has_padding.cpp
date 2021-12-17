@@ -1,4 +1,4 @@
-/// @example has_padding
+/// @example has_padding.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
