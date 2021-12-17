@@ -75,6 +75,7 @@ constinit const metaobject<__reflexpr_id()> no_metaobject{};
 
 /// @brief Indicates if a metaobject reflects any base-level entity.
 /// @ingroup classification
+/// @see find_if
 template <__metaobject_id M>
 consteval auto reflects_object(metaobject<M>) -> bool {
     return __metaobject_is_meta_object(M);
@@ -82,6 +83,9 @@ consteval auto reflects_object(metaobject<M>) -> bool {
 
 /// @brief Indicates if the argument is a sequence of metaobjects.
 /// @ingroup classification
+/// @see is_empty
+/// @see get_size
+/// @see get_element
 template <__metaobject_id M>
 consteval auto reflects_object_sequence(metaobject<M>) -> bool {
     return __metaobject_is_meta_object_sequence(M);
@@ -90,6 +94,10 @@ consteval auto reflects_object_sequence(metaobject<M>) -> bool {
 /// @brief Indicates if a metaobject reflects a named base-level entity.
 /// @ingroup classification
 /// @see reflects_alias
+/// @see get_name
+/// @see has_name
+/// @see get_display_name
+/// @see get_full_name
 template <__metaobject_id M>
 consteval auto reflects_named(metaobject<M>) -> bool {
     return __metaobject_is_meta_named(M);
@@ -98,6 +106,8 @@ consteval auto reflects_named(metaobject<M>) -> bool {
 /// @brief Indicates if a metaobject reflects a base-level alias.
 /// @ingroup classification
 /// @see reflects_named
+/// @see get_aliased
+/// @see remove_all_aliases
 template <__metaobject_id M>
 consteval auto reflects_alias(metaobject<M>) -> bool {
     return __metaobject_is_meta_alias(M);
@@ -109,6 +119,7 @@ consteval auto reflects_alias(metaobject<M>) -> bool {
 /// @see reflects_global_scope
 /// @see reflects_record
 /// @see reflects_scope_member
+/// @see get_scope
 template <__metaobject_id M>
 consteval auto reflects_scope(metaobject<M>) -> bool {
     return __metaobject_is_meta_scope(M);
@@ -116,6 +127,7 @@ consteval auto reflects_scope(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a base-level entity with a type.
 /// @ingroup classification
+/// @see get_type
 template <__metaobject_id M>
 consteval auto reflects_typed(metaobject<M>) -> bool {
     return __metaobject_is_meta_typed(M);
@@ -124,6 +136,7 @@ consteval auto reflects_typed(metaobject<M>) -> bool {
 /// @brief Indicates if a metaobject reflects a base-level scope member.
 /// @ingroup classification
 /// @see reflects_scope
+/// @see get_scope
 template <__metaobject_id M>
 consteval auto reflects_scope_member(metaobject<M>) -> bool {
     return __metaobject_is_meta_scope_member(M);
@@ -132,6 +145,7 @@ consteval auto reflects_scope_member(metaobject<M>) -> bool {
 /// @brief Indicates if a metaobject reflects a base-level global scope member.
 /// @ingroup classification
 /// @see reflects_global_scope
+/// @see get_scope
 template <__metaobject_id M>
 consteval auto reflects_global_scope_member(metaobject<M>) -> bool {
     if constexpr(__metaobject_is_meta_scope_member(M)) {
@@ -145,6 +159,8 @@ consteval auto reflects_global_scope_member(metaobject<M>) -> bool {
 /// @ingroup classification
 /// @see reflects_constant
 /// @see reflects_enum
+/// @see get_enumerators
+/// @see get_underlying_type
 template <__metaobject_id M>
 consteval auto reflects_enumerator(metaobject<M>) -> bool {
     return __metaobject_is_meta_enumerator(M);
@@ -154,6 +170,9 @@ consteval auto reflects_enumerator(metaobject<M>) -> bool {
 /// @ingroup classification
 /// @see reflects_scope_member
 /// @see reflects_record
+/// @see get_data_members
+/// @see get_member_types
+/// @see get_member_functions
 template <__metaobject_id M>
 consteval auto reflects_record_member(metaobject<M>) -> bool {
     return __metaobject_is_meta_record_member(M);
@@ -161,6 +180,12 @@ consteval auto reflects_record_member(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a base class specifier.
 /// @ingroup classification
+/// @see get_base_classes
+/// @see get_class
+/// @see is_private
+/// @see is_protected
+/// @see is_public
+/// @see is_virtual
 template <__metaobject_id M>
 consteval auto reflects_base(metaobject<M>) -> bool {
     return __metaobject_is_meta_base(M);
@@ -168,6 +193,9 @@ consteval auto reflects_base(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a namespace.
 /// @ingroup classification
+/// @see reflects_inline_namespace
+/// @see reflects_global_scope
+/// @see get_scope
 template <__metaobject_id M>
 consteval auto reflects_namespace(metaobject<M>) -> bool {
     return __metaobject_is_meta_namespace(M);
@@ -175,6 +203,7 @@ consteval auto reflects_namespace(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects an inline namespace.
 /// @ingroup classification
+/// @see reflects_namespace
 template <__metaobject_id M>
 consteval auto reflects_inline_namespace(metaobject<M>) -> bool {
     if constexpr(__metaobject_is_meta_namespace(M)) {
@@ -186,6 +215,7 @@ consteval auto reflects_inline_namespace(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects the global scope.
 /// @ingroup classification
+/// @see reflects_namespace
 template <__metaobject_id M>
 consteval auto reflects_global_scope(metaobject<M>) -> bool {
     return __metaobject_is_meta_global_scope(M);
@@ -193,6 +223,8 @@ consteval auto reflects_global_scope(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a type.
 /// @ingroup classification
+/// @see get_type
+/// @see get_reflected_type
 template <__metaobject_id M>
 consteval auto reflects_type(metaobject<M>) -> bool {
     return __metaobject_is_meta_type(M);
@@ -200,6 +232,10 @@ consteval auto reflects_type(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects an enumeration type.
 /// @ingroup classification
+/// @see reflects_enumerator
+/// @see reflects_type
+/// @see get_enumerators
+/// @see get_underlying_type
 template <__metaobject_id M>
 consteval auto reflects_enum(metaobject<M>) -> bool {
     return __metaobject_is_meta_enum(M);
@@ -207,6 +243,14 @@ consteval auto reflects_enum(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a record types (union or class).
 /// @ingroup classification
+/// @see reflects_type
+/// @see reflects_class
+/// @see get_data_members
+/// @see get_member_types
+/// @see get_member_functions
+/// @see get_constructors
+/// @see get_destructors
+/// @see get_operators
 template <__metaobject_id M>
 consteval auto reflects_record(metaobject<M>) -> bool {
     return __metaobject_is_meta_record(M);
@@ -214,6 +258,16 @@ consteval auto reflects_record(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a class.
 /// @ingroup classification
+/// @see reflects_type
+/// @see reflects_record
+/// @see reflects_lambda
+/// @see get_data_members
+/// @see get_member_types
+/// @see get_member_functions
+/// @see get_constructors
+/// @see get_destructors
+/// @see get_operators
+/// @see get_base_classes
 template <__metaobject_id M>
 consteval auto reflects_class(metaobject<M>) -> bool {
     return __metaobject_is_meta_class(M);
@@ -221,6 +275,9 @@ consteval auto reflects_class(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a lambda closure type.
 /// @ingroup classification
+/// @see reflects_record
+/// @see reflects_class
+/// @see get_captures
 template <__metaobject_id M>
 consteval auto reflects_lambda(metaobject<M>) -> bool {
     return __metaobject_is_meta_lambda(M);
@@ -228,6 +285,9 @@ consteval auto reflects_lambda(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a constant.
 /// @ingroup classification
+/// @see reflects_enumerator
+/// @see get_constant
+/// @see get_value
 template <__metaobject_id M>
 consteval auto reflects_constant(metaobject<M>) -> bool {
     return __metaobject_is_meta_constant(M);
@@ -235,6 +295,11 @@ consteval auto reflects_constant(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a variable.
 /// @ingroup classification
+/// @see reflects_function_parameter
+/// @see get_data_members
+/// @see get_pointer
+/// @see get_reference
+/// @see get_value
 template <__metaobject_id M>
 consteval auto reflects_variable(metaobject<M>) -> bool {
     return __metaobject_is_meta_variable(M);
@@ -242,6 +307,9 @@ consteval auto reflects_variable(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a lambda capture.
 /// @ingroup classification
+/// @see reflects_lambda
+/// @see get_captures
+/// @see is_explicitly_captured
 template <__metaobject_id M>
 consteval auto reflects_lambda_capture(metaobject<M>) -> bool {
     return __metaobject_is_meta_lambda_capture(M);
@@ -249,6 +317,9 @@ consteval auto reflects_lambda_capture(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a function parameter.
 /// @ingroup classification
+/// @see reflects_callable
+/// @see reflects_variable
+/// @see get_parameters
 template <__metaobject_id M>
 consteval auto reflects_function_parameter(metaobject<M>) -> bool {
     return __metaobject_is_meta_function_parameter(M);
@@ -256,6 +327,9 @@ consteval auto reflects_function_parameter(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a callable base-level entity.
 /// @ingroup classification
+/// @see reflects_function
+/// @see reflects_function_parameter
+/// @see get_parameters
 template <__metaobject_id M>
 consteval auto reflects_callable(metaobject<M>) -> bool {
     return __metaobject_is_meta_callable(M);
@@ -263,6 +337,12 @@ consteval auto reflects_callable(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a function.
 /// @ingroup classification
+/// @see reflects_callable
+/// @see reflects_member_function
+/// @see reflects_function_parameter
+/// @see get_type
+/// @see get_parameters
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto reflects_function(metaobject<M>) -> bool {
     return __metaobject_is_meta_function(M);
@@ -270,6 +350,14 @@ consteval auto reflects_function(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a record member function.
 /// @ingroup classification
+/// @see reflects_callable
+/// @see reflects_function
+/// @see reflects_special_member_function
+/// @see reflects_function_parameter
+/// @see get_member_functions
+/// @see get_scope
+/// @see get_type
+/// @see get_parameters
 template <__metaobject_id M>
 consteval auto reflects_member_function(metaobject<M>) -> bool {
     return __metaobject_is_meta_member_function(M);
@@ -277,6 +365,16 @@ consteval auto reflects_member_function(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a special member function.
 /// @ingroup classification
+/// @see reflects_callable
+/// @see reflects_function
+/// @see reflects_member_function
+/// @see reflects_function_parameter
+/// @see get_operators
+/// @see get_scope
+/// @see get_type
+/// @see get_parameters
+/// @see is_defaulted
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto reflects_special_member_function(metaobject<M>) -> bool {
     return __metaobject_is_meta_special_member_function(M);
@@ -284,6 +382,15 @@ consteval auto reflects_special_member_function(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a constructor.
 /// @ingroup classification
+/// @see reflects_callable
+/// @see reflects_operator
+/// @see reflects_destructor
+/// @see reflects_function_parameter
+/// @see get_constructors
+/// @see get_scope
+/// @see get_parameters
+/// @see is_defaulted
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto reflects_constructor(metaobject<M>) -> bool {
     return __metaobject_is_meta_constructor(M);
@@ -291,6 +398,14 @@ consteval auto reflects_constructor(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a destructor.
 /// @ingroup classification
+/// @see reflects_callable
+/// @see reflects_constructor
+/// @see reflects_function_parameter
+/// @see get_destructors
+/// @see get_scope
+/// @see get_parameters
+/// @see is_defaulted
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto reflects_destructor(metaobject<M>) -> bool {
     return __metaobject_is_meta_destructor(M);
@@ -298,6 +413,13 @@ consteval auto reflects_destructor(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects an operator.
 /// @ingroup classification
+/// @see reflects_function
+/// @see reflects_conversion_operator
+/// @see reflects_function_parameter
+/// @see get_operators
+/// @see get_scope
+/// @see get_parameters
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto reflects_operator(metaobject<M>) -> bool {
     return __metaobject_is_meta_operator(M);
@@ -305,6 +427,12 @@ consteval auto reflects_operator(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects a conversion operator.
 /// @ingroup classification
+/// @see reflects_function
+/// @see reflects_operator
+/// @see reflects_function_parameter
+/// @see get_operators
+/// @see get_scope
+/// @see get_parameters
 template <__metaobject_id M>
 consteval auto reflects_conversion_operator(metaobject<M>) -> bool {
     return __metaobject_is_meta_conversion_operator(M);
@@ -328,6 +456,8 @@ consteval auto reflects_specifier(metaobject<M>) -> bool {
 // boolean
 /// @brief Indicates if the reflected base-level entity is @c constexpr.
 /// @ingroup operations
+/// @see reflects_variable
+/// @see reflects_callable
 template <__metaobject_id M>
 consteval auto is_constexpr(metaobject<M>) -> bool requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_callable(M)) {
@@ -336,6 +466,7 @@ consteval auto is_constexpr(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c noexcept.
 /// @ingroup operations
+/// @see reflects_callable
 template <__metaobject_id M>
 consteval auto is_noexcept(metaobject<M>)
   -> bool requires(__metaobject_is_meta_callable(M)) {
@@ -344,6 +475,8 @@ consteval auto is_noexcept(metaobject<M>)
 
 /// @brief Indicates if the reflected base-level entity is @c explicit.
 /// @ingroup operations
+/// @see reflects_constructor
+/// @see reflects_conversion_operator
 template <__metaobject_id M>
 consteval auto is_explicit(metaobject<M>) -> bool requires(
   __metaobject_is_meta_constructor(M) ||
@@ -353,6 +486,9 @@ consteval auto is_explicit(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c inline.
 /// @ingroup operations
+/// @see reflects_namespace
+/// @see reflects_variable
+/// @see reflects_callable
 template <__metaobject_id M>
 consteval auto is_inline(metaobject<M>) -> bool requires(
   __metaobject_is_meta_namespace(M) || __metaobject_is_meta_variable(M) ||
@@ -362,6 +498,7 @@ consteval auto is_inline(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c thread_local.
 /// @ingroup operations
+/// @see reflects_variable
 template <__metaobject_id M>
 consteval auto is_thread_local(metaobject<M>)
   -> bool requires(__metaobject_is_meta_variable(M)) {
@@ -370,6 +507,8 @@ consteval auto is_thread_local(metaobject<M>)
 
 /// @brief Indicates if the reflected base-level entity is @c static.
 /// @ingroup operations
+/// @see reflects_variable
+/// @see reflects_member_function
 template <__metaobject_id M>
 consteval auto is_static(metaobject<M>) -> bool requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_member_function(M)) {
@@ -378,6 +517,9 @@ consteval auto is_static(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c virtual.
 /// @ingroup operations
+/// @see reflects_base
+/// @see reflects_destructor
+/// @see reflects_member_function
 template <__metaobject_id M>
 consteval auto is_virtual(metaobject<M>) -> bool requires(
   __metaobject_is_meta_base(M) || __metaobject_is_meta_destructor(M) ||
@@ -387,6 +529,8 @@ consteval auto is_virtual(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is pure @c virtual.
 /// @ingroup operations
+/// @see reflects_destructor
+/// @see reflects_member_function
 template <__metaobject_id M>
 consteval auto is_pure_virtual(metaobject<M>) -> bool requires(
   __metaobject_is_meta_destructor(M) ||
@@ -396,6 +540,8 @@ consteval auto is_pure_virtual(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c final.
 /// @ingroup operations
+/// @see reflects_class
+/// @see reflects_member_function
 template <__metaobject_id M>
 consteval auto is_final(metaobject<M>) -> bool requires(
   __metaobject_is_meta_class(M) || __metaobject_is_meta_member_function(M)) {
@@ -404,6 +550,8 @@ consteval auto is_final(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c private.
 /// @ingroup operations
+/// @see reflects_base
+/// @see reflects_record_member
 template <__metaobject_id M>
 consteval auto is_private(metaobject<M>) -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
@@ -412,6 +560,8 @@ consteval auto is_private(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c protected.
 /// @ingroup operations
+/// @see reflects_base
+/// @see reflects_record_member
 template <__metaobject_id M>
 consteval auto is_protected(metaobject<M>) -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
@@ -420,6 +570,8 @@ consteval auto is_protected(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is @c public.
 /// @ingroup operations
+/// @see reflects_base
+/// @see reflects_record_member
 template <__metaobject_id M>
 consteval auto is_public(metaobject<M>) -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
@@ -428,6 +580,9 @@ consteval auto is_public(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected base-level entity is unnamed.
 /// @ingroup operations
+/// @see reflects_named
+/// @see get_name
+/// @see get_display_name
 template <__metaobject_id M>
 consteval auto is_unnamed(metaobject<M>)
   -> bool requires(__metaobject_is_meta_named(M)) {
@@ -436,6 +591,9 @@ consteval auto is_unnamed(metaobject<M>)
 
 /// @brief Indicates if the reflected base-level entity is an @c enum.
 /// @ingroup operations
+/// @see reflects_type
+/// @see reflects_enum
+/// @see is_scoped_enum
 template <__metaobject_id M>
 consteval auto is_enum(metaobject<M>)
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -444,6 +602,9 @@ consteval auto is_enum(metaobject<M>)
 
 /// @brief Indicates if the reflected base-level entity is a scoped @c enum.
 /// @ingroup operations
+/// @see reflects_type
+/// @see reflects_enum
+/// @see is_enum
 template <__metaobject_id M>
 consteval auto is_scoped_enum(metaobject<M>)
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -452,6 +613,10 @@ consteval auto is_scoped_enum(metaobject<M>)
 
 /// @brief Indicates if the reflected base-level entity is an @c union.
 /// @ingroup operations
+/// @see reflects_type
+/// @see is_union
+/// @see uses_class_key
+/// @see uses_struct_key
 template <__metaobject_id M>
 consteval auto is_union(metaobject<M>)
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -460,6 +625,9 @@ consteval auto is_union(metaobject<M>)
 
 /// @brief Indicates if the reflected record type uses a @c class specifier.
 /// @ingroup operations
+/// @see reflects_type
+/// @see is_union
+/// @see uses_struct_key
 template <__metaobject_id M>
 consteval auto uses_class_key(metaobject<M>)
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -468,6 +636,9 @@ consteval auto uses_class_key(metaobject<M>)
 
 /// @brief Indicates if the reflected record type uses a @c struct specifier.
 /// @ingroup operations
+/// @see reflects_type
+/// @see is_union
+/// @see uses_class_key
 template <__metaobject_id M>
 consteval auto uses_struct_key(metaobject<M>)
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -476,6 +647,9 @@ consteval auto uses_struct_key(metaobject<M>)
 
 /// @brief Indicates if the reflected lambda closure uses default capture by copy.
 /// @ingroup operations
+/// @see reflects_lambda
+/// @see uses_default_reference_capture
+/// @see get_captures
 template <__metaobject_id M>
 consteval auto uses_default_copy_capture(metaobject<M>)
   -> bool requires(__metaobject_is_meta_lambda(M)) {
@@ -484,6 +658,9 @@ consteval auto uses_default_copy_capture(metaobject<M>)
 
 /// @brief Indicates if the reflected lambda closure uses default capture by reference.
 /// @ingroup operations
+/// @see reflects_lambda
+/// @see uses_default_copy_capture
+/// @see get_captures
 template <__metaobject_id M>
 consteval auto uses_default_reference_capture(metaobject<M>)
   -> bool requires(__metaobject_is_meta_lambda(M)) {
@@ -492,6 +669,8 @@ consteval auto uses_default_reference_capture(metaobject<M>)
 
 /// @brief Indicates if the reflected lambda closure's call operator is @c const.
 /// @ingroup operations
+/// @see reflects_lambda
+/// @see get_captures
 template <__metaobject_id M>
 consteval auto is_call_operator_const(metaobject<M>)
   -> bool requires(__metaobject_is_meta_lambda(M)) {
@@ -500,6 +679,8 @@ consteval auto is_call_operator_const(metaobject<M>)
 
 /// @brief Indicates if the reflected lambda capture is explicitly captured.
 /// @ingroup operations
+/// @see reflects_lambda_capture
+/// @see get_captures
 template <__metaobject_id M>
 consteval auto is_explicitly_captured(metaobject<M>)
   -> bool requires(__metaobject_is_meta_lambda_capture(M)) {
@@ -508,6 +689,8 @@ consteval auto is_explicitly_captured(metaobject<M>)
 
 /// @brief Indicates if the reflected function parameter has default argument.
 /// @ingroup operations
+/// @see reflects_function_parameter
+/// @see get_parameters
 template <__metaobject_id M>
 consteval auto has_default_argument(metaobject<M>)
   -> bool requires(__metaobject_is_meta_function_parameter(M)) {
@@ -516,6 +699,10 @@ consteval auto has_default_argument(metaobject<M>)
 
 /// @brief Indicates if the reflected member function is @c const.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see is_volatile
+/// @see has_lvalueref_qualifier
+/// @see has_rvalueref_qualifier
 template <__metaobject_id M>
 consteval auto is_const(metaobject<M>)
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -524,6 +711,10 @@ consteval auto is_const(metaobject<M>)
 
 /// @brief Indicates if the reflected member function is @c volatile.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see is_const
+/// @see has_lvalueref_qualifier
+/// @see has_rvalueref_qualifier
 template <__metaobject_id M>
 consteval auto is_volatile(metaobject<M>)
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -532,6 +723,10 @@ consteval auto is_volatile(metaobject<M>)
 
 /// @brief Indicates if the reflected member function has lvalue-ref qualifier.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see is_const
+/// @see is_volatile
+/// @see has_rvalueref_qualifier
 template <__metaobject_id M>
 consteval auto has_lvalueref_qualifier(metaobject<M>)
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -540,6 +735,10 @@ consteval auto has_lvalueref_qualifier(metaobject<M>)
 
 /// @brief Indicates if the reflected member function has rvalue-ref qualifier.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see is_const
+/// @see is_volatile
+/// @see has_rvalueref_qualifier
 template <__metaobject_id M>
 consteval auto has_rvalueref_qualifier(metaobject<M>)
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -548,6 +747,10 @@ consteval auto has_rvalueref_qualifier(metaobject<M>)
 
 /// @brief Indicates if the reflected special member function is implicitly declared.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see reflects_special_member_function
+/// @see is_defaulted
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto is_implicitly_declared(metaobject<M>)
   -> bool requires(__metaobject_is_meta_special_member_function(M)) {
@@ -556,6 +759,10 @@ consteval auto is_implicitly_declared(metaobject<M>)
 
 /// @brief Indicates if the reflected special member function is defaulted.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see reflects_special_member_function
+/// @see is_implicitly_declared
+/// @see is_deleted
 template <__metaobject_id M>
 consteval auto is_defaulted(metaobject<M>)
   -> bool requires(__metaobject_is_meta_special_member_function(M)) {
@@ -564,6 +771,10 @@ consteval auto is_defaulted(metaobject<M>)
 
 /// @brief Indicates if the reflected function is deleted.
 /// @ingroup operations
+/// @see reflects_member_function
+/// @see reflects_special_member_function
+/// @see is_implicitly_declared
+/// @see is_defaulted
 template <__metaobject_id M>
 consteval auto is_deleted(metaobject<M>)
   -> bool requires(__metaobject_is_meta_callable(M)) {
@@ -572,6 +783,10 @@ consteval auto is_deleted(metaobject<M>)
 
 /// @brief Indicates if the reflected constructor is copy constructor.
 /// @ingroup operations
+/// @see reflects_constructor
+/// @see get_constructors
+/// @see is_move_constructor
+/// @see is_copy_assignment_operator
 template <__metaobject_id M>
 consteval auto is_copy_constructor(metaobject<M>)
   -> bool requires(__metaobject_is_meta_constructor(M)) {
@@ -580,6 +795,10 @@ consteval auto is_copy_constructor(metaobject<M>)
 
 /// @brief Indicates if the reflected constructor is move constructor.
 /// @ingroup operations
+/// @see reflects_constructor
+/// @see get_constructors
+/// @see is_copy_constructor
+/// @see is_move_assignment_operator
 template <__metaobject_id M>
 consteval auto is_move_constructor(metaobject<M>)
   -> bool requires(__metaobject_is_meta_constructor(M)) {
@@ -588,6 +807,11 @@ consteval auto is_move_constructor(metaobject<M>)
 
 /// @brief Indicates if the reflected operator is copy assignment operator.
 /// @ingroup operations
+/// @see reflects_operator
+/// @see reflects_special_member_function
+/// @see get_operators
+/// @see is_copy_constructor
+/// @see is_move_assignment_operator
 template <__metaobject_id M>
 consteval auto is_copy_assignment_operator(metaobject<M>) -> bool requires(
   __metaobject_is_meta_operator(M) &&
@@ -597,6 +821,11 @@ consteval auto is_copy_assignment_operator(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the reflected operator is move assignment operator.
 /// @ingroup operations
+/// @see reflects_operator
+/// @see reflects_special_member_function
+/// @see get_operators
+/// @see is_move_constructor
+/// @see is_copy_assignment_operator
 template <__metaobject_id M>
 consteval auto is_move_assignment_operator(metaobject<M>) -> bool requires(
   __metaobject_is_meta_operator(M) &&
@@ -606,7 +835,9 @@ consteval auto is_move_assignment_operator(metaobject<M>) -> bool requires(
 
 /// @brief Indicates if the metaobject sequence is empty.
 /// @ingroup operations
+/// @see reflects_object_sequence
 /// @see get_size
+/// @see get_element
 template <__metaobject_id M>
 consteval auto is_empty(metaobject<M>)
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
@@ -615,28 +846,56 @@ consteval auto is_empty(metaobject<M>)
 
 /// @brief Indicates if the two metaobjects reflect the same base-level entity.
 /// @ingroup operations
-/// @see get_size
 template <__metaobject_id Ml, __metaobject_id Mr>
 consteval auto reflects_same(metaobject<Ml>, metaobject<Mr>) -> bool {
     return __metaobject_reflects_same(Ml, Mr);
 }
 
+/// @brief Indicates if the base name of the reflected entity is equal to @p str.
+/// @ingroup operations
+/// @see reflects_named
+/// @see get_name
+/// @see get_display_name
+template <__metaobject_id M, size_t L>
+consteval auto has_name(metaobject<M>, const char (&str)[L])
+  -> bool requires(__metaobject_is_meta_named(M)) {
+    return __builtin_strcmp(__metaobject_get_name(M), str) == 0;
+}
+
 // integer
+/// @brief Returns a unique metaobject identifier value.
+/// @ingroup operations
+/// @see reflects_object
 template <__metaobject_id M>
 consteval auto get_id(metaobject<M>) -> size_t {
     return __metaobject_get_id_value(M);
 }
 
+/// @brief Returns source file line of the reflected entity if available.
+/// @ingroup operations
+/// @see reflects_object
+/// @see get_source_column
+/// @see get_source_file_name
 template <__metaobject_id M>
 consteval auto get_source_line(metaobject<M>) -> size_t {
     return __metaobject_get_source_line(M);
 }
 
+/// @brief Returns source file column of the reflected entity if available.
+/// @ingroup operations
+/// @see reflects_object
+/// @see get_source_line
+/// @see get_source_file_name
 template <__metaobject_id M>
 consteval auto get_source_column(metaobject<M>) -> size_t {
     return __metaobject_get_source_column(M);
 }
 
+/// @brief Returns the number of elements in a metaobject sequence.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see get_element
 template <__metaobject_id M>
 consteval auto get_size(metaobject<M>) -> size_t
   requires(__metaobject_is_meta_object_sequence(M)) {
@@ -649,30 +908,63 @@ struct _get_pointer
       __unrefltype(__metaobject_get_pointer(M)),
       __metaobject_get_pointer(M)> {};
 
+/// @brief Returns a pointer to the reflected base-level entity.
+/// @ingroup operations
+/// @see reflects_variable
+/// @see reflects_function
+/// @see get_value
+/// @see get_reference
+/// @see get_constant
 template <__metaobject_id M>
 consteval auto get_pointer(metaobject<M>) requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_function(M)) {
     return _get_pointer<M>::value;
 }
 
+/// @brief Returns the value of the reflected base-level entity.
+/// @ingroup operations
+/// @see reflects_variable
+/// @see get_pointer
+/// @see get_reference
+/// @see get_constant
 template <__metaobject_id M>
 constexpr const auto&
 get_value(metaobject<M>) requires(__metaobject_is_meta_variable(M)) {
     return *_get_pointer<M>::value;
 }
 
+/// @brief Returns the value of the reflected base-level data member in @p obj.
+/// @ingroup operations
+/// @see reflects_record_member
+/// @see reflects_variable
+/// @see get_pointer
+/// @see get_reference
+/// @see get_constant
 template <__metaobject_id M, class C>
 constexpr const auto& get_value(metaobject<M>, const C& obj) requires(
   __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)) {
     return obj.*_get_pointer<M>::value;
 }
 
+/// @brief Returns a reference to the reflected base-level entity.
+/// @ingroup operations
+/// @see reflects_variable
+/// @see get_value
+/// @see get_pointer
+/// @see get_constant
 template <__metaobject_id M>
 constexpr auto&
 get_reference(metaobject<M>) requires(__metaobject_is_meta_variable(M)) {
     return *_get_pointer<M>::value;
 }
 
+/// @brief Returns a reference to the reflected base-level data member in @p obj.
+/// @ingroup operations
+/// @see reflects_record_member
+/// @see reflects_variable
+/// @see get_value
+/// @see get_pointer
+/// @see get_constant
 template <__metaobject_id M, class C>
 constexpr auto& get_reference(metaobject<M>, C& obj) requires(
   __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)) {
@@ -685,12 +977,23 @@ struct _get_constant
       __unrefltype(__metaobject_get_constant(M)),
       __metaobject_get_constant(M)> {};
 
+/// @brief Returns the value of the reflected base-level constant.
+/// @ingroup operations
+/// @see reflects_constant
+/// @see get_pointer
+/// @see get_reference
+/// @see get_value
 template <__metaobject_id M>
 constexpr auto
 get_constant(metaobject<M>) requires(__metaobject_is_meta_constant(M)) {
     return _get_constant<M>::value;
 }
 
+/// @brief Invokes the reflected member function on @p obj with specified @p args.
+/// @ingroup operations
+/// @see reflects_member_function
+/// @see get_pointer
+/// @see invoke
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke_on(metaobject<M> mo, C& obj, A&&... args) requires(
   __metaobject_is_meta_member_function(M)) {
@@ -701,6 +1004,13 @@ constexpr auto invoke_on(metaobject<M> mo, C& obj, A&&... args) requires(
     }
 }
 
+/// @brief Invokes the reflected function with the specified @p args.
+/// @ingroup operations
+/// @see reflects_function
+/// @see reflects_member_function
+/// @see is_static
+/// @see get_pointer
+/// @see invoke_on
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(metaobject<M>, A&&... args) requires(
   __metaobject_is_meta_function(M) ||
@@ -708,12 +1018,24 @@ constexpr auto invoke(metaobject<M>, A&&... args) requires(
     return (*_get_pointer<M>::value)(std::forward<A>(args)...);
 }
 
+/// @brief Invokes the reflected member function on @p obj with specified @p args.
+/// @ingroup operations
+/// @see reflects_member_function
+/// @see is_static
+/// @see get_pointer
+/// @see get_reference
+/// @see invoke_on
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke(metaobject<M>, C& obj, A&&... args) requires(
   __metaobject_is_meta_member_function(M) && !__metaobject_is_static(M)) {
     return (obj.*_get_pointer<M>::value)(std::forward<A>(args)...);
 }
 
+/// @brief Invokes the reflected constructor with the specified @p args.
+/// @ingroup operations
+/// @see reflects_constructor
+/// @see get_pointer
+/// @see invoke_on
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(metaobject<M>, A&&... args) -> __unrefltype(
   __metaobject_get_scope(M)) requires(__metaobject_is_meta_constructor(M)) {
@@ -727,6 +1049,11 @@ consteval auto get_source_file_name_view(__metaobject_id mo) -> string_view {
       __metaobject_source_file_name_len(mo)};
 }
 
+/// @brief Returns source file column of the reflected entity if available.
+/// @ingroup operations
+/// @see reflects_object
+/// @see get_source_line
+/// @see get_source_column
 template <__metaobject_id M>
 consteval auto get_source_file_name(metaobject<M>) -> string_view {
     return get_source_file_name_view(M);
@@ -736,16 +1063,16 @@ consteval auto get_name_view(__metaobject_id mo) -> string_view {
     return {__metaobject_get_name(mo), __metaobject_name_len(mo)};
 }
 
+/// @brief Returns the unqualified "base name" of the reflected base-level entity.
+/// @ingroup operations
+/// @see reflects_named
+/// @see get_full_name
+/// @see get_display_name
+/// @see has_name
 template <__metaobject_id M>
 consteval auto get_name(metaobject<M>) -> string_view
   requires(__metaobject_is_meta_named(M)) {
     return get_name_view(M);
-}
-
-template <__metaobject_id M, size_t L>
-consteval auto has_name(metaobject<M>, const char (&str)[L])
-  -> bool requires(__metaobject_is_meta_named(M)) {
-    return __builtin_strcmp(__metaobject_get_name(M), str) == 0;
 }
 
 consteval auto get_display_name_view(__metaobject_id mo) -> string_view {
@@ -753,6 +1080,11 @@ consteval auto get_display_name_view(__metaobject_id mo) -> string_view {
       __metaobject_get_display_name(mo), __metaobject_display_name_len(mo)};
 }
 
+/// @brief Returns the user-friendly name of the reflected base-level entity.
+/// @ingroup operations
+/// @see reflects_named
+/// @see get_name
+/// @see get_display_name
 template <__metaobject_id M>
 consteval auto get_display_name(metaobject<M>) -> string_view
   requires(__metaobject_is_meta_named(M)) {
@@ -760,29 +1092,50 @@ consteval auto get_display_name(metaobject<M>) -> string_view
 }
 
 // metaobject
+/// @brief Returns a reflection of the scope of a reflected scope member.
+/// @ingroup operations
+/// @see reflects_scope_member
+/// @see reflects_scope
 template <__metaobject_id M>
 constexpr auto
 get_scope(metaobject<M>) requires(__metaobject_is_meta_scope_member(M)) {
     return metaobject<__metaobject_get_scope(M)>{};
 }
 
+/// @brief Returns a reflection of the type of a reflected typed entity.
+/// @ingroup operations
+/// @see reflects_typed
+/// @see get_reflected_type
 template <__metaobject_id M>
 constexpr auto get_type(metaobject<M>) requires(__metaobject_is_meta_typed(M)) {
     return metaobject<__metaobject_get_type(M)>{};
 }
 
+/// @brief Returns a reflection of the underlying type of a reflected enum,
+/// @ingroup operations
+/// @see get_constant
+/// @see reflects_enum
 template <__metaobject_id M>
 constexpr auto
 get_underlying_type(metaobject<M>) requires(__metaobject_is_meta_enum(M)) {
     return metaobject<__metaobject_get_underlying_type(M)>{};
 }
 
+/// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
+/// @ingroup operations
+/// @see reflects_named
+/// @see reflects_alias
+/// @see remove_all_aliases
 template <__metaobject_id M>
 constexpr auto
 get_aliased(metaobject<M>) requires(__metaobject_is_meta_alias(M)) {
     return metaobject<__metaobject_get_aliased(M)>{};
 }
 
+/// @brief Removes all aliases from a potentially aliased reflected entity.
+/// @ingroup operations
+/// @see reflects_alias
+/// @see get_aliased
 template <__metaobject_id M>
 constexpr auto remove_all_aliases(metaobject<M> mo) {
     if constexpr(__metaobject_is_meta_alias(M)) {
@@ -792,83 +1145,178 @@ constexpr auto remove_all_aliases(metaobject<M> mo) {
     }
 }
 
+/// @brief Returns the reflection of the class in a reflected base class specifier.
+/// @ingroup operations
+/// @see get_base_classes
+/// @see reflects_base
+/// @see is_private
+/// @see is_protected
+/// @see is_public
+/// @see is_virtual
 template <__metaobject_id M>
 constexpr auto get_class(metaobject<M>) requires(__metaobject_is_meta_base(M)) {
     return metaobject<__metaobject_get_class(M)>{};
 }
 
+/// @brief Returns a sequence of base class specifier reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_base
+/// @see is_empty
+/// @see get_size
+/// @see get_class
 template <__metaobject_id M>
 constexpr auto
 get_base_classes(metaobject<M>) requires(__metaobject_is_meta_class(M)) {
     return metaobject<__metaobject_get_base_classes(M)>{};
 }
 
+/// @brief Returns a sequence of member type reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_type
+/// @see is_empty
+/// @see get_size
+/// @see get_type
 template <__metaobject_id M>
 constexpr auto
 get_member_types(metaobject<M>) requires(__metaobject_is_meta_record(M)) {
     return metaobject<__metaobject_get_member_types(M)>{};
 }
 
+/// @brief Returns a sequence of member type reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_variable
+/// @see is_empty
+/// @see get_size
+/// @see get_pointer
+/// @see get_reference
+/// @see get_value
 template <__metaobject_id M>
 constexpr auto
 get_data_members(metaobject<M>) requires(__metaobject_is_meta_record(M)) {
     return metaobject<__metaobject_get_data_members(M)>{};
 }
 
+/// @brief Returns a sequence of member function reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_function
+/// @see is_empty
+/// @see get_size
+/// @see get_pointer
+/// @see invoke_on
+/// @see invoke
 template <__metaobject_id M>
 constexpr auto
 get_member_functions(metaobject<M>) requires(__metaobject_is_meta_record(M)) {
     return metaobject<__metaobject_get_member_functions(M)>{};
 }
 
+/// @brief Returns a sequence of constructor reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_constructor
+/// @see is_empty
+/// @see get_size
+/// @see invoke_on
+/// @see invoke
 template <__metaobject_id M>
 constexpr auto
 get_constructors(metaobject<M>) requires(__metaobject_is_meta_record(M)) {
     return metaobject<__metaobject_get_constructors(M)>{};
 }
 
+/// @brief Returns a sequence of destructors reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_constructor
+/// @see is_empty
+/// @see get_size
 template <__metaobject_id M>
 constexpr auto
 get_destructors(metaobject<M>) requires(__metaobject_is_meta_record(M)) {
     return metaobject<__metaobject_get_destructors(M)>{};
 }
 
+/// @brief Returns a sequence of operator reflections of a reflected class.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_operator
+/// @see is_empty
+/// @see get_size
+/// @see invoke_on
+/// @see invoke
 template <__metaobject_id M>
 constexpr auto
 get_operators(metaobject<M>) requires(__metaobject_is_meta_record(M)) {
     return metaobject<__metaobject_get_operators(M)>{};
 }
 
+/// @brief Returns a sequence of enumerator reflections of a reflected enum type.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_enumerator
+/// @see is_empty
+/// @see get_size
+/// @see get_constant
 template <__metaobject_id M>
 constexpr auto
 get_enumerators(metaobject<M>) requires(__metaobject_is_meta_enum(M)) {
     return metaobject<__metaobject_get_enumerators(M)>{};
 }
 
+/// @brief Returns a sequence of parameter reflections of a reflected callable.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_function_parameter
+/// @see is_empty
+/// @see get_size
+/// @see has_default_argument
 template <__metaobject_id M>
 constexpr auto
 get_parameters(metaobject<M>) requires(__metaobject_is_meta_callable(M)) {
     return metaobject<__metaobject_get_parameters(M)>{};
 }
 
+/// @brief Returns a sequence of capture reflections of a reflected closure.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see reflects_lambda_capture
+/// @see is_empty
+/// @see get_size
+/// @see is_explicitly_captured
 template <__metaobject_id M>
 constexpr auto
 get_captures(metaobject<M>) requires(__metaobject_is_meta_lambda(M)) {
     return metaobject<__metaobject_get_captures(M)>{};
 }
 
+/// @brief Returns a sequence with private elements filtered out.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see hide_protected
 template <__metaobject_id M>
 constexpr auto
 hide_private(metaobject<M>) requires(__metaobject_is_meta_object_sequence(M)) {
     return metaobject<__metaobject_hide_private(M)>{};
 }
 
+/// @brief Returns a sequence with private and protected elements filtered out.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see hide_private
 template <__metaobject_id M>
 constexpr auto hide_protected(metaobject<M>) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return metaobject<__metaobject_hide_protected(M)>{};
 }
 
+/// @brief Returns the I-th metaobject in a metaobject sequence.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see get_size
 template <size_t I, __metaobject_id M>
 constexpr auto
 get_element(metaobject<M>) requires(__metaobject_is_meta_object_sequence(M)) {
