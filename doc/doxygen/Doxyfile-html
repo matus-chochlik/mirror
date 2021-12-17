@@ -1,0 +1,74 @@
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
+#
+GENERATE_HTML           = YES
+GENERATE_XML            = NO
+
+GENERATE_LEGEND         = YES
+GENERATE_TODOLIST       = YES
+GENERATE_TESTLIST       = YES
+GENERATE_BUGLIST        = YES
+GENERATE_DEPRECATEDLIST = YES
+
+EXAMPLE_PATTERNS        = *.cpp
+EXAMPLE_RECURSIVE       = YES
+
+CREATE_SUBDIRS          = NO
+HTML_OUTPUT             = doxygen
+HTML_FILE_EXTENSION     = .html
+HTML_EXTRA_STYLESHEET   =
+HTML_EXTRA_FILES        =
+HTML_COLORSTYLE_HUE     = 220
+HTML_COLORSTYLE_SAT     = 100
+HTML_COLORSTYLE_GAMMA   = 80
+HTML_TIMESTAMP          = NO
+HTML_DYNAMIC_MENUS      = YES
+HTML_DYNAMIC_SECTIONS   = NO
+HTML_INDEX_NUM_ENTRIES  = 100
+
+HAVE_DOT                = YES
+DOT_IMAGE_FORMAT        = svg
+INTERACTIVE_SVG         = YES
+GRAPHICAL_HIERARCHY     = NO
+CLASS_GRAPH             = NO
+COLLABORATION_GRAPH     = NO
+GROUP_GRAPHS            = NO
+INCLUDE_GRAPH           = NO
+INCLUDED_BY_GRAPH       = NO
+CALL_GRAPH              = NO
+CALLER_GRAPH            = NO
+DIRECTORY_GRAPH         = NO
+
+SHOW_USED_FILES         = YES
+SHOW_FILES              = YES
+SHOW_NAMESPACES         = YES
+ALPHABETICAL_INDEX      = YES
+SOURCE_BROWSER          = NO
+SOURCE_TOOLTIPS         = YES
+INLINE_SOURCES          = NO
+MAX_INITIALIZER_LINES   = 0
+STRIP_CODE_COMMENTS     = YES
+VERBATIM_HEADERS        = YES
+REFERENCED_BY_RELATION  = YES
+REFERENCES_RELATION     = NO
+REFERENCES_LINK_SOURCE  = YES
+
+WARNINGS                = YES
+WARN_IF_UNDOCUMENTED    = NO
+WARN_NO_PARAMDOC        = NO
+
+ALIASES                += glconstwrap{1}="Wrapper for <code>GL_\1</code>"
+ALIASES                += glfuncwrap{1}="Wrapper for <code>gl\1</code>"
+ALIASES                += glextwrap{1}="Wrapper for <code>GL_\1</code>"
+ALIASES                += alconstwrap{1}="Wrapper for <code>AL_\1</code>"
+ALIASES                += alfuncwrap{1}="Wrapper for <code>al\1</code>"
+ALIASES                += alcconstwrap{1}="Wrapper for <code>ALC_\1</code>"
+ALIASES                += alcfuncwrap{1}="Wrapper for <code>alc\1</code>"
+ALIASES                += alutconstwrap{1}="Wrapper for <code>ALUT_\1</code>"
+ALIASES                += alutfuncwrap{1}="Wrapper for <code>alut\1</code>"
+ALIASES                += eglconstwrap{1}="Wrapper for <code>EGL_\1</code>"
+ALIASES                += eglfuncwrap{1}="Wrapper for <code>egl\1</code>"
+ALIASES                += eglextwrap{1}="Wrapper for <code>EGL_\1</code>"
+
