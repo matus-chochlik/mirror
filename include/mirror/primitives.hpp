@@ -373,6 +373,12 @@ consteval auto is_explicitly_captured(metaobject<M>)
 }
 
 template <__metaobject_id M>
+consteval auto has_default_argument(metaobject<M>)
+  -> bool requires(__metaobject_is_meta_function_parameter(M)) {
+    return __metaobject_has_default_argument(M);
+}
+
+template <__metaobject_id M>
 consteval auto is_const(metaobject<M>)
   -> bool requires(__metaobject_is_meta_member_function(M)) {
     return __metaobject_is_const(M);

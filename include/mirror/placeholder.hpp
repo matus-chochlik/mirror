@@ -352,6 +352,12 @@ consteval auto is_explicitly_captured(placeholder_t<1>) {
     };
 }
 
+consteval auto has_default_argument(placeholder_t<1>) {
+    return [](auto mo) {
+        return has_default_argument(mo);
+    };
+}
+
 consteval auto is_const(placeholder_t<1>) {
     return [](auto mo) {
         return is_const(mo);
