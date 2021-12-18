@@ -91,6 +91,8 @@ inline auto object_builder::type_name() const noexcept -> std::string_view {
 template <typename Traits, typename Product, typename MetaCtr, typename MetaParam>
 class factory_constructor_parameter_impl
   : public factory_constructor_parameter {
+    static constexpr const MetaParam _meta_param{};
+
     const factory_constructor& _parent_constructor;
     factory_parameter_unit_t<Traits, Product, MetaCtr, MetaParam> _base_unit;
 
@@ -128,11 +130,11 @@ public:
     }
 
     auto parameter_type_name() const noexcept -> std::string_view final {
-        return get_name(get_type(MetaParam{}));
+        return get_name(get_type(_meta_param));
     }
 
     auto name() const noexcept -> std::string_view final {
-        return get_name(MetaParam{});
+        return get_name(_meta_param);
     }
 
     auto get(construction_context_param context)
@@ -164,6 +166,8 @@ template <typename Traits, typename Product, typename MetaCtr>
 class factory_constructor_impl
   : public factory_product_constructor<Traits, Product> {
 
+    static constexpr const MetaCtr _meta_ctr{};
+
     factory_constructor_unit_t<Traits, Product> _base_unit;
 
     auto base_constructor() const noexcept -> const factory_constructor& {
@@ -174,7 +178,7 @@ class factory_constructor_impl
     using _parameter_impl =
       factory_constructor_parameter_impl<Traits, Product, MetaCtr, MetaParam>;
 
-    unit_composition<_parameter_impl, decltype(get_parameters(MetaCtr{}))>
+    unit_composition<_parameter_impl, decltype(get_parameters(_meta_ctr))>
       _parameters;
 
     const factory& _parent_factory;
@@ -199,19 +203,19 @@ public:
     }
 
     auto is_default_constructor() const noexcept -> bool final {
-        return is_empty(get_parameters(MetaCtr{}));
+        return is_empty(get_parameters(_meta_ctr));
     }
 
     auto is_move_constructor() const noexcept -> bool final {
-        return mirror::is_move_constructor(MetaCtr{});
+        return mirror::is_move_constructor(_meta_ctr);
     }
 
     auto is_copy_constructor() const noexcept -> bool final {
-        return mirror::is_copy_constructor(MetaCtr{});
+        return mirror::is_copy_constructor(_meta_ctr);
     }
 
     auto parameter_count() const noexcept -> size_t final {
-        return get_size(get_parameters(MetaCtr{}));
+        return get_size(get_parameters(_meta_ctr));
     }
 
     auto parameter(size_t index) const noexcept
@@ -241,13 +245,15 @@ template <typename Traits, typename Product, typename MetaType>
 class factory_impl : public factory {
 
 private:
+    static constexpr const MetaType _meta_type{};
+
     factory_unit_t<Traits, Product> _base_unit;
 
     template <typename MetaCtr>
     using _constructor_impl =
       factory_constructor_impl<Traits, Product, MetaCtr>;
 
-    unit_composition<_constructor_impl, decltype(get_constructors(MetaType{}))>
+    unit_composition<_constructor_impl, decltype(get_constructors(_meta_type))>
       _constructors;
 
     const object_builder& _parent_builder;
@@ -279,11 +285,11 @@ public:
     }
 
     auto product_type_name() const noexcept -> std::string_view final {
-        return get_name(MetaType{});
+        return get_name(_meta_type);
     }
 
     auto constructor_count() const noexcept -> size_t final {
-        return get_size(get_constructors(MetaType{}));
+        return get_size(get_constructors(_meta_type));
     }
 
     auto constructor(size_t index) const noexcept
@@ -324,8 +330,8 @@ public:
       decltype(get_aliased(mirror(Product)))>;
 
     template <typename Product>
-    auto build() noexcept {
-        return factory_type<Product>{base_unit(), *this};
+    auto build() noexcept -> factory_type<Product> {
+        return {base_unit(), *this};
     }
 
     auto as_parameter() const noexcept
@@ -346,7 +352,6 @@ inline auto factory_constructor_parameter::parent_parameter() const noexcept
 template <typename Traits, typename Product>
 using built_factory_type =
   typename factory_builder<Traits>::template factory_type<Product>;
-//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 } // namespace mirror
 

@@ -17,9 +17,6 @@ auto main() -> int {
     using iostream_factory_builder = factory_builder<iostream_factory_traits>;
 
     auto fac = iostream_factory_builder("iof").build<example::tetrahedron>();
-    std::cout << get_size(get_constructors(mirror(example::tetrahedron)))
-              << std::endl;
-
     auto teh = fac.construct({std::cin, std::cout});
 
     std::cout << "volume of the tetrahedron is: " << teh.volume() << std::endl;
