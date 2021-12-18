@@ -48,6 +48,9 @@ using std::integral_constant;
 using std::string_view;
 using std::type_identity;
 
+template <__metaobject_id... M>
+struct unpacked_metaobject_sequence {};
+
 template <typename... T>
 struct type_list {};
 
@@ -844,6 +847,11 @@ consteval auto is_empty(metaobject<M>)
     return __metaobject_is_empty(M);
 }
 
+template <__metaobject_id... M>
+consteval auto is_empty(unpacked_metaobject_sequence<M...>) -> bool {
+    return sizeof...(M) == 0Z;
+}
+
 /// @brief Indicates if the two metaobjects reflect the same base-level entity.
 /// @ingroup operations
 template <__metaobject_id Ml, __metaobject_id Mr>
@@ -900,6 +908,11 @@ template <__metaobject_id M>
 consteval auto get_size(metaobject<M>) -> size_t
   requires(__metaobject_is_meta_object_sequence(M)) {
     return __metaobject_get_size(M);
+}
+
+template <__metaobject_id... M>
+consteval auto get_size(unpacked_metaobject_sequence<M...>) -> size_t {
+    return sizeof...(M);
 }
 
 template <__metaobject_id M>
@@ -1324,9 +1337,6 @@ get_element(metaobject<M>) requires(__metaobject_is_meta_object_sequence(M)) {
 }
 
 // unpacking
-template <__metaobject_id... M>
-struct unpacked_metaobject_sequence {};
-
 template <__metaobject_id M>
 constexpr auto unpack(metaobject<M>) {
     return __unpack_metaobject_seq<unpacked_metaobject_sequence, M>{};
