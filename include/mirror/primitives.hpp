@@ -1497,6 +1497,9 @@ constexpr auto select(metaobject<M> mo, F function, T fallback, P&&... param)
 template <__metaobject_id M>
 using _get_reflected_type = type_identity<__unrefltype(M)>;
 
+template <typename M>
+using get_reflected_type_t = __unrefltype(unwrap<M>);
+
 template <__metaobject_id M>
 consteval auto
 get_reflected_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
