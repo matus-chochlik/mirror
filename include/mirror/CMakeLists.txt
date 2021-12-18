@@ -10,6 +10,7 @@ target_include_directories(
 	INTERFACE
 		$<INSTALL_INTERFACE:include>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/submodules/rapidjson/include>
 )
 
 target_compile_options(

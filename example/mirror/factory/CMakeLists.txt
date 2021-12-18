@@ -5,3 +5,4 @@
 #
 
 mirror_add_simple_example(iostream)
+mirror_add_simple_example(rapidjson)
