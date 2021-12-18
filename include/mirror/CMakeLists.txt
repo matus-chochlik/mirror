@@ -22,6 +22,7 @@ target_compile_options(
 		-Wno-c++98-compat -Wno-c++98-compat-pedantic
 		-Wno-c++20-compat -Wno-c++2a-extensions
 		-Wno-padded
+		-Wno-weak-vtables
 		-Wno-documentation-unknown-command
 )
 
