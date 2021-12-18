@@ -64,5 +64,9 @@ int main() {
 		}
 	})");
 
+    construct_from<example::tetrahedron>(builder, R"([
+        [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], [2.0]
+    ])");
+
     return 0;
 }

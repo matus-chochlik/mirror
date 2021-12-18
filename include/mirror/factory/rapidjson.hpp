@@ -60,7 +60,8 @@ struct rapidjson_factory_traits {
         factory_unit(const builder_unit&, const factory&) noexcept {}
         factory_unit(const composite_unit<Product>&, const factory&) noexcept {}
 
-        auto select_constructor(construction_context& ctx, const factory& fac)
+        auto
+        select_constructor(construction_context_param ctx, const factory& fac)
           -> size_t {
             size_t result = _children.size();
             size_t count = 0;
@@ -100,19 +101,20 @@ struct rapidjson_factory_traits {
           std::is_same_v<T, std::string>;
 
         template <typename T>
-        static auto type_match(const T*, construction_context&) noexcept
+        static auto type_match(const T*, construction_context_param) noexcept
           -> std::enable_if_t<!is_atomic<T>, std::tuple<int, int>> {
-            return {true, true};
+            return {true, false};
         }
 
-        static auto type_match(const bool*, construction_context& ctx) noexcept
+        static auto
+        type_match(const bool*, construction_context_param ctx) noexcept
           -> std::tuple<bool, bool> {
             return {
               ctx.value.IsBool() || ctx.value.IsString(), ctx.value.IsBool()};
         }
 
         template <typename T>
-        static auto type_match(const T*, construction_context& ctx) noexcept
+        static auto type_match(const T*, construction_context_param ctx) noexcept
           -> std::enable_if_t<
             std::is_integral_v<T> && std::is_signed_v<T>,
             std::tuple<bool, bool>> {
@@ -122,7 +124,7 @@ struct rapidjson_factory_traits {
         }
 
         template <typename T>
-        static auto type_match(const T*, construction_context& ctx) noexcept
+        static auto type_match(const T*, construction_context_param ctx) noexcept
           -> std::enable_if_t<
             std::is_integral_v<T> && std::is_unsigned_v<T>,
             std::tuple<bool, bool>> {
@@ -132,22 +134,24 @@ struct rapidjson_factory_traits {
         }
 
         template <typename T>
-        static auto type_match(const T*, construction_context& ctx) noexcept
-          -> std::
-            enable_if_t<std::is_floating_point_v<T>, std::tuple<bool, bool>> {
+        static auto
+        type_match(const T*, construction_context_param ctx) noexcept -> std::
+          enable_if_t<std::is_floating_point_v<T>, std::tuple<bool, bool>> {
             return {
               ctx.value.IsDouble() || ctx.value.IsInt64() || ctx.value.IsInt(),
               ctx.value.IsDouble()};
         }
 
         static auto
-        type_match(const std::string*, construction_context& ctx) noexcept
+        type_match(const std::string*, construction_context_param ctx) noexcept
           -> std::tuple<bool, bool> {
             return {true, ctx.value.IsString()};
         }
 
-        auto match(construction_context& ctx, const factory_constructor& ctr)
-          const noexcept -> std::tuple<int, int> {
+        auto match(
+          construction_context_param ctx,
+          const factory_constructor& ctr) const noexcept
+          -> std::tuple<int, int> {
             if(ctr.is_move_constructor()) {
                 if(ctx.value.IsString()) {
                     return {1, 1};
@@ -176,6 +180,28 @@ struct rapidjson_factory_traits {
                 }
                 return {result, exact};
             }
+            if(ctx.value.IsArray()) {
+                const size_t n = ctr.parameter_count();
+                if(n == ctx.value.Size()) {
+                    if(ctr.is_copy_constructor() || ctr.is_move_constructor()) {
+                        return no_match;
+                    }
+                    int result = 0;
+                    int exact = 0;
+                    for(size_t i = 0; i < n; ++i) {
+                        const auto [match, exact_match] =
+                          type_match(static_cast<Product*>(nullptr), ctx);
+                        if(!match) {
+                            return no_match;
+                        }
+                        if(exact_match) {
+                            ++exact;
+                        }
+                        ++result;
+                    }
+                    return {result, exact};
+                }
+            }
             return no_match;
         }
     };
@@ -191,11 +217,12 @@ struct rapidjson_factory_traits {
           const factory_constructor_parameter& param,
           const factory_constructor& ctr) noexcept
           : _name{param.name()}
+          , _index{param.index()}
           , _is_default{ctr.is_default_constructor()}
           , _is_move{ctr.is_move_constructor()}
           , _is_copy{ctr.is_copy_constructor()} {}
 
-        auto nested(construction_context& ctx) -> construction_context {
+        auto nested(construction_context_param ctx) -> construction_context {
             if(!_name.empty()) {
                 if(ctx.value.IsObject()) {
                     auto pos = ctx.value.FindMember(_name.c_str());
@@ -204,11 +231,17 @@ struct rapidjson_factory_traits {
                     }
                 }
             }
+            if(ctx.value.IsArray()) {
+                if(_index < ctx.value.Size()) {
+                    return {ctx.value[rapidjson::SizeType(_index)]};
+                }
+            }
             return ctx;
         }
 
     private:
         std::string _name;
+        size_t _index;
         bool _is_default;
         bool _is_move;
         bool _is_copy;
@@ -290,7 +323,7 @@ struct rapidjson_factory_traits {
         }
 
         auto get(
-          construction_context& ctx,
+          construction_context_param ctx,
           const factory_constructor_parameter&) noexcept -> T {
             T result{};
             fetch(result, _info.nested(ctx).value);
@@ -311,8 +344,9 @@ struct rapidjson_factory_traits {
           : _info{parameter, parameter.parent_constructor()}
           , _fac{*this, parameter} {}
 
-        auto
-        get(construction_context& ctx, const factory_constructor_parameter&) {
+        auto get(
+          construction_context_param ctx,
+          const factory_constructor_parameter&) {
             return _fac.construct(_info.nested(ctx));
         }
 
@@ -334,7 +368,7 @@ struct rapidjson_factory_traits {
         static auto fetch(V&, const rapidjson::Value&) noexcept {}
 
         auto get(
-          construction_context& ctx,
+          construction_context_param ctx,
           const factory_constructor_parameter&) noexcept -> T {
             T result{};
             fetch(result, _info.nested(ctx).value);
