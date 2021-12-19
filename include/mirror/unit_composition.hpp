@@ -9,7 +9,7 @@
 #ifndef MIRROR_UNIT_COMPOSITION_HPP
 #define MIRROR_UNIT_COMPOSITION_HPP
 
-#include "primitives.hpp"
+#include "sequence.hpp"
 #include <array>
 
 namespace mirror {

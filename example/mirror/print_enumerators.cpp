@@ -7,6 +7,7 @@
 ///
 #include <iostream>
 #include <mirror/enum_utils.hpp>
+#include <mirror/sequence.hpp>
 
 enum class weekdays : int {
     monday = 1,

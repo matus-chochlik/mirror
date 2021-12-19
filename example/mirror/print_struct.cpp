@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 #include <iostream>
-#include <mirror/primitives.hpp>
+#include <mirror/sequence.hpp>
 
 template <typename S>
 void print_struct(const S& x) {

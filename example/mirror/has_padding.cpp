@@ -7,6 +7,7 @@
 ///
 #include <iostream>
 #include <mirror/placeholder.hpp>
+#include <mirror/sequence.hpp>
 
 struct S1 {
     int i;
