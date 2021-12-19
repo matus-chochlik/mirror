@@ -304,6 +304,12 @@ public:
       , _constructors{_base_unit, *this}
       , _parent_builder{parent_builder} {}
 
+    factory_impl(factory_impl&&) noexcept = default;
+    factory_impl(const factory_impl&) = delete;
+    auto operator=(factory_impl&&) = delete;
+    auto operator=(const factory_impl&) = delete;
+    ~factory_impl() noexcept override = default;
+
     auto parent_builder() const noexcept -> const object_builder& final {
         return _parent_builder;
     }
@@ -353,7 +359,7 @@ public:
     using factory_type = factory_impl<
       Traits,
       // this is here to force the compiler to create copy/move constructors
-      decltype(Product(std::declval<const Product&>())),
+      decltype(Product(std::declval<Product>())),
       decltype(get_aliased(mirror(Product)))>;
 
     template <typename Product>

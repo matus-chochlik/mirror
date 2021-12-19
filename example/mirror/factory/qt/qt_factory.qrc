@@ -1,0 +1,13 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file>main.qml</file>
+	<file>qtquickcontrols2.conf</file>
+	<file>qml_units/BuilderUnit.qml</file>
+	<file>qml_units/FactoryUnit.qml</file>
+	<file>qml_units/ConstructorUnit.qml</file>
+	<file>qml_units/CompositeUnit.qml</file>
+	<file>qml_units/BoolUnit.qml</file>
+	<file>qml_units/FloatUnit.qml</file>
+	<file>qml_units/StringUnit.qml</file>
+</qresource>
+</RCC>
