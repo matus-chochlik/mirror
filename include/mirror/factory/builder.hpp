@@ -12,6 +12,7 @@
 #include "../interface.hpp"
 #include "../unit_composition.hpp"
 #include <functional>
+#include <memory>
 #include <stdexcept>
 #include <string>
 
@@ -265,8 +266,18 @@ struct factory_error : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
 //------------------------------------------------------------------------------
+template <typename Traits, typename Product>
+struct product_factory : public factory {
+    using construction_context_param =
+      typename Traits::construction_context_param;
+
+    virtual auto base_unit() noexcept -> factory_unit_t<Traits, Product>& = 0;
+
+    virtual auto construct(construction_context_param context) -> Product = 0;
+};
+//------------------------------------------------------------------------------
 template <typename Traits, typename Product, typename MetaType>
-class factory_impl : public factory {
+class factory_impl : public product_factory<Traits, Product> {
 
 private:
     static constexpr const MetaType _meta_type{};
@@ -286,7 +297,7 @@ public:
     using construction_context_param =
       typename Traits::construction_context_param;
 
-    auto base_unit() noexcept -> auto& {
+    auto base_unit() noexcept -> factory_unit_t<Traits, Product>& final {
         return _base_unit;
     }
 
@@ -327,7 +338,7 @@ public:
         return get_element<factory_constructor>(_constructors, index);
     }
 
-    auto construct(construction_context_param context) -> Product {
+    auto construct(construction_context_param context) -> Product final {
         using ctr_t = factory_product_constructor<Traits, Product>;
         const size_t index =
           base_unit().select_constructor(context, static_cast<factory&>(*this));
@@ -356,6 +367,12 @@ public:
       , _name{std::move(name)} {}
 
     template <typename Product>
+    using factory_interface = product_factory<
+      Traits,
+      // this is here to force the compiler to create copy/move constructors
+      decltype(Product(std::declval<Product>()))>;
+
+    template <typename Product>
     using factory_type = factory_impl<
       Traits,
       // this is here to force the compiler to create copy/move constructors
@@ -365,6 +382,11 @@ public:
     template <typename Product>
     auto build() noexcept -> factory_type<Product> {
         return {base_unit(), *this};
+    }
+
+    template <typename Product>
+    auto make() noexcept -> std::unique_ptr<factory_interface<Product>> {
+        return std::make_unique<factory_type<Product>>(base_unit(), *this);
     }
 
     auto as_parameter() const noexcept

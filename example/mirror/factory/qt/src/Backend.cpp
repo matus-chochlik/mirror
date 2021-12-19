@@ -10,24 +10,24 @@
 Backend::Backend()
   : QObject{nullptr}
   , _builder{"qt5"}
-  , _pointFactory{_builder.build<example::point>()}
-  , _triangleFactory{_builder.build<example::triangle>()}
-  , _tetrahedronFactory{_builder.build<example::tetrahedron>()} {
+  , _pointFactory{_builder.make<example::point>()}
+  , _triangleFactory{_builder.make<example::triangle>()}
+  , _tetrahedronFactory{_builder.make<example::tetrahedron>()} {
 
-    _pointFactory.base_unit().view_model().testFunc([this] {
-        const auto p = _pointFactory.construct({});
+    _pointFactory->base_unit().view_model().testFunc([this] {
+        const auto p = _pointFactory->construct({});
         return QString("Distance of constructed point from origin: %1")
           .arg(QString::number(double(p.direction().length())));
     });
 
-    _triangleFactory.base_unit().view_model().testFunc([this] {
-        const auto t = _triangleFactory.construct({});
+    _triangleFactory->base_unit().view_model().testFunc([this] {
+        const auto t = _triangleFactory->construct({});
         return QString("Area of constructed triangle: %1")
           .arg(QString::number(double(t.area())));
     });
 
-    _tetrahedronFactory.base_unit().view_model().testFunc([this] {
-        const auto t = _tetrahedronFactory.construct({});
+    _tetrahedronFactory->base_unit().view_model().testFunc([this] {
+        const auto t = _tetrahedronFactory->construct({});
         return QString("Volume of constructed tetrahedron: %1")
           .arg(QString::number(double(t.volume())));
     });

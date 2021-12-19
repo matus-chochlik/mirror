@@ -16,6 +16,12 @@ QMAKE_CXXFLAGS   += -std=c++2b \
 					-Wno-redundant-parens \
 					-Wno-documentation-unknown-command
 
+QMAKE_LINK        = /opt/mirror/llvm/bin/clang++
+QMAKE_LFLAGS     += -std=c++2b \
+					-stdlib=libc++ \
+					-Wl,-rpath,/opt/mirror/llvm/lib \
+					-Wl,-rpath,/opt/mirror/llvm/lib/x86_64-unknown-linux-gnu
+
 TEMPLATE          = app
 QT               += core quick
 

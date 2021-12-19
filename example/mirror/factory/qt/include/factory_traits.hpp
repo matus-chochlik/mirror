@@ -100,9 +100,13 @@ public:
     }
 
 private:
+    static auto toQString(std::string_view s) {
+        return QString::fromStdString(std::string(s));
+    }
+
     std::unique_ptr<FactoryViewModel> _view_model{
       std::make_unique<FactoryViewModel>(
-        QString(get_name(remove_all_aliases(mirror(Product)))))};
+        toQString(get_name(remove_all_aliases(mirror(Product)))))};
 };
 //------------------------------------------------------------------------------
 template <typename Product>
@@ -222,6 +226,9 @@ public:
         return T{};
     }
 };
+//------------------------------------------------------------------------------
+template <typename Product>
+using qt5_product_factory = product_factory<qt5_factory_traits, Product>;
 //------------------------------------------------------------------------------
 } // namespace mirror
 

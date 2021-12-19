@@ -22,11 +22,10 @@ public:
 public slots:
 private:
     mirror::factory_builder<mirror::qt5_factory_traits> _builder;
-    mirror::built_factory_type<mirror::qt5_factory_traits, example::point>
-      _pointFactory;
-    mirror::built_factory_type<mirror::qt5_factory_traits, example::triangle>
+    std::unique_ptr<mirror::qt5_product_factory<example::point>> _pointFactory;
+    std::unique_ptr<mirror::qt5_product_factory<example::triangle>>
       _triangleFactory;
-    mirror::built_factory_type<mirror::qt5_factory_traits, example::tetrahedron>
+    std::unique_ptr<mirror::qt5_product_factory<example::tetrahedron>>
       _tetrahedronFactory;
 };
 //------------------------------------------------------------------------------
