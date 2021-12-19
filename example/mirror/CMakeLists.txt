@@ -14,5 +14,6 @@ mirror_add_simple_example(has_padding)
 mirror_add_simple_example(invoke)
 mirror_add_simple_example(gen_puml_diagram)
 mirror_add_simple_example(print_full_name)
+mirror_add_simple_example(row_polymorphism)
 
 add_subdirectory(factory)
