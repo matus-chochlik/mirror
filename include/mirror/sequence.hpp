@@ -16,8 +16,7 @@ namespace mirror {
 // transform
 template <__metaobject_id... M, typename F>
 constexpr auto transform(unpacked_metaobject_sequence<M...>, F function) {
-    return unpacked_metaobject_sequence<
-      unwrap<decltype((function(metaobject<M>{})))>...>{};
+    return unpacked_metaobject_sequence<unwrap(function(metaobject<M>{}))...>{};
 }
 
 template <__metaobject_id M, typename F>

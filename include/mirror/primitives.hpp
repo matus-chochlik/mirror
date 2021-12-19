@@ -60,16 +60,10 @@ struct type_list {};
 template <__metaobject_id M>
 struct metaobject {};
 
-template <typename>
-struct unwrap_metaobject;
-
 template <__metaobject_id M>
-struct unwrap_metaobject<metaobject<M>> {
-    static constexpr __metaobject_id value = M;
-};
-
-template <typename M>
-static constexpr const auto unwrap = unwrap_metaobject<M>::value;
+consteval auto unwrap(metaobject<M>) -> __metaobject_id {
+    return M;
+}
 
 /// @brief Special instance of metaobject that does not reflect anything.
 /// @ingroup metaobjects
@@ -1357,7 +1351,7 @@ using _get_reflected_type = type_identity<__unrefltype(M)>;
 /// @see get_reflected_type
 /// @see get_transformed_type_t
 template <typename M>
-using get_reflected_type_t = __unrefltype(unwrap<M>);
+using get_reflected_type_t = __unrefltype(unwrap(M{}));
 
 /// @brief Returns type_identity of base-level type reflected by a metaobject.
 /// @ingroup operations
@@ -1387,7 +1381,7 @@ template <template <typename T> class Transform, __metaobject_id M>
 using _get_transformed_type = Transform<__unrefltype(M)>;
 
 template <template <typename T> class Transform, typename M>
-using get_transformed_type_t = Transform<__unrefltype(unwrap<M>)>;
+using get_transformed_type_t = Transform<__unrefltype(unwrap(M{}))>;
 
 template <template <typename T> class Transform, __metaobject_id M>
 consteval auto
