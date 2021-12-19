@@ -56,7 +56,7 @@ using factory_builder_unit_t = typename Traits::builder_unit;
 template <typename Traits, typename Product, typename MetaCtr, typename MetaParam>
 using factory_parameter_unit_t = factory_product_unit_t<
   Traits,
-  typename decltype(get_reflected_type(get_type(MetaParam{})))::type,
+  typename decltype(get_reflected_type_of(MetaParam{}))::type,
   is_copy_constructor(MetaCtr{}) || is_move_constructor(MetaCtr{})>;
 
 template <typename Traits, typename Product>

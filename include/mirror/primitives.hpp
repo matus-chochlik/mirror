@@ -1350,17 +1350,44 @@ constexpr auto unpack(metaobject<M>)
 template <__metaobject_id M>
 using _get_reflected_type = type_identity<__unrefltype(M)>;
 
+/// @brief Returns the base-level type reflected by a type reflecting metaobject.
+/// @ingroup operations
+/// @see reflects_type
+/// @see get_type
+/// @see get_reflected_type
+/// @see get_transformed_type_t
 template <typename M>
 using get_reflected_type_t = __unrefltype(unwrap<M>);
 
+/// @brief Returns type_identity of base-level type reflected by a metaobject.
+/// @ingroup operations
+/// @see reflects_type
+/// @see get_reflected_type_of
+/// @see get_type
+/// @see get_reflected_type_t
 template <__metaobject_id M>
 consteval auto
 get_reflected_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
     return _get_reflected_type<M>{};
 }
 
-template <template <typename T> class transform, __metaobject_id M>
-using _get_transformed_type = transform<__unrefltype(M)>;
+/// @brief Returns type_identity of base-level type from a typed metaobject.
+/// @ingroup operations
+/// @see reflects_type
+/// @see get_reflected_type
+/// @see get_type
+/// @see get_reflected_type_t
+template <__metaobject_id M>
+consteval auto
+get_reflected_type_of(metaobject<M>) requires(__metaobject_is_meta_typed(M)) {
+    return _get_reflected_type<__metaobject_get_type(M)>{};
+}
+
+template <template <typename T> class Transform, __metaobject_id M>
+using _get_transformed_type = Transform<__unrefltype(M)>;
+
+template <template <typename T> class Transform, typename M>
+using get_transformed_type_t = Transform<__unrefltype(unwrap<M>)>;
 
 template <template <typename T> class Transform, __metaobject_id M>
 consteval auto
@@ -1368,12 +1395,24 @@ get_transformed_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
     return _get_transformed_type<Transform, M>{};
 }
 
+/// @brief Indicates if type-reflecting metaobject reflects the specified type.
+/// @ingroup operations
+/// @see reflects_type
+/// @see has_type
+/// @see get_type
+/// @see get_reflected_type
 template <typename T, __metaobject_id M>
 consteval auto is_type(metaobject<M>, type_identity<T> = {})
   -> bool requires(__metaobject_is_meta_type(M)) {
     return std::is_same_v<__unrefltype(M), T>;
 }
 
+/// @brief Indicates if type-reflecting metaobject reflects the specified type.
+/// @ingroup operations
+/// @see reflects_typed
+/// @see is_type
+/// @see get_type
+/// @see get_reflected_type_of
 template <typename T, __metaobject_id M>
 consteval auto has_type(metaobject<M>, type_identity<T> = {}) -> bool {
     if constexpr(__metaobject_is_meta_typed(M)) {
