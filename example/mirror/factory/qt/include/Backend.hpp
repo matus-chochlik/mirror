@@ -6,6 +6,7 @@
 #define MIRROR_FACTORY_BUILDER_QT_BACKEND_HPP
 
 #include "../../testdecl/tetrahedron.hpp"
+#include "Theme.hpp"
 #include "factory_traits.hpp"
 #include <QtCore>
 
@@ -15,12 +16,16 @@ class Backend : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(BuilderViewModel* builder READ getBuilder CONSTANT)
+    Q_PROPERTY(Theme* theme READ getTheme CONSTANT)
 public:
     Backend();
 
     auto getBuilder() -> BuilderViewModel*;
+    auto getTheme() noexcept -> Theme*;
 public slots:
 private:
+    Theme _theme;
+
     mirror::factory_builder<mirror::qt5_factory_traits> _builder;
     std::unique_ptr<mirror::qt5_product_factory<example::point>> _pointFactory;
     std::unique_ptr<mirror::qt5_product_factory<example::triangle>>

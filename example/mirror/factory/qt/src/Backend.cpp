@@ -37,3 +37,7 @@ auto Backend::getBuilder() -> BuilderViewModel* {
     return &_builder.base_unit().view_model();
 }
 //------------------------------------------------------------------------------
+auto Backend::getTheme() noexcept -> Theme* {
+    return &_theme;
+}
+//------------------------------------------------------------------------------

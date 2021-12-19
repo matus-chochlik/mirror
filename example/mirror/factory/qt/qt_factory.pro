@@ -31,6 +31,7 @@ INCLUDEPATH      += ../../../../include \
 					include
 
 SOURCES          += src/Backend.cpp \
+					src/Theme.cpp \
 					src/BuilderViewModel.cpp \
 					src/FactoryViewModel.cpp \
 					src/ConstructorViewModel.cpp \
@@ -39,6 +40,7 @@ SOURCES          += src/Backend.cpp \
 					main.cpp
 
 HEADERS          += include/Backend.hpp \
+					include/Theme.hpp \
 					include/BuilderViewModel.hpp \
 					include/FactoryViewModel.hpp \
 					include/ConstructorViewModel.hpp \
