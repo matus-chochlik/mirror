@@ -41,10 +41,9 @@ constexpr auto operator""_row() {
 }
 
 template <class T, fixed_string Name>
-concept has_member_name = []<class... Ts>(mirror::type_list<Ts...>) {
-    return ((get_name(Ts{}) == Name) or ...);
-}
-(expand(get_data_members(mirror(T))));
+concept has_member_name = [](auto mo) {
+    return any_of(mo, [](auto me) { return get_name(me) == Name; });
+}(get_data_members(mirror(T)));
 
 template <class... Ts>
 struct rows : Ts... {
