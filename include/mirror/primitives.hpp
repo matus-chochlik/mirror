@@ -1408,6 +1408,8 @@ get_transformed_type(metaobject<M>) requires(__metaobject_is_meta_type(M)) {
 /// @ingroup operations
 /// @see reflects_type
 /// @see has_type
+/// @see has_type_trait
+/// @see has_type_with_trait
 /// @see get_type
 /// @see get_reflected_type
 template <typename T, __metaobject_id M>
@@ -1418,14 +1420,47 @@ consteval auto is_type(metaobject<M>, type_identity<T> = {})
 
 /// @brief Indicates if type-reflecting metaobject reflects the specified type.
 /// @ingroup operations
+/// @see reflects_type
+/// @see is_type
+/// @see has_type
+/// @see has_type_with_trait
+/// @see get_type
+/// @see get_reflected_type
+template <template <typename> class Trait, __metaobject_id M>
+consteval auto has_type_trait(metaobject<M>)
+  -> bool requires(__metaobject_is_meta_type(M)) {
+    return Trait<__unrefltype(M)>::value;
+}
+
+/// @brief Indicates if typed metaobject has the specified type.
+/// @ingroup operations
 /// @see reflects_typed
 /// @see is_type
+/// @see has_type_trait
+/// @see has_type_with_trait
 /// @see get_type
 /// @see get_reflected_type_of
 template <typename T, __metaobject_id M>
 consteval auto has_type(metaobject<M>, type_identity<T> = {}) -> bool {
     if constexpr(__metaobject_is_meta_typed(M)) {
         return std::is_same_v<__unrefltype(__metaobject_get_type(M)), T>;
+    } else {
+        return false;
+    }
+}
+
+/// @brief Indicates if typed metaobject has type with specified trait.
+/// @ingroup operations
+/// @see reflects_type
+/// @see is_type
+/// @see has_type
+/// @see has_type_with_trait
+/// @see get_type
+/// @see get_reflected_type
+template <template <typename> class Trait, __metaobject_id M>
+consteval auto has_type_with_trait(metaobject<M>) -> bool {
+    if constexpr(__metaobject_is_meta_typed(M)) {
+        return Trait<__unrefltype(__metaobject_get_type(M))>::value;
     } else {
         return false;
     }

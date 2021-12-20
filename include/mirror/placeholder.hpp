@@ -615,10 +615,24 @@ consteval auto is_type(placeholder_t<1>, type_identity<T> tid = {}) {
     };
 }
 
+template <template <typename> class Trait>
+consteval auto has_type_trait(placeholder_t<1>) {
+    return [](auto mo) {
+        return has_type_trait<Trait>(mo);
+    };
+}
+
 template <typename T>
 consteval auto has_type(placeholder_t<1>, type_identity<T> tid = {}) {
     return [tid](auto mo) {
         return has_type(mo, tid);
+    };
+}
+
+template <template <typename> class Trait>
+consteval auto has_type_with_trait(placeholder_t<1>) {
+    return [](auto mo) {
+        return has_type_with_trait<Trait>(mo);
     };
 }
 

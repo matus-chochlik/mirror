@@ -5,9 +5,9 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#include <iostream>
 #include <mirror/placeholder.hpp>
 #include <mirror/sequence.hpp>
+#include <iostream>
 
 struct mystruct {
     using type = char;
@@ -27,7 +27,7 @@ int main() {
     const auto ms = mirror(mystruct);
 
     const auto found_by_name =
-      find_if(get_data_members(ms), [](auto me) { return has_name(me, "f"); });
+      find_if(get_data_members(ms), [](auto me) { return has_name(me, "i"); });
 
     if(reflects_variable(found_by_name)) {
         std::cout << get_value(found_by_name, x) << std::endl;
@@ -38,6 +38,13 @@ int main() {
 
     if(reflects_variable(found_by_having_type)) {
         std::cout << get_value(found_by_having_type, x) << std::endl;
+    }
+
+    const auto found_by_having_trait = find_if(
+      get_data_members(ms), has_type_with_trait<std::is_floating_point>(_1));
+
+    if(reflects_variable(found_by_having_trait)) {
+        std::cout << get_value(found_by_having_trait, x) << std::endl;
     }
 
     const auto found_by_being_type =
