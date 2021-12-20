@@ -5,7 +5,6 @@
 #
 include(Example.cmake)
 
-mirror_add_simple_example(dependency_injection)
 mirror_add_simple_example(find_if)
 mirror_add_simple_example(print_enumerators)
 mirror_add_simple_example(print_struct)

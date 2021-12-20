@@ -1,4 +1,4 @@
-/// @example mirror/row_polymorphism.cpp
+/// @example relexpr/row_polymorphism.cpp
 ///
 /// Copyright Kris Jusiak
 /// Distributed under the Boost Software License, Version 1.0.
@@ -6,7 +6,6 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 #include <mirror/diagnostic.hpp>
-#include <experimental/mirror>
 #include <experimental/reflect>
 #include <iostream>
 #include <memory>
