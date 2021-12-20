@@ -65,6 +65,9 @@ consteval auto unwrap(metaobject<M>) -> __metaobject_id {
     return M;
 }
 
+template <__metaobject_id... M>
+using expanded_metaobject_sequence = type_list<metaobject<M>...>;
+
 /// @brief Special instance of metaobject that does not reflect anything.
 /// @ingroup metaobjects
 /// @see metaobject
@@ -1330,12 +1333,24 @@ get_element(metaobject<M>) requires(__metaobject_is_meta_object_sequence(M)) {
     return metaobject<__metaobject_get_element(M, I)>{};
 }
 
-/// @brief Unpacks a sequence metaobject into sequence of separate metaobjects.
+/// @brief Unpacks a sequence metaobject into sequence of separate metaobject ids.
 /// @ingroup operations
 /// @see reflects_object_sequence
+/// @see expand
 template <__metaobject_id M>
 constexpr auto unpack(metaobject<M>)
   -> __unpack_metaobject_seq<unpacked_metaobject_sequence, M> requires(
+    __metaobject_is_meta_object_sequence(M)) {
+    return {};
+}
+
+/// @brief Unpacks a sequence metaobject into sequence of separate metaobjects.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see unpack
+template <__metaobject_id M>
+constexpr auto expand(metaobject<M>)
+  -> __unpack_metaobject_seq<expanded_metaobject_sequence, M> requires(
     __metaobject_is_meta_object_sequence(M)) {
     return {};
 }
