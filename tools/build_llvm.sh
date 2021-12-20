@@ -46,7 +46,7 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX="${llvm_install_dir}" \
 	-DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=${linker}" \
 	-DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=${linker}" \
-	-DLLVM_ENABLE_PROJECTS="clang" \
+	-DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" \
 	-DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
 	-DLLVM_INCLUDE_BENCHMARKS=Off \
 	-DLLVM_USE_LINKER="${linker}" \
