@@ -1,12 +1,11 @@
 /// @example mirror/row_polymorphism.cpp
 ///
-/// Copyright Kris Jusiak
+/// Copyright Kris Jusiak, Matus Chochlik
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#include <experimental/mirror>
-#include <experimental/reflect>
+#include <mirror/sequence.hpp>
 #include <iostream>
 #include <string>
 #include <string_view>
@@ -41,13 +40,11 @@ constexpr auto operator""_row() {
     return row<Name>{};
 }
 
-namespace meta = std::experimental::reflect;
-
 template <class T, fixed_string Name>
-concept has_member_name = []<class... Ts>(std::tuple<Ts...>) {
-    return ((std::string_view{meta::get_name_v<Ts>} == Name) or ...);
+concept has_member_name = []<class... Ts>(mirror::type_list<Ts...>) {
+    return ((get_name(Ts{}) == Name) or ...);
 }
-(meta::unpack_sequence_t<std::tuple, meta::get_data_members_t<reflexpr(T)>>{});
+(expand(get_data_members(mirror(T))));
 
 template <class... Ts>
 struct rows : Ts... {
