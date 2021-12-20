@@ -143,6 +143,43 @@ constexpr auto find_if(metaobject<M> mo, F predicate) requires(
     return find_if(unpack(mo), predicate);
 }
 
+// all of
+template <__metaobject_id... M, typename F>
+constexpr auto all_of(unpacked_metaobject_sequence<M...>, F predicate) -> bool {
+    return (... && predicate(metaobject<M>{}));
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto all_of(metaobject<M> mo, F predicate)
+  -> bool requires(__metaobject_is_meta_object_sequence(M)) {
+    return all_of(unpack(mo), predicate);
+}
+
+// any_of
+template <__metaobject_id... M, typename F>
+constexpr auto any_of(unpacked_metaobject_sequence<M...>, F predicate) -> bool {
+    return (... || predicate(metaobject<M>{}));
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto any_of(metaobject<M> mo, F predicate)
+  -> bool requires(__metaobject_is_meta_object_sequence(M)) {
+    return any_of(unpack(mo), predicate);
+}
+
+// none_of
+template <__metaobject_id... M, typename F>
+constexpr auto none_of(unpacked_metaobject_sequence<M...>, F predicate)
+  -> bool {
+    return !(... || predicate(metaobject<M>{}));
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto none_of(metaobject<M> mo, F predicate)
+  -> bool requires(__metaobject_is_meta_object_sequence(M)) {
+    return none_of(unpack(mo), predicate);
+}
+
 // select
 template <typename T, __metaobject_id... M, typename F, typename... P>
 constexpr auto
