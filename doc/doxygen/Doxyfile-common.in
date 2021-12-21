@@ -1,0 +1,23 @@
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
+#
+
+@INCLUDE                = @CMAKE_CURRENT_SOURCE_DIR@/Doxyfile-common
+PROJECT_NUMBER          = @MIRROR_VERSION@
+PROJECT_LOGO            = @CMAKE_CURRENT_SOURCE_DIR@/doc/logo/mirror.png
+OUTPUT_DIRECTORY        = @CMAKE_CURRENT_BINARY_DIR@
+
+STRIP_FROM_PATH        += @PROJECT_BINARY_DIR@/include
+STRIP_FROM_PATH        += @PROJECT_SOURCE_DIR@/include
+STRIP_FROM_PATH        += @CMAKE_CURRENT_SOURCE_DIR@/include
+STRIP_FROM_PATH        += @CMAKE_CURRENT_SOURCE_DIR@/example
+STRIP_FROM_INC_PATH    += @PROJECT_BINARY_DIR@/include
+STRIP_FROM_INC_PATH    += @PROJECT_SOURCE_DIR@/include
+STRIP_FROM_INC_PATH    += @CMAKE_CURRENT_BINARY_DIR@/include
+STRIP_FROM_INC_PATH    += @CMAKE_CURRENT_SOURCE_DIR@/include
+
+INPUT                  += @CMAKE_CURRENT_SOURCE_DIR@/include
+INPUT                  += @PROJECT_BINARY_DIR@/include
+INPUT                  += @PROJECT_SOURCE_DIR@/example

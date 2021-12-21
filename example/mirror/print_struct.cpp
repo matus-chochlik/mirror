@@ -1,4 +1,4 @@
-/// @example print_struct
+/// @example mirror/print_struct.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 #include <iostream>
-#include <mirror/primitives.hpp>
+#include <mirror/sequence.hpp>
 
 template <typename S>
 void print_struct(const S& x) {

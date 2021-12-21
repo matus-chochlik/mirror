@@ -74,3 +74,7 @@ Copyright 2008-2021 Matus Chochlik. Distributed under the Boost
 Software License, Version 1.0. (See accompanying file
 LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+The applications using Qt5 are distributed under
+the GNU GENERAL PUBLIC LICENSE version 3.
+See http://www.gnu.org/licenses/gpl-3.0.txt
+

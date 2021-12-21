@@ -1,4 +1,4 @@
-/// @example print_enumerators
+/// @example mirror/print_enumerators.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -7,6 +7,7 @@
 ///
 #include <iostream>
 #include <mirror/enum_utils.hpp>
+#include <mirror/sequence.hpp>
 
 enum class weekdays : int {
     monday = 1,

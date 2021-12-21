@@ -7,6 +7,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Mirror CXX)
 
+file(STRINGS VERSION MIRROR_VERSION)
+
 include(config/Policies.cmake)
 include(config/Defaults.cmake)
 include(config/BuildType.cmake)
@@ -14,3 +16,4 @@ include(config/BuildType.cmake)
 add_subdirectory(include)
 add_subdirectory(source)
 add_subdirectory(example)
+add_subdirectory(doc)
