@@ -440,9 +440,29 @@ consteval auto reflects_conversion_operator(metaobject<M>) -> bool {
 
 /// @brief Indicates if a metaobject reflects an expression.
 /// @ingroup classification
+/// @see reflects_parenthesized_expression
+/// @see reflects_function_call_expression
 template <__metaobject_id M>
 consteval auto reflects_expression(metaobject<M>) -> bool {
     return __metaobject_is_meta_expression(M);
+}
+
+/// @brief Indicates if a metaobject reflects a parenthesized expression.
+/// @ingroup classification
+/// @see reflects_expression
+/// @see reflects_function_call_expression
+template <__metaobject_id M>
+consteval auto reflects_parenthesized_expression(metaobject<M>) -> bool {
+    return __metaobject_is_meta_parenthesized_expression(M);
+}
+
+/// @brief Indicates if a metaobject reflects a function call expression.
+/// @ingroup classification
+/// @see reflects_expression
+/// @see reflects_parenthesized_expression
+template <__metaobject_id M>
+consteval auto reflects_function_call_expression(metaobject<M>) -> bool {
+    return __metaobject_is_meta_function_call_expression(M);
 }
 
 /// @brief Indicates if a metaobject reflects a specifier.
@@ -1166,6 +1186,28 @@ constexpr auto remove_all_aliases(metaobject<M> mo) {
 template <__metaobject_id M>
 constexpr auto get_class(metaobject<M>) requires(__metaobject_is_meta_base(M)) {
     return metaobject<__metaobject_get_class(M)>{};
+}
+
+/// @brief Returns the reflection of the sub-expression of a parenthesized expression.
+/// @ingroup operations
+/// @see reflects_parenthesized_expression
+/// @see reflects_function_call_expression
+/// @see get_callable
+template <__metaobject_id M>
+constexpr auto get_subexpression(metaobject<M>) requires(
+  __metaobject_is_meta_parenthesized_expression(M)) {
+    return metaobject<__metaobject_get_subexpression(M)>{};
+}
+
+/// @brief Returns the reflection of the sub-expression of a parenthesized expression.
+/// @ingroup operations
+/// @see reflects_parenthesized_expression
+/// @see reflects_function_call_expression
+/// @see get_subexpression
+template <__metaobject_id M>
+constexpr auto get_callable(metaobject<M>) requires(
+  __metaobject_is_meta_function_call_expression(M)) {
+    return metaobject<__metaobject_get_callable(M)>{};
 }
 
 /// @brief Returns a sequence of base class specifier reflections of a reflected class.

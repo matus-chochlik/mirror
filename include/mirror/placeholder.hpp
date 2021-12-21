@@ -211,6 +211,18 @@ consteval auto reflects_expression(placeholder_t<1>) {
     };
 }
 
+consteval auto reflects_parenthesized_expression(placeholder_t<1>) {
+    return [](auto mo) {
+        return reflects_parenthesized_expression(mo);
+    };
+}
+
+consteval auto reflects_function_call_expression(placeholder_t<1>) {
+    return [](auto mo) {
+        return reflects_function_call_expression(mo);
+    };
+}
+
 consteval auto reflects_specifier(placeholder_t<1>) {
     return [](auto mo) {
         return reflects_specifier(mo);
@@ -520,6 +532,18 @@ consteval auto remove_all_aliases(placeholder_t<1>) {
 consteval auto get_class(placeholder_t<1>) {
     return [](auto mo) {
         return get_class(mo);
+    };
+}
+
+consteval auto get_subexpression(placeholder_t<1>) {
+    return [](auto mo) {
+        return get_subexpression(mo);
+    };
+}
+
+consteval auto get_callable(placeholder_t<1>) {
+    return [](auto mo) {
+        return get_callable(mo);
     };
 }
 
