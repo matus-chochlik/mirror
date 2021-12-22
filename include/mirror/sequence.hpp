@@ -128,12 +128,12 @@ constexpr auto find_if(unpacked_metaobject_sequence<>, F) {
     return no_metaobject;
 }
 
-template <__metaobject_id M1, __metaobject_id... M, typename F>
-constexpr auto find_if(unpacked_metaobject_sequence<M1, M...>, F predicate) {
-    if constexpr(predicate(metaobject<M1>{})) {
-        return metaobject<M1>{};
+template <__metaobject_id M, __metaobject_id... Mt, typename F>
+constexpr auto find_if(unpacked_metaobject_sequence<M, Mt...>, F predicate) {
+    if constexpr(predicate(metaobject<M>{})) {
+        return metaobject<M>{};
     } else {
-        return find_if(unpacked_metaobject_sequence<M...>{}, predicate);
+        return find_if(unpacked_metaobject_sequence<Mt...>{}, predicate);
     }
 }
 
@@ -141,6 +141,47 @@ template <__metaobject_id M, typename F>
 constexpr auto find_if(metaobject<M> mo, F predicate) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return find_if(unpack(mo), predicate);
+}
+
+// filter
+template <__metaobject_id... M, typename F>
+constexpr auto
+do_filter(unpacked_metaobject_sequence<M...>, unpacked_metaobject_sequence<>, F)
+  -> unpacked_metaobject_sequence<M...> {
+    return {};
+}
+
+template <
+  __metaobject_id... Mh,
+  __metaobject_id M,
+  __metaobject_id... Mt,
+  typename F>
+constexpr auto do_filter(
+  unpacked_metaobject_sequence<Mh...>,
+  unpacked_metaobject_sequence<M, Mt...>,
+  F predicate) {
+    if constexpr(predicate(metaobject<M>{})) {
+        return do_filter(
+          unpacked_metaobject_sequence<Mh..., M>{},
+          unpacked_metaobject_sequence<Mt...>{},
+          predicate);
+    } else {
+        return do_filter(
+          unpacked_metaobject_sequence<Mh...>{},
+          unpacked_metaobject_sequence<Mt...>{},
+          predicate);
+    }
+}
+
+template <__metaobject_id... M, typename F>
+constexpr auto filter(unpacked_metaobject_sequence<M...> seq, F predicate) {
+    return do_filter(unpacked_metaobject_sequence<>{}, seq, predicate);
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto filter(metaobject<M> mo, F predicate) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return filter(unpack(mo), predicate);
 }
 
 // all of
