@@ -13,6 +13,33 @@
 
 namespace mirror {
 
+/// @brief Indicates if the argument is a sequence of metaobjects.
+/// @ingroup classification
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see get_size
+template <__metaobject_id M>
+consteval auto is_object_sequence(metaobject<M>) -> bool {
+    return __metaobject_is_meta_object_sequence(M);
+}
+
+template <__metaobject_id... M>
+consteval auto is_object_sequence(unpacked_metaobject_sequence<M...>) -> bool {
+    return true;
+}
+
+template <typename X>
+concept metaobject_sequence = is_object_sequence(X{});
+
+/// @brief Makes an unpacked_metaobject_sequence from individual metaobjects.
+/// @ingroup sequence_operations
+/// @see is_object_sequence
+template <__metaobject_id... M>
+constexpr auto make_sequence(metaobject<M>...)
+  -> unpacked_metaobject_sequence<M...> {
+    return {};
+}
+
 // transform
 template <__metaobject_id... M, typename F>
 constexpr auto transform(unpacked_metaobject_sequence<M...>, F function) {

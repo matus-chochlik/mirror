@@ -48,6 +48,11 @@ using std::integral_constant;
 using std::string_view;
 using std::type_identity;
 
+/// @brief Template implementing an unpacked sequence of individual metaobjects,
+/// @ingroup metaobjects
+/// @see is_metaobject_sequence
+/// @see reflects_metaobject_sequence
+/// @see metaobject
 template <__metaobject_id... M>
 struct unpacked_metaobject_sequence {};
 
@@ -56,7 +61,9 @@ struct type_list {};
 
 /// @brief Template implementing the metaobject type reflecting base-level entities.
 /// @ingroup metaobjects
+/// @see reflects_metaobject
 /// @see no_metaobject
+/// @see unpacked_metaobject_sequence
 template <__metaobject_id M>
 struct metaobject {};
 
@@ -81,8 +88,9 @@ consteval auto reflects_object(metaobject<M>) -> bool {
     return __metaobject_is_meta_object(M);
 }
 
-/// @brief Indicates if the argument is a sequence of metaobjects.
+/// @brief Indicates if the argument reflects a sequence of metaobjects.
 /// @ingroup classification
+/// @see is_object_sequence
 /// @see is_empty
 /// @see get_size
 /// @see get_element
