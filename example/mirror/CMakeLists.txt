@@ -5,6 +5,7 @@
 #
 include(Example.cmake)
 
+mirror_add_simple_example(filter)
 mirror_add_simple_example(find_if)
 mirror_add_simple_example(gen_puml_diagram)
 mirror_add_simple_example(has_padding)
