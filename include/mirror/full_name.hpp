@@ -14,10 +14,10 @@
 namespace mirror {
 
 template <__metaobject_id M>
-auto get_full_name(metaobject<M>) -> std::string;
+auto get_full_name(wrapped_metaobject<M>) -> std::string;
 
 template <__metaobject_id Mp>
-auto get_qualified_name(metaobject<Mp> mo) -> std::string
+auto get_qualified_name(wrapped_metaobject<Mp> mo) -> std::string
   requires(__metaobject_is_meta_named(Mp)) {
     if constexpr(reflects_global_scope_member(mo) || !reflects_scope_member(mo)) {
         return std::string{get_name(mo)};
@@ -309,7 +309,7 @@ struct decorate<T<P...>> : defaults {
 } // namespace _full_type_name
 
 template <__metaobject_id Mp>
-auto get_full_name(metaobject<Mp> mo) -> std::string {
+auto get_full_name(wrapped_metaobject<Mp> mo) -> std::string {
     if constexpr(reflects_type(mo)) {
         using D = _full_type_name::decorate<__unrefltype(Mp)>;
         return D::left() + D::base() + D::right() + D::extents() + D::params();
