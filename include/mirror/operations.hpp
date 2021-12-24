@@ -47,8 +47,6 @@ enum class metaobject_unary_op {
     has_default_argument,
     has_lvalueref_qualifier,
     has_rvalueref_qualifier,
-    hide_private,
-    hide_protected,
     uses_class_key,
     uses_struct_key,
     uses_default_copy_capture,
@@ -62,7 +60,26 @@ enum class metaobject_unary_op {
     // string
     get_display_name,
     get_name,
-    get_source_file_name
+    get_source_file_name,
+    // metaobject
+    get_aliased,
+    get_base_classes,
+    get_callable,
+    get_captures,
+    get_data_members,
+    get_class,
+    get_constructors,
+    get_destructors,
+    get_member_functions,
+    get_member_types,
+    get_operators,
+    get_parameters,
+    get_scope,
+    get_subexpression,
+    get_type,
+    get_underlying_type,
+    hide_private,
+    hide_protected
 };
 
 template <metaobject_unary_op>
@@ -113,8 +130,6 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(is_volatile)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(has_default_argument)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(has_lvalueref_qualifier)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(has_rvalueref_qualifier)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_private)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_class_key)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_struct_key)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_copy_capture)
@@ -189,6 +204,41 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
+    template <>                                                              \
+    struct map_unary_op<metaobject_unary_op::NAME> {                         \
+        using result_type = decltype(no_metaobject);                         \
+        template <__metaobject_id M>                                         \
+        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
+            return __metaobject_##NAME(bool, M);                             \
+        }                                                                    \
+        template <__metaobject_id M>                                         \
+        static consteval auto apply(wrapped_metaobject<M>) {                 \
+            return wrapped_metaobject<__metaobject_##NAME(M)>{};             \
+        }                                                                    \
+    };
+
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_aliased)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_base_classes)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_callable)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_captures)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_data_members)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_class)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_constructors)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_destructors)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_member_functions)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_member_types)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_operators)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_parameters)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_scope)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_subexpression)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_type)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_underlying_type)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_private)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
+
+#undef MIRROR_IMPLEMENT_MAP_UNARY_OP
+//------------------------------------------------------------------------------
 template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept {
     return map_unary_op<O>::is_applicable(mo);
@@ -204,8 +254,9 @@ template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     if constexpr(is_applicable<O>(mo)) {
         return std::optional{map_unary_op<O>::apply(mo)};
+    } else {
+        return std::optional<typename map_unary_op<O>::result_type>{};
     }
-    return std::optional<typename map_unary_op<O>::result_type>{};
 }
 
 } // namespace mirror
