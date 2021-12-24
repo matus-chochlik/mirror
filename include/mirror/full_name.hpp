@@ -10,6 +10,7 @@
 #define MIRROR_FULL_NAME_HPP
 
 #include "primitives.hpp"
+#include <string>
 
 namespace mirror {
 
