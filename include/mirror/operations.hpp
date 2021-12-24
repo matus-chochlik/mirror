@@ -53,12 +53,16 @@ enum class metaobject_unary_op {
     uses_struct_key,
     uses_default_copy_capture,
     uses_default_reference_capture,
-    // integral
+    // integral/constant/pointer
     get_constant,
     get_pointer,
     get_size,
     get_source_column,
-    get_source_line
+    get_source_line,
+    // string
+    get_display_name,
+    get_name,
+    get_source_file_name
 };
 
 template <metaobject_unary_op>
@@ -161,6 +165,27 @@ struct map_unary_op<metaobject_unary_op::get_pointer> {
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_size)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_column)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_line)
+
+#undef MIRROR_IMPLEMENT_MAP_UNARY_OP
+//------------------------------------------------------------------------------
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
+    template <>                                                              \
+    struct map_unary_op<metaobject_unary_op::NAME> {                         \
+        using result_type = std::string_view;                                \
+        template <__metaobject_id M>                                         \
+        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
+            return __metaobject_##NAME(bool, M);                             \
+        }                                                                    \
+        template <__metaobject_id M>                                         \
+        static consteval auto apply(wrapped_metaobject<M>)                   \
+          -> std::string_view {                                              \
+            return NAME##_view(M);                                           \
+        }                                                                    \
+    };
+
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_display_name)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_name)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
