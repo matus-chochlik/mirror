@@ -16,6 +16,7 @@ mirror_add_simple_example(print_enumerators)
 mirror_add_simple_example(print_full_name)
 mirror_add_simple_example(print_months)
 mirror_add_simple_example(print_struct)
+mirror_add_simple_example(print_traits)
 mirror_add_simple_example(row_polymorphism)
 
 add_subdirectory(factory)
