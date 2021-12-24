@@ -15,6 +15,7 @@
 namespace mirror {
 
 enum class metaobject_unary_op {
+    // boolean
     is_call_operator_const,
     is_const,
     is_constexpr,
@@ -51,22 +52,30 @@ enum class metaobject_unary_op {
     uses_class_key,
     uses_struct_key,
     uses_default_copy_capture,
-    uses_default_reference_capture
+    uses_default_reference_capture,
+    // integral
+    get_constant,
+    get_pointer,
+    get_size,
+    get_source_column,
+    get_source_line
 };
 
 template <metaobject_unary_op>
 struct map_unary_op;
 
-#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                               \
-    template <>                                                           \
-    struct map_unary_op<metaobject_unary_op::NAME> {                      \
-        using result_type = bool;                                         \
-        static consteval auto is_applicable(__metaobject_id mi) -> bool { \
-            return __metaobject_##NAME(bool, mi);                         \
-        }                                                                 \
-        static consteval auto apply(__metaobject_id mi) -> bool {         \
-            return __metaobject_##NAME(mi);                               \
-        }                                                                 \
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
+    template <>                                                              \
+    struct map_unary_op<metaobject_unary_op::NAME> {                         \
+        using result_type = bool;                                            \
+        template <__metaobject_id M>                                         \
+        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
+            return __metaobject_##NAME(bool, M);                             \
+        }                                                                    \
+        template <__metaobject_id M>                                         \
+        static consteval auto apply(wrapped_metaobject<M>) -> bool {         \
+            return __metaobject_##NAME(M);                                   \
+        }                                                                    \
     };
 
 MIRROR_IMPLEMENT_MAP_UNARY_OP(is_call_operator_const)
@@ -108,25 +117,70 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_copy_capture)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_reference_capture)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
+//------------------------------------------------------------------------------
+template <>
+struct map_unary_op<metaobject_unary_op::get_constant> {
+    using result_type = std::uintmax_t;
+    template <__metaobject_id M>
+    static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
+        return __metaobject_get_constant(bool, M);
+    }
+    template <__metaobject_id M>
+    static consteval auto apply(wrapped_metaobject<M>) {
+        return _get_constant<M>::value;
+    }
+};
 
+template <>
+struct map_unary_op<metaobject_unary_op::get_pointer> {
+    using result_type = std::uintmax_t;
+    template <__metaobject_id M>
+    static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
+        return __metaobject_get_pointer(bool, M);
+    }
+    template <__metaobject_id M>
+    static consteval auto apply(wrapped_metaobject<M>) {
+        return _get_pointer<M>::value;
+    }
+};
+
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
+    template <>                                                              \
+    struct map_unary_op<metaobject_unary_op::NAME> {                         \
+        using result_type = size_t;                                          \
+        template <__metaobject_id M>                                         \
+        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
+            return __metaobject_##NAME(bool, M);                             \
+        }                                                                    \
+        template <__metaobject_id M>                                         \
+        static consteval auto apply(wrapped_metaobject<M>) -> size_t {       \
+            return __metaobject_##NAME(M);                                   \
+        }                                                                    \
+    };
+
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_size)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_column)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_line)
+
+#undef MIRROR_IMPLEMENT_MAP_UNARY_OP
+//------------------------------------------------------------------------------
 template <metaobject_unary_op O, __metaobject_id M>
-constexpr auto is_applicable(wrapped_metaobject<M>) noexcept {
-    return map_unary_op<O>::is_applicable(M);
+constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept {
+    return map_unary_op<O>::is_applicable(mo);
 }
 
 template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto apply(wrapped_metaobject<M> mo) noexcept
   requires(is_applicable(mo)) {
-    return map_unary_op<O>::apply(M);
+    return map_unary_op<O>::apply(mo);
 }
 
 template <metaobject_unary_op O, __metaobject_id M>
-constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept
-  -> std::optional<typename map_unary_op<O>::result_type> {
+constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     if constexpr(is_applicable<O>(mo)) {
-        return {map_unary_op<O>::apply(M)};
+        return std::optional{map_unary_op<O>::apply(mo)};
     }
-    return {};
+    return std::optional<typename map_unary_op<O>::result_type>{};
 }
 
 } // namespace mirror
