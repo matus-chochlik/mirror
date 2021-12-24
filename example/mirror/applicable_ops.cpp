@@ -5,6 +5,7 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
+#include "testdecl/weekday.hpp"
 #include <mirror/operations.hpp>
 #include <mirror/sequence.hpp>
 #include <iostream>
@@ -28,5 +29,7 @@ int main(int argc, const char**) {
     print_info(mirror(std));
     print_info(mirror(std::string));
     print_info(mirror(argc));
+    print_info(mirror(example::weekday));
+    print_info(mirror(example::weekday::friday));
     return argc - 1;
 }
