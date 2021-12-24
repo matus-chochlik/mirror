@@ -6,7 +6,6 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 #include <mirror/init_list.hpp>
-#include <mirror/sequence.hpp>
 #include <mirror/traits.hpp>
 #include <algorithm>
 #include <iomanip>
