@@ -130,6 +130,16 @@ consteval auto reflects_alias(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_alias(M);
 }
 
+/// @brief Indicates if a metaobject reflects a base-level entity with a type.
+/// @ingroup classification
+/// @see get_type
+/// @see has_type
+/// @see has_type_trait
+template <__metaobject_id M>
+consteval auto reflects_typed(wrapped_metaobject<M>) -> bool {
+    return __metaobject_is_meta_typed(M);
+}
+
 /// @brief Indicates if a metaobject reflects a base-level scope.
 /// @ingroup classification
 /// @see reflects_namespace
@@ -140,14 +150,6 @@ consteval auto reflects_alias(wrapped_metaobject<M>) -> bool {
 template <__metaobject_id M>
 consteval auto reflects_scope(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_scope(M);
-}
-
-/// @brief Indicates if a metaobject reflects a base-level entity with a type.
-/// @ingroup classification
-/// @see get_type
-template <__metaobject_id M>
-consteval auto reflects_typed(wrapped_metaobject<M>) -> bool {
-    return __metaobject_is_meta_typed(M);
 }
 
 /// @brief Indicates if a metaobject reflects a base-level scope member.
