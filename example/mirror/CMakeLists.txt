@@ -5,6 +5,7 @@
 #
 include(Example.cmake)
 
+mirror_add_simple_example(applicable_ops)
 mirror_add_simple_example(expression)
 mirror_add_simple_example(filter)
 mirror_add_simple_example(find_if)
