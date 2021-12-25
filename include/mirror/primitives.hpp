@@ -92,6 +92,8 @@ constinit const wrapped_metaobject<__reflexpr_id()> no_metaobject{};
 /// @brief Indicates if a metaobject reflects any base-level entity.
 /// @ingroup classification
 /// @see find_if
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_object(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_object(M);
@@ -103,6 +105,8 @@ consteval auto reflects_object(wrapped_metaobject<M>) -> bool {
 /// @see is_empty
 /// @see get_size
 /// @see get_element
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_object_sequence(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_object_sequence(M);
@@ -115,6 +119,8 @@ consteval auto reflects_object_sequence(wrapped_metaobject<M>) -> bool {
 /// @see has_name
 /// @see get_display_name
 /// @see get_full_name
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_named(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_named(M);
@@ -125,6 +131,8 @@ consteval auto reflects_named(wrapped_metaobject<M>) -> bool {
 /// @see reflects_named
 /// @see get_aliased
 /// @see remove_all_aliases
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_alias(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_alias(M);
@@ -135,6 +143,8 @@ consteval auto reflects_alias(wrapped_metaobject<M>) -> bool {
 /// @see get_type
 /// @see has_type
 /// @see has_type_trait
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_typed(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_typed(M);
@@ -147,6 +157,8 @@ consteval auto reflects_typed(wrapped_metaobject<M>) -> bool {
 /// @see reflects_record
 /// @see reflects_scope_member
 /// @see get_scope
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_scope(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_scope(M);
@@ -156,6 +168,8 @@ consteval auto reflects_scope(wrapped_metaobject<M>) -> bool {
 /// @ingroup classification
 /// @see reflects_scope
 /// @see get_scope
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_scope_member(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_scope_member(M);
@@ -180,6 +194,8 @@ consteval auto reflects_global_scope_member(wrapped_metaobject<M>) -> bool {
 /// @see reflects_enum
 /// @see get_enumerators
 /// @see get_underlying_type
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_enumerator(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_enumerator(M);
@@ -192,6 +208,8 @@ consteval auto reflects_enumerator(wrapped_metaobject<M>) -> bool {
 /// @see get_data_members
 /// @see get_member_types
 /// @see get_member_functions
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_record_member(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_record_member(M);
@@ -205,6 +223,8 @@ consteval auto reflects_record_member(wrapped_metaobject<M>) -> bool {
 /// @see is_protected
 /// @see is_public
 /// @see is_virtual
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_base(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_base(M);
@@ -215,6 +235,8 @@ consteval auto reflects_base(wrapped_metaobject<M>) -> bool {
 /// @see reflects_inline_namespace
 /// @see reflects_global_scope
 /// @see get_scope
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_namespace(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_namespace(M);
@@ -223,6 +245,8 @@ consteval auto reflects_namespace(wrapped_metaobject<M>) -> bool {
 /// @brief Indicates if a metaobject reflects an inline namespace.
 /// @ingroup classification
 /// @see reflects_namespace
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_inline_namespace(wrapped_metaobject<M>) -> bool {
     if constexpr(__metaobject_is_meta_namespace(M)) {
@@ -235,6 +259,8 @@ consteval auto reflects_inline_namespace(wrapped_metaobject<M>) -> bool {
 /// @brief Indicates if a metaobject reflects the global scope.
 /// @ingroup classification
 /// @see reflects_namespace
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_global_scope(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_global_scope(M);
@@ -244,6 +270,8 @@ consteval auto reflects_global_scope(wrapped_metaobject<M>) -> bool {
 /// @ingroup classification
 /// @see get_type
 /// @see get_reflected_type
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_type(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_type(M);
@@ -255,6 +283,8 @@ consteval auto reflects_type(wrapped_metaobject<M>) -> bool {
 /// @see reflects_type
 /// @see get_enumerators
 /// @see get_underlying_type
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_enum(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_enum(M);
@@ -270,6 +300,8 @@ consteval auto reflects_enum(wrapped_metaobject<M>) -> bool {
 /// @see get_constructors
 /// @see get_destructors
 /// @see get_operators
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_record(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_record(M);
@@ -287,6 +319,8 @@ consteval auto reflects_record(wrapped_metaobject<M>) -> bool {
 /// @see get_destructors
 /// @see get_operators
 /// @see get_base_classes
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_class(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_class(M);
@@ -297,6 +331,8 @@ consteval auto reflects_class(wrapped_metaobject<M>) -> bool {
 /// @see reflects_record
 /// @see reflects_class
 /// @see get_captures
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_lambda(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_lambda(M);
@@ -307,6 +343,8 @@ consteval auto reflects_lambda(wrapped_metaobject<M>) -> bool {
 /// @see reflects_enumerator
 /// @see get_constant
 /// @see get_value
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_constant(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_constant(M);
@@ -319,6 +357,8 @@ consteval auto reflects_constant(wrapped_metaobject<M>) -> bool {
 /// @see get_pointer
 /// @see get_reference
 /// @see get_value
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_variable(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_variable(M);
@@ -329,6 +369,8 @@ consteval auto reflects_variable(wrapped_metaobject<M>) -> bool {
 /// @see reflects_lambda
 /// @see get_captures
 /// @see is_explicitly_captured
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_lambda_capture(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_lambda_capture(M);
@@ -339,6 +381,8 @@ consteval auto reflects_lambda_capture(wrapped_metaobject<M>) -> bool {
 /// @see reflects_callable
 /// @see reflects_variable
 /// @see get_parameters
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_function_parameter(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_function_parameter(M);
@@ -349,6 +393,8 @@ consteval auto reflects_function_parameter(wrapped_metaobject<M>) -> bool {
 /// @see reflects_function
 /// @see reflects_function_parameter
 /// @see get_parameters
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_callable(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_callable(M);
@@ -362,6 +408,8 @@ consteval auto reflects_callable(wrapped_metaobject<M>) -> bool {
 /// @see get_type
 /// @see get_parameters
 /// @see is_deleted
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_function(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_function(M);
@@ -377,6 +425,8 @@ consteval auto reflects_function(wrapped_metaobject<M>) -> bool {
 /// @see get_scope
 /// @see get_type
 /// @see get_parameters
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_member_function(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_member_function(M);
@@ -394,6 +444,8 @@ consteval auto reflects_member_function(wrapped_metaobject<M>) -> bool {
 /// @see get_parameters
 /// @see is_defaulted
 /// @see is_deleted
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_special_member_function(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_special_member_function(M);
@@ -410,6 +462,8 @@ consteval auto reflects_special_member_function(wrapped_metaobject<M>) -> bool {
 /// @see get_parameters
 /// @see is_defaulted
 /// @see is_deleted
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_constructor(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_constructor(M);
@@ -425,6 +479,8 @@ consteval auto reflects_constructor(wrapped_metaobject<M>) -> bool {
 /// @see get_parameters
 /// @see is_defaulted
 /// @see is_deleted
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_destructor(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_destructor(M);
@@ -439,6 +495,8 @@ consteval auto reflects_destructor(wrapped_metaobject<M>) -> bool {
 /// @see get_scope
 /// @see get_parameters
 /// @see is_deleted
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_operator(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_operator(M);
@@ -452,6 +510,8 @@ consteval auto reflects_operator(wrapped_metaobject<M>) -> bool {
 /// @see get_operators
 /// @see get_scope
 /// @see get_parameters
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_conversion_operator(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_conversion_operator(M);
@@ -461,6 +521,8 @@ consteval auto reflects_conversion_operator(wrapped_metaobject<M>) -> bool {
 /// @ingroup classification
 /// @see reflects_parenthesized_expression
 /// @see reflects_function_call_expression
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_expression(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_expression(M);
@@ -470,6 +532,8 @@ consteval auto reflects_expression(wrapped_metaobject<M>) -> bool {
 /// @ingroup classification
 /// @see reflects_expression
 /// @see reflects_function_call_expression
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>)
   -> bool {
@@ -480,6 +544,8 @@ consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>)
 /// @ingroup classification
 /// @see reflects_expression
 /// @see reflects_parenthesized_expression
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_function_call_expression(wrapped_metaobject<M>)
   -> bool {
@@ -488,6 +554,8 @@ consteval auto reflects_function_call_expression(wrapped_metaobject<M>)
 
 /// @brief Indicates if a metaobject reflects a specifier.
 /// @ingroup classification
+/// @see metaobject_trait
+/// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_specifier(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_specifier(M);
