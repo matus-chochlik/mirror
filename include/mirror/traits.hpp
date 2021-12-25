@@ -9,6 +9,7 @@
 #ifndef MIRROR_TRAITS_HPP
 #define MIRROR_TRAITS_HPP
 
+#include "preprocessor.hpp"
 #include "primitives.hpp"
 
 namespace mirror {
@@ -52,12 +53,12 @@ enum class metaobject_trait {
 template <metaobject_trait>
 struct map_trait;
 
-#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                  \
-    template <>                                           \
-    struct map_trait<metaobject_trait::is_##NAME> {       \
-        static consteval auto apply(__metaobject_id mi) { \
-            return __metaobject_is_meta_##NAME(mi);       \
-        }                                                 \
+#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                         \
+    template <>                                                  \
+    struct map_trait<metaobject_trait::MIRROR_JOIN(is_, NAME)> { \
+        static consteval auto apply(__metaobject_id mi) {        \
+            return MIRROR_JOIN(__metaobject_is_meta_, NAME)(mi); \
+        }                                                        \
     };
 
 MIRROR_IMPLEMENT_MAP_TRAIT(object)

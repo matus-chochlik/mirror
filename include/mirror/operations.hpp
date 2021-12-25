@@ -9,6 +9,7 @@
 #ifndef MIRROR_OPERATIONS_HPP
 #define MIRROR_OPERATIONS_HPP
 
+#include "preprocessor.hpp"
 #include "primitives.hpp"
 #include <optional>
 
@@ -91,11 +92,11 @@ struct map_unary_op;
         using result_type = bool;                                            \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return __metaobject_##NAME(bool, M);                             \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
         }                                                                    \
         template <__metaobject_id M>                                         \
         static consteval auto apply(wrapped_metaobject<M>) -> bool {         \
-            return __metaobject_##NAME(M);                                   \
+            return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
         }                                                                    \
     };
 
@@ -169,11 +170,11 @@ struct map_unary_op<metaobject_unary_op::get_pointer> {
         using result_type = size_t;                                          \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return __metaobject_##NAME(bool, M);                             \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
         }                                                                    \
         template <__metaobject_id M>                                         \
         static consteval auto apply(wrapped_metaobject<M>) -> size_t {       \
-            return __metaobject_##NAME(M);                                   \
+            return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
         }                                                                    \
     };
 
@@ -189,12 +190,12 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_line)
         using result_type = std::string_view;                                \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return __metaobject_##NAME(bool, M);                             \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
         }                                                                    \
         template <__metaobject_id M>                                         \
         static consteval auto apply(wrapped_metaobject<M>)                   \
           -> std::string_view {                                              \
-            return NAME##_view(M);                                           \
+            return MIRROR_JOIN(NAME, _view)(M);                              \
         }                                                                    \
     };
 
@@ -204,18 +205,18 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
-#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
-    template <>                                                              \
-    struct map_unary_op<metaobject_unary_op::NAME> {                         \
-        using result_type = decltype(no_metaobject);                         \
-        template <__metaobject_id M>                                         \
-        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return __metaobject_##NAME(bool, M);                             \
-        }                                                                    \
-        template <__metaobject_id M>                                         \
-        static consteval auto apply(wrapped_metaobject<M>) {                 \
-            return wrapped_metaobject<__metaobject_##NAME(M)>{};             \
-        }                                                                    \
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
+    template <>                                                               \
+    struct map_unary_op<metaobject_unary_op::NAME> {                          \
+        using result_type = decltype(no_metaobject);                          \
+        template <__metaobject_id M>                                          \
+        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
+        }                                                                     \
+        template <__metaobject_id M>                                          \
+        static consteval auto apply(wrapped_metaobject<M>) {                  \
+            return wrapped_metaobject<MIRROR_JOIN(__metaobject_, NAME)(M)>{}; \
+        }                                                                     \
     };
 
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_aliased)
