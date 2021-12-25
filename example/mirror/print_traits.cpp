@@ -5,6 +5,7 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
+#include "testdecl/weekday.hpp"
 #include <mirror/init_list.hpp>
 #include <mirror/traits.hpp>
 #include <algorithm>
@@ -33,5 +34,7 @@ int main(int argc, const char**) {
     print_traits(mirror(std));
     print_traits(mirror(std::string));
     print_traits(mirror(argc));
+    print_traits(mirror(example::weekday));
+    print_traits(mirror(example::weekday::friday));
     return argc - 1;
 }

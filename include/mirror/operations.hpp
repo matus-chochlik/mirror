@@ -312,7 +312,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 /// @see apply
 /// @see try_apply
 template <metaobject_unary_op O, __metaobject_id M>
-constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept {
+constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
     return map_unary_op<O>::is_applicable(mo);
 }
 
