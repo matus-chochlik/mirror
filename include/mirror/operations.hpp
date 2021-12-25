@@ -15,71 +15,137 @@
 
 namespace mirror {
 
+/// @brief Enumeration of metaobject unary operations.
+/// @ingroup operations
+/// @see is_applicable
+/// @see apply
+/// @see try_apply
+/// @see metaobject_traits
 enum class metaobject_unary_op {
     // boolean
+    /// @brief Indicates if the reflected lambda closure's call operator is @c const.
     is_call_operator_const,
+    /// @brief Indicates if the reflected member function is @c const.
     is_const,
+    /// @brief Indicates if the reflected base-level entity is @c constexpr.
     is_constexpr,
+    /// @brief Indicates if the reflected constructor is copy constructor.
     is_copy_constructor,
+    /// @brief Indicates if the reflected operator is copy assignment operator.
     is_copy_assignment_operator,
+    /// @brief Indicates if the reflected special member function is defaulted.
     is_defaulted,
+    /// @brief Indicates if the reflected function is deleted.
     is_deleted,
+    /// @brief Indicates if the metaobject sequence is empty.
     is_empty,
+    /// @brief Indicates if the reflected base-level entity is an @c enum.
     is_enum,
+    /// @brief Indicates if the reflected base-level entity is @c explicit.
     is_explicit,
+    /// @brief Indicates if the reflected lambda capture is explicitly captured.
     is_explicitly_captured,
+    /// @brief Indicates if the reflected base-level entity is @c final.
     is_final,
+    /// @brief Indicates if the reflected special member function is implicitly declared.
     is_implicitly_declared,
+    /// @brief Indicates if the reflected base-level entity is @c inline.
     is_inline,
+    /// @brief Indicates if the reflected constructor is move constructor.
     is_move_constructor,
+    /// @brief Indicates if the reflected operator is move assignment operator.
     is_move_assignment_operator,
+    /// @brief Indicates if the reflected base-level entity is @c noexcept.
     is_noexcept,
+    /// @brief Indicates if the reflected base-level entity is @c private.
     is_private,
+    /// @brief Indicates if the reflected base-level entity is @c protected.
     is_protected,
+    /// @brief Indicates if the reflected base-level entity is @c public.
     is_public,
+    /// @brief Indicates if the reflected base-level entity is pure @c virtual.
     is_pure_virtual,
+    /// @brief Indicates if the reflected base-level entity is a scoped @c enum.
     is_scoped_enum,
+    /// @brief Indicates if the reflected base-level entity is @c static.
     is_static,
+    /// @brief Indicates if the reflected base-level entity is @c thread_local.
     is_thread_local,
+    /// @brief Indicates if the reflected base-level entity is an @c union.
     is_union,
+    /// @brief Indicates if the reflected base-level entity is unnamed.
     is_unnamed,
+    /// @brief Indicates if the reflected base-level entity is @c virtual.
     is_virtual,
+    /// @brief Indicates if the reflected member function is @c volatile.
     is_volatile,
+    /// @brief Indicates if the reflected function parameter has default argument.
     has_default_argument,
+    /// @brief Indicates if the reflected member function has lvalue-ref qualifier.
     has_lvalueref_qualifier,
+    /// @brief Indicates if the reflected member function has rvalue-ref qualifier.
     has_rvalueref_qualifier,
+    /// @brief Indicates if the reflected record type uses a @c class specifier.
     uses_class_key,
+    /// @brief Indicates if the reflected record type uses a @c struct specifier.
     uses_struct_key,
+    /// @brief Indicates if the reflected lambda uses default capture by copy.
     uses_default_copy_capture,
+    /// @brief Indicates if the reflected lambda uses default capture by reference.
     uses_default_reference_capture,
     // integral/constant/pointer
+    /// @brief Returns the value of the reflected base-level constant.
     get_constant,
+    /// @brief Returns a pointer to the reflected base-level entity.
     get_pointer,
+    /// @brief Returns the number of elements in a metaobject sequence.
     get_size,
+    /// @brief Returns source file column of the reflected entity if available.
     get_source_column,
+    /// @brief Returns source file line of the reflected entity if available.
     get_source_line,
     // string
+    /// @brief Returns the user-friendly name of the reflected base-level entity.
     get_display_name,
+    /// @brief Returns the unqualified "base name" of the reflected base-level entity.
     get_name,
+    /// @brief Returns source file column of the reflected entity if available.
     get_source_file_name,
     // metaobject
+    /// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
     get_aliased,
+    /// @brief Returns a sequence of base class specifier reflections of a reflected class.
     get_base_classes,
+    /// @brief Returns the reflection of the sub-expression of a parenthesized expression.
     get_callable,
+    /// @brief Returns a sequence of capture reflections of a reflected closure.
     get_captures,
+    /// @brief Returns a sequence of member type reflections of a reflected class.
     get_data_members,
+    /// @brief Returns the reflection of the class in a reflected base class specifier.
     get_class,
+    /// @brief Returns a sequence of constructor reflections of a reflected class.
     get_constructors,
+    /// @brief Returns a sequence of destructors reflections of a reflected class.
     get_destructors,
+    /// @brief Returns a sequence of member function reflections of a reflected class.
     get_member_functions,
+    /// @brief Returns a sequence of member type reflections of a reflected class.
     get_member_types,
+    /// @brief Returns a sequence of operator reflections of a reflected class.
     get_operators,
+    /// @brief Returns a sequence of parameter reflections of a reflected callable.
     get_parameters,
     get_scope,
+    /// @brief Returns a reflection of the scope of a reflected scope member.
     get_subexpression,
+    /// @brief Returns a reflection of the type of a reflected typed entity.
     get_type,
+    /// @brief Returns a reflection of the underlying type of a reflected enum,
     get_underlying_type,
+    /// @brief Returns a sequence with private elements filtered out.
     hide_private,
+    /// @brief Returns a sequence with private and protected elements filtered out.
     hide_protected
 };
 
@@ -240,17 +306,32 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
+/// @brief Indicates if the specified operation is applicable to metaobject.
+/// @ingroup operations
+/// @see metaobject_unary_op
+/// @see apply
+/// @see try_apply
 template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept {
     return map_unary_op<O>::is_applicable(mo);
 }
 
+/// @brief Calls the specified unary operation on a metaobject.
+/// @ingroup operations
+/// @see metaobject_unary_op
+/// @see is_applicable
+/// @see try_apply
 template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto apply(wrapped_metaobject<M> mo) noexcept
   requires(is_applicable(mo)) {
     return map_unary_op<O>::apply(mo);
 }
 
+/// @brief Calls the specified unary operation on a metaobject if it's applicable.
+/// @ingroup operations
+/// @see metaobject_unary_op
+/// @see is_applicable
+/// @see apply
 template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     if constexpr(is_applicable<O>(mo)) {
