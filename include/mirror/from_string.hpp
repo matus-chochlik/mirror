@@ -78,7 +78,10 @@ from_string(const std::string_view src, const std::type_identity<T>) noexcept
     const auto res{
       std::from_chars<T>(src.data(), src.data() + src.size(), value, 10)};
     if(res.ec == std::errc{}) {
-        return {value};
+        if(std::string_view{res.ptr}.empty()) {
+            return {value};
+        }
+        return {std::errc::invalid_argument};
     }
     return {res.ec};
 }
