@@ -1,4 +1,4 @@
-
+/// @file
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -16,6 +16,7 @@
 #include <span>
 #include <type_traits>
 #include <variant>
+#include <vector>
 
 namespace mirror {
 //------------------------------------------------------------------------------
@@ -129,6 +130,20 @@ struct serializer<std::array<T, N>>
       typename Backend::context_param ctx,
       std::array<T, N> value) const noexcept {
         return serializer<std::span<std::add_const_t<T>, N>>::write(
+          driver, backend, ctx, std::span(value));
+    }
+};
+//------------------------------------------------------------------------------
+template <typename T, typename A>
+struct serializer<std::vector<T, A>>
+  : serializer<std::span<std::add_const_t<T>>> {
+    template <typename Backend>
+    auto write(
+      const serialize_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      std::vector<T, A> value) const noexcept {
+        return serializer<std::span<std::add_const_t<T>>>::write(
           driver, backend, ctx, std::span(value));
     }
 };
