@@ -142,10 +142,10 @@ private:
       Backend& backend,
       typename Backend::context_param ctx,
       const T& value,
-      metaobject auto mo) const noexcept -> serialization_errors
-      requires(reflects_record(mo)) {
+      metaobject auto mt) const noexcept -> serialization_errors
+      requires(reflects_record(mt)) {
         serialization_errors errors{};
-        const auto mdms{get_data_members(mo)};
+        const auto mdms{get_data_members(mt)};
         const auto subctx{backend.begin_record(ctx, get_size(mdms))};
         if(has_value(subctx)) {
             bool first = true;
@@ -167,6 +167,29 @@ private:
             errors |= backend.finish_record(extract(subctx));
         } else {
             errors |= std::get<serialization_errors>(subctx);
+        }
+        return errors;
+    }
+
+    template <typename Backend>
+    auto _do_write(
+      const serialize_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      const T& value,
+      metaobject auto mt) const noexcept -> serialization_errors
+      requires(reflects_enum(mt)) {
+        serialization_errors errors{};
+        const auto mes{get_enumerators(mt)};
+        if(backend.enum_as_string(ctx)) {
+            for_each(mes, [&](auto me) {
+                if(get_constant(me) == value) {
+                    errors |= driver.write(backend, ctx, get_name(me));
+                }
+            });
+        } else {
+            errors |= driver.write(
+              backend, ctx, static_cast<std::underlying_type_t<T>>(value));
         }
         return errors;
     }
