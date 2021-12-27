@@ -21,5 +21,6 @@ mirror_add_simple_example(print_struct)
 mirror_add_simple_example(print_traits)
 mirror_add_simple_example(repeat_message)
 mirror_add_simple_example(row_polymorphism)
+mirror_add_simple_example(simple_json)
 
 add_subdirectory(factory)

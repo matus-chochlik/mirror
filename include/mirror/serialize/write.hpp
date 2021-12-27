@@ -6,8 +6,8 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#ifndef MIRROR_WRITE_RESULT_HPP
-#define MIRROR_WRITE_RESULT_HPP
+#ifndef MIRROR_SERIALIZE_WRITE_HPP
+#define MIRROR_SERIALIZE_WRITE_HPP
 
 #include "../branch_predict.hpp"
 #include "../primitives.hpp"
@@ -46,7 +46,7 @@ struct plain_serializer {
     static auto write(
       const serialize_driver& driver,
       Backend& backend,
-      const typename Backend::context_param ctx,
+      typename Backend::context_param ctx,
       const T value) noexcept {
         return backend.write(driver, ctx, value);
     }
