@@ -9,6 +9,7 @@
 #ifndef MIRROR_EXTRACT_HPP
 #define MIRROR_EXTRACT_HPP
 
+#include <concepts>
 #include <memory>
 #include <optional>
 #include <system_error>
@@ -39,6 +40,14 @@ constexpr auto has_value(extractable auto p) noexcept -> bool;
 /// is undefined.
 constexpr auto extract(extractable auto p) noexcept -> const auto&;
 #endif
+
+// clang-format off
+template <typename T>
+concept extractable = requires(T v) {
+    { has_value(v) } -> std::convertible_to<bool>;
+    extract(v);
+};
+// clang-format on
 
 // pointer
 template <typename T>
