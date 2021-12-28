@@ -82,6 +82,12 @@ template <>
 struct serializer<double> : plain_serializer<double> {};
 template <>
 struct serializer<std::string_view> : plain_serializer<std::string_view> {};
+template <>
+struct serializer<std::string> : plain_serializer<std::string_view> {};
+template <size_t N>
+struct serializer<const char[N]> : plain_serializer<std::string_view> {};
+template <size_t N>
+struct serializer<char[N]> : plain_serializer<std::string_view> {};
 //------------------------------------------------------------------------------
 template <typename T, size_t N>
 struct serializer<std::span<const T, N>> {
@@ -93,7 +99,7 @@ struct serializer<std::span<const T, N>> {
       std::span<const T, N> value) const noexcept {
 
         serialization_errors errors{};
-        const auto subctx{backend.begin_list(ctx, value.size())};
+        auto subctx{backend.begin_list(ctx, value.size())};
         if(MIRROR_LIKELY(has_value(subctx))) {
             size_t idx = 0;
             bool first = true;
@@ -103,10 +109,9 @@ struct serializer<std::span<const T, N>> {
                 } else {
                     errors |= backend.separate_attribute(extract(subctx));
                 }
-                const auto subsubctx{
-                  backend.begin_element(extract(subctx), idx)};
+                auto subsubctx{backend.begin_element(extract(subctx), idx)};
                 errors |= driver.write(backend, extract(subsubctx), elem);
-                errors |= backend.finish_element(extract(subctx), idx);
+                errors |= backend.finish_element(extract(subsubctx), idx);
                 ++idx;
             }
             errors |= backend.finish_list(extract(subctx));
@@ -161,7 +166,7 @@ private:
       requires(reflects_record(mt)) {
         serialization_errors errors{};
         const auto mdms{get_data_members(mt)};
-        const auto subctx{backend.begin_record(ctx, get_size(mdms))};
+        auto subctx{backend.begin_record(ctx, get_size(mdms))};
         if(has_value(subctx)) {
             bool first = true;
             for_each(mdms, [&](auto mdm) {
@@ -171,10 +176,12 @@ private:
                     errors |= backend.separate_attribute(extract(subctx));
                 }
                 const auto name{get_name(mdm)};
-                const auto subsubctx{backend.begin_attribute(ctx, name)};
+                auto subsubctx{backend.begin_attribute(ctx, name)};
                 if(has_value(subsubctx)) {
-                    errors |= driver.write(backend, ctx, get_value(mdm, value));
-                    errors |= backend.finish_attribute(ctx, name);
+                    errors |= driver.write(
+                      backend, extract(subsubctx), get_value(mdm, value));
+                    errors |=
+                      backend.finish_attribute(extract(subsubctx), name);
                 } else {
                     errors |= std::get<serialization_errors>(subsubctx);
                 }
@@ -227,9 +234,9 @@ template <typename T, write_backend Backend>
 auto serialize(
   const T& value,
   Backend& backend,
-  typename Backend::context ctx) noexcept -> serialization_errors {
+  typename Backend::context_param ctx) noexcept -> serialization_errors {
     serialization_errors errors{};
-    const auto subctx{backend.begin(ctx)};
+    auto subctx{backend.begin(ctx)};
     if(MIRROR_LIKELY(has_value(subctx))) {
         serialize_driver driver;
         errors |= driver.write(backend, extract(subctx), value);
