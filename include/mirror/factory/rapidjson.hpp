@@ -9,13 +9,14 @@
 #ifndef MIRROR_FACTORY_RAPIDJSON_HPP
 #define MIRROR_FACTORY_RAPIDJSON_HPP
 
+#include "../diagnostic.hpp"
 #include <cassert>
 #include <tuple>
 #include <vector>
 
+MIRROR_DIAG_PUSH()
 #if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+MIRROR_DIAG_OFF(zero-as-null-pointer-constant)
 #endif
 
 #include <rapidjson/document.h>
@@ -23,7 +24,7 @@
 #include <rapidjson/rapidjson.h>
 
 #if defined(__clang__)
-#pragma clang diagnostic pop
+MIRROR_DIAG_POP()
 #endif
 
 namespace mirror {
