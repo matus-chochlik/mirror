@@ -11,6 +11,7 @@
 
 #include "../branch_predict.hpp"
 #include "../primitives.hpp"
+#include "../tribool.hpp"
 #include "write_backend.hpp"
 #include <array>
 #include <span>
@@ -54,6 +55,8 @@ struct plain_serializer {
 //------------------------------------------------------------------------------
 template <>
 struct serializer<bool> : plain_serializer<bool> {};
+template <>
+struct serializer<tribool> : plain_serializer<tribool> {};
 template <>
 struct serializer<char> : plain_serializer<char> {};
 template <>
@@ -176,7 +179,7 @@ private:
                     errors |= backend.separate_attribute(extract(subctx));
                 }
                 const auto name{get_name(mdm)};
-                auto subsubctx{backend.begin_attribute(ctx, name)};
+                auto subsubctx{backend.begin_attribute(extract(subctx), name)};
                 if(has_value(subsubctx)) {
                     errors |= driver.write(
                       backend, extract(subsubctx), get_value(mdm, value));
