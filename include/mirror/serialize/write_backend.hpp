@@ -18,69 +18,71 @@ struct serialize_driver;
 
 template <typename T>
 concept write_backend = requires(T v) {
-    { v.enum_as_string(std::declval<typename T::context>()) }
+    { v.enum_as_string(std::declval<typename T::context&>()) }
     ->std::convertible_to<bool>;
 
-    { v.begin(std::declval<typename T::context>()) }
+    { v.begin(std::declval<typename T::context&>()) }
     ->extractable;
 
     {
         v.write(
           std::declval<serialize_driver>(),
-          std::declval<typename T::context>(),
+          std::declval<typename T::context&>(),
           std::declval<int>())
     }
     ->std::same_as<serialization_errors>;
 
     {
         v.begin_list(
-          std::declval<typename T::context>(), std::declval<size_t>())
+          std::declval<typename T::context&>(), std::declval<size_t>())
     }
     ->extractable;
 
     {
         v.begin_element(
-          std::declval<typename T::context>(), std::declval<size_t>())
+          std::declval<typename T::context&>(), std::declval<size_t>())
     }
     ->extractable;
 
-    { v.separate_element(std::declval<typename T::context>()) }
+    { v.separate_element(std::declval<typename T::context&>()) }
     ->std::same_as<serialization_errors>;
 
     {
         v.finish_element(
-          std::declval<typename T::context>(), std::declval<size_t>())
+          std::declval<typename T::context&>(), std::declval<size_t>())
     }
     ->std::same_as<serialization_errors>;
 
-    { v.finish_list(std::declval<typename T::context>()) }
+    { v.finish_list(std::declval<typename T::context&>()) }
     ->std::same_as<serialization_errors>;
 
     {
         v.begin_record(
-          std::declval<typename T::context>(), std::declval<size_t>())
+          std::declval<typename T::context&>(), std::declval<size_t>())
     }
     ->extractable;
 
     {
         v.begin_attribute(
-          std::declval<typename T::context>(), std::declval<std::string_view>())
+          std::declval<typename T::context&>(),
+          std::declval<std::string_view>())
     }
     ->extractable;
 
-    { v.separate_attribute(std::declval<typename T::context>()) }
+    { v.separate_attribute(std::declval<typename T::context&>()) }
     ->std::same_as<serialization_errors>;
 
     {
         v.finish_attribute(
-          std::declval<typename T::context>(), std::declval<std::string_view>())
+          std::declval<typename T::context&>(),
+          std::declval<std::string_view>())
     }
     ->std::same_as<serialization_errors>;
 
-    { v.finish_record(std::declval<typename T::context>()) }
+    { v.finish_record(std::declval<typename T::context&>()) }
     ->std::same_as<serialization_errors>;
 
-    { v.finish(std::declval<typename T::context>()) }
+    { v.finish(std::declval<typename T::context&>()) }
     ->std::same_as<serialization_errors>;
 };
 
