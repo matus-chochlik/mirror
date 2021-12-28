@@ -21,6 +21,8 @@ namespace mirror {
 
 /// @defgroup operations Metaobject operations.
 
+/// @defgroup sequence_operations Metaobject sequence operations.
+
 /// @defgroup utilities Utilities.
 
 } // namespace mirror

@@ -14,6 +14,9 @@
 
 namespace mirror {
 
+/// @brief Returns the name of the specified enumerator.
+/// @ingroup utilities
+/// @see string_to_enum
 template <typename E>
 auto enum_to_string(E e) noexcept -> string_view {
     return select(
@@ -27,6 +30,9 @@ auto enum_to_string(E e) noexcept -> string_view {
       e);
 }
 
+/// @brief Finds the value of enum type @c E with the specified name.
+/// @ingroup utilities
+/// @see enum_to_string
 template <typename E>
 auto string_to_enum(string_view s) noexcept -> std::optional<E> {
     return select(

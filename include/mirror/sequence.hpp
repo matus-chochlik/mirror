@@ -13,14 +13,76 @@
 
 namespace mirror {
 
+/// @brief Template implementing an unpacked sequence of individual metaobjects,
+/// @ingroup metaobjects
+/// @see is_metaobject_sequence
+/// @see reflects_metaobject_sequence
+/// @see wrapped_metaobject
+template <__metaobject_id... M>
+struct unpacked_metaobject_sequence {};
+
+/// @brief Indicates if the argument is a sequence of metaobjects.
+/// @ingroup classification
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see get_size
+template <__metaobject_id M>
+consteval auto is_object_sequence(wrapped_metaobject<M>) -> bool {
+    return __metaobject_is_meta_object_sequence(M);
+}
+
+template <__metaobject_id... M>
+consteval auto is_object_sequence(unpacked_metaobject_sequence<M...>) -> bool {
+    return true;
+}
+
+template <typename X>
+consteval auto is_object_sequence(const X&) -> bool {
+    return false;
+}
+
+template <typename X>
+concept metaobject_sequence = is_object_sequence(X{});
+
+template <__metaobject_id... M>
+consteval auto is_empty(unpacked_metaobject_sequence<M...>) -> bool {
+    return sizeof...(M) == 0Z;
+}
+
+template <__metaobject_id... M>
+consteval auto get_size(unpacked_metaobject_sequence<M...>) -> size_t {
+    return sizeof...(M);
+}
+
+/// @brief Unpacks a sequence metaobject into sequence of separate metaobject ids.
+/// @ingroup sequence_operations
+/// @see reflects_object_sequence
+/// @see expand
+template <__metaobject_id M>
+constexpr auto unpack(wrapped_metaobject<M>)
+  -> __unpack_metaobject_seq<unpacked_metaobject_sequence, M> requires(
+    __metaobject_is_meta_object_sequence(M)) {
+    return {};
+}
+
+/// @brief Makes an unpacked_metaobject_sequence from individual metaobjects.
+/// @ingroup sequence_operations
+/// @see is_object_sequence
+template <__metaobject_id... M>
+constexpr auto make_sequence(wrapped_metaobject<M>...)
+  -> unpacked_metaobject_sequence<M...> {
+    return {};
+}
+
 // transform
 template <__metaobject_id... M, typename F>
 constexpr auto transform(unpacked_metaobject_sequence<M...>, F function) {
-    return unpacked_metaobject_sequence<unwrap(function(metaobject<M>{}))...>{};
+    return unpacked_metaobject_sequence<unwrap(
+      function(wrapped_metaobject<M>{}))...>{};
 }
 
 template <__metaobject_id M, typename F>
-constexpr auto transform(metaobject<M> mo, F function) requires(
+constexpr auto transform(wrapped_metaobject<M> mo, F function) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return transform(unpack(mo), function);
 }
@@ -42,7 +104,7 @@ template <
   template <typename>
   class Transform,
   __metaobject_id M>
-constexpr auto store_transformed_types(metaobject<M> mo) requires(
+constexpr auto store_transformed_types(wrapped_metaobject<M> mo) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return store_transformed_types(unpack(mo));
 }
@@ -53,7 +115,7 @@ constexpr auto transform_types(unpacked_metaobject_sequence<M...> ms) {
 }
 
 template <template <typename> class Transform, __metaobject_id M>
-constexpr auto transform_types(metaobject<M> mo) requires(
+constexpr auto transform_types(wrapped_metaobject<M> mo) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return store_transformed_types<type_list, Transform>(unpack(mo));
 }
@@ -65,7 +127,7 @@ constexpr auto extract_types(unpacked_metaobject_sequence<M...> ms) {
 }
 
 template <__metaobject_id M>
-constexpr auto extract_types(metaobject<M> mo) requires(
+constexpr auto extract_types(wrapped_metaobject<M> mo) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return transform_types<std::type_identity>(unpack(mo));
 }
@@ -73,11 +135,11 @@ constexpr auto extract_types(metaobject<M> mo) requires(
 // for each
 template <__metaobject_id... M, typename F>
 constexpr void for_each(unpacked_metaobject_sequence<M...>, F function) {
-    (void)(..., function(metaobject<M>{}));
+    (void)(..., function(wrapped_metaobject<M>{}));
 }
 
 template <__metaobject_id M, typename F>
-constexpr void for_each(metaobject<M> mo, F function) requires(
+constexpr void for_each(wrapped_metaobject<M> mo, F function) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return for_each(unpack(mo), std::move(function));
 }
@@ -113,7 +175,7 @@ public:
 };
 
 template <__metaobject_id M, typename F>
-constexpr void for_each_info(metaobject<M> mo, F function) requires(
+constexpr void for_each_info(wrapped_metaobject<M> mo, F function) requires(
   __metaobject_is_meta_object_sequence(M)) {
     std::size_t index{0};
     const auto count{__metaobject_get_size(M)};
@@ -128,29 +190,70 @@ constexpr auto find_if(unpacked_metaobject_sequence<>, F) {
     return no_metaobject;
 }
 
-template <__metaobject_id M1, __metaobject_id... M, typename F>
-constexpr auto find_if(unpacked_metaobject_sequence<M1, M...>, F predicate) {
-    if constexpr(predicate(metaobject<M1>{})) {
-        return metaobject<M1>{};
+template <__metaobject_id M, __metaobject_id... Mt, typename F>
+constexpr auto find_if(unpacked_metaobject_sequence<M, Mt...>, F predicate) {
+    if constexpr(predicate(wrapped_metaobject<M>{})) {
+        return wrapped_metaobject<M>{};
     } else {
-        return find_if(unpacked_metaobject_sequence<M...>{}, predicate);
+        return find_if(unpacked_metaobject_sequence<Mt...>{}, predicate);
     }
 }
 
 template <__metaobject_id M, typename F>
-constexpr auto find_if(metaobject<M> mo, F predicate) requires(
+constexpr auto find_if(wrapped_metaobject<M> mo, F predicate) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return find_if(unpack(mo), predicate);
+}
+
+// filter
+template <__metaobject_id... M, typename F>
+constexpr auto
+do_filter(unpacked_metaobject_sequence<M...>, unpacked_metaobject_sequence<>, F)
+  -> unpacked_metaobject_sequence<M...> {
+    return {};
+}
+
+template <
+  __metaobject_id... Mh,
+  __metaobject_id M,
+  __metaobject_id... Mt,
+  typename F>
+constexpr auto do_filter(
+  unpacked_metaobject_sequence<Mh...>,
+  unpacked_metaobject_sequence<M, Mt...>,
+  F predicate) {
+    if constexpr(predicate(wrapped_metaobject<M>{})) {
+        return do_filter(
+          unpacked_metaobject_sequence<Mh..., M>{},
+          unpacked_metaobject_sequence<Mt...>{},
+          predicate);
+    } else {
+        return do_filter(
+          unpacked_metaobject_sequence<Mh...>{},
+          unpacked_metaobject_sequence<Mt...>{},
+          predicate);
+    }
+}
+
+template <__metaobject_id... M, typename F>
+constexpr auto filter(unpacked_metaobject_sequence<M...> seq, F predicate) {
+    return do_filter(unpacked_metaobject_sequence<>{}, seq, predicate);
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto filter(wrapped_metaobject<M> mo, F predicate) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return filter(unpack(mo), predicate);
 }
 
 // all of
 template <__metaobject_id... M, typename F>
 constexpr auto all_of(unpacked_metaobject_sequence<M...>, F predicate) -> bool {
-    return (... && predicate(metaobject<M>{}));
+    return (... && predicate(wrapped_metaobject<M>{}));
 }
 
 template <__metaobject_id M, typename F>
-constexpr auto all_of(metaobject<M> mo, F predicate)
+constexpr auto all_of(wrapped_metaobject<M> mo, F predicate)
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return all_of(unpack(mo), predicate);
 }
@@ -158,11 +261,11 @@ constexpr auto all_of(metaobject<M> mo, F predicate)
 // any_of
 template <__metaobject_id... M, typename F>
 constexpr auto any_of(unpacked_metaobject_sequence<M...>, F predicate) -> bool {
-    return (... || predicate(metaobject<M>{}));
+    return (... || predicate(wrapped_metaobject<M>{}));
 }
 
 template <__metaobject_id M, typename F>
-constexpr auto any_of(metaobject<M> mo, F predicate)
+constexpr auto any_of(wrapped_metaobject<M> mo, F predicate)
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return any_of(unpack(mo), predicate);
 }
@@ -171,11 +274,11 @@ constexpr auto any_of(metaobject<M> mo, F predicate)
 template <__metaobject_id... M, typename F>
 constexpr auto none_of(unpacked_metaobject_sequence<M...>, F predicate)
   -> bool {
-    return !(... || predicate(metaobject<M>{}));
+    return !(... || predicate(wrapped_metaobject<M>{}));
 }
 
 template <__metaobject_id M, typename F>
-constexpr auto none_of(metaobject<M> mo, F predicate)
+constexpr auto none_of(wrapped_metaobject<M> mo, F predicate)
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return none_of(unpack(mo), predicate);
 }
@@ -185,13 +288,14 @@ template <typename T, __metaobject_id... M, typename F, typename... P>
 constexpr auto
 select(unpacked_metaobject_sequence<M...>, F function, T fallback, P&&... param)
   -> T {
-    (void)(..., function(fallback, metaobject<M>{}, std::forward<P>(param)...));
+    (void)(..., function(fallback, wrapped_metaobject<M>{}, std::forward<P>(param)...));
     return fallback;
 }
 
 template <typename T, __metaobject_id M, typename F, typename... P>
-constexpr auto select(metaobject<M> mo, F function, T fallback, P&&... param)
-  -> T requires(__metaobject_is_meta_object_sequence(M)) {
+constexpr auto
+select(wrapped_metaobject<M> mo, F function, T fallback, P&&... param) -> T
+  requires(__metaobject_is_meta_object_sequence(M)) {
     return select(
       unpack(mo),
       std::move(function),
