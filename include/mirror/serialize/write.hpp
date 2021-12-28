@@ -11,7 +11,7 @@
 
 #include "../branch_predict.hpp"
 #include "../primitives.hpp"
-#include "result.hpp"
+#include "write_backend.hpp"
 #include <array>
 #include <span>
 #include <type_traits>
@@ -24,7 +24,7 @@ template <typename T>
 struct serializer;
 
 struct serialize_driver {
-    template <typename T, typename Backend>
+    template <typename T, write_backend Backend>
     auto write(
       Backend& backend,
       typename Backend::context_param ctx,
@@ -42,7 +42,7 @@ struct serializer<const T&> : serializer<T> {};
 //------------------------------------------------------------------------------
 template <typename T>
 struct plain_serializer {
-    template <typename Backend>
+    template <write_backend Backend>
     static auto write(
       const serialize_driver& driver,
       Backend& backend,
@@ -85,7 +85,7 @@ struct serializer<std::string_view> : plain_serializer<std::string_view> {};
 //------------------------------------------------------------------------------
 template <typename T, size_t N>
 struct serializer<std::span<const T, N>> {
-    template <typename Backend>
+    template <write_backend Backend>
     auto write(
       const serialize_driver& driver,
       Backend& backend,
@@ -123,7 +123,7 @@ struct serializer<std::span<T, N>> : serializer<std::span<const T, N>> {};
 template <typename T, size_t N>
 struct serializer<std::array<T, N>>
   : serializer<std::span<std::add_const_t<T>, N>> {
-    template <typename Backend>
+    template <write_backend Backend>
     auto write(
       const serialize_driver& driver,
       Backend& backend,
@@ -137,7 +137,7 @@ struct serializer<std::array<T, N>>
 template <typename T, typename A>
 struct serializer<std::vector<T, A>>
   : serializer<std::span<std::add_const_t<T>>> {
-    template <typename Backend>
+    template <write_backend Backend>
     auto write(
       const serialize_driver& driver,
       Backend& backend,
@@ -151,7 +151,7 @@ struct serializer<std::vector<T, A>>
 template <typename T>
 struct serializer {
 private:
-    template <typename Backend>
+    template <write_backend Backend>
     auto _do_write(
       const serialize_driver& driver,
       Backend& backend,
@@ -186,7 +186,7 @@ private:
         return errors;
     }
 
-    template <typename Backend>
+    template <write_backend Backend>
     auto _do_write(
       const serialize_driver& driver,
       Backend& backend,
@@ -210,7 +210,7 @@ private:
     }
 
 public:
-    template <typename Backend>
+    template <write_backend Backend>
     auto write(
       const serialize_driver& driver,
       Backend& backend,
@@ -223,7 +223,7 @@ public:
 /// @brief Serializes a value with the specified serialization backend.
 /// @ingroup serialization
 /// @see deserialize
-template <typename T, typename Backend>
+template <typename T, write_backend Backend>
 auto serialize(
   const T& value,
   Backend& backend,
