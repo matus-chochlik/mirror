@@ -10,6 +10,7 @@
 #define MIRROR_SERIALIZE_WRITE_HPP
 
 #include "../branch_predict.hpp"
+#include "../placeholder.hpp"
 #include "../sequence.hpp"
 #include "../tribool.hpp"
 #include "write_backend.hpp"
@@ -168,7 +169,7 @@ private:
       metaobject auto mt) const noexcept -> write_errors
       requires(reflects_record(mt)) {
         write_errors errors{};
-        const auto mdms{get_data_members(mt)};
+        const auto mdms{filter(get_data_members(mt), not_(is_static(_1)))};
         auto subctx{backend.begin_record(ctx, get_size(mdms))};
         if(has_value(subctx)) {
             bool first = true;

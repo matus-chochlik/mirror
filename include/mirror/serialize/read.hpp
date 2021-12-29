@@ -10,6 +10,7 @@
 #define MIRROR_SERIALIZE_READ_HPP
 
 #include "../branch_predict.hpp"
+#include "../placeholder.hpp"
 #include "../sequence.hpp"
 #include "../tribool.hpp"
 #include "read_backend.hpp"
@@ -183,7 +184,7 @@ private:
       metaobject auto mt) const noexcept -> read_errors
       requires(reflects_record(mt)) {
         read_errors errors{};
-        const auto mdms{get_data_members(mt)};
+        const auto mdms{filter(get_data_members(mt), not_(is_static(_1)))};
         size_t count{get_size(mdms)};
         auto subctx{backend.begin_record(ctx, count)};
 
