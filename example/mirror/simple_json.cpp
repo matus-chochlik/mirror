@@ -24,89 +24,86 @@ struct simple_json_write_backend {
         return true;
     }
 
-    auto begin(context_param ctx)
-      -> std::variant<context, serialization_errors> {
+    auto begin(context_param ctx) -> std::variant<context, write_errors> {
         return {ctx};
     }
 
-    auto write(const write_driver&, context_param ctx, bool v)
-      -> serialization_errors {
+    auto write(const write_driver&, context_param ctx, bool v) -> write_errors {
         ctx.out << std::boolalpha << v;
         return {};
     }
 
     auto write(const write_driver&, context_param ctx, std::string_view v)
-      -> serialization_errors {
+      -> write_errors {
         ctx.out << std::quoted(v);
         return {};
     }
 
     auto write(const write_driver&, context_param ctx, const std::string& v)
-      -> serialization_errors {
+      -> write_errors {
         ctx.out << std::quoted(v);
         return {};
     }
 
     template <typename T>
     auto write(const write_driver&, context_param ctx, const T& v)
-      -> serialization_errors {
+      -> write_errors {
         ctx.out << v;
         return {};
     }
 
     auto begin_list(context_param ctx, size_t)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         ctx.out << '[';
         return {ctx};
     }
 
     auto begin_element(context_param ctx, size_t)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         return {ctx};
     }
 
-    auto separate_element(context_param ctx) -> serialization_errors {
+    auto separate_element(context_param ctx) -> write_errors {
         ctx.out << ',';
         return {};
     }
 
-    auto finish_element(context_param, size_t) -> serialization_errors {
+    auto finish_element(context_param, size_t) -> write_errors {
         return {};
     }
 
-    auto finish_list(context_param ctx) -> serialization_errors {
+    auto finish_list(context_param ctx) -> write_errors {
         ctx.out << ']';
         return {};
     }
 
     auto begin_record(context_param ctx, size_t)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         ctx.out << '{';
         return {ctx};
     }
 
     auto begin_attribute(context_param ctx, std::string_view name)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         ctx.out << std::quoted(name) << ':';
         return {ctx};
     }
 
-    auto separate_attribute(context_param ctx) -> serialization_errors {
+    auto separate_attribute(context_param ctx) -> write_errors {
         ctx.out << ',';
         return {};
     }
 
-    auto finish_attribute(context_param, std::string_view)
-      -> serialization_errors {
+    auto finish_attribute(context_param, std::string_view) -> write_errors {
         return {};
     }
 
-    auto finish_record(context_param ctx) -> serialization_errors {
+    auto finish_record(context_param ctx) -> write_errors {
         ctx.out << '}';
         return {};
     }
 
-    auto finish(context_param) -> serialization_errors {
+    auto finish(context_param) -> write_errors {
         return {};
     }
 };

@@ -30,7 +30,7 @@ concept read_backend = requires(T v) {
           std::declval<typename T::context&>(),
           std::declval<int&>())
     }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     {
         v.begin_list(
@@ -45,16 +45,16 @@ concept read_backend = requires(T v) {
     ->extractable;
 
     { v.separate_element(std::declval<typename T::context&>()) }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     {
         v.finish_element(
           std::declval<typename T::context&>(), std::declval<size_t>())
     }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     { v.finish_list(std::declval<typename T::context&>()) }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     {
         v.begin_record(
@@ -70,20 +70,20 @@ concept read_backend = requires(T v) {
     ->extractable;
 
     { v.separate_attribute(std::declval<typename T::context&>()) }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     {
         v.finish_attribute(
           std::declval<typename T::context&>(),
           std::declval<std::string_view>())
     }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     { v.finish_record(std::declval<typename T::context&>()) }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 
     { v.finish(std::declval<typename T::context&>()) }
-    ->std::same_as<deserialization_errors>;
+    ->std::same_as<read_errors>;
 };
 
 }; // namespace mirror::serialize

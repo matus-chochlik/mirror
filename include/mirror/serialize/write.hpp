@@ -29,7 +29,7 @@ struct write_driver {
     auto write(
       Backend& backend,
       typename Backend::context_param ctx,
-      const T& value) const -> serialization_errors {
+      const T& value) const -> write_errors {
         serializer<std::remove_cv_t<T>> writer;
         return writer.write(*this, backend, ctx, value);
     }
@@ -101,7 +101,7 @@ struct serializer<std::span<const T, N>> {
       typename Backend::context_param ctx,
       std::span<const T, N> value) const noexcept {
 
-        serialization_errors errors{};
+        write_errors errors{};
         auto subctx{backend.begin_list(ctx, value.size())};
         if(MIRROR_LIKELY(has_value(subctx))) {
             size_t idx = 0;
@@ -119,7 +119,7 @@ struct serializer<std::span<const T, N>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<serialization_errors>(subctx);
+            errors |= std::get<write_errors>(subctx);
         }
         return errors;
     }
@@ -165,9 +165,9 @@ private:
       Backend& backend,
       typename Backend::context_param ctx,
       const T& value,
-      metaobject auto mt) const noexcept -> serialization_errors
+      metaobject auto mt) const noexcept -> write_errors
       requires(reflects_record(mt)) {
-        serialization_errors errors{};
+        write_errors errors{};
         const auto mdms{get_data_members(mt)};
         auto subctx{backend.begin_record(ctx, get_size(mdms))};
         if(has_value(subctx)) {
@@ -186,12 +186,12 @@ private:
                     errors |=
                       backend.finish_attribute(extract(subsubctx), name);
                 } else {
-                    errors |= std::get<serialization_errors>(subsubctx);
+                    errors |= std::get<write_errors>(subsubctx);
                 }
             });
             errors |= backend.finish_record(extract(subctx));
         } else {
-            errors |= std::get<serialization_errors>(subctx);
+            errors |= std::get<write_errors>(subctx);
         }
         return errors;
     }
@@ -202,9 +202,9 @@ private:
       Backend& backend,
       typename Backend::context_param ctx,
       const T& value,
-      metaobject auto mt) const noexcept -> serialization_errors
+      metaobject auto mt) const noexcept -> write_errors
       requires(reflects_enum(mt)) {
-        serialization_errors errors{};
+        write_errors errors{};
         const auto mes{get_enumerators(mt)};
         if(backend.enum_as_string(ctx)) {
             for_each(mes, [&](auto me) {
@@ -237,15 +237,15 @@ template <typename T, write_backend Backend>
 auto write(
   const T& value,
   Backend& backend,
-  typename Backend::context_param ctx) noexcept -> serialization_errors {
-    serialization_errors errors{};
+  typename Backend::context_param ctx) noexcept -> write_errors {
+    write_errors errors{};
     auto subctx{backend.begin(ctx)};
     if(MIRROR_LIKELY(has_value(subctx))) {
         write_driver driver;
         errors |= driver.write(backend, extract(subctx), value);
         errors |= backend.finish(extract(subctx));
     } else {
-        errors |= std::get<serialization_errors>(subctx);
+        errors |= std::get<write_errors>(subctx);
     }
     return errors;
 }

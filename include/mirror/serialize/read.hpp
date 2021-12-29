@@ -28,7 +28,7 @@ struct read_driver {
     template <typename T, read_backend Backend>
     auto
     read(Backend& backend, typename Backend::context_param ctx, T& value) const
-      -> serialization_errors {
+      -> read_errors {
         deserializer<std::remove_cv_t<T>> reader;
         return reader.read(*this, backend, ctx, value);
     }
@@ -92,13 +92,13 @@ struct deserializer<std::span<T, N>> {
       typename Backend::context_param ctx,
       std::span<T, N> value) const noexcept {
 
-        deserialization_errors errors{};
+        read_errors errors{};
         size_t size = value.size();
         const auto subctx{backend.begin_list(ctx, size)};
         if(size > value.size()) {
-            errors |= deserialization_error_code::excess_element;
+            errors |= read_error_code::excess_element;
         } else if(size < value.size()) {
-            errors |= deserialization_error_code::missing_element;
+            errors |= read_error_code::missing_element;
         } else if(MIRROR_LIKELY(has_value(subctx))) {
             size_t idx = 0;
             bool first = true;
@@ -116,7 +116,7 @@ struct deserializer<std::span<T, N>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<deserialization_errors>(subctx);
+            errors |= std::get<read_errors>(subctx);
         }
         return errors;
     }
@@ -129,15 +129,15 @@ template <typename T, read_backend Backend>
 auto read(
   T& value,
   Backend& backend,
-  typename Backend::context_param ctx) noexcept -> deserialization_errors {
-    deserialization_errors errors{};
+  typename Backend::context_param ctx) noexcept -> read_errors {
+    read_errors errors{};
     auto subctx{backend.begin(ctx)};
     if(MIRROR_LIKELY(has_value(subctx))) {
         read_driver driver;
         errors |= driver.read(backend, extract(subctx), value);
         errors |= backend.finish(extract(subctx));
     } else {
-        errors |= std::get<deserialization_errors>(subctx);
+        errors |= std::get<read_errors>(subctx);
     }
     return errors;
 }

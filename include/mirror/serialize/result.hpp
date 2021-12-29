@@ -17,10 +17,10 @@ namespace mirror::serialize {
 //------------------------------------------------------------------------------
 /// @brief Serialization error code bits enumeration.
 /// @ingroup serialization
-/// @see serialization_errors
+/// @see write_errors
 /// @see serializer_backend
 /// @see serializer_data_sink
-enum class serialization_error_code : std::uint8_t {
+enum class write_error_code : std::uint8_t {
     /// @brief Value type or format not supported.
     not_supported = 1U << 0U,
     /// @brief Too much data to fit into serialization data sink.
@@ -35,10 +35,10 @@ enum class serialization_error_code : std::uint8_t {
 //------------------------------------------------------------------------------
 /// @brief Deserialization error code bits enumeration.
 /// @ingroup serialization
-/// @see deserialization_errors
+/// @see read_errors
 /// @see deserializer_backend
 /// @see deserializer_data_sink
-enum class deserialization_error_code : std::uint16_t {
+enum class read_error_code : std::uint16_t {
     /// @brief Value type or format not supported.
     not_supported = 1U << 0U,
     /// @brief Not enough data to deserialize the value.
@@ -65,49 +65,47 @@ enum class deserialization_error_code : std::uint16_t {
 //------------------------------------------------------------------------------
 /// @brief Alias for serialization error bitfield.
 /// @ingroup serialization
-/// @see serialization_result
-/// @see deserialization_errors
-using serialization_errors = bitfield<serialization_error_code>;
+/// @see write_result
+/// @see read_errors
+using write_errors = bitfield<write_error_code>;
 
 /// @brief Alias for deserialization error bitfield.
 /// @ingroup serialization
-/// @see deserialization_result
-/// @see serialization_errors
-using deserialization_errors = bitfield<deserialization_error_code>;
+/// @see read_result
+/// @see write_errors
+using read_errors = bitfield<read_error_code>;
 //------------------------------------------------------------------------------
 template <typename T>
-constexpr auto
-has_value(const std::variant<T, serialization_errors>& v) noexcept -> bool {
+constexpr auto has_value(const std::variant<T, write_errors>& v) noexcept
+  -> bool {
     return std::holds_alternative<T>(v);
 }
 
 template <typename T>
-constexpr auto extract(std::variant<T, serialization_errors>& v) noexcept
-  -> T& {
+constexpr auto extract(std::variant<T, write_errors>& v) noexcept -> T& {
     return std::get<T>(v);
 }
 
 template <typename T>
-constexpr auto extract(const std::variant<T, serialization_errors>& v) noexcept
+constexpr auto extract(const std::variant<T, write_errors>& v) noexcept
   -> const T& {
     return std::get<T>(v);
 }
 //------------------------------------------------------------------------------
 template <typename T>
-constexpr auto
-has_value(const std::variant<T, deserialization_errors>& v) noexcept -> bool {
+constexpr auto has_value(const std::variant<T, read_errors>& v) noexcept
+  -> bool {
     return std::holds_alternative<T>(v);
 }
 
 template <typename T>
-constexpr auto extract(std::variant<T, deserialization_errors>& v) noexcept
-  -> T& {
+constexpr auto extract(std::variant<T, read_errors>& v) noexcept -> T& {
     return std::get<T>(v);
 }
 
 template <typename T>
-constexpr auto
-extract(const std::variant<T, deserialization_errors>& v) noexcept -> const T& {
+constexpr auto extract(const std::variant<T, read_errors>& v) noexcept
+  -> const T& {
     return std::get<T>(v);
 }
 //------------------------------------------------------------------------------

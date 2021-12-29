@@ -72,14 +72,13 @@ struct basic_rapidjson_write_backend {
         return true;
     }
 
-    auto begin(context_param ctx)
-      -> std::variant<context, serialization_errors> {
+    auto begin(context_param ctx) -> std::variant<context, write_errors> {
         return {ctx};
     }
 
     template <typename T>
     auto write(const write_driver& drv, context_param ctx, const T& value)
-      -> serialization_errors {
+      -> write_errors {
         if constexpr(std::is_same_v<T, bool>) {
             ctx.node.SetBool(value);
         } else if constexpr(std::is_same_v<T, tribool>) {
@@ -120,56 +119,56 @@ struct basic_rapidjson_write_backend {
     }
 
     auto begin_list(context_param ctx, size_t count)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         ctx.node.SetArray();
         ctx.node.Reserve(rapidjson::SizeType(count), ctx.allocator);
         return {ctx};
     }
 
     auto begin_element(context_param ctx, size_t)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         return {context{ctx, ctx.temp}};
     }
 
-    auto separate_element(context_param) -> serialization_errors {
+    auto separate_element(context_param) -> write_errors {
         return {};
     }
 
-    auto finish_element(context_param ctx, size_t) -> serialization_errors {
+    auto finish_element(context_param ctx, size_t) -> write_errors {
         ctx.parent.PushBack(ctx.node, ctx.allocator);
         return {};
     }
 
-    auto finish_list(context_param) -> serialization_errors {
+    auto finish_list(context_param) -> write_errors {
         return {};
     }
 
     auto begin_record(context_param ctx, size_t)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         ctx.node.SetObject();
         return {ctx};
     }
 
     auto begin_attribute(context_param ctx, std::string_view)
-      -> std::variant<context, serialization_errors> {
+      -> std::variant<context, write_errors> {
         return {context{ctx, ctx.temp}};
     }
 
-    auto separate_attribute(context_param) -> serialization_errors {
+    auto separate_attribute(context_param) -> write_errors {
         return {};
     }
 
     auto finish_attribute(context_param ctx, std::string_view name)
-      -> serialization_errors {
+      -> write_errors {
         ctx.parent.AddMember(to_rapidjson(name), ctx.node, ctx.allocator);
         return {};
     }
 
-    auto finish_record(context_param) -> serialization_errors {
+    auto finish_record(context_param) -> write_errors {
         return {};
     }
 
-    auto finish(context_param) -> serialization_errors {
+    auto finish(context_param) -> write_errors {
         return {};
     }
 };
@@ -177,7 +176,7 @@ struct basic_rapidjson_write_backend {
 template <typename T, typename E, typename A>
 auto write_rapidjson(
   const T& value,
-  rapidjson::GenericDocument<E, A>& node) noexcept -> serialization_errors {
+  rapidjson::GenericDocument<E, A>& node) noexcept -> write_errors {
     basic_rapidjson_write_backend<E, A> backend;
     typename basic_rapidjson_write_backend<E, A>::context ctx{node};
     return write(value, backend, ctx);
