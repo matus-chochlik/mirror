@@ -14,6 +14,7 @@
 #include "../tribool.hpp"
 #include "../utils/rapidjson.hpp"
 #include "write.hpp"
+#include <sstream>
 
 MIRROR_DIAG_PUSH()
 #if defined(__clang__)
@@ -175,6 +176,25 @@ auto write_rapidjson(
     basic_rapidjson_write_backend<E, A> backend;
     typename basic_rapidjson_write_backend<E, A>::context ctx{node};
     return write(value, backend, ctx);
+}
+//------------------------------------------------------------------------------
+template <typename T>
+auto write_rapidjson_stream(const T& value, std::ostream& out) -> write_errors {
+    rapidjson::Document doc;
+    auto errors = mirror::serialize::write_rapidjson(value, doc);
+
+    rapidjson::OStreamWrapper stream(out);
+    rapidjson::Writer<rapidjson::OStreamWrapper> writer(stream);
+    doc.Accept(writer);
+    return errors;
+}
+//------------------------------------------------------------------------------
+template <typename T>
+auto write_rapidjson_string(const T& value, std::string& str) -> write_errors {
+    std::stringstream out;
+    auto errors = write_rapidjson_stream(value, out);
+    str = out.str();
+    return errors;
 }
 //------------------------------------------------------------------------------
 } // namespace mirror::serialize

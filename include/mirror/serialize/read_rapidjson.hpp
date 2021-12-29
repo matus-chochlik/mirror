@@ -111,12 +111,18 @@ struct basic_rapidjson_read_backend {
             if constexpr(std::is_same_v<T, float>) {
                 if(ctx.node.IsFloat()) {
                     value = T(ctx.node.GetFloat());
+                } else if(ctx.node.IsInt()) {
+                    value = T(ctx.node.GetInt());
+                } else {
+                    errors |= read_error_code::invalid_format;
                 }
             } else {
                 if(ctx.node.IsDouble()) {
                     value = ctx.node.GetDouble();
                 } else if(ctx.node.IsFloat()) {
                     value = T(ctx.node.GetFloat());
+                } else if(ctx.node.IsInt()) {
+                    value = T(ctx.node.GetInt());
                 } else {
                     errors |= read_error_code::invalid_format;
                 }
@@ -200,6 +206,18 @@ auto read_rapidjson(
     basic_rapidjson_read_backend<E, A> backend;
     typename basic_rapidjson_read_backend<E, A>::context ctx{node};
     return read(value, backend, ctx);
+}
+//------------------------------------------------------------------------------
+template <typename T>
+auto read_rapidjson_string(T& value, std::string_view json_str) -> read_errors {
+    rapidjson::Document json_doc;
+    const rapidjson::ParseResult parse_result{
+      json_doc.Parse(mirror::to_rapidjson(json_str))};
+    if(parse_result) {
+        return read_rapidjson(value, json_doc);
+    } else {
+        return {read_error_code::invalid_format};
+    }
 }
 //------------------------------------------------------------------------------
 } // namespace mirror::serialize

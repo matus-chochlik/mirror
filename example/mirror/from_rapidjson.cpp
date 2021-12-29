@@ -8,6 +8,7 @@
 #include "testdecl/month.hpp"
 #include "testdecl/tetrahedron.hpp"
 #include <mirror/serialize/read_rapidjson.hpp>
+#include <mirror/serialize/write_rapidjson.hpp>
 #include <iostream>
 
 template <typename T>
@@ -16,10 +17,12 @@ void from_json(std::string_view json_str) {
     const rapidjson::ParseResult parse_result{
       json_doc.Parse(mirror::to_rapidjson(json_str))};
     if(parse_result) {
-        T value;
+        T value{};
         const auto errors = mirror::serialize::read_rapidjson(value, json_doc);
         if(!errors) {
-            std::cout << "OK: '" << json_str << "'" << std::endl;
+            std::cout << "OK: '";
+            mirror::serialize::write_rapidjson_stream(value, std::cout);
+            std::cout << "'" << std::endl;
         } else {
             std::cerr << "failed to deserialize from '" << json_str << "'!"
                       << std::endl;
