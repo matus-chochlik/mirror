@@ -34,7 +34,7 @@ concept read_backend = requires(T v) {
 
     {
         v.begin_list(
-          std::declval<typename T::context&>(), std::declval<size_t>())
+          std::declval<typename T::context&>(), std::declval<size_t&>())
     }
     ->extractable;
 

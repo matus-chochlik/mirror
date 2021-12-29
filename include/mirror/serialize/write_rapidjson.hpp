@@ -12,6 +12,7 @@
 #include "../diagnostic.hpp"
 #include "../sequence.hpp"
 #include "../tribool.hpp"
+#include "../utils/rapidjson.hpp"
 #include "write.hpp"
 
 MIRROR_DIAG_PUSH()
@@ -19,7 +20,6 @@ MIRROR_DIAG_PUSH()
 MIRROR_DIAG_OFF(zero-as-null-pointer-constant)
 #endif
 
-#include <rapidjson/document.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
 
@@ -62,11 +62,6 @@ struct basic_rapidjson_write_backend {
           , temp{std::move(c.temp)} {}
     };
     using context_param = context&;
-
-    static auto to_rapidjson(std::string_view v) noexcept {
-        return rapidjson::GenericStringRef<char>(
-          v.data(), rapidjson::SizeType(v.size()));
-    }
 
     auto enum_as_string(context_param) noexcept -> bool {
         return true;
