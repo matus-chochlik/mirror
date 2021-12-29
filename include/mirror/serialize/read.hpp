@@ -16,6 +16,7 @@
 #include "read_backend.hpp"
 #include <array>
 #include <span>
+#include <tuple>
 #include <type_traits>
 #include <variant>
 #include <vector>
@@ -107,7 +108,7 @@ struct deserializer<std::span<T, N>> {
                 if(first) {
                     first = false;
                 } else {
-                    errors |= backend.separate_attribute(extract(subctx));
+                    errors |= backend.separate_element(extract(subctx));
                 }
                 const auto subsubctx{
                   backend.begin_element(extract(subctx), idx)};
@@ -115,6 +116,70 @@ struct deserializer<std::span<T, N>> {
                 errors |= backend.finish_element(extract(subctx), idx);
                 ++idx;
             }
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<read_errors>(subctx);
+        }
+        return errors;
+    }
+};
+//------------------------------------------------------------------------------
+template <typename... T>
+struct deserializer<std::tuple<T...>> {
+private:
+    template <read_backend Backend, typename Ctx, typename Tup>
+    auto _do_read(
+      const read_driver&,
+      const Backend&,
+      const Ctx&,
+      const Tup&,
+      std::index_sequence<>) const noexcept {
+        return read_errors{};
+    }
+
+    template <
+      read_backend Backend,
+      typename Ctx,
+      typename Tup,
+      size_t I,
+      size_t... Is>
+    auto _do_read(
+      const read_driver& driver,
+      Backend& backend,
+      Ctx& ctx,
+      Tup& value,
+      std::index_sequence<I, Is...>) const {
+        read_errors errors{};
+        auto subctx{backend.begin_element(extract(ctx), I)};
+        if(I > 0Z) {
+            errors |= backend.separate_element(extract(ctx));
+        }
+        errors |= driver.read(backend, extract(subctx), std::get<I>(value));
+        errors |= backend.finish_element(extract(subctx), I);
+
+        errors |=
+          _do_read(driver, backend, ctx, value, std::index_sequence<Is...>{});
+
+        return errors;
+    }
+
+public:
+    template <read_backend Backend>
+    auto read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      std::tuple<T...>& value) const noexcept {
+        read_errors errors{};
+        size_t size = sizeof...(T);
+        auto subctx{backend.begin_list(ctx, size)};
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            _do_read(
+              driver,
+              backend,
+              subctx,
+              value,
+              std::make_index_sequence<sizeof...(T)>{});
             errors |= backend.finish_list(extract(subctx));
         } else {
             errors |= std::get<read_errors>(subctx);
@@ -156,7 +221,7 @@ struct deserializer<std::vector<T, A>> {
                 if(first) {
                     first = false;
                 } else {
-                    errors |= backend.separate_attribute(extract(subctx));
+                    errors |= backend.separate_element(extract(subctx));
                 }
                 const auto subsubctx{
                   backend.begin_element(extract(subctx), idx)};

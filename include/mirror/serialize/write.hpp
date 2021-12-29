@@ -16,6 +16,7 @@
 #include "write_backend.hpp"
 #include <array>
 #include <span>
+#include <tuple>
 #include <type_traits>
 #include <variant>
 #include <vector>
@@ -111,7 +112,7 @@ struct serializer<std::span<const T, N>> {
                 if(first) {
                     first = false;
                 } else {
-                    errors |= backend.separate_attribute(extract(subctx));
+                    errors |= backend.separate_element(extract(subctx));
                 }
                 auto subsubctx{backend.begin_element(extract(subctx), idx)};
                 errors |= driver.write(backend, extract(subsubctx), elem);
@@ -151,9 +152,72 @@ struct serializer<std::vector<T, A>>
       const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
-      std::vector<T, A> value) const noexcept {
+      const std::vector<T, A>& value) const noexcept {
         return serializer<std::span<std::add_const_t<T>>>::write(
           driver, backend, ctx, std::span(value));
+    }
+};
+//------------------------------------------------------------------------------
+template <typename... T>
+struct serializer<std::tuple<T...>> {
+private:
+    template <write_backend Backend, typename Ctx, typename Tup>
+    auto _do_write(
+      const write_driver&,
+      Backend&,
+      Ctx&,
+      const Tup&,
+      std::index_sequence<>) const noexcept {
+        return write_errors{};
+    }
+
+    template <
+      write_backend Backend,
+      typename Ctx,
+      typename Tup,
+      size_t I,
+      size_t... Is>
+    auto _do_write(
+      const write_driver& driver,
+      Backend& backend,
+      Ctx& ctx,
+      const Tup& value,
+      std::index_sequence<I, Is...>) const {
+        write_errors errors{};
+        auto subctx{backend.begin_element(extract(ctx), I)};
+        if(I > 0Z) {
+            errors |= backend.separate_element(extract(ctx));
+        }
+        errors |= driver.write(backend, extract(subctx), std::get<I>(value));
+        errors |= backend.finish_element(extract(subctx), I);
+
+        errors |=
+          _do_write(driver, backend, ctx, value, std::index_sequence<Is...>{});
+
+        return errors;
+    }
+
+public:
+    template <write_backend Backend>
+    auto write(
+      const write_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      const std::tuple<T...>& value) const noexcept {
+        write_errors errors{};
+        auto subctx{backend.begin_list(ctx, sizeof...(T))};
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            _do_write(
+              driver,
+              backend,
+              subctx,
+              value,
+              std::make_index_sequence<sizeof...(T)>{});
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<write_errors>(subctx);
+        }
+        return errors;
     }
 };
 //------------------------------------------------------------------------------

@@ -39,6 +39,7 @@ int main() {
     from_json<int>("1");
     from_json<float>("2");
     from_json<double>("3.4");
+    from_json<std::tuple<bool, int, float>>("[false, 12, 3.4]");
     from_json<std::array<mirror::tribool, 3>>("[true, false, null]");
     from_json<std::vector<example::month>>(
       R"(["february", "june", "july", "august", "december"])");
