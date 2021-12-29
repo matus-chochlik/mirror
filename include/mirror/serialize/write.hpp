@@ -10,7 +10,7 @@
 #define MIRROR_SERIALIZE_WRITE_HPP
 
 #include "../branch_predict.hpp"
-#include "../primitives.hpp"
+#include "../sequence.hpp"
 #include "../tribool.hpp"
 #include "write_backend.hpp"
 #include <array>
@@ -136,7 +136,7 @@ struct serializer<std::array<T, N>>
       const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
-      std::array<T, N> value) const noexcept {
+      const std::array<T, N>& value) const noexcept {
         return serializer<std::span<std::add_const_t<T>, N>>::write(
           driver, backend, ctx, std::span(value));
     }

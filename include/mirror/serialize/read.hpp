@@ -10,7 +10,7 @@
 #define MIRROR_SERIALIZE_READ_HPP
 
 #include "../branch_predict.hpp"
-#include "../primitives.hpp"
+#include "../sequence.hpp"
 #include "../tribool.hpp"
 #include "read_backend.hpp"
 #include <array>
@@ -86,7 +86,7 @@ struct deserializer<std::string> : plain_deserializer<std::string> {};
 template <typename T, size_t N>
 struct deserializer<std::span<T, N>> {
     template <read_backend Backend>
-    auto write(
+    auto read(
       const read_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
@@ -102,7 +102,7 @@ struct deserializer<std::span<T, N>> {
         } else if(MIRROR_LIKELY(has_value(subctx))) {
             size_t idx = 0;
             bool first = true;
-            for(const auto& elem : value) {
+            for(auto& elem : value) {
                 if(first) {
                     first = false;
                 } else {
@@ -119,6 +119,139 @@ struct deserializer<std::span<T, N>> {
             errors |= std::get<read_errors>(subctx);
         }
         return errors;
+    }
+};
+//------------------------------------------------------------------------------
+template <typename T, size_t N>
+struct deserializer<std::array<T, N>> : deserializer<std::span<T, N>> {
+    template <read_backend Backend>
+    auto read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      std::array<T, N>& value) const noexcept {
+        return deserializer<std::span<T, N>>::read(
+          driver, backend, ctx, std::span(value));
+    }
+};
+//------------------------------------------------------------------------------
+template <typename T, typename A>
+struct deserializer<std::vector<T, A>> {
+    template <read_backend Backend>
+    auto read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      std::vector<T, A>& value) const noexcept {
+
+        read_errors errors{};
+        size_t size{0Z};
+        const auto subctx{backend.begin_list(ctx, size)};
+        value.resize(size);
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            size_t idx = 0;
+            bool first = true;
+            for(auto& elem : value) {
+                if(first) {
+                    first = false;
+                } else {
+                    errors |= backend.separate_attribute(extract(subctx));
+                }
+                const auto subsubctx{
+                  backend.begin_element(extract(subctx), idx)};
+                errors |= driver.read(backend, extract(subsubctx), elem);
+                errors |= backend.finish_element(extract(subctx), idx);
+                ++idx;
+            }
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<read_errors>(subctx);
+        }
+        return errors;
+    }
+};
+//------------------------------------------------------------------------------
+template <typename T>
+struct deserializer {
+private:
+    template <read_backend Backend>
+    auto _do_read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      T& value,
+      metaobject auto mt) const noexcept -> read_errors
+      requires(reflects_record(mt)) {
+        read_errors errors{};
+        const auto mdms{get_data_members(mt)};
+        size_t count{get_size(mdms)};
+        auto subctx{backend.begin_record(ctx, count)};
+
+        if(count > get_size(mdms)) {
+            errors |= read_error_code::excess_member;
+        } else if(count < get_size(mdms)) {
+            errors |= read_error_code::missing_member;
+        }
+        if(has_value(subctx)) {
+            bool first = true;
+            for_each(mdms, [&](auto mdm) {
+                if(first) {
+                    first = false;
+                } else {
+                    errors |= backend.separate_attribute(extract(subctx));
+                }
+                const auto name{get_name(mdm)};
+                auto subsubctx{backend.begin_attribute(extract(subctx), name)};
+                if(has_value(subsubctx)) {
+                    errors |= driver.read(
+                      backend, extract(subsubctx), get_reference(mdm, value));
+                    errors |=
+                      backend.finish_attribute(extract(subsubctx), name);
+                } else {
+                    errors |= std::get<read_errors>(subsubctx);
+                }
+            });
+            errors |= backend.finish_record(extract(subctx));
+        } else {
+            errors |= std::get<read_errors>(subctx);
+        }
+        return errors;
+    }
+
+    template <read_backend Backend>
+    auto _do_read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      T& value,
+      metaobject auto mt) const noexcept -> read_errors
+      requires(reflects_enum(mt)) {
+        read_errors errors{};
+        const auto mes{get_enumerators(mt)};
+        if(backend.enum_as_string(ctx)) {
+            std::string name;
+            errors |= driver.read(backend, ctx, name);
+            for_each(mes, [&](auto me) {
+                if(get_name(me) == name) {
+                    value = get_constant(me);
+                }
+            });
+        } else {
+            std::underlying_type_t<T> temp{};
+            errors |= driver.read(backend, ctx, temp);
+            value = static_cast<T>(temp);
+        }
+        return errors;
+    }
+
+public:
+    template <read_backend Backend>
+    auto read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      T& value) const noexcept {
+        return _do_read(driver, backend, ctx, value, mirror(T));
     }
 };
 //------------------------------------------------------------------------------
