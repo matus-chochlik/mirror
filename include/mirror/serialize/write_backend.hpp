@@ -13,8 +13,8 @@
 #include "result.hpp"
 #include <concepts>
 
-namespace mirror {
-struct serialize_driver;
+namespace mirror::serialize {
+struct write_driver;
 
 template <typename T>
 concept write_backend = requires(T v) {
@@ -26,7 +26,7 @@ concept write_backend = requires(T v) {
 
     {
         v.write(
-          std::declval<serialize_driver>(),
+          std::declval<write_driver>(),
           std::declval<typename T::context&>(),
           std::declval<int>())
     }
@@ -86,6 +86,6 @@ concept write_backend = requires(T v) {
     ->std::same_as<serialization_errors>;
 };
 
-} // namespace mirror
+} // namespace mirror::serialize
 
 #endif

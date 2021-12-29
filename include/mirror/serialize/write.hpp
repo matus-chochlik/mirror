@@ -19,12 +19,12 @@
 #include <variant>
 #include <vector>
 
-namespace mirror {
+namespace mirror::serialize {
 //------------------------------------------------------------------------------
 template <typename T>
 struct serializer;
 
-struct serialize_driver {
+struct write_driver {
     template <typename T, write_backend Backend>
     auto write(
       Backend& backend,
@@ -45,7 +45,7 @@ template <typename T>
 struct plain_serializer {
     template <write_backend Backend>
     static auto write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       const T value) noexcept {
@@ -96,7 +96,7 @@ template <typename T, size_t N>
 struct serializer<std::span<const T, N>> {
     template <write_backend Backend>
     auto write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       std::span<const T, N> value) const noexcept {
@@ -133,7 +133,7 @@ struct serializer<std::array<T, N>>
   : serializer<std::span<std::add_const_t<T>, N>> {
     template <write_backend Backend>
     auto write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       std::array<T, N> value) const noexcept {
@@ -147,7 +147,7 @@ struct serializer<std::vector<T, A>>
   : serializer<std::span<std::add_const_t<T>>> {
     template <write_backend Backend>
     auto write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       std::vector<T, A> value) const noexcept {
@@ -161,7 +161,7 @@ struct serializer {
 private:
     template <write_backend Backend>
     auto _do_write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       const T& value,
@@ -198,7 +198,7 @@ private:
 
     template <write_backend Backend>
     auto _do_write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       const T& value,
@@ -222,7 +222,7 @@ private:
 public:
     template <write_backend Backend>
     auto write(
-      const serialize_driver& driver,
+      const write_driver& driver,
       Backend& backend,
       typename Backend::context_param ctx,
       const T& value) const noexcept {
@@ -234,14 +234,14 @@ public:
 /// @ingroup serialization
 /// @see deserialize
 template <typename T, write_backend Backend>
-auto serialize(
+auto write(
   const T& value,
   Backend& backend,
   typename Backend::context_param ctx) noexcept -> serialization_errors {
     serialization_errors errors{};
     auto subctx{backend.begin(ctx)};
     if(MIRROR_LIKELY(has_value(subctx))) {
-        serialize_driver driver;
+        write_driver driver;
         errors |= driver.write(backend, extract(subctx), value);
         errors |= backend.finish(extract(subctx));
     } else {
@@ -250,6 +250,6 @@ auto serialize(
     return errors;
 }
 //------------------------------------------------------------------------------
-} // namespace mirror
+} // namespace mirror::serialize
 
 #endif

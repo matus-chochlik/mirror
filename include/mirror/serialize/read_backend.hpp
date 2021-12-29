@@ -13,8 +13,8 @@
 #include "result.hpp"
 #include <concepts>
 
-namespace mirror {
-struct deserialize_driver;
+namespace mirror::serialize {
+struct read_driver;
 
 template <typename T>
 concept read_backend = requires(T v) {
@@ -26,7 +26,7 @@ concept read_backend = requires(T v) {
 
     {
         v.read(
-          std::declval<deserialize_driver>(),
+          std::declval<read_driver>(),
           std::declval<typename T::context&>(),
           std::declval<int&>())
     }
@@ -86,6 +86,6 @@ concept read_backend = requires(T v) {
     ->std::same_as<deserialization_errors>;
 };
 
-}; // namespace mirror
+}; // namespace mirror::serialize
 
 #endif

@@ -12,9 +12,9 @@
 #include <iomanip>
 #include <iostream>
 
-namespace mirror {
+namespace mirror::serialize {
 //------------------------------------------------------------------------------
-struct simple_json_serializer_backend {
+struct simple_json_write_backend {
     struct context {
         std::ostream& out;
     };
@@ -29,26 +29,26 @@ struct simple_json_serializer_backend {
         return {ctx};
     }
 
-    auto write(const serialize_driver&, context_param ctx, bool v)
+    auto write(const write_driver&, context_param ctx, bool v)
       -> serialization_errors {
         ctx.out << std::boolalpha << v;
         return {};
     }
 
-    auto write(const serialize_driver&, context_param ctx, std::string_view v)
+    auto write(const write_driver&, context_param ctx, std::string_view v)
       -> serialization_errors {
         ctx.out << std::quoted(v);
         return {};
     }
 
-    auto write(const serialize_driver&, context_param ctx, const std::string& v)
+    auto write(const write_driver&, context_param ctx, const std::string& v)
       -> serialization_errors {
         ctx.out << std::quoted(v);
         return {};
     }
 
     template <typename T>
-    auto write(const serialize_driver&, context_param ctx, const T& v)
+    auto write(const write_driver&, context_param ctx, const T& v)
       -> serialization_errors {
         ctx.out << v;
         return {};
@@ -111,12 +111,12 @@ struct simple_json_serializer_backend {
     }
 };
 //------------------------------------------------------------------------------
-} // namespace mirror
+} // namespace mirror::serialize
 
 template <typename T>
 auto print_simple_json(std::ostream& out, const T& value) -> std::ostream& {
-    mirror::simple_json_serializer_backend be;
-    mirror::serialize(value, be, {out});
+    mirror::serialize::simple_json_write_backend be;
+    mirror::serialize::write(value, be, {out});
     return out << std::endl;
 }
 

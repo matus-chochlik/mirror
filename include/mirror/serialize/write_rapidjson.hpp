@@ -6,10 +6,11 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#ifndef MIRROR_SERIALIZE_RAPIDJSON_HPP
-#define MIRROR_SERIALIZE_RAPIDJSON_HPP
+#ifndef MIRROR_SERIALIZE_WRITE_RAPIDJSON_HPP
+#define MIRROR_SERIALIZE_WRITE_RAPIDJSON_HPP
 
 #include "../diagnostic.hpp"
+#include "../sequence.hpp"
 #include "../tribool.hpp"
 #include "write.hpp"
 
@@ -26,10 +27,10 @@ MIRROR_DIAG_OFF(zero-as-null-pointer-constant)
 MIRROR_DIAG_POP()
 #endif
 
-namespace mirror {
+namespace mirror::serialize {
 //------------------------------------------------------------------------------
 template <typename Encoding, typename Allocator>
-struct basic_rapidjson_serializer_backend {
+struct basic_rapidjson_write_backend {
     using node_type = rapidjson::GenericValue<Encoding, Allocator>;
 
     struct context {
@@ -77,7 +78,7 @@ struct basic_rapidjson_serializer_backend {
     }
 
     template <typename T>
-    auto write(const serialize_driver& drv, context_param ctx, const T& value)
+    auto write(const write_driver& drv, context_param ctx, const T& value)
       -> serialization_errors {
         if constexpr(std::is_same_v<T, bool>) {
             ctx.node.SetBool(value);
@@ -174,15 +175,15 @@ struct basic_rapidjson_serializer_backend {
 };
 //------------------------------------------------------------------------------
 template <typename T, typename E, typename A>
-auto serialize_rapidjson(
+auto write_rapidjson(
   const T& value,
   rapidjson::GenericDocument<E, A>& node) noexcept -> serialization_errors {
-    basic_rapidjson_serializer_backend<E, A> backend;
-    typename basic_rapidjson_serializer_backend<E, A>::context ctx{node};
-    return serialize(value, backend, ctx);
+    basic_rapidjson_write_backend<E, A> backend;
+    typename basic_rapidjson_write_backend<E, A>::context ctx{node};
+    return write(value, backend, ctx);
 }
 //------------------------------------------------------------------------------
-} // namespace mirror
+} // namespace mirror::serialize
 
 #endif
 

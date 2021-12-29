@@ -7,14 +7,13 @@
 ///
 #include "testdecl/tetrahedron.hpp"
 #include "testdecl/weekday.hpp"
-#include <mirror/sequence.hpp>
-#include <mirror/serialize/rapidjson.hpp>
+#include <mirror/serialize/write_rapidjson.hpp>
 #include <iostream>
 
 template <typename T>
 void print_json(const T& value) {
     rapidjson::Document doc;
-    mirror::serialize_rapidjson(value, doc);
+    mirror::serialize::write_rapidjson(value, doc);
 
     rapidjson::OStreamWrapper stream(std::cout);
     rapidjson::Writer<rapidjson::OStreamWrapper> writer(stream);

@@ -11,8 +11,9 @@
 
 #include "../bitfield.hpp"
 #include <cstdint>
+#include <variant>
 
-namespace mirror {
+namespace mirror::serialize {
 //------------------------------------------------------------------------------
 /// @brief Serialization error code bits enumeration.
 /// @ingroup serialization
@@ -110,6 +111,6 @@ extract(const std::variant<T, deserialization_errors>& v) noexcept -> const T& {
     return std::get<T>(v);
 }
 //------------------------------------------------------------------------------
-} // namespace mirror
+} // namespace mirror::serialize
 
 #endif // EAGINE_SERIALIZE_RESULT_HPP
