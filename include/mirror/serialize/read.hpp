@@ -15,6 +15,7 @@
 #include "../tribool.hpp"
 #include "read_backend.hpp"
 #include <array>
+#include <chrono>
 #include <optional>
 #include <span>
 #include <tuple>
@@ -85,6 +86,9 @@ template <>
 struct deserializer<double> : plain_deserializer<double> {};
 template <>
 struct deserializer<std::string> : plain_deserializer<std::string> {};
+template <typename R, typename P>
+struct deserializer<std::chrono::duration<R, P>>
+  : plain_deserializer<std::chrono::duration<R, P>> {};
 //------------------------------------------------------------------------------
 template <typename T>
 struct deserializer<std::optional<T>> {
@@ -106,6 +110,8 @@ struct deserializer<std::optional<T>> {
                 errors |= driver.read(backend, extract(subsubctx), temp);
                 value = temp;
                 errors |= backend.finish_element(extract(subctx), 0Z);
+            } else {
+                value.reset();
             }
             errors |= backend.finish_list(extract(subctx));
         } else {

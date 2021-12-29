@@ -10,6 +10,7 @@
 #define MIRROR_SERIALIZE_READ_RAPIDJSON_HPP
 
 #include "../diagnostic.hpp"
+#include "../from_string.hpp"
 #include "../tribool.hpp"
 #include "../utils/rapidjson.hpp"
 #include "read.hpp"
@@ -55,6 +56,26 @@ struct basic_rapidjson_read_backend {
 
     auto begin(context_param ctx) -> std::variant<context, read_errors> {
         return {ctx};
+    }
+
+    template <typename R, typename P>
+    auto read(
+      const read_driver&,
+      context_param ctx,
+      std::chrono::duration<R, P>& value) -> read_errors {
+        read_errors errors{};
+        if(ctx.node.IsString()) {
+            if(const auto opt_val{from_string<std::chrono::duration<R, P>>(
+                 std::string_view(ctx.node.GetString()))};
+               mirror::has_value(opt_val)) {
+                value = mirror::extract(opt_val);
+            } else {
+                errors |= read_error_code::invalid_format;
+            }
+        } else {
+            errors |= read_error_code::invalid_format;
+        }
+        return errors;
     }
 
     template <typename T>
