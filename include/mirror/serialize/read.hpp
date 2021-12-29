@@ -15,6 +15,7 @@
 #include "../tribool.hpp"
 #include "read_backend.hpp"
 #include <array>
+#include <optional>
 #include <span>
 #include <tuple>
 #include <type_traits>
@@ -84,6 +85,35 @@ template <>
 struct deserializer<double> : plain_deserializer<double> {};
 template <>
 struct deserializer<std::string> : plain_deserializer<std::string> {};
+//------------------------------------------------------------------------------
+template <typename T>
+struct deserializer<std::optional<T>> {
+    template <read_backend Backend>
+    auto read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      std::optional<T>& value) const noexcept {
+
+        read_errors errors{};
+        size_t size{0Z};
+        const auto subctx{backend.begin_list(ctx, size)};
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            if(size > 0Z) {
+                T temp{};
+                const auto subsubctx{
+                  backend.begin_element(extract(subctx), 0Z)};
+                errors |= driver.read(backend, extract(subsubctx), temp);
+                value = temp;
+                errors |= backend.finish_element(extract(subctx), 0Z);
+            }
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<read_errors>(subctx);
+        }
+        return errors;
+    }
+};
 //------------------------------------------------------------------------------
 template <typename T, size_t N>
 struct deserializer<std::span<T, N>> {

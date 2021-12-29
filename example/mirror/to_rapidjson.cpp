@@ -29,6 +29,8 @@ int main() {
     print_json(456.789);
     print_json("mirror");
     print_json(std::string("foo"));
+    print_json(std::optional<example::weekday>{});
+    print_json(std::optional<example::weekday>{example::weekday::friday});
     print_json(std::array<int, 10>{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}});
     print_json(std::array<std::string_view, 4>{{"foo", "bar", "baz", "qux"}});
     print_json(std::vector<example::weekday>{

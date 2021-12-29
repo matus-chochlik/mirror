@@ -10,11 +10,13 @@
 #define MIRROR_SERIALIZE_WRITE_HPP
 
 #include "../branch_predict.hpp"
+#include "../extract.hpp"
 #include "../placeholder.hpp"
 #include "../sequence.hpp"
 #include "../tribool.hpp"
 #include "write_backend.hpp"
 #include <array>
+#include <optional>
 #include <span>
 #include <tuple>
 #include <type_traits>
@@ -93,6 +95,31 @@ template <size_t N>
 struct serializer<const char[N]> : plain_serializer<std::string_view> {};
 template <size_t N>
 struct serializer<char[N]> : plain_serializer<std::string_view> {};
+//------------------------------------------------------------------------------
+template <typename T>
+struct serializer<std::optional<T>> {
+    template <write_backend Backend>
+    auto write(
+      const write_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      const std::optional<T>& value) const noexcept {
+
+        write_errors errors{};
+        auto subctx{backend.begin_list(ctx, value.has_value() ? 1Z : 0Z)};
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            if(value) {
+                auto subsubctx{backend.begin_element(extract(subctx), 0Z)};
+                errors |= driver.write(backend, extract(subsubctx), *value);
+                errors |= backend.finish_element(extract(subsubctx), 0Z);
+            }
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<write_errors>(subctx);
+        }
+        return errors;
+    }
+};
 //------------------------------------------------------------------------------
 template <typename T, size_t N>
 struct serializer<std::span<const T, N>> {

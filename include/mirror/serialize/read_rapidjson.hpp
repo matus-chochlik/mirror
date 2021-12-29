@@ -13,6 +13,7 @@
 #include "../tribool.hpp"
 #include "../utils/rapidjson.hpp"
 #include "read.hpp"
+#include <istream>
 
 MIRROR_DIAG_PUSH()
 #if defined(__clang__)
@@ -20,6 +21,7 @@ MIRROR_DIAG_OFF(zero-as-null-pointer-constant)
 #endif
 
 #include <rapidjson/error/en.h>
+#include <rapidjson/istreamwrapper.h>
 #include <rapidjson/rapidjson.h>
 
 #if defined(__clang__)
@@ -209,12 +211,24 @@ auto read_rapidjson(
 }
 //------------------------------------------------------------------------------
 template <typename T>
-auto read_rapidjson_string(T& value, std::string_view json_str) -> read_errors {
-    rapidjson::Document json_doc;
-    const rapidjson::ParseResult parse_result{
-      json_doc.Parse(mirror::to_rapidjson(json_str))};
+auto read_rapidjson_stream(T& value, std::istream& in) -> read_errors {
+    rapidjson::BasicIStreamWrapper<std::istream> stream(in);
+    rapidjson::Document doc;
+    const rapidjson::ParseResult parse_result{doc.ParseStream(stream)};
     if(parse_result) {
-        return read_rapidjson(value, json_doc);
+        return read_rapidjson(value, doc);
+    } else {
+        return {read_error_code::invalid_format};
+    }
+}
+//------------------------------------------------------------------------------
+template <typename T>
+auto read_rapidjson_string(T& value, std::string_view json_str) -> read_errors {
+    rapidjson::Document doc;
+    const rapidjson::ParseResult parse_result{
+      doc.Parse(mirror::to_rapidjson(json_str))};
+    if(parse_result) {
+        return read_rapidjson(value, doc);
     } else {
         return {read_error_code::invalid_format};
     }
