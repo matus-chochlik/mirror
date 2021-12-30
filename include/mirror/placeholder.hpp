@@ -784,6 +784,13 @@ consteval auto has_type_with_trait(placeholder_expr<X> e) {
     }};
 }
 
+template <typename X>
+consteval auto get_hash(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_hash(e(mo));
+    }};
+}
+
 } // namespace mirror
 
 #endif // MIRROR_PLACEHOLDER_HPP
