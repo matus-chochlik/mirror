@@ -15,20 +15,24 @@
 
 namespace mirror {
 
+// TODO: make the hashes platform-independent
+
+using hash_t = std::uint64_t;
+
 template <__metaobject_id M>
-constexpr auto get_hash(wrapped_metaobject<M> mo) -> size_t
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
   requires(!__metaobject_is_meta_object_sequence(M)) {
     return std::hash<std::string>{}(get_full_name(mo));
 }
 
-constexpr auto _do_get_hash(unpacked_metaobject_sequence<>, size_t s)
-  -> size_t {
+constexpr auto _do_get_hash(unpacked_metaobject_sequence<>, hash_t s)
+  -> hash_t {
     return s;
 }
 
 template <__metaobject_id M, __metaobject_id... Ms>
-constexpr auto _do_get_hash(unpacked_metaobject_sequence<M, Ms...>, size_t s)
-  -> size_t {
+constexpr auto _do_get_hash(unpacked_metaobject_sequence<M, Ms...>, hash_t s)
+  -> hash_t {
     return s ^
            std::hash<std::string>{}(get_full_name(wrapped_metaobject<M>{})) ^
            _do_get_hash(unpacked_metaobject_sequence<Ms...>{}, s + 1);
@@ -40,7 +44,7 @@ constexpr auto get_hash(unpacked_metaobject_sequence<M...> ms) {
 }
 
 template <__metaobject_id M>
-constexpr auto get_hash(wrapped_metaobject<M> mo) -> size_t
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
   requires(__metaobject_is_meta_object_sequence(M)) {
     return get_hash(unpack(mo));
 }
