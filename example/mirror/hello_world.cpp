@@ -12,6 +12,7 @@ struct hello {};
 
 int main() {
     hello world;
+    (void)world;
 
     std::cout << get_name(mirror(hello)) << ", " << get_name(mirror(world))
               << std::endl;
