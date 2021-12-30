@@ -10,6 +10,7 @@
 #define MIRROR_HASH_HPP
 
 #include "full_name.hpp"
+#include "placeholder.hpp"
 #include "sequence.hpp"
 #include <functional>
 
@@ -47,6 +48,24 @@ template <__metaobject_id M>
 constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
   requires(__metaobject_is_meta_object_sequence(M)) {
     return get_hash(unpack(mo));
+}
+
+template <__metaobject_id M>
+constexpr auto get_callable_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_callable(M)) {
+    return get_hash(mo) ^ get_hash(transform(get_parameters(mo), get_type(_1)));
+}
+
+template <__metaobject_id M>
+constexpr auto get_callable_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_function_call_expression(M)) {
+    return get_callable_hash(get_callable(mo));
+}
+
+template <__metaobject_id M>
+constexpr auto get_callable_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_parenthesized_expression(M)) {
+    return get_callable_hash(get_subexpression(mo));
 }
 
 } // namespace mirror
