@@ -94,9 +94,9 @@ struct basic_rapidjson_write_backend {
                 }
             } else {
                 if constexpr(sizeof(T) > 4Z) {
-                    ctx.node.SetUInt64(value);
+                    ctx.node.SetUint64(value);
                 } else {
-                    ctx.node.SetUInt(value);
+                    ctx.node.SetUint(value);
                 }
             }
         } else if constexpr(std::is_floating_point_v<T>) {

@@ -115,16 +115,16 @@ struct basic_rapidjson_read_backend {
                 }
             } else {
                 if(sizeof(T) > 4Z) {
-                    if(ctx.node.IsUInt64()) {
-                        value = T(ctx.node.GetUInt64());
-                    } else if(ctx.node.IsUInt()) {
-                        value = T(ctx.node.GetUInt());
+                    if(ctx.node.IsUint64()) {
+                        value = T(ctx.node.GetUint64());
+                    } else if(ctx.node.IsUint()) {
+                        value = T(ctx.node.GetUint());
                     } else {
                         errors |= read_error_code::invalid_format;
                     }
                 } else {
-                    if(ctx.node.IsUInt()) {
-                        value = T(ctx.node.GetUInt());
+                    if(ctx.node.IsUint()) {
+                        value = T(ctx.node.GetUint());
                     } else {
                         errors |= read_error_code::invalid_format;
                     }
