@@ -33,7 +33,7 @@ private:
       auto mo,
       auto&... args) {
         mirror::serialize::write_rapidjson_stream(
-          std::make_tuple(get_callable_hash(mo), _invocation_id++), header);
+          std::make_tuple(get_hash(mo), _invocation_id++), header);
         mirror::serialize::write_rapidjson_stream(
           std::make_tuple(args...), data);
     }
@@ -97,7 +97,7 @@ public:
         mirror::serialize::read_rapidjson_stream(header, request_header);
 
         for_each(get_member_functions(mirror(Intf)), [&](auto mf) {
-            if(get_callable_hash(mf) == rpc_id) {
+            if(get_hash(mf) == rpc_id) {
                 auto params = make_value_tuple(
                   transform(get_parameters(mf), get_type(mirror::_1)));
                 mirror::serialize::read_rapidjson_stream(params, request_data);
