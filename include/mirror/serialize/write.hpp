@@ -97,6 +97,37 @@ template <size_t N>
 struct serializer<char[N]> : plain_serializer<std::string_view> {};
 //------------------------------------------------------------------------------
 template <typename T>
+struct serializer<bitfield<T>> {
+    template <write_backend Backend>
+    auto write(
+      const write_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      const bitfield<T>& value) const noexcept {
+
+        const auto mes = get_enumerators(mirror(T));
+        write_errors errors{};
+        const size_t size{
+          count_if(mes, [&](auto me) { return value.has(get_constant(me)); })};
+        auto subctx{backend.begin_list(ctx, size)};
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            for_each(mes, [&](auto me) {
+                const auto bit{get_constant(me)};
+                if(value.has(bit)) {
+                    auto subsubctx{backend.begin_element(extract(subctx), 0Z)};
+                    errors |= driver.write(backend, extract(subsubctx), bit);
+                    errors |= backend.finish_element(extract(subsubctx), 0Z);
+                }
+            });
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<write_errors>(subctx);
+        }
+        return errors;
+    }
+};
+//------------------------------------------------------------------------------
+template <typename T>
 struct serializer<std::optional<T>> {
     template <write_backend Backend>
     auto write(

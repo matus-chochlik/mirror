@@ -91,6 +91,35 @@ struct deserializer<std::chrono::duration<R, P>>
   : plain_deserializer<std::chrono::duration<R, P>> {};
 //------------------------------------------------------------------------------
 template <typename T>
+struct deserializer<bitfield<T>> {
+    template <read_backend Backend>
+    auto read(
+      const read_driver& driver,
+      Backend& backend,
+      typename Backend::context_param ctx,
+      bitfield<T>& value) const noexcept {
+
+        read_errors errors{};
+        size_t size{0Z};
+        const auto subctx{backend.begin_list(ctx, size)};
+        if(MIRROR_LIKELY(has_value(subctx))) {
+            for(size_t idx{0Z}; idx < size; ++idx) {
+                T temp{};
+                const auto subsubctx{
+                  backend.begin_element(extract(subctx), idx)};
+                errors |= driver.read(backend, extract(subsubctx), temp);
+                value |= temp;
+                errors |= backend.finish_element(extract(subctx), idx);
+            }
+            errors |= backend.finish_list(extract(subctx));
+        } else {
+            errors |= std::get<read_errors>(subctx);
+        }
+        return errors;
+    }
+};
+//------------------------------------------------------------------------------
+template <typename T>
 struct deserializer<std::optional<T>> {
     template <read_backend Backend>
     auto read(
