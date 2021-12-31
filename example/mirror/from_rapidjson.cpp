@@ -7,6 +7,7 @@
 ///
 #include "testdecl/month.hpp"
 #include "testdecl/tetrahedron.hpp"
+#include "testdecl/weekday.hpp"
 #include <mirror/serialize/read_rapidjson.hpp>
 #include <mirror/serialize/write_rapidjson.hpp>
 #include <iostream>
@@ -45,6 +46,8 @@ int main() {
     from_json<std::optional<example::month>>(R"(["august"])");
     from_json<std::vector<example::month>>(
       R"(["february", "june", "july", "august", "december"])");
+    from_json<mirror::bitfield<example::weekday_bit>>(
+      R"(["monday","wednesday","friday"])");
     from_json<example::tetrahedron>(
       R"({"_base":{
 	       "_a":{"_x":1.0,"_y":0.0,"_z":0.0},
