@@ -35,8 +35,10 @@ static void print_value(mirror::metaobject auto value) {
 }
 
 static void print_value(auto opt_value) {
-    if(mirror::has_value(opt_value)) {
-        do_print_value(mirror::extract(opt_value));
+    using mirror::has_value;
+    if(has_value(opt_value)) {
+        using mirror::extract;
+        do_print_value(extract(opt_value));
     } else {
         std::cout << "N/A";
     }
