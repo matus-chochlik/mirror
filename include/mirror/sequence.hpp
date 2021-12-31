@@ -74,6 +74,19 @@ constexpr auto make_sequence(wrapped_metaobject<M>...)
     return {};
 }
 
+// count if
+template <__metaobject_id... M, typename F>
+constexpr auto count_if(unpacked_metaobject_sequence<M...>, F predicate)
+  -> size_t {
+    return (0Z + ... + (predicate(wrapped_metaobject<M>{}) ? 1Z : 0Z));
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto count_if(wrapped_metaobject<M> mo, F predicate) -> size_t
+  requires(__metaobject_is_meta_object_sequence(M)) {
+    return count_if(unpack(mo), predicate);
+}
+
 // transform
 template <__metaobject_id... M, typename F>
 constexpr auto transform(unpacked_metaobject_sequence<M...>, F function) {
