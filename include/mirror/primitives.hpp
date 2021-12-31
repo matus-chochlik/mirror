@@ -99,6 +99,16 @@ consteval auto reflects_object(wrapped_metaobject<M>) -> bool {
     return __metaobject_is_meta_object(M);
 }
 
+template <__metaobject_id M>
+consteval auto has_value(wrapped_metaobject<M>) -> bool {
+    return __metaobject_is_meta_object(M);
+}
+
+template <__metaobject_id M>
+constexpr auto extract(wrapped_metaobject<M> mo) {
+    return mo;
+}
+
 /// @brief Indicates if the argument reflects a sequence of metaobjects.
 /// @ingroup classification
 /// @see is_object_sequence

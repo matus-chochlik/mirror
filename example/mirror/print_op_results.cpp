@@ -5,42 +5,38 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
+#include <mirror/extract.hpp>
 #include <mirror/init_list.hpp>
 #include <mirror/operations.hpp>
 #include <algorithm>
+#include <concepts>
 #include <iomanip>
 #include <iostream>
 #include <string>
 
-static void print_value(std::optional<std::string_view> value) {
-    if(value) {
-        std::cout << std::quoted(*value);
+static void do_print_value(std::string_view value) {
+    std::cout << std::quoted(value);
+}
+
+static void do_print_value(bool value) {
+    std::cout << std::boolalpha << value;
+}
+
+static void do_print_value(std::integral auto value) {
+    std::cout << value;
+}
+
+static void print_value(mirror::metaobject auto value) {
+    if(reflects_object(value)) {
+        std::cout << "metaobject(" << get_id(value) << ")";
     } else {
-        std::cout << "N/A";
+        std::cout << "no_metaobject";
     }
 }
 
-static void print_value(std::optional<bool> value) {
-    if(value) {
-        std::cout << std::boolalpha << *value;
-    } else {
-        std::cout << "N/A";
-    }
-}
-
-template <typename T>
-static void print_value(std::optional<T> value) requires(std::is_integral_v<T>) {
-    if(value) {
-        std::cout << *value;
-    } else {
-        std::cout << "N/A";
-    }
-}
-
-template <typename T>
-static void print_value(std::optional<T> value) requires(mirror::metaobject<T>) {
-    if(value) {
-        std::cout << "metaobject(" << get_id(*value) << ")";
+static void print_value(auto opt_value) {
+    if(mirror::has_value(opt_value)) {
+        do_print_value(mirror::extract(opt_value));
     } else {
         std::cout << "N/A";
     }

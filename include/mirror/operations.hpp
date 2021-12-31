@@ -11,6 +11,7 @@
 
 #include "preprocessor.hpp"
 #include "primitives.hpp"
+#include "tribool.hpp"
 #include <optional>
 
 namespace mirror {
@@ -155,7 +156,6 @@ struct map_unary_op;
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
     template <>                                                              \
     struct map_unary_op<metaobject_unary_op::NAME> {                         \
-        using result_type = bool;                                            \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
@@ -163,6 +163,12 @@ struct map_unary_op;
         template <__metaobject_id M>                                         \
         static consteval auto apply(wrapped_metaobject<M>) -> bool {         \
             return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
+        }                                                                    \
+        static constexpr auto make_optional(bool v) -> tribool {             \
+            return v;                                                        \
+        }                                                                    \
+        static constexpr auto fallback() -> tribool {                        \
+            return indeterminate;                                            \
         }                                                                    \
     };
 
@@ -206,7 +212,6 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_reference_capture)
 //------------------------------------------------------------------------------
 template <>
 struct map_unary_op<metaobject_unary_op::get_constant> {
-    using result_type = std::uintmax_t;
     template <__metaobject_id M>
     static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
         return __metaobject_get_constant(bool, M);
@@ -215,11 +220,17 @@ struct map_unary_op<metaobject_unary_op::get_constant> {
     static consteval auto apply(wrapped_metaobject<M>) {
         return _get_constant<M>::value;
     }
+    template <typename T>
+    static constexpr auto make_optional(T v) -> std::optional<T> {
+        return {std::move(v)};
+    }
+    static constexpr auto fallback() -> std::optional<std::uintmax_t> {
+        return {};
+    }
 };
 
 template <>
 struct map_unary_op<metaobject_unary_op::get_pointer> {
-    using result_type = std::uintmax_t;
     template <__metaobject_id M>
     static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
         return __metaobject_get_pointer(bool, M);
@@ -228,12 +239,18 @@ struct map_unary_op<metaobject_unary_op::get_pointer> {
     static consteval auto apply(wrapped_metaobject<M>) {
         return _get_pointer<M>::value;
     }
+    template <typename T>
+    static constexpr auto make_optional(T v) -> std::optional<T> {
+        return {std::move(v)};
+    }
+    static consteval auto fallback() {
+        return nullptr;
+    }
 };
 
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
     template <>                                                              \
     struct map_unary_op<metaobject_unary_op::NAME> {                         \
-        using result_type = size_t;                                          \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
@@ -241,6 +258,13 @@ struct map_unary_op<metaobject_unary_op::get_pointer> {
         template <__metaobject_id M>                                         \
         static consteval auto apply(wrapped_metaobject<M>) -> size_t {       \
             return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
+        }                                                                    \
+        static constexpr auto make_optional(size_t v)                        \
+          -> std::optional<size_t> {                                         \
+            return {v};                                                      \
+        }                                                                    \
+        static constexpr auto fallback() -> std::optional<size_t> {          \
+            return {};                                                       \
         }                                                                    \
     };
 
@@ -250,19 +274,25 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_line)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
-#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
-    template <>                                                              \
-    struct map_unary_op<metaobject_unary_op::NAME> {                         \
-        using result_type = std::string_view;                                \
-        template <__metaobject_id M>                                         \
-        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
-        }                                                                    \
-        template <__metaobject_id M>                                         \
-        static consteval auto apply(wrapped_metaobject<M>)                   \
-          -> std::string_view {                                              \
-            return MIRROR_JOIN(NAME, _view)(M);                              \
-        }                                                                    \
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
+    template <>                                                               \
+    struct map_unary_op<metaobject_unary_op::NAME> {                          \
+        template <__metaobject_id M>                                          \
+        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
+        }                                                                     \
+        template <__metaobject_id M>                                          \
+        static consteval auto apply(wrapped_metaobject<M>)                    \
+          -> std::string_view {                                               \
+            return MIRROR_JOIN(NAME, _view)(M);                               \
+        }                                                                     \
+        static constexpr auto make_optional(std::string_view v)               \
+          -> std::optional<std::string_view> {                                \
+            return {v};                                                       \
+        }                                                                     \
+        static constexpr auto fallback() -> std::optional<std::string_view> { \
+            return {};                                                        \
+        }                                                                     \
     };
 
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_display_name)
@@ -274,7 +304,6 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
     template <>                                                               \
     struct map_unary_op<metaobject_unary_op::NAME> {                          \
-        using result_type = decltype(no_metaobject);                          \
         template <__metaobject_id M>                                          \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
@@ -282,6 +311,13 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
         template <__metaobject_id M>                                          \
         static consteval auto apply(wrapped_metaobject<M>) {                  \
             return wrapped_metaobject<MIRROR_JOIN(__metaobject_, NAME)(M)>{}; \
+        }                                                                     \
+        template <__metaobject_id M>                                          \
+        static constexpr auto make_optional(wrapped_metaobject<M> mo) {       \
+            return mo;                                                        \
+        }                                                                     \
+        static constexpr auto fallback() {                                    \
+            return no_metaobject;                                             \
         }                                                                     \
     };
 
@@ -334,10 +370,11 @@ constexpr auto apply(wrapped_metaobject<M> mo) noexcept
 /// @see apply
 template <metaobject_unary_op O, __metaobject_id M>
 constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
-    if constexpr(is_applicable<O>(mo)) {
-        return std::optional{map_unary_op<O>::apply(mo)};
+    using op = map_unary_op<O>;
+    if constexpr(op::is_applicable(mo)) {
+        return op::make_optional(op::apply(mo));
     } else {
-        return std::optional<typename map_unary_op<O>::result_type>{};
+        return op::fallback();
     }
 }
 
