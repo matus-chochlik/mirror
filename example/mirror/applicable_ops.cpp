@@ -12,7 +12,12 @@
 #include <string>
 
 void print_info(mirror::metaobject auto mo) {
-    const auto mes = get_enumerators(mirror(mirror::metaobject_unary_op));
+    const auto mes = concat(
+      get_enumerators(mirror(mirror::unary_op_boolean)),
+      get_enumerators(mirror(mirror::unary_op_integer)),
+      get_enumerators(mirror(mirror::unary_op_pointer)),
+      get_enumerators(mirror(mirror::unary_op_string)),
+      get_enumerators(mirror(mirror::unary_op_metaobject)));
 
     std::cout << "operations applicable to " << get_display_name(mo)
               << std::endl;

@@ -12,18 +12,18 @@
 #include "preprocessor.hpp"
 #include "primitives.hpp"
 #include "tribool.hpp"
+#include <concepts>
 #include <optional>
 
 namespace mirror {
 
-/// @brief Enumeration of metaobject unary operations.
+/// @brief Enumeration of boolean-returning unary operations applicable to metaobjects.
 /// @ingroup operations
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
 /// @see metaobject_traits
-enum class metaobject_unary_op {
-    // boolean
+enum class unary_op_boolean {
     /// @brief Indicates if the reflected lambda closure's call operator is @c const.
     is_call_operator_const,
     /// @brief Indicates if the reflected member function is @c const.
@@ -93,26 +93,60 @@ enum class metaobject_unary_op {
     /// @brief Indicates if the reflected lambda uses default capture by copy.
     uses_default_copy_capture,
     /// @brief Indicates if the reflected lambda uses default capture by reference.
-    uses_default_reference_capture,
-    // integral/constant/pointer
+    uses_default_reference_capture
+};
+
+/// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
+/// @ingroup operations
+/// @see is_applicable
+/// @see apply
+/// @see try_apply
+/// @see metaobject_traits
+enum class unary_op_integer {
     /// @brief Returns the value of the reflected base-level constant.
     get_constant,
     /// @brief Returns a pointer to the reflected base-level entity.
-    get_pointer,
-    /// @brief Returns the number of elements in a metaobject sequence.
     get_size,
     /// @brief Returns source file column of the reflected entity if available.
     get_source_column,
     /// @brief Returns source file line of the reflected entity if available.
-    get_source_line,
+    get_source_line
+};
+
+/// @brief Enumeration of pointer -returning unary operations applicable to metaobjects.
+/// @ingroup operations
+/// @see is_applicable
+/// @see apply
+/// @see try_apply
+/// @see metaobject_traits
+enum class unary_op_pointer {
+    /// @brief Returns a pointer to the reflected base-level entity.
+    get_pointer
+};
+
+/// @brief Enumeration of string-returning unary operations applicable to metaobjects.
+/// @ingroup operations
+/// @see is_applicable
+/// @see apply
+/// @see try_apply
+/// @see metaobject_traits
+enum class unary_op_string {
     // string
     /// @brief Returns the user-friendly name of the reflected base-level entity.
     get_display_name,
     /// @brief Returns the unqualified "base name" of the reflected base-level entity.
     get_name,
     /// @brief Returns source file column of the reflected entity if available.
-    get_source_file_name,
-    // metaobject
+    get_source_file_name
+};
+
+/// @brief Enumeration of metaobject-returning unary operations applicable to metaobjects.
+/// @ingroup operations
+/// @see is_applicable
+/// @see apply
+/// @see try_apply
+/// @see metaobject_traits
+enum class unary_op_metaobject {
     /// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
     get_aliased,
     /// @brief Returns a sequence of base class specifier reflections of a reflected class.
@@ -150,12 +184,18 @@ enum class metaobject_unary_op {
     hide_protected
 };
 
-template <metaobject_unary_op>
+template <typename T>
+concept metaobject_unary_op =
+  (std::same_as<T, unary_op_boolean> || std::same_as<T, unary_op_integer> ||
+   std::same_as<T, unary_op_pointer> || std::same_as<T, unary_op_string> ||
+   std::same_as<T, unary_op_metaobject>);
+
+template <metaobject_unary_op auto O>
 struct map_unary_op;
 
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
     template <>                                                              \
-    struct map_unary_op<metaobject_unary_op::NAME> {                         \
+    struct map_unary_op<unary_op_boolean::NAME> {                            \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
@@ -211,7 +251,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_reference_capture)
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
 template <>
-struct map_unary_op<metaobject_unary_op::get_constant> {
+struct map_unary_op<unary_op_integer::get_constant> {
     template <__metaobject_id M>
     static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
         return __metaobject_get_constant(bool, M);
@@ -229,28 +269,9 @@ struct map_unary_op<metaobject_unary_op::get_constant> {
     }
 };
 
-template <>
-struct map_unary_op<metaobject_unary_op::get_pointer> {
-    template <__metaobject_id M>
-    static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
-        return __metaobject_get_pointer(bool, M);
-    }
-    template <__metaobject_id M>
-    static consteval auto apply(wrapped_metaobject<M>) {
-        return _get_pointer<M>::value;
-    }
-    template <typename T>
-    static constexpr auto make_optional(T v) -> std::optional<T> {
-        return {std::move(v)};
-    }
-    static consteval auto fallback() {
-        return nullptr;
-    }
-};
-
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
     template <>                                                              \
-    struct map_unary_op<metaobject_unary_op::NAME> {                         \
+    struct map_unary_op<unary_op_integer::NAME> {                            \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
@@ -273,10 +294,29 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_column)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_line)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
+
+template <>
+struct map_unary_op<unary_op_pointer::get_pointer> {
+    template <__metaobject_id M>
+    static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
+        return __metaobject_get_pointer(bool, M);
+    }
+    template <__metaobject_id M>
+    static consteval auto apply(wrapped_metaobject<M>) {
+        return _get_pointer<M>::value;
+    }
+    template <typename T>
+    static constexpr auto make_optional(T v) -> std::optional<T> {
+        return {std::move(v)};
+    }
+    static consteval auto fallback() {
+        return nullptr;
+    }
+};
 //------------------------------------------------------------------------------
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
     template <>                                                               \
-    struct map_unary_op<metaobject_unary_op::NAME> {                          \
+    struct map_unary_op<unary_op_string::NAME> {                              \
         template <__metaobject_id M>                                          \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
@@ -303,7 +343,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
 //------------------------------------------------------------------------------
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
     template <>                                                               \
-    struct map_unary_op<metaobject_unary_op::NAME> {                          \
+    struct map_unary_op<unary_op_metaobject::NAME> {                          \
         template <__metaobject_id M>                                          \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
@@ -344,10 +384,14 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 //------------------------------------------------------------------------------
 /// @brief Indicates if the specified operation is applicable to metaobject.
 /// @ingroup operations
-/// @see metaobject_unary_op
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see unary_op_metaobject
 /// @see apply
 /// @see try_apply
-template <metaobject_unary_op O, __metaobject_id M>
+template <metaobject_unary_op auto O, __metaobject_id M>
 constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
     return map_unary_op<O>::is_applicable(mo);
 }
@@ -357,7 +401,7 @@ constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
 /// @see metaobject_unary_op
 /// @see is_applicable
 /// @see try_apply
-template <metaobject_unary_op O, __metaobject_id M>
+template <metaobject_unary_op auto O, __metaobject_id M>
 constexpr auto apply(wrapped_metaobject<M> mo) noexcept
   requires(is_applicable(mo)) {
     return map_unary_op<O>::apply(mo);
@@ -368,7 +412,7 @@ constexpr auto apply(wrapped_metaobject<M> mo) noexcept
 /// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
-template <metaobject_unary_op O, __metaobject_id M>
+template <metaobject_unary_op auto O, __metaobject_id M>
 constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     using op = map_unary_op<O>;
     if constexpr(op::is_applicable(mo)) {
