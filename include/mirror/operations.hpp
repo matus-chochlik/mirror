@@ -196,18 +196,20 @@ enum class unary_op_metaobject : std::uint64_t {
     get_operators = 1ULL << 10ULL,
     /// @brief Returns a sequence of parameter reflections of a reflected callable.
     get_parameters = 1ULL << 11ULL,
+    /// @brief Returns a sequence of enumerator reflections of a reflected enum.
+    get_enumerators = 1ULL << 12ULL,
     /// @brief Returns the reflection of the scope in a reflected entity.
-    get_scope = 1ULL << 12ULL,
+    get_scope = 1ULL << 13ULL,
     /// @brief Returns a reflection of the scope of a reflected scope member.
-    get_subexpression = 1ULL << 13ULL,
+    get_subexpression = 1ULL << 14ULL,
     /// @brief Returns a reflection of the type of a reflected typed entity.
-    get_type = 1ULL << 14ULL,
+    get_type = 1ULL << 15ULL,
     /// @brief Returns a reflection of the underlying type of a reflected enum,
-    get_underlying_type = 1ULL << 15ULL,
+    get_underlying_type = 1ULL << 16ULL,
     /// @brief Returns a sequence with private elements filtered out.
-    hide_private = 1ULL << 16ULL,
+    hide_private = 1ULL << 17ULL,
     /// @brief Returns a sequence with private and protected elements filtered out.
-    hide_protected = 1ULL << 17ULL
+    hide_protected = 1ULL << 18ULL
 };
 
 /// @brief Unary metaobject operation enumeration type.
@@ -406,6 +408,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_member_functions)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_member_types)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_operators)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_parameters)
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_enumerators)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_scope)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_subexpression)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_type)
