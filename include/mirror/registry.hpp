@@ -25,8 +25,17 @@ template <__metaobject_id M>
 auto get_metadata(metadata_registry&, wrapped_metaobject<M>) -> const metadata&;
 
 template <__metaobject_id M>
-auto get_metadata(metadata_registry&, const metadata&, wrapped_metaobject<M>)
-  -> const metadata&;
+auto get_metadata(
+  metadata_registry&,
+  const metadata& scope,
+  wrapped_metaobject<M>) -> const metadata&;
+
+template <__metaobject_id M>
+auto get_metadata(
+  metadata_registry&,
+  const metadata& scope,
+  const metadata& type,
+  wrapped_metaobject<M>) -> const metadata&;
 
 class metadata {
 private:
@@ -56,6 +65,7 @@ private:
     const metadata& _constructors{*this};
     const metadata& _data_members{*this};
     const metadata& _destructors{*this};
+    const metadata& _enumerators{*this};
     const metadata& _member_functions{*this};
     const metadata& _member_types{*this};
     const metadata& _operators{*this};
@@ -67,18 +77,20 @@ private:
     static auto _unpack(
       metadata_registry& r,
       const metadata& scope,
+      const metadata& type,
       unpacked_metaobject_sequence<M...>) noexcept
       -> std::vector<const metadata*> {
-        return {&get_metadata(r, scope, wrapped_metaobject<M>{})...};
+        return {&get_metadata(r, scope, type, wrapped_metaobject<M>{})...};
     }
 
     template <__metaobject_id M>
     static auto _unpack(
       metadata_registry& r,
       const metadata& scope,
+      const metadata& type,
       wrapped_metaobject<M> mo) noexcept -> std::vector<const metadata*> {
         if constexpr(reflects_object_sequence(mo)) {
-            return _unpack(r, scope, unpack(mo));
+            return _unpack(r, scope, type, unpack(mo));
         }
         return {};
     }
@@ -107,6 +119,7 @@ private:
     metadata(
       metadata_registry& r,
       const metadata& scope,
+      const metadata& type,
       wrapped_metaobject<M> mo) noexcept
       : _id{get_id(mo)}
       , _traits{get_traits(mo)}
@@ -115,50 +128,56 @@ private:
       , _name{_get_name(mo)}
       , _display_name{_get_display_name(mo)}
       , _scope{scope}
-      , _type(get_metadata(r, try_apply<unary_op_metaobject::get_type>(mo)))
-      , _underlying_type(get_metadata(
+      , _type{type}
+      , _underlying_type{get_metadata(
           r,
-          try_apply<unary_op_metaobject::get_underlying_type>(mo)))
-      , _aliased(
-          get_metadata(r, try_apply<unary_op_metaobject::get_aliased>(mo)))
-      , _class(get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo)))
-      , _base_classes(get_metadata(
+          try_apply<unary_op_metaobject::get_underlying_type>(mo))}
+      , _aliased{get_metadata(
           r,
-          *this,
-          try_apply<unary_op_metaobject::get_base_classes>(mo)))
-      , _captures(get_metadata(
+          try_apply<unary_op_metaobject::get_aliased>(mo))}
+      , _class{get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo))}
+      , _base_classes{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_captures>(mo)))
-      , _constructors(get_metadata(
+          try_apply<unary_op_metaobject::get_base_classes>(mo))}
+      , _captures{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_constructors>(mo)))
-      , _data_members(get_metadata(
+          try_apply<unary_op_metaobject::get_captures>(mo))}
+      , _constructors{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_data_members>(mo)))
-      , _destructors(get_metadata(
+          try_apply<unary_op_metaobject::get_constructors>(mo))}
+      , _data_members{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_destructors>(mo)))
-      , _member_functions(get_metadata(
+          try_apply<unary_op_metaobject::get_data_members>(mo))}
+      , _destructors{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_member_functions>(mo)))
-      , _member_types(get_metadata(
+          try_apply<unary_op_metaobject::get_destructors>(mo))}
+      , _enumerators{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_member_types>(mo)))
-      , _operators(get_metadata(
+          *this,
+          try_apply<unary_op_metaobject::get_enumerators>(mo))}
+      , _member_functions{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_operators>(mo)))
-      , _parameters(get_metadata(
+          try_apply<unary_op_metaobject::get_member_functions>(mo))}
+      , _member_types{get_metadata(
           r,
           *this,
-          try_apply<unary_op_metaobject::get_parameters>(mo)))
-      , _elements{_unpack(r, _scope, mo)} {
+          try_apply<unary_op_metaobject::get_member_types>(mo))}
+      , _operators{get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_operators>(mo))}
+      , _parameters{get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_parameters>(mo))}
+      , _elements{_unpack(r, _scope, _type, mo)} {
         for_each(get_enumerators(mirror(unary_op_boolean)), [&](auto me) {
             const auto result = try_apply<get_constant(me)>(mo);
             if(has_value(result)) {
@@ -184,6 +203,17 @@ private:
             }
         });
     }
+
+    template <__metaobject_id M>
+    metadata(
+      metadata_registry& r,
+      const metadata& scope,
+      wrapped_metaobject<M> mo) noexcept
+      : metadata{
+          r,
+          scope,
+          get_metadata(r, try_apply<unary_op_metaobject::get_type>(mo)),
+          mo} {}
 
     template <__metaobject_id M>
     metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
@@ -274,6 +304,10 @@ public:
         return {};
     }
 
+    auto element(size_t index) const noexcept -> const metadata& {
+        return *_elements[index];
+    }
+
     auto scope() const noexcept -> const metadata& {
         return _scope;
     }
@@ -293,15 +327,78 @@ public:
     auto class_() const noexcept -> const metadata& {
         return _class;
     }
+
+    auto base_classes() const noexcept -> const metadata& {
+        return _base_classes;
+    }
+
+    auto captures() const noexcept -> const metadata& {
+        return _captures;
+    }
+
+    auto constructors() const noexcept -> const metadata& {
+        return _constructors;
+    }
+
+    auto destructors() const noexcept -> const metadata& {
+        return _destructors;
+    }
+
+    auto enumerators() const noexcept -> const metadata& {
+        return _enumerators;
+    }
+
+    auto member_functions() const noexcept -> const metadata& {
+        return _member_functions;
+    }
+
+    auto member_types() const noexcept -> const metadata& {
+        return _member_types;
+    }
+
+    auto operators() const noexcept -> const metadata& {
+        return _operators;
+    }
+
+    auto parameters() const noexcept -> const metadata& {
+        return _parameters;
+    }
 };
 
 class metadata_registry {
 private:
     std::map<hash_t, const metadata> _metadata;
 
+    template <__metaobject_id M>
+    auto _get(const metadata& scope, wrapped_metaobject<M> mo)
+      -> const metadata& {
+        const auto id = get_hash(mo);
+        auto pos = _metadata.find(id);
+        if(pos == _metadata.end()) {
+            pos = _metadata.emplace(id, metadata(*this, scope, mo)).first;
+        }
+        return pos->second;
+    }
+
+    template <__metaobject_id M>
+    auto
+    _get(const metadata& scope, const metadata& type, wrapped_metaobject<M> mo)
+      -> const metadata& {
+        const auto id = get_hash(mo);
+        auto pos = _metadata.find(id);
+        if(pos == _metadata.end()) {
+            pos = _metadata.emplace(id, metadata(*this, scope, type, mo)).first;
+        }
+        return pos->second;
+    }
+
 public:
     metadata_registry() noexcept {
         _metadata.emplace(get_hash(no_metaobject), metadata{});
+    }
+
+    auto size() const noexcept {
+        return _metadata.size();
     }
 
     template <__metaobject_id M>
@@ -315,30 +412,28 @@ public:
     }
 
     template <__metaobject_id M>
-    auto get(const metadata& scope, wrapped_metaobject<M> mo)
+    friend auto get_metadata(metadata_registry& r, wrapped_metaobject<M> mo)
       -> const metadata& {
-        const auto id = get_hash(mo);
-        auto pos = _metadata.find(id);
-        if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata(*this, scope, mo)).first;
-        }
-        return pos->second;
+        return r.get(mo);
+    }
+
+    template <__metaobject_id M>
+    friend auto get_metadata(
+      metadata_registry& r,
+      const metadata& scope,
+      wrapped_metaobject<M> mo) -> const metadata& {
+        return r._get(scope, mo);
+    }
+
+    template <__metaobject_id M>
+    friend auto get_metadata(
+      metadata_registry& r,
+      const metadata& scope,
+      const metadata& type,
+      wrapped_metaobject<M> mo) -> const metadata& {
+        return r._get(scope, type, mo);
     }
 };
-
-template <__metaobject_id M>
-auto get_metadata(metadata_registry& r, wrapped_metaobject<M> mo)
-  -> const metadata& {
-    return r.get(mo);
-}
-
-template <__metaobject_id M>
-auto get_metadata(
-  metadata_registry& r,
-  const metadata& scope,
-  wrapped_metaobject<M> mo) -> const metadata& {
-    return r.get(scope, mo);
-}
 
 } // namespace mirror
 
