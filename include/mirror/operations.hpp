@@ -28,77 +28,77 @@ namespace mirror {
 /// @see apply
 /// @see try_apply
 /// @see metaobject_traits
-enum class unary_op_boolean {
+enum class unary_op_boolean : std::uint64_t {
     /// @brief Indicates if the reflected lambda closure's call operator is @c const.
-    is_call_operator_const,
+    is_call_operator_const = 1ULL << 0ULL,
     /// @brief Indicates if the reflected member function is @c const.
-    is_const,
+    is_const = 1ULL << 1ULL,
     /// @brief Indicates if the reflected base-level entity is @c constexpr.
-    is_constexpr,
+    is_constexpr = 1ULL << 2ULL,
     /// @brief Indicates if the reflected constructor is copy constructor.
-    is_copy_constructor,
+    is_copy_constructor = 1ULL << 3ULL,
     /// @brief Indicates if the reflected operator is copy assignment operator.
-    is_copy_assignment_operator,
+    is_copy_assignment_operator = 1ULL << 4ULL,
     /// @brief Indicates if the reflected special member function is defaulted.
-    is_defaulted,
+    is_defaulted = 1ULL << 5ULL,
     /// @brief Indicates if the reflected function is deleted.
-    is_deleted,
+    is_deleted = 1ULL << 6ULL,
     /// @brief Indicates if the metaobject sequence is empty.
-    is_empty,
+    is_empty = 1ULL << 7ULL,
     /// @brief Indicates if the reflected base-level entity is an @c enum.
-    is_enum,
+    is_enum = 1ULL << 8ULL,
     /// @brief Indicates if the reflected base-level entity is @c explicit.
-    is_explicit,
+    is_explicit = 1ULL << 9ULL,
     /// @brief Indicates if the reflected lambda capture is explicitly captured.
-    is_explicitly_captured,
+    is_explicitly_captured = 1ULL << 10ULL,
     /// @brief Indicates if the reflected base-level entity is @c final.
-    is_final,
+    is_final = 1ULL << 11ULL,
     /// @brief Indicates if the reflected special member function is implicitly declared.
-    is_implicitly_declared,
+    is_implicitly_declared = 1ULL << 12ULL,
     /// @brief Indicates if the reflected base-level entity is @c inline.
-    is_inline,
+    is_inline = 1ULL << 13ULL,
     /// @brief Indicates if the reflected constructor is move constructor.
-    is_move_constructor,
+    is_move_constructor = 1ULL << 14ULL,
     /// @brief Indicates if the reflected operator is move assignment operator.
-    is_move_assignment_operator,
+    is_move_assignment_operator = 1ULL << 15ULL,
     /// @brief Indicates if the reflected base-level entity is @c noexcept.
-    is_noexcept,
+    is_noexcept = 1ULL << 16ULL,
     /// @brief Indicates if the reflected base-level entity is @c private.
-    is_private,
+    is_private = 1ULL << 17ULL,
     /// @brief Indicates if the reflected base-level entity is @c protected.
-    is_protected,
+    is_protected = 1ULL << 18ULL,
     /// @brief Indicates if the reflected base-level entity is @c public.
-    is_public,
+    is_public = 1ULL << 19ULL,
     /// @brief Indicates if the reflected base-level entity is pure @c virtual.
-    is_pure_virtual,
+    is_pure_virtual = 1ULL << 20ULL,
     /// @brief Indicates if the reflected base-level entity is a scoped @c enum.
-    is_scoped_enum,
+    is_scoped_enum = 1ULL << 21ULL,
     /// @brief Indicates if the reflected base-level entity is @c static.
-    is_static,
+    is_static = 1ULL << 22ULL,
     /// @brief Indicates if the reflected base-level entity is @c thread_local.
-    is_thread_local,
+    is_thread_local = 1ULL << 23ULL,
     /// @brief Indicates if the reflected base-level entity is an @c union.
-    is_union,
+    is_union = 1ULL << 24ULL,
     /// @brief Indicates if the reflected base-level entity is unnamed.
-    is_unnamed,
+    is_unnamed = 1ULL << 25ULL,
     /// @brief Indicates if the reflected base-level entity is @c virtual.
-    is_virtual,
+    is_virtual = 1ULL << 26ULL,
     /// @brief Indicates if the reflected member function is @c volatile.
-    is_volatile,
+    is_volatile = 1ULL << 27ULL,
     /// @brief Indicates if the reflected function parameter has default argument.
-    has_default_argument,
+    has_default_argument = 1ULL << 28ULL,
     /// @brief Indicates if the reflected member function has lvalue-ref qualifier.
-    has_lvalueref_qualifier,
+    has_lvalueref_qualifier = 1ULL << 29ULL,
     /// @brief Indicates if the reflected member function has rvalue-ref qualifier.
-    has_rvalueref_qualifier,
+    has_rvalueref_qualifier = 1ULL << 30ULL,
     /// @brief Indicates if the reflected record type uses a @c class specifier.
-    uses_class_key,
+    uses_class_key = 1ULL << 31ULL,
     /// @brief Indicates if the reflected record type uses a @c struct specifier.
-    uses_struct_key,
+    uses_struct_key = 1ULL << 32ULL,
     /// @brief Indicates if the reflected lambda uses default capture by copy.
-    uses_default_copy_capture,
+    uses_default_copy_capture = 1ULL << 33ULL,
     /// @brief Indicates if the reflected lambda uses default capture by reference.
-    uses_default_reference_capture
+    uses_default_reference_capture = 1ULL << 34ULL
 };
 
 /// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
@@ -237,7 +237,7 @@ struct map_unary_op;
             return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
         }                                                                    \
         static constexpr auto make_optional(bool v) -> tribool {             \
-            return v;                                                        \
+            return {v};                                                      \
         }                                                                    \
         static constexpr auto fallback() -> tribool {                        \
             return indeterminate;                                            \
