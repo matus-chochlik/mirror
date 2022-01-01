@@ -65,6 +65,11 @@ constexpr auto unpack(wrapped_metaobject<M>)
     return {};
 }
 
+template <__metaobject_id... M>
+constexpr auto unpack(unpacked_metaobject_sequence<M...> ms) {
+    return ms;
+}
+
 /// @brief Makes an unpacked_metaobject_sequence from individual metaobjects.
 /// @ingroup sequence_operations
 /// @see is_object_sequence
@@ -314,6 +319,24 @@ select(wrapped_metaobject<M> mo, F function, T fallback, P&&... param) -> T
       std::move(function),
       std::move(fallback),
       std::forward<P>(param)...);
+}
+
+// concat
+template <__metaobject_id... L, __metaobject_id... R>
+constexpr auto
+concat(unpacked_metaobject_sequence<L...>, unpacked_metaobject_sequence<R...>)
+  -> unpacked_metaobject_sequence<L..., R...> {
+    return {};
+}
+
+template <metaobject_sequence M>
+constexpr auto concat(M ms) {
+    return ms;
+}
+
+template <metaobject_sequence M, metaobject_sequence... Ms>
+constexpr auto concat(M h, Ms... t) {
+    return concat(unpack(h), concat(unpack(t)...));
 }
 
 } // namespace mirror
