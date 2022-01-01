@@ -112,15 +112,15 @@ enum class unary_op_boolean : std::uint64_t {
 /// @see apply
 /// @see try_apply
 /// @see metaobject_traits
-enum class unary_op_integer {
+enum class unary_op_integer : unsigned {
     /// @brief Returns the value of the reflected base-level constant.
-    get_constant,
+    get_constant = 1U << 0U,
     /// @brief Returns a pointer to the reflected base-level entity.
-    get_size,
+    get_size = 1U << 1U,
     /// @brief Returns source file column of the reflected entity if available.
-    get_source_column,
+    get_source_column = 1U << 2U,
     /// @brief Returns source file line of the reflected entity if available.
-    get_source_line
+    get_source_line = 1U << 3U
 };
 
 /// @brief Enumeration of pointer -returning unary operations applicable to metaobjects.
@@ -134,9 +134,9 @@ enum class unary_op_integer {
 /// @see apply
 /// @see try_apply
 /// @see metaobject_traits
-enum class unary_op_pointer {
+enum class unary_op_pointer : unsigned {
     /// @brief Returns a pointer to the reflected base-level entity.
-    get_pointer
+    get_pointer = 1U << 0U
 };
 
 /// @brief Enumeration of string-returning unary operations applicable to metaobjects.
@@ -150,14 +150,14 @@ enum class unary_op_pointer {
 /// @see apply
 /// @see try_apply
 /// @see metaobject_traits
-enum class unary_op_string {
+enum class unary_op_string : unsigned {
     // string
     /// @brief Returns the user-friendly name of the reflected base-level entity.
-    get_display_name,
+    get_display_name = 1U << 0U,
     /// @brief Returns the unqualified "base name" of the reflected base-level entity.
-    get_name,
+    get_name = 1U << 1U,
     /// @brief Returns source file column of the reflected entity if available.
-    get_source_file_name
+    get_source_file_name = 1U << 2U
 };
 
 /// @brief Enumeration of metaobject-returning unary operations applicable to metaobjects.
@@ -171,42 +171,43 @@ enum class unary_op_string {
 /// @see apply
 /// @see try_apply
 /// @see metaobject_traits
-enum class unary_op_metaobject {
+enum class unary_op_metaobject : std::uint64_t {
     /// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
-    get_aliased,
+    get_aliased = 1ULL << 0ULL,
     /// @brief Returns a sequence of base class specifier reflections of a reflected class.
-    get_base_classes,
+    get_base_classes = 1ULL << 1ULL,
     /// @brief Returns the reflection of the sub-expression of a parenthesized expression.
-    get_callable,
+    get_callable = 1ULL << 2ULL,
     /// @brief Returns a sequence of capture reflections of a reflected closure.
-    get_captures,
+    get_captures = 1ULL << 3ULL,
     /// @brief Returns a sequence of member type reflections of a reflected class.
-    get_data_members,
+    get_data_members = 1ULL << 4ULL,
     /// @brief Returns the reflection of the class in a reflected base class specifier.
-    get_class,
+    get_class = 1ULL << 5ULL,
     /// @brief Returns a sequence of constructor reflections of a reflected class.
-    get_constructors,
+    get_constructors = 1ULL << 6ULL,
     /// @brief Returns a sequence of destructors reflections of a reflected class.
-    get_destructors,
+    get_destructors = 1ULL << 7ULL,
     /// @brief Returns a sequence of member function reflections of a reflected class.
-    get_member_functions,
+    get_member_functions = 1ULL << 8ULL,
     /// @brief Returns a sequence of member type reflections of a reflected class.
-    get_member_types,
+    get_member_types = 1ULL << 9ULL,
     /// @brief Returns a sequence of operator reflections of a reflected class.
-    get_operators,
+    get_operators = 1ULL << 10ULL,
     /// @brief Returns a sequence of parameter reflections of a reflected callable.
-    get_parameters,
-    get_scope,
+    get_parameters = 1ULL << 11ULL,
+    /// @brief Returns the reflection of the scope in a reflected entity.
+    get_scope = 1ULL << 12ULL,
     /// @brief Returns a reflection of the scope of a reflected scope member.
-    get_subexpression,
+    get_subexpression = 1ULL << 13ULL,
     /// @brief Returns a reflection of the type of a reflected typed entity.
-    get_type,
+    get_type = 1ULL << 14ULL,
     /// @brief Returns a reflection of the underlying type of a reflected enum,
-    get_underlying_type,
+    get_underlying_type = 1ULL << 15ULL,
     /// @brief Returns a sequence with private elements filtered out.
-    hide_private,
+    hide_private = 1ULL << 16ULL,
     /// @brief Returns a sequence with private and protected elements filtered out.
-    hide_protected
+    hide_protected = 1ULL << 17ULL
 };
 
 /// @brief Unary metaobject operation enumeration type.
