@@ -14,6 +14,7 @@
 #include "operations.hpp"
 #include "traits.hpp"
 #include <map>
+#include <vector>
 
 namespace mirror {
 
@@ -23,32 +24,63 @@ class metadata_registry;
 template <__metaobject_id M>
 auto get_metadata(metadata_registry&, wrapped_metaobject<M>) -> const metadata&;
 
+template <__metaobject_id M>
+auto get_metadata(metadata_registry&, const metadata&, wrapped_metaobject<M>)
+  -> const metadata&;
+
 class metadata {
 private:
     size_t _id{0U};
     metaobject_traits _traits{};
+
     bitfield<unary_op_boolean> _op_boolean_results{};
     bitfield<unary_op_boolean> _op_boolean_applicable{};
     bitfield<unary_op_metaobject> _op_metaobject_applicable{};
     bitfield<unary_op_integer> _op_integer_applicable{};
     bitfield<unary_op_string> _op_string_applicable{};
+
     size_t _source_column{0U};
     size_t _source_line{0U};
-    size_t _size{0U};
+
     std::string_view _name{};
     std::string_view _display_name{};
+
     const metadata& _scope{*this};
     const metadata& _type{*this};
     const metadata& _underlying_type{*this};
     const metadata& _aliased{*this};
     const metadata& _class{*this};
 
+    const metadata& _base_classes{*this};
+    const metadata& _captures{*this};
+    const metadata& _constructors{*this};
+    const metadata& _data_members{*this};
+    const metadata& _destructors{*this};
+    const metadata& _member_functions{*this};
+    const metadata& _member_types{*this};
+    const metadata& _operators{*this};
+    const metadata& _parameters{*this};
+
+    std::vector<const metadata*> _elements;
+
+    template <__metaobject_id... M>
+    static auto _unpack(
+      metadata_registry& r,
+      const metadata& scope,
+      unpacked_metaobject_sequence<M...>) noexcept
+      -> std::vector<const metadata*> {
+        return {&get_metadata(r, scope, wrapped_metaobject<M>{})...};
+    }
+
     template <__metaobject_id M>
-    static auto _get_size(wrapped_metaobject<M> mo) noexcept -> size_t {
+    static auto _unpack(
+      metadata_registry& r,
+      const metadata& scope,
+      wrapped_metaobject<M> mo) noexcept -> std::vector<const metadata*> {
         if constexpr(reflects_object_sequence(mo)) {
-            return get_size(mo);
+            return _unpack(r, scope, unpack(mo));
         }
-        return 0L;
+        return {};
     }
 
     template <__metaobject_id M>
@@ -72,22 +104,61 @@ private:
     metadata() noexcept = default;
 
     template <__metaobject_id M>
-    metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
+    metadata(
+      metadata_registry& r,
+      const metadata& scope,
+      wrapped_metaobject<M> mo) noexcept
       : _id{get_id(mo)}
       , _traits{get_traits(mo)}
       , _source_column{get_source_column(mo)}
       , _source_line{get_source_line(mo)}
-      , _size{_get_size(mo)}
       , _name{_get_name(mo)}
       , _display_name{_get_display_name(mo)}
-      , _scope(get_metadata(r, try_apply<unary_op_metaobject::get_scope>(mo)))
+      , _scope{scope}
       , _type(get_metadata(r, try_apply<unary_op_metaobject::get_type>(mo)))
       , _underlying_type(get_metadata(
           r,
           try_apply<unary_op_metaobject::get_underlying_type>(mo)))
       , _aliased(
           get_metadata(r, try_apply<unary_op_metaobject::get_aliased>(mo)))
-      , _class(get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo))) {
+      , _class(get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo)))
+      , _base_classes(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_base_classes>(mo)))
+      , _captures(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_captures>(mo)))
+      , _constructors(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_constructors>(mo)))
+      , _data_members(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_data_members>(mo)))
+      , _destructors(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_destructors>(mo)))
+      , _member_functions(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_member_functions>(mo)))
+      , _member_types(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_member_types>(mo)))
+      , _operators(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_operators>(mo)))
+      , _parameters(get_metadata(
+          r,
+          *this,
+          try_apply<unary_op_metaobject::get_parameters>(mo)))
+      , _elements{_unpack(r, _scope, mo)} {
         for_each(get_enumerators(mirror(unary_op_boolean)), [&](auto me) {
             const auto result = try_apply<get_constant(me)>(mo);
             if(has_value(result)) {
@@ -113,6 +184,13 @@ private:
             }
         });
     }
+
+    template <__metaobject_id M>
+    metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
+      : metadata{
+          r,
+          get_metadata(r, try_apply<unary_op_metaobject::get_scope>(mo)),
+          mo} {}
 
     friend class metadata_registry;
 
@@ -177,7 +255,7 @@ public:
 
     auto size() const noexcept -> std::optional<size_t> {
         if(is_applicable(unary_op_integer::get_size)) {
-            return {_size};
+            return {_elements.size()};
         }
         return {};
     }
@@ -235,12 +313,31 @@ public:
         }
         return pos->second;
     }
+
+    template <__metaobject_id M>
+    auto get(const metadata& scope, wrapped_metaobject<M> mo)
+      -> const metadata& {
+        const auto id = get_hash(mo);
+        auto pos = _metadata.find(id);
+        if(pos == _metadata.end()) {
+            pos = _metadata.emplace(id, metadata(*this, scope, mo)).first;
+        }
+        return pos->second;
+    }
 };
 
 template <__metaobject_id M>
 auto get_metadata(metadata_registry& r, wrapped_metaobject<M> mo)
   -> const metadata& {
     return r.get(mo);
+}
+
+template <__metaobject_id M>
+auto get_metadata(
+  metadata_registry& r,
+  const metadata& scope,
+  wrapped_metaobject<M> mo) -> const metadata& {
+    return r.get(scope, mo);
 }
 
 } // namespace mirror
