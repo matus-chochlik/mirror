@@ -45,29 +45,26 @@ static void print_value(auto opt_value) {
 }
 
 void print_info(mirror::metaobject auto mo) {
-    for_each(
-      make_sequence(
-        mirror(mirror::unary_op_boolean),
-        mirror(mirror::unary_op_integer),
-        mirror(mirror::unary_op_pointer),
-        mirror(mirror::unary_op_string),
-        mirror(mirror::unary_op_metaobject)),
-      [&](auto muo) {
-          const auto mes = get_enumerators(muo);
-          const auto maxl = fold_init_list(
-            mes,
-            [](auto me) { return get_name(me).size(); },
-            [](auto l) { return std::max(l); });
+    const auto mes = concat(
+      get_enumerators(mirror(mirror::unary_op_boolean)),
+      get_enumerators(mirror(mirror::unary_op_integer)),
+      get_enumerators(mirror(mirror::unary_op_pointer)),
+      get_enumerators(mirror(mirror::unary_op_string)),
+      get_enumerators(mirror(mirror::unary_op_metaobject)));
 
-          std::cout << "meta-info for " << get_display_name(mo) << std::endl;
-          for_each(mes, [&](mirror::metaobject auto me) {
-              std::cout << "  " << get_name(me) << ": "
-                        << std::string(maxl - get_name(me).size(), ' ');
-              print_value(try_apply<get_constant(me)>(mo));
-              std::cout << std::endl;
-          });
-          std::cout << std::endl;
-      });
+    const auto maxl = fold_init_list(
+      mes,
+      [](auto me) { return get_name(me).size(); },
+      [](auto l) { return std::max(l); });
+
+    std::cout << "meta-info for " << get_display_name(mo) << std::endl;
+    for_each(mes, [&](mirror::metaobject auto me) {
+        std::cout << "  " << get_name(me) << ": "
+                  << std::string(maxl - get_name(me).size(), ' ');
+        print_value(try_apply<get_constant(me)>(mo));
+        std::cout << std::endl;
+    });
+    std::cout << std::endl;
 }
 
 int main(int argc, const char**) {

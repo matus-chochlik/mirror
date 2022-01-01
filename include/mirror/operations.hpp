@@ -10,7 +10,7 @@
 #define MIRROR_OPERATIONS_HPP
 
 #include "preprocessor.hpp"
-#include "primitives.hpp"
+#include "sequence.hpp"
 #include "tribool.hpp"
 #include <concepts>
 #include <optional>
@@ -19,6 +19,11 @@ namespace mirror {
 
 /// @brief Enumeration of boolean-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see unary_op_metaobject
+/// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
@@ -98,6 +103,11 @@ enum class unary_op_boolean {
 
 /// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see unary_op_metaobject
+/// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
@@ -115,6 +125,11 @@ enum class unary_op_integer {
 
 /// @brief Enumeration of pointer -returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_string
+/// @see unary_op_metaobject
+/// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
@@ -126,6 +141,11 @@ enum class unary_op_pointer {
 
 /// @brief Enumeration of string-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_metaobject
+/// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
@@ -142,6 +162,11 @@ enum class unary_op_string {
 
 /// @brief Enumeration of metaobject-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
@@ -184,6 +209,13 @@ enum class unary_op_metaobject {
     hide_protected
 };
 
+/// @brief Unary metaobject operation enumeration type.
+/// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see unary_op_metaobject
 template <typename T>
 concept metaobject_unary_op =
   (std::same_as<T, unary_op_boolean> || std::same_as<T, unary_op_integer> ||
@@ -389,6 +421,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 /// @see unary_op_pointer
 /// @see unary_op_string
 /// @see unary_op_metaobject
+/// @see metaobject_unary_op
 /// @see apply
 /// @see try_apply
 template <metaobject_unary_op auto O, __metaobject_id M>
@@ -398,6 +431,11 @@ constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
 
 /// @brief Calls the specified unary operation on a metaobject.
 /// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see unary_op_metaobject
 /// @see metaobject_unary_op
 /// @see is_applicable
 /// @see try_apply
@@ -409,6 +447,11 @@ constexpr auto apply(wrapped_metaobject<M> mo) noexcept
 
 /// @brief Calls the specified unary operation on a metaobject if it's applicable.
 /// @ingroup operations
+/// @see unary_op_boolean
+/// @see unary_op_integer
+/// @see unary_op_pointer
+/// @see unary_op_string
+/// @see unary_op_metaobject
 /// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
@@ -420,6 +463,23 @@ constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     } else {
         return op::fallback();
     }
+}
+
+/// @brief Calls the specified function on each unary_op meta-enumerator
+/// @ingroup operations
+/// @see metaobject_unary_op
+/// @see is_applicable
+/// @see apply
+template <typename F>
+constexpr void for_each_metaobject_unary_op(F function) {
+    for_each(
+      make_sequence(
+        mirror(mirror::unary_op_boolean),
+        mirror(mirror::unary_op_integer),
+        mirror(mirror::unary_op_pointer),
+        mirror(mirror::unary_op_string),
+        mirror(mirror::unary_op_metaobject)),
+      [&](auto muo) { for_each(get_enumerators(muo), function); });
 }
 
 } // namespace mirror
