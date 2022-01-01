@@ -14,6 +14,7 @@
 #include "operations.hpp"
 #include "traits.hpp"
 #include <map>
+#include <memory>
 #include <vector>
 
 namespace mirror {
@@ -290,6 +291,10 @@ public:
         return {};
     }
 
+    auto count() const noexcept -> size_t {
+        return _elements.size();
+    }
+
     auto name() const noexcept -> std::optional<std::string_view> {
         if(_traits.has(metaobject_trait::is_named)) {
             return {_name};
@@ -367,7 +372,7 @@ public:
 
 class metadata_registry {
 private:
-    std::map<hash_t, const metadata> _metadata;
+    std::map<hash_t, std::unique_ptr<const metadata>> _metadata;
 
     template <__metaobject_id M>
     auto _get(const metadata& scope, wrapped_metaobject<M> mo)
@@ -375,9 +380,9 @@ private:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata(*this, scope, mo)).first;
+            pos = _metadata.emplace(id, new metadata(*this, scope, mo)).first;
         }
-        return pos->second;
+        return *pos->second;
     }
 
     template <__metaobject_id M>
@@ -387,14 +392,15 @@ private:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata(*this, scope, type, mo)).first;
+            pos =
+              _metadata.emplace(id, new metadata(*this, scope, type, mo)).first;
         }
-        return pos->second;
+        return *pos->second;
     }
 
 public:
     metadata_registry() noexcept {
-        _metadata.emplace(get_hash(no_metaobject), metadata{});
+        _metadata.emplace(get_hash(no_metaobject), new metadata());
     }
 
     auto size() const noexcept {
@@ -406,9 +412,9 @@ public:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata(*this, mo)).first;
+            pos = _metadata.emplace(id, new metadata(*this, mo)).first;
         }
-        return pos->second;
+        return *pos->second;
     }
 
     template <__metaobject_id M>
