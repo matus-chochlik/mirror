@@ -346,6 +346,12 @@ private:
     friend class metadata_registry;
 
 public:
+    metadata(metadata&&) = delete;
+    auto operator=(metadata&&) = delete;
+    metadata(const metadata&) = delete;
+    auto operator=(const metadata&) = delete;
+    ~metadata() noexcept = default;
+
     explicit operator bool() const noexcept {
         return _traits.has(metaobject_trait::is_object);
     }
@@ -498,6 +504,50 @@ public:
     }
 };
 
+class metadata_registry_iterator {
+private:
+    using base_iter_t =
+      std::map<hash_t, std::unique_ptr<const metadata>>::const_iterator;
+    base_iter_t _iter{};
+
+public:
+    using value_type = const metadata;
+    using pointer = const metadata*;
+    using reference = const metadata&;
+    using difference_type = base_iter_t::difference_type;
+    using iterator_category = std::forward_iterator_tag;
+
+    metadata_registry_iterator(base_iter_t iter) noexcept
+      : _iter{iter} {}
+
+    friend auto operator==(
+      const metadata_registry_iterator& l,
+      const metadata_registry_iterator& r) noexcept -> bool {
+        return l._iter == r._iter;
+    }
+
+    friend auto operator!=(
+      const metadata_registry_iterator& l,
+      const metadata_registry_iterator& r) noexcept -> bool {
+        return l._iter != r._iter;
+    }
+
+    auto operator++() noexcept -> auto& {
+        ++_iter;
+        return *this;
+    }
+
+    auto operator++(int) noexcept -> auto {
+        auto copy{*this};
+        ++_iter;
+        return copy;
+    }
+
+    auto operator*() noexcept -> const metadata& {
+        return *_iter->second;
+    }
+};
+
 class metadata_registry {
 private:
     std::map<hash_t, std::unique_ptr<const metadata>> _metadata;
@@ -558,6 +608,14 @@ public:
 
     auto size() const noexcept {
         return _metadata.size();
+    }
+
+    auto begin() const noexcept -> metadata_registry_iterator {
+        return {_metadata.begin()};
+    }
+
+    auto end() const noexcept -> metadata_registry_iterator {
+        return {_metadata.end()};
     }
 
     template <__metaobject_id M>
