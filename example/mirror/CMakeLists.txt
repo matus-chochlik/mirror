@@ -5,6 +5,8 @@
 #
 include(Example.cmake)
 
+add_subdirectory(testdecl)
+
 mirror_add_simple_example(applicable_ops)
 mirror_add_simple_example(expression)
 mirror_add_simple_example(filter)

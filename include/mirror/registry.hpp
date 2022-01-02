@@ -12,15 +12,20 @@
 #include "extract.hpp"
 #include "hash.hpp"
 #include "operations.hpp"
+#include "registry_fwd.hpp"
 #include "traits.hpp"
 #include <map>
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 namespace mirror {
 
-class metadata;
-class metadata_registry;
+class metadata_not_found : public std::runtime_error {
+public:
+    metadata_not_found() noexcept
+      : std::runtime_error{"metadata not found"} {}
+};
 
 template <__metaobject_id M>
 auto get_metadata(metadata_registry&, wrapped_metaobject<M>) noexcept
@@ -38,6 +43,94 @@ auto get_metadata(
   const metadata& scope,
   const metadata& type,
   wrapped_metaobject<M>) noexcept -> const metadata&;
+
+class metadata_iterator {
+private:
+    using base_iter_t = std::vector<const metadata*>::const_iterator;
+    base_iter_t _iter{};
+
+public:
+    using value_type = const metadata;
+    using pointer = const metadata*;
+    using reference = const metadata&;
+    using difference_type = base_iter_t::difference_type;
+    using iterator_category = base_iter_t::iterator_category;
+
+    metadata_iterator(base_iter_t iter) noexcept
+      : _iter{iter} {}
+
+    friend auto
+    operator==(const metadata_iterator& l, const metadata_iterator& r) noexcept
+      -> bool {
+        return l._iter == r._iter;
+    }
+
+    friend auto
+    operator!=(const metadata_iterator& l, const metadata_iterator& r) noexcept
+      -> bool {
+        return l._iter != r._iter;
+    }
+
+    friend auto
+    operator<(const metadata_iterator& l, const metadata_iterator& r) noexcept
+      -> bool {
+        return l._iter < r._iter;
+    }
+
+    friend auto
+    operator-(const metadata_iterator& l, const metadata_iterator& r) noexcept
+      -> difference_type {
+        return l._iter - r._iter;
+    }
+
+    friend auto
+    operator+(const metadata_iterator& i, difference_type ofs) noexcept
+      -> metadata_iterator {
+        return {i._iter + ofs};
+    }
+
+    friend auto
+    operator-(const metadata_iterator& i, difference_type ofs) noexcept
+      -> metadata_iterator {
+        return {i._iter - ofs};
+    }
+
+    auto operator++() noexcept -> auto& {
+        ++_iter;
+        return *this;
+    }
+
+    auto operator++(int) noexcept -> auto {
+        auto copy{*this};
+        ++_iter;
+        return copy;
+    }
+
+    auto operator+=(difference_type ofs) noexcept -> auto& {
+        _iter += ofs;
+        return *this;
+    }
+
+    auto operator--() noexcept -> auto& {
+        --_iter;
+        return *this;
+    }
+
+    auto operator--(int) noexcept -> auto {
+        auto copy{*this};
+        --_iter;
+        return copy;
+    }
+
+    auto operator-=(difference_type ofs) noexcept -> auto& {
+        _iter -= ofs;
+        return *this;
+    }
+
+    auto operator*() noexcept -> const metadata& {
+        return **_iter;
+    }
+};
 
 class metadata {
 private:
@@ -322,6 +415,14 @@ public:
         return _elements.size();
     }
 
+    auto begin() const noexcept -> metadata_iterator {
+        return {_elements.begin()};
+    }
+
+    auto end() const noexcept -> metadata_iterator {
+        return {_elements.end()};
+    }
+
     auto name() const noexcept -> std::optional<std::string_view> {
         if(_traits.has(metaobject_trait::is_named)) {
             return {_name};
@@ -426,25 +527,6 @@ private:
         return *pos->second;
     }
 
-public:
-    metadata_registry() noexcept {
-        _metadata.emplace(get_hash(no_metaobject), metadata::make());
-    }
-
-    auto size() const noexcept {
-        return _metadata.size();
-    }
-
-    template <__metaobject_id M>
-    auto get(wrapped_metaobject<M> mo) noexcept -> const metadata& {
-        const auto id = get_hash(mo);
-        auto pos = _metadata.find(id);
-        if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata::make(*this, mo)).first;
-        }
-        return *pos->second;
-    }
-
     template <__metaobject_id M>
     friend auto
     get_metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
@@ -467,6 +549,40 @@ public:
       const metadata& type,
       wrapped_metaobject<M> mo) noexcept -> const metadata& {
         return r._get(scope, type, mo);
+    }
+
+public:
+    metadata_registry() noexcept {
+        _metadata.emplace(get_hash(no_metaobject), metadata::make());
+    }
+
+    auto size() const noexcept {
+        return _metadata.size();
+    }
+
+    template <__metaobject_id M>
+    auto get(wrapped_metaobject<M> mo) noexcept -> const metadata& {
+        const auto id = get_hash(mo);
+        auto pos = _metadata.find(id);
+        if(pos == _metadata.end()) {
+            pos = _metadata.emplace(id, metadata::make(*this, mo)).first;
+        }
+        return *pos->second;
+    }
+
+    template <__metaobject_id M>
+    auto add(wrapped_metaobject<M> mo) noexcept {
+        (void)get(mo);
+    }
+
+    template <__metaobject_id M>
+    auto find(wrapped_metaobject<M> mo) -> const metadata& {
+        const auto id = get_hash(mo);
+        auto pos = _metadata.find(id);
+        if(pos == _metadata.end()) {
+            throw metadata_not_found();
+        }
+        return *pos->second;
     }
 };
 
