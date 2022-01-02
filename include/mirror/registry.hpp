@@ -23,20 +23,21 @@ class metadata;
 class metadata_registry;
 
 template <__metaobject_id M>
-auto get_metadata(metadata_registry&, wrapped_metaobject<M>) -> const metadata&;
+auto get_metadata(metadata_registry&, wrapped_metaobject<M>) noexcept
+  -> const metadata&;
 
 template <__metaobject_id M>
 auto get_metadata(
   metadata_registry&,
   const metadata& scope,
-  wrapped_metaobject<M>) -> const metadata&;
+  wrapped_metaobject<M>) noexcept -> const metadata&;
 
 template <__metaobject_id M>
 auto get_metadata(
   metadata_registry&,
   const metadata& scope,
   const metadata& type,
-  wrapped_metaobject<M>) -> const metadata&;
+  wrapped_metaobject<M>) noexcept -> const metadata&;
 
 class metadata {
 private:
@@ -223,6 +224,32 @@ private:
           get_metadata(r, try_apply<unary_op_metaobject::get_scope>(mo)),
           mo} {}
 
+    static auto make() noexcept {
+        return std::unique_ptr<metadata>{new metadata()};
+    }
+
+    template <__metaobject_id M>
+    static auto make(metadata_registry& r, wrapped_metaobject<M> mo) noexcept {
+        return std::unique_ptr<metadata>{new metadata(r, mo)};
+    }
+
+    template <__metaobject_id M>
+    static auto make(
+      metadata_registry& r,
+      const metadata& scope,
+      wrapped_metaobject<M> mo) noexcept {
+        return std::unique_ptr<metadata>{new metadata(r, scope, mo)};
+    }
+
+    template <__metaobject_id M>
+    static auto make(
+      metadata_registry& r,
+      const metadata& scope,
+      const metadata& type,
+      wrapped_metaobject<M> mo) noexcept {
+        return std::unique_ptr<metadata>{new metadata(r, scope, type, mo)};
+    }
+
     friend class metadata_registry;
 
 public:
@@ -375,32 +402,33 @@ private:
     std::map<hash_t, std::unique_ptr<const metadata>> _metadata;
 
     template <__metaobject_id M>
-    auto _get(const metadata& scope, wrapped_metaobject<M> mo)
+    auto _get(const metadata& scope, wrapped_metaobject<M> mo) noexcept
       -> const metadata& {
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, new metadata(*this, scope, mo)).first;
+            pos = _metadata.emplace(id, metadata::make(*this, scope, mo)).first;
         }
         return *pos->second;
     }
 
     template <__metaobject_id M>
-    auto
-    _get(const metadata& scope, const metadata& type, wrapped_metaobject<M> mo)
-      -> const metadata& {
+    auto _get(
+      const metadata& scope,
+      const metadata& type,
+      wrapped_metaobject<M> mo) noexcept -> const metadata& {
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos =
-              _metadata.emplace(id, new metadata(*this, scope, type, mo)).first;
+            pos = _metadata.emplace(id, metadata::make(*this, scope, type, mo))
+                    .first;
         }
         return *pos->second;
     }
 
 public:
     metadata_registry() noexcept {
-        _metadata.emplace(get_hash(no_metaobject), new metadata());
+        _metadata.emplace(get_hash(no_metaobject), metadata::make());
     }
 
     auto size() const noexcept {
@@ -408,17 +436,18 @@ public:
     }
 
     template <__metaobject_id M>
-    auto get(wrapped_metaobject<M> mo) -> const metadata& {
+    auto get(wrapped_metaobject<M> mo) noexcept -> const metadata& {
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, new metadata(*this, mo)).first;
+            pos = _metadata.emplace(id, metadata::make(*this, mo)).first;
         }
         return *pos->second;
     }
 
     template <__metaobject_id M>
-    friend auto get_metadata(metadata_registry& r, wrapped_metaobject<M> mo)
+    friend auto
+    get_metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
       -> const metadata& {
         return r.get(mo);
     }
@@ -427,7 +456,7 @@ public:
     friend auto get_metadata(
       metadata_registry& r,
       const metadata& scope,
-      wrapped_metaobject<M> mo) -> const metadata& {
+      wrapped_metaobject<M> mo) noexcept -> const metadata& {
         return r._get(scope, mo);
     }
 
@@ -436,7 +465,7 @@ public:
       metadata_registry& r,
       const metadata& scope,
       const metadata& type,
-      wrapped_metaobject<M> mo) -> const metadata& {
+      wrapped_metaobject<M> mo) noexcept -> const metadata& {
         return r._get(scope, type, mo);
     }
 };
