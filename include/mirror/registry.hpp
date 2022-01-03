@@ -137,11 +137,11 @@ private:
     size_t _id{0U};
     metaobject_traits _traits{};
 
-    bitfield<unary_op_boolean> _op_boolean_results{};
-    bitfield<unary_op_boolean> _op_boolean_applicable{};
-    bitfield<unary_op_metaobject> _op_metaobject_applicable{};
-    bitfield<unary_op_integer> _op_integer_applicable{};
-    bitfield<unary_op_string> _op_string_applicable{};
+    unary_ops_boolean _op_boolean_results{};
+    unary_ops_boolean _op_boolean_applicable{};
+    unary_ops_metaobject _op_metaobject_applicable{};
+    unary_ops_integer _op_integer_applicable{};
+    unary_ops_string _op_string_applicable{};
 
     size_t _source_column{0U};
     size_t _source_line{0U};

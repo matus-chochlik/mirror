@@ -9,6 +9,7 @@
 #ifndef MIRROR_OPERATIONS_HPP
 #define MIRROR_OPERATIONS_HPP
 
+#include "bitfield.hpp"
 #include "preprocessor.hpp"
 #include "sequence.hpp"
 #include "tribool.hpp"
@@ -23,6 +24,7 @@ namespace mirror {
 /// @see unary_op_pointer
 /// @see unary_op_string
 /// @see unary_op_metaobject
+/// @see metaobject_ops_boolean
 /// @see metaobject_unary_op
 /// @see is_applicable
 /// @see apply
@@ -101,6 +103,20 @@ enum class unary_op_boolean : std::uint64_t {
     uses_default_reference_capture = 1ULL << 34ULL
 };
 
+/// @brief Bitfield of boolean-returning unary operations applicable to metaobjects.
+/// @ingroup classification
+/// @see unary_op_boolean
+/// @see unary_ops_integer
+/// @see unary_ops_pointer
+/// @see unary_ops_string
+/// @see unary_ops_metaobject
+using unary_ops_boolean = bitfield<unary_op_boolean>;
+
+static constexpr auto operator|(unary_op_boolean l, unary_op_boolean r) noexcept
+  -> unary_ops_boolean {
+    return {l, r};
+}
+
 /// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
 /// @ingroup operations
 /// @see unary_op_boolean
@@ -123,6 +139,20 @@ enum class unary_op_integer : unsigned {
     get_source_line = 1U << 3U
 };
 
+/// @brief Bitfield of integer-returning unary operations applicable to metaobjects.
+/// @ingroup classification
+/// @see unary_op_integer
+/// @see unary_ops_boolean
+/// @see unary_ops_pointer
+/// @see unary_ops_string
+/// @see unary_ops_metaobject
+using unary_ops_integer = bitfield<unary_op_integer>;
+
+static constexpr auto operator|(unary_op_integer l, unary_op_integer r) noexcept
+  -> unary_ops_integer {
+    return {l, r};
+}
+
 /// @brief Enumeration of pointer -returning unary operations applicable to metaobjects.
 /// @ingroup operations
 /// @see unary_op_boolean
@@ -138,6 +168,20 @@ enum class unary_op_pointer : unsigned {
     /// @brief Returns a pointer to the reflected base-level entity.
     get_pointer = 1U << 0U
 };
+
+/// @brief Bitfield of pointer-returning unary operations applicable to metaobjects.
+/// @ingroup classification
+/// @see unary_op_pointer
+/// @see unary_ops_boolean
+/// @see unary_ops_integer
+/// @see unary_ops_string
+/// @see unary_ops_metaobject
+using unary_ops_pointer = bitfield<unary_op_pointer>;
+
+static constexpr auto operator|(unary_op_pointer l, unary_op_pointer r) noexcept
+  -> unary_ops_pointer {
+    return {l, r};
+}
 
 /// @brief Enumeration of string-returning unary operations applicable to metaobjects.
 /// @ingroup operations
@@ -159,6 +203,20 @@ enum class unary_op_string : unsigned {
     /// @brief Returns source file column of the reflected entity if available.
     get_source_file_name = 1U << 2U
 };
+
+/// @brief Bitfield of string-returning unary operations applicable to metaobjects.
+/// @ingroup classification
+/// @see unary_op_string
+/// @see unary_ops_boolean
+/// @see unary_ops_integer
+/// @see unary_ops_pointer
+/// @see unary_ops_metaobject
+using unary_ops_string = bitfield<unary_op_string>;
+
+static constexpr auto operator|(unary_op_string l, unary_op_string r) noexcept
+  -> unary_ops_string {
+    return {l, r};
+}
 
 /// @brief Enumeration of metaobject-returning unary operations applicable to metaobjects.
 /// @ingroup operations
@@ -211,6 +269,21 @@ enum class unary_op_metaobject : std::uint64_t {
     /// @brief Returns a sequence with private and protected elements filtered out.
     hide_protected = 1ULL << 18ULL
 };
+
+/// @brief Bitfield of metaobject-returning unary operations applicable to metaobjects.
+/// @ingroup classification
+/// @see unary_op_metaobject
+/// @see unary_ops_boolean
+/// @see unary_ops_integer
+/// @see unary_ops_pointer
+/// @see unary_ops_metaobject
+using unary_ops_metaobject = bitfield<unary_op_metaobject>;
+
+static constexpr auto
+operator|(unary_op_metaobject l, unary_op_metaobject r) noexcept
+  -> unary_ops_metaobject {
+    return {l, r};
+}
 
 /// @brief Unary metaobject operation enumeration type.
 /// @ingroup operations
