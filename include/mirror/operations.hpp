@@ -506,6 +506,13 @@ constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
     return map_unary_op<O>::is_applicable(mo);
 }
 
+template <__metaobject_id Me, __metaobject_id Mo>
+constexpr auto
+is_applicable(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept
+  -> bool {
+    return is_applicable<get_constant(me)>(mo);
+}
+
 /// @brief Calls the specified unary operation on a metaobject.
 /// @ingroup operations
 /// @see unary_op_boolean
@@ -540,6 +547,12 @@ constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     } else {
         return op::fallback();
     }
+}
+
+template <__metaobject_id Me, __metaobject_id Mo>
+constexpr auto
+try_apply(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept {
+    return try_apply<get_constant(me)>(mo);
 }
 
 /// @brief Calls the specified function on each unary_op meta-enumerator
