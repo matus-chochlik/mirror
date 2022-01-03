@@ -13,7 +13,6 @@
 #include "operations.hpp"
 #include "registry_fwd.hpp"
 #include "traits.hpp"
-#include <map>
 #include <memory>
 #include <stdexcept>
 #include <vector>
@@ -114,7 +113,37 @@ public:
     }
 };
 
-class metadata {
+class metadata_sequence {
+private:
+    std::vector<const metadata*> _elements;
+
+protected:
+    metadata_sequence() noexcept = default;
+
+    metadata_sequence(std::vector<const metadata*> elements) noexcept
+      : _elements{elements} {}
+
+    friend class metadata_registry;
+
+public:
+    auto element(size_t index) const noexcept -> const metadata& {
+        return *_elements[index];
+    }
+
+    auto count() const noexcept -> size_t {
+        return _elements.size();
+    }
+
+    auto begin() const noexcept -> metadata_iterator {
+        return {_elements.begin()};
+    }
+
+    auto end() const noexcept -> metadata_iterator {
+        return {_elements.end()};
+    }
+};
+
+class metadata : public metadata_sequence {
 private:
     size_t _id{0U};
     metaobject_traits _traits{};
@@ -148,8 +177,6 @@ private:
     const metadata& _operators{*this};
     const metadata& _parameters{*this};
 
-    std::vector<const metadata*> _elements;
-
 protected:
     metadata() noexcept = default;
 
@@ -181,7 +208,8 @@ protected:
       const metadata& operators,
       const metadata& parameters,
       std::vector<const metadata*> elements) noexcept
-      : _id{id}
+      : metadata_sequence{std::move(elements)}
+      , _id{id}
       , _traits{traits}
       , _op_boolean_results{op_boolean_results}
       , _op_boolean_applicable{op_boolean_applicable}
@@ -206,8 +234,7 @@ protected:
       , _member_functions{member_functions}
       , _member_types{member_types}
       , _operators{operators}
-      , _parameters{parameters}
-      , _elements{std::move(elements)} {}
+      , _parameters{parameters} {}
 
 public:
     metadata(metadata&&) = delete;
@@ -274,25 +301,6 @@ public:
         return {};
     }
 
-    auto size() const noexcept -> std::optional<size_t> {
-        if(is_applicable(unary_op_integer::get_size)) {
-            return {_elements.size()};
-        }
-        return {};
-    }
-
-    auto count() const noexcept -> size_t {
-        return _elements.size();
-    }
-
-    auto begin() const noexcept -> metadata_iterator {
-        return {_elements.begin()};
-    }
-
-    auto end() const noexcept -> metadata_iterator {
-        return {_elements.end()};
-    }
-
     auto name() const noexcept -> std::optional<std::string_view> {
         if(is_applicable(unary_op_string::get_name)) {
             return {_name};
@@ -305,10 +313,6 @@ public:
             return {_display_name};
         }
         return {};
-    }
-
-    auto element(size_t index) const noexcept -> const metadata& {
-        return *_elements[index];
     }
 
     auto scope() const noexcept -> const metadata& {
@@ -369,6 +373,13 @@ public:
 
     auto parameters() const noexcept -> const metadata& {
         return _parameters;
+    }
+
+    auto size() const noexcept -> std::optional<size_t> {
+        if(is_applicable(unary_op_integer::get_size)) {
+            return {count()};
+        }
+        return {};
     }
 };
 

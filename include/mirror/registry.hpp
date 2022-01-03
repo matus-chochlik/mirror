@@ -13,6 +13,7 @@
 #include "init_list.hpp"
 #include "metadata.hpp"
 #include "placeholder.hpp"
+#include <map>
 
 namespace mirror {
 
@@ -346,6 +347,15 @@ public:
             throw metadata_not_found();
         }
         return *pos->second;
+    }
+
+    auto all() const -> metadata_sequence {
+        std::vector<const metadata*> elements;
+        elements.reserve(_metadata.size());
+        for(const auto& p : _metadata) {
+            elements.push_back(std::get<1>(p).get());
+        }
+        return {elements};
     }
 };
 
