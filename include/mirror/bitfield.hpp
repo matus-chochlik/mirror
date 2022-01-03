@@ -102,10 +102,22 @@ public:
         return (has(bit) && ... && has(bits));
     }
 
+    /// @brief Tests if all of the specified bits are set.
+    /// @see has
+    /// @see has_not
+    /// @see has_only
+    /// @see has_any
+    /// @see has_none
+    /// @see has_at_most
+    constexpr auto has_all(const bitfield that) const noexcept {
+        return (_bits & that._bits) == that._bits;
+    }
+
     /// @brief Tests if any of the specified bits are set.
     /// @see has
     /// @see has_not
     /// @see has_only
+    /// @see has_some
     /// @see has_all
     /// @see has_none
     /// @see has_at_most
@@ -113,6 +125,16 @@ public:
     constexpr auto has_any(const bit_type bit, B... bits) const noexcept
       -> bool {
         return (has(bit) || ... || has(bits));
+    }
+
+    /// @brief Tests if some of the specified bits are set.
+    /// @see has
+    /// @see has_not
+    /// @see has_any
+    /// @see has_none
+    /// @see has_at_most
+    constexpr auto has_some(const bitfield that) const noexcept {
+        return (_bits & that._bits) != value_type{0};
     }
 
     /// @brief Tests if none of the specified bits are set.
@@ -126,6 +148,16 @@ public:
     constexpr auto has_none(const bit_type bit, B... bits) const noexcept
       -> bool {
         return (has_not(bit) && ... && has_not(bits));
+    }
+
+    /// @brief Tests if none of the specified bits are set.
+    /// @see has
+    /// @see has_not
+    /// @see has_any
+    /// @see has_some
+    /// @see has_at_most
+    constexpr auto has_none(const bitfield that) const noexcept {
+        return (_bits & that._bits) == value_type{0};
     }
 
     /// @brief Tests if only the specified bit is set.
