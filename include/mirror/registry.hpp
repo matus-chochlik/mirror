@@ -353,7 +353,7 @@ public:
     ~metadata() noexcept = default;
 
     explicit operator bool() const noexcept {
-        return _traits.has(metaobject_trait::is_object);
+        return _traits.has(metaobject_trait::reflects_object);
     }
 
     friend bool operator==(const metadata& l, const metadata& r) noexcept {
@@ -430,14 +430,14 @@ public:
     }
 
     auto name() const noexcept -> std::optional<std::string_view> {
-        if(_traits.has(metaobject_trait::is_named)) {
+        if(is_applicable(unary_op_string::get_name)) {
             return {_name};
         }
         return {};
     }
 
     auto display_name() const noexcept -> std::optional<std::string_view> {
-        if(_traits.has(metaobject_trait::is_named)) {
+        if(is_applicable(unary_op_string::get_display_name)) {
             return {_display_name};
         }
         return {};
