@@ -9,6 +9,7 @@
 #ifndef MIRROR_BITFIELD_HPP
 #define MIRROR_BITFIELD_HPP
 
+#include <initializer_list>
 #include <type_traits>
 
 namespace mirror {
@@ -36,7 +37,13 @@ public:
       : _bits{value_type(_bit)} {}
 
     constexpr bitfield(const bit_type _bit_a, const bit_type _bit_b) noexcept
-      : _bits(value_type(_bit_a) | value_type(_bit_b)) {}
+      : _bits{value_type(_bit_a) | value_type(_bit_b)} {}
+
+    constexpr bitfield(std::initializer_list<bit_type> bits) noexcept {
+        for(const auto bit : bits) {
+            (*this) |= bit;
+        }
+    }
 
     /// @brief Indicates that none of the bits are set.
     constexpr auto is_empty() const noexcept {
