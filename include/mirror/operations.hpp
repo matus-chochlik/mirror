@@ -112,6 +112,18 @@ enum class unary_op_boolean : std::uint64_t {
 /// @see unary_ops_metaobject
 using unary_ops_boolean = bitfield<unary_op_boolean>;
 
+/// @brief Alias for unary_op_boolean.
+/// @ingroup classification
+/// @see unary_op_boolean
+/// @see object_traits
+using object_trait = unary_op_boolean;
+
+/// @brief Alias for unary_ops_boolean.
+/// @ingroup classification
+/// @see object_trait
+/// @see unary_op_boolean
+using object_traits = bitfield<object_trait>;
+
 static constexpr auto operator|(unary_op_boolean l, unary_op_boolean r) noexcept
   -> unary_ops_boolean {
     return {l, r};
