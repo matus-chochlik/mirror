@@ -141,6 +141,21 @@ public:
     auto end() const noexcept -> metadata_iterator {
         return {_elements.end()};
     }
+
+    auto satisfying(metaobject_traits all) const -> metadata_sequence;
+
+    auto satisfying(metaobject_traits all, metaobject_traits none) const
+      -> metadata_sequence;
+
+    auto supporting(unary_ops_boolean all) const -> metadata_sequence;
+
+    auto supporting(unary_ops_integer all) const -> metadata_sequence;
+
+    auto supporting(unary_ops_string all) const -> metadata_sequence;
+
+    auto supporting(unary_ops_metaobject all) const -> metadata_sequence;
+
+    auto having(object_traits all) const -> metadata_sequence;
 };
 
 class metadata : public metadata_sequence {
@@ -259,24 +274,50 @@ public:
         return l._id < r._id;
     }
 
-    auto satisfies(metaobject_trait trait) const noexcept -> bool {
-        return _traits.has(trait);
+    auto satisfies(metaobject_traits all) const noexcept -> bool {
+        return _traits.has_all(all);
+    }
+
+    auto satisfies(metaobject_traits all, metaobject_traits none) const noexcept
+      -> bool {
+        return _traits.has_all(all) && _traits.has_none(none);
     }
 
     auto is_applicable(unary_op_boolean op) const noexcept -> bool {
         return _op_boolean_applicable.has(op);
     }
 
+    auto supports(unary_ops_boolean all) const noexcept -> bool {
+        return _op_boolean_applicable.has_all(all);
+    }
+
     auto is_applicable(unary_op_integer op) const noexcept -> bool {
         return _op_integer_applicable.has(op);
+    }
+
+    auto supports(unary_ops_integer all) const noexcept -> bool {
+        return _op_integer_applicable.has_all(all);
     }
 
     auto is_applicable(unary_op_string op) const noexcept -> bool {
         return _op_string_applicable.has(op);
     }
 
+    auto supports(unary_ops_string all) const noexcept -> bool {
+        return _op_string_applicable.has_all(all);
+    }
+
     auto is_applicable(unary_op_metaobject op) const noexcept -> bool {
         return _op_metaobject_applicable.has(op);
+    }
+
+    auto supports(unary_ops_metaobject all) const noexcept -> bool {
+        return _op_metaobject_applicable.has_all(all);
+    }
+
+    auto has(object_traits all) const noexcept -> bool {
+        return _op_boolean_results.has_all(all) &&
+               _op_boolean_applicable.has_all(all);
     }
 
     auto apply(unary_op_boolean op) const noexcept -> tribool {
@@ -382,6 +423,84 @@ public:
         return {};
     }
 };
+
+inline auto metadata_sequence::satisfying(metaobject_traits all) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->satisfies(all)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::satisfying(
+  metaobject_traits all,
+  metaobject_traits none) const -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->satisfies(all, none)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::supporting(unary_ops_boolean all) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->supports(all)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::supporting(unary_ops_integer all) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->supports(all)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::supporting(unary_ops_string all) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->supports(all)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::supporting(unary_ops_metaobject all) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->supports(all)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::having(object_traits all) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(md->has(all)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
 
 } // namespace mirror
 
