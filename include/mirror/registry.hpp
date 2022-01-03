@@ -11,7 +11,9 @@
 
 #include "extract.hpp"
 #include "hash.hpp"
+#include "init_list.hpp"
 #include "operations.hpp"
+#include "placeholder.hpp"
 #include "registry_fwd.hpp"
 #include "traits.hpp"
 #include <map>
@@ -26,23 +28,6 @@ public:
     metadata_not_found() noexcept
       : std::runtime_error{"metadata not found"} {}
 };
-
-template <__metaobject_id M>
-auto get_metadata(metadata_registry&, wrapped_metaobject<M>) noexcept
-  -> const metadata&;
-
-template <__metaobject_id M>
-auto get_metadata(
-  metadata_registry&,
-  const metadata& scope,
-  wrapped_metaobject<M>) noexcept -> const metadata&;
-
-template <__metaobject_id M>
-auto get_metadata(
-  metadata_registry&,
-  const metadata& scope,
-  const metadata& type,
-  wrapped_metaobject<M>) noexcept -> const metadata&;
 
 class metadata_iterator {
 private:
@@ -168,182 +153,64 @@ private:
 
     std::vector<const metadata*> _elements;
 
-    template <__metaobject_id... M>
-    static auto _unpack(
-      metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      unpacked_metaobject_sequence<M...>) noexcept
-      -> std::vector<const metadata*> {
-        return {&get_metadata(r, scope, type, wrapped_metaobject<M>{})...};
-    }
-
-    template <__metaobject_id M>
-    static auto _unpack(
-      metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      wrapped_metaobject<M> mo) noexcept -> std::vector<const metadata*> {
-        if constexpr(reflects_object_sequence(mo)) {
-            return _unpack(r, scope, type, unpack(mo));
-        }
-        return {};
-    }
-
-    template <__metaobject_id M>
-    static auto _get_name(wrapped_metaobject<M> mo) noexcept
-      -> std::string_view {
-        if constexpr(reflects_named(mo)) {
-            return get_name(mo);
-        }
-        return {};
-    }
-
-    template <__metaobject_id M>
-    static auto _get_display_name(wrapped_metaobject<M> mo) noexcept
-      -> std::string_view {
-        if constexpr(reflects_named(mo)) {
-            return get_display_name(mo);
-        }
-        return {};
-    }
-
+protected:
     metadata() noexcept = default;
 
-    template <__metaobject_id M>
     metadata(
-      metadata_registry& r,
+      size_t id,
+      metaobject_traits traits,
+      unary_ops_boolean op_boolean_results,
+      unary_ops_boolean op_boolean_applicable,
+      unary_ops_metaobject op_metaobject_applicable,
+      unary_ops_integer op_integer_applicable,
+      unary_ops_string op_string_applicable,
+      size_t source_column,
+      size_t source_line,
+      std::string_view name,
+      std::string_view display_name,
       const metadata& scope,
       const metadata& type,
-      wrapped_metaobject<M> mo) noexcept
-      : _id{get_id(mo)}
-      , _traits{get_traits(mo)}
-      , _source_column{get_source_column(mo)}
-      , _source_line{get_source_line(mo)}
-      , _name{_get_name(mo)}
-      , _display_name{_get_display_name(mo)}
+      const metadata& underlying_type,
+      const metadata& aliased,
+      const metadata& class_,
+      const metadata& base_classes,
+      const metadata& captures,
+      const metadata& constructors,
+      const metadata& data_members,
+      const metadata& destructors,
+      const metadata& enumerators,
+      const metadata& member_functions,
+      const metadata& member_types,
+      const metadata& operators,
+      const metadata& parameters,
+      std::vector<const metadata*> elements) noexcept
+      : _id{id}
+      , _traits{traits}
+      , _op_boolean_results{op_boolean_results}
+      , _op_boolean_applicable{op_boolean_applicable}
+      , _op_metaobject_applicable{op_metaobject_applicable}
+      , _op_integer_applicable{op_integer_applicable}
+      , _op_string_applicable{op_string_applicable}
+      , _source_column{source_column}
+      , _source_line{source_line}
+      , _name{name}
+      , _display_name{display_name}
       , _scope{scope}
       , _type{type}
-      , _underlying_type{get_metadata(
-          r,
-          try_apply<unary_op_metaobject::get_underlying_type>(mo))}
-      , _aliased{get_metadata(
-          r,
-          try_apply<unary_op_metaobject::get_aliased>(mo))}
-      , _class{get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo))}
-      , _base_classes{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_base_classes>(mo))}
-      , _captures{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_captures>(mo))}
-      , _constructors{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_constructors>(mo))}
-      , _data_members{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_data_members>(mo))}
-      , _destructors{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_destructors>(mo))}
-      , _enumerators{get_metadata(
-          r,
-          *this,
-          *this,
-          try_apply<unary_op_metaobject::get_enumerators>(mo))}
-      , _member_functions{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_member_functions>(mo))}
-      , _member_types{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_member_types>(mo))}
-      , _operators{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_operators>(mo))}
-      , _parameters{get_metadata(
-          r,
-          *this,
-          try_apply<unary_op_metaobject::get_parameters>(mo))}
-      , _elements{_unpack(r, _scope, _type, mo)} {
-        for_each(get_enumerators(mirror(unary_op_boolean)), [&](auto me) {
-            const auto result = try_apply<get_constant(me)>(mo);
-            if(has_value(result)) {
-                if(extract(result)) {
-                    _op_boolean_results |= get_constant(me);
-                }
-                _op_boolean_applicable |= get_constant(me);
-            }
-        });
-        for_each(get_enumerators(mirror(unary_op_metaobject)), [&](auto me) {
-            if(is_applicable<get_constant(me)>(mo)) {
-                _op_metaobject_applicable |= get_constant(me);
-            }
-        });
-        for_each(get_enumerators(mirror(unary_op_integer)), [&](auto me) {
-            if(is_applicable<get_constant(me)>(mo)) {
-                _op_integer_applicable |= get_constant(me);
-            }
-        });
-        for_each(get_enumerators(mirror(unary_op_string)), [&](auto me) {
-            if(is_applicable<get_constant(me)>(mo)) {
-                _op_string_applicable |= get_constant(me);
-            }
-        });
-    }
-
-    template <__metaobject_id M>
-    metadata(
-      metadata_registry& r,
-      const metadata& scope,
-      wrapped_metaobject<M> mo) noexcept
-      : metadata{
-          r,
-          scope,
-          get_metadata(r, try_apply<unary_op_metaobject::get_type>(mo)),
-          mo} {}
-
-    template <__metaobject_id M>
-    metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
-      : metadata{
-          r,
-          get_metadata(r, try_apply<unary_op_metaobject::get_scope>(mo)),
-          mo} {}
-
-    static auto make() noexcept {
-        return std::unique_ptr<metadata>{new metadata()};
-    }
-
-    template <__metaobject_id M>
-    static auto make(metadata_registry& r, wrapped_metaobject<M> mo) noexcept {
-        return std::unique_ptr<metadata>{new metadata(r, mo)};
-    }
-
-    template <__metaobject_id M>
-    static auto make(
-      metadata_registry& r,
-      const metadata& scope,
-      wrapped_metaobject<M> mo) noexcept {
-        return std::unique_ptr<metadata>{new metadata(r, scope, mo)};
-    }
-
-    template <__metaobject_id M>
-    static auto make(
-      metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      wrapped_metaobject<M> mo) noexcept {
-        return std::unique_ptr<metadata>{new metadata(r, scope, type, mo)};
-    }
-
-    friend class metadata_registry;
+      , _underlying_type{underlying_type}
+      , _aliased{aliased}
+      , _class{class_}
+      , _base_classes{base_classes}
+      , _captures{captures}
+      , _constructors{constructors}
+      , _data_members{data_members}
+      , _destructors{destructors}
+      , _enumerators{enumerators}
+      , _member_functions{member_functions}
+      , _member_types{member_types}
+      , _operators{operators}
+      , _parameters{parameters}
+      , _elements{std::move(elements)} {}
 
 public:
     metadata(metadata&&) = delete;
@@ -479,6 +346,10 @@ public:
         return _constructors;
     }
 
+    auto data_members() const noexcept -> const metadata& {
+        return _data_members;
+    }
+
     auto destructors() const noexcept -> const metadata& {
         return _destructors;
     }
@@ -502,6 +373,190 @@ public:
     auto parameters() const noexcept -> const metadata& {
         return _parameters;
     }
+};
+
+template <__metaobject_id M>
+auto get_metadata(metadata_registry&, wrapped_metaobject<M>) noexcept
+  -> const metadata&;
+
+template <__metaobject_id M>
+auto get_metadata(
+  metadata_registry&,
+  const metadata& scope,
+  wrapped_metaobject<M>) noexcept -> const metadata&;
+
+template <__metaobject_id M>
+auto get_metadata(
+  metadata_registry&,
+  const metadata& scope,
+  const metadata& type,
+  wrapped_metaobject<M>) noexcept -> const metadata&;
+
+class stored_metadata : public metadata {
+private:
+    static auto _get_op_boolean_results(auto mo) noexcept {
+        return fold_init_list_of<unary_op_boolean>(
+          filter(
+            get_enumerators(mirror(unary_op_boolean)),
+            mirror::try_apply(_1, mo)),
+          get_constant(_1),
+          [](auto il) { return unary_ops_boolean{il}; });
+    }
+
+    static auto _get_op_boolean_applicable(auto mo) noexcept {
+        return fold_init_list_of<unary_op_boolean>(
+          filter(
+            get_enumerators(mirror(unary_op_boolean)),
+            mirror::is_applicable(_1, mo)),
+          get_constant(_1),
+          [](auto il) { return unary_ops_boolean{il}; });
+    }
+
+    static auto _get_op_metaobject_applicable(auto mo) noexcept {
+        return fold_init_list_of<unary_op_metaobject>(
+          filter(
+            get_enumerators(mirror(unary_op_metaobject)),
+            mirror::is_applicable(_1, mo)),
+          get_constant(_1),
+          [](auto il) { return unary_ops_metaobject{il}; });
+    }
+
+    static auto _get_op_integer_applicable(auto mo) noexcept {
+        return fold_init_list_of<unary_op_integer>(
+          filter(
+            get_enumerators(mirror(unary_op_integer)),
+            mirror::is_applicable(_1, mo)),
+          get_constant(_1),
+          [](auto il) { return unary_ops_integer{il}; });
+    }
+
+    static auto _get_op_string_applicable(auto mo) noexcept {
+        return fold_init_list_of<unary_op_string>(
+          filter(
+            get_enumerators(mirror(unary_op_string)),
+            mirror::is_applicable(_1, mo)),
+          get_constant(_1),
+          [](auto il) { return unary_ops_string{il}; });
+    }
+
+    static auto _get_name(auto mo) noexcept -> std::string_view {
+        if constexpr(reflects_named(mo)) {
+            return get_name(mo);
+        }
+        return {};
+    }
+
+    static auto _get_display_name(auto mo) noexcept -> std::string_view {
+        if constexpr(reflects_named(mo)) {
+            return get_display_name(mo);
+        }
+        return {};
+    }
+
+    template <__metaobject_id... M>
+    static auto _unpack(
+      metadata_registry& r,
+      const metadata& scope,
+      const metadata& type,
+      unpacked_metaobject_sequence<M...>) noexcept
+      -> std::vector<const metadata*> {
+        return {&get_metadata(r, scope, type, wrapped_metaobject<M>{})...};
+    }
+
+    template <__metaobject_id M>
+    static auto _unpack(
+      metadata_registry& r,
+      const metadata& scope,
+      const metadata& type,
+      wrapped_metaobject<M> mo) noexcept -> std::vector<const metadata*> {
+        if constexpr(reflects_object_sequence(mo)) {
+            return _unpack(r, scope, type, unpack(mo));
+        }
+        return {};
+    }
+
+public:
+    stored_metadata() noexcept = default;
+
+    stored_metadata(
+      metadata_registry& r,
+      const metadata& scope,
+      const metadata& type,
+      auto mo) noexcept
+      : metadata{
+          get_id(mo),
+          get_traits(mo),
+          _get_op_boolean_results(mo),
+          _get_op_boolean_applicable(mo),
+          _get_op_metaobject_applicable(mo),
+          _get_op_integer_applicable(mo),
+          _get_op_string_applicable(mo),
+          get_source_column(mo),
+          get_source_line(mo),
+          _get_name(mo),
+          _get_display_name(mo),
+          scope,
+          type,
+          get_metadata(
+            r,
+            try_apply<unary_op_metaobject::get_underlying_type>(mo)),
+          get_metadata(r, try_apply<unary_op_metaobject::get_aliased>(mo)),
+          get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_base_classes>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_captures>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_constructors>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_data_members>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_destructors>(mo)),
+          get_metadata(
+            r,
+            *this,
+            *this,
+            try_apply<unary_op_metaobject::get_enumerators>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_member_functions>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_member_types>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_operators>(mo)),
+          get_metadata(
+            r,
+            *this,
+            try_apply<unary_op_metaobject::get_parameters>(mo)),
+          _unpack(r, scope, type, mo)} {}
+
+    stored_metadata(metadata_registry& r, const metadata& scope, auto mo) noexcept
+      : stored_metadata{
+          r,
+          scope,
+          get_metadata(r, try_apply<unary_op_metaobject::get_type>(mo)),
+          mo} {}
+
+    stored_metadata(metadata_registry& r, auto mo) noexcept
+      : stored_metadata{
+          r,
+          get_metadata(r, try_apply<unary_op_metaobject::get_scope>(mo)),
+          mo} {}
 };
 
 class metadata_registry_iterator {
@@ -558,7 +613,10 @@ private:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata::make(*this, scope, mo)).first;
+            pos = _metadata
+                    .emplace(
+                      id, std::make_unique<stored_metadata>(*this, scope, mo))
+                    .first;
         }
         return *pos->second;
     }
@@ -571,8 +629,11 @@ private:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata::make(*this, scope, type, mo))
-                    .first;
+            pos =
+              _metadata
+                .emplace(
+                  id, std::make_unique<stored_metadata>(*this, scope, type, mo))
+                .first;
         }
         return *pos->second;
     }
@@ -603,7 +664,8 @@ private:
 
 public:
     metadata_registry() noexcept {
-        _metadata.emplace(get_hash(no_metaobject), metadata::make());
+        _metadata.emplace(
+          get_hash(no_metaobject), std::make_unique<stored_metadata>());
     }
 
     auto size() const noexcept {
@@ -623,7 +685,9 @@ public:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata.emplace(id, metadata::make(*this, mo)).first;
+            pos = _metadata
+                    .emplace(id, std::make_unique<stored_metadata>(*this, mo))
+                    .first;
         }
         return *pos->second;
     }
