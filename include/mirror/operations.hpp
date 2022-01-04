@@ -29,7 +29,7 @@ namespace mirror {
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
-/// @see metaobject_traits
+/// @see meta_traits
 enum class unary_op_boolean : std::uint64_t {
     /// @brief Indicates if the reflected lambda closure's call operator is @c const.
     is_call_operator_const = 1ULL << 0ULL,
@@ -115,14 +115,14 @@ using unary_ops_boolean = bitfield<unary_op_boolean>;
 /// @brief Alias for unary_op_boolean.
 /// @ingroup classification
 /// @see unary_op_boolean
-/// @see object_traits
-using object_trait = unary_op_boolean;
+/// @see traits
+using trait = unary_op_boolean;
 
 /// @brief Alias for unary_ops_boolean.
 /// @ingroup classification
-/// @see object_trait
+/// @see trait
 /// @see unary_op_boolean
-using object_traits = bitfield<object_trait>;
+using traits = bitfield<trait>;
 
 static constexpr auto operator|(unary_op_boolean l, unary_op_boolean r) noexcept
   -> unary_ops_boolean {
@@ -139,7 +139,7 @@ static constexpr auto operator|(unary_op_boolean l, unary_op_boolean r) noexcept
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
-/// @see metaobject_traits
+/// @see meta_traits
 enum class unary_op_integer : unsigned {
     /// @brief Returns the value of the reflected base-level constant.
     get_constant = 1U << 0U,
@@ -175,7 +175,7 @@ static constexpr auto operator|(unary_op_integer l, unary_op_integer r) noexcept
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
-/// @see metaobject_traits
+/// @see meta_traits
 enum class unary_op_pointer : unsigned {
     /// @brief Returns a pointer to the reflected base-level entity.
     get_pointer = 1U << 0U
@@ -205,7 +205,7 @@ static constexpr auto operator|(unary_op_pointer l, unary_op_pointer r) noexcept
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
-/// @see metaobject_traits
+/// @see meta_traits
 enum class unary_op_string : unsigned {
     // string
     /// @brief Returns the user-friendly name of the reflected base-level entity.
@@ -240,7 +240,7 @@ static constexpr auto operator|(unary_op_string l, unary_op_string r) noexcept
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
-/// @see metaobject_traits
+/// @see meta_traits
 enum class unary_op_metaobject : std::uint64_t {
     /// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
     get_aliased = 1ULL << 0ULL,

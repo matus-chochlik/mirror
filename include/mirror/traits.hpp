@@ -18,10 +18,10 @@ namespace mirror {
 
 /// @brief Enumeration of metaobject trait operations.
 /// @ingroup classification
-/// @see metaobject_traits
+/// @see meta_traits
 /// @see has_trait
 /// @see metaobject_unary_op
-enum class metaobject_trait : std::uint64_t {
+enum class meta_trait : std::uint64_t {
     /// @brief Indicates if the argument is a metaobject.
     /// @see mirror::reflects_object
     reflects_object = 1ULL << 0ULL,
@@ -125,24 +125,24 @@ enum class metaobject_trait : std::uint64_t {
 
 /// @brief Metaobject trait bitfield.
 /// @ingroup classification
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see get_traits
-using metaobject_traits = bitfield<metaobject_trait>;
+using meta_traits = bitfield<meta_trait>;
 
-static constexpr auto operator|(metaobject_trait l, metaobject_trait r) noexcept
-  -> metaobject_traits {
+static constexpr auto operator|(meta_trait l, meta_trait r) noexcept
+  -> meta_traits {
     return {l, r};
 }
 
-template <metaobject_trait>
+template <meta_trait>
 struct map_trait;
 
-#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                               \
-    template <>                                                        \
-    struct map_trait<metaobject_trait::MIRROR_JOIN(reflects_, NAME)> { \
-        static consteval auto apply(__metaobject_id mi) {              \
-            return MIRROR_JOIN(__metaobject_is_meta_, NAME)(mi);       \
-        }                                                              \
+#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                         \
+    template <>                                                  \
+    struct map_trait<meta_trait::MIRROR_JOIN(reflects_, NAME)> { \
+        static consteval auto apply(__metaobject_id mi) {        \
+            return MIRROR_JOIN(__metaobject_is_meta_, NAME)(mi); \
+        }                                                        \
     };
 
 MIRROR_IMPLEMENT_MAP_TRAIT(object)
@@ -183,24 +183,23 @@ MIRROR_IMPLEMENT_MAP_TRAIT(specifier)
 
 /// @brief Indicates if a metaobject has the specified trait.
 /// @ingroup classification
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see metaobject_unary_op
 /// @see get_traits
-template <metaobject_trait T, __metaobject_id M>
+template <meta_trait T, __metaobject_id M>
 constexpr auto has_trait(wrapped_metaobject<M>) noexcept -> bool {
     return map_trait<T>::apply(M);
 }
 
 /// @brief Gets all metaobject traits.
 /// @ingroup classification
-/// @see metaobject_traits
+/// @see meta_traits
 /// @see metaobject_unary_op
 /// @see has_trait
 template <__metaobject_id M>
-constexpr auto get_traits(wrapped_metaobject<M> mo) noexcept
-  -> metaobject_traits {
-    metaobject_traits result{};
-    for_each(get_enumerators(mirror(metaobject_trait)), [&](auto me) {
+constexpr auto get_traits(wrapped_metaobject<M> mo) noexcept -> meta_traits {
+    meta_traits result{};
+    for_each(get_enumerators(mirror(meta_trait)), [&](auto me) {
         if(has_trait<get_constant(me)>(mo)) {
             result |= get_constant(me);
         }

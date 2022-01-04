@@ -14,7 +14,7 @@
 #include <string>
 
 void print_traits(mirror::metaobject auto mo) {
-    const auto mes = get_enumerators(mirror(mirror::metaobject_trait));
+    const auto mes = get_enumerators(mirror(mirror::meta_trait));
     const auto maxl = fold_init_list(
       mes,
       [](auto me) { return get_name(me).size(); },

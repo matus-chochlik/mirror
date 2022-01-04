@@ -142,9 +142,9 @@ public:
         return {_elements.end()};
     }
 
-    auto satisfying(metaobject_traits all) const -> metadata_sequence;
+    auto satisfying(meta_traits all) const -> metadata_sequence;
 
-    auto satisfying(metaobject_traits all, metaobject_traits none) const
+    auto satisfying(meta_traits all, meta_traits none) const
       -> metadata_sequence;
 
     auto supporting(unary_ops_boolean all) const -> metadata_sequence;
@@ -155,13 +155,13 @@ public:
 
     auto supporting(unary_ops_metaobject all) const -> metadata_sequence;
 
-    auto having(object_traits all) const -> metadata_sequence;
+    auto having(traits all) const -> metadata_sequence;
 };
 
 class metadata : public metadata_sequence {
 private:
     size_t _id{0U};
-    metaobject_traits _traits{};
+    meta_traits _traits{};
 
     unary_ops_boolean _op_boolean_results{};
     unary_ops_boolean _op_boolean_applicable{};
@@ -198,7 +198,7 @@ protected:
 
     metadata(
       size_t id,
-      metaobject_traits traits,
+      meta_traits traits,
       unary_ops_boolean op_boolean_results,
       unary_ops_boolean op_boolean_applicable,
       unary_ops_metaobject op_metaobject_applicable,
@@ -262,7 +262,7 @@ public:
     ~metadata() noexcept = default;
 
     explicit operator bool() const noexcept {
-        return _traits.has(metaobject_trait::reflects_object);
+        return _traits.has(meta_trait::reflects_object);
     }
 
     friend bool operator==(const metadata& l, const metadata& r) noexcept {
@@ -277,12 +277,11 @@ public:
         return l._id < r._id;
     }
 
-    auto satisfies(metaobject_traits all) const noexcept -> bool {
+    auto satisfies(meta_traits all) const noexcept -> bool {
         return _traits.has_all(all);
     }
 
-    auto satisfies(metaobject_traits all, metaobject_traits none) const noexcept
-      -> bool {
+    auto satisfies(meta_traits all, meta_traits none) const noexcept -> bool {
         return _traits.has_all(all) && _traits.has_none(none);
     }
 
@@ -318,7 +317,7 @@ public:
         return _op_metaobject_applicable.has_all(all);
     }
 
-    auto has(object_traits all) const noexcept -> bool {
+    auto has(traits all) const noexcept -> bool {
         return _op_boolean_results.has_all(all) &&
                _op_boolean_applicable.has_all(all);
     }
@@ -431,7 +430,7 @@ public:
     }
 };
 
-inline auto metadata_sequence::satisfying(metaobject_traits all) const
+inline auto metadata_sequence::satisfying(meta_traits all) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
@@ -442,9 +441,9 @@ inline auto metadata_sequence::satisfying(metaobject_traits all) const
     return {result};
 }
 
-inline auto metadata_sequence::satisfying(
-  metaobject_traits all,
-  metaobject_traits none) const -> metadata_sequence {
+inline auto
+metadata_sequence::satisfying(meta_traits all, meta_traits none) const
+  -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
         if(md->satisfies(all, none)) {
@@ -498,8 +497,7 @@ inline auto metadata_sequence::supporting(unary_ops_metaobject all) const
     return {result};
 }
 
-inline auto metadata_sequence::having(object_traits all) const
-  -> metadata_sequence {
+inline auto metadata_sequence::having(traits all) const -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
         if(md->has(all)) {
