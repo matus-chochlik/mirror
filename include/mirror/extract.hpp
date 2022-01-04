@@ -49,6 +49,15 @@ concept extractable = requires(T v) {
 };
 // clang-format on
 
+// nullptr
+constexpr auto has_value(const nullptr_t) noexcept -> bool {
+    return false;
+}
+
+constexpr auto extract(const nullptr_t) noexcept -> int {
+    return 0;
+}
+
 // pointer
 template <typename T>
 constexpr auto has_value(const T* p) noexcept -> bool {

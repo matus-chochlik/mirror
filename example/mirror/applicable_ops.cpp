@@ -12,11 +12,10 @@
 #include <string>
 
 void print_info(mirror::metaobject auto mo) {
-    const auto mes = get_enumerators(mirror(mirror::metaobject_unary_op));
 
     std::cout << "operations applicable to " << get_display_name(mo)
               << std::endl;
-    for_each(mes, [&](mirror::metaobject auto me) {
+    mirror::for_each_metaobject_unary_op([&](mirror::metaobject auto me) {
         if(is_applicable<get_constant(me)>(mo)) {
             std::cout << "  " << get_name(me) << std::endl;
         }

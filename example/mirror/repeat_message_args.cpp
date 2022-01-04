@@ -1,4 +1,4 @@
-/// @example mirror/repeat_message.cpp
+/// @example mirror/repeat_message_args.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.

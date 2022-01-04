@@ -50,7 +50,7 @@ public:
     }
 
     ///@ brief Checks if the stored value is indeterminate.
-    constexpr auto is(const indeterminate_t) const noexcept {
+    constexpr auto is(const indeterminate_t) const noexcept -> bool {
         return _value == _value_t::_unknown;
     }
 
@@ -149,6 +149,14 @@ public:
 private:
     _value_t _value{_value_t::_false};
 };
+
+static constexpr auto has_value(tribool v) noexcept {
+    return !v.is(indeterminate);
+}
+
+static constexpr auto extract(tribool v) noexcept -> bool {
+    return bool(v);
+}
 
 /// @brief Tri-state boolean and operator.
 /// @ingroup utilities

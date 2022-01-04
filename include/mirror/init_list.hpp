@@ -14,6 +14,13 @@
 
 namespace mirror {
 
+template <typename T, __metaobject_id... M, typename F, typename A>
+constexpr auto
+fold_init_list_of(unpacked_metaobject_sequence<M...>, F transform, A aggregate) {
+    return aggregate(
+      std::initializer_list<T>{transform(wrapped_metaobject<M>{})...});
+}
+
 template <__metaobject_id... M, typename F, typename A>
 constexpr auto
 fold_init_list(unpacked_metaobject_sequence<M...>, F transform, A aggregate) {

@@ -5,9 +5,9 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#include <iostream>
 #include <mirror/placeholder.hpp>
 #include <mirror/sequence.hpp>
+#include <iostream>
 
 struct S1 {
     int i;
@@ -26,8 +26,10 @@ constexpr auto sum_sizeofs(mirror::type_list<T...>) {
 
 template <typename T>
 constexpr auto has_padding() -> bool {
-    return sizeof(T) > sum_sizeofs(extract_types(transform(
-                         get_data_members(mirror(T)), get_type(mirror::_1))));
+    return sizeof(T) >
+           sum_sizeofs(extract_types(transform(
+             filter(get_data_members(mirror(T)), not_(is_static(mirror::_1))),
+             get_type(mirror::_1))));
 }
 
 template <typename T>

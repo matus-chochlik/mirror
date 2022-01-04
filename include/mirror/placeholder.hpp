@@ -784,6 +784,45 @@ consteval auto has_type_with_trait(placeholder_expr<X> e) {
     }};
 }
 
+template <typename X>
+consteval auto get_hash(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_hash(e(mo));
+    }};
+}
+
+template <typename X, __metaobject_id Mo>
+constexpr auto
+is_applicable(placeholder_expr<X> e, wrapped_metaobject<Mo> mo) noexcept {
+    return placeholder_expr{[e, mo](auto me) {
+        return is_applicable(e(me), mo);
+    }};
+}
+
+template <__metaobject_id Me, typename X>
+constexpr auto
+is_applicable(wrapped_metaobject<Me> me, placeholder_expr<X> e) noexcept {
+    return placeholder_expr{[e, me](auto mo) {
+        return is_applicable(me, e(mo));
+    }};
+}
+
+template <typename X, __metaobject_id Mo>
+constexpr auto
+try_apply(placeholder_expr<X> e, wrapped_metaobject<Mo> mo) noexcept {
+    return placeholder_expr{[e, mo](auto me) {
+        return try_apply(e(me), mo);
+    }};
+}
+
+template <__metaobject_id Me, typename X>
+constexpr auto
+try_apply(wrapped_metaobject<Me> me, placeholder_expr<X> e) noexcept {
+    return placeholder_expr{[e, me](auto mo) {
+        return try_apply(me, e(mo));
+    }};
+}
+
 } // namespace mirror
 
 #endif // MIRROR_PLACEHOLDER_HPP

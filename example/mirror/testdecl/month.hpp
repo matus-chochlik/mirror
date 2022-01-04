@@ -9,6 +9,8 @@
 #ifndef MIRROR_TESTDECL_MONTH_HPP
 #define MIRROR_TESTDECL_MONTH_HPP
 
+#include <mirror/registry_fwd.hpp>
+
 namespace example {
 
 enum class month : int {
@@ -25,6 +27,8 @@ enum class month : int {
     november,
     december
 };
+
+void register_month(mirror::metadata_registry&);
 
 } // namespace example
 

@@ -9,6 +9,7 @@
 #ifndef MIRROR_TESTDECL_TETRAHEDRON_HPP
 #define MIRROR_TESTDECL_TETRAHEDRON_HPP
 
+#include <mirror/registry_fwd.hpp>
 #include <cmath>
 
 namespace example {
@@ -170,6 +171,8 @@ private:
     triangle _base;
     point _apex;
 };
+
+void register_tetrahedron(mirror::metadata_registry&);
 
 } // namespace example
 

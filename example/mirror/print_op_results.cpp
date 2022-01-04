@@ -5,49 +5,53 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
+#include <mirror/extract.hpp>
 #include <mirror/init_list.hpp>
 #include <mirror/operations.hpp>
 #include <algorithm>
+#include <concepts>
 #include <iomanip>
 #include <iostream>
 #include <string>
 
-static void print_value(std::optional<std::string_view> value) {
-    if(value) {
-        std::cout << std::quoted(*value);
+static void do_print_value(std::string_view value) {
+    std::cout << std::quoted(value);
+}
+
+static void do_print_value(bool value) {
+    std::cout << std::boolalpha << value;
+}
+
+static void do_print_value(std::integral auto value) {
+    std::cout << value;
+}
+
+static void print_value(mirror::metaobject auto value) {
+    if(reflects_object(value)) {
+        std::cout << "metaobject(" << get_id(value) << ")";
     } else {
-        std::cout << "N/A";
+        std::cout << "no_metaobject";
     }
 }
 
-static void print_value(std::optional<bool> value) {
-    if(value) {
-        std::cout << std::boolalpha << *value;
-    } else {
-        std::cout << "N/A";
-    }
-}
-
-template <typename T>
-static void print_value(std::optional<T> value) requires(std::is_integral_v<T>) {
-    if(value) {
-        std::cout << *value;
-    } else {
-        std::cout << "N/A";
-    }
-}
-
-template <typename T>
-static void print_value(std::optional<T> value) requires(mirror::metaobject<T>) {
-    if(value) {
-        std::cout << "metaobject(" << get_id(*value) << ")";
+static void print_value(auto opt_value) {
+    using mirror::has_value;
+    if(has_value(opt_value)) {
+        using mirror::extract;
+        do_print_value(extract(opt_value));
     } else {
         std::cout << "N/A";
     }
 }
 
 void print_info(mirror::metaobject auto mo) {
-    const auto mes = get_enumerators(mirror(mirror::metaobject_unary_op));
+    const auto mes = concat(
+      get_enumerators(mirror(mirror::unary_op_boolean)),
+      get_enumerators(mirror(mirror::unary_op_integer)),
+      get_enumerators(mirror(mirror::unary_op_pointer)),
+      get_enumerators(mirror(mirror::unary_op_string)),
+      get_enumerators(mirror(mirror::unary_op_metaobject)));
+
     const auto maxl = fold_init_list(
       mes,
       [](auto me) { return get_name(me).size(); },
