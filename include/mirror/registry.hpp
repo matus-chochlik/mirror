@@ -17,22 +17,13 @@
 
 namespace mirror {
 
-template <__metaobject_id M>
-auto get_metadata(metadata_registry&, wrapped_metaobject<M>) noexcept
-  -> const metadata&;
+class stored_metadata;
+
+auto get_no_metadata(metadata_registry&) noexcept -> const metadata&;
 
 template <__metaobject_id M>
-auto get_metadata(
-  metadata_registry&,
-  const metadata& scope,
-  wrapped_metaobject<M>) noexcept -> const metadata&;
-
-template <__metaobject_id M>
-auto get_metadata(
-  metadata_registry&,
-  const metadata& scope,
-  const metadata& type,
-  wrapped_metaobject<M>) noexcept -> const metadata&;
+auto get_metadata(wrapped_metaobject<M>, metadata_registry&) noexcept
+  -> stored_metadata&;
 
 class stored_metadata : public metadata {
 private:
@@ -96,59 +87,76 @@ private:
     }
 
     template <typename R, typename T>
-    static auto _do_get_referenced_type(R& r, std::type_identity<T>) noexcept
+    static constexpr auto
+    _do_get_referenced_type(std::type_identity<T>, R& r) noexcept
       -> const metadata& {
         if constexpr(std::is_pointer_v<T>) {
             using P =
               std::remove_cv_t<typename std::pointer_traits<T>::value_type>;
-            return r.get(get_aliased(mirror(P)));
+            return get_metadata(get_aliased(mirror(P)), r);
         } else if constexpr(std::is_reference_v<T>) {
             using P = std::remove_cv_t<std::remove_reference_t<T>>;
-            return r.get(get_aliased(mirror(P)));
+            return get_metadata(get_aliased(mirror(P)), r);
         } else {
             return r.get_none();
         }
     }
 
-    static auto _get_referenced_type(auto& r, auto mo) noexcept
+    static constexpr auto _get_referenced_type(auto mo, auto& r) noexcept
       -> const metadata& {
         if constexpr(reflects_type(mo)) {
-            return _do_get_referenced_type(r, get_reflected_type(mo));
+            return _do_get_referenced_type(get_reflected_type(mo), r);
         } else {
             return r.get_none();
         }
     }
 
     template <__metaobject_id... M>
-    static auto _unpack(
-      metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      unpacked_metaobject_sequence<M...>) noexcept
+    static auto
+    _expand(unpacked_metaobject_sequence<M...>, metadata_registry& r) noexcept
       -> std::vector<const metadata*> {
-        return {&get_metadata(r, scope, type, wrapped_metaobject<M>{})...};
+        return {&get_metadata(wrapped_metaobject<M>{}, r)...};
     }
 
-    template <__metaobject_id M>
-    static auto _unpack(
+    static void _init(
+      unpacked_metaobject_sequence<>,
+      const metadata_registry&,
+      const std::vector<const metadata*>&,
+      size_t = 0Z) noexcept {}
+
+    template <__metaobject_id M, __metaobject_id... Ms>
+    static void _init(
+      unpacked_metaobject_sequence<M, Ms...>,
       metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      wrapped_metaobject<M> mo) noexcept -> std::vector<const metadata*> {
-        if constexpr(reflects_object_sequence(mo)) {
-            return _unpack(r, scope, type, unpack(mo));
+      std::vector<const metadata*>& md,
+      size_t idx = 0Z) noexcept {
+        static_cast<stored_metadata*>(const_cast<metadata*>(md[idx]))
+          ->init(wrapped_metaobject<M>{}, r);
+        _init(unpacked_metaobject_sequence<Ms...>{}, r, md, idx + 1Z);
+    }
+
+    template <unary_op_metaobject O, __metaobject_id M>
+    static auto _try_init(
+      wrapped_metaobject<M> mo,
+      metadata_registry& r,
+      const metadata*& pmd) -> const metadata* {
+        if(pmd->is_none()) {
+            if constexpr(mirror::is_applicable<O>(mo)) {
+                const auto ms = mirror::try_apply<O>(mo);
+                auto& md = get_metadata(ms, r);
+                pmd = &md;
+                if constexpr(!reflects_type(ms)) {
+                    md.init(ms, r);
+                }
+            }
         }
-        return {};
+        return pmd;
     }
 
 public:
     stored_metadata() noexcept = default;
 
-    stored_metadata(
-      metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      auto mo) noexcept
+    stored_metadata(auto mo, metadata_registry& r) noexcept
       : metadata{
           get_id(mo),
           get_traits(mo),
@@ -161,75 +169,40 @@ public:
           get_source_line(mo),
           _get_name(mo),
           _get_display_name(mo),
-          scope,
-          type,
-          _get_referenced_type(r, mo),
-          get_metadata(
-            r,
-            try_apply<unary_op_metaobject::get_underlying_type>(mo)),
-          get_metadata(r, try_apply<unary_op_metaobject::get_aliased>(mo)),
-          get_metadata(r, try_apply<unary_op_metaobject::get_class>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_base_classes>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_captures>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_constructors>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_data_members>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_destructors>(mo)),
-          get_metadata(
-            r,
-            *this,
-            *this,
-            try_apply<unary_op_metaobject::get_enumerators>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_member_functions>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_member_types>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_operators>(mo)),
-          get_metadata(
-            r,
-            *this,
-            try_apply<unary_op_metaobject::get_parameters>(mo)),
-          _unpack(r, scope, type, mo)} {}
+          get_no_metadata(r)} {}
 
-    stored_metadata(metadata_registry& r, const metadata& scope, auto mo) noexcept
-      : stored_metadata{
-          r,
-          scope,
-          get_metadata(r, try_apply<unary_op_metaobject::get_type>(mo)),
-          mo} {}
+    void init(auto mo, metadata_registry& r) {
+        if constexpr(reflects_object_sequence(mo)) {
+            if(_needs_elements()) {
+                const auto ms{unpack(mo)};
+                _init(ms, r, _emplace_elements(_expand(ms, r)));
+            }
+        } else if constexpr(reflects_object(mo)) {
+            using O = unary_op_metaobject;
+            _try_init<O::get_scope>(mo, r, _scope);
+            _try_init<O::get_type>(mo, r, _type);
+            _try_init<O::get_underlying_type>(mo, r, _underlying_type);
+            _try_init<O::get_aliased>(mo, r, _aliased);
+            _try_init<O::get_class>(mo, r, _class);
 
-    stored_metadata(metadata_registry& r, auto mo) noexcept
-      : stored_metadata{
-          r,
-          get_metadata(r, try_apply<unary_op_metaobject::get_scope>(mo)),
-          mo} {}
+            _try_init<O::get_base_classes>(mo, r, _base_classes);
+            _try_init<O::get_captures>(mo, r, _captures);
+            _try_init<O::get_constructors>(mo, r, _constructors);
+            _try_init<O::get_data_members>(mo, r, _data_members);
+            _try_init<O::get_destructors>(mo, r, _destructors);
+            _try_init<O::get_enumerators>(mo, r, _enumerators);
+            _try_init<O::get_member_functions>(mo, r, _member_functions);
+            _try_init<O::get_member_types>(mo, r, _member_types);
+            _try_init<O::get_operators>(mo, r, _operators);
+            _try_init<O::get_parameters>(mo, r, _parameters);
+        }
+    }
 };
 
 class metadata_registry_iterator {
 private:
     using base_iter_t =
-      std::map<hash_t, std::unique_ptr<const metadata>>::const_iterator;
+      std::map<hash_t, std::unique_ptr<stored_metadata>>::const_iterator;
     base_iter_t _iter{};
 
 public:
@@ -272,61 +245,46 @@ public:
 
 class metadata_registry {
 private:
-    std::map<hash_t, std::unique_ptr<const metadata>> _metadata;
+    std::map<hash_t, std::unique_ptr<stored_metadata>> _metadata;
+
+    friend auto get_no_metadata(metadata_registry& r) noexcept
+      -> const metadata& {
+        return r.get_none();
+    }
 
     template <__metaobject_id M>
-    auto _get(const metadata& scope, wrapped_metaobject<M> mo) noexcept
-      -> const metadata& {
+    auto _get(wrapped_metaobject<M> mo) noexcept -> stored_metadata& {
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
             pos = _metadata
-                    .emplace(
-                      id, std::make_unique<stored_metadata>(*this, scope, mo))
+                    .emplace(id, std::make_unique<stored_metadata>(mo, *this))
                     .first;
         }
         return *pos->second;
     }
 
     template <__metaobject_id M>
-    auto _get(
-      const metadata& scope,
-      const metadata& type,
-      wrapped_metaobject<M> mo) noexcept -> const metadata& {
+    friend auto
+    get_metadata(wrapped_metaobject<M> mo, metadata_registry& r) noexcept
+      -> stored_metadata& {
+        return r._get(mo);
+    }
+
+    auto _find(metaobject auto mo) -> stored_metadata& {
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos =
-              _metadata
-                .emplace(
-                  id, std::make_unique<stored_metadata>(*this, scope, type, mo))
-                .first;
+            throw metadata_not_found();
         }
         return *pos->second;
     }
 
     template <__metaobject_id M>
-    friend auto
-    get_metadata(metadata_registry& r, wrapped_metaobject<M> mo) noexcept
-      -> const metadata& {
-        return r.get(mo);
-    }
-
-    template <__metaobject_id M>
-    friend auto get_metadata(
-      metadata_registry& r,
-      const metadata& scope,
-      wrapped_metaobject<M> mo) noexcept -> const metadata& {
-        return r._get(scope, mo);
-    }
-
-    template <__metaobject_id M>
-    friend auto get_metadata(
-      metadata_registry& r,
-      const metadata& scope,
-      const metadata& type,
-      wrapped_metaobject<M> mo) noexcept -> const metadata& {
-        return r._get(scope, type, mo);
+    auto _add(wrapped_metaobject<M> mo) noexcept -> stored_metadata& {
+        auto& md = _get(mo);
+        md.init(mo, *this);
+        return md;
     }
 
 public:
@@ -351,31 +309,12 @@ public:
         return *_metadata[get_hash(no_metaobject)];
     }
 
-    template <__metaobject_id M>
-    auto get(wrapped_metaobject<M> mo) noexcept -> const metadata& {
-        const auto id = get_hash(mo);
-        auto pos = _metadata.find(id);
-        if(pos == _metadata.end()) {
-            pos = _metadata
-                    .emplace(id, std::make_unique<stored_metadata>(*this, mo))
-                    .first;
-        }
-        return *pos->second;
+    auto add(metaobject auto mo) noexcept -> const metadata& {
+        return _add(mo);
     }
 
-    template <__metaobject_id M>
-    auto add(wrapped_metaobject<M> mo) noexcept {
-        (void)get(mo);
-    }
-
-    template <__metaobject_id M>
-    auto find(wrapped_metaobject<M> mo) -> const metadata& {
-        const auto id = get_hash(mo);
-        auto pos = _metadata.find(id);
-        if(pos == _metadata.end()) {
-            throw metadata_not_found();
-        }
-        return *pos->second;
+    auto find(metaobject auto mo) -> const metadata& {
+        return _find(mo);
     }
 
     auto all() const -> metadata_sequence {

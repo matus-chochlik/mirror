@@ -18,13 +18,13 @@
 #include <vector>
 
 namespace mirror {
-
+//------------------------------------------------------------------------------
 class metadata_not_found : public std::runtime_error {
 public:
     metadata_not_found() noexcept
       : std::runtime_error{"metadata not found"} {}
 };
-
+//------------------------------------------------------------------------------
 class metadata_iterator {
 private:
     using base_iter_t = std::vector<const metadata*>::const_iterator;
@@ -112,7 +112,7 @@ public:
         return **_iter;
     }
 };
-
+//------------------------------------------------------------------------------
 class metadata_sequence {
 private:
     std::vector<const metadata*> _elements;
@@ -124,6 +124,12 @@ protected:
       : _elements{elements} {}
 
     friend class metadata_registry;
+
+    auto _emplace_elements(std::vector<const metadata*> elements) noexcept
+      -> auto& {
+        _elements = std::move(elements);
+        return _elements;
+    }
 
 public:
     auto element(size_t index) const noexcept -> const metadata& {
@@ -156,8 +162,12 @@ public:
     auto supporting(unary_ops_metaobject all) const -> metadata_sequence;
 
     auto having(traits all) const -> metadata_sequence;
-};
 
+    auto with_name() const -> metadata_sequence {
+        return supporting(unary_op_string::get_name);
+    }
+};
+//------------------------------------------------------------------------------
 class metadata : public metadata_sequence {
 private:
     size_t _id{0U};
@@ -175,25 +185,31 @@ private:
     std::string_view _name{};
     std::string_view _display_name{};
 
-    const metadata& _scope{*this};
-    const metadata& _type{*this};
-    const metadata& _referenced_type{*this};
-    const metadata& _underlying_type{*this};
-    const metadata& _aliased{*this};
-    const metadata& _class{*this};
-
-    const metadata& _base_classes{*this};
-    const metadata& _captures{*this};
-    const metadata& _constructors{*this};
-    const metadata& _data_members{*this};
-    const metadata& _destructors{*this};
-    const metadata& _enumerators{*this};
-    const metadata& _member_functions{*this};
-    const metadata& _member_types{*this};
-    const metadata& _operators{*this};
-    const metadata& _parameters{*this};
-
 protected:
+    const metadata& _none{*this};
+    const metadata* _scope{&_none};
+    const metadata* _type{&_none};
+    const metadata* _referenced_type{&_none};
+    const metadata* _underlying_type{&_none};
+    const metadata* _aliased{&_none};
+    const metadata* _class{&_none};
+
+    const metadata* _base_classes{&_none};
+    const metadata* _captures{&_none};
+    const metadata* _constructors{&_none};
+    const metadata* _data_members{&_none};
+    const metadata* _destructors{&_none};
+    const metadata* _enumerators{&_none};
+    const metadata* _member_functions{&_none};
+    const metadata* _member_types{&_none};
+    const metadata* _operators{&_none};
+    const metadata* _parameters{&_none};
+
+    auto _needs_elements() const noexcept -> bool {
+        return _op_boolean_applicable.has(trait::is_empty) &&
+               !_op_boolean_results.has(trait::is_empty) && (count() == 0Z);
+    }
+
     metadata() noexcept = default;
 
     metadata(
@@ -208,25 +224,8 @@ protected:
       size_t source_line,
       std::string_view name,
       std::string_view display_name,
-      const metadata& scope,
-      const metadata& type,
-      const metadata& referenced_type,
-      const metadata& underlying_type,
-      const metadata& aliased,
-      const metadata& class_,
-      const metadata& base_classes,
-      const metadata& captures,
-      const metadata& constructors,
-      const metadata& data_members,
-      const metadata& destructors,
-      const metadata& enumerators,
-      const metadata& member_functions,
-      const metadata& member_types,
-      const metadata& operators,
-      const metadata& parameters,
-      std::vector<const metadata*> elements) noexcept
-      : metadata_sequence{std::move(elements)}
-      , _id{id}
+      const metadata& none)
+      : _id{id}
       , _traits{traits}
       , _op_boolean_results{op_boolean_results}
       , _op_boolean_applicable{op_boolean_applicable}
@@ -237,22 +236,7 @@ protected:
       , _source_line{source_line}
       , _name{name}
       , _display_name{display_name}
-      , _scope{scope}
-      , _type{type}
-      , _referenced_type{referenced_type}
-      , _underlying_type{underlying_type}
-      , _aliased{aliased}
-      , _class{class_}
-      , _base_classes{base_classes}
-      , _captures{captures}
-      , _constructors{constructors}
-      , _data_members{data_members}
-      , _destructors{destructors}
-      , _enumerators{enumerators}
-      , _member_functions{member_functions}
-      , _member_types{member_types}
-      , _operators{operators}
-      , _parameters{parameters} {}
+      , _none{none} {}
 
 public:
     metadata(metadata&&) = delete;
@@ -260,6 +244,10 @@ public:
     metadata(const metadata&) = delete;
     auto operator=(const metadata&) = delete;
     ~metadata() noexcept = default;
+
+    auto is_none() const noexcept {
+        return !_traits.has(meta_trait::reflects_object);
+    }
 
     explicit operator bool() const noexcept {
         return _traits.has(meta_trait::reflects_object);
@@ -322,12 +310,16 @@ public:
                _op_boolean_applicable.has_all(all);
     }
 
+    auto has_some(traits all) const noexcept -> bool {
+        return _op_boolean_results.has_some(all & _op_boolean_applicable);
+    }
+
     auto apply(unary_op_boolean op) const noexcept -> tribool {
         return {_op_boolean_results.has(op), !_op_boolean_applicable.has(op)};
     }
 
     auto is_empty() const noexcept -> tribool {
-        return apply(unary_op_boolean::is_empty);
+        return apply(trait::is_empty);
     }
 
     auto source_column() const noexcept -> std::optional<size_t> {
@@ -351,6 +343,10 @@ public:
         return {};
     }
 
+    auto name_() const noexcept -> std::string_view {
+        return _name;
+    }
+
     auto display_name() const noexcept -> std::optional<std::string_view> {
         if(is_applicable(unary_op_string::get_display_name)) {
             return {_display_name};
@@ -359,67 +355,67 @@ public:
     }
 
     auto scope() const noexcept -> const metadata& {
-        return _scope;
+        return *_scope;
     }
 
     auto type() const noexcept -> const metadata& {
-        return _type;
+        return *_type;
     }
 
     auto referenced_type() const noexcept -> const metadata& {
-        return _referenced_type;
+        return *_referenced_type;
     }
 
     auto underlying_type() const noexcept -> const metadata& {
-        return _underlying_type;
+        return *_underlying_type;
     }
 
     auto aliased() const noexcept -> const metadata& {
-        return _aliased;
+        return *_aliased;
     }
 
     auto class_() const noexcept -> const metadata& {
-        return _class;
+        return *_class;
     }
 
     auto base_classes() const noexcept -> const metadata& {
-        return _base_classes;
+        return *_base_classes;
     }
 
     auto captures() const noexcept -> const metadata& {
-        return _captures;
+        return *_captures;
     }
 
     auto constructors() const noexcept -> const metadata& {
-        return _constructors;
+        return *_constructors;
     }
 
     auto data_members() const noexcept -> const metadata& {
-        return _data_members;
+        return *_data_members;
     }
 
     auto destructors() const noexcept -> const metadata& {
-        return _destructors;
+        return *_destructors;
     }
 
     auto enumerators() const noexcept -> const metadata& {
-        return _enumerators;
+        return *_enumerators;
     }
 
     auto member_functions() const noexcept -> const metadata& {
-        return _member_functions;
+        return *_member_functions;
     }
 
     auto member_types() const noexcept -> const metadata& {
-        return _member_types;
+        return *_member_types;
     }
 
     auto operators() const noexcept -> const metadata& {
-        return _operators;
+        return *_operators;
     }
 
     auto parameters() const noexcept -> const metadata& {
-        return _parameters;
+        return *_parameters;
     }
 
     auto size() const noexcept -> std::optional<size_t> {
@@ -440,7 +436,7 @@ inline auto metadata_sequence::satisfying(meta_traits all) const
     }
     return {result};
 }
-
+//------------------------------------------------------------------------------
 inline auto
 metadata_sequence::satisfying(meta_traits all, meta_traits none) const
   -> metadata_sequence {
@@ -506,7 +502,7 @@ inline auto metadata_sequence::having(traits all) const -> metadata_sequence {
     }
     return {result};
 }
-
+//------------------------------------------------------------------------------
 } // namespace mirror
 
 #endif
