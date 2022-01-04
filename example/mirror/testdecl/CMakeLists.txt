@@ -9,6 +9,7 @@ add_library(
 	register_month
 	register_weekday
 	register_tetrahedron
+	register_cards
 )
 
 target_link_libraries(
