@@ -177,6 +177,7 @@ private:
 
     const metadata& _scope{*this};
     const metadata& _type{*this};
+    const metadata& _referenced_type{*this};
     const metadata& _underlying_type{*this};
     const metadata& _aliased{*this};
     const metadata& _class{*this};
@@ -209,6 +210,7 @@ protected:
       std::string_view display_name,
       const metadata& scope,
       const metadata& type,
+      const metadata& referenced_type,
       const metadata& underlying_type,
       const metadata& aliased,
       const metadata& class_,
@@ -237,6 +239,7 @@ protected:
       , _display_name{display_name}
       , _scope{scope}
       , _type{type}
+      , _referenced_type{referenced_type}
       , _underlying_type{underlying_type}
       , _aliased{aliased}
       , _class{class_}
@@ -362,6 +365,10 @@ public:
 
     auto type() const noexcept -> const metadata& {
         return _type;
+    }
+
+    auto referenced_type() const noexcept -> const metadata& {
+        return _referenced_type;
     }
 
     auto underlying_type() const noexcept -> const metadata& {

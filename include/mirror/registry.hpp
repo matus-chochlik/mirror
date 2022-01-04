@@ -95,6 +95,30 @@ private:
         return {};
     }
 
+    template <typename R, typename T>
+    static auto _do_get_referenced_type(R& r, std::type_identity<T>) noexcept
+      -> const metadata& {
+        if constexpr(std::is_pointer_v<T>) {
+            using P =
+              std::remove_cv_t<typename std::pointer_traits<T>::value_type>;
+            return r.get(get_aliased(mirror(P)));
+        } else if constexpr(std::is_reference_v<T>) {
+            using P = std::remove_cv_t<std::remove_reference_t<T>>;
+            return r.get(get_aliased(mirror(P)));
+        } else {
+            return r.get_none();
+        }
+    }
+
+    static auto _get_referenced_type(auto& r, auto mo) noexcept
+      -> const metadata& {
+        if constexpr(reflects_type(mo)) {
+            return _do_get_referenced_type(r, get_reflected_type(mo));
+        } else {
+            return r.get_none();
+        }
+    }
+
     template <__metaobject_id... M>
     static auto _unpack(
       metadata_registry& r,
@@ -139,6 +163,7 @@ public:
           _get_display_name(mo),
           scope,
           type,
+          _get_referenced_type(r, mo),
           get_metadata(
             r,
             try_apply<unary_op_metaobject::get_underlying_type>(mo)),
@@ -320,6 +345,10 @@ public:
 
     auto end() const noexcept -> metadata_registry_iterator {
         return {_metadata.end()};
+    }
+
+    auto get_none() noexcept -> const metadata& {
+        return *_metadata[get_hash(no_metaobject)];
     }
 
     template <__metaobject_id M>
