@@ -148,6 +148,12 @@ public:
         return {_elements.end()};
     }
 
+    auto contains(const metadata& md) const noexcept;
+
+    auto intersecting(const metadata_sequence& s) const -> metadata_sequence;
+
+    auto excluding(const metadata_sequence& s) const -> metadata_sequence;
+
     auto satisfying(meta_traits all) const -> metadata_sequence;
 
     auto satisfying(meta_traits all, meta_traits none) const
@@ -425,6 +431,37 @@ public:
         return {};
     }
 };
+//------------------------------------------------------------------------------
+inline auto metadata_sequence::contains(const metadata& md) const noexcept {
+    for(const auto* pmd : _elements) {
+        if(*pmd == md) {
+            return true;
+        }
+    }
+    return false;
+}
+
+inline auto metadata_sequence::intersecting(const metadata_sequence& s) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(s.contains(*md)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
+
+inline auto metadata_sequence::excluding(const metadata_sequence& s) const
+  -> metadata_sequence {
+    std::vector<const metadata*> result;
+    for(const auto* md : _elements) {
+        if(!s.contains(*md)) {
+            result.push_back(md);
+        }
+    }
+    return {result};
+}
 
 inline auto metadata_sequence::satisfying(meta_traits all) const
   -> metadata_sequence {
@@ -436,7 +473,7 @@ inline auto metadata_sequence::satisfying(meta_traits all) const
     }
     return {result};
 }
-//------------------------------------------------------------------------------
+
 inline auto
 metadata_sequence::satisfying(meta_traits all, meta_traits none) const
   -> metadata_sequence {
