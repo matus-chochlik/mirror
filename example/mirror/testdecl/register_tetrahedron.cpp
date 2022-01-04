@@ -12,6 +12,9 @@
 namespace example {
 
 void register_tetrahedron(mirror::metadata_registry& r) {
+    r.add(mirror(point));
+    r.add(mirror(vector));
+    r.add(mirror(triangle));
     r.add(mirror(tetrahedron));
 }
 
