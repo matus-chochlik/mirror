@@ -15,14 +15,14 @@
 /// @brief Mirror's code is placed in this namespace.
 namespace mirror {
 
-/// @defgroup metaobjects Metaobject representation.
+/// @defgroup metaobjects Metaobject representation
 
-/// @defgroup classification Metaobject classification.
+/// @defgroup classification Metaobject classification
 
-/// @defgroup operations Metaobject operations.
+/// @defgroup operations Metaobject operations
 
-/// @defgroup sequence_operations Metaobject sequence operations.
+/// @defgroup sequence_operations Metaobject sequence operations
 
-/// @defgroup utilities Utilities.
+/// @defgroup utilities Utilities
 
 } // namespace mirror

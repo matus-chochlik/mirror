@@ -54,6 +54,7 @@ struct type_list {};
 
 /// @brief Template implementing the metaobject type reflecting base-level entities.
 /// @ingroup metaobjects
+/// @see metaobject
 /// @see reflects_metaobject
 /// @see no_metaobject
 /// @see unpacked_metaobject_sequence
@@ -73,6 +74,12 @@ consteval auto is_object(const X&) noexcept -> bool {
     return false;
 }
 
+/// @brief Concept for metaobject types.
+/// @ingroup classification
+/// @see reflects_object
+/// @see is_object
+/// @see wrapped_metaobject
+/// @see no_metaobject
 template <typename X>
 concept metaobject = is_object(X{});
 
