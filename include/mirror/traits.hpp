@@ -13,6 +13,7 @@
 #include "preprocessor.hpp"
 #include "sequence.hpp"
 #include <cstdint>
+#include <type_traits>
 
 namespace mirror {
 
@@ -133,16 +134,39 @@ static constexpr auto operator|(meta_trait l, meta_trait r) noexcept
   -> meta_traits {
     return {l, r};
 }
+//------------------------------------------------------------------------------
+/// @brief Enumeration of supported type traits.
+/// @ingroup classification
+/// @see type_traits
+/// @see meta_trait
+enum class type_trait : std::uint64_t {
+    is_const = 1ULL << 0ULL,
+    is_volatile = 1ULL << 1ULL,
+    is_pointer = 1ULL << 2ULL,
+    is_reference = 1ULL << 3ULL,
+    is_fundamental = 1ULL << 4ULL,
+    is_void = 1ULL << 5ULL
+};
 
+/// @brief Type trait bitfield.
+/// @ingroup classification
+/// @see type_trait
+using type_traits = bitfield<type_trait>;
+
+static constexpr auto operator|(type_trait l, type_trait r) noexcept
+  -> type_traits {
+    return {l, r};
+}
+//------------------------------------------------------------------------------
 template <meta_trait>
-struct map_trait;
+struct map_meta_trait;
 
-#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                         \
-    template <>                                                  \
-    struct map_trait<meta_trait::MIRROR_JOIN(reflects_, NAME)> { \
-        static consteval auto apply(__metaobject_id mi) {        \
-            return MIRROR_JOIN(__metaobject_is_meta_, NAME)(mi); \
-        }                                                        \
+#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                              \
+    template <>                                                       \
+    struct map_meta_trait<meta_trait::MIRROR_JOIN(reflects_, NAME)> { \
+        static consteval auto apply(__metaobject_id mi) {             \
+            return MIRROR_JOIN(__metaobject_is_meta_, NAME)(mi);      \
+        }                                                             \
     };
 
 MIRROR_IMPLEMENT_MAP_TRAIT(object)
@@ -180,7 +204,28 @@ MIRROR_IMPLEMENT_MAP_TRAIT(function_call_expression)
 MIRROR_IMPLEMENT_MAP_TRAIT(specifier)
 
 #undef MIRROR_IMPLEMENT_MAP_TRAIT
+//------------------------------------------------------------------------------
+template <type_trait>
+struct map_type_trait;
 
+#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)          \
+    template <>                                   \
+    struct map_type_trait<type_trait::NAME> {     \
+        template <typename T>                     \
+        static consteval auto apply() -> bool {   \
+            return std::MIRROR_JOIN(NAME, _v)<T>; \
+        }                                         \
+    };
+
+MIRROR_IMPLEMENT_MAP_TRAIT(is_const)
+MIRROR_IMPLEMENT_MAP_TRAIT(is_volatile)
+MIRROR_IMPLEMENT_MAP_TRAIT(is_pointer)
+MIRROR_IMPLEMENT_MAP_TRAIT(is_reference)
+MIRROR_IMPLEMENT_MAP_TRAIT(is_fundamental)
+MIRROR_IMPLEMENT_MAP_TRAIT(is_void)
+
+#undef MIRROR_IMPLEMENT_MAP_TRAIT
+//------------------------------------------------------------------------------
 /// @brief Indicates if a metaobject has the specified trait.
 /// @ingroup classification
 /// @see meta_trait
@@ -188,7 +233,7 @@ MIRROR_IMPLEMENT_MAP_TRAIT(specifier)
 /// @see get_traits
 template <meta_trait T, __metaobject_id M>
 constexpr auto has_trait(wrapped_metaobject<M>) noexcept -> bool {
-    return map_trait<T>::apply(M);
+    return map_meta_trait<T>::apply(M);
 }
 
 /// @brief Gets all metaobject traits.
@@ -201,6 +246,30 @@ constexpr auto get_traits(wrapped_metaobject<M> mo) noexcept -> meta_traits {
     meta_traits result{};
     for_each(get_enumerators(mirror(meta_trait)), [&](auto me) {
         if(has_trait<get_constant(me)>(mo)) {
+            result |= get_constant(me);
+        }
+    });
+    return result;
+}
+
+/// @brief Indicates if a type has the specified trait.
+/// @ingroup classification
+/// @see type_trait
+/// @see get_traits
+template <type_trait TT, typename T>
+constexpr auto has_trait(std::type_identity<T>) noexcept -> bool {
+    return map_type_trait<TT>::template apply<T>();
+}
+
+/// @brief Gets all type traits.
+/// @ingroup classification
+/// @see type_traits
+/// @see meta_traits
+template <typename T>
+constexpr auto get_traits(std::type_identity<T> tid) noexcept -> type_traits {
+    type_traits result{};
+    for_each(get_enumerators(mirror(type_trait)), [&](auto me) {
+        if(has_trait<get_constant(me)>(tid)) {
             result |= get_constant(me);
         }
     });
