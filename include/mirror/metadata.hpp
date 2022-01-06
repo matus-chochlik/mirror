@@ -175,9 +175,9 @@ public:
     auto having(type_traits t) const -> metadata_sequence;
     auto not_having(type_traits t) const -> metadata_sequence;
 
-    auto having_all(traits t) const -> metadata_sequence;
-    auto having(traits t) const -> metadata_sequence;
-    auto not_having(traits t) const -> metadata_sequence;
+    auto having_all(object_traits t) const -> metadata_sequence;
+    auto having(object_traits t) const -> metadata_sequence;
+    auto not_having(object_traits t) const -> metadata_sequence;
 
     auto supporting(operations_boolean op) const -> metadata_sequence;
 
@@ -273,11 +273,11 @@ public:
     ~metadata() noexcept = default;
 
     auto is_none() const noexcept {
-        return !_meta_traits.has(meta_trait::reflects_object);
+        return !_meta_traits.has(trait::reflects_object);
     }
 
     explicit operator bool() const noexcept {
-        return _meta_traits.has(meta_trait::reflects_object);
+        return _meta_traits.has(trait::reflects_object);
     }
 
     friend bool operator==(const metadata& l, const metadata& r) noexcept {
@@ -352,16 +352,16 @@ public:
         return _type_traits.has_none(t);
     }
 
-    auto has_all(traits t) const noexcept -> bool {
+    auto has_all(object_traits t) const noexcept -> bool {
         return _op_boolean_results.has_all(t) &&
                _op_boolean_applicable.has_all(t);
     }
 
-    auto has(traits t) const noexcept -> bool {
+    auto has(object_traits t) const noexcept -> bool {
         return _op_boolean_results.has_some(t & _op_boolean_applicable);
     }
 
-    auto has_none(traits t) const noexcept -> bool {
+    auto has_none(object_traits t) const noexcept -> bool {
         return !has(t);
     }
 
@@ -603,15 +603,18 @@ inline auto metadata_sequence::not_having(type_traits t) const
     return filtered([&](auto& md) { return !md.has(t); });
 }
 
-inline auto metadata_sequence::having_all(traits t) const -> metadata_sequence {
+inline auto metadata_sequence::having_all(object_traits t) const
+  -> metadata_sequence {
     return filtered([&](auto& md) { return md.has_all(t); });
 }
 
-inline auto metadata_sequence::having(traits t) const -> metadata_sequence {
+inline auto metadata_sequence::having(object_traits t) const
+  -> metadata_sequence {
     return filtered([&](auto& md) { return md.has(t); });
 }
 
-inline auto metadata_sequence::not_having(traits t) const -> metadata_sequence {
+inline auto metadata_sequence::not_having(object_traits t) const
+  -> metadata_sequence {
     return filtered([&](auto& md) { return !md.has(t); });
 }
 

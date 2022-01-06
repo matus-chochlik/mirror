@@ -31,8 +31,7 @@ private:
     static auto _get_op_boolean_results(auto mo) noexcept {
         return fold_init_list_of<operation_boolean>(
           filter(
-            get_enumerators(mirror(operation_boolean)),
-            mirror::try_apply(_1, mo)),
+            get_enumerators(mirror(object_trait)), mirror::try_apply(_1, mo)),
           get_constant(_1),
           [](auto il) { return operations_boolean{il}; });
     }
@@ -40,7 +39,7 @@ private:
     static auto _get_op_boolean_applicable(auto mo) noexcept {
         return fold_init_list_of<operation_boolean>(
           filter(
-            get_enumerators(mirror(operation_boolean)),
+            get_enumerators(mirror(object_trait)),
             mirror::is_applicable(_1, mo)),
           get_constant(_1),
           [](auto il) { return operations_boolean{il}; });

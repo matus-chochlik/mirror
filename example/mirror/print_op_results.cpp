@@ -8,6 +8,7 @@
 #include <mirror/extract.hpp>
 #include <mirror/init_list.hpp>
 #include <mirror/operations.hpp>
+#include <mirror/placeholder.hpp>
 #include <algorithm>
 #include <concepts>
 #include <iomanip>
@@ -45,12 +46,8 @@ static void print_value(auto opt_value) {
 }
 
 void print_info(mirror::metaobject auto mo) {
-    const auto mes = concat(
-      get_enumerators(mirror(mirror::operation_boolean)),
-      get_enumerators(mirror(mirror::operation_integer)),
-      get_enumerators(mirror(mirror::operation_pointer)),
-      get_enumerators(mirror(mirror::operation_string)),
-      get_enumerators(mirror(mirror::operation_metaobject)));
+    const auto mes = flatten(transform(
+      mirror::all_metaobject_operation_kinds(), get_enumerators(mirror::_1)));
 
     const auto maxl = fold_init_list(
       mes,

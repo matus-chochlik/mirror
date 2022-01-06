@@ -9,128 +9,28 @@
 #ifndef MIRROR_OPERATIONS_HPP
 #define MIRROR_OPERATIONS_HPP
 
-#include "bitfield.hpp"
-#include "preprocessor.hpp"
-#include "sequence.hpp"
-#include "tribool.hpp"
+#include "placeholder.hpp"
+#include "traits.hpp"
 #include <concepts>
 #include <optional>
 
 namespace mirror {
 
-/// @brief Enumeration of boolean-returning unary operations applicable to metaobjects.
+/// @brief Alias for object_trait.
 /// @ingroup operations
-/// @see operation
-/// @see operation_integer
-/// @see operation_pointer
-/// @see operation_string
-/// @see operation_metaobject
-/// @see metaobject_ops_boolean
-/// @see metaobject_operation
-/// @see is_applicable
-/// @see apply
-/// @see try_apply
-/// @see meta_traits
-enum class operation_boolean : std::uint64_t {
-    /// @brief Indicates if the reflected lambda closure's call operator is @c const.
-    is_call_operator_const = 1ULL << 0ULL,
-    /// @brief Indicates if the reflected member function is @c const.
-    is_const = 1ULL << 1ULL,
-    /// @brief Indicates if the reflected base-level entity is @c constexpr.
-    is_constexpr = 1ULL << 2ULL,
-    /// @brief Indicates if the reflected constructor is copy constructor.
-    is_copy_constructor = 1ULL << 3ULL,
-    /// @brief Indicates if the reflected operator is copy assignment operator.
-    is_copy_assignment_operator = 1ULL << 4ULL,
-    /// @brief Indicates if the reflected special member function is defaulted.
-    is_defaulted = 1ULL << 5ULL,
-    /// @brief Indicates if the reflected function is deleted.
-    is_deleted = 1ULL << 6ULL,
-    /// @brief Indicates if the metaobject sequence is empty.
-    is_empty = 1ULL << 7ULL,
-    /// @brief Indicates if the reflected base-level entity is an @c enum.
-    is_enum = 1ULL << 8ULL,
-    /// @brief Indicates if the reflected base-level entity is @c explicit.
-    is_explicit = 1ULL << 9ULL,
-    /// @brief Indicates if the reflected lambda capture is explicitly captured.
-    is_explicitly_captured = 1ULL << 10ULL,
-    /// @brief Indicates if the reflected base-level entity is @c final.
-    is_final = 1ULL << 11ULL,
-    /// @brief Indicates if the reflected special member function is implicitly declared.
-    is_implicitly_declared = 1ULL << 12ULL,
-    /// @brief Indicates if the reflected base-level entity is @c inline.
-    is_inline = 1ULL << 13ULL,
-    /// @brief Indicates if the reflected constructor is move constructor.
-    is_move_constructor = 1ULL << 14ULL,
-    /// @brief Indicates if the reflected operator is move assignment operator.
-    is_move_assignment_operator = 1ULL << 15ULL,
-    /// @brief Indicates if the reflected base-level entity is @c noexcept.
-    is_noexcept = 1ULL << 16ULL,
-    /// @brief Indicates if the reflected base-level entity is @c private.
-    is_private = 1ULL << 17ULL,
-    /// @brief Indicates if the reflected base-level entity is @c protected.
-    is_protected = 1ULL << 18ULL,
-    /// @brief Indicates if the reflected base-level entity is @c public.
-    is_public = 1ULL << 19ULL,
-    /// @brief Indicates if the reflected base-level entity is pure @c virtual.
-    is_pure_virtual = 1ULL << 20ULL,
-    /// @brief Indicates if the reflected base-level entity is a scoped @c enum.
-    is_scoped_enum = 1ULL << 21ULL,
-    /// @brief Indicates if the reflected base-level entity is @c static.
-    is_static = 1ULL << 22ULL,
-    /// @brief Indicates if the reflected base-level entity is @c thread_local.
-    is_thread_local = 1ULL << 23ULL,
-    /// @brief Indicates if the reflected base-level entity is an @c union.
-    is_union = 1ULL << 24ULL,
-    /// @brief Indicates if the reflected base-level entity is unnamed.
-    is_unnamed = 1ULL << 25ULL,
-    /// @brief Indicates if the reflected base-level entity is @c virtual.
-    is_virtual = 1ULL << 26ULL,
-    /// @brief Indicates if the reflected member function is @c volatile.
-    is_volatile = 1ULL << 27ULL,
-    /// @brief Indicates if the reflected function parameter has default argument.
-    has_default_argument = 1ULL << 28ULL,
-    /// @brief Indicates if the reflected member function has lvalue-ref qualifier.
-    has_lvalueref_qualifier = 1ULL << 29ULL,
-    /// @brief Indicates if the reflected member function has rvalue-ref qualifier.
-    has_rvalueref_qualifier = 1ULL << 30ULL,
-    /// @brief Indicates if the reflected record type uses a @c class specifier.
-    uses_class_key = 1ULL << 31ULL,
-    /// @brief Indicates if the reflected record type uses a @c struct specifier.
-    uses_struct_key = 1ULL << 32ULL,
-    /// @brief Indicates if the reflected lambda uses default capture by copy.
-    uses_default_copy_capture = 1ULL << 33ULL,
-    /// @brief Indicates if the reflected lambda uses default capture by reference.
-    uses_default_reference_capture = 1ULL << 34ULL
-};
-
-/// @brief Bitfield of boolean-returning unary operations applicable to metaobjects.
-/// @ingroup classification
-/// @see operation
-/// @see operation_boolean
-/// @see operations_integer
-/// @see operations_pointer
-/// @see operations_string
-/// @see operations_metaobject
-using operations_boolean = bitfield<operation_boolean>;
-
-/// @brief Alias for operation_boolean.
-/// @ingroup classification
-/// @see operation_boolean
+/// @see operations_boolean
 /// @see traits
-using trait = operation_boolean;
+using operation_boolean = object_trait;
 
-/// @brief Alias for operations_boolean.
+/// @brief Alias for object_traits.
 /// @ingroup classification
 /// @see trait
 /// @see operation_boolean
-using traits = bitfield<trait>;
-
-static constexpr auto
-operator|(operation_boolean l, operation_boolean r) noexcept
-  -> operations_boolean {
-    return {l, r};
-}
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metadata
+using operations_boolean = bitfield<operation_boolean>;
 
 /// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
 /// @ingroup operations
@@ -319,65 +219,8 @@ concept metaobject_operation =
    std::same_as<T, operation_pointer> || std::same_as<T, operation_string> ||
    std::same_as<T, operation_metaobject>);
 
-template <metaobject_operation auto O>
+template <auto O>
 struct map_operation;
-
-#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
-    template <>                                                              \
-    struct map_operation<operation_boolean::NAME> {                          \
-        template <__metaobject_id M>                                         \
-        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
-        }                                                                    \
-        template <__metaobject_id M>                                         \
-        static consteval auto apply(wrapped_metaobject<M>) -> bool {         \
-            return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
-        }                                                                    \
-        static constexpr auto make_optional(bool v) -> tribool {             \
-            return {v};                                                      \
-        }                                                                    \
-        static constexpr auto fallback() -> tribool {                        \
-            return indeterminate;                                            \
-        }                                                                    \
-    };
-
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_call_operator_const)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_const)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_constexpr)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_copy_constructor)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_copy_assignment_operator)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_defaulted)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_deleted)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_empty)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_enum)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_explicit)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_explicitly_captured)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_final)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_implicitly_declared)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_inline)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_move_constructor)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_move_assignment_operator)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_noexcept)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_private)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_protected)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_public)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_pure_virtual)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_scoped_enum)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_static)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_thread_local)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_union)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_unnamed)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_virtual)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(is_volatile)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(has_default_argument)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(has_lvalueref_qualifier)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(has_rvalueref_qualifier)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_class_key)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_struct_key)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_copy_capture)
-MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_reference_capture)
-
-#undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
 template <>
 struct map_operation<operation_integer::get_constant> {
@@ -520,8 +363,8 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 /// @see operation_string
 /// @see operation_metaobject
 /// This class can be used to access the enumerators of the operation
-/// enumerations. Instead of @c operation_boolean::op_name use simply @c
-/// operation::op_name. Same for the enumerators from operation_integer,
+/// enumerations. Instead of @c operation_boolean::op_name use simply
+/// @c operation::op_name. Same for the enumerators from operation_integer,
 /// operation_pointer, operation_string and operation_metaobject.
 struct operation {
     // boolean
@@ -657,6 +500,20 @@ try_apply(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept {
     return try_apply<get_constant(me)>(mo);
 }
 
+constexpr auto all_metaobject_operation_kinds() noexcept {
+    return make_sequence(
+      remove_all_aliases(mirror(mirror::operation_boolean)),
+      remove_all_aliases(mirror(mirror::operation_integer)),
+      remove_all_aliases(mirror(mirror::operation_pointer)),
+      remove_all_aliases(mirror(mirror::operation_string)),
+      remove_all_aliases(mirror(mirror::operation_metaobject)));
+}
+
+constexpr auto all_metaobject_operations() noexcept {
+    return flatten(
+      transform(all_metaobject_operation_kinds(), get_enumerators(_1)));
+}
+
 /// @brief Calls the specified function on each operation meta-enumerator
 /// @ingroup operations
 /// @see metaobject_operation
@@ -664,14 +521,9 @@ try_apply(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept {
 /// @see apply
 template <typename F>
 constexpr void for_each_metaobject_operation(F function) {
-    for_each(
-      make_sequence(
-        mirror(mirror::operation_boolean),
-        mirror(mirror::operation_integer),
-        mirror(mirror::operation_pointer),
-        mirror(mirror::operation_string),
-        mirror(mirror::operation_metaobject)),
-      [&](auto muo) { for_each(get_enumerators(muo), function); });
+    for_each(all_metaobject_operation_kinds(), [&](auto muo) {
+        for_each(get_enumerators(muo), function);
+    });
 }
 
 } // namespace mirror
