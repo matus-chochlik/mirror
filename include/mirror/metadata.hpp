@@ -154,10 +154,9 @@ public:
 
     auto excluding(const metadata_sequence& s) const -> metadata_sequence;
 
-    auto satisfying(meta_traits all) const -> metadata_sequence;
+    auto having(meta_traits all) const -> metadata_sequence;
 
-    auto satisfying(meta_traits all, meta_traits none) const
-      -> metadata_sequence;
+    auto having(traits all) const -> metadata_sequence;
 
     auto supporting(operations_boolean all) const -> metadata_sequence;
 
@@ -166,8 +165,6 @@ public:
     auto supporting(operations_string all) const -> metadata_sequence;
 
     auto supporting(operations_metaobject all) const -> metadata_sequence;
-
-    auto having(traits all) const -> metadata_sequence;
 
     auto with_name() const -> metadata_sequence {
         return supporting(operation_string::get_name);
@@ -271,12 +268,8 @@ public:
         return l._id < r._id;
     }
 
-    auto satisfies(meta_traits all) const noexcept -> bool {
+    auto has(meta_traits all) const noexcept -> bool {
         return _traits.has_all(all);
-    }
-
-    auto satisfies(meta_traits all, meta_traits none) const noexcept -> bool {
-        return _traits.has_all(all) && _traits.has_none(none);
     }
 
     auto is_applicable(operation_boolean op) const noexcept -> bool {
@@ -463,23 +456,21 @@ inline auto metadata_sequence::excluding(const metadata_sequence& s) const
     return {result};
 }
 
-inline auto metadata_sequence::satisfying(meta_traits all) const
+inline auto metadata_sequence::having(meta_traits all) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
-        if(md->satisfies(all)) {
+        if(md->has(all)) {
             result.push_back(md);
         }
     }
     return {result};
 }
 
-inline auto
-metadata_sequence::satisfying(meta_traits all, meta_traits none) const
-  -> metadata_sequence {
+inline auto metadata_sequence::having(traits all) const -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
-        if(md->satisfies(all, none)) {
+        if(md->has(all)) {
             result.push_back(md);
         }
     }
@@ -524,16 +515,6 @@ inline auto metadata_sequence::supporting(operations_metaobject all) const
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
         if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
-}
-
-inline auto metadata_sequence::having(traits all) const -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->has(all)) {
             result.push_back(md);
         }
     }
