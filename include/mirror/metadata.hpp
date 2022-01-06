@@ -159,18 +159,18 @@ public:
     auto satisfying(meta_traits all, meta_traits none) const
       -> metadata_sequence;
 
-    auto supporting(unary_ops_boolean all) const -> metadata_sequence;
+    auto supporting(operations_boolean all) const -> metadata_sequence;
 
-    auto supporting(unary_ops_integer all) const -> metadata_sequence;
+    auto supporting(operations_integer all) const -> metadata_sequence;
 
-    auto supporting(unary_ops_string all) const -> metadata_sequence;
+    auto supporting(operations_string all) const -> metadata_sequence;
 
-    auto supporting(unary_ops_metaobject all) const -> metadata_sequence;
+    auto supporting(operations_metaobject all) const -> metadata_sequence;
 
     auto having(traits all) const -> metadata_sequence;
 
     auto with_name() const -> metadata_sequence {
-        return supporting(unary_op_string::get_name);
+        return supporting(operation_string::get_name);
     }
 };
 //------------------------------------------------------------------------------
@@ -179,11 +179,11 @@ private:
     size_t _id{0U};
     meta_traits _traits{};
 
-    unary_ops_boolean _op_boolean_results{};
-    unary_ops_boolean _op_boolean_applicable{};
-    unary_ops_metaobject _op_metaobject_applicable{};
-    unary_ops_integer _op_integer_applicable{};
-    unary_ops_string _op_string_applicable{};
+    operations_boolean _op_boolean_results{};
+    operations_boolean _op_boolean_applicable{};
+    operations_metaobject _op_metaobject_applicable{};
+    operations_integer _op_integer_applicable{};
+    operations_string _op_string_applicable{};
 
     size_t _source_column{0U};
     size_t _source_line{0U};
@@ -221,11 +221,11 @@ protected:
     metadata(
       size_t id,
       meta_traits traits,
-      unary_ops_boolean op_boolean_results,
-      unary_ops_boolean op_boolean_applicable,
-      unary_ops_metaobject op_metaobject_applicable,
-      unary_ops_integer op_integer_applicable,
-      unary_ops_string op_string_applicable,
+      operations_boolean op_boolean_results,
+      operations_boolean op_boolean_applicable,
+      operations_metaobject op_metaobject_applicable,
+      operations_integer op_integer_applicable,
+      operations_string op_string_applicable,
       size_t source_column,
       size_t source_line,
       std::string_view name,
@@ -279,35 +279,35 @@ public:
         return _traits.has_all(all) && _traits.has_none(none);
     }
 
-    auto is_applicable(unary_op_boolean op) const noexcept -> bool {
+    auto is_applicable(operation_boolean op) const noexcept -> bool {
         return _op_boolean_applicable.has(op);
     }
 
-    auto supports(unary_ops_boolean all) const noexcept -> bool {
+    auto supports(operations_boolean all) const noexcept -> bool {
         return _op_boolean_applicable.has_all(all);
     }
 
-    auto is_applicable(unary_op_integer op) const noexcept -> bool {
+    auto is_applicable(operation_integer op) const noexcept -> bool {
         return _op_integer_applicable.has(op);
     }
 
-    auto supports(unary_ops_integer all) const noexcept -> bool {
+    auto supports(operations_integer all) const noexcept -> bool {
         return _op_integer_applicable.has_all(all);
     }
 
-    auto is_applicable(unary_op_string op) const noexcept -> bool {
+    auto is_applicable(operation_string op) const noexcept -> bool {
         return _op_string_applicable.has(op);
     }
 
-    auto supports(unary_ops_string all) const noexcept -> bool {
+    auto supports(operations_string all) const noexcept -> bool {
         return _op_string_applicable.has_all(all);
     }
 
-    auto is_applicable(unary_op_metaobject op) const noexcept -> bool {
+    auto is_applicable(operation_metaobject op) const noexcept -> bool {
         return _op_metaobject_applicable.has(op);
     }
 
-    auto supports(unary_ops_metaobject all) const noexcept -> bool {
+    auto supports(operations_metaobject all) const noexcept -> bool {
         return _op_metaobject_applicable.has_all(all);
     }
 
@@ -320,7 +320,7 @@ public:
         return _op_boolean_results.has_some(all & _op_boolean_applicable);
     }
 
-    auto apply(unary_op_boolean op) const noexcept -> tribool {
+    auto apply(operation_boolean op) const noexcept -> tribool {
         return {_op_boolean_results.has(op), !_op_boolean_applicable.has(op)};
     }
 
@@ -343,7 +343,7 @@ public:
     }
 
     auto name() const noexcept -> std::optional<std::string_view> {
-        if(is_applicable(unary_op_string::get_name)) {
+        if(is_applicable(operation_string::get_name)) {
             return {_name};
         }
         return {};
@@ -354,7 +354,7 @@ public:
     }
 
     auto display_name() const noexcept -> std::optional<std::string_view> {
-        if(is_applicable(unary_op_string::get_display_name)) {
+        if(is_applicable(operation_string::get_display_name)) {
             return {_display_name};
         }
         return {};
@@ -425,7 +425,7 @@ public:
     }
 
     auto size() const noexcept -> std::optional<size_t> {
-        if(is_applicable(unary_op_integer::get_size)) {
+        if(is_applicable(operation_integer::get_size)) {
             return {count()};
         }
         return {};
@@ -486,7 +486,7 @@ metadata_sequence::satisfying(meta_traits all, meta_traits none) const
     return {result};
 }
 
-inline auto metadata_sequence::supporting(unary_ops_boolean all) const
+inline auto metadata_sequence::supporting(operations_boolean all) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
@@ -497,7 +497,7 @@ inline auto metadata_sequence::supporting(unary_ops_boolean all) const
     return {result};
 }
 
-inline auto metadata_sequence::supporting(unary_ops_integer all) const
+inline auto metadata_sequence::supporting(operations_integer all) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
@@ -508,7 +508,7 @@ inline auto metadata_sequence::supporting(unary_ops_integer all) const
     return {result};
 }
 
-inline auto metadata_sequence::supporting(unary_ops_string all) const
+inline auto metadata_sequence::supporting(operations_string all) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
@@ -519,7 +519,7 @@ inline auto metadata_sequence::supporting(unary_ops_string all) const
     return {result};
 }
 
-inline auto metadata_sequence::supporting(unary_ops_metaobject all) const
+inline auto metadata_sequence::supporting(operations_metaobject all) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {

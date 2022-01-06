@@ -20,7 +20,7 @@ namespace mirror {
 /// @ingroup classification
 /// @see meta_traits
 /// @see has_trait
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 enum class meta_trait : std::uint64_t {
     /// @brief Indicates if the argument is a metaobject.
     /// @see mirror::reflects_object
@@ -184,7 +184,7 @@ MIRROR_IMPLEMENT_MAP_TRAIT(specifier)
 /// @brief Indicates if a metaobject has the specified trait.
 /// @ingroup classification
 /// @see meta_trait
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 /// @see get_traits
 template <meta_trait T, __metaobject_id M>
 constexpr auto has_trait(wrapped_metaobject<M>) noexcept -> bool {
@@ -194,7 +194,7 @@ constexpr auto has_trait(wrapped_metaobject<M>) noexcept -> bool {
 /// @brief Gets all metaobject traits.
 /// @ingroup classification
 /// @see meta_traits
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 /// @see has_trait
 template <__metaobject_id M>
 constexpr auto get_traits(wrapped_metaobject<M> mo) noexcept -> meta_traits {

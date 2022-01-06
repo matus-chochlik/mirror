@@ -28,48 +28,48 @@ auto get_metadata(wrapped_metaobject<M>, metadata_registry&) noexcept
 class stored_metadata : public metadata {
 private:
     static auto _get_op_boolean_results(auto mo) noexcept {
-        return fold_init_list_of<unary_op_boolean>(
+        return fold_init_list_of<operation_boolean>(
           filter(
-            get_enumerators(mirror(unary_op_boolean)),
+            get_enumerators(mirror(operation_boolean)),
             mirror::try_apply(_1, mo)),
           get_constant(_1),
-          [](auto il) { return unary_ops_boolean{il}; });
+          [](auto il) { return operations_boolean{il}; });
     }
 
     static auto _get_op_boolean_applicable(auto mo) noexcept {
-        return fold_init_list_of<unary_op_boolean>(
+        return fold_init_list_of<operation_boolean>(
           filter(
-            get_enumerators(mirror(unary_op_boolean)),
+            get_enumerators(mirror(operation_boolean)),
             mirror::is_applicable(_1, mo)),
           get_constant(_1),
-          [](auto il) { return unary_ops_boolean{il}; });
+          [](auto il) { return operations_boolean{il}; });
     }
 
     static auto _get_op_metaobject_applicable(auto mo) noexcept {
-        return fold_init_list_of<unary_op_metaobject>(
+        return fold_init_list_of<operation_metaobject>(
           filter(
-            get_enumerators(mirror(unary_op_metaobject)),
+            get_enumerators(mirror(operation_metaobject)),
             mirror::is_applicable(_1, mo)),
           get_constant(_1),
-          [](auto il) { return unary_ops_metaobject{il}; });
+          [](auto il) { return operations_metaobject{il}; });
     }
 
     static auto _get_op_integer_applicable(auto mo) noexcept {
-        return fold_init_list_of<unary_op_integer>(
+        return fold_init_list_of<operation_integer>(
           filter(
-            get_enumerators(mirror(unary_op_integer)),
+            get_enumerators(mirror(operation_integer)),
             mirror::is_applicable(_1, mo)),
           get_constant(_1),
-          [](auto il) { return unary_ops_integer{il}; });
+          [](auto il) { return operations_integer{il}; });
     }
 
     static auto _get_op_string_applicable(auto mo) noexcept {
-        return fold_init_list_of<unary_op_string>(
+        return fold_init_list_of<operation_string>(
           filter(
-            get_enumerators(mirror(unary_op_string)),
+            get_enumerators(mirror(operation_string)),
             mirror::is_applicable(_1, mo)),
           get_constant(_1),
-          [](auto il) { return unary_ops_string{il}; });
+          [](auto il) { return operations_string{il}; });
     }
 
     static auto _get_name(auto mo) noexcept -> std::string_view {
@@ -135,7 +135,7 @@ private:
         _init(unpacked_metaobject_sequence<Ms...>{}, r, md, idx + 1Z);
     }
 
-    template <unary_op_metaobject O, __metaobject_id M>
+    template <operation_metaobject O, __metaobject_id M>
     static auto _try_init(
       wrapped_metaobject<M> mo,
       metadata_registry& r,
@@ -178,7 +178,7 @@ public:
                 _init(ms, r, _emplace_elements(_expand(ms, r)));
             }
         } else if constexpr(reflects_object(mo)) {
-            using O = unary_op_metaobject;
+            using O = operation_metaobject;
             _try_init<O::get_scope>(mo, r, _scope);
             _try_init<O::get_type>(mo, r, _type);
             _try_init<O::get_underlying_type>(mo, r, _underlying_type);

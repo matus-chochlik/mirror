@@ -20,17 +20,17 @@ namespace mirror {
 
 /// @brief Enumeration of boolean-returning unary operations applicable to metaobjects.
 /// @ingroup operations
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see unary_op_metaobject
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
 /// @see metaobject_ops_boolean
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
 /// @see meta_traits
-enum class unary_op_boolean : std::uint64_t {
+enum class operation_boolean : std::uint64_t {
     /// @brief Indicates if the reflected lambda closure's call operator is @c const.
     is_call_operator_const = 1ULL << 0ULL,
     /// @brief Indicates if the reflected member function is @c const.
@@ -105,42 +105,43 @@ enum class unary_op_boolean : std::uint64_t {
 
 /// @brief Bitfield of boolean-returning unary operations applicable to metaobjects.
 /// @ingroup classification
-/// @see unary_op_boolean
-/// @see unary_ops_integer
-/// @see unary_ops_pointer
-/// @see unary_ops_string
-/// @see unary_ops_metaobject
-using unary_ops_boolean = bitfield<unary_op_boolean>;
+/// @see operation_boolean
+/// @see operations_integer
+/// @see operations_pointer
+/// @see operations_string
+/// @see operations_metaobject
+using operations_boolean = bitfield<operation_boolean>;
 
-/// @brief Alias for unary_op_boolean.
+/// @brief Alias for operation_boolean.
 /// @ingroup classification
-/// @see unary_op_boolean
+/// @see operation_boolean
 /// @see traits
-using trait = unary_op_boolean;
+using trait = operation_boolean;
 
-/// @brief Alias for unary_ops_boolean.
+/// @brief Alias for operations_boolean.
 /// @ingroup classification
 /// @see trait
-/// @see unary_op_boolean
+/// @see operation_boolean
 using traits = bitfield<trait>;
 
-static constexpr auto operator|(unary_op_boolean l, unary_op_boolean r) noexcept
-  -> unary_ops_boolean {
+static constexpr auto
+operator|(operation_boolean l, operation_boolean r) noexcept
+  -> operations_boolean {
     return {l, r};
 }
 
 /// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see unary_op_metaobject
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
 /// @see meta_traits
-enum class unary_op_integer : unsigned {
+enum class operation_integer : unsigned {
     /// @brief Returns the value of the reflected base-level constant.
     get_constant = 1U << 0U,
     /// @brief Returns a pointer to the reflected base-level entity.
@@ -153,60 +154,62 @@ enum class unary_op_integer : unsigned {
 
 /// @brief Bitfield of integer-returning unary operations applicable to metaobjects.
 /// @ingroup classification
-/// @see unary_op_integer
-/// @see unary_ops_boolean
-/// @see unary_ops_pointer
-/// @see unary_ops_string
-/// @see unary_ops_metaobject
-using unary_ops_integer = bitfield<unary_op_integer>;
+/// @see operation_integer
+/// @see operations_boolean
+/// @see operations_pointer
+/// @see operations_string
+/// @see operations_metaobject
+using operations_integer = bitfield<operation_integer>;
 
-static constexpr auto operator|(unary_op_integer l, unary_op_integer r) noexcept
-  -> unary_ops_integer {
+static constexpr auto
+operator|(operation_integer l, operation_integer r) noexcept
+  -> operations_integer {
     return {l, r};
 }
 
 /// @brief Enumeration of pointer -returning unary operations applicable to metaobjects.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_string
-/// @see unary_op_metaobject
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_string
+/// @see operation_metaobject
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
 /// @see meta_traits
-enum class unary_op_pointer : unsigned {
+enum class operation_pointer : unsigned {
     /// @brief Returns a pointer to the reflected base-level entity.
     get_pointer = 1U << 0U
 };
 
 /// @brief Bitfield of pointer-returning unary operations applicable to metaobjects.
 /// @ingroup classification
-/// @see unary_op_pointer
-/// @see unary_ops_boolean
-/// @see unary_ops_integer
-/// @see unary_ops_string
-/// @see unary_ops_metaobject
-using unary_ops_pointer = bitfield<unary_op_pointer>;
+/// @see operation_pointer
+/// @see operations_boolean
+/// @see operations_integer
+/// @see operations_string
+/// @see operations_metaobject
+using operations_pointer = bitfield<operation_pointer>;
 
-static constexpr auto operator|(unary_op_pointer l, unary_op_pointer r) noexcept
-  -> unary_ops_pointer {
+static constexpr auto
+operator|(operation_pointer l, operation_pointer r) noexcept
+  -> operations_pointer {
     return {l, r};
 }
 
 /// @brief Enumeration of string-returning unary operations applicable to metaobjects.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_metaobject
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_metaobject
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
 /// @see meta_traits
-enum class unary_op_string : unsigned {
+enum class operation_string : unsigned {
     // string
     /// @brief Returns the user-friendly name of the reflected base-level entity.
     get_display_name = 1U << 0U,
@@ -218,30 +221,30 @@ enum class unary_op_string : unsigned {
 
 /// @brief Bitfield of string-returning unary operations applicable to metaobjects.
 /// @ingroup classification
-/// @see unary_op_string
-/// @see unary_ops_boolean
-/// @see unary_ops_integer
-/// @see unary_ops_pointer
-/// @see unary_ops_metaobject
-using unary_ops_string = bitfield<unary_op_string>;
+/// @see operation_string
+/// @see operations_boolean
+/// @see operations_integer
+/// @see operations_pointer
+/// @see operations_metaobject
+using operations_string = bitfield<operation_string>;
 
-static constexpr auto operator|(unary_op_string l, unary_op_string r) noexcept
-  -> unary_ops_string {
+static constexpr auto operator|(operation_string l, operation_string r) noexcept
+  -> operations_string {
     return {l, r};
 }
 
 /// @brief Enumeration of metaobject-returning unary operations applicable to metaobjects.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
 /// @see try_apply
 /// @see meta_traits
-enum class unary_op_metaobject : std::uint64_t {
+enum class operation_metaobject : std::uint64_t {
     /// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
     get_aliased = 1ULL << 0ULL,
     /// @brief Returns a sequence of base class specifier reflections of a reflected class.
@@ -284,38 +287,38 @@ enum class unary_op_metaobject : std::uint64_t {
 
 /// @brief Bitfield of metaobject-returning unary operations applicable to metaobjects.
 /// @ingroup classification
-/// @see unary_op_metaobject
-/// @see unary_ops_boolean
-/// @see unary_ops_integer
-/// @see unary_ops_pointer
-/// @see unary_ops_metaobject
-using unary_ops_metaobject = bitfield<unary_op_metaobject>;
+/// @see operation_metaobject
+/// @see operations_boolean
+/// @see operations_integer
+/// @see operations_pointer
+/// @see operations_metaobject
+using operations_metaobject = bitfield<operation_metaobject>;
 
 static constexpr auto
-operator|(unary_op_metaobject l, unary_op_metaobject r) noexcept
-  -> unary_ops_metaobject {
+operator|(operation_metaobject l, operation_metaobject r) noexcept
+  -> operations_metaobject {
     return {l, r};
 }
 
 /// @brief Unary metaobject operation enumeration type.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see unary_op_metaobject
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
 template <typename T>
-concept metaobject_unary_op =
-  (std::same_as<T, unary_op_boolean> || std::same_as<T, unary_op_integer> ||
-   std::same_as<T, unary_op_pointer> || std::same_as<T, unary_op_string> ||
-   std::same_as<T, unary_op_metaobject>);
+concept metaobject_operation =
+  (std::same_as<T, operation_boolean> || std::same_as<T, operation_integer> ||
+   std::same_as<T, operation_pointer> || std::same_as<T, operation_string> ||
+   std::same_as<T, operation_metaobject>);
 
-template <metaobject_unary_op auto O>
-struct map_unary_op;
+template <metaobject_operation auto O>
+struct map_operation;
 
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
     template <>                                                              \
-    struct map_unary_op<unary_op_boolean::NAME> {                            \
+    struct map_operation<operation_boolean::NAME> {                          \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
@@ -371,7 +374,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(uses_default_reference_capture)
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 //------------------------------------------------------------------------------
 template <>
-struct map_unary_op<unary_op_integer::get_constant> {
+struct map_operation<operation_integer::get_constant> {
     template <__metaobject_id M>
     static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
         return __metaobject_get_constant(bool, M);
@@ -391,7 +394,7 @@ struct map_unary_op<unary_op_integer::get_constant> {
 
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
     template <>                                                              \
-    struct map_unary_op<unary_op_integer::NAME> {                            \
+    struct map_operation<operation_integer::NAME> {                          \
         template <__metaobject_id M>                                         \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
@@ -416,7 +419,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_line)
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
 
 template <>
-struct map_unary_op<unary_op_pointer::get_pointer> {
+struct map_operation<operation_pointer::get_pointer> {
     template <__metaobject_id M>
     static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {
         return __metaobject_get_pointer(bool, M);
@@ -436,7 +439,7 @@ struct map_unary_op<unary_op_pointer::get_pointer> {
 //------------------------------------------------------------------------------
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
     template <>                                                               \
-    struct map_unary_op<unary_op_string::NAME> {                              \
+    struct map_operation<operation_string::NAME> {                            \
         template <__metaobject_id M>                                          \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
@@ -463,7 +466,7 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)
 //------------------------------------------------------------------------------
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
     template <>                                                               \
-    struct map_unary_op<unary_op_metaobject::NAME> {                          \
+    struct map_operation<operation_metaobject::NAME> {                        \
         template <__metaobject_id M>                                          \
         static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
             return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
@@ -505,17 +508,17 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 //------------------------------------------------------------------------------
 /// @brief Indicates if the specified operation is applicable to metaobject.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see unary_op_metaobject
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
+/// @see metaobject_operation
 /// @see apply
 /// @see try_apply
-template <metaobject_unary_op auto O, __metaobject_id M>
+template <metaobject_operation auto O, __metaobject_id M>
 constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
-    return map_unary_op<O>::is_applicable(mo);
+    return map_operation<O>::is_applicable(mo);
 }
 
 template <__metaobject_id Me, __metaobject_id Mo>
@@ -527,33 +530,33 @@ is_applicable(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept
 
 /// @brief Calls the specified unary operation on a metaobject.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see unary_op_metaobject
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see try_apply
-template <metaobject_unary_op auto O, __metaobject_id M>
+template <metaobject_operation auto O, __metaobject_id M>
 constexpr auto apply(wrapped_metaobject<M> mo) noexcept
   requires(is_applicable(mo)) {
-    return map_unary_op<O>::apply(mo);
+    return map_operation<O>::apply(mo);
 }
 
 /// @brief Calls the specified unary operation on a metaobject if it's applicable.
 /// @ingroup operations
-/// @see unary_op_boolean
-/// @see unary_op_integer
-/// @see unary_op_pointer
-/// @see unary_op_string
-/// @see unary_op_metaobject
-/// @see metaobject_unary_op
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
-template <metaobject_unary_op auto O, __metaobject_id M>
+template <metaobject_operation auto O, __metaobject_id M>
 constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
-    using op = map_unary_op<O>;
+    using op = map_operation<O>;
     if constexpr(op::is_applicable(mo)) {
         return op::make_optional(op::apply(mo));
     } else {
@@ -567,20 +570,20 @@ try_apply(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept {
     return try_apply<get_constant(me)>(mo);
 }
 
-/// @brief Calls the specified function on each unary_op meta-enumerator
+/// @brief Calls the specified function on each operation meta-enumerator
 /// @ingroup operations
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
 template <typename F>
-constexpr void for_each_metaobject_unary_op(F function) {
+constexpr void for_each_metaobject_operation(F function) {
     for_each(
       make_sequence(
-        mirror(mirror::unary_op_boolean),
-        mirror(mirror::unary_op_integer),
-        mirror(mirror::unary_op_pointer),
-        mirror(mirror::unary_op_string),
-        mirror(mirror::unary_op_metaobject)),
+        mirror(mirror::operation_boolean),
+        mirror(mirror::operation_integer),
+        mirror(mirror::operation_pointer),
+        mirror(mirror::operation_string),
+        mirror(mirror::operation_metaobject)),
       [&](auto muo) { for_each(get_enumerators(muo), function); });
 }
 

@@ -46,11 +46,11 @@ static void print_value(auto opt_value) {
 
 void print_info(mirror::metaobject auto mo) {
     const auto mes = concat(
-      get_enumerators(mirror(mirror::unary_op_boolean)),
-      get_enumerators(mirror(mirror::unary_op_integer)),
-      get_enumerators(mirror(mirror::unary_op_pointer)),
-      get_enumerators(mirror(mirror::unary_op_string)),
-      get_enumerators(mirror(mirror::unary_op_metaobject)));
+      get_enumerators(mirror(mirror::operation_boolean)),
+      get_enumerators(mirror(mirror::operation_integer)),
+      get_enumerators(mirror(mirror::operation_pointer)),
+      get_enumerators(mirror(mirror::operation_string)),
+      get_enumerators(mirror(mirror::operation_metaobject)));
 
     const auto maxl = fold_init_list(
       mes,
