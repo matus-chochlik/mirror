@@ -9,6 +9,7 @@
 #ifndef MIRROR_REGISTRY_HPP
 #define MIRROR_REGISTRY_HPP
 
+#include "base_type.hpp"
 #include "hash.hpp"
 #include "init_list.hpp"
 #include "metadata.hpp"
@@ -153,13 +154,30 @@ private:
         return pmd;
     }
 
+    template <__metaobject_id M>
+    static auto _try_init_base_type(
+      wrapped_metaobject<M> mo,
+      metadata_registry& r,
+      const metadata*& pmd) -> const metadata* {
+        if constexpr(reflects_type(mo)) {
+            if(pmd->is_none()) {
+                auto& md = get_metadata(get_base_type(mo), r);
+                pmd = &md;
+            }
+        } else if constexpr(reflects_typed(mo)) {
+            return _try_init_base_type(get_type(mo), r, pmd);
+        }
+        return pmd;
+    }
+
 public:
     stored_metadata() noexcept = default;
 
-    stored_metadata(auto mo, metadata_registry& r) noexcept
+    stored_metadata(auto mo, hash_t id, metadata_registry& r) noexcept
       : metadata{
-          get_id(mo),
+          id,
           get_traits(mo),
+          get_type_traits(mo),
           _get_op_boolean_results(mo),
           _get_op_boolean_applicable(mo),
           _get_op_metaobject_applicable(mo),
@@ -181,6 +199,7 @@ public:
             using O = operation_metaobject;
             _try_init<O::get_scope>(mo, r, _scope);
             _try_init<O::get_type>(mo, r, _type);
+            _try_init_base_type(mo, r, _base_type);
             _try_init<O::get_underlying_type>(mo, r, _underlying_type);
             _try_init<O::get_aliased>(mo, r, _aliased);
             _try_init<O::get_class>(mo, r, _class);
@@ -257,9 +276,10 @@ private:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos = _metadata
-                    .emplace(id, std::make_unique<stored_metadata>(mo, *this))
-                    .first;
+            pos =
+              _metadata
+                .emplace(id, std::make_unique<stored_metadata>(mo, id, *this))
+                .first;
         }
         return *pos->second;
     }

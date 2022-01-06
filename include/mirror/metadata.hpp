@@ -160,21 +160,32 @@ public:
 
     auto contains(const metadata& md) const noexcept;
 
+    template <typename F>
+    auto filtered(F predicate) const -> metadata_sequence;
+
     auto intersecting(const metadata_sequence& s) const -> metadata_sequence;
 
     auto excluding(const metadata_sequence& s) const -> metadata_sequence;
 
-    auto having(meta_traits all) const -> metadata_sequence;
+    auto having_all(meta_traits t) const -> metadata_sequence;
+    auto having(meta_traits t) const -> metadata_sequence;
+    auto not_having(meta_traits t) const -> metadata_sequence;
 
-    auto having(traits all) const -> metadata_sequence;
+    auto having_all(type_traits t) const -> metadata_sequence;
+    auto having(type_traits t) const -> metadata_sequence;
+    auto not_having(type_traits t) const -> metadata_sequence;
 
-    auto supporting(operations_boolean all) const -> metadata_sequence;
+    auto having_all(traits t) const -> metadata_sequence;
+    auto having(traits t) const -> metadata_sequence;
+    auto not_having(traits t) const -> metadata_sequence;
 
-    auto supporting(operations_integer all) const -> metadata_sequence;
+    auto supporting(operations_boolean op) const -> metadata_sequence;
 
-    auto supporting(operations_string all) const -> metadata_sequence;
+    auto supporting(operations_integer op) const -> metadata_sequence;
 
-    auto supporting(operations_metaobject all) const -> metadata_sequence;
+    auto supporting(operations_string op) const -> metadata_sequence;
+
+    auto supporting(operations_metaobject op) const -> metadata_sequence;
 
     auto with_name() const -> metadata_sequence {
         return supporting(operation::get_name);
@@ -183,8 +194,9 @@ public:
 //------------------------------------------------------------------------------
 class metadata : public metadata_sequence {
 private:
-    size_t _id{0U};
-    meta_traits _traits{};
+    hash_t _id{0U};
+    meta_traits _meta_traits{};
+    type_traits _type_traits{};
 
     operations_boolean _op_boolean_results{};
     operations_boolean _op_boolean_applicable{};
@@ -202,7 +214,7 @@ protected:
     const metadata& _none{*this};
     const metadata* _scope{&_none};
     const metadata* _type{&_none};
-    const metadata* _referenced_type{&_none};
+    const metadata* _base_type{&_none};
     const metadata* _underlying_type{&_none};
     const metadata* _aliased{&_none};
     const metadata* _class{&_none};
@@ -226,8 +238,9 @@ protected:
     metadata() noexcept = default;
 
     metadata(
-      size_t id,
-      meta_traits traits,
+      hash_t id,
+      meta_traits meta_tr,
+      type_traits type_tr,
       operations_boolean op_boolean_results,
       operations_boolean op_boolean_applicable,
       operations_metaobject op_metaobject_applicable,
@@ -239,7 +252,8 @@ protected:
       std::string_view display_name,
       const metadata& none)
       : _id{id}
-      , _traits{traits}
+      , _meta_traits{meta_tr}
+      , _type_traits{type_tr}
       , _op_boolean_results{op_boolean_results}
       , _op_boolean_applicable{op_boolean_applicable}
       , _op_metaobject_applicable{op_metaobject_applicable}
@@ -259,11 +273,11 @@ public:
     ~metadata() noexcept = default;
 
     auto is_none() const noexcept {
-        return !_traits.has(meta_trait::reflects_object);
+        return !_meta_traits.has(meta_trait::reflects_object);
     }
 
     explicit operator bool() const noexcept {
-        return _traits.has(meta_trait::reflects_object);
+        return _meta_traits.has(meta_trait::reflects_object);
     }
 
     friend bool operator==(const metadata& l, const metadata& r) noexcept {
@@ -278,49 +292,77 @@ public:
         return l._id < r._id;
     }
 
-    auto has(meta_traits all) const noexcept -> bool {
-        return _traits.has_all(all);
+    auto id() const noexcept -> hash_t {
+        return _id;
     }
 
     auto is_applicable(operation_boolean op) const noexcept -> bool {
         return _op_boolean_applicable.has(op);
     }
 
-    auto supports(operations_boolean all) const noexcept -> bool {
-        return _op_boolean_applicable.has_all(all);
+    auto supports(operations_boolean op) const noexcept -> bool {
+        return _op_boolean_applicable.has_all(op);
     }
 
     auto is_applicable(operation_integer op) const noexcept -> bool {
         return _op_integer_applicable.has(op);
     }
 
-    auto supports(operations_integer all) const noexcept -> bool {
-        return _op_integer_applicable.has_all(all);
+    auto supports(operations_integer op) const noexcept -> bool {
+        return _op_integer_applicable.has_all(op);
     }
 
     auto is_applicable(operation_string op) const noexcept -> bool {
         return _op_string_applicable.has(op);
     }
 
-    auto supports(operations_string all) const noexcept -> bool {
-        return _op_string_applicable.has_all(all);
+    auto supports(operations_string op) const noexcept -> bool {
+        return _op_string_applicable.has_all(op);
     }
 
     auto is_applicable(operation_metaobject op) const noexcept -> bool {
         return _op_metaobject_applicable.has(op);
     }
 
-    auto supports(operations_metaobject all) const noexcept -> bool {
-        return _op_metaobject_applicable.has_all(all);
+    auto supports(operations_metaobject op) const noexcept -> bool {
+        return _op_metaobject_applicable.has_all(op);
     }
 
-    auto has(traits all) const noexcept -> bool {
-        return _op_boolean_results.has_all(all) &&
-               _op_boolean_applicable.has_all(all);
+    auto has_all(meta_traits t) const noexcept -> bool {
+        return _meta_traits.has_all(t);
     }
 
-    auto has_some(traits all) const noexcept -> bool {
-        return _op_boolean_results.has_some(all & _op_boolean_applicable);
+    auto has(meta_traits t) const noexcept -> bool {
+        return _meta_traits.has_some(t);
+    }
+
+    auto has_none(meta_traits t) const noexcept -> bool {
+        return _meta_traits.has_none(t);
+    }
+
+    auto has_all(type_traits t) const noexcept -> bool {
+        return _type_traits.has_all(t);
+    }
+
+    auto has(type_traits t) const noexcept -> bool {
+        return _type_traits.has_some(t);
+    }
+
+    auto has_none(type_traits t) const noexcept -> bool {
+        return _type_traits.has_none(t);
+    }
+
+    auto has_all(traits t) const noexcept -> bool {
+        return _op_boolean_results.has_all(t) &&
+               _op_boolean_applicable.has_all(t);
+    }
+
+    auto has(traits t) const noexcept -> bool {
+        return _op_boolean_results.has_some(t & _op_boolean_applicable);
+    }
+
+    auto has_none(traits t) const noexcept -> bool {
+        return !has(t);
     }
 
     auto apply(operation_boolean op) const noexcept -> tribool {
@@ -371,8 +413,8 @@ public:
         return *_type;
     }
 
-    auto referenced_type() const noexcept -> const metadata& {
-        return *_referenced_type;
+    auto base_type() const noexcept -> const metadata& {
+        return *_base_type;
     }
 
     auto underlying_type() const noexcept -> const metadata& {
@@ -441,7 +483,7 @@ private:
 
 public:
     metadata_value() noexcept = default;
-    metadata_value(const metadata& md) noexcept
+    explicit metadata_value(const metadata& md) noexcept
       : _pmd{&md} {}
 
     friend auto
@@ -508,92 +550,89 @@ inline auto metadata_sequence::contains(const metadata& md) const noexcept {
     }
     return false;
 }
-
-inline auto metadata_sequence::intersecting(const metadata_sequence& s) const
+//------------------------------------------------------------------------------
+template <typename F>
+inline auto metadata_sequence::filtered(F predicate) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
-        if(s.contains(*md)) {
+        if(predicate(*md)) {
             result.push_back(md);
         }
     }
     return {result};
+}
+
+inline auto metadata_sequence::intersecting(const metadata_sequence& s) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return s.contains(md); });
 }
 
 inline auto metadata_sequence::excluding(const metadata_sequence& s) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(!s.contains(*md)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return !s.contains(md); });
 }
 
-inline auto metadata_sequence::having(meta_traits all) const
+inline auto metadata_sequence::having_all(meta_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->has(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return md.has_all(t); });
 }
 
-inline auto metadata_sequence::having(traits all) const -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->has(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
-}
-
-inline auto metadata_sequence::supporting(operations_boolean all) const
+inline auto metadata_sequence::having(meta_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return md.has(t); });
 }
 
-inline auto metadata_sequence::supporting(operations_integer all) const
+inline auto metadata_sequence::not_having(meta_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return !md.has(t); });
 }
 
-inline auto metadata_sequence::supporting(operations_string all) const
+inline auto metadata_sequence::having_all(type_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return md.has_all(t); });
 }
 
-inline auto metadata_sequence::supporting(operations_metaobject all) const
+inline auto metadata_sequence::having(type_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return md.has(t); });
+}
+
+inline auto metadata_sequence::not_having(type_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return !md.has(t); });
+}
+
+inline auto metadata_sequence::having_all(traits t) const -> metadata_sequence {
+    return filtered([&](auto& md) { return md.has_all(t); });
+}
+
+inline auto metadata_sequence::having(traits t) const -> metadata_sequence {
+    return filtered([&](auto& md) { return md.has(t); });
+}
+
+inline auto metadata_sequence::not_having(traits t) const -> metadata_sequence {
+    return filtered([&](auto& md) { return !md.has(t); });
+}
+
+inline auto metadata_sequence::supporting(operations_boolean op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+
+inline auto metadata_sequence::supporting(operations_integer op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+
+inline auto metadata_sequence::supporting(operations_string op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+
+inline auto metadata_sequence::supporting(operations_metaobject op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
 }
 //------------------------------------------------------------------------------
 } // namespace mirror

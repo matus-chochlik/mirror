@@ -264,6 +264,7 @@ constexpr auto has_trait(std::type_identity<T>) noexcept -> bool {
 /// @brief Gets all type traits.
 /// @ingroup classification
 /// @see type_traits
+/// @see get_type_traits
 /// @see meta_traits
 template <typename T>
 constexpr auto get_traits(std::type_identity<T> tid) noexcept -> type_traits {
@@ -274,6 +275,20 @@ constexpr auto get_traits(std::type_identity<T> tid) noexcept -> type_traits {
         }
     });
     return result;
+}
+
+/// @brief Gets all type traits if metaobject reflects a type.
+/// @ingroup classification
+/// @see type_traits
+/// @see get_traits
+template <__metaobject_id M>
+constexpr auto get_type_traits(wrapped_metaobject<M> mo) noexcept
+  -> type_traits {
+    if constexpr(reflects_type(mo)) {
+        return get_traits(get_reflected_type(mo));
+    } else {
+        return {};
+    }
 }
 
 } // namespace mirror
