@@ -133,6 +133,15 @@ protected:
     }
 
 public:
+    friend auto operator+(const metadata_sequence& l, const metadata_sequence& r)
+      -> metadata_sequence {
+        std::vector<const metadata*> elements;
+        elements.reserve(l._elements.size() + r._elements.size());
+        elements.insert(elements.end(), l._elements.begin(), l._elements.end());
+        elements.insert(elements.end(), r._elements.begin(), r._elements.end());
+        return {elements};
+    }
+
     auto element(size_t index) const noexcept -> const metadata& {
         return *_elements[index];
     }
