@@ -20,6 +20,7 @@ namespace mirror {
 
 /// @brief Enumeration of boolean-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see operation
 /// @see operation_integer
 /// @see operation_pointer
 /// @see operation_string
@@ -105,6 +106,7 @@ enum class operation_boolean : std::uint64_t {
 
 /// @brief Bitfield of boolean-returning unary operations applicable to metaobjects.
 /// @ingroup classification
+/// @see operation
 /// @see operation_boolean
 /// @see operations_integer
 /// @see operations_pointer
@@ -132,6 +134,7 @@ operator|(operation_boolean l, operation_boolean r) noexcept
 
 /// @brief Enumeration of integer-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see operation
 /// @see operation_boolean
 /// @see operation_pointer
 /// @see operation_string
@@ -167,8 +170,9 @@ operator|(operation_integer l, operation_integer r) noexcept
     return {l, r};
 }
 
-/// @brief Enumeration of pointer -returning unary operations applicable to metaobjects.
+/// @brief Enumeration of pointer-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see operation
 /// @see operation_boolean
 /// @see operation_integer
 /// @see operation_string
@@ -200,6 +204,7 @@ operator|(operation_pointer l, operation_pointer r) noexcept
 
 /// @brief Enumeration of string-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see operation
 /// @see operation_boolean
 /// @see operation_integer
 /// @see operation_pointer
@@ -235,6 +240,7 @@ static constexpr auto operator|(operation_string l, operation_string r) noexcept
 
 /// @brief Enumeration of metaobject-returning unary operations applicable to metaobjects.
 /// @ingroup operations
+/// @see operation
 /// @see operation_boolean
 /// @see operation_integer
 /// @see operation_pointer
@@ -505,6 +511,87 @@ MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_private)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(hide_protected)
 
 #undef MIRROR_IMPLEMENT_MAP_UNARY_OP
+//------------------------------------------------------------------------------
+/// @brief Class unifying the operation_* enumerators.
+/// @ingroup operations
+/// @see operation_boolean
+/// @see operation_integer
+/// @see operation_pointer
+/// @see operation_string
+/// @see operation_metaobject
+/// This class can be used to access the enumerators of the operation
+/// enumerations. Instead of @c operation_boolean::op_name use simply @c
+/// operation::op_name. Same for the enumerators from operation_integer,
+/// operation_pointer, operation_string and operation_metaobject.
+struct operation {
+    // boolean
+    using operation_boolean::has_default_argument;
+    using operation_boolean::has_lvalueref_qualifier;
+    using operation_boolean::has_rvalueref_qualifier;
+    using operation_boolean::is_call_operator_const;
+    using operation_boolean::is_const;
+    using operation_boolean::is_constexpr;
+    using operation_boolean::is_copy_assignment_operator;
+    using operation_boolean::is_copy_constructor;
+    using operation_boolean::is_defaulted;
+    using operation_boolean::is_deleted;
+    using operation_boolean::is_empty;
+    using operation_boolean::is_enum;
+    using operation_boolean::is_explicit;
+    using operation_boolean::is_explicitly_captured;
+    using operation_boolean::is_final;
+    using operation_boolean::is_implicitly_declared;
+    using operation_boolean::is_inline;
+    using operation_boolean::is_move_assignment_operator;
+    using operation_boolean::is_move_constructor;
+    using operation_boolean::is_noexcept;
+    using operation_boolean::is_private;
+    using operation_boolean::is_protected;
+    using operation_boolean::is_public;
+    using operation_boolean::is_pure_virtual;
+    using operation_boolean::is_scoped_enum;
+    using operation_boolean::is_static;
+    using operation_boolean::is_thread_local;
+    using operation_boolean::is_union;
+    using operation_boolean::is_unnamed;
+    using operation_boolean::is_virtual;
+    using operation_boolean::is_volatile;
+    using operation_boolean::uses_class_key;
+    using operation_boolean::uses_default_copy_capture;
+    using operation_boolean::uses_default_reference_capture;
+    using operation_boolean::uses_struct_key;
+    // integer
+    using operation_integer::get_constant;
+    using operation_integer::get_size;
+    using operation_integer::get_source_column;
+    using operation_integer::get_source_line;
+    // pointer
+    using operation_pointer::get_pointer;
+    // string
+    using operation_string::get_display_name;
+    using operation_string::get_name;
+    using operation_string::get_source_file_name;
+    // metaobject
+    using operation_metaobject::get_aliased;
+    using operation_metaobject::get_base_classes;
+    using operation_metaobject::get_callable;
+    using operation_metaobject::get_captures;
+    using operation_metaobject::get_class;
+    using operation_metaobject::get_constructors;
+    using operation_metaobject::get_data_members;
+    using operation_metaobject::get_destructors;
+    using operation_metaobject::get_enumerators;
+    using operation_metaobject::get_member_functions;
+    using operation_metaobject::get_member_types;
+    using operation_metaobject::get_operators;
+    using operation_metaobject::get_parameters;
+    using operation_metaobject::get_scope;
+    using operation_metaobject::get_subexpression;
+    using operation_metaobject::get_type;
+    using operation_metaobject::get_underlying_type;
+    using operation_metaobject::hide_private;
+    using operation_metaobject::hide_protected;
+};
 //------------------------------------------------------------------------------
 /// @brief Indicates if the specified operation is applicable to metaobject.
 /// @ingroup operations

@@ -167,7 +167,7 @@ public:
     auto supporting(operations_metaobject all) const -> metadata_sequence;
 
     auto with_name() const -> metadata_sequence {
-        return supporting(operation_string::get_name);
+        return supporting(operation::get_name);
     }
 };
 //------------------------------------------------------------------------------
@@ -336,7 +336,7 @@ public:
     }
 
     auto name() const noexcept -> std::optional<std::string_view> {
-        if(is_applicable(operation_string::get_name)) {
+        if(is_applicable(operation::get_name)) {
             return {_name};
         }
         return {};
@@ -347,7 +347,7 @@ public:
     }
 
     auto display_name() const noexcept -> std::optional<std::string_view> {
-        if(is_applicable(operation_string::get_display_name)) {
+        if(is_applicable(operation::get_display_name)) {
             return {_display_name};
         }
         return {};
@@ -418,7 +418,7 @@ public:
     }
 
     auto size() const noexcept -> std::optional<size_t> {
-        if(is_applicable(operation_integer::get_size)) {
+        if(is_applicable(operation::get_size)) {
             return {count()};
         }
         return {};
