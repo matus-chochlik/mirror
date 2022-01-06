@@ -617,6 +617,13 @@ consteval auto get_type(placeholder_expr<X> e) {
 }
 
 template <typename X>
+consteval auto get_base_type(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_base_type(e(mo));
+    }};
+}
+
+template <typename X>
 consteval auto get_underlying_type(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto mo) {
         return get_underlying_type(e(mo));
