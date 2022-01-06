@@ -13,6 +13,7 @@
 #include "operations.hpp"
 #include "registry_fwd.hpp"
 #include "traits.hpp"
+#include <cassert>
 #include <memory>
 #include <stdexcept>
 #include <vector>
@@ -424,6 +425,71 @@ public:
         return {};
     }
 };
+//------------------------------------------------------------------------------
+class metadata_value {
+private:
+    const metadata* _pmd{nullptr};
+
+public:
+    metadata_value() noexcept = default;
+    metadata_value(const metadata& md) noexcept
+      : _pmd{&md} {}
+
+    friend auto
+    operator==(const metadata_value l, const metadata_value r) noexcept
+      -> bool {
+        if(l._pmd && r._pmd) {
+            return *l._pmd == *r._pmd;
+        } else if(!l._pmd && !r._pmd) {
+            return true;
+        }
+        return false;
+    }
+
+    friend auto
+    operator!=(const metadata_value l, const metadata_value r) noexcept
+      -> bool {
+        return !(l == r);
+    }
+
+    friend auto
+    operator<(const metadata_value l, const metadata_value r) noexcept -> bool {
+        if(l._pmd && r._pmd) {
+            return *l._pmd < *r._pmd;
+        } else if(l._pmd) {
+            return false;
+        } else if(r._pmd) {
+            return true;
+        }
+        return true;
+    }
+
+    explicit operator bool() const noexcept {
+        return bool(_pmd);
+    }
+
+    auto get() const noexcept -> const metadata& {
+        assert(_pmd);
+        return *_pmd;
+    }
+
+    operator const metadata&() const noexcept {
+        return get();
+    }
+
+    auto operator->() const noexcept -> const metadata* {
+        return _pmd;
+    }
+};
+
+static inline auto has_value(const metadata_value& v) noexcept -> bool {
+    return bool(v);
+}
+
+static inline auto extract(const metadata_value& v) noexcept
+  -> const metadata& {
+    return v.get();
+}
 //------------------------------------------------------------------------------
 inline auto metadata_sequence::contains(const metadata& md) const noexcept {
     for(const auto* pmd : _elements) {
