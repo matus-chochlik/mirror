@@ -215,6 +215,7 @@ protected:
     const metadata* _scope{&_none};
     const metadata* _type{&_none};
     const metadata* _base_type{&_none};
+    const metadata* _element_type{&_none};
     const metadata* _underlying_type{&_none};
     const metadata* _aliased{&_none};
     const metadata* _class{&_none};
@@ -415,6 +416,10 @@ public:
 
     auto base_type() const noexcept -> const metadata& {
         return *_base_type;
+    }
+
+    auto element_type() const noexcept -> const metadata& {
+        return *_element_type;
     }
 
     auto underlying_type() const noexcept -> const metadata& {

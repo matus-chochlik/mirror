@@ -10,6 +10,7 @@
 #define MIRROR_REGISTRY_HPP
 
 #include "base_type.hpp"
+#include "element_type.hpp"
 #include "hash.hpp"
 #include "init_list.hpp"
 #include "metadata.hpp"
@@ -169,6 +170,20 @@ private:
         return pmd;
     }
 
+    template <__metaobject_id M>
+    static auto _try_init_element_type(
+      wrapped_metaobject<M> mo,
+      metadata_registry& r,
+      const metadata*& pmd) -> const metadata* {
+        if constexpr(reflects_type(mo)) {
+            if(pmd->is_none()) {
+                auto& md = get_metadata(get_element_type(mo), r);
+                pmd = &md;
+            }
+        }
+        return pmd;
+    }
+
 public:
     stored_metadata() noexcept = default;
 
@@ -199,6 +214,7 @@ public:
             _try_init<O::get_scope>(mo, r, _scope);
             _try_init<O::get_type>(mo, r, _type);
             _try_init_base_type(mo, r, _base_type);
+            _try_init_element_type(mo, r, _element_type);
             _try_init<O::get_underlying_type>(mo, r, _underlying_type);
             _try_init<O::get_aliased>(mo, r, _aliased);
             _try_init<O::get_class>(mo, r, _class);
