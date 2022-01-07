@@ -30,4 +30,7 @@ mirror_add_simple_example(row_polymorphism)
 mirror_add_simple_example(simple_json)
 mirror_add_simple_example(to_rapidjson)
 
+mirror_add_simple_example(puml_class_diagram)
+target_link_libraries(mirror-puml_class_diagram PRIVATE mirror-testdecl)
+
 add_subdirectory(factory)

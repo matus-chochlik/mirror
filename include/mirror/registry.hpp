@@ -361,6 +361,18 @@ public:
         }
         return {elements};
     }
+
+    template <typename F>
+    auto filtered(F predicate) const -> metadata_sequence {
+        std::vector<const metadata*> elements;
+        elements.reserve(_metadata.size());
+        for(const auto& p : _metadata) {
+            if(predicate(*std::get<1>(p))) {
+                elements.push_back(std::get<1>(p).get());
+            }
+        }
+        return {elements};
+    }
 };
 
 } // namespace mirror
