@@ -127,18 +127,40 @@ private:
         if(md.has(trait::reflects_class)) {
             for(const auto& mb : md.base_classes()) {
                 if(ms.contains(mb.class_())) {
-                    out << mb.class_().name_() << " <|-- " << md.name_()
-                        << '\n';
+                    out << mb.class_().name_();
+                    if(mb.has(trait::is_virtual)) {
+                        out << " <|-- ";
+                    } else {
+                        out << " <|.. ";
+                    }
+                    out << md.name_() << '\n';
                 }
             }
         }
         if(md.has(trait::reflects_record)) {
             std::set<metadata_value> owns;
+            std::set<metadata_value> refs;
             std::set<metadata_value> uses;
 
             for(const auto& mm : md.data_members()) {
-                if(ms.contains(mm.base_type())) {
-                    owns.emplace(mm.base_type());
+                if(mm.base_type().element_type()) {
+                    const auto& mt = mm.base_type().element_type().base_type();
+                    if(ms.contains(mt)) {
+                        if(mt.has(trait::is_pointer | trait::is_reference)) {
+                            refs.emplace(mt);
+                        } else {
+                            owns.emplace(mt);
+                        }
+                    }
+                } else {
+                    const auto& mt = mm.base_type();
+                    if(ms.contains(mt)) {
+                        if(mt.has(trait::is_pointer | trait::is_reference)) {
+                            refs.emplace(mt);
+                        } else {
+                            uses.emplace(mt);
+                        }
+                    }
                 }
             }
             for(const auto& mf : md.constructors() + md.member_functions()) {
@@ -153,7 +175,7 @@ private:
             }
             for(const auto& mv : uses) {
                 if(
-                  (mv != md) && !owns.contains(mv) &&
+                  (mv != md) && !owns.contains(mv) && !refs.contains(mv) &&
                   mv->has_none(trait::is_fundamental)) {
                     out << md.name_() << " --> " << mv->name_() << '\n';
                 }
@@ -161,6 +183,11 @@ private:
             for(const auto& mv : owns) {
                 if((mv != md) && mv->has_none(trait::is_fundamental)) {
                     out << md.name_() << " *-- " << mv->name_() << '\n';
+                }
+            }
+            for(const auto& mv : refs) {
+                if(mv->has_none(trait::is_fundamental)) {
+                    out << md.name_() << " o-- " << mv->name_() << '\n';
                 }
             }
         }
