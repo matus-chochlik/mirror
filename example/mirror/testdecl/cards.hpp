@@ -10,12 +10,12 @@
 #define MIRROR_TESTDECL_CARDS_HPP
 
 #include <mirror/registry_fwd.hpp>
-#include <set>
-#include <tuple>
+#include <array>
 
 namespace example {
+namespace cards {
 
-enum class card_rank {
+enum class rank {
     ace = 1,
     two,
     three,
@@ -31,89 +31,78 @@ enum class card_rank {
     king
 };
 
-enum class card_suit { hearts, spades, diamonds, clubs };
+enum class suit { hearts, spades, diamonds, clubs };
 
-struct playing_card {
-    const card_rank rank;
-    const card_suit suit;
+struct card {
+    const enum rank rank;
+    const enum suit suit;
 
-    constexpr playing_card(card_rank r, card_suit s) noexcept
+    constexpr card(enum rank r, enum suit s) noexcept
       : rank{r}
       , suit{s} {}
 
-    friend auto operator==(const playing_card l, const playing_card r) noexcept {
+    friend auto operator==(const card l, const card r) noexcept {
         return std::make_tuple(l.rank, l.suit) ==
                std::make_tuple(r.rank, r.suit);
     }
 
-    friend auto operator!=(const playing_card l, const playing_card r) noexcept {
+    friend auto operator!=(const card l, const card r) noexcept {
         return std::make_tuple(l.rank, l.suit) !=
                std::make_tuple(r.rank, r.suit);
     }
 
-    friend auto operator<(const playing_card l, const playing_card r) noexcept {
+    friend auto operator<(const card l, const card r) noexcept {
         return std::make_tuple(l.rank, l.suit) <
                std::make_tuple(r.rank, r.suit);
     }
 };
 
-class card_deck {
+class deck {
 private:
-    std::set<playing_card> _cards{{card_rank::ace, card_suit::hearts},
-                                  {card_rank::ace, card_suit::spades},
-                                  {card_rank::ace, card_suit::diamonds},
-                                  {card_rank::ace, card_suit::clubs},
-                                  {card_rank::two, card_suit::hearts},
-                                  {card_rank::two, card_suit::spades},
-                                  {card_rank::two, card_suit::diamonds},
-                                  {card_rank::two, card_suit::clubs},
-                                  {card_rank::three, card_suit::hearts},
-                                  {card_rank::three, card_suit::spades},
-                                  {card_rank::three, card_suit::diamonds},
-                                  {card_rank::three, card_suit::clubs},
-                                  {card_rank::four, card_suit::hearts},
-                                  {card_rank::four, card_suit::spades},
-                                  {card_rank::four, card_suit::diamonds},
-                                  {card_rank::four, card_suit::clubs},
-                                  {card_rank::five, card_suit::hearts},
-                                  {card_rank::five, card_suit::spades},
-                                  {card_rank::five, card_suit::diamonds},
-                                  {card_rank::five, card_suit::clubs},
-                                  {card_rank::six, card_suit::hearts},
-                                  {card_rank::six, card_suit::spades},
-                                  {card_rank::six, card_suit::diamonds},
-                                  {card_rank::six, card_suit::clubs},
-                                  {card_rank::seven, card_suit::hearts},
-                                  {card_rank::seven, card_suit::spades},
-                                  {card_rank::seven, card_suit::diamonds},
-                                  {card_rank::seven, card_suit::clubs},
-                                  {card_rank::eight, card_suit::hearts},
-                                  {card_rank::eight, card_suit::spades},
-                                  {card_rank::eight, card_suit::diamonds},
-                                  {card_rank::eight, card_suit::clubs},
-                                  {card_rank::nine, card_suit::hearts},
-                                  {card_rank::nine, card_suit::spades},
-                                  {card_rank::nine, card_suit::diamonds},
-                                  {card_rank::nine, card_suit::clubs},
-                                  {card_rank::ten, card_suit::hearts},
-                                  {card_rank::ten, card_suit::spades},
-                                  {card_rank::ten, card_suit::diamonds},
-                                  {card_rank::ten, card_suit::clubs},
-                                  {card_rank::jack, card_suit::hearts},
-                                  {card_rank::jack, card_suit::spades},
-                                  {card_rank::jack, card_suit::diamonds},
-                                  {card_rank::jack, card_suit::clubs},
-                                  {card_rank::queen, card_suit::hearts},
-                                  {card_rank::queen, card_suit::spades},
-                                  {card_rank::queen, card_suit::diamonds},
-                                  {card_rank::queen, card_suit::clubs},
-                                  {card_rank::king, card_suit::hearts},
-                                  {card_rank::king, card_suit::spades},
-                                  {card_rank::king, card_suit::diamonds},
-                                  {card_rank::king, card_suit::clubs}};
+    std::array<card, 52> _cards{
+      {{rank::ace, suit::hearts},     {rank::ace, suit::spades},
+       {rank::ace, suit::diamonds},   {rank::ace, suit::clubs},
+       {rank::two, suit::hearts},     {rank::two, suit::spades},
+       {rank::two, suit::diamonds},   {rank::two, suit::clubs},
+       {rank::three, suit::hearts},   {rank::three, suit::spades},
+       {rank::three, suit::diamonds}, {rank::three, suit::clubs},
+       {rank::four, suit::hearts},    {rank::four, suit::spades},
+       {rank::four, suit::diamonds},  {rank::four, suit::clubs},
+       {rank::five, suit::hearts},    {rank::five, suit::spades},
+       {rank::five, suit::diamonds},  {rank::five, suit::clubs},
+       {rank::six, suit::hearts},     {rank::six, suit::spades},
+       {rank::six, suit::diamonds},   {rank::six, suit::clubs},
+       {rank::seven, suit::hearts},   {rank::seven, suit::spades},
+       {rank::seven, suit::diamonds}, {rank::seven, suit::clubs},
+       {rank::eight, suit::hearts},   {rank::eight, suit::spades},
+       {rank::eight, suit::diamonds}, {rank::eight, suit::clubs},
+       {rank::nine, suit::hearts},    {rank::nine, suit::spades},
+       {rank::nine, suit::diamonds},  {rank::nine, suit::clubs},
+       {rank::ten, suit::hearts},     {rank::ten, suit::spades},
+       {rank::ten, suit::diamonds},   {rank::ten, suit::clubs},
+       {rank::jack, suit::hearts},    {rank::jack, suit::spades},
+       {rank::jack, suit::diamonds},  {rank::jack, suit::clubs},
+       {rank::queen, suit::hearts},   {rank::queen, suit::spades},
+       {rank::queen, suit::diamonds}, {rank::queen, suit::clubs},
+       {rank::king, suit::hearts},    {rank::king, suit::spades},
+       {rank::king, suit::diamonds},  {rank::king, suit::clubs}}};
 
 public:
 };
+
+class player {
+private:
+public:
+};
+
+class dealer : player {
+private:
+    deck _deck;
+
+public:
+};
+
+} // namespace cards
 
 void register_cards(mirror::metadata_registry&);
 

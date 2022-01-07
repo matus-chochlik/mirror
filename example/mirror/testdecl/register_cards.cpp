@@ -12,10 +12,12 @@
 namespace example {
 
 void register_cards(mirror::metadata_registry& r) {
-    r.add(mirror(card_rank));
-    r.add(mirror(card_suit));
-    r.add(mirror(playing_card));
-    r.add(mirror(card_deck));
+    r.add(mirror(cards::rank));
+    r.add(mirror(cards::suit));
+    r.add(mirror(cards::card));
+    r.add(mirror(cards::deck));
+    r.add(mirror(cards::player));
+    r.add(mirror(cards::dealer));
 }
 
 } // namespace example
