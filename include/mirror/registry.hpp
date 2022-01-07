@@ -175,11 +175,9 @@ private:
       wrapped_metaobject<M> mo,
       metadata_registry& r,
       const metadata*& pmd) -> const metadata* {
-        if constexpr(reflects_type(mo)) {
-            if(pmd->is_none()) {
-                auto& md = get_metadata(get_element_type(mo), r);
-                pmd = &md;
-            }
+        if(pmd->is_none()) {
+            auto& md = get_metadata(get_element_type(mo), r);
+            pmd = &md;
         }
         return pmd;
     }
@@ -201,7 +199,11 @@ public:
           get_source_line(mo),
           _get_name(mo),
           _get_display_name(mo),
-          get_no_metadata(r)} {}
+          get_no_metadata(r)} {
+        if constexpr(reflects_type(mo)) {
+            _try_init_element_type(mo, r, _element_type);
+        }
+    }
 
     void init(auto mo, metadata_registry& r) {
         if constexpr(reflects_object_sequence(mo)) {
@@ -214,7 +216,6 @@ public:
             _try_init<O::get_scope>(mo, r, _scope);
             _try_init<O::get_type>(mo, r, _type);
             _try_init_base_type(mo, r, _base_type);
-            _try_init_element_type(mo, r, _element_type);
             _try_init<O::get_underlying_type>(mo, r, _underlying_type);
             _try_init<O::get_aliased>(mo, r, _aliased);
             _try_init<O::get_class>(mo, r, _class);

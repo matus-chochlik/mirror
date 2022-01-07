@@ -129,9 +129,9 @@ private:
                 if(ms.contains(mb.class_())) {
                     out << mb.class_().name_();
                     if(mb.has(trait::is_virtual)) {
-                        out << " <|-- ";
-                    } else {
                         out << " <|.. ";
+                    } else {
+                        out << " <|-- ";
                     }
                     out << md.name_() << '\n';
                 }
