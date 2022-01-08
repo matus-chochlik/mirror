@@ -830,6 +830,27 @@ try_apply(wrapped_metaobject<Me> me, placeholder_expr<X> e) noexcept {
     }};
 }
 
+template <typename... X>
+consteval auto make_sequence(placeholder_expr<X>... e) {
+    return placeholder_expr{[e...](auto mo) {
+        return make_sequence(e(mo)...);
+    }};
+}
+
+template <typename X, typename F>
+consteval auto filter(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto mo) {
+        return filter(e(mo), predicate);
+    }};
+}
+
+template <typename X>
+consteval auto flatten(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return flatten(e(mo));
+    }};
+}
+
 } // namespace mirror
 
 #endif // MIRROR_PLACEHOLDER_HPP
