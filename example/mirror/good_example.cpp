@@ -30,18 +30,18 @@ concept good_example_class = any_of(
   get_member_functions(mirror(T)),
   ctre_match<"foo|bar|baz">(get_name(mirror::_1)));
 
-void showoff(good_example_class auto) {
+void review(good_example_class auto) {
     std::cout << "what a nice example!\n";
 }
 
-void showoff(auto) {
+void review(auto) {
     std::cout << "try harder...\n";
 }
 
 int main() {
-    showoff(excellent_example{});
-    showoff(good_example{});
-    showoff(bad_example{});
+    review(excellent_example{});
+    review(good_example{});
+    review(bad_example{});
 
     return 0;
 }
