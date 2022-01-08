@@ -7,6 +7,7 @@ include(Example.cmake)
 
 add_subdirectory(testdecl)
 
+mirror_add_simple_example(amount_of_foo)
 mirror_add_simple_example(applicable_ops)
 mirror_add_simple_example(ctre_integer_concept)
 mirror_add_simple_example(expression)
