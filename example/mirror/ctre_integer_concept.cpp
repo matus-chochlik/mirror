@@ -6,14 +6,14 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#include <mirror/ctre_all.hpp>
+#include <mirror/ctre_match.hpp>
 #include <mirror/primitives.hpp>
 #include <iostream>
 
 template <typename T>
-concept very_smart_integer =
-  ctre::match<"((signed|unsigned) )?((long long|long|short)( int)?|int)">(
-    get_name(remove_all_aliases(mirror(T))));
+concept very_smart_integer = mirror::ctre_match<
+  "((signed|unsigned) )?((long long|long|short)( int)?|int)">(
+  get_name(remove_all_aliases(mirror(T))));
 
 auto add(very_smart_integer auto l, very_smart_integer auto r) {
     return l + r;

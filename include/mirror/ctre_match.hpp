@@ -6,10 +6,11 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#ifndef MIRROR_CTRE_ALL_HPP
-#define MIRROR_CTRE_ALL_HPP
+#ifndef MIRROR_CTRE_MATCH_HPP
+#define MIRROR_CTRE_MATCH_HPP
 
 #include "diagnostic.hpp"
+#include "placeholder.hpp"
 
 MIRROR_DIAG_PUSH()
 #if defined(__clang__)
@@ -20,5 +21,21 @@ MIRROR_DIAG_OFF(reserved-macro-identifier)
 #endif
 #include <ctre.hpp>
 MIRROR_DIAG_POP()
+
+namespace mirror {
+
+template <CTRE_REGEX_INPUT_TYPE Input>
+constexpr auto ctre_match(std::string_view s) noexcept {
+    return ctre::match<Input>(s);
+}
+
+template <CTRE_REGEX_INPUT_TYPE Input, typename X>
+constexpr auto ctre_match(placeholder_expr<X> e) noexcept {
+    return placeholder_expr{[e](auto mo) {
+        return ctre::match<Input>(e(mo));
+    }};
+}
+
+} // namespace mirror
 
 #endif

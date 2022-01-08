@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#include <mirror/ctre_all.hpp>
+#include <mirror/ctre_match.hpp>
 #include <mirror/sequence.hpp>
 #include <iostream>
 
@@ -26,10 +26,9 @@ struct bad_example {
 };
 
 template <typename T>
-concept good_example_class =
-  any_of(get_member_functions(mirror(T)), [](mirror::metaobject auto mo) {
-      return ctre::match<"foo|bar|baz">(get_name(mo));
-  });
+concept good_example_class = any_of(
+  get_member_functions(mirror(T)),
+  ctre_match<"foo|bar|baz">(get_name(mirror::_1)));
 
 void showoff(good_example_class auto) {
     std::cout << "what a nice example!\n";
