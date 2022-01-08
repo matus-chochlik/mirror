@@ -9,6 +9,8 @@
 #include <mirror/sequence.hpp>
 #include <iostream>
 
+struct meh {};
+
 struct foo {
     foo() noexcept = default;
 };
@@ -46,6 +48,8 @@ void compare_by_foo(mirror::metaobject auto l, mirror::metaobject auto r) {
 
 int main() {
 
+    compare_by_foo(mirror(foo), mirror(meh));
+    compare_by_foo(mirror(foo), mirror(foo));
     compare_by_foo(mirror(foo), mirror(qux));
 
     return 0;
