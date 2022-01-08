@@ -8,6 +8,7 @@ include(Example.cmake)
 add_subdirectory(testdecl)
 
 mirror_add_simple_example(applicable_ops)
+mirror_add_simple_example(ctre_integer_concept)
 mirror_add_simple_example(expression)
 mirror_add_simple_example(filter)
 mirror_add_simple_example(fake_rpc)

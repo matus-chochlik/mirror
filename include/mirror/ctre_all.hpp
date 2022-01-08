@@ -13,9 +13,10 @@
 
 MIRROR_DIAG_PUSH()
 #if defined(__clang__)
-MIRROR_DIAG_OFF(reserved-macro-identifier)
-MIRROR_DIAG_OFF(newline-eof)
+MIRROR_DIAG_OFF(class-varargs)
 MIRROR_DIAG_OFF(ctad-maybe-unsupported)
+MIRROR_DIAG_OFF(newline-eof)
+MIRROR_DIAG_OFF(reserved-macro-identifier)
 #endif
 #include <ctre.hpp>
 MIRROR_DIAG_POP()
