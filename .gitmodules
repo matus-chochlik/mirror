@@ -7,3 +7,6 @@
 [submodule "submodules/ctre"]
 	path = submodules/ctre
 	url = https://github.com/hanickadot/compile-time-regular-expressions.git
+[submodule "submodules/ChaiScript"]
+	path = submodules/ChaiScript
+	url = https://github.com/ChaiScript/ChaiScript.git

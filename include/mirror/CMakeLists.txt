@@ -12,6 +12,7 @@ target_include_directories(
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/submodules/rapidjson/include>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/submodules/ctre/include>
+		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/submodules/ChaiScript/include>
 )
 
 target_compile_options(
@@ -31,6 +32,13 @@ target_compile_options(
 target_link_options(
 	mirror-headers
 	INTERFACE -std=c++2b -stdlib=libc++
+)
+
+target_link_libraries(
+	mirror-headers
+	INTERFACE
+		Threads::Threads
+		Mirror::Deps::System
 )
 
 file(GLOB_RECURSE HEADERS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" *.hpp)
