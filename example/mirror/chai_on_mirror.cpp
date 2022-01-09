@@ -164,7 +164,7 @@ int main() {
 		sir_robin.say("Auuuuuuuugh.");
 		at_the_bridge.pause();
 
-		bridgekeeper.say("Bridgekeeper: Stop. What... is your name?");
+		bridgekeeper.say("Stop. What... is your name?");
 		sir_galahad.say("Sir Galahad of Camelot.");
 		bridgekeeper.say("What... is your quest?");
 		sir_galahad.say("To seek the Holy Grail.");
