@@ -9,6 +9,7 @@ add_subdirectory(testdecl)
 
 mirror_add_simple_example(amount_of_foo)
 mirror_add_simple_example(applicable_ops)
+mirror_add_simple_example(chai_on_mirror)
 mirror_add_simple_example(ctre_integer_concept)
 mirror_add_simple_example(expression)
 mirror_add_simple_example(filter)
@@ -35,5 +36,6 @@ mirror_add_simple_example(to_rapidjson)
 
 mirror_add_simple_example(puml_class_diagram)
 target_link_libraries(mirror-puml_class_diagram PRIVATE mirror-testdecl)
+
 
 add_subdirectory(factory)
