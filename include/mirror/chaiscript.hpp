@@ -26,8 +26,16 @@ MIRROR_DIAG_POP()
 
 namespace mirror {
 
+template <typename T>
+void _add_type(
+  chaiscript::ChaiScript& chai,
+  std::type_identity<T>,
+  const std::string& name) {
+    chai.add(chaiscript::user_type<T>(), name);
+}
+
 template <typename T, typename... P>
-void _add_constructor_to(
+void _add_constructor(
   chaiscript::ChaiScript& chai,
   std::type_identity<T>,
   type_list<P...>,
@@ -35,10 +43,31 @@ void _add_constructor_to(
     chai.add(chaiscript::constructor<T(P...)>(), name);
 }
 
-template <__metaobject_id M>
-void add_to(chaiscript::ChaiScript& chai, wrapped_metaobject<M> mo) {
+template <typename Base, typename Derived>
+void _add_base_class(
+  chaiscript::ChaiScript& chai,
+  std::type_identity<Base>,
+  std::type_identity<Derived>) {
+    chai.add(chaiscript::base_class<Base, Derived>());
+}
+
+template <typename From, typename To>
+void _add_conversion(
+  chaiscript::ChaiScript& chai,
+  std::type_identity<From>,
+  std::type_identity<To>) {
+    chai.add(chaiscript::type_conversion<From, To>());
+}
+
+void _do_add_to(
+  chaiscript::ChaiScript& chai,
+  metaobject auto mo,
+  metaobject auto ms) {
     if constexpr(reflects_object_sequence(mo)) {
-        add_to(chai, unpack(mo));
+        _do_add_to(chai, unpack(mo), ms);
+    } else if constexpr(reflects_base(mo)) {
+        _add_base_class(
+          chai, get_reflected_type(get_class(mo)), get_reflected_type(ms));
     } else {
         const std::string name{get_name(mo)};
         if constexpr(reflects_variable(mo)) {
@@ -51,7 +80,7 @@ void add_to(chaiscript::ChaiScript& chai, wrapped_metaobject<M> mo) {
             }
         } else if constexpr(reflects_constructor(mo)) {
             if constexpr(is_public(mo)) {
-                _add_constructor_to(
+                _add_constructor(
                   chai,
                   get_reflected_type(get_scope(mo)),
                   extract_types(transform(get_parameters(mo), get_type(_1))),
@@ -59,26 +88,50 @@ void add_to(chaiscript::ChaiScript& chai, wrapped_metaobject<M> mo) {
             }
         } else if constexpr(reflects_function(mo)) {
             if constexpr(reflects_record_member(mo) && is_public(mo)) {
-                chai.add(chaiscript::fun(get_pointer(mo)), name);
+                if constexpr(reflects_conversion_operator(mo)) {
+                    if constexpr(!is_deleted(mo)) {
+                        _add_conversion(
+                          chai,
+                          get_reflected_type(get_scope(mo)),
+                          get_reflected_type(get_type(mo)));
+                    }
+                } else {
+                    if constexpr(!is_deleted(mo)) {
+                        chai.add(chaiscript::fun(get_pointer(mo)), name);
+                    }
+                }
             } else {
                 chai.add(chaiscript::fun(get_pointer(mo)), name);
             }
         } else if constexpr(reflects_record(mo)) {
-            chai.add(
-              chaiscript::user_type<
-                get_reflected_type_t<wrapped_metaobject<M>>>(),
-              name);
-            add_to(chai, get_member_types(mo));
-            add_to(chai, get_data_members(mo));
-            add_to(chai, get_constructors(mo));
-            add_to(chai, get_member_functions(mo));
+            _add_type(chai, get_reflected_type(mo), name);
+            _do_add_to(chai, get_base_classes(mo), mo);
+            _do_add_to(chai, get_member_types(mo), mo);
+            _do_add_to(chai, get_data_members(mo), mo);
+            _do_add_to(chai, get_constructors(mo), mo);
+            _do_add_to(chai, get_member_functions(mo), mo);
+            _do_add_to(chai, get_operators(mo), mo);
         }
     }
 }
 
 template <__metaobject_id... M>
-void add_to(chaiscript::ChaiScript& chai, unpacked_metaobject_sequence<M...>) {
-    (void)(..., add_to(chai, wrapped_metaobject<M>{}));
+void _do_add_to(
+  chaiscript::ChaiScript& chai,
+  unpacked_metaobject_sequence<M...>,
+  metaobject auto ms) {
+    (void)(..., _do_add_to(chai, wrapped_metaobject<M>{}, ms));
+}
+
+static inline void add_to(chaiscript::ChaiScript& chai, metaobject auto mo) {
+    _do_add_to(chai, mo, no_metaobject);
+}
+
+template <__metaobject_id... M>
+void add_to(
+  chaiscript::ChaiScript& chai,
+  unpacked_metaobject_sequence<M...> mos) {
+    _do_add_to(chai, mos, no_metaobject);
 }
 
 } // namespace mirror

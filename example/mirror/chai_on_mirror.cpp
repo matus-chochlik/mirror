@@ -39,6 +39,10 @@ public:
     auto scene() noexcept -> auto& {
         return _scene;
     }
+
+    operator class scene &() noexcept {
+        return scene();
+    }
 };
 
 class person {
@@ -49,6 +53,9 @@ private:
 public:
     person(std::string name) noexcept
       : _name{std::move(name)} {}
+
+    person()
+      : person("a person") {}
 
     auto current_location() const noexcept -> auto& {
         assert(_loc);
@@ -74,6 +81,15 @@ public:
     }
 };
 
+class king : public person {
+public:
+    king(std::string name) noexcept
+      : person{std::move(name)} {}
+
+    king()
+      : person("the king") {}
+};
+
 class mysterious_force {
 private:
     location& _chasm;
@@ -93,7 +109,7 @@ void scene::person_says(const person& p, std::string_view line) {
 
 void scene::person_relocates(person& p, std::string_view how) {
     std::cout << "[" << p.name() << " " << how << " "
-              << p.current_location().name() << ".]" << std::endl;
+              << p.current_location().name() << "]" << std::endl;
 }
 
 void scene::pause() {
@@ -116,6 +132,7 @@ int main() {
         mirror(mysterious_force),
         mirror(location),
         mirror(person),
+        mirror(king),
         mirror(at_the_bridge)));
 
     chai(R"(
@@ -125,8 +142,8 @@ int main() {
 
 		var the_force = mysterious_force(chasm);
 
-		var bridgekeeper = person("bridgekeeper");
-		var king_arthur = person("king Arthur");
+		var bridgekeeper = person("the Bridgekeeper");
+		var king_arthur = king("king Arthur");
 		var sir_lancelot = person("sir Lancelot");
 		var sir_robin = person("sir Robin");
 		var sir_galahad = person("sir Galahad");
