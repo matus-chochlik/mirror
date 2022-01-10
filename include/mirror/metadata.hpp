@@ -209,6 +209,7 @@ private:
 
     std::string_view _name{};
     std::string_view _display_name{};
+    std::string _full_name{};
 
 protected:
     const metadata& _none{*this};
@@ -251,6 +252,7 @@ protected:
       size_t source_line,
       std::string_view name,
       std::string_view display_name,
+      std::string full_name,
       const metadata& none)
       : _id{id}
       , _meta_traits{meta_tr}
@@ -264,6 +266,7 @@ protected:
       , _source_line{source_line}
       , _name{name}
       , _display_name{display_name}
+      , _full_name{std::move(full_name)}
       , _none{none} {}
 
 public:
@@ -404,6 +407,10 @@ public:
             return {_display_name};
         }
         return {};
+    }
+
+    auto full_name() const noexcept -> std::string_view {
+        return _full_name;
     }
 
     auto scope() const noexcept -> const metadata& {

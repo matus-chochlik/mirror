@@ -185,7 +185,11 @@ private:
 public:
     stored_metadata() noexcept = default;
 
-    stored_metadata(auto mo, hash_t id, metadata_registry& r) noexcept
+    stored_metadata(
+      auto mo,
+      hash_t id,
+      std::string full_name,
+      metadata_registry& r) noexcept
       : metadata{
           id,
           get_traits(mo),
@@ -199,6 +203,7 @@ public:
           get_source_line(mo),
           _get_name(mo),
           _get_display_name(mo),
+          std::move(full_name),
           get_no_metadata(r)} {
         if constexpr(reflects_type(mo)) {
             _try_init_element_type(mo, r, _element_type);
@@ -292,10 +297,12 @@ private:
         const auto id = get_hash(mo);
         auto pos = _metadata.find(id);
         if(pos == _metadata.end()) {
-            pos =
-              _metadata
-                .emplace(id, std::make_unique<stored_metadata>(mo, id, *this))
-                .first;
+            pos = _metadata
+                    .emplace(
+                      id,
+                      std::make_unique<stored_metadata>(
+                        mo, id, get_full_name(mo), *this))
+                    .first;
         }
         return *pos->second;
     }
