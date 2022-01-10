@@ -17,7 +17,7 @@ if [[ -f "${root_dir}/LLVM_PREFIX" ]]
 then llvm_install_dir=$(< "${root_dir}/LLVM_PREFIX")
 fi
 
-while getopts "b:C:L:l:c" arg
+while getopts "b:i:C:L:l:c" arg
 do
 	case ${arg} in
 		b) llvm_build_dir=${OPTARG};;
