@@ -101,7 +101,12 @@ public:
 
 class player {
 private:
+    std::vector<card> _hand;
+
 public:
+    void receive_card(card c) {
+        _hand.push_back(c);
+    }
 };
 
 class dealer : player {
@@ -110,8 +115,26 @@ private:
     std::default_random_engine _rand{std::random_device{}()};
 
 public:
-    void shuffle_deck() {
+    dealer(player p) noexcept
+      : player{p} {}
+
+    void shuffle_deck() noexcept {
         _deck.shuffle(_rand);
+    }
+};
+
+class game {
+private:
+    dealer _dealer;
+    std::vector<player> _players;
+
+public:
+    void become_dealer(player p) {
+        _dealer = {p};
+    }
+
+    void join(player p) {
+        _players.push_back(p);
     }
 };
 

@@ -19,6 +19,7 @@ void register_cards(mirror::metadata_registry& r) {
     r.add(mirror(cards::deck));
     r.add(mirror(cards::player));
     r.add(mirror(cards::dealer));
+    r.add(mirror(cards::game));
 }
 
 } // namespace example
