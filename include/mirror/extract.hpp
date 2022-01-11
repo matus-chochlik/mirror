@@ -103,15 +103,24 @@ constexpr auto extract(const std::optional<T>& o) noexcept -> const T& {
 }
 
 // variant (expected)
-template <typename T>
-constexpr auto has_value(const std::variant<T, std::errc>& v) noexcept -> bool {
+template <typename T, typename E>
+constexpr auto has_value(const std::variant<T, E>& v) noexcept -> bool {
     return std::holds_alternative<T>(v);
 }
 
-template <typename T>
-constexpr auto extract(const std::variant<T, std::errc>& v) noexcept
-  -> const T& {
+template <typename T, typename E>
+constexpr auto extract(const std::variant<T, E>& v) noexcept -> const T& {
     return std::get<T>(v);
+}
+
+template <typename T, typename E>
+constexpr auto extract(std::variant<T, E>& v) noexcept -> T& {
+    return std::get<T>(v);
+}
+
+template <typename T, typename E>
+constexpr auto get_error(const std::variant<T, E>& v) noexcept -> const E& {
+    return std::get<E>(v);
 }
 
 } // namespace mirror

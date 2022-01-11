@@ -75,40 +75,6 @@ using write_errors = bitfield<write_error_code>;
 /// @see write_errors
 using read_errors = bitfield<read_error_code>;
 //------------------------------------------------------------------------------
-template <typename T>
-constexpr auto has_value(const std::variant<T, write_errors>& v) noexcept
-  -> bool {
-    return std::holds_alternative<T>(v);
-}
-
-template <typename T>
-constexpr auto extract(std::variant<T, write_errors>& v) noexcept -> T& {
-    return std::get<T>(v);
-}
-
-template <typename T>
-constexpr auto extract(const std::variant<T, write_errors>& v) noexcept
-  -> const T& {
-    return std::get<T>(v);
-}
-//------------------------------------------------------------------------------
-template <typename T>
-constexpr auto has_value(const std::variant<T, read_errors>& v) noexcept
-  -> bool {
-    return std::holds_alternative<T>(v);
-}
-
-template <typename T>
-constexpr auto extract(std::variant<T, read_errors>& v) noexcept -> T& {
-    return std::get<T>(v);
-}
-
-template <typename T>
-constexpr auto extract(const std::variant<T, read_errors>& v) noexcept
-  -> const T& {
-    return std::get<T>(v);
-}
-//------------------------------------------------------------------------------
 } // namespace mirror::serialize
 
 #endif // EAGINE_SERIALIZE_RESULT_HPP
