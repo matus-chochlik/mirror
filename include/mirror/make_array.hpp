@@ -14,6 +14,19 @@
 
 namespace mirror {
 
+template <typename E, __metaobject_id... M, typename F>
+constexpr auto
+make_array_of(unpacked_metaobject_sequence<M...>, F transform) noexcept
+  -> std::array<E, sizeof...(M)> {
+    return {{transform(wrapped_metaobject<M>{})...}};
+}
+
+template <typename E, __metaobject_id M, typename F>
+auto make_array_of(wrapped_metaobject<M> mo, F transform) noexcept
+  requires(__metaobject_is_meta_object_sequence(M)) {
+    return make_array_of<E>(unpack(mo), transform);
+}
+
 template <__metaobject_id... M, typename F>
 constexpr auto
 make_array(unpacked_metaobject_sequence<M...>, F transform) noexcept
