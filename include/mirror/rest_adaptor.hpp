@@ -9,38 +9,114 @@
 #ifndef MIRROR_REST_ADAPTOR_HPP
 #define MIRROR_REST_ADAPTOR_HPP
 
-#include <mirror/extract.hpp>
-#include <mirror/from_string.hpp>
-#include <mirror/make_array.hpp>
-#include <mirror/make_tuple.hpp>
-#include <mirror/placeholder.hpp>
-#include <mirror/sequence.hpp>
-#include <mirror/url.hpp>
+#include "extract.hpp"
+#include "from_string.hpp"
+#include "make_array.hpp"
+#include "make_tuple.hpp"
+#include "placeholder.hpp"
+#include "sequence.hpp"
+#include "serialize/write_rapidjson.hpp"
+#include "url.hpp"
 #include <ostream>
+#include <sstream>
 
 namespace mirror {
 
+class rest_response {
+private:
+    rapidjson::Document _result{};
+
+public:
+    template <typename T>
+    void set_result(const T& result) {
+        serialize::write_rapidjson(result, _result);
+    }
+
+    template <typename E>
+    void set_error_code(E code) {
+        rapidjson::Value code_value;
+        if(!serialize::write_rapidjson(
+             code, code_value, _result.GetAllocator())) {
+            if(!_result.IsObject()) {
+                _result.SetObject();
+            }
+            _result.AddMember(
+              to_rapidjson("error_code"), code_value, _result.GetAllocator());
+        }
+    }
+
+    template <typename... T>
+    void set_error_message(std::string_view format, const T&... args) {
+        rapidjson::Value message_value;
+        message_value.SetObject();
+        rapidjson::Value format_value;
+        if(!serialize::write_rapidjson(
+             format, format_value, _result.GetAllocator())) {
+            message_value.AddMember(
+              to_rapidjson("format"), format_value, _result.GetAllocator());
+        }
+        rapidjson::Value args_value;
+        if(!serialize::write_rapidjson(
+             std::tie(args...), args_value, _result.GetAllocator())) {
+            message_value.AddMember(
+              to_rapidjson("args"), args_value, _result.GetAllocator());
+        }
+        if(!_result.IsObject()) {
+            _result.SetObject();
+        }
+        _result.AddMember(
+          to_rapidjson("message"), message_value, _result.GetAllocator());
+    }
+
+    auto str() const -> std::string {
+        std::stringstream temp;
+        rapidjson::OStreamWrapper stream(temp);
+        rapidjson::Writer<rapidjson::OStreamWrapper> writer(stream);
+        _result.Accept(writer);
+        return temp.str();
+    }
+};
+
 template <typename Backend>
 class rest_adaptor {
+public:
+    enum class error_code {
+        invalid_argument,
+        missing_argument,
+        missing_path,
+        invalid_domain,
+        missing_domain,
+        invalid_scheme,
+        missing_scheme,
+        invalid_url
+    };
+
 private:
     std::string _scheme{"https"};
     std::string _domain{"server"};
     Backend _backend{};
+
+    template <typename T>
+    using result = typename Backend::template result<T>;
 
     template <typename Value>
     auto _handle_arg(
       std::string_view name,
       Value& dst,
       const url& request,
-      std::ostream& response) -> bool {
+      rest_response& response) -> bool {
         if(const auto arg{request.argument(name)}) {
             if(const auto value{from_string<Value>(extract(arg))};
                has_value(value)) {
                 dst = extract(value);
                 return true;
             } else {
-                response << "invalid value `" << extract(arg)
-                         << "` for argument `" << name << "` in request";
+                response.set_error_code(error_code::invalid_argument);
+                response.set_error_message(
+                  "invalid value `{1}` for argument `{2}` in request",
+                  extract(arg),
+                  name);
+                return false;
             }
         } else if(name == "username") {
             if(const auto username{request.login()}) {
@@ -59,7 +135,8 @@ private:
                 return true;
             }
         }
-        response << "missing argument `" << name << "` in request";
+        response.set_error_code(error_code::missing_argument);
+        response.set_error_message("missing argument `{1}` in request", name);
         return false;
     }
 
@@ -68,7 +145,7 @@ private:
       const Names& names,
       Values& values,
       const url& request,
-      std::ostream& response) {
+      rest_response& response) {
         if constexpr(I < std::tuple_size_v<Values>) {
             if(_handle_arg(names[I], std::get<I>(values), request, response)) {
                 return _handle_args<I + 1Z>(names, values, request, response);
@@ -78,15 +155,32 @@ private:
         return true;
     }
 
+    template <typename Metaobject, typename R, typename E, typename Tup, size_t... I>
+    auto _apply(
+      Metaobject mf,
+      std::type_identity<std::variant<R, E>>,
+      Tup& tup,
+      std::index_sequence<I...>,
+      rest_response& response) {
+        if(const auto result{(_backend.*get_pointer(mf))(std::get<I>(tup)...)};
+           has_value(result)) {
+            response.set_result(extract(result));
+            return true;
+        } else {
+            response.set_error_code(get_error(result));
+        }
+        return false;
+    }
+
     template <typename Metaobject, typename R, typename Tup, size_t... I>
     auto _apply(
       Metaobject mf,
       std::type_identity<R>,
       Tup& tup,
       std::index_sequence<I...>,
-      std::ostream& response) {
-        response << (_backend.*get_pointer(mf))(std::get<I>(tup)...);
-        return response.good();
+      rest_response& response) {
+        response.set_result((_backend.*get_pointer(mf))(std::get<I>(tup)...));
+        return true;
     }
 
     template <typename Metaobject, typename R, typename Tup, size_t... I>
@@ -95,7 +189,7 @@ private:
       std::type_identity<void>,
       Tup& tup,
       std::index_sequence<I...>,
-      std::ostream&) {
+      rest_response&) {
         (_backend.*get_pointer(mf))(std::get<I>(tup)...);
         return true;
     }
@@ -103,7 +197,7 @@ private:
     bool _handle_call(
       metaobject auto mf,
       const url& request,
-      std::ostream& response) {
+      rest_response& response) {
         const auto mp{get_parameters(mf)};
         const auto arg_names{make_array_of<std::string_view>(mp, get_name(_1))};
         auto arg_values{make_value_tuple(transform(mp, get_type(_1)))};
@@ -118,45 +212,54 @@ private:
         return false;
     }
 
-    bool _handle_dispatch(const url& request, std::ostream& response) {
+    bool _handle_dispatch(const url& request, rest_response& response) {
         bool success{false};
         if(const auto opt_path{request.path()}) {
             const auto& path{extract(opt_path)};
-            for_each(get_member_functions(mirror(Backend)), [&](auto mf) {
-                const auto func_name{get_name(mf)};
-                if(
-                  path.starts_with("/") && path.ends_with(func_name) &&
-                  (path.size() == 1Z + func_name.size())) {
-                    success = _handle_call(mf, request, response);
-                }
-            });
+            for_each(
+              filter(get_member_functions(mirror(Backend)), is_public(_1)),
+              [&](auto mf) {
+                  const auto func_name{get_name(mf)};
+                  if(
+                    path.starts_with("/") && path.ends_with(func_name) &&
+                    (path.size() == 1Z + func_name.size())) {
+                      success = _handle_call(mf, request, response);
+                  }
+              });
         } else {
-            response << "missing path in request";
+            response.set_error_code(error_code::missing_path);
+            response.set_error_message("missing path in request");
         }
         return success;
     }
 
-    bool _handle_domain(const url& request, std::ostream& response) {
+    bool _handle_domain(const url& request, rest_response& response) {
         if(request.has_host(_domain)) {
             return _handle_dispatch(request, response);
         } else {
             if(const auto domain{request.host()}) {
-                response << "invalid domain `" << *domain << "` in request";
+                response.set_error_code(error_code::invalid_domain);
+                response.set_error_message(
+                  "invalid domain `{1}` in request", *domain);
             } else {
-                response << "missing domain in request";
+                response.set_error_code(error_code::missing_domain);
+                response.set_error_message("missing domain in request");
             }
         }
         return false;
     }
 
-    bool _handle_scheme(const url& request, std::ostream& response) {
+    bool _handle_scheme(const url& request, rest_response& response) {
         if(request.has_scheme(_scheme)) {
             return _handle_domain(request, response);
         } else {
             if(const auto scheme{request.scheme()}) {
-                response << "invalid scheme `" << *scheme << "` in request";
+                response.set_error_code(error_code::invalid_scheme);
+                response.set_error_message(
+                  "invalid scheme `{1}` in request", *scheme);
             } else {
-                response << "missing scheme in request";
+                response.set_error_code(error_code::missing_scheme);
+                response.set_error_message("missing scheme in request");
             }
         }
         return false;
@@ -173,11 +276,11 @@ public:
         return _domain;
     }
 
-    auto handle(const url& request, std::ostream& response) -> bool {
+    auto handle(const url& request, rest_response& response) -> bool {
         if(request) {
             return _handle_scheme(request, response);
         } else {
-            response << "invalid URL: `" << request.str() << "`";
+            response.set_error_message("invalid URL `{1}`", request.str());
         }
         return false;
     }
