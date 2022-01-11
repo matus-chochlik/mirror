@@ -13,18 +13,19 @@
 #include "operations.hpp"
 #include "registry_fwd.hpp"
 #include "traits.hpp"
+#include <cassert>
 #include <memory>
 #include <stdexcept>
 #include <vector>
 
 namespace mirror {
-
+//------------------------------------------------------------------------------
 class metadata_not_found : public std::runtime_error {
 public:
     metadata_not_found() noexcept
       : std::runtime_error{"metadata not found"} {}
 };
-
+//------------------------------------------------------------------------------
 class metadata_iterator {
 private:
     using base_iter_t = std::vector<const metadata*>::const_iterator;
@@ -112,7 +113,7 @@ public:
         return **_iter;
     }
 };
-
+//------------------------------------------------------------------------------
 class metadata_sequence {
 private:
     std::vector<const metadata*> _elements;
@@ -125,7 +126,22 @@ protected:
 
     friend class metadata_registry;
 
+    auto _emplace_elements(std::vector<const metadata*> elements) noexcept
+      -> auto& {
+        _elements = std::move(elements);
+        return _elements;
+    }
+
 public:
+    friend auto operator+(const metadata_sequence& l, const metadata_sequence& r)
+      -> metadata_sequence {
+        std::vector<const metadata*> elements;
+        elements.reserve(l._elements.size() + r._elements.size());
+        elements.insert(elements.end(), l._elements.begin(), l._elements.end());
+        elements.insert(elements.end(), r._elements.begin(), r._elements.end());
+        return {elements};
+    }
+
     auto element(size_t index) const noexcept -> const metadata& {
         return *_elements[index];
     }
@@ -142,90 +158,105 @@ public:
         return {_elements.end()};
     }
 
-    auto satisfying(metaobject_traits all) const -> metadata_sequence;
+    auto contains(const metadata& md) const noexcept;
 
-    auto satisfying(metaobject_traits all, metaobject_traits none) const
-      -> metadata_sequence;
+    template <typename F>
+    auto filtered(F predicate) const -> metadata_sequence;
 
-    auto supporting(unary_ops_boolean all) const -> metadata_sequence;
+    auto intersecting(const metadata_sequence& s) const -> metadata_sequence;
 
-    auto supporting(unary_ops_integer all) const -> metadata_sequence;
+    auto excluding(const metadata_sequence& s) const -> metadata_sequence;
 
-    auto supporting(unary_ops_string all) const -> metadata_sequence;
+    auto having_all(meta_traits t) const -> metadata_sequence;
+    auto having(meta_traits t) const -> metadata_sequence;
+    auto not_having(meta_traits t) const -> metadata_sequence;
 
-    auto supporting(unary_ops_metaobject all) const -> metadata_sequence;
+    auto having_all(type_traits t) const -> metadata_sequence;
+    auto having(type_traits t) const -> metadata_sequence;
+    auto not_having(type_traits t) const -> metadata_sequence;
 
-    auto having(object_traits all) const -> metadata_sequence;
+    auto having_all(object_traits t) const -> metadata_sequence;
+    auto having(object_traits t) const -> metadata_sequence;
+    auto not_having(object_traits t) const -> metadata_sequence;
+
+    auto supporting(operations_boolean op) const -> metadata_sequence;
+
+    auto supporting(operations_integer op) const -> metadata_sequence;
+
+    auto supporting(operations_string op) const -> metadata_sequence;
+
+    auto supporting(operations_metaobject op) const -> metadata_sequence;
+
+    auto with_name() const -> metadata_sequence {
+        return supporting(operation::get_name);
+    }
 };
-
+//------------------------------------------------------------------------------
 class metadata : public metadata_sequence {
 private:
-    size_t _id{0U};
-    metaobject_traits _traits{};
+    hash_t _id{0U};
+    meta_traits _meta_traits{};
+    type_traits _type_traits{};
 
-    unary_ops_boolean _op_boolean_results{};
-    unary_ops_boolean _op_boolean_applicable{};
-    unary_ops_metaobject _op_metaobject_applicable{};
-    unary_ops_integer _op_integer_applicable{};
-    unary_ops_string _op_string_applicable{};
+    operations_boolean _op_boolean_results{};
+    operations_boolean _op_boolean_applicable{};
+    operations_metaobject _op_metaobject_applicable{};
+    operations_integer _op_integer_applicable{};
+    operations_string _op_string_applicable{};
 
     size_t _source_column{0U};
     size_t _source_line{0U};
 
     std::string_view _name{};
     std::string_view _display_name{};
-
-    const metadata& _scope{*this};
-    const metadata& _type{*this};
-    const metadata& _underlying_type{*this};
-    const metadata& _aliased{*this};
-    const metadata& _class{*this};
-
-    const metadata& _base_classes{*this};
-    const metadata& _captures{*this};
-    const metadata& _constructors{*this};
-    const metadata& _data_members{*this};
-    const metadata& _destructors{*this};
-    const metadata& _enumerators{*this};
-    const metadata& _member_functions{*this};
-    const metadata& _member_types{*this};
-    const metadata& _operators{*this};
-    const metadata& _parameters{*this};
+    std::string _full_name{};
 
 protected:
+    const metadata& _none{*this};
+    const metadata* _scope{&_none};
+    const metadata* _type{&_none};
+    const metadata* _base_type{&_none};
+    const metadata* _element_type{&_none};
+    const metadata* _underlying_type{&_none};
+    const metadata* _aliased{&_none};
+    const metadata* _class{&_none};
+
+    const metadata* _base_classes{&_none};
+    const metadata* _captures{&_none};
+    const metadata* _constructors{&_none};
+    const metadata* _data_members{&_none};
+    const metadata* _destructors{&_none};
+    const metadata* _enumerators{&_none};
+    const metadata* _member_functions{&_none};
+    const metadata* _member_types{&_none};
+    const metadata* _operators{&_none};
+    const metadata* _parameters{&_none};
+
+    auto _needs_elements() const noexcept -> bool {
+        return _op_boolean_applicable.has(trait::is_empty) &&
+               !_op_boolean_results.has(trait::is_empty) && (count() == 0Z);
+    }
+
     metadata() noexcept = default;
 
     metadata(
-      size_t id,
-      metaobject_traits traits,
-      unary_ops_boolean op_boolean_results,
-      unary_ops_boolean op_boolean_applicable,
-      unary_ops_metaobject op_metaobject_applicable,
-      unary_ops_integer op_integer_applicable,
-      unary_ops_string op_string_applicable,
+      hash_t id,
+      meta_traits meta_tr,
+      type_traits type_tr,
+      operations_boolean op_boolean_results,
+      operations_boolean op_boolean_applicable,
+      operations_metaobject op_metaobject_applicable,
+      operations_integer op_integer_applicable,
+      operations_string op_string_applicable,
       size_t source_column,
       size_t source_line,
       std::string_view name,
       std::string_view display_name,
-      const metadata& scope,
-      const metadata& type,
-      const metadata& underlying_type,
-      const metadata& aliased,
-      const metadata& class_,
-      const metadata& base_classes,
-      const metadata& captures,
-      const metadata& constructors,
-      const metadata& data_members,
-      const metadata& destructors,
-      const metadata& enumerators,
-      const metadata& member_functions,
-      const metadata& member_types,
-      const metadata& operators,
-      const metadata& parameters,
-      std::vector<const metadata*> elements) noexcept
-      : metadata_sequence{std::move(elements)}
-      , _id{id}
-      , _traits{traits}
+      std::string full_name,
+      const metadata& none)
+      : _id{id}
+      , _meta_traits{meta_tr}
+      , _type_traits{type_tr}
       , _op_boolean_results{op_boolean_results}
       , _op_boolean_applicable{op_boolean_applicable}
       , _op_metaobject_applicable{op_metaobject_applicable}
@@ -235,21 +266,8 @@ protected:
       , _source_line{source_line}
       , _name{name}
       , _display_name{display_name}
-      , _scope{scope}
-      , _type{type}
-      , _underlying_type{underlying_type}
-      , _aliased{aliased}
-      , _class{class_}
-      , _base_classes{base_classes}
-      , _captures{captures}
-      , _constructors{constructors}
-      , _data_members{data_members}
-      , _destructors{destructors}
-      , _enumerators{enumerators}
-      , _member_functions{member_functions}
-      , _member_types{member_types}
-      , _operators{operators}
-      , _parameters{parameters} {}
+      , _full_name{std::move(full_name)}
+      , _none{none} {}
 
 public:
     metadata(metadata&&) = delete;
@@ -258,8 +276,12 @@ public:
     auto operator=(const metadata&) = delete;
     ~metadata() noexcept = default;
 
+    auto is_none() const noexcept {
+        return !_meta_traits.has(trait::reflects_object);
+    }
+
     explicit operator bool() const noexcept {
-        return _traits.has(metaobject_trait::reflects_object);
+        return _meta_traits.has(trait::reflects_object);
     }
 
     friend bool operator==(const metadata& l, const metadata& r) noexcept {
@@ -274,58 +296,85 @@ public:
         return l._id < r._id;
     }
 
-    auto satisfies(metaobject_traits all) const noexcept -> bool {
-        return _traits.has_all(all);
+    auto id() const noexcept -> hash_t {
+        return _id;
     }
 
-    auto satisfies(metaobject_traits all, metaobject_traits none) const noexcept
-      -> bool {
-        return _traits.has_all(all) && _traits.has_none(none);
-    }
-
-    auto is_applicable(unary_op_boolean op) const noexcept -> bool {
+    auto is_applicable(operation_boolean op) const noexcept -> bool {
         return _op_boolean_applicable.has(op);
     }
 
-    auto supports(unary_ops_boolean all) const noexcept -> bool {
-        return _op_boolean_applicable.has_all(all);
+    auto supports(operations_boolean op) const noexcept -> bool {
+        return _op_boolean_applicable.has_all(op);
     }
 
-    auto is_applicable(unary_op_integer op) const noexcept -> bool {
+    auto is_applicable(operation_integer op) const noexcept -> bool {
         return _op_integer_applicable.has(op);
     }
 
-    auto supports(unary_ops_integer all) const noexcept -> bool {
-        return _op_integer_applicable.has_all(all);
+    auto supports(operations_integer op) const noexcept -> bool {
+        return _op_integer_applicable.has_all(op);
     }
 
-    auto is_applicable(unary_op_string op) const noexcept -> bool {
+    auto is_applicable(operation_string op) const noexcept -> bool {
         return _op_string_applicable.has(op);
     }
 
-    auto supports(unary_ops_string all) const noexcept -> bool {
-        return _op_string_applicable.has_all(all);
+    auto supports(operations_string op) const noexcept -> bool {
+        return _op_string_applicable.has_all(op);
     }
 
-    auto is_applicable(unary_op_metaobject op) const noexcept -> bool {
+    auto is_applicable(operation_metaobject op) const noexcept -> bool {
         return _op_metaobject_applicable.has(op);
     }
 
-    auto supports(unary_ops_metaobject all) const noexcept -> bool {
-        return _op_metaobject_applicable.has_all(all);
+    auto supports(operations_metaobject op) const noexcept -> bool {
+        return _op_metaobject_applicable.has_all(op);
     }
 
-    auto has(object_traits all) const noexcept -> bool {
-        return _op_boolean_results.has_all(all) &&
-               _op_boolean_applicable.has_all(all);
+    auto has_all(meta_traits t) const noexcept -> bool {
+        return _meta_traits.has_all(t);
     }
 
-    auto apply(unary_op_boolean op) const noexcept -> tribool {
+    auto has(meta_traits t) const noexcept -> bool {
+        return _meta_traits.has_some(t);
+    }
+
+    auto has_none(meta_traits t) const noexcept -> bool {
+        return _meta_traits.has_none(t);
+    }
+
+    auto has_all(type_traits t) const noexcept -> bool {
+        return _type_traits.has_all(t);
+    }
+
+    auto has(type_traits t) const noexcept -> bool {
+        return _type_traits.has_some(t);
+    }
+
+    auto has_none(type_traits t) const noexcept -> bool {
+        return _type_traits.has_none(t);
+    }
+
+    auto has_all(object_traits t) const noexcept -> bool {
+        return _op_boolean_results.has_all(t) &&
+               _op_boolean_applicable.has_all(t);
+    }
+
+    auto has(object_traits t) const noexcept -> bool {
+        return _op_boolean_results.has_some(t & _op_boolean_applicable);
+    }
+
+    auto has_none(object_traits t) const noexcept -> bool {
+        return !has(t);
+    }
+
+    auto apply(operation_boolean op) const noexcept -> tribool {
         return {_op_boolean_results.has(op), !_op_boolean_applicable.has(op)};
     }
 
     auto is_empty() const noexcept -> tribool {
-        return apply(unary_op_boolean::is_empty);
+        return apply(trait::is_empty);
     }
 
     auto source_column() const noexcept -> std::optional<size_t> {
@@ -343,165 +392,264 @@ public:
     }
 
     auto name() const noexcept -> std::optional<std::string_view> {
-        if(is_applicable(unary_op_string::get_name)) {
+        if(is_applicable(operation::get_name)) {
             return {_name};
         }
         return {};
     }
 
+    auto name_() const noexcept -> std::string_view {
+        return _name;
+    }
+
     auto display_name() const noexcept -> std::optional<std::string_view> {
-        if(is_applicable(unary_op_string::get_display_name)) {
+        if(is_applicable(operation::get_display_name)) {
             return {_display_name};
         }
         return {};
     }
 
+    auto full_name() const noexcept -> std::string_view {
+        return _full_name;
+    }
+
     auto scope() const noexcept -> const metadata& {
-        return _scope;
+        return *_scope;
     }
 
     auto type() const noexcept -> const metadata& {
-        return _type;
+        return *_type;
+    }
+
+    auto base_type() const noexcept -> const metadata& {
+        return *_base_type;
+    }
+
+    auto element_type() const noexcept -> const metadata& {
+        return *_element_type;
     }
 
     auto underlying_type() const noexcept -> const metadata& {
-        return _underlying_type;
+        return *_underlying_type;
     }
 
     auto aliased() const noexcept -> const metadata& {
-        return _aliased;
+        return *_aliased;
     }
 
     auto class_() const noexcept -> const metadata& {
-        return _class;
+        return *_class;
     }
 
     auto base_classes() const noexcept -> const metadata& {
-        return _base_classes;
+        return *_base_classes;
     }
 
     auto captures() const noexcept -> const metadata& {
-        return _captures;
+        return *_captures;
     }
 
     auto constructors() const noexcept -> const metadata& {
-        return _constructors;
+        return *_constructors;
     }
 
     auto data_members() const noexcept -> const metadata& {
-        return _data_members;
+        return *_data_members;
     }
 
     auto destructors() const noexcept -> const metadata& {
-        return _destructors;
+        return *_destructors;
     }
 
     auto enumerators() const noexcept -> const metadata& {
-        return _enumerators;
+        return *_enumerators;
     }
 
     auto member_functions() const noexcept -> const metadata& {
-        return _member_functions;
+        return *_member_functions;
     }
 
     auto member_types() const noexcept -> const metadata& {
-        return _member_types;
+        return *_member_types;
     }
 
     auto operators() const noexcept -> const metadata& {
-        return _operators;
+        return *_operators;
     }
 
     auto parameters() const noexcept -> const metadata& {
-        return _parameters;
+        return *_parameters;
     }
 
     auto size() const noexcept -> std::optional<size_t> {
-        if(is_applicable(unary_op_integer::get_size)) {
+        if(is_applicable(operation::get_size)) {
             return {count()};
         }
         return {};
     }
 };
+//------------------------------------------------------------------------------
+class metadata_value {
+private:
+    const metadata* _pmd{nullptr};
 
-inline auto metadata_sequence::satisfying(metaobject_traits all) const
+public:
+    metadata_value() noexcept = default;
+    explicit metadata_value(const metadata& md) noexcept
+      : _pmd{&md} {}
+
+    friend auto
+    operator==(const metadata_value l, const metadata_value r) noexcept
+      -> bool {
+        if(l._pmd && r._pmd) {
+            return *l._pmd == *r._pmd;
+        } else if(!l._pmd && !r._pmd) {
+            return true;
+        }
+        return false;
+    }
+
+    friend auto
+    operator!=(const metadata_value l, const metadata_value r) noexcept
+      -> bool {
+        return !(l == r);
+    }
+
+    friend auto
+    operator<(const metadata_value l, const metadata_value r) noexcept -> bool {
+        if(l._pmd && r._pmd) {
+            return *l._pmd < *r._pmd;
+        } else if(l._pmd) {
+            return false;
+        } else if(r._pmd) {
+            return true;
+        }
+        return true;
+    }
+
+    explicit operator bool() const noexcept {
+        return bool(_pmd);
+    }
+
+    auto get() const noexcept -> const metadata& {
+        assert(_pmd);
+        return *_pmd;
+    }
+
+    operator const metadata&() const noexcept {
+        return get();
+    }
+
+    auto operator->() const noexcept -> const metadata* {
+        return _pmd;
+    }
+};
+
+static inline auto has_value(const metadata_value& v) noexcept -> bool {
+    return bool(v);
+}
+
+static inline auto extract(const metadata_value& v) noexcept
+  -> const metadata& {
+    return v.get();
+}
+//------------------------------------------------------------------------------
+inline auto metadata_sequence::contains(const metadata& md) const noexcept {
+    for(const auto* pmd : _elements) {
+        if(*pmd == md) {
+            return true;
+        }
+    }
+    return false;
+}
+//------------------------------------------------------------------------------
+template <typename F>
+inline auto metadata_sequence::filtered(F predicate) const
   -> metadata_sequence {
     std::vector<const metadata*> result;
     for(const auto* md : _elements) {
-        if(md->satisfies(all)) {
+        if(predicate(*md)) {
             result.push_back(md);
         }
     }
     return {result};
 }
 
-inline auto metadata_sequence::satisfying(
-  metaobject_traits all,
-  metaobject_traits none) const -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->satisfies(all, none)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
-}
-
-inline auto metadata_sequence::supporting(unary_ops_boolean all) const
+inline auto metadata_sequence::intersecting(const metadata_sequence& s) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return s.contains(md); });
 }
 
-inline auto metadata_sequence::supporting(unary_ops_integer all) const
+inline auto metadata_sequence::excluding(const metadata_sequence& s) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return !s.contains(md); });
 }
 
-inline auto metadata_sequence::supporting(unary_ops_string all) const
+inline auto metadata_sequence::having_all(meta_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return md.has_all(t); });
 }
 
-inline auto metadata_sequence::supporting(unary_ops_metaobject all) const
+inline auto metadata_sequence::having(meta_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->supports(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return md.has(t); });
 }
 
-inline auto metadata_sequence::having(object_traits all) const
+inline auto metadata_sequence::not_having(meta_traits t) const
   -> metadata_sequence {
-    std::vector<const metadata*> result;
-    for(const auto* md : _elements) {
-        if(md->has(all)) {
-            result.push_back(md);
-        }
-    }
-    return {result};
+    return filtered([&](auto& md) { return !md.has(t); });
 }
 
+inline auto metadata_sequence::having_all(type_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.has_all(t); });
+}
+
+inline auto metadata_sequence::having(type_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.has(t); });
+}
+
+inline auto metadata_sequence::not_having(type_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return !md.has(t); });
+}
+
+inline auto metadata_sequence::having_all(object_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.has_all(t); });
+}
+
+inline auto metadata_sequence::having(object_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.has(t); });
+}
+
+inline auto metadata_sequence::not_having(object_traits t) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return !md.has(t); });
+}
+
+inline auto metadata_sequence::supporting(operations_boolean op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+
+inline auto metadata_sequence::supporting(operations_integer op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+
+inline auto metadata_sequence::supporting(operations_string op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+
+inline auto metadata_sequence::supporting(operations_metaobject op) const
+  -> metadata_sequence {
+    return filtered([&](auto& md) { return md.supports(op); });
+}
+//------------------------------------------------------------------------------
 } // namespace mirror
 
 #endif

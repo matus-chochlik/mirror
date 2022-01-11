@@ -617,6 +617,20 @@ consteval auto get_type(placeholder_expr<X> e) {
 }
 
 template <typename X>
+consteval auto get_base_type(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_base_type(e(mo));
+    }};
+}
+
+template <typename X>
+consteval auto get_element_type(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_element_type(e(mo));
+    }};
+}
+
+template <typename X>
 consteval auto get_underlying_type(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto mo) {
         return get_underlying_type(e(mo));
@@ -820,6 +834,70 @@ constexpr auto
 try_apply(wrapped_metaobject<Me> me, placeholder_expr<X> e) noexcept {
     return placeholder_expr{[e, me](auto mo) {
         return try_apply(me, e(mo));
+    }};
+}
+
+template <typename... X>
+consteval auto make_sequence(placeholder_expr<X>... e) {
+    return placeholder_expr{[e...](auto mo) {
+        return make_sequence(e(mo)...);
+    }};
+}
+
+template <typename... X>
+consteval auto concat(placeholder_expr<X>... e) {
+    return placeholder_expr{[e...](auto mo) {
+        return concat(e(mo)...);
+    }};
+}
+
+template <typename X, typename F>
+consteval auto all_of(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto mo) {
+        return all_of(e(mo), predicate);
+    }};
+}
+
+template <typename X, typename F>
+consteval auto any_of(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto mo) {
+        return any_of(e(mo), predicate);
+    }};
+}
+
+template <typename X, typename F>
+consteval auto none_of(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto mo) {
+        return none_of(e(mo), predicate);
+    }};
+}
+
+template <typename X, typename F>
+consteval auto filter(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto mo) {
+        return filter(e(mo), predicate);
+    }};
+}
+
+template <typename X, typename Function, typename Fallback, typename... P>
+consteval auto select(
+  placeholder_expr<X> e,
+  Function function,
+  Fallback fallback,
+  P&&... param) {
+    return placeholder_expr{[e, &function, &fallback, &param...](auto mo) {
+        return select(
+          e(mo),
+          std::move(function),
+          std::move(fallback),
+          std::forward<P>(param)...);
+    }};
+}
+
+template <typename X>
+consteval auto flatten(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return flatten(e(mo));
     }};
 }
 

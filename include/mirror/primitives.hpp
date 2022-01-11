@@ -54,6 +54,7 @@ struct type_list {};
 
 /// @brief Template implementing the metaobject type reflecting base-level entities.
 /// @ingroup metaobjects
+/// @see metaobject
 /// @see reflects_metaobject
 /// @see no_metaobject
 /// @see unpacked_metaobject_sequence
@@ -73,6 +74,12 @@ consteval auto is_object(const X&) noexcept -> bool {
     return false;
 }
 
+/// @brief Concept for metaobject types.
+/// @ingroup classification
+/// @see reflects_object
+/// @see is_object
+/// @see wrapped_metaobject
+/// @see no_metaobject
 template <typename X>
 concept metaobject = is_object(X{});
 
@@ -92,7 +99,7 @@ constinit const wrapped_metaobject<__reflexpr_id()> no_metaobject{};
 /// @brief Indicates if a metaobject reflects any base-level entity.
 /// @ingroup classification
 /// @see find_if
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_object(wrapped_metaobject<M>) noexcept -> bool {
@@ -115,7 +122,7 @@ constexpr auto extract(wrapped_metaobject<M> mo) noexcept {
 /// @see is_empty
 /// @see get_size
 /// @see get_element
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_object_sequence(wrapped_metaobject<M>) noexcept
@@ -130,7 +137,7 @@ consteval auto reflects_object_sequence(wrapped_metaobject<M>) noexcept
 /// @see has_name
 /// @see get_display_name
 /// @see get_full_name
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_named(wrapped_metaobject<M>) noexcept -> bool {
@@ -142,7 +149,7 @@ consteval auto reflects_named(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_named
 /// @see get_aliased
 /// @see remove_all_aliases
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_alias(wrapped_metaobject<M>) noexcept -> bool {
@@ -154,7 +161,7 @@ consteval auto reflects_alias(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_type
 /// @see has_type
 /// @see has_type_trait
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_typed(wrapped_metaobject<M>) noexcept -> bool {
@@ -168,7 +175,7 @@ consteval auto reflects_typed(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_record
 /// @see reflects_scope_member
 /// @see get_scope
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_scope(wrapped_metaobject<M>) noexcept -> bool {
@@ -179,7 +186,7 @@ consteval auto reflects_scope(wrapped_metaobject<M>) noexcept -> bool {
 /// @ingroup classification
 /// @see reflects_scope
 /// @see get_scope
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_scope_member(wrapped_metaobject<M>) noexcept -> bool {
@@ -206,7 +213,7 @@ consteval auto reflects_global_scope_member(wrapped_metaobject<M>) noexcept
 /// @see reflects_enum
 /// @see get_enumerators
 /// @see get_underlying_type
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_enumerator(wrapped_metaobject<M>) noexcept -> bool {
@@ -220,7 +227,7 @@ consteval auto reflects_enumerator(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_data_members
 /// @see get_member_types
 /// @see get_member_functions
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_record_member(wrapped_metaobject<M>) noexcept -> bool {
@@ -235,7 +242,7 @@ consteval auto reflects_record_member(wrapped_metaobject<M>) noexcept -> bool {
 /// @see is_protected
 /// @see is_public
 /// @see is_virtual
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_base(wrapped_metaobject<M>) noexcept -> bool {
@@ -247,7 +254,7 @@ consteval auto reflects_base(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_inline_namespace
 /// @see reflects_global_scope
 /// @see get_scope
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_namespace(wrapped_metaobject<M>) noexcept -> bool {
@@ -257,7 +264,7 @@ consteval auto reflects_namespace(wrapped_metaobject<M>) noexcept -> bool {
 /// @brief Indicates if a metaobject reflects an inline namespace.
 /// @ingroup classification
 /// @see reflects_namespace
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_inline_namespace(wrapped_metaobject<M>) noexcept
@@ -272,7 +279,7 @@ consteval auto reflects_inline_namespace(wrapped_metaobject<M>) noexcept
 /// @brief Indicates if a metaobject reflects the global scope.
 /// @ingroup classification
 /// @see reflects_namespace
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_global_scope(wrapped_metaobject<M>) noexcept -> bool {
@@ -283,7 +290,7 @@ consteval auto reflects_global_scope(wrapped_metaobject<M>) noexcept -> bool {
 /// @ingroup classification
 /// @see get_type
 /// @see get_reflected_type
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_type(wrapped_metaobject<M>) noexcept -> bool {
@@ -296,7 +303,7 @@ consteval auto reflects_type(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_type
 /// @see get_enumerators
 /// @see get_underlying_type
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_enum(wrapped_metaobject<M>) noexcept -> bool {
@@ -313,7 +320,7 @@ consteval auto reflects_enum(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_constructors
 /// @see get_destructors
 /// @see get_operators
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_record(wrapped_metaobject<M>) noexcept -> bool {
@@ -332,7 +339,7 @@ consteval auto reflects_record(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_destructors
 /// @see get_operators
 /// @see get_base_classes
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_class(wrapped_metaobject<M>) noexcept -> bool {
@@ -344,7 +351,7 @@ consteval auto reflects_class(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_record
 /// @see reflects_class
 /// @see get_captures
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_lambda(wrapped_metaobject<M>) noexcept -> bool {
@@ -356,7 +363,7 @@ consteval auto reflects_lambda(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_enumerator
 /// @see get_constant
 /// @see get_value
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_constant(wrapped_metaobject<M>) noexcept -> bool {
@@ -370,7 +377,7 @@ consteval auto reflects_constant(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_pointer
 /// @see get_reference
 /// @see get_value
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_variable(wrapped_metaobject<M>) noexcept -> bool {
@@ -382,7 +389,7 @@ consteval auto reflects_variable(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_lambda
 /// @see get_captures
 /// @see is_explicitly_captured
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_lambda_capture(wrapped_metaobject<M>) noexcept -> bool {
@@ -394,7 +401,7 @@ consteval auto reflects_lambda_capture(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_callable
 /// @see reflects_variable
 /// @see get_parameters
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_function_parameter(wrapped_metaobject<M>) noexcept
@@ -407,7 +414,7 @@ consteval auto reflects_function_parameter(wrapped_metaobject<M>) noexcept
 /// @see reflects_function
 /// @see reflects_function_parameter
 /// @see get_parameters
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_callable(wrapped_metaobject<M>) noexcept -> bool {
@@ -422,7 +429,7 @@ consteval auto reflects_callable(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_type
 /// @see get_parameters
 /// @see is_deleted
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_function(wrapped_metaobject<M>) noexcept -> bool {
@@ -439,7 +446,7 @@ consteval auto reflects_function(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_scope
 /// @see get_type
 /// @see get_parameters
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_member_function(wrapped_metaobject<M>) noexcept
@@ -459,7 +466,7 @@ consteval auto reflects_member_function(wrapped_metaobject<M>) noexcept
 /// @see get_parameters
 /// @see is_defaulted
 /// @see is_deleted
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_special_member_function(wrapped_metaobject<M>) noexcept
@@ -478,7 +485,7 @@ consteval auto reflects_special_member_function(wrapped_metaobject<M>) noexcept
 /// @see get_parameters
 /// @see is_defaulted
 /// @see is_deleted
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_constructor(wrapped_metaobject<M>) noexcept -> bool {
@@ -495,7 +502,7 @@ consteval auto reflects_constructor(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_parameters
 /// @see is_defaulted
 /// @see is_deleted
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_destructor(wrapped_metaobject<M>) noexcept -> bool {
@@ -511,7 +518,7 @@ consteval auto reflects_destructor(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_scope
 /// @see get_parameters
 /// @see is_deleted
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_operator(wrapped_metaobject<M>) noexcept -> bool {
@@ -526,7 +533,7 @@ consteval auto reflects_operator(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_operators
 /// @see get_scope
 /// @see get_parameters
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_conversion_operator(wrapped_metaobject<M>) noexcept
@@ -538,7 +545,7 @@ consteval auto reflects_conversion_operator(wrapped_metaobject<M>) noexcept
 /// @ingroup classification
 /// @see reflects_parenthesized_expression
 /// @see reflects_function_call_expression
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_expression(wrapped_metaobject<M>) noexcept -> bool {
@@ -549,7 +556,7 @@ consteval auto reflects_expression(wrapped_metaobject<M>) noexcept -> bool {
 /// @ingroup classification
 /// @see reflects_expression
 /// @see reflects_function_call_expression
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>) noexcept
@@ -561,7 +568,7 @@ consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>) noexcept
 /// @ingroup classification
 /// @see reflects_expression
 /// @see reflects_parenthesized_expression
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_function_call_expression(wrapped_metaobject<M>) noexcept
@@ -571,7 +578,7 @@ consteval auto reflects_function_call_expression(wrapped_metaobject<M>) noexcept
 
 /// @brief Indicates if a metaobject reflects a specifier.
 /// @ingroup classification
-/// @see metaobject_trait
+/// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
 consteval auto reflects_specifier(wrapped_metaobject<M>) noexcept -> bool {
@@ -584,7 +591,7 @@ consteval auto reflects_specifier(wrapped_metaobject<M>) noexcept -> bool {
 /// @ingroup operations
 /// @see reflects_variable
 /// @see reflects_callable
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_constexpr(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_callable(M)) {
@@ -594,7 +601,7 @@ consteval auto is_constexpr(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @brief Indicates if the reflected base-level entity is @c noexcept.
 /// @ingroup operations
 /// @see reflects_callable
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_noexcept(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_callable(M)) {
@@ -605,7 +612,7 @@ consteval auto is_noexcept(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_constructor
 /// @see reflects_conversion_operator
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_explicit(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_constructor(M) ||
@@ -618,7 +625,7 @@ consteval auto is_explicit(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @see reflects_namespace
 /// @see reflects_variable
 /// @see reflects_callable
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_inline(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_namespace(M) || __metaobject_is_meta_variable(M) ||
@@ -629,7 +636,7 @@ consteval auto is_inline(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @brief Indicates if the reflected base-level entity is @c thread_local.
 /// @ingroup operations
 /// @see reflects_variable
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_thread_local(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_variable(M)) {
@@ -640,7 +647,7 @@ consteval auto is_thread_local(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_variable
 /// @see reflects_member_function
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_static(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_member_function(M)) {
@@ -652,7 +659,7 @@ consteval auto is_static(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @see reflects_base
 /// @see reflects_destructor
 /// @see reflects_member_function
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_base(M) || __metaobject_is_meta_destructor(M) ||
@@ -664,7 +671,7 @@ consteval auto is_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @ingroup operations
 /// @see reflects_destructor
 /// @see reflects_member_function
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_pure_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_destructor(M) ||
@@ -676,7 +683,7 @@ consteval auto is_pure_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @ingroup operations
 /// @see reflects_class
 /// @see reflects_member_function
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_final(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_class(M) || __metaobject_is_meta_member_function(M)) {
@@ -687,7 +694,7 @@ consteval auto is_final(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_record_member
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_private(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
@@ -698,7 +705,7 @@ consteval auto is_private(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_record_member
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_protected(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
@@ -709,7 +716,7 @@ consteval auto is_protected(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_record_member
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_public(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
@@ -721,7 +728,7 @@ consteval auto is_public(wrapped_metaobject<M>) noexcept -> bool requires(
 /// @see reflects_named
 /// @see get_name
 /// @see get_display_name
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_unnamed(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_named(M)) {
@@ -733,7 +740,7 @@ consteval auto is_unnamed(wrapped_metaobject<M>) noexcept
 /// @see reflects_type
 /// @see reflects_enum
 /// @see is_scoped_enum
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_enum(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -745,7 +752,7 @@ consteval auto is_enum(wrapped_metaobject<M>) noexcept
 /// @see reflects_type
 /// @see reflects_enum
 /// @see is_enum
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_scoped_enum(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -758,7 +765,7 @@ consteval auto is_scoped_enum(wrapped_metaobject<M>) noexcept
 /// @see is_union
 /// @see uses_class_key
 /// @see uses_struct_key
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_union(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -770,7 +777,7 @@ consteval auto is_union(wrapped_metaobject<M>) noexcept
 /// @see reflects_type
 /// @see is_union
 /// @see uses_struct_key
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto uses_class_key(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -782,7 +789,7 @@ consteval auto uses_class_key(wrapped_metaobject<M>) noexcept
 /// @see reflects_type
 /// @see is_union
 /// @see uses_class_key
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto uses_struct_key(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
@@ -794,7 +801,7 @@ consteval auto uses_struct_key(wrapped_metaobject<M>) noexcept
 /// @see reflects_lambda
 /// @see uses_default_reference_capture
 /// @see get_captures
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto uses_default_copy_capture(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda(M)) {
@@ -806,7 +813,7 @@ consteval auto uses_default_copy_capture(wrapped_metaobject<M>) noexcept
 /// @see reflects_lambda
 /// @see uses_default_copy_capture
 /// @see get_captures
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto uses_default_reference_capture(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda(M)) {
@@ -817,7 +824,7 @@ consteval auto uses_default_reference_capture(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_lambda
 /// @see get_captures
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_call_operator_const(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda(M)) {
@@ -828,7 +835,7 @@ consteval auto is_call_operator_const(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_lambda_capture
 /// @see get_captures
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_explicitly_captured(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda_capture(M)) {
@@ -839,7 +846,7 @@ consteval auto is_explicitly_captured(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_function_parameter
 /// @see get_parameters
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto has_default_argument(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_function_parameter(M)) {
@@ -852,7 +859,7 @@ consteval auto has_default_argument(wrapped_metaobject<M>) noexcept
 /// @see is_volatile
 /// @see has_lvalueref_qualifier
 /// @see has_rvalueref_qualifier
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_const(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -865,7 +872,7 @@ consteval auto is_const(wrapped_metaobject<M>) noexcept
 /// @see is_const
 /// @see has_lvalueref_qualifier
 /// @see has_rvalueref_qualifier
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_volatile(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -878,7 +885,7 @@ consteval auto is_volatile(wrapped_metaobject<M>) noexcept
 /// @see is_const
 /// @see is_volatile
 /// @see has_rvalueref_qualifier
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto has_lvalueref_qualifier(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -891,7 +898,7 @@ consteval auto has_lvalueref_qualifier(wrapped_metaobject<M>) noexcept
 /// @see is_const
 /// @see is_volatile
 /// @see has_rvalueref_qualifier
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto has_rvalueref_qualifier(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
@@ -904,7 +911,7 @@ consteval auto has_rvalueref_qualifier(wrapped_metaobject<M>) noexcept
 /// @see reflects_special_member_function
 /// @see is_defaulted
 /// @see is_deleted
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_implicitly_declared(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_special_member_function(M)) {
@@ -917,7 +924,7 @@ consteval auto is_implicitly_declared(wrapped_metaobject<M>) noexcept
 /// @see reflects_special_member_function
 /// @see is_implicitly_declared
 /// @see is_deleted
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_defaulted(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_special_member_function(M)) {
@@ -930,7 +937,7 @@ consteval auto is_defaulted(wrapped_metaobject<M>) noexcept
 /// @see reflects_special_member_function
 /// @see is_implicitly_declared
 /// @see is_defaulted
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_deleted(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_callable(M)) {
@@ -943,7 +950,7 @@ consteval auto is_deleted(wrapped_metaobject<M>) noexcept
 /// @see get_constructors
 /// @see is_move_constructor
 /// @see is_copy_assignment_operator
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_copy_constructor(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_constructor(M)) {
@@ -956,7 +963,7 @@ consteval auto is_copy_constructor(wrapped_metaobject<M>) noexcept
 /// @see get_constructors
 /// @see is_copy_constructor
 /// @see is_move_assignment_operator
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_move_constructor(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_constructor(M)) {
@@ -970,7 +977,7 @@ consteval auto is_move_constructor(wrapped_metaobject<M>) noexcept
 /// @see get_operators
 /// @see is_copy_constructor
 /// @see is_move_assignment_operator
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_copy_assignment_operator(wrapped_metaobject<M>) noexcept
   -> bool requires(
@@ -986,7 +993,7 @@ consteval auto is_copy_assignment_operator(wrapped_metaobject<M>) noexcept
 /// @see get_operators
 /// @see is_move_constructor
 /// @see is_copy_assignment_operator
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_move_assignment_operator(wrapped_metaobject<M>) noexcept
   -> bool requires(
@@ -1000,7 +1007,7 @@ consteval auto is_move_assignment_operator(wrapped_metaobject<M>) noexcept
 /// @see reflects_object_sequence
 /// @see get_size
 /// @see get_element
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto is_empty(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
@@ -1030,7 +1037,7 @@ consteval auto has_name(wrapped_metaobject<M>, const char (&str)[L]) noexcept
 /// @brief Returns a unique metaobject identifier value.
 /// @ingroup operations
 /// @see reflects_object
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_id(wrapped_metaobject<M>) noexcept -> size_t {
     return __metaobject_get_id_value(M);
@@ -1041,7 +1048,7 @@ consteval auto get_id(wrapped_metaobject<M>) noexcept -> size_t {
 /// @see reflects_object
 /// @see get_source_column
 /// @see get_source_file_name
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_source_line(wrapped_metaobject<M>) noexcept -> size_t {
     return __metaobject_get_source_line(M);
@@ -1052,7 +1059,7 @@ consteval auto get_source_line(wrapped_metaobject<M>) noexcept -> size_t {
 /// @see reflects_object
 /// @see get_source_line
 /// @see get_source_file_name
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_source_column(wrapped_metaobject<M>) noexcept -> size_t {
     return __metaobject_get_source_column(M);
@@ -1063,7 +1070,7 @@ consteval auto get_source_column(wrapped_metaobject<M>) noexcept -> size_t {
 /// @see reflects_object_sequence
 /// @see is_empty
 /// @see get_element
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_size(wrapped_metaobject<M>) noexcept -> size_t
   requires(__metaobject_is_meta_object_sequence(M)) {
@@ -1083,7 +1090,7 @@ struct _get_pointer
 /// @see get_value
 /// @see get_reference
 /// @see get_constant
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_pointer(wrapped_metaobject<M>) noexcept requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_function(M)) {
@@ -1153,7 +1160,7 @@ struct _get_constant
 /// @see get_pointer
 /// @see get_reference
 /// @see get_value
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_constant(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_constant(M)) {
@@ -1228,7 +1235,7 @@ consteval auto get_source_file_name_view(__metaobject_id mo) noexcept
 /// @see reflects_object
 /// @see get_source_line
 /// @see get_source_column
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_source_file_name(wrapped_metaobject<M>) noexcept
   -> string_view {
@@ -1245,7 +1252,7 @@ consteval auto get_name_view(__metaobject_id mo) noexcept -> string_view {
 /// @see get_full_name
 /// @see get_display_name
 /// @see has_name
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_name(wrapped_metaobject<M>) noexcept -> string_view
   requires(__metaobject_is_meta_named(M)) {
@@ -1263,7 +1270,7 @@ consteval auto get_display_name_view(__metaobject_id mo) noexcept
 /// @see reflects_named
 /// @see get_name
 /// @see get_display_name
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 consteval auto get_display_name(wrapped_metaobject<M>) noexcept -> string_view
   requires(__metaobject_is_meta_named(M)) {
@@ -1275,7 +1282,7 @@ consteval auto get_display_name(wrapped_metaobject<M>) noexcept -> string_view
 /// @ingroup operations
 /// @see reflects_scope_member
 /// @see reflects_scope
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_scope(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_scope_member(M)) {
@@ -1286,7 +1293,7 @@ constexpr auto get_scope(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_typed
 /// @see get_reflected_type
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_typed(M)) {
@@ -1297,7 +1304,7 @@ constexpr auto get_type(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see get_constant
 /// @see reflects_enum
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_underlying_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_enum(M)) {
@@ -1309,7 +1316,7 @@ constexpr auto get_underlying_type(wrapped_metaobject<M>) noexcept
 /// @see reflects_named
 /// @see reflects_alias
 /// @see remove_all_aliases
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_aliased(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_alias(M)) {
@@ -1320,7 +1327,7 @@ constexpr auto get_aliased(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_alias
 /// @see get_aliased
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto remove_all_aliases(wrapped_metaobject<M> mo) noexcept {
     if constexpr(__metaobject_is_meta_alias(M)) {
@@ -1339,7 +1346,7 @@ constexpr auto remove_all_aliases(wrapped_metaobject<M> mo) noexcept {
 /// @see is_protected
 /// @see is_public
 /// @see is_virtual
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_class(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_base(M)) {
@@ -1351,7 +1358,7 @@ constexpr auto get_class(wrapped_metaobject<M>) noexcept
 /// @see reflects_parenthesized_expression
 /// @see reflects_function_call_expression
 /// @see get_callable
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_subexpression(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_parenthesized_expression(M)) {
@@ -1363,7 +1370,7 @@ constexpr auto get_subexpression(wrapped_metaobject<M>) noexcept
 /// @see reflects_parenthesized_expression
 /// @see reflects_function_call_expression
 /// @see get_subexpression
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_callable(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_function_call_expression(M)) {
@@ -1377,7 +1384,7 @@ constexpr auto get_callable(wrapped_metaobject<M>) noexcept
 /// @see is_empty
 /// @see get_size
 /// @see get_class
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_base_classes(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_class(M)) {
@@ -1391,7 +1398,7 @@ constexpr auto get_base_classes(wrapped_metaobject<M>) noexcept
 /// @see is_empty
 /// @see get_size
 /// @see get_type
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_member_types(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
@@ -1407,7 +1414,7 @@ constexpr auto get_member_types(wrapped_metaobject<M>) noexcept
 /// @see get_pointer
 /// @see get_reference
 /// @see get_value
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_data_members(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
@@ -1423,7 +1430,7 @@ constexpr auto get_data_members(wrapped_metaobject<M>) noexcept
 /// @see get_pointer
 /// @see invoke_on
 /// @see invoke
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_member_functions(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
@@ -1438,7 +1445,7 @@ constexpr auto get_member_functions(wrapped_metaobject<M>) noexcept
 /// @see get_size
 /// @see invoke_on
 /// @see invoke
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_constructors(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
@@ -1451,7 +1458,7 @@ constexpr auto get_constructors(wrapped_metaobject<M>) noexcept
 /// @see reflects_constructor
 /// @see is_empty
 /// @see get_size
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_destructors(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
@@ -1466,7 +1473,7 @@ constexpr auto get_destructors(wrapped_metaobject<M>) noexcept
 /// @see get_size
 /// @see invoke_on
 /// @see invoke
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_operators(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
@@ -1480,7 +1487,7 @@ constexpr auto get_operators(wrapped_metaobject<M>) noexcept
 /// @see is_empty
 /// @see get_size
 /// @see get_constant
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_enumerators(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_enum(M)) {
@@ -1494,7 +1501,7 @@ constexpr auto get_enumerators(wrapped_metaobject<M>) noexcept
 /// @see is_empty
 /// @see get_size
 /// @see has_default_argument
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_parameters(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_callable(M)) {
@@ -1508,7 +1515,7 @@ constexpr auto get_parameters(wrapped_metaobject<M>) noexcept
 /// @see is_empty
 /// @see get_size
 /// @see is_explicitly_captured
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_captures(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_lambda(M)) {
@@ -1519,7 +1526,7 @@ constexpr auto get_captures(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see hide_protected
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto hide_private(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
@@ -1530,7 +1537,7 @@ constexpr auto hide_private(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see hide_private
-/// @see metaobject_unary_op
+/// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto hide_protected(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {

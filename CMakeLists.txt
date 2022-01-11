@@ -12,6 +12,9 @@ file(STRINGS VERSION MIRROR_VERSION)
 include(config/Policies.cmake)
 include(config/Defaults.cmake)
 include(config/BuildType.cmake)
+include(config/CommonLibs.cmake)
+
+find_package(Threads REQUIRED)
 
 add_subdirectory(include)
 add_subdirectory(source)

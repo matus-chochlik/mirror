@@ -351,6 +351,13 @@ constexpr auto concat(M h, Ms... t) noexcept {
     return concat(unpack(h), concat(unpack(t)...));
 }
 
+// flatten
+template <__metaobject_id... M>
+constexpr auto flatten(unpacked_metaobject_sequence<M...>) requires(
+  ...&& is_object_sequence(wrapped_metaobject<M>{})) {
+    return concat(wrapped_metaobject<M>{}...);
+}
+
 } // namespace mirror
 
 #endif // MIRROR_SEQUENCE_HPP
