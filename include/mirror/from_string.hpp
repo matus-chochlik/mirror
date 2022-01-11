@@ -9,6 +9,7 @@
 #ifndef MIRROR_FROM_STRING_HPP
 #define MIRROR_FROM_STRING_HPP
 
+#include "enum_utils.hpp"
 #include "extract.hpp"
 #include "is_within_limits.hpp"
 #include "tribool.hpp"
@@ -84,6 +85,16 @@ from_string(const std::string_view src, const std::type_identity<T>) noexcept
         return {std::errc::invalid_argument};
     }
     return {res.ec};
+}
+
+template <typename T>
+static inline auto
+from_string(const std::string_view src, const std::type_identity<T>) noexcept
+  -> std::variant<T, std::errc> requires(std::is_enum_v<T>) {
+    if(const auto converted{string_to_enum<T>(src)}) {
+        return {extract(converted)};
+    }
+    return {std::errc::invalid_argument};
 }
 
 static inline auto from_string(
@@ -184,6 +195,17 @@ auto from_string(const std::string_view src) noexcept -> extractable;
 template <typename T>
 auto from_string(const std::string_view src) noexcept {
     return from_string(src, std::type_identity<T>{});
+}
+
+template <typename T>
+auto from_optional_string(const std::optional<std::string_view> src) noexcept
+  -> std::optional<T> {
+    if(src) {
+        if(const auto converted{from_string(src, std::type_identity<T>{})}) {
+            return extract(converted);
+        }
+    }
+    return {};
 }
 //------------------------------------------------------------------------------
 } // namespace mirror
