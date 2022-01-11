@@ -40,10 +40,12 @@ struct basic_rapidjson_write_backend {
         node_type& node;
         node_type temp;
 
-        context(rapidjson::GenericDocument<Encoding, Allocator>& d) noexcept
-          : allocator{d.GetAllocator()}
-          , parent{d}
-          , node{d} {}
+        context(
+          rapidjson::GenericValue<Encoding, Allocator>& v,
+          Allocator& a) noexcept
+          : allocator{a}
+          , parent{v}
+          , node{v} {}
 
         context(context& c, node_type& n) noexcept
           : allocator{c.allocator}
@@ -107,7 +109,7 @@ struct basic_rapidjson_write_backend {
             }
         } else if constexpr(std::is_convertible_v<T, std::string_view>) {
             const std::string_view view{value};
-            ctx.node.SetString(to_rapidjson(view));
+            ctx.node.SetString(to_rapidjson(view), ctx.allocator);
         } else {
             return drv.write(*this, ctx, value);
         }
@@ -172,10 +174,18 @@ struct basic_rapidjson_write_backend {
 template <typename T, typename E, typename A>
 auto write_rapidjson(
   const T& value,
-  rapidjson::GenericDocument<E, A>& node) noexcept -> write_errors {
+  rapidjson::GenericValue<E, A>& node,
+  A& alloc) noexcept -> write_errors {
     basic_rapidjson_write_backend<E, A> backend;
-    typename basic_rapidjson_write_backend<E, A>::context ctx{node};
+    typename basic_rapidjson_write_backend<E, A>::context ctx{node, alloc};
     return write(value, backend, ctx);
+}
+//------------------------------------------------------------------------------
+template <typename T, typename E, typename A>
+auto write_rapidjson(
+  const T& value,
+  rapidjson::GenericDocument<E, A>& doc) noexcept -> write_errors {
+    return write_rapidjson(value, doc, doc.GetAllocator());
 }
 //------------------------------------------------------------------------------
 template <typename T>
