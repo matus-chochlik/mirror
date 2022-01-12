@@ -6,8 +6,8 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#ifndef MIRROR_REST_ADAPTOR_HPP
-#define MIRROR_REST_ADAPTOR_HPP
+#ifndef MIRROR_REST_API_HPP
+#define MIRROR_REST_API_HPP
 
 #include "extract.hpp"
 #include "from_string.hpp"
@@ -22,7 +22,7 @@
 
 namespace mirror {
 
-class rest_response {
+class rest_api_response {
 private:
     rapidjson::Document _result{};
 
@@ -78,7 +78,7 @@ public:
 };
 
 template <typename Backend>
-class rest_adaptor {
+class rest_api_adaptor {
 public:
     enum class error_code {
         invalid_argument,
@@ -104,7 +104,7 @@ private:
       std::string_view name,
       Value& dst,
       const url& request,
-      rest_response& response) -> bool {
+      rest_api_response& response) -> bool {
         if(const auto arg{request.argument(name)}) {
             if(const auto value{from_string<Value>(extract(arg))};
                has_value(value)) {
@@ -145,7 +145,7 @@ private:
       const Names& names,
       Values& values,
       const url& request,
-      rest_response& response) {
+      rest_api_response& response) {
         if constexpr(I < std::tuple_size_v<Values>) {
             if(_handle_arg(names[I], std::get<I>(values), request, response)) {
                 return _handle_args<I + 1Z>(names, values, request, response);
@@ -161,7 +161,7 @@ private:
       std::type_identity<std::variant<R, E>>,
       Tup& tup,
       std::index_sequence<I...>,
-      rest_response& response) {
+      rest_api_response& response) {
         if(const auto result{(_backend.*get_pointer(mf))(std::get<I>(tup)...)};
            has_value(result)) {
             response.set_result(extract(result));
@@ -178,7 +178,7 @@ private:
       std::type_identity<R>,
       Tup& tup,
       std::index_sequence<I...>,
-      rest_response& response) {
+      rest_api_response& response) {
         response.set_result((_backend.*get_pointer(mf))(std::get<I>(tup)...));
         return true;
     }
@@ -189,7 +189,7 @@ private:
       std::type_identity<void>,
       Tup& tup,
       std::index_sequence<I...>,
-      rest_response&) {
+      rest_api_response&) {
         (_backend.*get_pointer(mf))(std::get<I>(tup)...);
         return true;
     }
@@ -197,7 +197,7 @@ private:
     bool _handle_call(
       metaobject auto mf,
       const url& request,
-      rest_response& response) {
+      rest_api_response& response) {
         const auto mp{get_parameters(mf)};
         const auto arg_names{make_array_of<std::string_view>(mp, get_name(_1))};
         auto arg_values{make_value_tuple(transform(mp, get_type(_1)))};
@@ -212,7 +212,7 @@ private:
         return false;
     }
 
-    bool _handle_dispatch(const url& request, rest_response& response) {
+    bool _handle_dispatch(const url& request, rest_api_response& response) {
         bool success{false};
         if(const auto opt_path{request.path()}) {
             const auto& path{extract(opt_path)};
@@ -233,7 +233,7 @@ private:
         return success;
     }
 
-    bool _handle_domain(const url& request, rest_response& response) {
+    bool _handle_domain(const url& request, rest_api_response& response) {
         if(request.has_host(_domain)) {
             return _handle_dispatch(request, response);
         } else {
@@ -249,7 +249,7 @@ private:
         return false;
     }
 
-    bool _handle_scheme(const url& request, rest_response& response) {
+    bool _handle_scheme(const url& request, rest_api_response& response) {
         if(request.has_scheme(_scheme)) {
             return _handle_domain(request, response);
         } else {
@@ -266,8 +266,11 @@ private:
     }
 
 public:
-    rest_adaptor() = default;
-    rest_adaptor(std::string scheme, std::string domain, Backend backend) noexcept
+    rest_api_adaptor() = default;
+    rest_api_adaptor(
+      std::string scheme,
+      std::string domain,
+      Backend backend) noexcept
       : _scheme{std::move(scheme)}
       , _domain{std::move(domain)}
       , _backend{std::move(backend)} {}
@@ -276,7 +279,7 @@ public:
         return _domain;
     }
 
-    auto handle(const url& request, rest_response& response) -> bool {
+    auto handle(const url& request, rest_api_response& response) -> bool {
         if(request) {
             return _handle_scheme(request, response);
         } else {
