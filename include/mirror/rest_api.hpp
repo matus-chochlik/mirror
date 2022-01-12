@@ -83,6 +83,7 @@ public:
     enum class error_code {
         invalid_argument,
         missing_argument,
+        invalid_path,
         missing_path,
         invalid_domain,
         missing_domain,
@@ -215,6 +216,7 @@ private:
     bool _handle_dispatch(const url& request, rest_api_response& response) {
         bool success{false};
         if(const auto opt_path{request.path()}) {
+            bool found{false};
             const auto& path{extract(opt_path)};
             for_each(
               filter(get_member_functions(mirror(Backend)), is_public(_1)),
@@ -223,9 +225,15 @@ private:
                   if(
                     path.starts_with("/") && path.ends_with(func_name) &&
                     (path.size() == 1Z + func_name.size())) {
+                      found = true;
                       success = _handle_call(mf, request, response);
                   }
               });
+            if(!found) {
+                response.set_error_code(error_code::invalid_path);
+                response.set_error_message(
+                  "invalid path `{1}` in request", path);
+            }
         } else {
             response.set_error_code(error_code::missing_path);
             response.set_error_message("missing path in request");
