@@ -69,11 +69,9 @@ public:
     }
 
     auto str() const -> std::string {
-        std::stringstream temp;
-        rapidjson::OStreamWrapper stream(temp);
-        rapidjson::Writer<rapidjson::OStreamWrapper> writer(stream);
-        _result.Accept(writer);
-        return temp.str();
+        std::string str;
+        serialize::rapidjson_to_string(_result, str);
+        return str;
     }
 };
 

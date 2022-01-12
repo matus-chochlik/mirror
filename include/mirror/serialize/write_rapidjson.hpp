@@ -15,6 +15,7 @@
 #include "../utils/rapidjson.hpp"
 #include "write.hpp"
 #include <sstream>
+#include <variant>
 
 MIRROR_DIAG_PUSH()
 #if defined(__clang__)
@@ -188,14 +189,31 @@ auto write_rapidjson(
     return write_rapidjson(value, doc, doc.GetAllocator());
 }
 //------------------------------------------------------------------------------
+template <typename E, typename A>
+auto rapidjson_to_stream(
+  const rapidjson::GenericDocument<E, A>& doc,
+  std::ostream& out) -> write_errors {
+    rapidjson::OStreamWrapper stream(out);
+    rapidjson::Writer<rapidjson::OStreamWrapper> writer(stream);
+    doc.Accept(writer);
+    return {};
+}
+//------------------------------------------------------------------------------
+template <typename E, typename A>
+auto rapidjson_to_string(
+  const rapidjson::GenericDocument<E, A>& doc,
+  std::string& str) -> write_errors {
+    std::stringstream out;
+    auto errors = rapidjson_to_stream(doc, out);
+    str = out.str();
+    return errors;
+}
+//------------------------------------------------------------------------------
 template <typename T>
 auto write_rapidjson_stream(const T& value, std::ostream& out) -> write_errors {
     rapidjson::Document doc;
     auto errors = mirror::serialize::write_rapidjson(value, doc);
-
-    rapidjson::OStreamWrapper stream(out);
-    rapidjson::Writer<rapidjson::OStreamWrapper> writer(stream);
-    doc.Accept(writer);
+    errors |= rapidjson_to_stream(doc, out);
     return errors;
 }
 //------------------------------------------------------------------------------
