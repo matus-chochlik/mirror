@@ -544,6 +544,7 @@ consteval auto reflects_conversion_operator(wrapped_metaobject<M>) noexcept
 /// @brief Indicates if a metaobject reflects an expression.
 /// @ingroup classification
 /// @see reflects_parenthesized_expression
+/// @see reflects_construction_expression
 /// @see reflects_function_call_expression
 /// @see meta_trait
 /// @see has_trait
@@ -555,6 +556,7 @@ consteval auto reflects_expression(wrapped_metaobject<M>) noexcept -> bool {
 /// @brief Indicates if a metaobject reflects a parenthesized expression.
 /// @ingroup classification
 /// @see reflects_expression
+/// @see reflects_construction_expression
 /// @see reflects_function_call_expression
 /// @see meta_trait
 /// @see has_trait
@@ -564,10 +566,24 @@ consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>) noexcept
     return __metaobject_is_meta_parenthesized_expression(M);
 }
 
+/// @brief Indicates if a metaobject reflects a constructor call expression.
+/// @ingroup classification
+/// @see reflects_expression
+/// @see reflects_parenthesized_expression
+/// @see reflects_function_call_expression
+/// @see meta_trait
+/// @see has_trait
+template <__metaobject_id M>
+consteval auto reflects_construction_expression(wrapped_metaobject<M>) noexcept
+  -> bool {
+    return __metaobject_is_meta_construction_expression(M);
+}
+
 /// @brief Indicates if a metaobject reflects a function call expression.
 /// @ingroup classification
 /// @see reflects_expression
 /// @see reflects_parenthesized_expression
+/// @see reflects_construction_expression
 /// @see meta_trait
 /// @see has_trait
 template <__metaobject_id M>
@@ -1357,6 +1373,7 @@ constexpr auto get_class(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_parenthesized_expression
 /// @see reflects_function_call_expression
+/// @see reflects_construction_expression
 /// @see get_callable
 /// @see metaobject_operation
 template <__metaobject_id M>
@@ -1368,12 +1385,14 @@ constexpr auto get_subexpression(wrapped_metaobject<M>) noexcept
 /// @brief Returns the reflection of the sub-expression of a parenthesized expression.
 /// @ingroup operations
 /// @see reflects_parenthesized_expression
+/// @see reflects_construction_expression
 /// @see reflects_function_call_expression
 /// @see get_subexpression
 /// @see metaobject_operation
 template <__metaobject_id M>
-constexpr auto get_callable(wrapped_metaobject<M>) noexcept
-  requires(__metaobject_is_meta_function_call_expression(M)) {
+constexpr auto get_callable(wrapped_metaobject<M>) noexcept requires(
+  __metaobject_is_meta_construction_expression(M) ||
+  __metaobject_is_meta_function_call_expression(M)) {
     return wrapped_metaobject<__metaobject_get_callable(M)>{};
 }
 
