@@ -865,6 +865,13 @@ constexpr auto concat(placeholder_expr<X>... e) {
     }};
 }
 
+template <typename X, typename F, typename A>
+constexpr auto fold(placeholder_expr<X> e, F transform, A aggregate) {
+    return placeholder_expr{[e, transform, aggregate](auto mo) {
+        return fold(e(mo, transform, aggregate));
+    }};
+}
+
 template <typename X, typename F>
 constexpr auto all_of(placeholder_expr<X> e, F predicate) {
     return placeholder_expr{[e, predicate](auto mo) {

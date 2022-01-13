@@ -153,6 +153,21 @@ constexpr auto extract_types(wrapped_metaobject<M> mo) noexcept
     return transform_types<std::type_identity>(unpack(mo));
 }
 
+// fold
+template <__metaobject_id... M, typename F, typename A>
+constexpr auto
+fold(unpacked_metaobject_sequence<M...>, F transform, A aggregate) {
+    return aggregate(transform(wrapped_metaobject<M>{})...);
+}
+
+template <__metaobject_id M, typename F, typename A>
+constexpr auto fold(
+  wrapped_metaobject<M> mo,
+  F transform,
+  A aggregate) requires(__metaobject_is_meta_object_sequence(M)) {
+    return fold(unpack(mo), transform, aggregate);
+}
+
 // for each
 template <__metaobject_id... M, typename F>
 constexpr void
