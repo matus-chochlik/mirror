@@ -26,6 +26,20 @@ struct placeholder_expr {
 template <typename F>
 placeholder_expr(F) -> placeholder_expr<F>;
 
+template <typename El, typename Er>
+constexpr auto operator^(placeholder_expr<El> l, placeholder_expr<Er> r) {
+    return placeholder_expr{[l, r](auto x) {
+        return l(x) ^ r(x);
+    }};
+}
+
+template <typename El, typename Er>
+constexpr auto operator+(placeholder_expr<El> l, placeholder_expr<Er> r) {
+    return placeholder_expr{[l, r](auto x) {
+        return l(x) + r(x);
+    }};
+}
+
 template <>
 struct placeholder_expr<std::integral_constant<size_t, 1>> {
     template <__metaobject_id M>
