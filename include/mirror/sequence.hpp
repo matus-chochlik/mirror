@@ -168,6 +168,44 @@ constexpr auto fold(
     return fold(unpack(mo), transform, aggregate);
 }
 
+// join
+template <typename F, typename S, typename A>
+constexpr auto join(unpacked_metaobject_sequence<>, F, S, A) {
+    return S{};
+}
+
+template <
+  __metaobject_id M,
+  __metaobject_id... Ms,
+  typename F,
+  typename S,
+  typename A>
+constexpr auto join(
+  unpacked_metaobject_sequence<M, Ms...>,
+  F transform,
+  S separator,
+  A aggregate) {
+    return aggregate(
+      transform(wrapped_metaobject<M>{}),
+      aggregate(separator, transform(wrapped_metaobject<Ms>{}))...);
+}
+
+template <__metaobject_id... M, typename F, typename S>
+constexpr auto
+join(unpacked_metaobject_sequence<M...> ms, F transform, S separator) {
+    return join(ms, std::move(transform), std::move(separator), [](auto... v) {
+        return (... + v);
+    });
+}
+
+template <__metaobject_id M, typename F, typename S>
+constexpr auto join(
+  wrapped_metaobject<M> mo,
+  F transform,
+  S separator) requires(__metaobject_is_meta_object_sequence(M)) {
+    return join(unpack(mo), std::move(transform), std::move(separator));
+}
+
 // for each
 template <__metaobject_id... M, typename F>
 constexpr void

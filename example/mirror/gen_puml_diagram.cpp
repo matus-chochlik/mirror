@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#include <iostream>
 #include <mirror/all.hpp>
+#include <iostream>
 #include <vector>
 //------------------------------------------------------------------------------
 template <typename MT>
@@ -24,7 +24,7 @@ void print_type_puml(std::ostream& out, MT mt) {
             out << "  " << get_name(mo) << "\n";
         });
     } else {
-        for_each_info(get_member_functions(mt), [&](auto mo, auto info) {
+        for_each(get_member_functions(mt), [&](auto mo) {
             out << "  ";
             if(is_private(mo)) {
                 out << "-";
@@ -35,13 +35,13 @@ void print_type_puml(std::ostream& out, MT mt) {
             }
             out << get_name(get_type(mo)) << " ";
             out << get_name(mo) << "(";
-            for_each(get_parameters(mo), [&](auto mp) {
-                if(!info.is_first()) {
-                    out << ", ";
-                }
-                out << get_name(mp) << ": ";
-                out << get_name(get_type(mp));
-            });
+            out << join(
+              get_parameters(mo),
+              [](auto mp) {
+                  return std::string(get_name(mp)) + ": " +
+                         std::string(get_name(get_type(mp)));
+              },
+              std::string(", "));
             out << ")\n";
         });
         out << "  __\n";
