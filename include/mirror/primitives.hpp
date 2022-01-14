@@ -1239,6 +1239,15 @@ constexpr auto invoke(wrapped_metaobject<M>, A&&... args) -> __unrefltype(
 }
 
 // string
+consteval auto get_debug_info_view(__metaobject_id mo) noexcept -> string_view {
+    return {__metaobject_get_debug_info(mo)};
+}
+
+template <__metaobject_id M>
+consteval auto get_debug_info(wrapped_metaobject<M>) noexcept -> string_view {
+    return get_debug_info_view(M);
+}
+
 consteval auto get_source_file_name_view(__metaobject_id mo) noexcept
   -> string_view {
     return {
