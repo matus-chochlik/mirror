@@ -616,6 +616,13 @@ constexpr auto get_display_name(placeholder_expr<X> e) {
 }
 
 template <typename X>
+constexpr auto get_full_name(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_full_name(e(mo));
+    }};
+}
+
+template <typename X>
 constexpr auto to_string(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto mo) {
         return std::string(e(mo));
@@ -875,14 +882,14 @@ constexpr auto concat(placeholder_expr<X>... e) {
 template <typename X, typename F, typename A>
 constexpr auto fold(placeholder_expr<X> e, F transform, A aggregate) {
     return placeholder_expr{[e, transform, aggregate](auto mo) {
-        return fold(e(mo, transform, aggregate));
+        return fold(e(mo), transform, aggregate);
     }};
 }
 
 template <typename X, typename F, typename S>
 constexpr auto join(placeholder_expr<X> e, F transform, S separator) {
     return placeholder_expr{[e, transform, separator](auto mo) {
-        return join(e(mo, transform, separator));
+        return join(e(mo), transform, separator);
     }};
 }
 
@@ -890,7 +897,7 @@ template <typename X, typename F, typename S, typename A>
 constexpr auto
 join(placeholder_expr<X> e, F transform, S separator, A aggregate) {
     return placeholder_expr{[e, transform, separator, aggregate](auto mo) {
-        return join(e(mo, transform, separator, aggregate));
+        return join(e(mo), transform, separator, aggregate);
     }};
 }
 
