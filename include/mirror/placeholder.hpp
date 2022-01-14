@@ -595,6 +595,13 @@ constexpr auto get_constant(placeholder_expr<X> e) {
 
 // string
 template <typename X>
+constexpr auto get_debug_info(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto mo) {
+        return get_debug_info(e(mo));
+    }};
+}
+
+template <typename X>
 constexpr auto get_source_file_name(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto mo) {
         return get_source_file_name(e(mo));
