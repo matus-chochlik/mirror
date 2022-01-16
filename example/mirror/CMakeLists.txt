@@ -9,6 +9,7 @@ add_subdirectory(testdecl)
 
 mirror_add_simple_example(amount_of_foo)
 mirror_add_simple_example(applicable_ops)
+mirror_add_simple_example(are_consecutive)
 mirror_add_simple_example(are_sorted_by_name)
 mirror_add_simple_example(chai_on_mirror)
 mirror_add_simple_example(ctre_integer_concept)
