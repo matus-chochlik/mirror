@@ -10,6 +10,7 @@
 #define MIRROR_SEQUENCE_HPP
 
 #include "primitives.hpp"
+#include <string>
 
 namespace mirror {
 
@@ -204,6 +205,40 @@ constexpr auto join(
   F transform,
   S separator) requires(__metaobject_is_meta_object_sequence(M)) {
     return join(unpack(mo), std::move(transform), std::move(separator));
+}
+
+// join to st5ring
+template <typename F, typename S>
+auto join_to_string(unpacked_metaobject_sequence<>, const F&, std::string_view)
+  -> std::string {
+    return {};
+}
+
+template <__metaobject_id M, __metaobject_id... Ms, typename F>
+auto join_to_string(
+  unpacked_metaobject_sequence<M, Ms...>,
+  F transform,
+  std::string_view separator) -> std::string {
+    std::string result;
+    result.reserve(
+      ((sizeof...(Ms) * separator.size()) + ... +
+       transform(wrapped_metaobject<Ms>{}).size()));
+    result.append(transform(wrapped_metaobject<M>{}));
+    for_each(unpacked_metaobject_sequence<Ms...>{}, [&](auto mo) {
+        result.append(separator);
+        result.append(transform(mo));
+    });
+
+    return result;
+}
+
+template <__metaobject_id M, typename F>
+auto join_to_string(
+  wrapped_metaobject<M> mo,
+  F transform,
+  std::string_view separator) -> std::string
+  requires(__metaobject_is_meta_object_sequence(M)) {
+    return join_to_string(unpack(mo), std::move(transform), separator);
 }
 
 // for each

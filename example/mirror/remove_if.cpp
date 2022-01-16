@@ -18,10 +18,10 @@ int main() {
         mirror(example::tetrahedron)),
       [](mirror::metaobject auto mo) {
           std::cout << "non-static member functions: ";
-          std::cout << join(
+          std::cout << join_to_string(
             remove_if(get_member_functions(mo), is_static(mirror::_1)),
-            to_string(get_name(mirror::_1)),
-            std::string("; "));
+            get_name(mirror::_1),
+            "; ");
           std::cout << std::endl;
       });
 
