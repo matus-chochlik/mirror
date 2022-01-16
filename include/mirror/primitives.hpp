@@ -1093,6 +1093,10 @@ consteval auto get_size(wrapped_metaobject<M>) noexcept -> size_t
     return __metaobject_get_size(M);
 }
 
+consteval auto get_size(std::string_view s) noexcept -> size_t {
+    return s.size();
+}
+
 template <__metaobject_id M>
 struct _get_pointer
   : integral_constant<
