@@ -346,6 +346,19 @@ constexpr auto filter(wrapped_metaobject<M> mo, F predicate) noexcept
     return filter(unpack(mo), predicate);
 }
 
+// remove
+template <__metaobject_id... M, typename F>
+constexpr auto
+remove_if(unpacked_metaobject_sequence<M...> seq, F predicate) noexcept {
+    return filter(seq, [predicate](auto mo) { return !predicate(mo); });
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto remove_if(wrapped_metaobject<M> mo, F predicate) noexcept
+  requires(__metaobject_is_meta_object_sequence(M)) {
+    return remove_if(unpack(mo), predicate);
+}
+
 // all of
 template <__metaobject_id... M, typename F>
 constexpr auto all_of(unpacked_metaobject_sequence<M...>, F predicate) noexcept

@@ -937,6 +937,13 @@ constexpr auto filter(placeholder_expr<X> e, F predicate) {
 }
 
 template <typename X, typename F>
+constexpr auto remove_if(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto mo) {
+        return remove_if(e(mo), predicate);
+    }};
+}
+
+template <typename X, typename F>
 constexpr auto find_if(placeholder_expr<X> e, F predicate) {
     return placeholder_expr{[e, predicate](auto mo) {
         return find_if(e(mo), predicate);
