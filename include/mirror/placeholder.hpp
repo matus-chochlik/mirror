@@ -953,6 +953,13 @@ join(placeholder_expr<X> e, F transform, S separator, A aggregate) {
 }
 
 template <typename X, typename F>
+constexpr auto is_sorted(placeholder_expr<X> e, F compare) {
+    return placeholder_expr{[e, compare](auto... a) {
+        return is_sorted(e(a...), compare);
+    }};
+}
+
+template <typename X, typename F>
 constexpr auto all_of(placeholder_expr<X> e, F predicate) {
     return placeholder_expr{[e, predicate](auto... a) {
         return all_of(e(a...), predicate);

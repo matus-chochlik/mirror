@@ -381,7 +381,7 @@ constexpr auto filter(wrapped_metaobject<M> mo, F predicate) noexcept
     return filter(unpack(mo), predicate);
 }
 
-// remove
+// remove if
 template <__metaobject_id... M, typename F>
 constexpr auto
 remove_if(unpacked_metaobject_sequence<M...> seq, F predicate) noexcept {
@@ -392,6 +392,40 @@ template <__metaobject_id M, typename F>
 constexpr auto remove_if(wrapped_metaobject<M> mo, F predicate) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return remove_if(unpack(mo), predicate);
+}
+
+// is sorted
+template <typename F>
+constexpr auto is_sorted(unpacked_metaobject_sequence<>, F) {
+    return true;
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto is_sorted(unpacked_metaobject_sequence<M>, F) {
+    return true;
+}
+
+template <__metaobject_id M0, __metaobject_id M1, typename F>
+constexpr auto is_sorted(unpacked_metaobject_sequence<M0, M1>, F compare) {
+    return compare(wrapped_metaobject<M0>{}, wrapped_metaobject<M1>{});
+}
+
+template <
+  __metaobject_id M0,
+  __metaobject_id M1,
+  __metaobject_id M2,
+  __metaobject_id... Ms,
+  typename F>
+constexpr auto
+is_sorted(unpacked_metaobject_sequence<M0, M1, M2, Ms...>, F compare) {
+    return compare(wrapped_metaobject<M0>{}, wrapped_metaobject<M1>{}) &&
+           is_sorted(unpacked_metaobject_sequence<M1, M2, Ms...>{}, compare);
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto is_sorted(wrapped_metaobject<M> mo, F compare) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return is_sorted(unpack(mo), compare);
 }
 
 // all of
