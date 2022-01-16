@@ -60,5 +60,12 @@ int main() {
     if(reflects_object(found_default_ctr)) {
         std::cout << "has default constructor" << std::endl;
     }
+
+    const auto found_nondefault_ctr = find_if_not(
+      transform(get_constructors(ms), get_parameters(_1)), is_empty(_1));
+
+    if(reflects_object(found_nondefault_ctr)) {
+        std::cout << "has non-default constructor" << std::endl;
+    }
     return 0;
 }

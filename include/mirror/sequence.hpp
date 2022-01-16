@@ -281,6 +281,28 @@ constexpr auto find_if(wrapped_metaobject<M> mo, F predicate) noexcept
     return find_if(unpack(mo), predicate);
 }
 
+// find if not
+template <typename F>
+constexpr auto find_if_not(unpacked_metaobject_sequence<>, F) noexcept {
+    return no_metaobject;
+}
+
+template <__metaobject_id M, __metaobject_id... Mt, typename F>
+constexpr auto
+find_if_not(unpacked_metaobject_sequence<M, Mt...>, F predicate) noexcept {
+    if constexpr(!predicate(wrapped_metaobject<M>{})) {
+        return wrapped_metaobject<M>{};
+    } else {
+        return find_if_not(unpacked_metaobject_sequence<Mt...>{}, predicate);
+    }
+}
+
+template <__metaobject_id M, typename F>
+constexpr auto find_if_not(wrapped_metaobject<M> mo, F predicate) noexcept
+  requires(__metaobject_is_meta_object_sequence(M)) {
+    return find_if_not(unpack(mo), predicate);
+}
+
 // filter
 template <__metaobject_id... M, typename F>
 constexpr auto do_filter(
