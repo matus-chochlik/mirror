@@ -338,6 +338,81 @@ constexpr auto find_if_not(wrapped_metaobject<M> mo, F predicate) noexcept
     return find_if_not(unpack(mo), predicate);
 }
 
+// find ranking
+template <__metaobject_id M, typename F, typename C>
+constexpr auto find_ranking(unpacked_metaobject_sequence<M>, F, C) {
+    return wrapped_metaobject<M>{};
+}
+
+template <__metaobject_id M0, __metaobject_id M1, typename F, typename C>
+constexpr auto
+find_ranking(unpacked_metaobject_sequence<M0, M1>, F transform, C compare) {
+    const auto l{wrapped_metaobject<M0>{}};
+    const auto r{wrapped_metaobject<M1>{}};
+    if constexpr(compare(transform(l), transform(r))) {
+        return r;
+    } else {
+        return l;
+    }
+}
+
+template <
+  __metaobject_id M0,
+  __metaobject_id M1,
+  __metaobject_id M2,
+  __metaobject_id... Ms,
+  typename F,
+  typename C>
+constexpr auto find_ranking(
+  unpacked_metaobject_sequence<M0, M1, M2, Ms...>,
+  F transform,
+  C compare) {
+    const auto l{wrapped_metaobject<M0>{}};
+    const auto r{wrapped_metaobject<M1>{}};
+    if constexpr(compare(transform(l), transform(r))) {
+        return find_ranking(
+          unpacked_metaobject_sequence<M1, M2, Ms...>{}, transform, compare);
+    } else {
+        return find_ranking(
+          unpacked_metaobject_sequence<M0, M2, Ms...>{}, transform, compare);
+    }
+}
+
+template <__metaobject_id M, typename F, typename C>
+constexpr auto find_ranking(
+  wrapped_metaobject<M> mo,
+  F transform,
+  C compare) requires(__metaobject_is_meta_object_sequence(M)) {
+    return find_ranking(unpack(mo), transform, compare);
+}
+
+template <typename S, typename F>
+constexpr auto
+find_ranking(S seq, F transform) requires(is_object_sequence(seq)) {
+    return find_ranking(seq, transform, [](auto l, auto r) { return l < r; });
+}
+
+// get top value
+template <__metaobject_id... M, typename F, typename C>
+constexpr auto
+get_top_value(unpacked_metaobject_sequence<M...> seq, F transform, C compare) {
+    return transform(find_ranking(seq, transform, compare));
+}
+
+template <__metaobject_id M, typename F, typename C>
+constexpr auto get_top_value(
+  wrapped_metaobject<M> mo,
+  F transform,
+  C compare) requires(__metaobject_is_meta_object_sequence(M)) {
+    return get_top_value(unpack(mo), transform, compare);
+}
+
+template <typename S, typename F>
+constexpr auto
+get_top_value(S seq, F transform) requires(is_object_sequence(seq)) {
+    return get_top_value(seq, transform, [](auto l, auto r) { return l < r; });
+}
+
 // filter
 template <__metaobject_id... M, typename F>
 constexpr auto do_filter(
