@@ -1008,6 +1008,34 @@ constexpr auto find_if_not(placeholder_expr<X> e, F predicate) {
     }};
 }
 
+template <typename X, typename F, typename C>
+constexpr auto find_ranking(placeholder_expr<X> e, F transform, C compare) {
+    return placeholder_expr{[e, transform, compare](auto... a) {
+        return find_ranking(e(a...), transform, compare);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto find_ranking(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return find_ranking(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F, typename C>
+constexpr auto get_top_value(placeholder_expr<X> e, F transform, C compare) {
+    return placeholder_expr{[e, transform, compare](auto... a) {
+        return get_top_value(e(a...), transform, compare);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto get_top_value(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return get_top_value(e(a...), transform);
+    }};
+}
+
 template <typename X, typename Function, typename Fallback, typename... P>
 constexpr auto select(
   placeholder_expr<X> e,
