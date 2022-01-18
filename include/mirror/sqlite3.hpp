@@ -9,11 +9,17 @@
 #ifndef MIRROR_SQLITE3_HPP
 #define MIRROR_SQLITE3_HPP
 
+#include "extract.hpp"
+#include "from_string.hpp"
+#include "sequence.hpp"
+#include <cassert>
 #include <memory>
+#include <optional>
 #include <span>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <type_traits>
 #include <vector>
 
 #if !MIRROR_HAS_SQLITE3
@@ -40,7 +46,7 @@ private:
     std::vector<std::string_view> _values;
     std::vector<std::string_view> _names;
 
-public:
+    friend class sqlite3_db;
     auto set(int count, char** values, char** names) noexcept -> const auto& {
         _values.clear();
         _names.clear();
@@ -55,6 +61,13 @@ public:
         return *this;
     }
 
+public:
+    sqlite3_row() noexcept = default;
+    sqlite3_row(sqlite3_row&&) noexcept = default;
+    sqlite3_row(const sqlite3_row&) = delete;
+    auto operator=(sqlite3_row&&) = delete;
+    auto operator=(const sqlite3_row&) = delete;
+
     auto size() const noexcept -> size_t {
         return _values.size();
     }
@@ -63,8 +76,55 @@ public:
         return {_names};
     }
 
+    auto index_of(std::string_view name) const noexcept
+      -> std::optional<size_t> {
+        const auto pos = std::find(_names.begin(), _names.end(), name);
+        if(pos != _names.end()) {
+            return {static_cast<size_t>(std::distance(_names.begin(), pos))};
+        }
+        return {};
+    }
+
     auto values() const noexcept -> std::span<const std::string_view> {
         return {_values};
+    }
+
+    auto value(size_t idx) const noexcept -> std::string_view {
+        assert(idx < size());
+        return {_values[idx]};
+    }
+
+    auto value(std::optional<size_t> idx) const noexcept
+      -> std::optional<std::string_view> {
+        if(idx) {
+            return value(*idx);
+        }
+        return {};
+    }
+
+    auto value_of(std::string_view name) const noexcept
+      -> std::optional<std::string_view> {
+        return value(index_of(name));
+    }
+
+    template <typename T>
+    auto fetch(T& instance) const -> bool requires(std::is_class_v<T>) {
+        bool result = true;
+        for_each(get_data_members(mirror(T)), [&](auto mdm) {
+            using mirror::has_value;
+            using mirror::extract;
+            if(const auto col_idx{index_of(get_name(mdm))};
+               has_value(col_idx)) {
+                if(const auto opt_val{from_string(
+                     value(*col_idx), get_reflected_type(get_type(mdm)))};
+                   has_value(opt_val)) {
+                    get_reference(mdm, instance) = extract(opt_val);
+                }
+            } else {
+                result = false;
+            }
+        });
+        return result;
     }
 };
 
