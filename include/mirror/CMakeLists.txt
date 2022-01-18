@@ -39,6 +39,7 @@ target_link_libraries(
 	INTERFACE
 		Threads::Threads
 		Mirror::Deps::System
+		Mirror::Deps::SQLite3
 )
 
 file(GLOB_RECURSE HEADERS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" *.hpp)
