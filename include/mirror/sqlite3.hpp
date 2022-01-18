@@ -8,24 +8,25 @@
 
 #ifndef MIRROR_SQLITE3_HPP
 #define MIRROR_SQLITE3_HPP
+#include <iostream>
 
+#if !MIRROR_HAS_SQLITE3
+#error "SQLite3 required but not found!"
+#else
 #include "extract.hpp"
 #include "from_string.hpp"
 #include "sequence.hpp"
 #include <cassert>
 #include <memory>
 #include <optional>
+#include <set>
 #include <span>
+#include <sqlite3.h>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 #include <type_traits>
 #include <vector>
-
-#if !MIRROR_HAS_SQLITE3
-#error "SQLite3 required but not found!"
-#else
-#include <sqlite3.h>
 
 namespace mirror {
 
@@ -43,7 +44,7 @@ private:
 
 class sqlite3_row {
 private:
-    std::vector<std::string_view> _values;
+    std::vector<std::optional<std::string_view>> _values;
     std::vector<std::string_view> _names;
 
     friend class sqlite3_db;
@@ -54,7 +55,8 @@ private:
             _values.reserve(static_cast<size_t>(count));
             _names.reserve(static_cast<size_t>(count));
             for(int i = 0; i < count; ++i) {
-                _values.emplace_back(values[i]);
+                using vt = std::optional<std::string_view>;
+                _values.emplace_back(values[i] ? vt{values[i]} : vt{});
                 _names.emplace_back(names[i]);
             }
         }
@@ -85,13 +87,18 @@ public:
         return {};
     }
 
-    auto values() const noexcept -> std::span<const std::string_view> {
+    auto values() const noexcept
+      -> std::span<const std::optional<std::string_view>> {
         return {_values};
     }
 
-    auto value(size_t idx) const noexcept -> std::string_view {
+    auto value(size_t idx) const noexcept -> std::optional<std::string_view> {
         assert(idx < size());
         return {_values[idx]};
+    }
+
+    auto has_value(size_t idx, std::string_view val) const noexcept -> bool {
+        return value(idx) == val;
     }
 
     auto value(std::optional<size_t> idx) const noexcept
@@ -115,7 +122,7 @@ public:
             using mirror::extract;
             if(const auto col_idx{index_of(get_name(mdm))};
                has_value(col_idx)) {
-                if(const auto opt_val{from_string(
+                if(const auto opt_val{from_optional_string(
                      value(*col_idx), get_reflected_type(get_type(mdm)))};
                    has_value(opt_val)) {
                     get_reference(mdm, instance) = extract(opt_val);
@@ -139,6 +146,24 @@ private:
             throw sqlite3_error(handle);
         }
         return handle_ptr{handle, &::sqlite3_close};
+    }
+
+    template <typename T>
+    static auto _get_sql_type(std::type_identity<T>, int) -> std::string_view
+      requires(std::convertible_to<T, std::string_view>) {
+        return "varchar";
+    }
+
+    template <typename T>
+    static auto _get_sql_type(std::type_identity<T>, int) -> std::string_view
+      requires(std::is_integral_v<T>) {
+        return "integer";
+    }
+
+    template <typename T>
+    static auto _get_sql_type(std::type_identity<T>, ...) -> std::string_view
+      requires(std::convertible_to<T, std::string_view>) {
+        return "varchar";
     }
 
 public:
@@ -166,6 +191,92 @@ public:
               err_msg, &::sqlite3_free};
             throw sqlite3_error(err_msg);
         }
+    }
+
+    void execute(std::string_view sql) {
+        char* err_msg = nullptr;
+        auto wrapper = [](void*, int, char**, char**) -> int {
+            return 0;
+        };
+        if(
+          ::sqlite3_exec(
+            _handle.get(), sql.data(), wrapper, nullptr, &err_msg) !=
+          SQLITE_OK) {
+            const std::unique_ptr<char, void (*)(void*)> free_msg{
+              err_msg, &::sqlite3_free};
+            throw sqlite3_error(err_msg);
+        }
+    }
+
+    template <typename T>
+    void ensure_table(std::type_identity<T> = {}) {
+        const auto table_name{get_name(remove_all_aliases(mirror(T)))};
+        std::string table_query{
+          "SELECT count(1) FROM sqlite_master WHERE type='table' AND name='"};
+        table_query.append(table_name);
+        table_query.append("'");
+        bool needs_table = true;
+        execute(table_query, [&](const auto& count_data) {
+            needs_table = count_data.has_value(0, "0");
+        });
+
+        if(needs_table) {
+            std::string table_create{"CREATE TABLE "};
+            table_create.append(table_name);
+            table_create.append("(");
+            bool first = true;
+            for_each(get_data_members(mirror(T)), [&](auto mdm) {
+                if(first) {
+                    first = false;
+                } else {
+                    table_create.append(", ");
+                }
+                table_create.append(get_name(mdm));
+                table_create.append(" ");
+                table_create.append(
+                  _get_sql_type(get_reflected_type(get_type(mdm)), 0));
+            });
+            table_create.append(")");
+            execute(table_create);
+        } else {
+            std::string column_query{"pragma table_info("};
+            column_query.append(table_name);
+            column_query.append(")");
+            std::set<std::string> columns;
+            execute(column_query, [&](const auto& col_data) {
+                using mirror::has_value;
+                using mirror::extract;
+                if(const auto col_name{col_data.value_of("name")};
+                   has_value(col_name)) {
+                    columns.insert(std::string(extract(col_name)));
+                }
+            });
+            for_each(get_data_members(mirror(T)), [&](auto mdm) {
+                const auto column_name{get_name(mdm)};
+                if(!columns.contains(std::string(column_name))) {
+                    std::string column_add{"ALTER TABLE "};
+                    column_add.append(table_name);
+                    column_add.append(" ADD COLUMN ");
+                    column_add.append(column_name);
+                    column_add.append(" ");
+                    column_add.append(
+                      _get_sql_type(get_reflected_type(get_type(mdm)), 0));
+                    execute(column_add);
+                }
+            });
+        }
+    }
+
+    template <typename T>
+    auto fetch(std::string_view sql, std::vector<T>& dest)
+      -> auto& requires(std::is_class_v<T>) {
+        execute(sql, [&](const auto& row) {
+            T instance{};
+            if(row.fetch(instance)) {
+                dest.emplace_back(std::move(instance));
+            }
+        });
+        return dest;
     }
 };
 
