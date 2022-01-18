@@ -116,12 +116,14 @@ operator|(operation_pointer l, operation_pointer r) noexcept
 /// @see meta_traits
 enum class operation_string : unsigned {
     // string
+    /// @brief Returns the debug-info (in JSON format) for a metaobject.
+    get_debug_info = 1U << 0U,
     /// @brief Returns the user-friendly name of the reflected base-level entity.
-    get_display_name = 1U << 0U,
+    get_display_name = 1U << 1U,
     /// @brief Returns the unqualified "base name" of the reflected base-level entity.
-    get_name = 1U << 1U,
+    get_name = 1U << 2U,
     /// @brief Returns source file column of the reflected entity if available.
-    get_source_file_name = 1U << 2U
+    get_source_file_name = 1U << 3U
 };
 
 /// @brief Bitfield of string-returning unary operations applicable to metaobjects.
@@ -307,6 +309,7 @@ struct map_operation<operation_pointer::get_pointer> {
         }                                                                     \
     };
 
+MIRROR_IMPLEMENT_MAP_UNARY_OP(get_debug_info)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_display_name)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_name)
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_source_file_name)

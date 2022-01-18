@@ -50,9 +50,7 @@ void print_info(mirror::metaobject auto mo) {
       mirror::all_metaobject_operation_kinds(), get_enumerators(mirror::_1)));
 
     const auto maxl = fold_init_list(
-      mes,
-      [](auto me) { return get_name(me).size(); },
-      [](auto l) { return std::max(l); });
+      mes, get_size(get_name(mirror::_1)), [](auto l) { return std::max(l); });
 
     std::cout << "meta-info for " << get_display_name(mo) << std::endl;
     for_each(mes, [&](mirror::metaobject auto me) {

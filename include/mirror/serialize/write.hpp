@@ -121,7 +121,7 @@ struct serializer<bitfield<T>> {
             });
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<write_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -146,7 +146,7 @@ struct serializer<std::optional<T>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<write_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -179,7 +179,7 @@ struct serializer<std::span<const T, N>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<write_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -273,7 +273,7 @@ public:
               std::make_index_sequence<sizeof...(T)>{});
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<write_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -309,12 +309,12 @@ private:
                     errors |=
                       backend.finish_attribute(extract(subsubctx), name);
                 } else {
-                    errors |= std::get<write_errors>(subsubctx);
+                    errors |= get_error(subsubctx);
                 }
             });
             errors |= backend.finish_record(extract(subctx));
         } else {
-            errors |= std::get<write_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -368,7 +368,7 @@ auto write(
         errors |= driver.write(backend, extract(subctx), value);
         errors |= backend.finish(extract(subctx));
     } else {
-        errors |= std::get<write_errors>(subctx);
+        errors |= get_error(subctx);
     }
     return errors;
 }

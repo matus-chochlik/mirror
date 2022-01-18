@@ -7,6 +7,7 @@
 ///
 #include "testdecl/weekday.hpp"
 #include <mirror/init_list.hpp>
+#include <mirror/placeholder.hpp>
 #include <mirror/traits.hpp>
 #include <algorithm>
 #include <iomanip>
@@ -15,10 +16,7 @@
 
 void print_traits(mirror::metaobject auto mo) {
     const auto mes = get_enumerators(mirror(mirror::meta_trait));
-    const auto maxl = fold_init_list(
-      mes,
-      [](auto me) { return get_name(me).size(); },
-      [](auto l) { return std::max(l); });
+    const auto maxl = get_top_value(mes, get_size(get_name(mirror::_1)));
 
     std::cout << "traits of " << get_display_name(mo) << std::endl;
     for_each(mes, [&](mirror::metaobject auto me) {

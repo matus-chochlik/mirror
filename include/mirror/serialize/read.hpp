@@ -113,7 +113,7 @@ struct deserializer<bitfield<T>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<read_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -144,7 +144,7 @@ struct deserializer<std::optional<T>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<read_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -183,7 +183,7 @@ struct deserializer<std::span<T, N>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<read_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -247,7 +247,7 @@ public:
               std::make_index_sequence<sizeof...(T)>{});
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<read_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -296,7 +296,7 @@ struct deserializer<std::vector<T, A>> {
             }
             errors |= backend.finish_list(extract(subctx));
         } else {
-            errors |= std::get<read_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -339,12 +339,12 @@ private:
                     errors |=
                       backend.finish_attribute(extract(subsubctx), name);
                 } else {
-                    errors |= std::get<read_errors>(subsubctx);
+                    errors |= get_error(subsubctx);
                 }
             });
             errors |= backend.finish_record(extract(subctx));
         } else {
-            errors |= std::get<read_errors>(subctx);
+            errors |= get_error(subctx);
         }
         return errors;
     }
@@ -401,7 +401,7 @@ auto read(
         errors |= driver.read(backend, extract(subctx), value);
         errors |= backend.finish(extract(subctx));
     } else {
-        errors |= std::get<read_errors>(subctx);
+        errors |= get_error(subctx);
     }
     return errors;
 }
