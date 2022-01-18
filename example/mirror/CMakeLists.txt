@@ -46,7 +46,23 @@ mirror_add_simple_example(sql_query_generator)
 mirror_add_simple_example(to_json_string)
 mirror_add_simple_example(to_rapidjson)
 
+
 mirror_add_simple_example(puml_class_diagram)
 target_link_libraries(mirror-puml_class_diagram PRIVATE mirror-testdecl)
+
+find_program(SQLite3_COMMAND sqlite3)
+if(SQLite3_FOUND AND SQLite3_COMMAND)
+	add_custom_command(
+		OUTPUT people.db
+		COMMAND "${SQLite3_COMMAND}"
+		ARGS people.db < "${CMAKE_CURRENT_SOURCE_DIR}/people.sql"
+		WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+		DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/people.sql"
+	)
+	add_custom_target(mirror-people-db DEPENDS people.db)
+
+	mirror_add_simple_example(fetch_from_sqlite)
+	add_dependencies(mirror-fetch_from_sqlite mirror-people-db)
+endif()
 
 add_subdirectory(factory)
