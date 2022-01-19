@@ -1,7 +1,7 @@
 \mode<presentation>
 
-\setbeamercolor{frametitle}{parent=palette primary}
-\setbeamercolor{section in head/foot}{parent=palette quaternary}
+\newcommand{\miniscule}{\@setfontsize\miniscule{4}{5}}
+\setbeamerfont{headline}{size=\miniscule}
 
 \beamer@compresstrue
 
@@ -45,9 +45,9 @@
       ](interior.north west) rectangle (interior.south east);
     },
     width=\paperwidth,height=0.7cm]
-      \insertnavigation{1em}
+			\insertnavigation{1em}
       \hfill
-      \smash{\raisebox{-0.17cm}{\includegraphics[width=0.7cm,height=0.7cm]{mirror.png}}}
+      \smash{\raisebox{-0.22cm}{\includegraphics[width=0.7cm,height=0.7cm]{mirror.png}}}
   \end{tcolorbox}
 }%
 
@@ -71,4 +71,5 @@
 \mode
 <all>
 
+\setbeamertemplate{page number in head/foot}[totalframenumber]
 \setbeamertemplate{bibliography item}[text]

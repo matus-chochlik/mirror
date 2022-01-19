@@ -9,6 +9,7 @@
 \usepackage[most]{tcolorbox}
 \usepackage[table]{xcolor}
 \usepackage{url}
+\usepackage{syntax}
 \usepackage{relsize}
 \usepackage{gensymb}
 \usepackage{mathtools}
@@ -41,8 +42,8 @@
 }
 
 \newcommand{\cmdname}[1]{\texttt{\larger{#1}}}
-\newcommand{\inlinecode}[1]{\texttt{\color{mirrortext}\colorbox{mirrorlisting}{#1}}}
-\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrormajor}{#1}}}
+\newcommand{\inlinecode}[1]{\texttt{\color{mirrortext}{#1}}}
+\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrormajor}{\protect{#1}}}}
 
 \usepackage{listings}
 \lstdefinestyle{mirrorcode}{
@@ -51,14 +52,26 @@
     breaklines=true,
     prebreak=\textbackslash,
     showstringspaces=false,
+		stringstyle=\color{mirrorstring},
     commentstyle=\itshape\color{mirrorcomment},
     keywordstyle=\itshape\bfseries\color{mirrorkeyword},
     tabsize=2,
     escapeinside={(*@}{@*)}
 }
+\lstdefinelanguage{c++2x}{
+	language = c++,
+  morekeywords = {
+    concept,
+		constexpr,
+		consteval,
+		decltype,
+		requires,
+		static_assert
+  }
+}
 \lstdefinelanguage{cmake}{
-    alsodigit = {-},
-    keywords = {
+  alsodigit = {-},
+  keywords = {
         and, or, not,
         set, option,
         add_executable,
@@ -67,7 +80,7 @@
         set_target_properties,
         if,endif,
         PROPERTIES
-   }
+ }
 }
 \lstset{style=mirrorcode}
 
