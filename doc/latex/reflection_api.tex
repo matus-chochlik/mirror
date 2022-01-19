@@ -8,11 +8,150 @@
 \frame{\titlepage}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Title}
-  \framesubtitle{Sub title}
+  \frametitle{Metaobject}
+  \larger
   \begin{itemize}
-	\item{TODO}
+    \item A {\em meta-level} representation of a {\em base-level} entity
+      \begin{itemize}
+      \smaller
+        \item namespace, type, function, constructor, destructor, variable,
+          constant, expression, \ldots
+      \end{itemize}
+    \item On the {\em meta-level} all of the above are \say{reified}\footnote{
+        unlike on the base-level}
+      \begin{itemize}
+      \smaller
+        \item can be stored in variables, used as function arguments and
+          return values,
+        \item provides the ability to write reflection algorithm libraries,
+        \item working at compile-time.
+      \end{itemize}
+    \item We say it \say{reflects} the {\em base-level} entity
   \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Metaobject}
+  \framesubtitle{continued}
+  \larger
+  \begin{itemize}
+    \item Provides access to {\em metadata} describing the reflected
+      {\em base-level} entity
+      \begin{itemize}
+      \smaller
+        \item type of a variable,
+        \item data members of a \inlinecode{struct},
+        \item constructors or member functions of a \inlinecode{class},
+        \item base classes of a \inlinecode{class},
+        \item return type of a function,
+        \item parameters of a function,
+        \item enumerators in an \inlinecode{enum} type,
+        \item name of a namespace, type, function, data member, parameter, etc.
+        \item address of a variable, data member or member function,
+        \item specifiers like \inlinecode{virtual}, \inlinecode{constexpr},
+          \inlinecode{static}, \inlinecode{noexcept}, \inlinecode{public},
+          \inlinecode{protected}, \inlinecode{private}, etc.
+        \item source location\footnote{except for built-ins},
+        \item \ldots
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject}
+  \framesubtitle{continued}
+  \larger
+  In a program a {\em metaobject} is a compile-time constant
+    {\larger value} of a type satisfying the~following concept:
+  \begin{lstlisting}[language=c++2x]
+template <typename X>
+concept metaobject = (*@{\em not-really-important-here}@*);
+  \end{lstlisting}
+  \vfill
+  Can be used to constrain function arguments:
+  \begin{lstlisting}[language=c++2x]
+void foo(metaobject auto m) { /*...*/ }
+  \end{lstlisting}
+  or,
+  \begin{lstlisting}[language=c++2x]
+void bar(auto m)
+  requires(metaobject<decltype(m)>) {
+    /*...*/
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \larger
+  \begin{itemize}
+    \item The process of obtaining metadata or metaobjects.
+    \item Through an dedicated operator or language expression:
+    \item For example\footnote{\inlinecode{mirror} is a placeholder
+      for the actual reflection expression}:
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x]
+const auto meta_int = mirror(int);
+static_assert(
+  metaobject<decltype(meta_int)>);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection API}
+  \larger
+  \begin{itemize}
+    \item Set of (compile-time) functions operating on {\em metaobjects}
+    \item Several groups
+    \begin{itemize}
+      \item metaobject classification functions,
+      \item primitive metadata extraction,
+      \item metaobject sequence operations,
+      \item algorithms,
+      \item predicates, comparators, transformation functions,
+      \item placeholder expressions(?),
+      \item \ldots
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+% - Design ---------------------------------------------------------------------
+\section{Design}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection API}
+  \framesubtitle{design considerations}
+  \larger
+  \begin{itemize}
+    \item The general API design stuff
+    \item Concise and clear syntax
+    \item Support for as many use-cases as possible
+    \item Provide functions handling recurring patterns and use-cases
+    \item Support composition of function calls into bigger custom algorithms
+    \item Proper ADL\footnote{argument-dependent lookup}; should not require
+      excessive name qualification
+    \item Be similar to the STL and other commonly-used libraries\footnote{
+        boost, \ldots}, where it makes sense.
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Hello, reflection!}
+  \framesubtitle{the obligtatory first example}
+  \begin{lstlisting}[language=c++2x]
+struct hello {};
+
+int main() {
+  hello world;
+
+  std::cout << get_name((*@\listinghl{mirror}@*)(hello))
+            << ", "
+            << (*@\listinghl{get_name}@*)(mirror(world))
+            << "!" << std::endl;
+
+    return 0;
+}
+  \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
