@@ -42,8 +42,8 @@
 }
 
 \newcommand{\cmdname}[1]{\texttt{\larger{#1}}}
-\newcommand{\inlinecode}[1]{\texttt{\color{mirrortext}{#1}}}
-\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrormajor}{\protect{#1}}}}
+\newcommand{\inlinecode}[1]{\texttt{\color{mirrortext}{\protect{#1}}}}
+\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite}{\protect{#1}}}}
 
 \usepackage{listings}
 \lstdefinestyle{mirrorcode}{

@@ -5,7 +5,31 @@
 \title{Implementing a general-purpose reflection API}
 % - Intro ----------------------------------------------------------------------
 \section{Introduction}
-\frame{\titlepage}
+\begin{frame}
+  \frametitle{Intro}
+  \framesubtitle{What is this? Why am I here? Who are these people?}
+  \makebox[\linewidth][c]{
+    \centering
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \includegraphics[
+        width=0.9\textwidth,
+        keepaspectratio
+    ]{look_into_mirror.png}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Contents}
+  \Large
+  \begin{itemize}
+    \item Reflection
+    \item Metaobjects and metadata
+    \item Metaobject APIs
+    \item Examples
+    \item Some use-cases
+  \end{itemize}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Metaobject}
@@ -17,13 +41,13 @@
         \item namespace, type, function, constructor, destructor, variable,
           constant, expression, \ldots
       \end{itemize}
-    \item On the {\em meta-level} all of the above are \say{reified}\footnote{
-        unlike on the base-level}
+    \item On the {\em meta-level\footnote{unlike on the base-level}} all
+      of the above are \say{reified}
       \begin{itemize}
       \smaller
         \item can be stored in variables, used as function arguments and
           return values,
-        \item provides the ability to write reflection algorithm libraries,
+        \item provide the ability to write reflection algorithm libraries,
         \item working at compile-time.
       \end{itemize}
     \item We say it \say{reflects} the {\em base-level} entity
@@ -70,12 +94,12 @@ concept metaobject = (*@{\em not-really-important-here}@*);
   \vfill
   Can be used to constrain function arguments:
   \begin{lstlisting}[language=c++2x]
-void foo(metaobject auto m) { /*...*/ }
+void foo((*@\listinghl{metaobject}@*) auto m) { /*...*/ }
   \end{lstlisting}
-  or,
+  or more generally in a \inlinecode{requires} clause,
   \begin{lstlisting}[language=c++2x]
 void bar(auto m)
-  requires(metaobject<decltype(m)>) {
+  requires((*@\listinghl{metaobject}@*)<decltype(m)>) {
     /*...*/
 }
   \end{lstlisting}
@@ -85,13 +109,14 @@ void bar(auto m)
   \frametitle{Reflection}
   \larger
   \begin{itemize}
-    \item The process of obtaining metadata or metaobjects.
-    \item Through an dedicated operator or language expression:
-    \item For example\footnote{\inlinecode{mirror} is a placeholder
-      for the actual reflection expression}:
+    \item The process of obtaining metadata or metaobjects providing metadata
+      indirectly.
+    \item Done through a~dedicated operator or~language expression:
+    \item For example:
   \end{itemize}
   \begin{lstlisting}[language=c++2x]
-const auto meta_int = mirror(int);
+const auto meta_int = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~placeholder
+      for the~actual reflection expression}@*)(int);
 static_assert(
   metaobject<decltype(meta_int)>);
   \end{lstlisting}
@@ -107,16 +132,15 @@ static_assert(
       \item metaobject classification functions,
       \item primitive metadata extraction,
       \item metaobject sequence operations,
-      \item algorithms,
+      \item general-purpose algorithms,
       \item predicates, comparators, transformation functions,
-      \item placeholder expressions(?),
+      \item syntax sugar, placeholder expressions,
       \item \ldots
     \end{itemize}
   \end{itemize}
 \end{frame}
-% ------------------------------------------------------------------------------
 % - Design ---------------------------------------------------------------------
-\section{Design}
+\section{API Design}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Reflection API}
@@ -152,6 +176,237 @@ int main() {
     return 0;
 }
   \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection API}
+  \framesubtitle{metaobject classification}
+  \begin{itemize}
+    \item Indicate {\em \larger what} does a metaobject reflect
+    \item Return \inlinecode{true} or \inlinecode{false}
+    \item Are \inlinecode{consteval}
+    \item \inlinecode{auto reflects_object(metaobject auto m) -> bool;}
+    \item \footnotesize\inlinecode{auto reflects_\{object_sequence, named, alias, typed,
+    scope, scope_member, enumerator, record_member, base, namespace, global_scope,
+    type, enum, record, class, lambda, constant, variable, lambda_capture,
+    function_parameter, callable, function, member_function,
+    special_member_function, constructor, destructor, operator, conversion_operator,
+    expression, parenthesized_expression, function_call_expression\}(metaobject auto m) -> bool;}
+    \item \normalsize Typically used in \inlinecode{requires} clauses or
+      in \inlinecode{if constexpr}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection API}
+  \framesubtitle{metadata retrieval functions}
+  \begin{itemize}
+    \item Return individual \say{atomic} pieces of metadata
+    \item Some are applicable to all metaobjects
+    \begin{itemize}
+      \smaller
+      \item \inlinecode{get_source_line}, \inlinecode{get_source_column},
+        \inlinecode{reflects_same}, \ldots
+    \end{itemize}
+  \item Some only on metaobjects reflecting specific {\em base-level} entities
+    \begin{itemize}
+      \smaller
+      \item where they make sense,
+      \item \inlinecode{get_name}, \inlinecode{get_type}, \inlinecode{get_scope},
+        \inlinecode{get_enumerators}, \ldots
+    \end{itemize}
+  \item Return one of these things:
+    \begin{itemize}
+      \smaller
+      \item boolean values (\inlinecode{is_static}),
+      \item integer values (\inlinecode{get_source_line}),
+      \item other constant values\footnote{like enumerators} (\inlinecode{get_constant}),
+      \item pointers or references\footnote{to values, data member, functions},
+      \item strings\footnote{string views actually} (\inlinecode{get_source_file_name},
+        \inlinecode{get_name}),
+      \item other metaobjects (\inlinecode{get_scope}, \inlinecode{get_data_members}).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+% - Sequences ------------------------------------------------------------------
+\section{Sequences}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection API}
+  \framesubtitle{somewhere in logging\ldots}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_display_name(metaobject auto mo) 
+  requires((*@\listinghl{reflects_named}@*)(mo)) -> string_view;
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void log_who_did_this(
+  metaobject auto mo,
+  ostream& log) {
+  if constexpr((*@\listinghl{reflects_named}@*)(mo)) {
+    log << get_display_name(mo);
+  } else if constexpr((*@\listinghl{reflects_global_scope}@*)(mo)) {
+    log << "it was the global scope!"
+  } else {
+    log << "how the hell should I know?"
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Metaobject sequences}
+  \larger
+  \begin{itemize}
+    \item Are (special kind of) metaobjects themselves
+    \item Represent collections of other metaobjects
+    \item Returned by many metaobject operations
+    \begin{itemize}
+      \smaller
+      \item base classes,
+      \item data members,
+      \item member functions,
+      \item constructors, destructors,
+      \item enumerators,
+      \item \ldots
+    \end{itemize}
+    \item Only unpacked on demand to improve performance
+  \end{itemize}
+\end{frame}
+% - Composition ----------------------------------------------------------------
+\section{Compositions}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are enumerators consecutive?}
+  \begin{columns}
+    \begin{column}{.43\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+enum class digits {
+    zero = 0,
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.47\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+enum class po2s {
+    one = 1,
+    two = 2,
+    four = 4,
+    eight = 8,
+    sixteen = 16,
+    thirty_two = 32
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are enumerators consecutive?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const auto are_consecutive =
+  is_sorted(get_enumerators(_1),
+  [](metaobject auto l, metaobject auto r) {
+      return int(get_constant(l)) ==
+             int(get_constant(r)) - 1;
+  });
+
+cout << are_consecutive(mirror(digits))<< endl;
+cout << are_consecutive(mirror(po2s)) << endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+  1
+  0
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are data members sorted by name?}
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct foo {
+  int plus(int x) {
+    return x;
+  }
+  int plus(int x, int y) {
+    return x + y;
+  }
+  int plus(int x, int y, int z) {
+    return x + y + z;
+  }
+  int minus(int x) {
+    return -x;
+  }
+  int minus(int x, int y) {
+    return x - y;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct bar {
+  int a() {
+    return 0;
+  }
+  int b() {
+    return 1;
+  }
+  int c() {
+    return 2;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are data members sorted by name?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const auto are_sorted_by_name = is_sorted(
+  get_member_functions(_1),
+  get_name(_1) < get_name(_2));
+
+cout << are_sorted_by_name(mirror(foo))<< endl;
+cout << are_sorted_by_name(mirror(bar))<< endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+  0
+  1
+  \end{verbatim}
+\end{frame}
+% - Conclusion -----------------------------------------------------------------
+\section{Conclusion}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Links, shameless plugs, etc.}
+  \begin{itemize}
+    \item {\em The Mirror library repository} --
+      \url{https://github.com/matus-chochlik/mirror}
+    \item {\em The Mirror library reference (W.I.P.)} --
+      \url{matus-chochlik.github.io/mirror/doxygen/}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{That's all folks\dots}
+  \centering
+  \Huge
+  Thanks for your attention.\\
+  \Large
+  Happy to answer any additional questions.
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
