@@ -623,6 +623,13 @@ constexpr auto get_size(placeholder_expr<X> e) {
     }};
 }
 
+template <size_t I, typename X>
+constexpr auto get_element(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_element<I>(e(a...));
+    }};
+}
+
 template <typename X>
 constexpr auto get_pointer(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
