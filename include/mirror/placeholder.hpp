@@ -1002,6 +1002,13 @@ constexpr auto remove_if(placeholder_expr<X> e, F predicate) {
 }
 
 template <typename X, typename F>
+constexpr auto count_if(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto... a) {
+        return count_if(e(a...), predicate);
+    }};
+}
+
+template <typename X, typename F>
 constexpr auto find_if(placeholder_expr<X> e, F predicate) {
     return placeholder_expr{[e, predicate](auto... a) {
         return find_if(e(a...), predicate);
