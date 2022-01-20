@@ -148,7 +148,7 @@ static_assert(
   \larger
   \begin{itemize}
     \item The general API design stuff
-    \item Concise and clear syntax
+    \item Concise and clear syntax, functional-style
     \item Support for as many use-cases as possible
     \item Provide functions handling recurring patterns and use-cases
     \item Support composition of function calls into bigger custom algorithms
@@ -215,6 +215,14 @@ int main() {
       \item \inlinecode{get_name}, \inlinecode{get_type}, \inlinecode{get_scope},
         \inlinecode{get_enumerators}, \ldots
     \end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection API}
+  \framesubtitle{metadata retrieval functions}
+  \larger
+  \begin{itemize}
   \item Return one of these things:
     \begin{itemize}
       \smaller
@@ -224,6 +232,7 @@ int main() {
       \item pointers or references\footnote{to values, data member, functions},
       \item strings\footnote{string views actually} (\inlinecode{get_source_file_name},
         \inlinecode{get_name}),
+      \item types\footnote{or type identity} (\inlinecode{get_reflected_type},
       \item other metaobjects (\inlinecode{get_scope}, \inlinecode{get_data_members}).
     \end{itemize}
   \end{itemize}
@@ -250,6 +259,8 @@ void log_who_did_this(
 }
   \end{lstlisting}
 \end{frame}
+% - Primitives -----------------------------------------------------------------
+\section{Primitives}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
@@ -368,6 +379,79 @@ auto get_pointer(metaobject auto mo, auto& obj) -> auto*
            reflects_variable(mo));
   \end{lstlisting}
 \end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metadata getters}
+  \framesubtitle{invocation}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto invoke(metaobject auto mo, auto&&... args)
+  requires(reflects_function(mo));
+
+auto invoke(metaobject auto mo, auto&&... args)
+  requires(reflects_member_function(mo) &&
+           is_static(mo));
+
+auto invoke(auto mo, auto& inst, auto&&... args)
+  requires(reflects_member_function(mo) &&
+           !is_static(mo));
+
+auto invoke(metaobject auto mo, auto&&... args)
+  requires(reflects_constructor(mo));
+
+auto invoke_on(auto mo, auto& inst, auto&&... args)
+  requires(reflects_member_function(mo));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metadata getters}
+  \framesubtitle{metaobjects}
+ \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_scope(metaobject auto mo)
+  requires(reflects_scoped(mo));
+
+auto get_type(metaobject auto mo)
+  requires(reflects_typed(mo));
+
+auto get_underlying_type(metaobject auto mo)
+  requires(reflects_enum(mo));
+
+auto get_aliased(metaobject auto mo)
+  requires(reflects_alias(mo));
+
+auto get_class(metaobject auto mo)
+  requires(reflects_base(mo));
+
+auto get_subexpression(metaobject auto mo)
+  requires(reflects_parenthesized_expression(mo));
+
+// and more...
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metadata getters}
+  \framesubtitle{{\em base-level} types}
+ \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <metaobject MO>
+using get_reflected_type_t = (*@\listinghl{unspecified}@*);
+
+auto get_reflected_type(metaobject auto mo)
+  -> type_identity<(*@\listinghl{unspecified}@*)>
+  requires(reflects_type(mo));
+
+template <typename T>
+auto is_type(
+  metaobject auto mo,
+  type_identity<T> = {})
+  -> bool requires(reflects_type(mo));
+
+template <template <typename> class Trait>
+auto has_type_trait(metaobject auto mo) 
+  -> bool requires(reflects_type(mo));
+
+  \end{lstlisting}
+\end{frame}
 % - Sequences ------------------------------------------------------------------
 \section{Sequences}
 % ------------------------------------------------------------------------------
@@ -390,6 +474,65 @@ auto get_pointer(metaobject auto mo, auto& obj) -> auto*
     \item Only unpacked on demand to improve performance
   \end{itemize}
 \end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject sequences}
+  \framesubtitle{getting sequences}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto get_base_classes(metaobject auto mo)
+  requires(reflects_class(mo));
+
+auto get_captures(metaobject auto mo)
+  requires(reflects_lambda(mo));
+
+auto get_constructors(metaobject auto mo)
+  requires(reflects_record(mo));
+
+auto get_data_members(metaobject auto mo)
+  requires(reflects_record(mo));
+
+auto get_destructors(metaobject auto mo)
+  requires(reflects_record(mo));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject sequences}
+  \framesubtitle{getting sequences}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto get_enumerators(metaobject auto mo)
+  requires(reflects_enum(mo));
+
+auto get_member_functions(metaobject auto mo)
+  requires(reflects_record(mo));
+
+auto get_member_types(metaobject auto mo)
+  requires(reflects_record(mo));
+
+auto get_operations(metaobject auto mo)
+  requires(reflects_record(mo));
+
+auto get_parameters(metaobject auto mo)
+  requires(reflects_callable(mo));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Metaobject sequences}
+  \framesubtitle{basic operations}
+  \larger
+  \begin{itemize}
+    \item Is something a sequence (\inlinecode{is_object_sequence})
+    \item Is there anything in the sequence (\inlinecode{is_empty})
+    \item How many elements are there (\inlinecode{get_size})
+    \item Get the I-th element (\inlinecode{get_element<I>})
+    \item Concatenate (\inlinecode{concat}).
+  \end{itemize}
+\end{frame}
+% - Placeholders ---------------------------------------------------------------
+\section{Placeholders}
+% - Algorithms -----------------------------------------------------------------
+\section{Algorithms}
 % - Composition ----------------------------------------------------------------
 \section{Compositions}
 % ------------------------------------------------------------------------------
@@ -758,7 +901,9 @@ void foonction(has_foo_and_such auto) {
         sqlite3, etc.},
       \item \ldots
     \end{itemize}
-    \item On top of the reflection TS implementation in \inlinecode{clang}.
+    \item On top of the reflection TS implementation in \inlinecode{clang}
+    \item There is much more than what fits into a talk
+    \item See the reference (links below)
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -784,6 +929,58 @@ void foonction(has_foo_and_such auto) {
 \end{frame}
 % - Extras ---------------------------------------------------------------------
 \section{Extras}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{There is more}
+  \makebox[\linewidth][c]{
+    \centering
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \includegraphics[
+        width=0.9\textwidth,
+        keepaspectratio
+    ]{extras.png}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are enumerators bitfield bits?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+const auto is_bitfield_enum =
+  is_sorted(get_enumerators(_1), [](auto l, auto r) {
+    if constexpr(has_type_trait<is_signed>(
+      get_underlying_type(get_type(l)))) {
+      return false;
+    } else {
+      auto to_underlying = [](auto e) {
+        using U = underlying_type_t<decltype(e)>;
+        return static_cast<U>(e);
+      };
+      return to_underlying(get_constant(l)) << 1U ==
+             to_underlying(get_constant(r));
+    }
+  });
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Does a structure have some padding?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename... T>
+auto sum_sizeofs(type_list<T...>) -> bool {
+    return (0Z + ... + sizeof(T));
+}
+
+template <typename T>
+auto has_padding() -> bool {
+    return sizeof(T) >
+           sum_sizeofs(extract_types(transform(
+             filter(get_data_members(mirror(T)),
+                    not_(is_static(_1))),
+             get_type(_1))));
+}
+  \end{lstlisting}
+\end{frame}
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 \end{document}
