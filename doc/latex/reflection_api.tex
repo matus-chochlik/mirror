@@ -526,7 +526,8 @@ auto get_parameters(metaobject auto mo)
     \item Is there anything in the sequence (\inlinecode{is_empty})
     \item How many elements are there (\inlinecode{get_size})
     \item Get the I-th element (\inlinecode{get_element<I>})
-    \item Concatenate (\inlinecode{concat}).
+    \item Concatenate (\inlinecode{concat})
+    \item Flatten (\inlinecode{flatten})
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -557,7 +558,7 @@ void (*@\listinghl{for_each}@*)(metaobject auto mo, F function)
   \begin{itemize}
     \item Placeholders
     \begin{itemize}
-      \item pre-defined constant values -- \inlinecode{_1}, \inlinecode{_2}, \ldots
+      \item pre-defined constant objects -- \inlinecode{_1}, \inlinecode{_2}, \ldots
     \end{itemize}
     \item Placeholder expressions
     \begin{itemize}
@@ -630,8 +631,173 @@ get_name(get_element<1>(get_parameters(_1)));
     \item Mostly operate on metaobject sequences
   \end{itemize}
 \end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Algorithms}
+  \framesubtitle{transform}
+  Takes a sequence, returns new sequence containing metaobjects that are
+  the result of applying a transformation \inlinecode{function}
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{transform}@*)(auto mo, auto function)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_base_classes = (*@\listinghl{transform}@*)(
+    get_base_classes(_1),
+    (*@\listinghl{get_class}@*)(_1));
+
+auto get_parameter_types = (*@\listinghl{transform}@*)(
+    get_parameters(_1),
+    (*@\listinghl{get_type}@*)(_1));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Algorithms}
+  \framesubtitle{filter, remove-if}
+  Takes a sequence, returns new sequence containing only metaobjects
+  satisfying a \inlinecode{predicate}
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{filter}@*)(auto mo, auto predicate)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  Takes a sequence, returns new sequence containing only metaobjects
+  {\em not} satisfying a \inlinecode{predicate}
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{remove_if}@*)(auto mo, auto predicate)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_virtual_functions =
+  (*@\listinghl{filter}@*)(get_member_functions(_1), (*@\listinghl{is_virtual}@*)(_1));
+
+auto get_nonstatic_members =
+  (*@\listinghl{remove_if}@*)(get_data_members(_1), (*@\listinghl{is_static}@*)(_1));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Algorithms}
+  \framesubtitle{count-if}
+  Takes a sequence, returns the count of metaobjects satisfying
+  a \inlinecode{predicate}
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{find_if}@*)(auto mo, auto predicate)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto count_public_bases =
+  (*@\listinghl{count_if}@*)(
+    get_base_classes(_1),
+    is_public(_1));
+
+auto count_integer_members =
+  (*@\listinghl{count_if}@*)(
+    get_data_members(_1),
+    has_type_trait<is_integral>(get_type(_1)));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Algorithms}
+  \framesubtitle{find-if, find-if-not}
+  Takes a sequence, returns the first metaobject satisfying
+  a \inlinecode{predicate}
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{find_if}@*)(auto mo, auto predicate)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  Takes a sequence, returns the first metaobject {\em not} satisfying
+  a \inlinecode{predicate}
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{find_if_not}@*)(auto mo, auto predicate)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto find_function_foo = (*@\listinghl{find_if}@*)(
+    get_member_functions(_1),
+    [](auto mo) { return has_name(mo, "foo"); });
+
+auto find_nonstatic_member = (*@\listinghl{find_if_not}@*)(
+    get_data_members(_1),
+    is_static(_1));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Algorithms}
+  \framesubtitle{find-ranking}
+  Takes a sequence, applies a \inlinecode{query} function returning some metadata
+  value on each metaobject.
+  Returns the metaobject for which the value is {\em largest} according
+  to a \inlinecode{compare} function\footnote{if unspecified then less-than is used}.
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{find_ranking}@*)(
+  auto mo, auto query, auto compare)
+  requires(is_object_sequence(mo));
+
+auto (*@\listinghl{find_ranking}@*)(auto mo, auto query)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+    auto find_largest_data_member =
+      find_ranking(
+        get_data_members(_1),
+        get_sizeof(get_type(_1)));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Algorithms}
+  \framesubtitle{get-top-value}
+  Takes a sequence, applies a \inlinecode{query} function returning some metadata
+  value on each metaobject.
+  Returns the {\em value} which is {\em largest} according
+  to a \inlinecode{compare} function\footnote{if unspecified then less-than is used}.
+  \begin{lstlisting}[language=c++2x]
+auto (*@\listinghl{get_top_value}@*)(
+  auto mo, auto query, auto compare)
+  requires(is_object_sequence(mo));
+
+auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+    auto get_max_arity =
+      get_top_value(
+        get_member_functions(_1),
+        get_size(get_parameters(_1)));
+  \end{lstlisting}
+\end{frame}
 % - Composition ----------------------------------------------------------------
 \section{Compositions}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Composition}
+  \larger
+  \begin{itemize}
+    \item There are more such algorithms
+    \begin{itemize}
+      \item \inlinecode{fold}
+      \item \inlinecode{join}
+      \item \inlinecode{is_sorted}
+      \item \inlinecode{all_of}, \inlinecode{any_of}, \inlinecode{none_of}
+      \item \ldots
+    \end{itemize}
+    \item Together with the primitive operations and the placeholder expressions,
+      the basic algorithms can be {\em \larger combined} into bigger,
+      custom algorithms in-place.
+    \item Some examples follow\ldots
+  \end{itemize}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Are data members sorted by size?}
@@ -788,19 +954,19 @@ cout << are_consecutive(mirror(po2s)) << endl;
   \frametitle{Find enumerator with longest name}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 void print_enum(metaobject auto mo) {
-    const auto find_enum_with_longest_name =
-      find_ranking(
-        get_enumerators(_1),
-        get_size(get_name(_1)));
+  auto find_enum_with_longest_name =
+    find_ranking(
+      get_enumerators(_1),
+      get_size(get_name(_1)));
 
-    const auto me = find_enum_with_longest_name(mo);
+  auto me = find_enum_with_longest_name(mo);
 
-    cout << get_name(me)
-         << ", length: "
-         << get_name(me).size()
-         << ", value: "
-         << int(get_constant(me))
-         << endl;
+  cout << get_name(me)
+       << ", length: "
+       << get_name(me).size()
+       << ", value: "
+       << int(get_constant(me))
+       << endl;
 }
   \end{lstlisting}
 \end{frame}
@@ -979,8 +1145,9 @@ void foonction(has_foo_and_such auto) {
     \item Implementation of RPC\footnote{remote procedure calls}
     \item Generating DB system queries
     \item Fetching data from databases into C++ structures
-    \item Parsing of command-line arguments
     \item Parsing of configuration files
+    \item Parsing of command-line arguments
+    \item Mapping of URL arguments to function arguments
     \item \ldots
   \end{itemize}
 \end{frame}
@@ -1006,7 +1173,7 @@ void foonction(has_foo_and_such auto) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{What's next?}
+  \frametitle{What's next for reflection?}
   \larger
   \begin{itemize}
     \item More \say{unreflection}
