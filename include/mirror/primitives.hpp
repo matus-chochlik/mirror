@@ -1627,6 +1627,7 @@ consteval auto get_reflected_type(wrapped_metaobject<M>) noexcept
 /// @see reflects_type
 /// @see get_reflected_type
 /// @see get_type
+/// @see get_sizeof
 /// @see get_reflected_type_t
 template <__metaobject_id M>
 consteval auto get_reflected_type_of(wrapped_metaobject<M>) noexcept
@@ -1644,6 +1645,21 @@ template <template <typename T> class Transform, __metaobject_id M>
 consteval auto get_transformed_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_type(M)) {
     return _get_transformed_type<Transform, M>{};
+}
+
+/// @brief Returns the size (in bytes) of the reflected type.
+/// @ingroup operations
+/// @see reflects_type
+/// @see get_reflected_type
+/// @see get_type
+template <__metaobject_id M>
+consteval auto get_sizeof(wrapped_metaobject<M> mo) noexcept
+  requires(__metaobject_is_meta_type(M) || __metaobject_is_meta_typed(M)) {
+    if constexpr(__metaobject_is_meta_typed(M)) {
+        return get_sizeof(get_type(mo));
+    } else {
+        return sizeof(__unrefltype(M));
+    }
 }
 
 /// @brief Indicates if type-reflecting metaobject reflects the specified type.

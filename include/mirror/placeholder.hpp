@@ -849,6 +849,13 @@ constexpr auto get_transformed_type(placeholder_expr<X> e) {
     }};
 }
 
+template <typename X>
+constexpr auto get_sizeof(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_sizeof(e(a...));
+    }};
+}
+
 template <typename T, typename X>
 constexpr auto is_type(placeholder_expr<X> e, type_identity<T> tid = {}) {
     return placeholder_expr{[e, tid](auto... a) {
