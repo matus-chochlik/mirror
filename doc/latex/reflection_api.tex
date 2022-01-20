@@ -394,6 +394,103 @@ auto get_pointer(metaobject auto mo, auto& obj) -> auto*
 \section{Compositions}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{Are data members sorted by size?}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct foo {
+    double d;
+    int i;
+    short s;
+    char c;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct bar {
+    int i;
+    float f;
+    long l;
+    bool b;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const auto are_sorted_by_size = is_sorted(
+  get_member_functions(_1),
+  get_sizeof(_1) < get_sizeof(_2));
+
+cout << are_sorted_by_size(mirror(foo))<< endl;
+cout << are_sorted_by_size(mirror(bar))<< endl;
+  \end{lstlisting}
+  \begin{verbatim}
+  1
+  0
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are member functions sorted by name?}
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct foo {
+  int plus(int x) {
+    return x;
+  }
+  int plus(int x, int y) {
+    return x + y;
+  }
+  int plus(int x, int y, int z) {
+    return x + y + z;
+  }
+  int minus(int x) {
+    return -x;
+  }
+  int minus(int x, int y) {
+    return x - y;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct bar {
+  int a() {
+    return 0;
+  }
+  int b() {
+    return 1;
+  }
+  int c() {
+    return 2;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are member functions sorted by name?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const auto are_sorted_by_name = is_sorted(
+  get_member_functions(_1),
+  get_name(_1) < get_name(_2));
+
+cout << are_sorted_by_name(mirror(foo))<< endl;
+cout << are_sorted_by_name(mirror(bar))<< endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+  0
+  1
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{Are enumerators consecutive?}
   \begin{columns}
     \begin{column}{.43\textwidth}
@@ -444,65 +541,6 @@ cout << are_consecutive(mirror(po2s)) << endl;
   \begin{verbatim}
   1
   0
-  \end{verbatim}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are data members sorted by name?}
-  \begin{columns}
-    \begin{column}{.65\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-struct foo {
-  int plus(int x) {
-    return x;
-  }
-  int plus(int x, int y) {
-    return x + y;
-  }
-  int plus(int x, int y, int z) {
-    return x + y + z;
-  }
-  int minus(int x) {
-    return -x;
-  }
-  int minus(int x, int y) {
-    return x - y;
-  }
-};
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{.35\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct bar {
-  int a() {
-    return 0;
-  }
-  int b() {
-    return 1;
-  }
-  int c() {
-    return 2;
-  }
-};
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are data members sorted by name?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_sorted_by_name = is_sorted(
-  get_member_functions(_1),
-  get_name(_1) < get_name(_2));
-
-cout << are_sorted_by_name(mirror(foo))<< endl;
-cout << are_sorted_by_name(mirror(bar))<< endl;
-  \end{lstlisting}
-  Output:
-  \begin{verbatim}
-  0
-  1
   \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -707,8 +745,28 @@ void foonction(has_foo_and_such auto) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
+  \frametitle{Where does this come from}
+  \larger
+  \begin{itemize}
+    \item The {\em Mirror} library
+    \begin{itemize}
+      \item primitive and sequence operations,
+      \item algorithms,
+      \item placeholder expressions,
+      \item examples and use-cases\footnote{including bigger ones},
+      \item integration with other projects\footnote{CTRE, rapidjson, chaiscript,
+        sqlite3, etc.},
+      \item \ldots
+    \end{itemize}
+    \item On top of the reflection TS implementation in \inlinecode{clang}.
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
   \frametitle{Links, shameless plugs, etc.}
   \begin{itemize}
+    \item {\em Reflection TS in \inlinecode{clang}} --
+      \url{https://github.com/matus-chochlik/llvm-project}
     \item {\em The Mirror library repository} --
       \url{https://github.com/matus-chochlik/mirror}
     \item {\em The Mirror library reference (W.I.P.)} --
@@ -724,5 +782,8 @@ void foonction(has_foo_and_such auto) {
   \Large
   Happy to answer any additional questions.
 \end{frame}
+% - Extras ---------------------------------------------------------------------
+\section{Extras}
+% ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 \end{document}
