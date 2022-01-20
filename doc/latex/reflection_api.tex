@@ -509,7 +509,7 @@ auto get_member_functions(metaobject auto mo)
 auto get_member_types(metaobject auto mo)
   requires(reflects_record(mo));
 
-auto get_operations(metaobject auto mo)
+auto get_operators(metaobject auto mo)
   requires(reflects_record(mo));
 
 auto get_parameters(metaobject auto mo)
@@ -643,7 +643,7 @@ auto (*@\listinghl{transform}@*)(auto mo, auto function)
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_base_classes = (*@\listinghl{transform}@*)(
+auto get_base_class_types = (*@\listinghl{transform}@*)(
     get_base_classes(_1),
     (*@\listinghl{get_class}@*)(_1));
 
@@ -777,11 +777,9 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
         get_size(get_parameters(_1)));
   \end{lstlisting}
 \end{frame}
-% - Composition ----------------------------------------------------------------
-\section{Compositions}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Composition}
+  \frametitle{Algorithms}
   \larger
   \begin{itemize}
     \item There are more such algorithms
@@ -792,6 +790,23 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
       \item \inlinecode{all_of}, \inlinecode{any_of}, \inlinecode{none_of}
       \item \ldots
     \end{itemize}
+    \item Named algorithms convey meaning of code better
+    \item Typically require less typing than writing for-loops
+    \item They may hide some compiler magic
+    \begin{itemize}
+      \item \inlinecode{filter}
+      \item \ldots
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+% - Composition ----------------------------------------------------------------
+\section{Compositions}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Composition}
+  \larger
+  \begin{itemize}
+    \item The super-power of named algorithms
     \item Together with the primitive operations and the placeholder expressions,
       the basic algorithms can be {\em \larger combined} into bigger,
       custom algorithms in-place.
@@ -1088,6 +1103,64 @@ cout << has_overloaded_functions(mirror(bar))<< endl;
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{Does a structure have some padding?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename... T>
+auto sum_sizeofs(type_list<T...>) -> bool {
+    return (0Z + ... + sizeof(T));
+}
+
+template <typename T>
+auto has_padding() -> bool {
+    return sizeof(T) >
+           sum_sizeofs(extract_types(transform(
+             filter(get_data_members(mirror(T)),
+                    not_(is_static(_1))),
+             get_type(_1))));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Does a structure have some padding?}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct S1 {
+    int i;
+    float f;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.40\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct S2 {
+    char c;
+    double d;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+void print_has_padding() {
+  cout << get_name(remove_all_aliases(mirror(T)))
+       << ": "
+       << (has_padding<T>() ? "has some" : "has no")
+       << " padding"
+       << endl;
+}
+print_has_padding<S1>();
+print_has_padding<S2>();
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+S1: has no padding
+S2: has some padding
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{\say{Smart} concept definition}
   \framesubtitle{featuring CTRE!}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
@@ -1153,7 +1226,7 @@ void foonction(has_foo_and_such auto) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Where does this come from}
+  \frametitle{Where does all this come from?}
   \larger
   \begin{itemize}
     \item The {\em Mirror} library
@@ -1236,25 +1309,6 @@ const auto is_bitfield_enum =
              to_underlying(get_constant(r));
     }
   });
-  \end{lstlisting}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Does a structure have some padding?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-template <typename... T>
-auto sum_sizeofs(type_list<T...>) -> bool {
-    return (0Z + ... + sizeof(T));
-}
-
-template <typename T>
-auto has_padding() -> bool {
-    return sizeof(T) >
-           sum_sizeofs(extract_types(transform(
-             filter(get_data_members(mirror(T)),
-                    not_(is_static(_1))),
-             get_type(_1))));
-}
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
