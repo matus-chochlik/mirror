@@ -241,7 +241,7 @@ int main() {
 \begin{frame}[fragile]
   \frametitle{Reflection API}
   \framesubtitle{somewhere in logging\ldots}
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 auto get_display_name(metaobject auto mo) -> string_view
   requires((*@\listinghl{reflects_named}@*)(mo));
   \end{lstlisting}
@@ -326,6 +326,9 @@ auto is_virtual(metaobject auto mo) -> bool
   \frametitle{Metadata getters}
   \framesubtitle{miscelaneous}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+auto is_scoped_enum(metaobject auto mo) -> bool
+  requires(reflects_type(mo));
+
 auto uses_class_key(metaobject auto mo) -> bool
   requires(reflects_type(mo));
 
@@ -337,7 +340,13 @@ auto is_explicitly_captured(metaobject auto mo) -> bool
 
 auto has_default_argument(metaobject auto mo) -> bool
   requires(reflects_function_parameter(mo));
-
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metadata getters}
+  \framesubtitle{miscelaneous}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 auto has_lvalueref_qualifier(metaobject auto mo) -> bool
   requires(reflects_member_function(mo));
 
@@ -347,6 +356,9 @@ auto is_implicitly_declared(metaobject auto mo) -> bool
 auto is_deleted(metaobject auto mo) -> bool
   requires(reflects_callable(mo));
 
+auto is_defaulted(metaobject auto mo) -> bool
+  requires(reflects_special_member_function(mo));
+
 auto is_move_constructor(metaobject auto mo) -> bool
   requires(reflects_constructor(mo));
   \end{lstlisting}
@@ -354,19 +366,27 @@ auto is_move_constructor(metaobject auto mo) -> bool
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
-  \framesubtitle{values, references and pointers}
+  \framesubtitle{constants and values}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 auto get_constant(metaobject auto mo)
   requires(reflects_constant(mo));
 
 auto get_value(metaobject auto mo) -> const auto&
   requires(reflects_variable(mo));
+
 auto get_value(metaobject auto mo, auto& obj)-> const auto&
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
-
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metadata getters}
+  \framesubtitle{references and pointers}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 auto get_reference(metaobject auto mo) -> auto&
   requires(reflects_variable(mo));
+
 auto get_reference(metaobject auto mo, auto& obj) -> auto&
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
@@ -374,6 +394,7 @@ auto get_reference(metaobject auto mo, auto& obj) -> auto&
 auto get_pointer(metaobject auto mo) -> auto*
   requires(reflects_variable(mo) ||
            reflects_function(mo));
+
 auto get_pointer(metaobject auto mo, auto& obj) -> auto*
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
@@ -384,9 +405,6 @@ auto get_pointer(metaobject auto mo, auto& obj) -> auto*
   \frametitle{Metadata getters}
   \framesubtitle{invocation}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto invoke(metaobject auto mo, auto&&... args)
-  requires(reflects_function(mo));
-
 auto invoke(metaobject auto mo, auto&&... args)
   requires(reflects_member_function(mo) &&
            is_static(mo));
@@ -562,7 +580,7 @@ void (*@\listinghl{for_each}@*)(metaobject auto mo, F function)
     \end{itemize}
     \item Placeholder expressions
     \begin{itemize}
-      \item Functions matching the metaobject operations in name taking
+      \item Functions matching the metaobject operations in name taking,
         placeholders or other placeholder expressions as arguments
     \end{itemize}
     \item Create objects (like lambdas) that can be called later
@@ -748,7 +766,7 @@ auto (*@\listinghl{find_ranking}@*)(auto mo, auto query)
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
     auto find_largest_data_member =
-      find_ranking(
+      (*@\listinghl{find_ranking}@*)(
         get_data_members(_1),
         get_sizeof(get_type(_1)));
   \end{lstlisting}
@@ -772,7 +790,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
     auto get_max_arity =
-      get_top_value(
+      (*@\listinghl{get_top_value}@*)(
         get_member_functions(_1),
         get_size(get_parameters(_1)));
   \end{lstlisting}
@@ -780,6 +798,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Algorithms}
+  \framesubtitle{the gist\ldots}
   \larger
   \begin{itemize}
     \item There are more such algorithms
@@ -1207,7 +1226,20 @@ void foonction(has_foo_and_such auto) {
 \section{Conclusion}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Additional use-cases}
+  \frametitle{Conclusions}
+  \larger
+  \begin{itemize}
+    \item Reflection is {\em \larger fun}
+    \item Reflection is {\em \larger useful}
+    \item Reflection code can be readable and straightforward to write
+    \item Reflection code doesn't need to look like punctuation-soup\footnote{
+        for the most part}
+    \item Reflection APIs can provide many reusable tools
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{There are so many use-cases}
   \framesubtitle{details in other talks}
   \begin{itemize}
     \item Implementation of the {\em factory} pattern
@@ -1240,19 +1272,8 @@ void foonction(has_foo_and_such auto) {
       \item \ldots
     \end{itemize}
     \item On top of the reflection TS implementation in \inlinecode{clang}
-    \item There is much more than what fits into a talk
+    \item There is much more than what fits into this talk
     \item See the reference (links below)
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{What's next for reflection?}
-  \larger
-  \begin{itemize}
-    \item More \say{unreflection}
-    \item Code fragment splicing
-    \item Generating identifiers from metaobjects
-    \item Support for more use-cases
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1265,6 +1286,18 @@ void foonction(has_foo_and_such auto) {
       \url{https://github.com/matus-chochlik/mirror}
     \item {\em The Mirror library reference (W.I.P.)} --
       \url{matus-chochlik.github.io/mirror/doxygen/}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What's next for reflection?}
+  \Large
+  \begin{itemize}
+    \item More \say{unreflection}
+    \item Code fragment splicing
+    \item Splicing identifiers from metaobjects\footnote{maybe even with
+      custom formatting}
+    \item Support for more use-cases
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
