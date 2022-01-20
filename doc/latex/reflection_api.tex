@@ -529,10 +529,107 @@ auto get_parameters(metaobject auto mo)
     \item Concatenate (\inlinecode{concat}).
   \end{itemize}
 \end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject sequences}
+  \framesubtitle{basic iteration}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+void (*@\listinghl{for_each}@*)(metaobject auto mo, F function)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x]
+(*@\listinghl{for_each}@*)(
+  get_enumerators(mirror(weekday)),
+  [](metaobject auto mo) {
+    cout << get_name(mo)
+         << ": "
+         << int(get_constant(mo))
+         << endl;
+  });
+  \end{lstlisting}
+\end{frame}
 % - Placeholders ---------------------------------------------------------------
 \section{Placeholders}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Placeholder expressions}
+  \larger
+  \begin{itemize}
+    \item Placeholders
+    \begin{itemize}
+      \item pre-defined constant values -- \inlinecode{_1}, \inlinecode{_2}, \ldots
+    \end{itemize}
+    \item Placeholder expressions
+    \begin{itemize}
+      \item Functions matching the metaobject operations in name taking
+        placeholders or other placeholder expressions as arguments
+    \end{itemize}
+    \item Create objects (like lambdas) that can be called later
+    \item Predicates, comparators, transformation functions
+    \item Custom composite algorithms
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Placeholder expressions}
+  \framesubtitle{filters}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+reflects_named(_1);
+reflects_destructor(_1);
+is_static(_1);
+is_pure_virtual(_1);
+is_public(_1);
+is_noexcept(_1);
+is_constexpr(_1);
+is_copy_constructor(_1);
+has_rvalueref_qualifier(_1);
+uses_class_key(_1);
+is_type<int>(get_type(_1));
+has_type_trait<std::is_floating_point>(_1);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Placeholder expressions}
+  \framesubtitle{comparators}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+reflects_same(_1, _2);
+get_name(_1) < get_name(_2);
+get_size(get_name(_1)) > get_size(get_name(_2));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Placeholder expressions}
+  \framesubtitle{transforms}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+get_type(_1);
+get_scope(_1);
+get_display_name(_1);
+get_name(get_aliased(_1));
+get_name(get_aliased(get_type(_1)));
+get_size(get_enumerators(_1));
+is_empty(get_data_members(_1));
+get_size(get_name(get_scope(get_type(_1))));
+get_type(get_element<0>(get_operators(_1)));
+get_name(get_element<1>(get_parameters(_1)));
+  \end{lstlisting}
+\end{frame}
 % - Algorithms -----------------------------------------------------------------
 \section{Algorithms}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Algorithms}
+  \larger
+  \begin{itemize}
+    \item Implement small specific, but non-trivial functionality
+    \item On top of the primitive metaobject operations
+    \item Can be easily combined in many ways into bigger, custom algorithms
+    \item Can form and inter-operate with placeholder expressions
+    \item Promote code re-usability
+    \item Mostly operate on metaobject sequences
+  \end{itemize}
+\end{frame}
 % - Composition ----------------------------------------------------------------
 \section{Compositions}
 % ------------------------------------------------------------------------------
@@ -876,7 +973,8 @@ void foonction(has_foo_and_such auto) {
   \begin{itemize}
     \item Implementation of the {\em factory} pattern
     \item Auto-registering with script language bindings
-    \item Serialization
+    \item Generating GUIs for visualization and data input
+    \item Serialization and deserialization
     \item Generating UML diagrams from code
     \item Implementation of RPC\footnote{remote procedure calls}
     \item Generating DB system queries
@@ -904,6 +1002,17 @@ void foonction(has_foo_and_such auto) {
     \item On top of the reflection TS implementation in \inlinecode{clang}
     \item There is much more than what fits into a talk
     \item See the reference (links below)
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What's next?}
+  \larger
+  \begin{itemize}
+    \item More \say{unreflection}
+    \item Code fragment splicing
+    \item Generating identifiers from metaobjects
+    \item Support for more use-cases
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------

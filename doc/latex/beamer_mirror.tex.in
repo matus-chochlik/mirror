@@ -49,7 +49,7 @@
 \lstdefinestyle{mirrorcode}{
     basicstyle=\normalsize\ttfamily,
     backgroundcolor = \color{mirrorlisting},
-    breaklines=true,
+    breaklines=false,
     prebreak=\textbackslash,
     showstringspaces=false,
 		stringstyle=\color{mirrorstring},
