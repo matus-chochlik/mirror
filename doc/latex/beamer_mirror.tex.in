@@ -67,6 +67,7 @@
 		decltype,
 		override,
 		final,
+		noexcept,
 		requires,
 		static_assert
   }

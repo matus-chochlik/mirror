@@ -1273,6 +1273,48 @@ cout << are_sorted_by_size(mirror(bar))<< endl;
 \section{Examples}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{enum-to-string}
+  \begin{lstlisting}[language=c++2x]
+template <typename E>
+auto enum_to_string(E e) noexcept
+  -> string_view {
+
+  return (*@\listinghl{select}@*)(
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    [](auto& result, auto mo, auto c) {
+        if((*@\listinghl{get_constant}@*)(mo) == c) {
+            result = (*@\listinghl{get_name}@*)(mo);
+        }
+    },
+    string_view{},
+    e);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{string-to-enum}
+  \begin{lstlisting}[language=c++2x]
+template <typename E>
+auto string_to_enum(string_view s) noexcept
+  -> optional<E> {
+
+  return (*@\listinghl{select}@*)(
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    [](auto& result, auto mo, auto n) {
+        if((*@\listinghl{get_name}@*)(mo) == n) {
+            result = (*@\listinghl{get_constant}@*)(mo);
+        }
+    },
+    optional<E>{},
+    s);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{Parsing command-line arguments}
   \framesubtitle{into a structure}
   \begin{columns}
@@ -1758,6 +1800,54 @@ cout << are_sorted_by_name(mirror(bar))<< endl;
   \begin{verbatim}
   0
   1
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Next weekday}
+  \begin{columns}
+    \begin{column}{.46\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class weekdays : int {
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.54\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+weekdays next_day(weekdays d);
+      \end{lstlisting}
+      \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+void print_next_day(string_view day) {
+  if(auto opt_day{
+    string_to_enum<weekdays>(day)}) {
+      auto next{next_day(*opt_day)};
+      cout << day << " -> "
+           << enum_to_string(next)
+           << endl;
+  }
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+(*@\listinghl{for_each}@*)((*@\listinghl{get_enumerators}@*)(mirror(weekdays)),
+  [](metaobject auto mo) {
+    print_next_day((*@\listinghl{get_name}@*)(mo));
+});
+  \end{lstlisting}
+  \smaller
+  \begin{verbatim}
+monday -> tuesday
+tuesday -> wednesday
+...
+sunday -> monday
   \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
