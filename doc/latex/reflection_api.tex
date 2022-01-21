@@ -23,7 +23,7 @@
   \frametitle{Contents}
   \Large
   \begin{itemize}
-    \item Reflection
+    \item Reflection \smaller and \say{un-reflection}
     \item Metaobjects and metadata
     \item Reflection APIs
     \item Examples
@@ -50,7 +50,7 @@
         \item provide the ability to write reflection algorithm libraries,
         \item working at compile-time.
       \end{itemize}
-    \item We say it \say{reflects} the {\em base-level} entity
+    \item We say a metaobject \say{reflects} the {\em base-level} entity
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -99,7 +99,8 @@ void foo((*@\listinghl{metaobject}@*) auto m) { /*...*/ }
   or more generally in a \inlinecode{requires} clause,
   \begin{lstlisting}[language=c++2x]
 void bar(auto m)
-  requires((*@\listinghl{metaobject}@*)<decltype(m)>) {
+  requires((*@\listinghl{metaobject}@*)<decltype(m)> &&
+           something_else(m)) {
     /*...*/
 }
   \end{lstlisting}
@@ -110,9 +111,9 @@ void bar(auto m)
   \larger
   \begin{itemize}
     \item The process of obtaining metadata or metaobjects providing metadata
-      indirectly.
-    \item Done through a~dedicated operator or~language expression:
-    \item For example:
+      indirectly
+    \item Done through a~dedicated operator or~language expression
+    \item For example
   \end{itemize}
   \begin{lstlisting}[language=c++2x]
 const auto meta_int = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~placeholder
@@ -120,6 +121,30 @@ const auto meta_int = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~pl
 static_assert(
   metaobject<decltype(meta_int)>);
   \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{\say{Un-reflection}}
+  \framesubtitle{a.k.a \say{splicing}}
+  \larger
+  \begin{itemize}
+    \item The reverse of reflection
+    \item Getting back to the base-level entity reflected by a metaobject
+    \item As in\ldots
+    \begin{itemize}
+      \smaller
+      \item getting a type,
+      \item getting the value of a constant,
+      \item getting the pointer or reference to a variable,
+      \item getting the pointer to a function or a member function,
+      \item invoking a function, constructor or operator,
+      \item etc.
+    \end{itemize}
+    \item \ldots through an operation on a metaobject reflecting that
+      {\em base-level} entity
+    \item \say{Splicing} can also mean emitting a snippet of code involving
+      base-level entities, reflected by metaobjects
+  \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -137,6 +162,8 @@ static_assert(
       \item syntax sugar, placeholder expressions,
       \item \ldots
     \end{itemize}
+  \item Are \inlinecode{consteval} (or \inlinecode{constexpr})\footnote{
+      assumed, but omitted from examples in here to save space on slides}
   \end{itemize}
 \end{frame}
 % - Design ---------------------------------------------------------------------
@@ -180,11 +207,10 @@ int main() {
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Reflection API}
-  \framesubtitle{metaobject classification}
+  \framesubtitle{metaobject classification functions}
   \begin{itemize}
     \item Indicate {\em \larger what} does a metaobject reflect
     \item Return \inlinecode{true} or \inlinecode{false}
-    \item Are \inlinecode{consteval}
     \item \inlinecode{auto reflects_object(metaobject auto m) -> bool;}
     \item \footnotesize\inlinecode{auto reflects_\{object_sequence, named, alias, typed,
     scope, scope_member, enumerator, record_member, base, namespace, global_scope,
@@ -268,9 +294,14 @@ void log_who_did_this(
   \begin{lstlisting}[language=c++2x]
 auto get_source_file_name(metaobject auto)
   -> string_view;
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto get_source_line(metaobject auto)
   -> unsigned long;
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto get_source_column(metaobject auto)
   -> unsigned long;
   \end{lstlisting}
@@ -284,12 +315,16 @@ auto get_name(metaobject auto mo)
   -> string_view
   requires(reflects_named(mo));
 // "basic_string"
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x]
 auto get_display_name(metaobject auto mo)
   -> string_view
   requires(reflects_named(mo));
 // "string"
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x]
 auto get_full_name(metaobject auto mo)
   -> string;
 // "std::basic_string<char, ...>"
@@ -303,18 +338,26 @@ auto get_full_name(metaobject auto mo)
 auto is_constexpr(metaobject auto mo) -> bool
   requires(reflects_variable(mo) ||
            reflects_callable(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_noexcept(metaobject auto mo) -> bool
   requires(reflects_callable(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_explicit(metaobject auto mo) -> bool
   requires(reflects_constructor(mo) ||
            reflects_conversion_operator(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_static(metaobject auto mo) -> bool
   requires(reflects_variable(mo) ||
            reflects_member_function(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_virtual(metaobject auto mo) -> bool
   requires(reflects_base(mo) ||
            reflects_destructor(mo)) ||
@@ -328,16 +371,26 @@ auto is_virtual(metaobject auto mo) -> bool
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 auto is_scoped_enum(metaobject auto mo) -> bool
   requires(reflects_type(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto uses_class_key(metaobject auto mo) -> bool
   requires(reflects_type(mo));
-
-auto uses_default_copy_capture(metaobject auto mo) -> bool
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto uses_default_copy_capture(metaobject auto mo)
+  -> bool
   requires(reflects_lambda(mo));
-
-auto is_explicitly_captured(metaobject auto mo) -> bool
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto is_explicitly_captured(metaobject auto mo)
+  -> bool
   requires(reflects_lambda_capture(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto has_default_argument(metaobject auto mo) -> bool
   requires(reflects_function_parameter(mo));
   \end{lstlisting}
@@ -349,16 +402,25 @@ auto has_default_argument(metaobject auto mo) -> bool
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 auto has_lvalueref_qualifier(metaobject auto mo) -> bool
   requires(reflects_member_function(mo));
-
-auto is_implicitly_declared(metaobject auto mo) -> bool
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto is_implicitly_declared(metaobject auto mo)
+  -> bool
   requires(reflects_special_member_function(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_deleted(metaobject auto mo) -> bool
   requires(reflects_callable(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_defaulted(metaobject auto mo) -> bool
   requires(reflects_special_member_function(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_move_constructor(metaobject auto mo) -> bool
   requires(reflects_constructor(mo));
   \end{lstlisting}
@@ -367,14 +429,21 @@ auto is_move_constructor(metaobject auto mo) -> bool
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
   \framesubtitle{constants and values}
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_constant(metaobject auto mo)
+  -> const auto
   requires(reflects_constant(mo));
-
-auto get_value(metaobject auto mo) -> const auto&
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto get_value(metaobject auto mo)
+  -> const auto&
   requires(reflects_variable(mo));
-
-auto get_value(metaobject auto mo, auto& obj)-> const auto&
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto get_value(metaobject auto mo, auto& obj)
+  -> const auto&
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
   \end{lstlisting}
@@ -383,19 +452,29 @@ auto get_value(metaobject auto mo, auto& obj)-> const auto&
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
   \framesubtitle{references and pointers}
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-auto get_reference(metaobject auto mo) -> auto&
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_reference(metaobject auto mo)
+  -> auto&
   requires(reflects_variable(mo));
-
-auto get_reference(metaobject auto mo, auto& obj) -> auto&
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_reference(metaobject auto mo, auto& obj)
+  -> auto&
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
-
-auto get_pointer(metaobject auto mo) -> auto*
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_pointer(metaobject auto mo)
+  -> auto*
   requires(reflects_variable(mo) ||
            reflects_function(mo));
-
-auto get_pointer(metaobject auto mo, auto& obj) -> auto*
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto get_pointer(metaobject auto mo, auto& obj)
+  -> auto*
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
   \end{lstlisting}
@@ -403,19 +482,25 @@ auto get_pointer(metaobject auto mo, auto& obj) -> auto*
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
-  \framesubtitle{invocation}
+  \framesubtitle{invocation of callables}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto invoke(metaobject auto mo, auto&&... args)
   requires(reflects_member_function(mo) &&
            is_static(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto invoke(auto mo, auto& inst, auto&&... args)
   requires(reflects_member_function(mo) &&
            !is_static(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto invoke(metaobject auto mo, auto&&... args)
   requires(reflects_constructor(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto invoke_on(auto mo, auto& inst, auto&&... args)
   requires(reflects_member_function(mo));
   \end{lstlisting}
@@ -424,50 +509,63 @@ auto invoke_on(auto mo, auto& inst, auto&&... args)
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
   \framesubtitle{metaobjects}
- \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+ \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_scope(metaobject auto mo)
   requires(reflects_scoped(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_type(metaobject auto mo)
   requires(reflects_typed(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_underlying_type(metaobject auto mo)
   requires(reflects_enum(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_aliased(metaobject auto mo)
   requires(reflects_alias(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_class(metaobject auto mo)
   requires(reflects_base(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto get_subexpression(metaobject auto mo)
   requires(reflects_parenthesized_expression(mo));
-
-// and more...
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
   \framesubtitle{{\em base-level} types}
- \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+ \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <metaobject MO>
 using get_reflected_type_t = (*@\listinghl{unspecified}@*);
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_reflected_type(metaobject auto mo)
   -> type_identity<(*@\listinghl{unspecified}@*)>
   requires(reflects_type(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename T>
 auto is_type(
   metaobject auto mo,
   type_identity<T> = {})
   -> bool requires(reflects_type(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <template <typename> class Trait>
 auto has_type_trait(metaobject auto mo) 
   -> bool requires(reflects_type(mo));
-
   \end{lstlisting}
 \end{frame}
 % - Sequences ------------------------------------------------------------------
@@ -489,7 +587,8 @@ auto has_type_trait(metaobject auto mo)
       \item enumerators,
       \item \ldots
     \end{itemize}
-    \item Only unpacked on demand to improve performance
+    \item Initially the metaobject elements of a sequence are not materialized
+    \item Only \say{unpacked} if necessary to improve performance
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -499,16 +598,24 @@ auto has_type_trait(metaobject auto mo)
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_base_classes(metaobject auto mo)
   requires(reflects_class(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_captures(metaobject auto mo)
   requires(reflects_lambda(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_constructors(metaobject auto mo)
   requires(reflects_record(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_data_members(metaobject auto mo)
   requires(reflects_record(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_destructors(metaobject auto mo)
   requires(reflects_record(mo));
   \end{lstlisting}
@@ -520,16 +627,24 @@ auto get_destructors(metaobject auto mo)
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_enumerators(metaobject auto mo)
   requires(reflects_enum(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_member_functions(metaobject auto mo)
   requires(reflects_record(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_member_types(metaobject auto mo)
   requires(reflects_record(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_operators(metaobject auto mo)
   requires(reflects_record(mo));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_parameters(metaobject auto mo)
   requires(reflects_callable(mo));
   \end{lstlisting}
@@ -544,8 +659,10 @@ auto get_parameters(metaobject auto mo)
     \item Is there anything in the sequence (\inlinecode{is_empty})
     \item How many elements are there (\inlinecode{get_size})
     \item Get the I-th element (\inlinecode{get_element<I>})
-    \item Concatenate (\inlinecode{concat})
-    \item Flatten (\inlinecode{flatten})
+    \item Concatenate\footnote{merge several sequences into one}
+      (\inlinecode{concat})
+    \item Flatten\footnote{transform a sequence of sequences into a single
+      sequence}(\inlinecode{flatten})
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -591,7 +708,7 @@ void (*@\listinghl{for_each}@*)(metaobject auto mo, F function)
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Placeholder expressions}
-  \framesubtitle{filters}
+  \framesubtitle{predicates}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 reflects_named(_1);
 reflects_destructor(_1);
@@ -647,6 +764,8 @@ get_name(get_element<1>(get_parameters(_1)));
     \item Can form and inter-operate with placeholder expressions
     \item Promote code re-usability
     \item Mostly operate on metaobject sequences
+    \item \say{Un-reflection} can be done in the function objects passed
+      to the algorithms
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -703,7 +822,7 @@ auto get_nonstatic_members =
   Takes a sequence, returns the count of metaobjects satisfying
   a \inlinecode{predicate}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{find_if}@*)(auto mo, auto predicate)
+auto (*@\listinghl{count_if}@*)(auto mo, auto predicate)
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
@@ -825,109 +944,12 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
   \frametitle{Composition}
   \larger
   \begin{itemize}
-    \item The super-power of named algorithms
+    \item {\larger The super-power of named algorithms}
     \item Together with the primitive operations and the placeholder expressions,
       the basic algorithms can be {\em \larger combined} into bigger,
       custom algorithms in-place.
     \item Some examples follow\ldots
   \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are data members sorted by size?}
-  \begin{columns}
-    \begin{column}{.45\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct foo {
-    double d;
-    int i;
-    short s;
-    char c;
-};
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{.45\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct bar {
-    int i;
-    float f;
-    long l;
-    bool b;
-};
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_sorted_by_size = is_sorted(
-  get_member_functions(_1),
-  get_sizeof(_1) < get_sizeof(_2));
-
-cout << are_sorted_by_size(mirror(foo))<< endl;
-cout << are_sorted_by_size(mirror(bar))<< endl;
-  \end{lstlisting}
-  \begin{verbatim}
-  1
-  0
-  \end{verbatim}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are member functions sorted by name?}
-  \begin{columns}
-    \begin{column}{.65\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-struct foo {
-  int plus(int x) {
-    return x;
-  }
-  int plus(int x, int y) {
-    return x + y;
-  }
-  int plus(int x, int y, int z) {
-    return x + y + z;
-  }
-  int minus(int x) {
-    return -x;
-  }
-  int minus(int x, int y) {
-    return x - y;
-  }
-};
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{.35\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct bar {
-  int a() {
-    return 0;
-  }
-  int b() {
-    return 1;
-  }
-  int c() {
-    return 2;
-  }
-};
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are member functions sorted by name?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_sorted_by_name = is_sorted(
-  get_member_functions(_1),
-  get_name(_1) < get_name(_2));
-
-cout << are_sorted_by_name(mirror(foo))<< endl;
-cout << are_sorted_by_name(mirror(bar))<< endl;
-  \end{lstlisting}
-  Output:
-  \begin{verbatim}
-  0
-  1
-  \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -1132,7 +1154,9 @@ auto sum_sizeofs(type_list<T...>) -> bool {
 template <typename T>
 auto has_padding() -> bool {
     return sizeof(T) >
-           sum_sizeofs(extract_types(transform(
+           sum_sizeofs(extract_types(*@\footnote{note that this operation 
+           ~involves \say{un-reflection} -- getting base-level types from
+           ~meta-types}@*)(transform(
              filter(get_data_members(mirror(T)),
                     not_(is_static(_1))),
              get_type(_1))));
@@ -1180,6 +1204,134 @@ S2: has some padding
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{Are data members sorted by size?}
+  \begin{columns}
+    \begin{column}{.45\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct foo {
+    double d;
+    int i;
+    short s;
+    char c;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct bar {
+    int i;
+    float f;
+    long l;
+    bool b;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const auto are_sorted_by_size = is_sorted(
+  get_member_functions(_1),
+  get_sizeof(_1) < get_sizeof(_2));
+
+cout << are_sorted_by_size(mirror(foo))<< endl;
+cout << are_sorted_by_size(mirror(bar))<< endl;
+  \end{lstlisting}
+  \begin{verbatim}
+  1
+  0
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{into a structure}
+  \begin{columns}
+    \begin{column}{.57\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_arg {
+public:
+  auto next() -> program_arg;
+  auto is_long_tag() -> bool;
+  operator string_view();
+  // ...
+};
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_args {
+public:
+  program_args(int, const char**); 
+  auto begin();
+  auto end();
+  // ...
+};
+      \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+bool (*@\listinghl{parse}@*)(
+  T& opts,
+  const program_args& args);
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.44\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct options {
+  string
+    message{"Hi world!"};
+  chrono::milliseconds
+    interval{500};
+  int count{3};
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+int main(
+  int argc,
+  const char** argv) {
+
+  const program_args
+      args{argc, argv};
+  options opts;
+  if((*@\listinghl{parse}@*)(opts, args)) {
+    // do something
+    return 0;
+  }
+  return 1;
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Auto-parsing command-line arguments}
+  \framesubtitle{with reflection}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+bool parse(T& opts, const program_args& args) {
+  bool parsed = true;
+  for(const auto& arg : args) {
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
+      if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
+        if(const auto opt{from_string(
+          arg.next(), (*@\listinghl{get_reflected_type}\footnote{\ldots and \say{un-reflection}}@*)((*@\listinghl{get_type}@*)(mdm)))}
+        ) {
+           (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
+        } else {
+            std::cerr << "invalid value '" << arg.next()
+                      << "' for option " << arg
+                      << "!" << std::endl;
+            parsed = false;
+        }
+      }
+    });
+  }
+  return parsed;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{\say{Smart} concept definition}
   \framesubtitle{featuring CTRE!}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
@@ -1202,26 +1354,6 @@ cout << add(21, 21) << endl;
 cout << add(400ULL, 20ULL) << endl;
   \end{lstlisting}
 \end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{MOAR \say{smart} concepts!}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct excellent {
-    void foo() {}
-    void bar() {}
-    void baz() {}
-};
-
-template <typename T>
-concept has_foo_and_such = any_of(
-  get_member_functions(mirror(T)),
-  ctre_match<"foo|bar|baz">(get_name(_1)));
-
-void foonction(has_foo_and_such auto) {
-    cout << "this is wonderful!" << endl;
-}
-  \end{lstlisting}
-\end{frame}
 % - Conclusion -----------------------------------------------------------------
 \section{Conclusion}
 % ------------------------------------------------------------------------------
@@ -1234,7 +1366,7 @@ void foonction(has_foo_and_such auto) {
     \item Reflection code can be readable and straightforward to write
     \item Reflection code doesn't need to look like punctuation-soup\footnote{
         for the most part}
-    \item Reflection APIs can provide many reusable tools
+    \item Reflection APIs can provide many non-trivial, reusable tools
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1293,10 +1425,10 @@ void foonction(has_foo_and_such auto) {
   \frametitle{What's next for reflection?}
   \Large
   \begin{itemize}
-    \item More \say{unreflection}
+    \item More \say{un-reflection}
     \item Code fragment splicing
-    \item Splicing identifiers from metaobjects\footnote{maybe even with
-      custom formatting}
+    \item Splicing {\em \larger identifiers} depending on metaobjects\footnote{
+        maybe even with custom formatting}
     \item Support for more use-cases
   \end{itemize}
 \end{frame}
@@ -1326,6 +1458,26 @@ void foonction(has_foo_and_such auto) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{MOAR \say{smart} concepts!}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct excellent {
+    void foo() {}
+    void bar() {}
+    void baz() {}
+};
+
+template <typename T>
+concept has_foo_and_such = any_of(
+  get_member_functions(mirror(T)),
+  ctre_match<"foo|bar|baz">(get_name(_1)));
+
+void foonction(has_foo_and_such auto) {
+    cout << "this is wonderful!" << endl;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{Are enumerators bitfield bits?}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 const auto is_bitfield_enum =
@@ -1343,6 +1495,65 @@ const auto is_bitfield_enum =
     }
   });
   \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are member functions sorted by name?}
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct foo {
+  int plus(int x) {
+    return x;
+  }
+  int plus(int x, int y) {
+    return x + y;
+  }
+  int plus(int x, int y, int z) {
+    return x + y + z;
+  }
+  int minus(int x) {
+    return -x;
+  }
+  int minus(int x, int y) {
+    return x - y;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct bar {
+  int a() {
+    return 0;
+  }
+  int b() {
+    return 1;
+  }
+  int c() {
+    return 2;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Are member functions sorted by name?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const auto are_sorted_by_name = is_sorted(
+  get_member_functions(_1),
+  get_name(_1) < get_name(_2));
+
+cout << are_sorted_by_name(mirror(foo))<< endl;
+cout << are_sorted_by_name(mirror(bar))<< endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+  0
+  1
+  \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
