@@ -9,8 +9,8 @@
   \frametitle{Intro}
   \framesubtitle{What is this? Why am I here? Who are these people?}
   \makebox[\linewidth][c]{
-    \centering
     \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
     \includegraphics[
         width=0.9\textwidth,
         keepaspectratio
@@ -1362,6 +1362,34 @@ bool parse(T& opts, const program_args& args) {
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Remote procedure calls}
+  \framesubtitle{class overview}
+  \colorbox{gray}{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.65\textwidth,
+        keepaspectratio
+    ]{rpc_class.pdf}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Remote procedure calls}
+  \framesubtitle{synchronous call sequence}
+  \colorbox{lightgray}{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.9\textwidth,
+        keepaspectratio
+    ]{rpc_sequence.pdf}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{RPC stubs/skeletons}
   \framesubtitle{the interface}
@@ -1589,8 +1617,8 @@ cout << add(400ULL, 20ULL) << endl;
 \begin{frame}
   \frametitle{There is more}
   \makebox[\linewidth][c]{
-    \centering
     \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
     \includegraphics[
         width=0.9\textwidth,
         keepaspectratio

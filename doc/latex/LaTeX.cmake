@@ -78,13 +78,14 @@ macro(mirror_add_latex_presentation NAME)
         "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.tex"
     )
 
+    foreach(FIGURE ${MIRROR_LATEX_FIGURES})
+        list(APPEND PRESENTATION_DEPENDS ${FIGURE}.pdf)
+    endforeach()
+
     add_custom_target(
         ${NAME}-latex-sources
         DEPENDS ${PRESENTATION_DEPENDS}
     )
-    foreach(FIGURE ${MIRROR_LATEX_FIGURES})
-        list(APPEND PRESENTATION_DEPENDS ${FIGURE}.pdf)
-    endforeach()
 
     add_custom_command(
         OUTPUT ${NAME}.toc
