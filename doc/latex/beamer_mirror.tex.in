@@ -65,6 +65,8 @@
 		constexpr,
 		consteval,
 		decltype,
+		override,
+		final,
 		requires,
 		static_assert
   }

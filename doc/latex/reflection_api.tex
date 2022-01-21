@@ -668,9 +668,37 @@ auto get_parameters(metaobject auto mo)
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Metaobject sequences}
+  \framesubtitle{basic operations}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto is_object_sequence(auto mo) -> bool;
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto is_empty(auto mo) -> bool
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto get_size(auto mo) -> size_t
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto concat(auto... mo)
+  requires((... && is_object_sequence(mo)));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+auto flatten(auto mo)
+  requires(is_object_sequence(mo));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject sequences}
   \framesubtitle{basic iteration}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-void (*@\listinghl{for_each}@*)(metaobject auto mo, F function)
+void for_each(auto mo, F function)
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x]
@@ -684,8 +712,8 @@ void (*@\listinghl{for_each}@*)(metaobject auto mo, F function)
   });
   \end{lstlisting}
 \end{frame}
-% - Placeholders ---------------------------------------------------------------
-\section{Placeholders}
+% - Sugar ----------------------------------------------------------------------
+\section{Sugar}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Placeholder expressions}
@@ -731,6 +759,7 @@ has_type_trait<std::is_floating_point>(_1);
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 reflects_same(_1, _2);
 get_name(_1) < get_name(_2);
+get_sizeof(_1) == get_sizeof(_2);
 get_size(get_name(_1)) > get_size(get_name(_2));
   \end{lstlisting}
 \end{frame}
@@ -1240,6 +1269,8 @@ cout << are_sorted_by_size(mirror(bar))<< endl;
   0
   \end{verbatim}
 \end{frame}
+% - Examples -------------------------------------------------------------------
+\section{Examples}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Parsing command-line arguments}
@@ -1332,6 +1363,117 @@ bool parse(T& opts, const program_args& args) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the interface}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct calculator {
+    virtual float add(float, float) = 0;
+    virtual float subtract(float, float) = 0;
+    virtual float multiply(float, float) = 0;
+    virtual float divide(float, float) = 0;
+    virtual float negate(float) = 0;
+    virtual float invert(float) = 0;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the stub}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class calculator_stub : public calculator {
+private:
+    (*@\listinghl{rpc_stub_impl}@*) _impl;
+public:
+  float add(float l, float r) final {
+    return _impl.(*@\listinghl{make_call}@*)(
+      (*@\listinghl{mirror}@*)((calculator::add(l, r))), l, r);
+  }
+
+  float subtract(float l, float r) final {
+    return _impl.make_call(
+      mirror((calculator::subtract(l, r))), l, r);
+  }
+
+  float multiply(float l, float r) final;
+  float divide(float l, float r) final;
+  float negate(float x) final;
+  float invert(float x) final;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the generic stub implementation\footnote{pseudocode}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class rpc_stub_impl {
+  template <typename T>
+  auto _deserialize(packet&, (*@\listinghl{type_identity}@*)<T>) -> T;
+public:
+  auto make_call(metaobject auto mo, auto&... args) {
+
+    packet request;
+    _serialize(request, mo, args...);
+    packed response{_send_and_receive(request)};
+
+    return _deserialize(
+      response,
+      (*@\listinghl{get_reflected_type}@*)(
+        (*@\listinghl{get_type}@*)(
+          (*@\listinghl{get_callable}@*)(
+            (*@\listinghl{get_subexpression}@*)(mo)))));
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the skeleton interface}
+  \begin{lstlisting}[language=c++2x]
+struct rpc_skeleton {
+  virtual void dispatch(
+    packet& request,
+    packet& response) = 0;
+};
+  \end{lstlisting}
+  \begin{itemize}
+    \item Could be plugged-into a network connection
+    \item Handle incoming data
+    \item After call is finished the connection can send the response
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the skeleton implementation\footnote{pseudocode}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Intf>
+class rpc_skeleton_impl : public rpc_skeleton {
+private:
+  std::unique_ptr<Intf> _impl;
+public:
+  void dispatch(packet& request, packet& response) final {
+    const auto method_id{_get_method_id(request)};
+
+    for_each(get_member_functions(mirror(Intf)),
+      [&](auto mf) {
+        if(_get_method_id(mf) == method_id) {
+          auto params = (*@\listinghl{make_value_tuple}@*)(
+            (*@\listinghl{transform}@*)((*@\listinghl{get_parameters}@*)(mf), (*@\listinghl{get_type}@*)(_1)));
+
+          deserialize(params, request);
+          auto result = (*@\listinghl{apply}@*)(mf, *_impl, params);
+          serialize(method_id, result, response);
+        }
+    });
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{\say{Smart} concept definition}
   \framesubtitle{featuring CTRE!}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
@@ -1363,7 +1505,8 @@ cout << add(400ULL, 20ULL) << endl;
   \begin{itemize}
     \item Reflection is {\em \larger fun}
     \item Reflection is {\em \larger useful}
-    \item Reflection code can be readable and straightforward to write
+    \item Reflection code can be readable
+    \item Reflection code can be straightforward to write
     \item Reflection code doesn't need to look like punctuation-soup\footnote{
         for the most part}
     \item Reflection APIs can provide many non-trivial, reusable tools
@@ -1379,7 +1522,6 @@ cout << add(400ULL, 20ULL) << endl;
     \item Generating GUIs for visualization and data input
     \item Serialization and deserialization
     \item Generating UML diagrams from code
-    \item Implementation of RPC\footnote{remote procedure calls}
     \item Generating DB system queries
     \item Fetching data from databases into C++ structures
     \item Parsing of configuration files
@@ -1465,15 +1607,50 @@ struct excellent {
     void bar() {}
     void baz() {}
 };
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename T>
 concept has_foo_and_such = any_of(
   get_member_functions(mirror(T)),
   ctre_match<"foo|bar|baz">(get_name(_1)));
-
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 void foonction(has_foo_and_such auto) {
-    cout << "this is wonderful!" << endl;
+    cout << "this is excellent!" << endl;
 }
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+foonction(excellent{});
+foonction(std::string{}); // ERROR
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Min/max enumerator value}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto min_enum = get_top_value(
+  get_enumerators(_1),
+  get_constant(_1),
+  std::greater<>{});
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto max_enum = get_top_value(
+  get_enumerators(_1),
+  get_constant(_1),
+  std::less<>{});
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto print_info = [&](auto me) {
+  cout << get_name(me)
+       << ":  min(" << enum_to_string(min_enum(me))
+       << "), max(" << enum_to_string(max_enum(me))
+       << ")" << std::endl;
+};
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
