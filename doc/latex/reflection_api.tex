@@ -1019,9 +1019,9 @@ enum class po2s {
   \frametitle{Are enumerators consecutive?}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 const auto are_consecutive =
-  is_sorted(get_enumerators(_1),
+  (*@\listinghl{is_sorted}@*)((*@\listinghl{get_enumerators}@*)(_1),
   [](metaobject auto l, metaobject auto r) {
-      return int(get_constant(l)) ==
+      return int((*@\listinghl{get_constant}@*)(l)) ==
              int(get_constant(r)) - 1;
   });
 
@@ -1040,9 +1040,9 @@ cout << are_consecutive(mirror(po2s)) << endl;
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 void print_enum(metaobject auto mo) {
   auto find_enum_with_longest_name =
-    find_ranking(
-      get_enumerators(_1),
-      get_size(get_name(_1)));
+    (*@\listinghl{find_ranking}@*)(
+      (*@\listinghl{get_enumerators}@*)(_1),
+      (*@\listinghl{get_size}@*)((*@\listinghl{get_name}@*)(_1)));
 
   auto me = find_enum_with_longest_name(mo);
 
@@ -1050,7 +1050,7 @@ void print_enum(metaobject auto mo) {
        << ", length: "
        << get_name(me).size()
        << ", value: "
-       << int(get_constant(me))
+       << int((*@\listinghl{get_constant}@*)(me))
        << endl;
 }
   \end{lstlisting}
@@ -1111,7 +1111,7 @@ auto has_overloaded_functions =
     return fold(
       mfs,
       [mfs](auto mf1) {
-        return any_of(mfs, [mf1](auto mf2) {
+        return (*@\listinghl{any_of}@*)(mfs, [mf1](auto mf2) {
           return !(*@\listinghl{reflects_same}@*)(mf1, mf2) &&
              (*@\listinghl{get_name}@*)(mf1) == (*@\listinghl{get_name}@*)(mf2);
         });
@@ -1185,10 +1185,10 @@ auto has_padding() -> bool {
     return sizeof(T) >
            sum_sizeofs(extract_types(*@\footnote{note that this operation 
            ~involves \say{un-reflection} -- getting base-level types from
-           ~meta-types}@*)(transform(
-             filter(get_data_members(mirror(T)),
-                    not_(is_static(_1))),
-             get_type(_1))));
+           ~meta-types}@*)((*@\listinghl{transform}@*)(
+             (*@\listinghl{filter}@*)((*@\listinghl{get_data_members}@*)(mirror(T)),
+                    not_((*@\listinghl{is_static}@*)(_1))),
+             (*@\listinghl{get_type}@*)(_1))));
 }
   \end{lstlisting}
 \end{frame}
@@ -1216,7 +1216,7 @@ struct S2 {
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 template <typename T>
 void print_has_padding() {
-  cout << get_name(remove_all_aliases(mirror(T)))
+  cout << (*@\listinghl{get_name}@*)((*@\listinghl{remove_all_aliases}@*)(mirror(T)))
        << ": "
        << (has_padding<T>() ? "has some" : "has no")
        << " padding"
@@ -1257,9 +1257,9 @@ struct bar {
     \end{column}
   \end{columns}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_sorted_by_size = is_sorted(
-  get_member_functions(_1),
-  get_sizeof(_1) < get_sizeof(_2));
+const auto are_sorted_by_size = (*@\listinghl{is_sorted}@*)(
+  (*@\listinghl{get_member_functions}@*)(_1),
+  (*@\listinghl{get_sizeof}@*)(_1) < get_sizeof(_2));
 
 cout << are_sorted_by_size(mirror(foo))<< endl;
 cout << are_sorted_by_size(mirror(bar))<< endl;
