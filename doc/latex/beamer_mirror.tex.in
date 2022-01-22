@@ -65,9 +65,10 @@
 		constexpr,
 		consteval,
 		decltype,
-		override,
 		final,
+		mirror,
 		noexcept,
+		override,
 		requires,
 		static_assert
   }

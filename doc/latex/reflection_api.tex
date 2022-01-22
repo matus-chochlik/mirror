@@ -1672,13 +1672,16 @@ cout << add(400ULL, 20ULL) << endl;
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Links, shameless plugs, etc.}
+  \smaller
   \begin{itemize}
-    \item {\em Reflection TS in \inlinecode{clang}} --
-      \url{https://github.com/matus-chochlik/llvm-project}
     \item {\em The Mirror library repository} --
       \url{https://github.com/matus-chochlik/mirror}
     \item {\em The Mirror library reference (W.I.P.)} --
-      \url{matus-chochlik.github.io/mirror/doxygen/}
+      \url{https://matus-chochlik.github.io/mirror/doxygen/}
+    \item {\em Reflection TS in \inlinecode{clang}} --
+      \url{https://github.com/matus-chochlik/llvm-project}
+    \item {\em Reflection TS draft} --
+      \url{https://cplusplus.github.io/reflection-ts/draft.pdf}
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1730,9 +1733,9 @@ struct excellent {
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename T>
-concept has_foo_and_such = any_of(
-  get_member_functions(mirror(T)),
-  ctre_match<"foo|bar|baz">(get_name(_1)));
+concept has_foo_and_such = (*@\listinghl{any_of}@*)(
+  (*@\listinghl{get_member_functions}@*)(mirror(T)),
+  ctre_match<"foo|bar|baz">((*@\listinghl{get_name}@*)(_1)));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
@@ -1751,8 +1754,8 @@ foonction(std::string{}); // ERROR
   \frametitle{Min/max enumerator value}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto min_enum = get_top_value(
-  get_enumerators(_1),
-  get_constant(_1),
+  (*@\listinghl{get_enumerators}@*)(_1),
+  (*@\listinghl{get_constant}@*)(_1),
   std::greater<>{});
   \end{lstlisting}
   \vfill
@@ -1765,7 +1768,7 @@ auto max_enum = get_top_value(
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto print_info = [&](auto me) {
-  cout << get_name(me)
+  cout << (*@\listinghl{get_name}@*)(me)
        << ":  min(" << enum_to_string(min_enum(me))
        << "), max(" << enum_to_string(max_enum(me))
        << ")" << std::endl;
@@ -1777,16 +1780,16 @@ auto print_info = [&](auto me) {
   \frametitle{Are enumerators bitfield bits?}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 const auto is_bitfield_enum =
-  is_sorted(get_enumerators(_1), [](auto l, auto r) {
-    if constexpr(has_type_trait<is_signed>(
-      get_underlying_type(get_type(l)))) {
+  (*@\listinghl{is_sorted}@*)((*@\listinghl{get_enumerators}@*)(_1), [](auto l, auto r) {
+    if constexpr((*@\listinghl{has_type_trait}@*)<is_signed>(
+      (*@\listinghl{get_underlying_type}@*)((*@\listinghl{get_type}@*)(l)))) {
       return false;
     } else {
       auto to_underlying = [](auto e) {
         using U = underlying_type_t<decltype(e)>;
         return static_cast<U>(e);
       };
-      return to_underlying(get_constant(l)) << 1U ==
+      return to_underlying((*@\listinghl{get_constant}@*)(l)) << 1U ==
              to_underlying(get_constant(r));
     }
   });
