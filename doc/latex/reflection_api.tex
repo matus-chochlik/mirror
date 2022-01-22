@@ -1327,9 +1327,9 @@ public:
   operator string_view();
   // ...
 };
-  \end{lstlisting}
-  \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 class program_args {
 public:
   program_args(int, const char**); 
@@ -1338,8 +1338,8 @@ public:
   // ...
 };
       \end{lstlisting}
-  \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 template <typename T>
 bool (*@\listinghl{parse}@*)(
   T& opts,
@@ -1402,6 +1402,55 @@ bool parse(T& opts, const program_args& args) {
   return parsed;
 }
   \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Calculation of interface revision id}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename Intf>
+struct versioned_interface {
+public:
+  static auto revision_id() noexcept -> hash_t {
+    return (*@\listinghl{fold}@*)(
+      (*@\listinghl{filter}@*)((*@\listinghl{get_member_functions}@*)(mirror(Intf)),
+        (*@\listinghl{is_virtual}@*)(_1)),
+      (*@\listinghl{get_hash}@*)(_1) ^ get_hash((*@\listinghl{get_type}@*)(_1)),
+      [](auto... h) { return (... ^ h); });
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Calculation of interface revision id}
+    \smaller
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+// initially
+struct operations
+ : versioned_interface<operations> {
+  virtual void foo() = 0;
+  virtual void bar((*@\listinghl{int}@*)) = 0;
+  virtual auto baz(bool, bool) -> (*@\listinghl{bool}@*) = 0;
+};
+cout << hex << operations::revision_id() << endl;
+    \end{lstlisting}
+    \begin{verbatim}
+d423c43e4eabdc
+    \end{verbatim}
+    \vfill
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+// later
+struct operations
+ : versioned_interface<operations> {
+  virtual void foo() = 0;
+  virtual void bar((*@\listinghl{long}@*)) = 0;
+  virtual auto baz(bool, bool) -> (*@\listinghl{int}@*) = 0;
+};
+cout << hex << operations::revision_id() << endl;
+    \end{lstlisting}
+    \begin{verbatim}
+ef4203c133db7600
+    \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -1789,9 +1838,9 @@ struct bar {
 \begin{frame}[fragile]
   \frametitle{Are member functions sorted by name?}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_sorted_by_name = is_sorted(
-  get_member_functions(_1),
-  get_name(_1) < get_name(_2));
+const auto are_sorted_by_name = (*@\listinghl{is_sorted}@*)(
+  (*@\listinghl{get_member_functions}@*)(_1),
+  (*@\listinghl{get_name}@*)(_1) < get_name(_2));
 
 cout << are_sorted_by_name(mirror(foo))<< endl;
 cout << are_sorted_by_name(mirror(bar))<< endl;
@@ -1800,6 +1849,73 @@ cout << are_sorted_by_name(mirror(bar))<< endl;
   \begin{verbatim}
   0
   1
+  \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Have classes the same structure?}
+  \begin{lstlisting}[language=c++2x]
+auto have_same_structure = [](
+  metaobject auto ml,
+  metaobject auto mr) {
+
+  const auto structure_hash =
+    (*@\listinghl{fold}@*)(
+      (*@\listinghl{get_data_members}@*)(_1),
+      (*@\listinghl{get_hash}@*)((*@\listinghl{get_type}@*)(_1)),
+      [](auto... h) {
+        return (... ^ h);
+      });
+  return structure_hash(ml) ==
+         structure_hash(mr);
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Have classes the same structure?}
+  \begin{columns}
+    \begin{column}{.33\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct foo {
+  int i;
+  float f;
+  std::string s;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.33\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct bar {
+  int j;
+  float e;
+  std::string z;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.33\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct baz {
+  long l;
+  double d;
+  char c;
+  bool b;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+cout << boolalpha
+     << have_same_structure(mirror(foo), mirror(bar))
+     << endl;
+cout << boolalpha
+     << have_same_structure(mirror(foo), mirror(baz))
+     << endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+true
+false
   \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
