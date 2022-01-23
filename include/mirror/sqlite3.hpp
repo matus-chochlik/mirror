@@ -122,7 +122,7 @@ public:
             using mirror::extract;
             if(const auto col_idx{index_of(get_name(mdm))};
                has_value(col_idx)) {
-                if(const auto opt_val{from_optional_string(
+                if(const auto opt_val{from_extractable_string(
                      value(*col_idx), get_reflected_type(get_type(mdm)))};
                    has_value(opt_val)) {
                     get_reference(mdm, instance) = extract(opt_val);

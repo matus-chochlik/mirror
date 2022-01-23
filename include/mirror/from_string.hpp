@@ -198,11 +198,12 @@ auto from_string(const std::string_view src) noexcept {
 }
 
 template <typename T>
-auto from_optional_string(
-  const std::optional<std::string_view> src,
+auto from_extractable_string(
+  const extractable auto src,
   std::type_identity<T> tid = {}) noexcept -> std::optional<T> {
-    if(src) {
-        if(auto converted{from_string(*src, tid)}; has_value(converted)) {
+    if(has_value_of<std::string_view>(src) && has_value(src)) {
+        if(auto converted{from_string(extract(src), tid)};
+           has_value(converted)) {
             return {std::move(extract(converted))};
         }
     }
