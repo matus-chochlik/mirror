@@ -13,3 +13,8 @@ mirror_add_latex_presentation(
 	FIGURES rpc_class rpc_sequence
 )
 add_dependencies(doc-latex doc-reflection_api-pdf)
+
+mirror_add_latex_presentation(
+	use_cases
+)
+add_dependencies(doc-latex doc-use_cases-pdf)
