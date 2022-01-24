@@ -5,5 +5,231 @@
 \title{Reflection use-cases}
 % - Intro ----------------------------------------------------------------------
 \frame{\titlepage}
+% - Utilities ------------------------------------------------------------------
+\section{Utilities}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\em Extractables}
+  \framesubtitle{concepts}
+  \larger
+  \begin{itemize}
+    \item can optionally refer to or store a value
+    \begin{itemize}
+      \item raw pointers, smart pointers,
+      \item \inlinecode{optional}, \inlinecode{expected},
+      \item \ldots
+    \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+concept extractable = requires(T v) {
+  { (*@\listinghl{has_value}@*)(v) } -> convertible_to<bool>;
+  (*@\listinghl{extract}@*)(v);
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\em Extractables}
+  \framesubtitle{operations}
+  \begin{itemize}
+    \item \inlinecode{has_value_type} -- indicates if the extracted value has
+      a~specific type
+    \item \inlinecode{has_value} -- indicates if an extractable has a value
+    \item \inlinecode{extract} -- provides access to a value in an extractable
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename V>
+consteval auto has_value_type(
+  const extractable auto& v)
+  noexcept -> bool;
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto has_value(
+  extractable auto &) noexcept -> bool;
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto extract(extractable auto&) -> auto&;
+auto extract(extractable auto&&) -> const auto&&;
+auto extract(extractable const auto&) -> const auto&;
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\em Extractables}
+  \framesubtitle{the idiom}
+  This is quite common\ldots
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+  auto get_opt_val(auto... params)
+  -> (*@\listinghl{extractable}@*);
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+  if(const auto (*@\listinghl{opt}@*){get_opt_val(args...)};
+     (*@\listinghl{has_value}@*)(opt)) {
+
+    do_something((*@\listinghl{extract}@*)(opt));
+  } else {
+    do_something_else();
+  }
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Conversion from string}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+auto from_string(
+  const string_view src,
+  type_identity<T> = {})
+  -> (*@\listinghl{extractable}@*);
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+auto from_extractable_string(
+  const (*@\listinghl{extractable}@*) auto src,
+  type_identity<T> tid = {})
+  -> (*@\listinghl{extractable}@*)
+  requires((*@\listinghl{has_value_type}@*)<string_view>(src));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Command-line arguments}
+  \begin{columns}
+    \begin{column}{.57\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_arg {
+public:
+  auto next() -> program_arg;
+
+  auto is_short_tag(
+    string_view) -> bool;
+  auto is_long_tag(
+    string_view) -> bool;
+  // ...
+  operator string_view();
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_args {
+public:
+  program_args(int, const char**);
+  auto begin();
+  auto end();
+  auto command() -> string_view;
+  // ...
+  auto find(string_view)
+    -> program_arg;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.44\textwidth}
+      \small
+      \begin{itemize}
+        \item \inlinecode{program_arg} -- represents a single program argument.
+        \begin{itemize}
+          \smaller
+          \item get previous and next argument,
+          \item check for \verb@-o@ and \verb@--long-opt@ options,
+          \item starts-with, ends-with,
+          \item \ldots
+        \end{itemize}
+        \item \inlinecode{program_args} -- represents all program arguments
+        \begin{itemize}
+          \smaller
+          \item iteration, search,
+          \item command, first, last,
+          \item \ldots
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% - Parsing options ------------------------------------------------------------
+\section{Options}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{into a structure}
+  \small
+  \begin{itemize}
+    \item \inlinecode{options} -- application-specific data structure
+      storing options
+    \item \inlinecode{parse_args} -- generic function that parses and stores
+      command-line argument values into a structure
+    \begin{itemize}
+      \item can be implemented using reflection
+    \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct options {
+  string message{"Hello, world!"};
+  chrono::milliseconds interval{500};
+  int count{3};
+};
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename T>
+bool (*@\listinghl{parse_options}@*)(T& opts, const program_args&);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{usage}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+int main(int argc, const char** argv) {
+    const (*@\listinghl{program_args}@*) args{argc, argv};
+    (*@\listinghl{options}@*) opts;
+
+    if((*@\listinghl{parse_options}@*)(opts, args)) {
+      const auto repeats{
+        ranges::views::iota(1, opts.(*@\listinghl{count}@*) + 1)};
+
+      for(auto i : repeats) {
+          cout << i << ": "
+               << opts.(*@\listinghl{message}@*) << endl;
+
+          this_thread::sleep_for(opts.(*@\listinghl{interval}@*));
+      }
+      return 0;
+    } else {
+      return 1;
+    }
+}  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{how to implement \inlinecode{parse}?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+bool parse_options(T& opts, const program_args& args) {
+  bool parsed = true;
+  for(const auto& arg : args) {
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
+      if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
+        if(const auto opt{from_string(
+          arg.next(), (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
+        ) {
+           (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
+        } else {
+            std::cerr << "invalid value '" << arg.next()
+                      << "' for option " << arg
+                      << "!" << std::endl;
+            parsed = false;
+        }
+      }
+    });
+  }
+  return parsed;
+}
+  \end{lstlisting}
+\end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
