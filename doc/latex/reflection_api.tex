@@ -21,7 +21,7 @@
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Contents}
-  \Large
+  \LARGE
   \begin{itemize}
     \item Reflection \smaller and \say{un-reflection}
     \item Metaobjects and metadata
@@ -111,16 +111,16 @@ void bar(auto m)
   \frametitle{Reflection}
   \larger
   \begin{itemize}
-    \item The process of obtaining metadata or metaobjects providing metadata
+    \item The process of obtaining metadata or metaobjects which provide metadata
       indirectly
     \item Done through a~dedicated operator or~language expression
     \item For example
   \end{itemize}
   \begin{lstlisting}[language=c++2x]
-const auto meta_int = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~placeholder
+const auto (*@\listinghlt{meta_int}@*) = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~placeholder
       for the~actual reflection expression}@*)(int);
 static_assert(
-  metaobject<decltype(meta_int)>);
+  metaobject<decltype((*@\listinghlt{meta_int}@*))>);
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -280,14 +280,14 @@ void log_who_did_this(
   if constexpr((*@\listinghl{reflects_global_scope}@*)(mo)) {
     log << "it was the global scope!"
   } else if constexpr((*@\listinghl{reflects_named}@*)(mo)) {
-    log << "it was " << (*@\listinghl{get_display_name}@*)(mo);
+    log << "it was " << (*@\listinghlt{get_display_name}@*)(mo);
   } else {
     log << "how the [:^#%@:]! should I know?"
   }
   log << " "
-      << "(" << (*@\listinghl{get_source_file_name}@*)(mo)
-      << ":" << (*@\listinghl{get_source_line}@*)(mo)
-      << "," << (*@\listinghl{get_source_column}@*)(mo)
+      << "(" << (*@\listinghlt{get_source_file_name}@*)(mo)
+      << ":" << (*@\listinghlt{get_source_line}@*)(mo)
+      << "," << (*@\listinghlt{get_source_column}@*)(mo)
       << ")";
 }
   \end{lstlisting}
@@ -303,12 +303,12 @@ auto get_source_file_name(metaobject auto)
   -> string_view;
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x]
 auto get_source_line(metaobject auto)
   -> unsigned long;
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x]
 auto get_source_column(metaobject auto)
   -> unsigned long;
   \end{lstlisting}
@@ -571,7 +571,7 @@ auto is_type(
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <template <typename> class Trait>
-auto has_type_trait(metaobject auto mo) 
+auto has_type_trait(metaobject auto mo)
   -> bool requires(reflects_type(mo));
   \end{lstlisting}
 \end{frame}
@@ -657,47 +657,38 @@ auto get_parameters(metaobject auto mo)
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{Metaobject sequences}
-  \framesubtitle{basic operations}
-  \larger
-  \begin{itemize}
-    \item Is something a sequence (\inlinecode{is_object_sequence})
-    \item Is there anything in the sequence (\inlinecode{is_empty})
-    \item How many elements are there (\inlinecode{get_size})
-    \item Get the I-th element (\inlinecode{get_element<I>})
-    \item Concatenate\footnote{merge several sequences into one}
-      (\inlinecode{concat})
-    \item Flatten\footnote{transform a sequence of sequences into a single
-      sequence}(\inlinecode{flatten})
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Metaobject sequences}
   \framesubtitle{basic operations}
+  \smaller
+  Is something a sequence?
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto is_object_sequence(auto mo) -> bool;
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  Is there anything in the sequence?
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_empty(auto mo) -> bool
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  How many elements are there?
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto get_size(auto mo) -> size_t
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-auto concat(auto... mo)
-  requires((... && is_object_sequence(mo)));
+  Get the I-th element 
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <size_t I>
+auto get_element(auto mo)
+  requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-auto flatten(auto mo)
-  requires(is_object_sequence(mo));
+  Concatenate\footnote{merge several sequences into one}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto concat(auto... mo)
+  requires((... && is_object_sequence(mo)));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -739,6 +730,34 @@ void for_each(auto mo, F function)
     \item Predicates, comparators, transformation functions
     \item Custom composite algorithms
   \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Placeholder expressions}
+  \framesubtitle{\say{huh?}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename F>
+struct placeholder_expr {
+  auto operator()(auto... mo) const;
+  // ...
+};
+// + CTAD guide
+// + some specializations
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+constinit const placeholder_expr<...> _1{};
+constinit const placeholder_expr<...> _2{};
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename X>
+auto (*@\listinghl{some_operation}@*)((*@\listinghlt{placeholder_expr}@*)<X> e) {
+  return (*@\listinghlt{placeholder_expr}@*){[e](auto... a) {
+    return (*@\listinghl{some_operation}@*)(e(a...));
+  }};
+}
+  \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -811,18 +830,18 @@ get_name(get_element<1>(get_parameters(_1)));
   Takes a sequence, returns new sequence containing metaobjects that are
   the result of applying a transformation \inlinecode{function}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{transform}@*)(auto mo, auto function)
+auto (*@\listinghl{transform}@*)(auto mo, auto (*@\listinghlt{function}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto get_base_class_types = (*@\listinghl{transform}@*)(
     get_base_classes(_1),
-    (*@\listinghl{get_class}@*)(_1));
+    (*@\listinghlt{get_class}@*)(_1));
 
 auto get_parameter_types = (*@\listinghl{transform}@*)(
     get_parameters(_1),
-    (*@\listinghl{get_type}@*)(_1));
+    (*@\listinghlt{get_type}@*)(_1));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -832,23 +851,23 @@ auto get_parameter_types = (*@\listinghl{transform}@*)(
   Takes a sequence, returns new sequence containing only metaobjects
   satisfying a \inlinecode{predicate}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{filter}@*)(auto mo, auto predicate)
+auto (*@\listinghl{filter}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   Takes a sequence, returns new sequence containing only metaobjects
   {\em not} satisfying a \inlinecode{predicate}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{remove_if}@*)(auto mo, auto predicate)
+auto (*@\listinghl{remove_if}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto get_virtual_functions =
-  (*@\listinghl{filter}@*)(get_member_functions(_1), (*@\listinghl{is_virtual}@*)(_1));
+  (*@\listinghl{filter}@*)(get_member_functions(_1), (*@\listinghlt{is_virtual}@*)(_1));
 
 auto get_nonstatic_members =
-  (*@\listinghl{remove_if}@*)(get_data_members(_1), (*@\listinghl{is_static}@*)(_1));
+  (*@\listinghl{remove_if}@*)(get_data_members(_1), (*@\listinghlt{is_static}@*)(_1));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -858,7 +877,7 @@ auto get_nonstatic_members =
   Takes a sequence, returns the count of metaobjects satisfying
   a \inlinecode{predicate}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{count_if}@*)(auto mo, auto predicate)
+auto (*@\listinghl{count_if}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
@@ -866,12 +885,12 @@ auto (*@\listinghl{count_if}@*)(auto mo, auto predicate)
 auto count_public_bases =
   (*@\listinghl{count_if}@*)(
     get_base_classes(_1),
-    is_public(_1));
+    (*@\listinghlt{is_public}@*)(_1));
 
 auto count_integer_members =
   (*@\listinghl{count_if}@*)(
     get_data_members(_1),
-    has_type_trait<is_integral>(get_type(_1)));
+    (*@\listinghlt{has_type_trait}@*)<is_integral>((*@\listinghlt{get_type}@*)(_1)));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -881,25 +900,25 @@ auto count_integer_members =
   Takes a sequence, returns the first metaobject satisfying
   a \inlinecode{predicate}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{find_if}@*)(auto mo, auto predicate)
+auto (*@\listinghl{find_if}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   Takes a sequence, returns the first metaobject {\em not} satisfying
   a \inlinecode{predicate}
   \begin{lstlisting}[language=c++2x]
-auto (*@\listinghl{find_if_not}@*)(auto mo, auto predicate)
+auto (*@\listinghl{find_if_not}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto find_function_foo = (*@\listinghl{find_if}@*)(
     get_member_functions(_1),
-    [](auto mo) { return has_name(mo, "foo"); });
+    (*@\listinghlt{[]}@*)(auto mo) { return has_name(mo, "foo"); });
 
 auto find_nonstatic_member = (*@\listinghl{find_if_not}@*)(
     get_data_members(_1),
-    is_static(_1));
+    (*@\listinghlt{is_static}@*)(_1));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -912,10 +931,10 @@ auto find_nonstatic_member = (*@\listinghl{find_if_not}@*)(
   to a \inlinecode{compare} function\footnote{if unspecified then less-than is used}.
   \begin{lstlisting}[language=c++2x]
 auto (*@\listinghl{find_ranking}@*)(
-  auto mo, auto query, auto compare)
+  auto mo, auto (*@\listinghlt{query}@*), auto compare)
   requires(is_object_sequence(mo));
 
-auto (*@\listinghl{find_ranking}@*)(auto mo, auto query)
+auto (*@\listinghl{find_ranking}@*)(auto mo, auto (*@\listinghlt{query}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
@@ -923,7 +942,7 @@ auto (*@\listinghl{find_ranking}@*)(auto mo, auto query)
     auto find_largest_data_member =
       (*@\listinghl{find_ranking}@*)(
         get_data_members(_1),
-        get_sizeof(get_type(_1)));
+        (*@\listinghlt{get_sizeof}@*)((*@\listinghlt{get_type}@*)(_1)));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -936,10 +955,10 @@ auto (*@\listinghl{find_ranking}@*)(auto mo, auto query)
   to a \inlinecode{compare} function\footnote{if unspecified then less-than is used}.
   \begin{lstlisting}[language=c++2x]
 auto (*@\listinghl{get_top_value}@*)(
-  auto mo, auto query, auto compare)
+  auto mo, auto (*@\listinghlt{query}@*), auto compare)
   requires(is_object_sequence(mo));
 
-auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
+auto (*@\listinghl{get_top_value}@*)(auto mo, auto (*@\listinghlt{query}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
@@ -947,7 +966,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
     auto get_max_arity =
       (*@\listinghl{get_top_value}@*)(
         get_member_functions(_1),
-        get_size(get_parameters(_1)));
+        (*@\listinghlt{get_size}@*)((*@\listinghlt{get_parameters}@*)(_1)));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -980,7 +999,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto query)
   \frametitle{Composition}
   \larger
   \begin{itemize}
-    \item {\larger The super-power of named algorithms}
+    \item {\larger The {\larger super-power} of named algorithms}
     \item Together with the primitive operations and the placeholder expressions,
       the basic algorithms can be {\em \larger combined} into bigger,
       custom algorithms in-place.
@@ -1115,7 +1134,7 @@ enum class month : int {
 auto has_overloaded_functions =
   [](metaobject auto mo) {
     const auto mfs = (*@\listinghl{get_member_functions}@*)(mo);
-    return fold(
+    return (*@\listinghlt{fold}@*)(
       mfs,
       [mfs](auto mf1) {
         return (*@\listinghl{any_of}@*)(mfs, [mf1](auto mf2) {
@@ -1123,7 +1142,7 @@ auto has_overloaded_functions =
              (*@\listinghl{get_name}@*)(mf1) == (*@\listinghl{get_name}@*)(mf2);
         });
       },
-      [](auto... b) { return (... || b); });
+      (*@\listinghlt{[]}@*)(auto... b) { return (... || b); });
   };
   \end{lstlisting}
 \end{frame}
@@ -1183,14 +1202,14 @@ cout << has_overloaded_functions(mirror(bar))<< endl;
   \frametitle{Does a structure have some padding?}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 template <typename... T>
-auto sum_sizeofs(type_list<T...>) -> bool {
+auto sum_sizeofs((*@\listinghlt{type_list}@*)<T...>) -> bool {
     return (0Z + ... + sizeof(T));
 }
 
 template <typename T>
 auto has_padding() -> bool {
     return sizeof(T) >
-           sum_sizeofs(extract_types(*@\footnote{note that this operation 
+           sum_sizeofs((*@\listinghlt{extract_types}@*)(*@\footnote{note that this operation
            ~involves \say{un-reflection} -- getting base-level types from
            ~meta-types}@*)((*@\listinghl{transform}@*)(
              (*@\listinghl{filter}@*)((*@\listinghl{get_data_members}@*)(mirror(T)),
@@ -1285,16 +1304,16 @@ cout << are_sorted_by_size(mirror(bar))<< endl;
   \begin{lstlisting}[language=c++2x]
 template <typename E>
 auto enum_to_string(E e) noexcept
-  -> string_view {
+  -> (*@\listinghlt{string_view}@*) {
 
-  return (*@\listinghl{select}@*)(
+  return (*@\listinghlt{select}@*)(
     (*@\listinghl{get_enumerators}@*)(mirror(E)),
     [](auto& result, auto mo, auto c) {
         if((*@\listinghl{get_constant}@*)(mo) == c) {
-            result = (*@\listinghl{get_name}@*)(mo);
+            (*@\listinghlt{result}@*) = (*@\listinghl{get_name}@*)(mo);
         }
     },
-    string_view{},
+    (*@\listinghlt{string_view}@*){},
     e);
 }
   \end{lstlisting}
@@ -1306,16 +1325,16 @@ auto enum_to_string(E e) noexcept
   \begin{lstlisting}[language=c++2x]
 template <typename E>
 auto string_to_enum(string_view s) noexcept
-  -> optional<E> {
+  -> (*@\listinghlt{optional}@*)<E> {
 
-  return (*@\listinghl{select}@*)(
+  return (*@\listinghlt{select}@*)(
     (*@\listinghl{get_enumerators}@*)(mirror(E)),
     [](auto& result, auto mo, auto n) {
         if((*@\listinghl{get_name}@*)(mo) == n) {
-            result = (*@\listinghl{get_constant}@*)(mo);
+            (*@\listinghlt{result}@*) = (*@\listinghl{get_constant}@*)(mo);
         }
     },
-    optional<E>{},
+    (*@\listinghlt{optional}@*)<E>{},
     s);
 }
   \end{lstlisting}
@@ -1337,9 +1356,9 @@ public:
       \end{lstlisting}
       \vfill
       \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-class program_args {
+class (*@\listinghlt{program_args}@*) {
 public:
-  program_args(int, const char**); 
+  program_args(int, const char**);
   auto begin();
   auto end();
   // ...
@@ -1350,7 +1369,7 @@ public:
 template <typename T>
 bool (*@\listinghl{parse}@*)(
   T& opts,
-  const program_args& args);
+  const (*@\listinghlt{program_args}@*)& args);
       \end{lstlisting}
     \end{column}
     \begin{column}{.44\textwidth}
@@ -1369,7 +1388,7 @@ int main(
   int argc,
   const char** argv) {
 
-  const program_args
+  const (*@\listinghlt{program_args}@*)
       args{argc, argv};
   options opts;
   if((*@\listinghl{parse}@*)(opts, args)) {
@@ -1394,7 +1413,7 @@ bool parse(T& opts, const program_args& args) {
     (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
       if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
         if(const auto opt{from_string(
-          arg.next(), (*@\listinghl{get_reflected_type}\footnote{\ldots and \say{un-reflection}}@*)((*@\listinghl{get_type}@*)(mdm)))}
+          arg.next(), (*@\listinghlt{get_reflected_type}\footnote{\ldots and \say{un-reflection}}@*)((*@\listinghl{get_type}@*)(mdm)))}
         ) {
            (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
         } else {
@@ -1417,12 +1436,12 @@ bool parse(T& opts, const program_args& args) {
 template <typename Intf>
 struct versioned_interface {
 public:
-  static auto revision_id() noexcept -> hash_t {
-    return (*@\listinghl{fold}@*)(
+  static auto revision_id() noexcept -> (*@\listinghlt{hash_t}@*) {
+    return (*@\listinghlt{fold}@*)(
       (*@\listinghl{filter}@*)((*@\listinghl{get_member_functions}@*)(mirror(Intf)),
         (*@\listinghl{is_virtual}@*)(_1)),
       (*@\listinghl{get_hash}@*)(_1) ^ get_hash((*@\listinghl{get_type}@*)(_1)),
-      [](auto... h) { return (... ^ h); });
+      (*@\listinghlt{[]}@*)(auto... h) { return (... ^ h); });
   }
 };
   \end{lstlisting}
@@ -1437,7 +1456,7 @@ struct operations
  : versioned_interface<operations> {
   virtual void foo() = 0;
   virtual void bar((*@\listinghl{int}@*)) = 0;
-  virtual auto baz(bool, bool) -> (*@\listinghl{bool}@*) = 0;
+  virtual auto baz(bool, bool) -> (*@\listinghlt{bool}@*) = 0;
 };
 cout << hex << operations::revision_id() << endl;
     \end{lstlisting}
@@ -1451,7 +1470,7 @@ struct operations
  : versioned_interface<operations> {
   virtual void foo() = 0;
   virtual void bar((*@\listinghl{long}@*)) = 0;
-  virtual auto baz(bool, bool) -> (*@\listinghl{int}@*) = 0;
+  virtual auto baz(bool, bool) -> (*@\listinghlt{int}@*) = 0;
 };
 cout << hex << operations::revision_id() << endl;
     \end{lstlisting}
@@ -1511,16 +1530,15 @@ class calculator_stub : public calculator {
 private:
     (*@\listinghl{rpc_stub_impl}@*) _impl;
 public:
-  float add(float l, float r) final {
+  float (*@\listinghlt{add}@*)(float l, float r) final {
     return _impl.(*@\listinghl{make_call}@*)(
-      (*@\listinghl{mirror}@*)((calculator::add(l, r))), l, r);
+      (*@\listinghl{mirror}@*)((calculator::(*@\listinghlt{add}@*)(l, r)))(*@\footnote{expression reflection}@*), l, r);
   }
 
-  float subtract(float l, float r) final {
+  float (*@\listinghlt{subtract}@*)(float l, float r) final {
     return _impl.make_call(
-      mirror((calculator::subtract(l, r))), l, r);
+      mirror((calculator::(*@\listinghlt{subtract}@*)(l, r))), l, r);
   }
-
   float multiply(float l, float r) final;
   float divide(float l, float r) final;
   float negate(float x) final;
@@ -1535,7 +1553,7 @@ public:
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 class rpc_stub_impl {
   template <typename T>
-  auto _deserialize(packet&, (*@\listinghl{type_identity}@*)<T>) -> T;
+  auto _deserialize(packet&, (*@\listinghlt{type_identity}@*)<T>) -> T;
 public:
   auto make_call(metaobject auto mo, auto&... args) {
 
@@ -1545,7 +1563,7 @@ public:
 
     return _deserialize(
       response,
-      (*@\listinghl{get_reflected_type}@*)(
+      (*@\listinghlt{get_reflected_type}@*)(
         (*@\listinghl{get_type}@*)(
           (*@\listinghl{get_callable}@*)(
             (*@\listinghl{get_subexpression}@*)(mo)))));
@@ -1586,7 +1604,7 @@ public:
     for_each(get_member_functions(mirror(Intf)),
       [&](auto mf) {
         if(_get_method_id(mf) == method_id) {
-          auto params = (*@\listinghl{make_value_tuple}@*)(
+          auto params = (*@\listinghlt{make_value_tuple}@*)(
             (*@\listinghl{transform}@*)((*@\listinghl{get_parameters}@*)(mf), (*@\listinghl{get_type}@*)(_1)));
 
           deserialize(params, request);
@@ -1742,7 +1760,7 @@ struct excellent {
 template <typename T>
 concept has_foo_and_such = (*@\listinghl{any_of}@*)(
   (*@\listinghl{get_member_functions}@*)(mirror(T)),
-  ctre_match<"foo|bar|baz">((*@\listinghl{get_name}@*)(_1)));
+  (*@\listinghlt{ctre_match}@*)<"foo|bar|baz">((*@\listinghlt{get_name}@*)(_1)));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
@@ -1763,14 +1781,14 @@ foonction(std::string{}); // ERROR
 auto min_enum = get_top_value(
   (*@\listinghl{get_enumerators}@*)(_1),
   (*@\listinghl{get_constant}@*)(_1),
-  std::greater<>{});
+  (*@\listinghlt{std::greater}@*)<>{});
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto max_enum = get_top_value(
   get_enumerators(_1),
   get_constant(_1),
-  std::less<>{});
+  (*@\listinghlt{std::less}@*)<>{});
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
@@ -1792,74 +1810,15 @@ const auto is_bitfield_enum =
       (*@\listinghl{get_underlying_type}@*)((*@\listinghl{get_type}@*)(l)))) {
       return false;
     } else {
-      auto to_underlying = [](auto e) {
+      auto (*@\listinghlt{to_underlying}@*) = [](auto e) {
         using U = underlying_type_t<decltype(e)>;
         return static_cast<U>(e);
       };
       return to_underlying((*@\listinghl{get_constant}@*)(l)) << 1U ==
-             to_underlying(get_constant(r));
+             (*@\listinghlt{to_underlying}@*)(get_constant(r));
     }
   });
   \end{lstlisting}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are member functions sorted by name?}
-  \begin{columns}
-    \begin{column}{.65\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-struct foo {
-  int plus(int x) {
-    return x;
-  }
-  int plus(int x, int y) {
-    return x + y;
-  }
-  int plus(int x, int y, int z) {
-    return x + y + z;
-  }
-  int minus(int x) {
-    return -x;
-  }
-  int minus(int x, int y) {
-    return x - y;
-  }
-};
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{.35\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct bar {
-  int a() {
-    return 0;
-  }
-  int b() {
-    return 1;
-  }
-  int c() {
-    return 2;
-  }
-};
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Are member functions sorted by name?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_sorted_by_name = (*@\listinghl{is_sorted}@*)(
-  (*@\listinghl{get_member_functions}@*)(_1),
-  (*@\listinghl{get_name}@*)(_1) < get_name(_2));
-
-cout << are_sorted_by_name(mirror(foo))<< endl;
-cout << are_sorted_by_name(mirror(bar))<< endl;
-  \end{lstlisting}
-  Output:
-  \begin{verbatim}
-  0
-  1
-  \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -1869,13 +1828,13 @@ auto have_same_structure = [](
   metaobject auto ml,
   metaobject auto mr) {
 
-  const auto structure_hash =
-    (*@\listinghl{fold}@*)(
+  const auto structure_hash = (*@\listinghlt{fold}@*)(
       (*@\listinghl{get_data_members}@*)(_1),
       (*@\listinghl{get_hash}@*)((*@\listinghl{get_type}@*)(_1)),
-      [](auto... h) {
+      (*@\listinghlt{[]}@*)(auto... h) {
         return (... ^ h);
       });
+
   return structure_hash(ml) ==
          structure_hash(mr);
 };

@@ -8,7 +8,8 @@
 \definecolor{mirrorstring}{RGB}{129, 215, 255}
 \definecolor{mirrorkeyword}{RGB}{96, 148, 215}
 \definecolor{mirrorcomment}{RGB}{192, 192, 203}
-\definecolor{mirrorhilite}{RGB}{215, 148, 96}
+\definecolor{mirrorhilite1}{RGB}{215, 148, 96}
+\definecolor{mirrorhilite2}{RGB}{215, 215, 128}
 
 \setbeamercolor{structure}{fg=mirrorminor}
 \setbeamercolor{background canvas}{bg=mirrorpage}
