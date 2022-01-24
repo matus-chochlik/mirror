@@ -201,7 +201,7 @@ template <typename T>
 auto from_extractable_string(
   const extractable auto src,
   std::type_identity<T> tid = {}) noexcept -> std::optional<T> {
-    if(has_value_of<std::string_view>(src) && has_value(src)) {
+    if(has_value_type<std::string_view>(src) && has_value(src)) {
         if(auto converted{from_string(extract(src), tid)};
            has_value(converted)) {
             return {std::move(extract(converted))};

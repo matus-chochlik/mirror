@@ -49,12 +49,12 @@ struct extracted_traits;
 /// @ingroup utilities
 /// @see extract
 template <typename T>
-using extracted_value_t = std::remove_cv_t<typename extracted_traits<
+using extracted_type_t = std::remove_cv_t<typename extracted_traits<
   std::remove_cv_t<std::remove_reference_t<T>>>::value_type>;
 
 template <typename E, typename V>
-static constexpr const auto has_value_of_v =
-  std::is_convertible_v<extracted_value_t<E>, V>;
+static constexpr const auto has_value_type_v =
+  std::is_convertible_v<extracted_type_t<E>, V>;
 
 // nullptr
 template <>
@@ -164,18 +164,18 @@ constexpr auto get_error(const std::variant<T, E>& v) noexcept -> const E& {
 template <typename T>
 concept extractable = requires(T v) {
     { has_value(v) } -> std::convertible_to<bool>;
-	{ std::declval<mirror::extracted_value_t<T>>() };
+	{ std::declval<mirror::extracted_type_t <T>>() };
 	extract(v);
 };
 // clang-format on
 
 /// @brief Indicates in an extractable has value type of @c V.
 /// @see extract
-/// @see extracted_value_t
+/// @see extracted_type_t
 /// @ingroup utilities
 template <typename V>
-consteval auto has_value_of(const extractable auto& v) noexcept -> bool {
-    return has_value_of_v<decltype(v), V>;
+consteval auto has_value_type(const extractable auto& v) noexcept -> bool {
+    return has_value_type_v<decltype(v), V>;
 }
 
 } // namespace mirror
