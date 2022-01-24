@@ -259,7 +259,8 @@ int main() {
       \item pointers or references\footnote{to values, data member, functions},
       \item strings\footnote{string views actually} (\inlinecode{get_source_file_name},
         \inlinecode{get_name}),
-      \item types\footnote{or type identity} (\inlinecode{get_reflected_type},
+      \item types\footnote{more precisely \inlinecode{type_identity}}
+        (\inlinecode{get_reflected_type}),
       \item other metaobjects (\inlinecode{get_scope}, \inlinecode{get_data_members}).
     \end{itemize}
   \end{itemize}
@@ -279,10 +280,15 @@ void log_who_did_this(
   if constexpr((*@\listinghl{reflects_global_scope}@*)(mo)) {
     log << "it was the global scope!"
   } else if constexpr((*@\listinghl{reflects_named}@*)(mo)) {
-    log << "it was " << get_display_name(mo);
+    log << "it was " << (*@\listinghl{get_display_name}@*)(mo);
   } else {
-    log << "how the hell should I know?"
+    log << "how the [:^#%@:]! should I know?"
   }
+  log << " "
+      << "(" << (*@\listinghl{get_source_file_name}@*)(mo)
+      << ":" << (*@\listinghl{get_source_line}@*)(mo)
+      << "," << (*@\listinghl{get_source_column}@*)(mo)
+      << ")";
 }
   \end{lstlisting}
 \end{frame}
@@ -1259,7 +1265,7 @@ struct bar {
   \end{columns}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 const auto are_sorted_by_size = (*@\listinghl{is_sorted}@*)(
-  (*@\listinghl{get_member_functions}@*)(_1),
+  (*@\listinghl{get_data_members}@*)(_1),
   (*@\listinghl{get_sizeof}@*)(_1) < get_sizeof(_2));
 
 cout << are_sorted_by_size(mirror(foo))<< endl;
@@ -1324,7 +1330,7 @@ auto string_to_enum(string_view s) noexcept
 class program_arg {
 public:
   auto next() -> program_arg;
-  auto is_long_tag() -> bool;
+  auto is_long_tag(...) -> bool;
   operator string_view();
   // ...
 };
@@ -1635,13 +1641,15 @@ cout << add(400ULL, 20ULL) << endl;
   \frametitle{There are so many use-cases}
   \framesubtitle{details in other talks}
   \begin{itemize}
-    \item Implementation of the {\em factory} pattern
+    \item Implementing the {\em factory} pattern
     \item Auto-registering with script language bindings
     \item Generating GUIs for visualization and data input
     \item Serialization and deserialization
+    \item Implementing RPC/RMI stubs and skeletons
     \item Generating UML diagrams from code
     \item Generating DB system queries
     \item Fetching data from databases into C++ structures
+    \item Generating \inlinecode{boost::spirit} parsers and formatters
     \item Parsing of configuration files
     \item Parsing of command-line arguments
     \item Mapping of URL arguments to function arguments
