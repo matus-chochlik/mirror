@@ -1649,7 +1649,8 @@ cout << add(true, false) << endl; // NOPE!
 \section{Alt}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Alternative API\footnote{pseudocode}}
+  \frametitle{Additional API\footnote{pseudocode}}
+  \framesubtitle{Operation name enums \& generic functions}
   \begin{columns}
     \begin{column}{.50\textwidth}
       \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
@@ -1660,6 +1661,10 @@ enum class trait {
   // ...
   is_call_operator_const,
   is_volatile,
+  // ...
+  is_public,
+  is_static,
+  is_virtual,
   // ...
   uses_default_copy_capture,
   // ...
@@ -1701,7 +1706,7 @@ auto try_apply(
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Alternative API}
+  \frametitle{Additional API}
   \framesubtitle{Print all metaobject traits}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 void print_traits(metaobject auto mo) {
@@ -1709,13 +1714,16 @@ void print_traits(metaobject auto mo) {
   const auto maxl =
     get_top_value(mes, get_size(get_name(_1)));
 
-  cout << "traits of " << get_display_name(mo) << endl;
+  cout << "traits of "
+       << get_display_name(mo) << "\n";
+
   for_each(mes, [&](metaobject auto me) {
-      cout << "  " << get_name(me)
-           << ": "
-           << string(maxl - get_name(me).size(), ' ')
-           << boolalpha
-           << (*@\listinghlt{has_trait}@*)<(*@\listinghl{get_constant}@*)(me)>(mo) << endl;
+    cout << "  " << get_name(me)
+         << ": "
+         << string(maxl - get_name(me).size(), ' ')
+         << boolalpha
+         << (*@\listinghlt{has_trait}@*)<(*@\listinghl{get_constant}@*)(me)>(mo)
+         << "\n";
   });
   cout << endl;
 }
@@ -1723,7 +1731,7 @@ void print_traits(metaobject auto mo) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Alternative API}
+  \frametitle{Additional API}
   \framesubtitle{Print all metaobject traits}
   Output:
   \footnotesize
