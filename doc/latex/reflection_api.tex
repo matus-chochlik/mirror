@@ -835,13 +835,13 @@ auto (*@\listinghl{transform}@*)(auto mo, auto (*@\listinghlt{function}@*))
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_base_class_types = (*@\listinghl{transform}@*)(
-    get_base_classes(_1),
-    (*@\listinghlt{get_class}@*)(_1));
-
 auto get_parameter_types = (*@\listinghl{transform}@*)(
     get_parameters(_1),
     (*@\listinghlt{get_type}@*)(_1));
+
+auto get_base_class_types = (*@\listinghl{transform}@*)(
+    get_base_classes(_1),
+    (*@\listinghlt{get_class}@*)(_1));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1002,7 +1002,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto (*@\listinghlt{query}@*))
     \item {\larger The {\larger super-power} of named algorithms}
     \item Together with the primitive operations and the placeholder expressions,
       the basic algorithms can be {\em \larger combined} into bigger,
-      custom algorithms in-place.
+      custom algorithms in-place
     \item Some examples follow\ldots
   \end{itemize}
 \end{frame}
@@ -1044,8 +1044,8 @@ enum class po2s {
 \begin{frame}[fragile]
   \frametitle{Are enumerators consecutive?}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-const auto are_consecutive =
-  (*@\listinghl{is_sorted}@*)((*@\listinghl{get_enumerators}@*)(_1),
+auto are_consecutive = (*@\listinghl{is_sorted}@*)(
+  (*@\listinghl{get_enumerators}@*)(_1),
   [](metaobject auto l, metaobject auto r) {
       return int((*@\listinghl{get_constant}@*)(l)) ==
              int(get_constant(r)) - 1;
@@ -1207,7 +1207,7 @@ auto sum_sizeofs((*@\listinghlt{type_list}@*)<T...>) -> bool {
 }
 
 template <typename T>
-auto has_padding() -> bool {
+auto has_padding(*@\footnote{is bigger than the sum of its parts?}@*)() -> bool {
     return sizeof(T) >
            sum_sizeofs((*@\listinghlt{extract_types}@*)(*@\footnote{note that this operation
            ~involves \say{un-reflection} -- getting base-level types from
@@ -1415,12 +1415,12 @@ bool parse(T& opts, const program_args& args) {
         if(const auto opt{from_string(
           arg.next(), (*@\listinghlt{get_reflected_type}\footnote{\ldots and \say{un-reflection}}@*)((*@\listinghl{get_type}@*)(mdm)))}
         ) {
-           (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
+          (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
         } else {
-            std::cerr << "invalid value '" << arg.next()
-                      << "' for option " << arg
-                      << "!" << std::endl;
-            parsed = false;
+          std::cerr << "invalid value '" << arg.next()
+                    << "' for option " << arg
+                    << "!" << std::endl;
+          parsed = false;
         }
       }
     });
@@ -1532,7 +1532,8 @@ private:
 public:
   float (*@\listinghlt{add}@*)(float l, float r) final {
     return _impl.(*@\listinghl{make_call}@*)(
-      (*@\listinghl{mirror}@*)((calculator::(*@\listinghlt{add}@*)(l, r)))(*@\footnote{expression reflection}@*), l, r);
+      (*@\listinghl{mirror}@*)((calculator::(*@\listinghlt{add}@*)(l, r)))(*@\footnote{
+        expression reflection}@*), l, r);
   }
 
   float (*@\listinghlt{subtract}@*)(float l, float r) final {
@@ -1633,11 +1634,15 @@ auto add(
     return l + r;
 }
   \end{lstlisting}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 cout << add(1U, 2U) << endl;
 cout << add(short(3), short(4)) << endl;
 cout << add(21, 21) << endl;
 cout << add(400ULL, 20ULL) << endl;
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+cout << add(true, false) << endl; // NOPE!
   \end{lstlisting}
 \end{frame}
 % - Conclusion -----------------------------------------------------------------
