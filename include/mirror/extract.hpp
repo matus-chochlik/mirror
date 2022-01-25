@@ -12,6 +12,7 @@
 #include <concepts>
 #include <memory>
 #include <optional>
+#include <string_view>
 #include <system_error>
 #include <type_traits>
 #include <variant>
@@ -68,6 +69,20 @@ constexpr auto has_value(const nullptr_t) noexcept -> bool {
 
 constexpr auto extract(const nullptr_t) noexcept -> int {
     return 0;
+}
+
+// c-str
+template <>
+struct extracted_traits<char*> {
+    using value_type = std::string_view;
+};
+
+static constexpr auto has_value(const char* p) noexcept -> bool {
+    return p != nullptr;
+}
+
+static constexpr auto extract(const char* s) noexcept -> std::string_view {
+    return {s};
 }
 
 // pointer
