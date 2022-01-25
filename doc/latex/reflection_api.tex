@@ -1645,6 +1645,109 @@ cout << add(400ULL, 20ULL) << endl;
 cout << add(true, false) << endl; // NOPE!
   \end{lstlisting}
 \end{frame}
+% - Alt-API --------------------------------------------------------------------
+\section{Alt}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Alternative API\footnote{pseudocode}}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class trait {
+  reflects_object,
+  // ...
+  reflects_expression,
+  // ...
+  is_call_operator_const,
+  is_volatile,
+  // ...
+  uses_default_copy_capture,
+  // ...
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <trait T>
+auto has_trait(
+  metaobject auto) -> bool;
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.50\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class operation {
+  // ...
+  get_name,
+  get_type,
+  // ...
+  get_enumerators,
+  // ...
+};
+      \end{lstlisting}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <operation O>
+auto is_applicable(
+  metaobject auto) -> bool;
+
+template <operation O>
+auto apply(metaobject auto);
+
+template <operation O>
+auto try_apply(
+  metaobject auto)
+    -> (*@\listinghl{optional}@*)<...>;
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Alternative API}
+  \framesubtitle{Print all metaobject traits}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void print_traits(metaobject auto mo) {
+  const auto mes = get_enumerators(mirror((*@\listinghl{trait}@*)));
+  const auto maxl =
+    get_top_value(mes, get_size(get_name(_1)));
+
+  cout << "traits of " << get_display_name(mo) << endl;
+  for_each(mes, [&](metaobject auto me) {
+      cout << "  " << get_name(me)
+           << ": "
+           << string(maxl - get_name(me).size(), ' ')
+           << boolalpha
+           << (*@\listinghlt{has_trait}@*)<(*@\listinghl{get_constant}@*)(me)>(mo) << endl;
+  });
+  cout << endl;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Alternative API}
+  \framesubtitle{Print all metaobject traits}
+  Output:
+  \footnotesize
+  \begin{verbatim}
+  traits of std::string
+  reflects_object:                   true
+  reflects_object_sequence:          false
+  reflects_named:                    true
+  reflects_alias:                    true
+  reflects_typed:                    false
+  reflects_scope:                    true
+  reflects_scope_member:             true
+  reflects_enumerator:               false
+  reflects_record_member:            false
+  reflects_base:                     false
+  reflects_namespace:                false
+  reflects_global_scope:             false
+  reflects_type:                     true
+  reflects_enum:                     false
+  reflects_record:                   true
+  reflects_class:                    true
+  ...
+  \end{verbatim}
+\end{frame}
 % - Conclusion -----------------------------------------------------------------
 \section{Conclusion}
 % ------------------------------------------------------------------------------
@@ -1892,54 +1995,5 @@ true
 false
   \end{verbatim}
 \end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Next weekday}
-  \begin{columns}
-    \begin{column}{.46\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-enum class weekdays : int {
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday,
-    sunday
-};
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{.54\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-weekdays next_day(weekdays d);
-      \end{lstlisting}
-      \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
-void print_next_day(string_view day) {
-  if(auto opt_day{
-    string_to_enum<weekdays>(day)}) {
-      auto next{next_day(*opt_day)};
-      cout << day << " -> "
-           << enum_to_string(next)
-           << endl;
-  }
-}
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-(*@\listinghl{for_each}@*)((*@\listinghl{get_enumerators}@*)(mirror(weekdays)),
-  [](metaobject auto mo) {
-    print_next_day((*@\listinghl{get_name}@*)(mo));
-});
-  \end{lstlisting}
-  \smaller
-  \begin{verbatim}
-monday -> tuesday
-tuesday -> wednesday
-...
-sunday -> monday
-  \end{verbatim}
-\end{frame}
-% ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 \end{document}
