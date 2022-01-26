@@ -4,16 +4,151 @@
 % ------------------------------------------------------------------------------
 \title{Reflection use-cases}
 % - Intro ----------------------------------------------------------------------
+\section{Intro}
 \frame{\titlepage}
+% - Recap ----------------------------------------------------------------------
+\section{Recap}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Metadata}
+  \framesubtitle{describing program declarations}
+  \larger
+  \begin{itemize}
+    \item type of a variable,
+    \item data members of a \inlinecode{struct},
+    \item constructors or member functions of a \inlinecode{class},
+    \item base classes of a \inlinecode{class},
+    \item return type of a function,
+    \item parameters of a function,
+    \item enumerators in an \inlinecode{enum} type,
+    \item name of a namespace, type, function, data member, parameter, etc.
+    \item address of a variable, data member or member function,
+    \item specifier like \inlinecode{virtual}, \inlinecode{constexpr},
+      \inlinecode{static}, etc.
+    \item source location,
+    \item \ldots
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject}
+  \begin{itemize}
+    \item A {\em meta-level} representation of a {\em base-level} entity\footnote{
+      namespace, type, class, function, constructor, destructor, variable,
+        enumerator, expression, \ldots}
+    \item On the {\em meta-level\footnote{unlike the base-level (namespaces,
+      constructors, etc)}} all of the above are \say{reified}
+    \item We say a metaobject \say{reflects} the {\em base-level} entity
+    \item Provides access to {\em metadata} describing the reflected
+      {\em base-level} entity
+    \item A compile-time constant
+    {\larger value} of a type satisfying the~following concept:
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x]
+template <typename X>
+concept (*@\listinghl{metaobject}@*) = (*@{\em not-really-important-here}@*);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection~~~~~~~~~~~~~~~~~~~~~~~\ldots and
+  \say{un-reflection}\footnote{a.k.a. \say{"splicing"}}}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item The process of obtaining metadata or metaobjects which provide metadata
+          indirectly
+        \item Done through a~dedicated operator or~language expression
+        \item For example
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto (*@\listinghlt{meta_string}@*) =
+  (*@\listinghl{mirror}@*)(std::string);
+  \end{lstlisting}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item Getting back to the base-level entity reflected by a metaobject
+        \item \ldots through an operation on a metaobject reflecting that
+          {\em base-level} entity
+        \item \say{Splicing} can also mean emitting a snippet of code involving
+          base-level entities, reflected by metaobjects
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection API}
+  \larger
+  Set of compile-time\footnote{\inlinecode{consteval}, \inlinecode{constexpr}
+    assumed, but omitted from examples in here to save space on slides}
+   functions operating on {\em metaobjects}
+  \smaller
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item classification
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{reflects_type}, \inlinecode{reflects_callable},
+              \ldots
+          \end{itemize}
+        \item primitive operations
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{get_name}, \inlinecode{get_scope},
+            \item \inlinecode{get_type}, \inlinecode{get_aliased},
+              \inlinecode{get_enumerators}, \inlinecode{is_constexpr},
+              \inlinecode{is_scoped_enum},
+              \inlinecode{is_pure_virtual}, \ldots
+          \end{itemize}
+        \item sequence operations
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{is_empty}, \inlinecode{get_size},
+              \inlinecode{get_element}, \inlinecode{concat}, \ldots
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item algorithms
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{for_each}, \inlinecode{fold},
+              \inlinecode{join}, \inlinecode{transform},
+              \inlinecode{filter}, \inlinecode{remove_if},
+              \inlinecode{find_if}, \inlinecode{find_if_not},
+              \inlinecode{find_ranking}, \ldots
+          \end{itemize}
+        \item comparators
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{reflects_same}, \ldots
+          \end{itemize}
+        \item syntax sugar, placeholder expressions
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{_1}, \inlinecode{_2},
+              \inlinecode{get_type(_1)}, \inlinecode{reflects_same(_1, _2)},
+              \ldots
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
 % - Utilities ------------------------------------------------------------------
 \section{Utilities}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{\em Extractables}
+  \frametitle{\em Extractable}
   \framesubtitle{concepts}
   \larger
   \begin{itemize}
-    \item can optionally refer to or store a value
+    \item Types which can optionally refer to or store a value
+    \item Unifies usage of
     \begin{itemize}
       \item raw pointers, smart pointers,
       \item \inlinecode{optional}, \inlinecode{expected},
@@ -23,6 +158,7 @@
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 template <typename T>
 concept extractable = requires(T v) {
+	{ declval<(*@\listinghl{extracted_type_t}@*)<T>>() };
   { (*@\listinghl{has_value}@*)(v) } -> convertible_to<bool>;
   (*@\listinghl{extract}@*)(v);
 };
@@ -30,7 +166,7 @@ concept extractable = requires(T v) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{\em Extractables}
+  \frametitle{\em Extractable}
   \framesubtitle{operations}
   \begin{itemize}
     \item \inlinecode{has_value_type} -- indicates if the extracted value has
@@ -57,7 +193,7 @@ auto extract(extractable const auto&) -> const auto&;
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{\em Extractables}
+  \frametitle{\em Extractable}
   \framesubtitle{the idiom}
   This is quite common\ldots
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
@@ -185,17 +321,17 @@ bool (*@\listinghl{parse_options}@*)(T& opts, const program_args&);
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 int main(int argc, const char** argv) {
     const (*@\listinghl{program_args}@*) args{argc, argv};
-    (*@\listinghl{options}@*) opts;
+    (*@\listinghl{options}@*) (*@\listinghlt{opts}@*);
 
-    if((*@\listinghl{parse_options}@*)(opts, args)) {
+    if((*@\listinghl{parse_options}@*)((*@\listinghlt{opts}@*), args)) {
       const auto repeats{
-        ranges::views::iota(1, opts.(*@\listinghl{count}@*) + 1)};
+        ranges::views::iota(1, opts.(*@\listinghlt{count}@*) + 1)};
 
       for(auto i : repeats) {
           cout << i << ": "
-               << opts.(*@\listinghl{message}@*) << endl;
+               << opts.(*@\listinghlt{message}@*) << endl;
 
-          this_thread::sleep_for(opts.(*@\listinghl{interval}@*));
+          this_thread::sleep_for(opts.(*@\listinghlt{interval}@*));
       }
       return 0;
     } else {
@@ -211,8 +347,9 @@ int main(int argc, const char** argv) {
 template <typename T>
 bool parse_options(T& opts, const program_args& args) {
   bool parsed = true;
+
   for(const auto& arg : args) {
-    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghlt{mirror}@*)(T)), [&](auto mdm) {
       if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
         if(const auto opt{from_string(
           arg.next(), (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
