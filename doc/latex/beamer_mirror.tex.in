@@ -44,8 +44,9 @@
 \newcommand{\cmdname}[1]{\texttt{\larger{#1}}}
 \newcommand{\inlinecode}[1]{\texttt{\color{mirrortext}{\mbox{\protect{#1}}}}}
 \newcommand{\inlinecodebreak}[1]{\texttt{\color{mirrortext}{\protect{#1}}}}
-\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite1}{\protect{#1}}}}
-\newcommand{\listinghlt}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite2}{\protect{#1}}}}
+\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite0}{\protect{#1}}}}
+\newcommand{\listinghlt}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite1}{\protect{#1}}}}
+\newcommand{\listinghls}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite2}{\protect{#1}}}}
 
 \usepackage{listings}
 \lstdefinestyle{mirrorcode}{
@@ -68,6 +69,7 @@
 		consteval,
 		constexpr,
 		decltype,
+		declval,
 		final,
 		mirror,
 		noexcept,

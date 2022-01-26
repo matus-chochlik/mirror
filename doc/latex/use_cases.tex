@@ -10,13 +10,14 @@
 \begin{frame}
   \frametitle{Contents}
   \begin{itemize}
-    \item Metadata, metaobjects, reflections, \say{un-reflection}
+    \item Metadata, metaobjects, reflection, \say{un-reflection}
     \item Parsing of application options 
     \begin{itemize}
       \smaller
       \item from command-line arguments,
       \item from configuration files
     \end{itemize}
+    \item Remote procedure call stubs and skeletons
     \item \ldots
   \end{itemize}
 \end{frame}
@@ -74,7 +75,7 @@ concept (*@\listinghl{metaobject}@*) = (*@{\em not-really-important-here}@*);
         \item For example
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto (*@\listinghlt{meta_string}@*) =
-  (*@\listinghl{mirror}@*)(std::string);
+  (*@\listinghl{mirror}@*)(string);
   \end{lstlisting}
       \end{itemize}
     \end{column}
@@ -253,7 +254,7 @@ auto extract(extractable const auto&) -> const auto&;
 template <typename T>
 auto from_string(
   const string_view src,
-  type_identity<T> = {})
+  (*@\listinghlt{type_identity}@*)<T> = {})
   -> (*@\listinghl{extractable}@*);
   \end{lstlisting}
   \vfill
@@ -261,9 +262,28 @@ auto from_string(
 template <typename T>
 auto from_extractable_string(
   const (*@\listinghl{extractable}@*) auto src,
-  type_identity<T> tid = {})
+  (*@\listinghlt{type_identity}@*)<T> tid = {})
   -> (*@\listinghl{extractable}@*)
   requires((*@\listinghl{has_value_type}@*)<string_view>(src));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Conversion from string}
+  \framesubtitle{common combo with \say{un-reflection}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto get_reflected_type(metaobject auto mo)
+  -> (*@\listinghlt{type_identity}@*)<(*@\listinghl{unspecified}@*)>
+  requires((*@\listinghl{reflects_type}@*)(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto mo = mirror(some_type);
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto opt_val = (*@\listinghl{from_string}@*)(
+  get_some_string(),
+  (*@\listinghlt{get_reflected_type}@*)(mo));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -320,8 +340,286 @@ public:
     \end{column}
   \end{columns}
 \end{frame}
+% - Serialization --------------------------------------------------------------
+\section{Serialization}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Serialization\\
+  \Large
+  and deserialization
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{read-backend concept}
+  \smaller
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+concept (*@\listinghls{read_backend}@*) =
+  requires(T v) {
+
+  { v.(*@\listinghlt{enum_as_string}@*)(
+    declval<T::context&>())
+  } -> convertible_to<bool>;
+
+  { v.(*@\listinghlt{begin}@*)(declval<T::context&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{read}@*)(
+    declval<read_driver>(),
+    declval<T::context&>(),
+    declval<(*@\listinghl{unspecified}@*)&>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{begin_list}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+  { v.(*@\listinghlt{begin_element}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+  { v.(*@\listinghlt{separate_element}@*)(
+    declval<T::context&>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{finish_element}@*)(
+    declval<T::context&>(),
+    declval<size_t>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{finish_list}@*)(
+    declval<T::context&>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{begin_record}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{begin_attribute}@*)(
+    declval<T::context&>(),
+    declval<string_view>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+    { v.(*@\listinghlt{finish}@*)(
+      declval<T::context&>())
+    } -> same_as<read_errors>;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{write-backend concept}
+  \smaller
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+concept (*@\listinghls{write_backend}@*) =
+  requires(T v) {
+
+  { v.(*@\listinghlt{enum_as_string}@*)(
+    declval<T::context&>())
+  } -> convertible_to<bool>;
+
+  { v.(*@\listinghlt{begin}@*)(declval<T::context&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{write}@*)(
+    declval<write_driver>(),
+    declval<T::context&>(),
+    declval<const (*@\listinghl{unspecified}@*)&>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{begin_list}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+  { v.(*@\listinghlt{begin_element}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+  { v.(*@\listinghlt{separate_element}@*)(
+    declval<T::context&>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{finish_element}@*)(
+    declval<T::context&>(),
+    declval<size_t>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{finish_list}@*)(
+    declval<T::context&>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{begin_record}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{begin_attribute}@*)(
+    declval<T::context&>(),
+    declval<string_view>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+    { v.(*@\listinghlt{finish}@*)(
+      declval<T::context&>())
+    } -> same_as<write_errors>;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{deserializer}}
+  Default implementation for types that can be read directly by the~{\em backend}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename T>
+struct deserializer {
+
+  static auto read(
+    const read_driver& driver,
+    read_backend auto& (*@\listinghls{backend}@*),
+    typename Backend::context_param ctx,
+    T& value) noexcept {
+      // delegate the work to the backend
+      return (*@\listinghls{backend}@*).(*@\listinghlt{read}@*)(driver, ctx, value);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{read_driver}}
+  Used by the {\em backend} and some \inlinecode{deserializer} specializations.
+  Creates appropriate nested \inlinecode{deserializer} and uses it.
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct read_driver {
+  template <typename T, read_backend Backend>
+  auto read(
+    Backend& backend,
+    typename Backend::context_param ctx,
+    T& value) const
+    -> read_errors {
+      deserializer<remove_cv_t<T>> (*@\listinghls{reader}@*);
+      return (*@\listinghls{reader}@*).(*@\listinghlt{read}@*)(
+        *this,
+        backend,
+        ctx,
+        value);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{deserializer} -- \inlinecode{enum} types}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+static auto read(
+  const read_driver& (*@\listinghls{driver}@*),
+  read_backend auto& (*@\listinghls{backend}@*), /*...*/ ctx,
+  T& value) noexcept {
+    read_errors errors{};
+
+    const auto mes{(*@\listinghl{get_enumerators}@*)(mirror(T))};
+
+    if((*@\listinghls{backend}@*).(*@\listinghlt{enum_as_string}@*)(ctx)) {
+      std::string name;
+      errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, name);
+      (*@\listinghl{for_each}@*)(mes, [&](auto me) {
+          if((*@\listinghl{get_name}@*)(me) == name)
+              value = (*@\listinghl{get_constant}@*)(me);
+      });
+    } else {
+        std::underlying_type_t<T> temp{};
+        errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, temp);
+        value = static_cast<T>(temp);
+    }
+    return errors;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{deserializer} -- classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+static auto read(
+  const read_driver& (*@\listinghls{driver}@*),
+  read_backend auto& (*@\listinghls{backend}@*), /*...*/ ctx,
+  T& value) noexcept {
+    read_errors errors{};
+
+    const auto mdms{filter((*@\listinghl{get_data_members(mt)}@*), not_((*@\listinghl{is_static}@*)(_1)))};
+    size_t count{get_size(mdms)};
+    auto subctx{(*@\listinghls{backend}@*).(*@\listinghlt{begin_record}@*)(ctx, count)};
+
+    if(has_value(subctx)) {
+      bool first = true;
+      (*@\listinghl{for_each}@*)(mdms, [&](auto mdm) {
+          errors |= (*@\listinghls{backend}@*).(*@\listinghlt{separate_attribute}@*)(extract(subctx));
+
+          const auto name{(*@\listinghl{get_name}@*)(mdm)};
+          auto subsubctx{(*@\listinghls{backend}@*).(*@\listinghlt{begin_attribute}@*)(extract(subctx), name)};
+          if(has_value(subsubctx)) {
+            errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(
+              (*@\listinghls{backend}@*), extract(subsubctx), (*@\listinghl{get_reference}@*)(mdm, value));
+            errors |= (*@\listinghls{backend}@*).(*@\listinghlt{finish_attribute}@*)(extract(subsubctx), name);
+          } else {
+            errors |= get_error(subsubctx);
+          }
+      });
+      errors |= (*@\listinghls{backend}@*).(*@\listinghlt{finish_record}@*)(extract(subctx));
+    } else {
+      errors |= get_error(subctx);
+    }
+    return errors;
+}
+  \end{lstlisting}
+\end{frame}
 % - Parsing options ------------------------------------------------------------
-\section{Args}
+\section{Options}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Application options\\
+  \large
+  parsing from command-line arguments\\
+  and external configuration files
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Parsing command-line arguments}
@@ -338,9 +636,9 @@ public:
   \end{itemize}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 struct options {
-  string message{"Hello, world!"};
-  chrono::milliseconds interval{500};
-  int count{3};
+  int (*@\listinghlt{count}@*){3};
+  string (*@\listinghlt{message}@*){"Hello, world!"};
+  chrono::milliseconds (*@\listinghlt{interval}@*){500};
 };
   \end{lstlisting}
   \vfill
@@ -355,10 +653,10 @@ bool (*@\listinghl{parse_options}@*)(T& opts, const program_args&);
   \framesubtitle{usage}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 int main(int argc, const char** argv) {
-    const (*@\listinghl{program_args}@*) args{argc, argv};
-    (*@\listinghl{options}@*) (*@\listinghlt{opts}@*);
+    const program_args (*@\listinghl{args}@*){argc, argv};
+    options (*@\listinghlt{opts}@*);
 
-    if((*@\listinghl{parse_options}@*)((*@\listinghlt{opts}@*), args)) {
+    if((*@\listinghl{parse_options}@*)((*@\listinghlt{opts}@*), (*@\listinghl{args}@*))) {
       const auto repeats{
         ranges::views::iota(1, opts.(*@\listinghlt{count}@*) + 1)};
 
@@ -391,9 +689,9 @@ bool parse_options(T& opts, const program_args& args) {
         ) {
            (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
         } else {
-            std::cerr << "invalid value '" << arg.next()
-                      << "' for option " << arg
-                      << "!" << std::endl;
+            cerr << "invalid value '" << arg.next()
+                 << "' for option " << arg
+                 << "!" << endl;
             parsed = false;
         }
       }
@@ -405,6 +703,14 @@ bool parse_options(T& opts, const program_args& args) {
 \end{frame}
 % - RPC ------------------------------------------------------------------------
 \section{RPC}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Remote procedure calls\\
+  \Large
+  skipping the code generator
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Remote procedure calls}
@@ -437,14 +743,14 @@ bool parse_options(T& opts, const program_args& args) {
 \begin{frame}[fragile]
   \frametitle{RPC stubs/skeletons}
   \framesubtitle{the interface}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 struct calculator {
-    virtual float add(float, float) = 0;
-    virtual float subtract(float, float) = 0;
-    virtual float multiply(float, float) = 0;
-    virtual float divide(float, float) = 0;
-    virtual float negate(float) = 0;
-    virtual float invert(float) = 0;
+  virtual float add(float, float) = 0;
+  virtual float subtract(float, float) = 0;
+  virtual float multiply(float, float) = 0;
+  virtual float divide(float, float) = 0;
+  virtual float negate(float) = 0;
+  virtual float invert(float) = 0;
 };
   \end{lstlisting}
 \end{frame}
@@ -497,6 +803,63 @@ public:
             (*@\listinghl{get_subexpression}@*)(mo)))));
   }
 };
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the skeleton interface}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct rpc_skeleton {
+  virtual void (*@\listinghl{dispatch}@*)(
+    packet& request,
+    packet& response) = 0;
+};
+  \end{lstlisting}
+  \begin{itemize}
+    \item Could be plugged-into a network connection
+    \item Handle incoming data
+    \item After call is finished the connection can send the response
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class connection {
+  unique_ptr<skeleton> (*@\listinghlt{_skel}@*);
+  // ...
+  void send(address host, packet& data);
+  void on_received(address host, packet& request) {
+    packet response;
+    (*@\listinghlt{_skel}@*)->(*@\listinghl{dispatch}@*)(request, response);
+    send(host, response);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the skeleton implementation\footnote{pseudocode}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Intf>
+class rpc_skeleton_impl : public rpc_skeleton {
+private:
+  unique_ptr<Intf> _impl;
+public:
+  void dispatch(packet& request, packet& response) final {
+    const auto method_id{_get_method_id(request)};
+
+    for_each(get_member_functions(mirror(Intf)),
+      [&](auto mf) {
+        if(_get_method_id(mf) == method_id) {
+          auto params = (*@\listinghlt{make_value_tuple}@*)(
+            (*@\listinghl{transform}@*)((*@\listinghl{get_parameters}@*)(mf), (*@\listinghl{get_type}@*)(_1)));
+
+          deserialize(params, request);
+          auto result = (*@\listinghl{apply}@*)(mf, *_impl, params);
+          serialize(method_id, result, response);
+        }
+    });
+  }
+}
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
