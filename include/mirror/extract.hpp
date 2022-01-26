@@ -179,7 +179,7 @@ constexpr auto get_error(const std::variant<T, E>& v) noexcept -> const E& {
 template <typename T>
 concept extractable = requires(T v) {
     { has_value(v) } -> std::convertible_to<bool>;
-	{ std::declval<mirror::extracted_type_t <T>>() };
+	{ std::declval<mirror::extracted_type_t<T>>() };
 	extract(v);
 };
 // clang-format on
