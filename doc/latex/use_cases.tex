@@ -3,11 +3,23 @@
 \begin{document}
 % ------------------------------------------------------------------------------
 \title{Reflection use-cases}
-% - Intro ----------------------------------------------------------------------
-\section{Intro}
+% - Intro/Recap ----------------------------------------------------------------
+\section{Intro/Recap}
+% ------------------------------------------------------------------------------
 \frame{\titlepage}
-% - Recap ----------------------------------------------------------------------
-\section{Recap}
+\begin{frame}
+  \frametitle{Contents}
+  \begin{itemize}
+    \item Metadata, metaobjects, reflections, \say{un-reflection}
+    \item Parsing of application options 
+    \begin{itemize}
+      \smaller
+      \item from command-line arguments,
+      \item from configuration files
+    \end{itemize}
+    \item \ldots
+  \end{itemize}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Metadata}
@@ -82,7 +94,7 @@ auto (*@\listinghlt{meta_string}@*) =
   \frametitle{Reflection API}
   \larger
   Set of compile-time\footnote{\inlinecode{consteval}, \inlinecode{constexpr}
-    assumed, but omitted from examples in here to save space on slides}
+    assumed, but omitted here to save space on slides}
    functions operating on {\em metaobjects}
   \smaller
   \begin{columns}
@@ -139,6 +151,28 @@ auto (*@\listinghlt{meta_string}@*) =
   \end{columns}
 \end{frame}
 % ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\say{hello world of reflection!}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+enum class (*@\listinghlt{greeting}@*) {
+  hello, world, of, reflection
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+cout << (*@\listinghl{join\footnote{algorithm}}@*)(
+          (*@\listinghl{get_enumerators\footnote{
+            metaobject sequence getter}}@*)(mirror(*@\footnote{
+            reflection operator}@*)((*@\listinghlt{greeting}@*))(*@\footnote{
+            reflection in action -- returns a metaobject}@*)),
+          to_string((*@\listinghl{get_name\footnote{
+            metadata (name) getter}}@*)((*@\listinghlt{_1}@*)(*@\footnote{
+            placeholder}@*)))(*@\footnote{
+            placeholder expression}@*),
+          string(" "))
+       << "!\n";
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
 % - Utilities ------------------------------------------------------------------
 \section{Utilities}
 % ------------------------------------------------------------------------------
@@ -154,6 +188,7 @@ auto (*@\listinghlt{meta_string}@*) =
       \item \inlinecode{optional}, \inlinecode{expected},
       \item \ldots
     \end{itemize}
+    \item \ldots in some specific cases
   \end{itemize}
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 template <typename T>
@@ -197,12 +232,12 @@ auto extract(extractable const auto&) -> const auto&;
   \framesubtitle{the idiom}
   This is quite common\ldots
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-  auto get_opt_val(auto... params)
+  auto (*@\listinghlt{get_opt_val}@*)(auto... params)
   -> (*@\listinghl{extractable}@*);
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-  if(const auto (*@\listinghl{opt}@*){get_opt_val(args...)};
+  if(const auto opt{(*@\listinghlt{get_opt_val}@*)(args...)};
      (*@\listinghl{has_value}@*)(opt)) {
 
     do_something((*@\listinghl{extract}@*)(opt));
@@ -286,7 +321,7 @@ public:
   \end{columns}
 \end{frame}
 % - Parsing options ------------------------------------------------------------
-\section{Options}
+\section{Args}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Parsing command-line arguments}
@@ -341,8 +376,8 @@ int main(int argc, const char** argv) {
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Parsing command-line arguments}
-  \framesubtitle{how to implement \inlinecode{parse}?}
+  \frametitle{Parsing arguments}
+  \framesubtitle{how to implement {\em \larger generic} \inlinecode{parse_options}?}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 template <typename T>
 bool parse_options(T& opts, const program_args& args) {
@@ -368,5 +403,102 @@ bool parse_options(T& opts, const program_args& args) {
 }
   \end{lstlisting}
 \end{frame}
+% - RPC ------------------------------------------------------------------------
+\section{RPC}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Remote procedure calls}
+  \framesubtitle{class overview}
+  \colorbox{gray}{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.65\textwidth,
+        keepaspectratio
+    ]{rpc_class.pdf}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Remote procedure calls}
+  \framesubtitle{synchronous call sequence}
+  \colorbox{lightgray}{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.9\textwidth,
+        keepaspectratio
+    ]{rpc_sequence.pdf}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the interface}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct calculator {
+    virtual float add(float, float) = 0;
+    virtual float subtract(float, float) = 0;
+    virtual float multiply(float, float) = 0;
+    virtual float divide(float, float) = 0;
+    virtual float negate(float) = 0;
+    virtual float invert(float) = 0;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the stub}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class calculator_stub : public calculator {
+private:
+    (*@\listinghl{rpc_stub_impl}@*) _impl;
+public:
+  float (*@\listinghlt{add}@*)(float l, float r) final {
+    return _impl.(*@\listinghl{make_call}@*)(
+      (*@\listinghl{mirror}@*)((calculator::(*@\listinghlt{add}@*)(l, r)))(*@\footnote{
+        expression reflection}@*), l, r);
+  }
+
+  float (*@\listinghlt{subtract}@*)(float l, float r) final {
+    return _impl.make_call(
+      mirror((calculator::(*@\listinghlt{subtract}@*)(l, r))), l, r);
+  }
+  float multiply(float l, float r) final;
+  float divide(float l, float r) final;
+  float negate(float x) final;
+  float invert(float x) final;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the generic stub implementation\footnote{pseudocode}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class rpc_stub_impl {
+  template <typename T>
+  auto _deserialize(packet&, (*@\listinghlt{type_identity}@*)<T>) -> T;
+public:
+  auto make_call(metaobject auto mo, auto&... args) {
+
+    packet request;
+    _serialize(request, mo, args...);
+    packed response{_send_and_receive(request)};
+
+    return _deserialize(
+      response,
+      (*@\listinghlt{get_reflected_type}@*)(
+        (*@\listinghl{get_type}@*)(
+          (*@\listinghl{get_callable}@*)(
+            (*@\listinghl{get_subexpression}@*)(mo)))));
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 \end{document}
