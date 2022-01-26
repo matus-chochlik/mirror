@@ -1008,6 +1008,28 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto (*@\listinghlt{query}@*))
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
+  \frametitle{Hello again!}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+enum class (*@\listinghlt{greeting}@*) {
+  hello, world, of, reflection
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+cout << (*@\listinghl{join\footnote{algorithm}}@*)(
+          (*@\listinghl{get_enumerators\footnote{
+            metaobject sequence getter}}@*)(mirror(*@\footnote{
+            reflection operator}@*)((*@\listinghlt{greeting}@*))(*@\footnote{
+            reflection in action -- returns a metaobject}@*)),
+          to_string((*@\listinghl{get_name\footnote{
+            metadata (name) getter}}@*)((*@\listinghls{_1}@*)(*@\footnote{
+            placeholder}@*)))(*@\footnote{
+            placeholder expression}@*),
+          string(" "))
+     << "!\n";
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
   \frametitle{Are enumerators consecutive?}
   \begin{columns}
     \begin{column}{.43\textwidth}
@@ -1860,35 +1882,6 @@ void print_traits(metaobject auto mo) {
     ]{extras.png}
     \end{minipage}
   }
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{MOAR \say{smart} concepts!}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-struct excellent {
-    void foo() {}
-    void bar() {}
-    void baz() {}
-};
-  \end{lstlisting}
-  \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-template <typename T>
-concept has_foo_and_such = (*@\listinghl{any_of}@*)(
-  (*@\listinghl{get_member_functions}@*)(mirror(T)),
-  (*@\listinghlt{ctre_match}@*)<"foo|bar|baz">((*@\listinghlt{get_name}@*)(_1)));
-  \end{lstlisting}
-  \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-void foonction(has_foo_and_such auto) {
-    cout << "this is excellent!" << endl;
-}
-  \end{lstlisting}
-  \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-foonction(excellent{});
-foonction(std::string{}); // ERROR
-  \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
