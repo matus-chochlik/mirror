@@ -15,6 +15,12 @@ mirror_add_latex_presentation(
 add_dependencies(doc-latex doc-reflection_api-pdf)
 
 mirror_add_latex_presentation(
+	meeting_cpp
+	FIGURES rpc_class rpc_sequence
+)
+add_dependencies(doc-latex doc-meeting_cpp-pdf)
+
+mirror_add_latex_presentation(
 	use_cases
 )
 add_dependencies(doc-latex doc-use_cases-pdf)
