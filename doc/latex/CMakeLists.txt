@@ -22,6 +22,8 @@ add_dependencies(doc-latex doc-meeting_cpp-pdf)
 
 mirror_add_latex_presentation(
 	use_cases
-	FIGURES rpc_class rpc_sequence
+	FIGURES
+		rpc_class rpc_sequence
+		serialize_class deserialize_class
 )
 add_dependencies(doc-latex doc-use_cases-pdf)
