@@ -488,8 +488,8 @@ auto get_pointer(metaobject auto mo, auto& obj)
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Metadata getters}
-  \framesubtitle{invocation of callables}
+  \frametitle{Metadata use}
+  \framesubtitle{invocation of callables with arguments}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto invoke(metaobject auto mo, auto&&... args)
   requires(reflects_member_function(mo) &&
@@ -509,6 +509,32 @@ auto invoke(metaobject auto mo, auto&&... args)
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto invoke_on(auto mo, auto& inst, auto&&... args)
+  requires(reflects_member_function(mo));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metadata use}
+  \framesubtitle{application of callables on argument tuples}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto apply(metaobject auto mo, auto&& args_tuple)
+  requires(reflects_member_function(mo) &&
+           is_static(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto apply(auto mo, auto& inst, auto&& args_tuple)
+  requires(reflects_member_function(mo) &&
+           !is_static(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto apply(metaobject auto mo, auto&& args_tuple)
+  requires(reflects_constructor(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto apply_on(auto mo, auto& inst, auto&& args_tuple)
   requires(reflects_member_function(mo));
   \end{lstlisting}
 \end{frame}
