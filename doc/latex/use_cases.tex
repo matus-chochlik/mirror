@@ -114,7 +114,7 @@ auto (*@\listinghlt{meta_string}@*) =
               \inlinecode{get_type}, \inlinecode{get_aliased},
               \inlinecode{get_enumerators}, \inlinecode{is_constexpr},
               \inlinecode{is_scoped_enum},
-              \inlinecode{is_pure_virtual}, \ldots
+              \inlinecode{invoke}, \inlinecode{apply}, \ldots
           \end{itemize}
         \item sequence operations
           \begin{itemize}
@@ -339,6 +339,91 @@ public:
     \end{column}
   \end{columns}
 \end{frame}
+% - Enums ----------------------------------------------------------------------
+\section{Enums}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Enumeration\\
+  \large
+  conversion utilities\footnote{let's start easy\ldots}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{enum-to-string}
+  \begin{lstlisting}[language=c++2x]
+template <typename E>
+auto enum_to_string(E e) noexcept
+  -> (*@\listinghlt{string_view}@*) {
+
+  return (*@\listinghlt{select}@*)(
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    [](auto& (*@\listinghlt{result}@*), auto mo, auto c) {
+        if((*@\listinghl{get_constant}@*)(mo) == c) {
+            (*@\listinghlt{result}@*) = (*@\listinghl{get_name}@*)(mo);
+        }
+    },
+    (*@\listinghlt{string_view}@*){},
+    e);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{string-to-enum}
+  \begin{lstlisting}[language=c++2x]
+template <typename E>
+auto string_to_enum(string_view s) noexcept
+  -> (*@\listinghlt{optional}@*)<E> {
+
+  return (*@\listinghlt{select}@*)(
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    [](auto& (*@\listinghlt{result}@*), auto mo, auto n) {
+        if((*@\listinghl{get_name}@*)(mo) == n) {
+            (*@\listinghlt{result}@*) = (*@\listinghl{get_constant}@*)(mo);
+        }
+    },
+    (*@\listinghlt{optional}@*)<E>{},
+    s);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{example}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class weekdays : int { /*...*/ };
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+weekdays next_day(weekdays d);
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void (*@\listinghls{print_next_day}@*)(string_view n) {
+  if(auto opt_day{(*@\listinghlt{string_to_enum}@*)<weekdays>(n)};
+     has_value(opt_day)) {
+    cout << n << " -> " << (*@\listinghlt{enum_to_string}@*)(
+             next_day(extract(opt_day)))
+         << endl;
+  }
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+(*@\listinghl{for_each}@*)(
+  (*@\listinghl{get_enumerators}@*)(mirror(weekdays)),
+  [](auto mo) {
+    (*@\listinghls{print_next_day}@*)((*@\listinghl{get_name}@*)(mo));
+});
+  \end{lstlisting}
+  \smaller
+  \begin{verbatim}
+  monday -> tuesday
+  ...
+  \end{verbatim}
+\end{frame}
 % - Serialization --------------------------------------------------------------
 \section{Serialization}
 % ------------------------------------------------------------------------------
@@ -528,15 +613,16 @@ static auto read(
   T& value) noexcept {
     read_errors errors{};
 
-    const auto mes{(*@\listinghl{get_enumerators}@*)(mirror(T))};
-
     if((*@\listinghls{backend}@*).(*@\listinghlt{enum_as_string}@*)(ctx)) {
-      std::string name;
-      errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, name);
-      (*@\listinghl{for_each}@*)(mes, [&](auto me) {
-          if((*@\listinghl{get_name}@*)(me) == name)
-              value = (*@\listinghl{get_constant}@*)(me);
-      });
+        string name;
+        errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, name);
+
+        if(const auto conv{(*@\listinghl{string_to_enum}@*)<T>(name)};
+           has_value(conv)) {
+            value = extract(conv);
+        } else {
+            errors |= read_error_code::invalid_format;
+        }
     } else {
         std::underlying_type_t<T> temp{};
         errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, temp);
