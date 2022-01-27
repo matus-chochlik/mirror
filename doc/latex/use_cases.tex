@@ -396,16 +396,16 @@ auto string_to_enum(string_view s) noexcept
   \frametitle{Enumeration conversions}
   \framesubtitle{example}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-enum class weekdays : int { /*...*/ };
+enum class weekdays : int { monday, /*...*/ };
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 weekdays next_day(weekdays d);
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-void (*@\listinghls{print_next_day}@*)(string_view n) {
-  if(auto opt_day{(*@\listinghlt{string_to_enum}@*)<weekdays>(n)};
+void (*@\listinghls{print_next_day}@*)(string_view name) {
+  if(auto opt_day{(*@\listinghlt{string_to_enum}@*)<weekdays>(name)};
      has_value(opt_day)) {
-    cout << n << " -> " << (*@\listinghlt{enum_to_string}@*)(
+    cout << name << " -> " << (*@\listinghlt{enum_to_string}@*)(
              next_day(extract(opt_day)))
          << endl;
   }
@@ -1053,6 +1053,214 @@ public:
 }
   \end{lstlisting}
 \end{frame}
+% - REST -----------------------------------------------------------------------
+\section{ReST API}
 % ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Representational state transfer\footnote{today I finally learned what ReST means\ldots} API\\
+  \Large
+  automating the boilerplate
+  
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the API operation result}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+class rest_api_response {
+private:
+  /* ... */(*@\footnote{rapidjson inside}@*)
+public:
+  void set_result(const auto& result);
+  void set_error_code(auto code);
+  void set_error_message(
+    string_view format,
+    const auto&... args);
+
+  auto str(*@\footnote{returns the JSON string}@*)() const -> string;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the adapter}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename Backend>
+class rest_api_adapter {
+  Backend (*@\listinghl{_backend}@*)(*@\footnote{
+    implements the actual application functionality}@*){};
+public:
+  auto (*@\listinghlt{handle}@*)(
+    const url& request,
+    rest_api_response& response) -> bool {
+    if((*@\listinghls{request}@*)) {
+      return (*@\listinghlt{handle_scheme}@*)(request, response);
+    } else {
+      response.set_error_message(
+        "invalid URL `{1}`",
+        request.str());
+    }
+    return false;
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{some unimportant URL checking\ldots}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+bool (*@\listinghlt{handle_scheme}@*)(const url& request, rest_api_response& response) {
+  if(request.(*@\listinghls{has_scheme}@*)(_scheme)) {
+    return (*@\listinghlt{handle_domain}@*)(request, response);
+  } else {
+    if(const auto scheme{request.scheme()}) {
+      response.set_error_code(error_code::invalid_scheme);
+    } else {
+      response.set_error_code(error_code::missing_scheme);
+    }
+  }
+  return false;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+bool (*@\listinghlt{handle_domain}@*)(const url& request, rest_api_response& response) {
+  if(request.(*@\listinghls{has_host}@*)(_domain)) {
+      return (*@\listinghlt{handle_dispatch}@*)(request, response);
+  } else {
+    if(const auto domain{request.host()}) {
+      response.set_error_code(error_code::invalid_domain);
+    } else {
+      response.set_error_code(error_code::missing_domain);
+    }
+  }
+  return false;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{little more suspense\ldots}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+bool (*@\listinghlt{handle_dispatch}@*)(
+  const url& request,
+  rest_api_response& response) {
+
+  bool success{false};
+  if(const auto opt_path{request.(*@\listinghls{path}@*)()}) {
+    bool found{false};
+
+    (*@\listinghlt{/* this is where it happens */}@*)
+
+    if(!found) {
+        response.set_error_code(error_code::invalid_path);
+    }
+  } else {
+    response.set_error_code(error_code::missing_path);
+  }
+  return success;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{find the correct function from URL path}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+const auto& path{extract(opt_path)};
+(*@\listinghl{for_each}@*)(
+  (*@\listinghl{filter}@*)(
+    (*@\listinghl{get_member_functions}@*)(mirror(Backend)),
+    (*@\listinghl{is_public}@*)(_1)),
+  [&](auto mf) {
+    const auto func_name{(*@\listinghl{get_name}@*)(mf)};
+
+    if(path.(*@\listinghls{starts_with}@*)("/") &&
+       path.(*@\listinghls{ends_with}@*)(func_name)) {
+        found = true;
+        success =
+          (*@\listinghlt{handle_call}@*)(mf, request, response);
+    }
+  });
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{\ldots scan the function parameters, prepare space for arguments\ldots}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+bool (*@\listinghlt{handle_call}@*)(
+  metaobject auto mf,
+  const url& request,
+  rest_api_response& response) {
+    const auto mp{(*@\listinghl{get_parameters}@*)(mf)};
+
+    const auto arg_names{
+      (*@\listinghlt{make_array_of}@*)<string_view>(
+      mp, (*@\listinghl{get_name}@*)(_1))};
+    }
+    auto arg_values{
+      (*@\listinghlt{make_value_tuple}@*)(
+        (*@\listinghl{transform}@*)(mp, (*@\listinghl{get_type}@*)(_1)))};
+
+    if((*@\listinghlt{handle_args}@*)(
+      arg_names, arg_values, request, response)) {
+      return (*@\listinghl{apply}@*)( /* ... */);
+    }
+    return false;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{\ldots extract the argument values, and make the call}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Value>
+auto (*@\listinghlt{handle_arg}@*)(
+  string_view name,
+  Value& dst,
+  const url& request,
+  rest_api_response& response) -> bool {
+    if(const auto arg{request.(*@\listinghls{argument}@*)(name)}) {
+      if(const auto value{from_string<Value>(extract(arg))};
+         has_value(value)) {
+        (*@\listinghls{dst}@*) = extract(value);
+      }
+    }
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+if((*@\listinghlt{handle_args}@*)(
+  arg_names, (*@\listinghls{arg_values}@*), request, response)) {
+  return (*@\listinghl{apply}@*)(
+    mf, (*@\listinghlt{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mf)),
+    (*@\listinghls{arg_values}@*), response);
+}
+  \end{lstlisting}
+\end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
