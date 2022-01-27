@@ -1192,6 +1192,7 @@ constexpr auto get_constant(wrapped_metaobject<M>) noexcept
 /// @see reflects_member_function
 /// @see get_pointer
 /// @see invoke
+/// @see apply
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke_on(
   wrapped_metaobject<M> mo,
@@ -1211,6 +1212,7 @@ constexpr auto invoke_on(
 /// @see is_static
 /// @see get_pointer
 /// @see invoke_on
+/// @see apply_on
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, A&&... args) requires(
   __metaobject_is_meta_function(M) ||
@@ -1225,6 +1227,7 @@ constexpr auto invoke(wrapped_metaobject<M>, A&&... args) requires(
 /// @see get_pointer
 /// @see get_reference
 /// @see invoke_on
+/// @see apply
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, C& obj, A&&... args) requires(
   __metaobject_is_meta_member_function(M) && !__metaobject_is_static(M)) {
@@ -1236,6 +1239,7 @@ constexpr auto invoke(wrapped_metaobject<M>, C& obj, A&&... args) requires(
 /// @see reflects_constructor
 /// @see get_pointer
 /// @see invoke_on
+/// @see apply
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, A&&... args) -> __unrefltype(
   __metaobject_get_scope(M)) requires(__metaobject_is_meta_constructor(M)) {
@@ -1462,6 +1466,8 @@ constexpr auto get_data_members(wrapped_metaobject<M>) noexcept
 /// @see get_pointer
 /// @see invoke_on
 /// @see invoke
+/// @see apply
+/// @see apply_on
 /// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_member_functions(wrapped_metaobject<M>) noexcept

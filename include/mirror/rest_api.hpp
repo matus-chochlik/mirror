@@ -9,6 +9,7 @@
 #ifndef MIRROR_REST_API_HPP
 #define MIRROR_REST_API_HPP
 
+#include "apply.hpp"
 #include "extract.hpp"
 #include "from_string.hpp"
 #include "make_array.hpp"
@@ -154,15 +155,13 @@ private:
         return true;
     }
 
-    template <typename Metaobject, typename R, typename E, typename Tup, size_t... I>
+    template <typename Metaobject, typename R, typename E, typename Tup>
     auto _apply(
       Metaobject mf,
       std::type_identity<std::variant<R, E>>,
       Tup& tup,
-      std::index_sequence<I...>,
       rest_api_response& response) {
-        if(const auto result{(_backend.*get_pointer(mf))(std::get<I>(tup)...)};
-           has_value(result)) {
+        if(const auto result{apply_on(mf, _backend, tup)}; has_value(result)) {
             response.set_result(extract(result));
             return true;
         } else {
@@ -171,25 +170,23 @@ private:
         return false;
     }
 
-    template <typename Metaobject, typename R, typename Tup, size_t... I>
+    template <typename Metaobject, typename R, typename Tup>
     auto _apply(
       Metaobject mf,
       std::type_identity<R>,
       Tup& tup,
-      std::index_sequence<I...>,
       rest_api_response& response) {
-        response.set_result((_backend.*get_pointer(mf))(std::get<I>(tup)...));
+        response.set_result(apply_on(mf, _backend, tup));
         return true;
     }
 
-    template <typename Metaobject, typename R, typename Tup, size_t... I>
+    template <typename Metaobject, typename R, typename Tup>
     auto _apply(
       Metaobject mf,
       std::type_identity<void>,
       Tup& tup,
-      std::index_sequence<I...>,
       rest_api_response&) {
-        (_backend.*get_pointer(mf))(std::get<I>(tup)...);
+        apply_on(mf, _backend, tup);
         return true;
     }
 
@@ -202,11 +199,7 @@ private:
         auto arg_values{make_value_tuple(transform(mp, get_type(_1)))};
         if(_handle_args<0Z>(arg_names, arg_values, request, response)) {
             return _apply(
-              mf,
-              get_reflected_type(get_type(mf)),
-              arg_values,
-              std::make_index_sequence<std::tuple_size_v<decltype(arg_values)>>{},
-              response);
+              mf, get_reflected_type(get_type(mf)), arg_values, response);
         }
         return false;
     }

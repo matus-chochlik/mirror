@@ -5,6 +5,7 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
+#include <mirror/apply.hpp>
 #include <mirror/hash.hpp>
 #include <mirror/interface.hpp>
 #include <mirror/make_tuple.hpp>
@@ -77,11 +78,6 @@ class fake_rpc_skeleton_impl : public fake_rpc_skeleton {
 private:
     Intf& _impl;
 
-    template <typename Metaobject, typename Tup, size_t... I>
-    auto _apply(Metaobject mo, Tup& tup, std::index_sequence<I...>) {
-        return (_impl.*get_pointer(mo))(std::get<I>(tup)...);
-    }
-
 public:
     fake_rpc_skeleton_impl(Intf& impl) noexcept
       : _impl{impl} {}
@@ -103,11 +99,7 @@ public:
                 mirror::serialize::read_rapidjson_stream(params, request_data);
                 mirror::serialize::write_rapidjson_stream(
                   invocation_id, response_header);
-                auto result = _apply(
-                  mf,
-                  params,
-                  std::make_index_sequence<
-                    std::tuple_size_v<decltype(params)>>{});
+                auto result = apply_on(mf, _impl, params);
                 mirror::serialize::write_rapidjson_stream(
                   result, response_data);
             }
