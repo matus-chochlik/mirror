@@ -11,6 +11,7 @@
   \frametitle{Contents}
   \begin{itemize}
     \item Metadata, metaobjects, reflection, \say{un-reflection}
+    \item Enumeration/string conversions
     \item Serialization and deserialization
     \item Parsing of application options 
     \begin{itemize}
@@ -19,8 +20,17 @@
       \item from configuration files
     \end{itemize}
     \item Remote procedure call stubs and skeletons
+    \item Generic ReST API adapter
     \item \ldots
   \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Crash course\\
+  \large
+  metadata, metaobjects, reflection
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -814,10 +824,11 @@ bool (*@\listinghl{parse_options}@*)(T& opts, const program_args&);
   \framesubtitle{usage}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 int main(int argc, const char** argv) {
-    const program_args (*@\listinghl{args}@*){argc, argv};
+
+    const program_args (*@\listinghls{args}@*){argc, argv};
     options (*@\listinghlt{opts}@*);
 
-    if((*@\listinghl{parse_options}@*)((*@\listinghlt{opts}@*), (*@\listinghl{args}@*))) {
+    if((*@\listinghl{parse_options}@*)((*@\listinghlt{opts}@*), (*@\listinghls{args}@*))) {
       const auto repeats{
         ranges::views::iota(1, opts.(*@\listinghlt{count}@*) + 1)};
 
@@ -827,9 +838,6 @@ int main(int argc, const char** argv) {
 
           this_thread::sleep_for(opts.(*@\listinghlt{interval}@*));
       }
-      return 0;
-    } else {
-      return 1;
     }
 }  \end{lstlisting}
 \end{frame}
