@@ -634,7 +634,7 @@ static auto read(
             errors |= read_error_code::invalid_format;
         }
     } else {
-        std::underlying_type_t<T> temp{};
+        underlying_type_t<T> temp{};
         errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, temp);
         value = static_cast<T>(temp);
     }
@@ -1320,9 +1320,10 @@ const auto (*@\listinghls{get}@*) =
     return {};
 };
 
-const auto (*@\listinghl{show}@*) = [&](const auto& response) {
-  if(response) {
-      cout << server.(*@\listinghlt{domain}@*)() << ": " << *response << endl;
+const auto show = [&](const auto& result) {
+  if(has_value(result)) {
+      cout << server.(*@\listinghlt{domain}@*)() << ": "
+           << extract(result) << endl;
   }
 };
   \end{lstlisting}
@@ -1333,29 +1334,28 @@ const auto (*@\listinghl{show}@*) = [&](const auto& response) {
   \framesubtitle{usage\footnote{{\em sans} the boring networking part}}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 rest_api_adaptor<(*@\listinghlt{too_smart_home}@*)> server("https", "home");
-
-auto sid =
+auto (*@\listinghl{sid}@*)(*@\footnote{login session id}@*) =
   (*@\listinghls{get}@*)({"https://admin:supersecret(*@\footnote{sending passwords in URLs; don't try this @home!}@*)@home/(*@\listinghlt{login}@*)"});
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
-if(sid) {
+if((*@\listinghl{sid}@*)) {
   show((*@\listinghls{get}@*)(
-    {"https://home/(*@\listinghlt{add_user}@*)?username=johnny+password=qwerty+sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *sid}));
+    {"https://home/(*@\listinghlt{add_user}@*)?username=johnny+password=qwerty+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *(*@\listinghl{sid}@*)}));
 
-  sid = (*@\listinghls{get}@*)({"https://johnny:qwerty@home/(*@\listinghlt{login}@*)"});
-  show((*@\listinghls{get}@*)({"http://home/(*@\listinghlt{shutdown}@*)?sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=kitchen+sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{window_status}@*)?room_name=bathroom+sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{windows_status}@*)?room_name=bathroom+sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{close_windows}@*)?room_name=study+sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=bedroom+sid=" + *sid}));
+  (*@\listinghl{sid}@*) = (*@\listinghls{get}@*)({"https://johnny:qwerty@home/(*@\listinghlt{login}@*)"});
+  show((*@\listinghls{get}@*)({"http://home/(*@\listinghlt{shutdown}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=kitchen+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{window_status}@*)?room_name=bathroom+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{windows_status}@*)?room_name=bathroom+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{close_windows}@*)?room_name=study+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=bedroom+sid=" + *(*@\listinghl{sid}@*)}));
 
-  sid = (*@\listinghls{get}@*)({"https://admin:supersecret@home/(*@\listinghlt{login}@*)"});
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *sid}));
-  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *sid}));
+  (*@\listinghl{sid}@*) = (*@\listinghls{get}@*)({"https://admin:supersecret@home/(*@\listinghlt{login}@*)"});
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *(*@\listinghl{sid}@*)}));
 }
   \end{lstlisting}
 \end{frame}
@@ -1384,6 +1384,322 @@ home: {"error_code": "invalid_session"}
 home: "shutdown"
 home: {"error_code": "is_offline"}
   \end{verbatim}
+\end{frame}
+% - Scripting ------------------------------------------------------------------
+\section{Scripting}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Scripting\\
+  \Large
+  language bindings\footnote{reflection on a quest\ldots}
+  
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{is fun, hand-coding bindings, not so much}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void (*@\listinghlt{add_to}@*)(chaiscript::ChaiScript& (*@\listinghls{chai}@*), auto mos)
+  requires((*@\listinghl{is_object_sequence}@*)(mos));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{do_add_to}@*)(
+chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+metaobject auto mo(*@\footnote{what is being registered}@*),
+metaobject auto ms(*@\footnote{the scope}@*)) {
+  if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+    /* ... */
+  } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+    /* ... */
+  } else {
+    const string name{(*@\listinghl{get_name}@*)(mo)};
+    if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_constructor}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
+    }
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{handling sequences\footnote{\say{That’s easy!} -- sir Robin}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+void do_add_to(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  metaobject auto mo,
+  metaobject auto ms) {
+    if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+        (*@\listinghl{for_each}@*)(mo, [&](auto me) {
+          (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), me, ms);
+        });
+    } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+      /* ... */
+    } else {
+      /* ... */
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{base classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Base, typename Derived>
+void (*@\listinghlt{add_base_class}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<Base>,
+  (*@\listinghl{type_identity}@*)<Derived>) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::base_class<Base, Derived>());
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{do_add_to}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  metaobject auto mo,
+  metaobject auto ms) {
+    if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+      (*@\listinghlt{add_base_class}@*)(
+        (*@\listinghls{chai}@*),
+        (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_class}@*)(mo)),
+        (*@\listinghl{get_reflected_type}@*)(ms));
+    } else {
+      /* ... */
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{variables and data members}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
+    if constexpr((*@\listinghl{reflects_record_member}@*)(mo)) {
+      if constexpr((*@\listinghl{is_public}@*)(mo)) {
+          (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun(
+            (*@\listinghl{get_pointer}@*)(mo)), name);
+      }
+    } else {
+      (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::var(
+          (*@\listinghl{get_reference}@*)(mo)), name);
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{constructors}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T, typename... P>
+void (*@\listinghlt{add_constructor}@*)(
+  chaiscript::ChaiScript& chai,
+  (*@\listinghl{type_identity}@*)<T>,
+  (*@\listinghl{type_list}@*)<P...>,
+  const string& name) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::constructor<T(P...)>(), name);
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_constructor}@*)(mo)) {
+  if constexpr((*@\listinghl{is_public}@*)(mo)) {
+      (*@\listinghlt{add_constructor}@*)(
+        (*@\listinghls{chai}@*),
+        (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_scope}@*)(mo)),
+        (*@\listinghl{extract_types}@*)((*@\listinghl{transform}@*)(
+          (*@\listinghl{get_parameters}@*)(mo),
+          (*@\listinghl{get_type}@*)(_1))),
+        name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{functions and operators}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename From, typename To>
+void (*@\listinghlt{add_conversion}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  type_identity<From>,
+  type_identity<To>) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::type_conversion<From, To>());
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
+  if constexpr((*@\listinghl{reflects_record_member}@*)(mo) && (*@\listinghl{is_public}@*)(mo)) {
+      if constexpr((*@\listinghl{reflects_conversion_operator}@*)(mo)) {
+        if constexpr(!(*@\listinghl{is_deleted}@*)(mo)) {
+            (*@\listinghlt{add_conversion}@*)(
+              (*@\listinghls{chai}@*),
+              (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_scope}@*)(mo)),
+              (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mo)));
+        }
+      } else {
+        if constexpr(!(*@\listinghl{is_deleted}@*)(mo)) {
+          (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun((*@\listinghl{get_pointer}@*)(mo)), name);
+        }
+      }
+  } else {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun((*@\listinghl{get_pointer}@*)(mo)), name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{types and classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename T>
+void (*@\listinghlt{add_type}@*)(
+  chaiscript::ChaiScript& chai,
+  (*@\listinghl{type_identity}@*)<T>,
+  const string& name) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::user_type<T>(), name);
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
+  (*@\listinghlt{add_type}@*)((*@\listinghls{chai}@*),  (*@\listinghl{get_reflected_type}@*)(mo), name);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_base_classes}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_member_types}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_data_members}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_constructors}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_member_functions}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_operators}@*)(mo), mo);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{C++ theatre}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class scene {
+public:
+  void (*@\listinghlt{person_says}@*)(
+    const person&, string_view line);
+  void (*@\listinghlt{person_relocates}@*)(
+    person& p, string_view how);
+  void (*@\listinghlt{event_happens}@*)(
+    string_view what);
+  void (*@\listinghlt{pause}@*)();
+};
+
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class location {
+public:
+  (*@\listinghlt{location}@*)(string name, scene&);
+  auto (*@\listinghlt{name}@*)() const -> string_view;
+};
+    \end{lstlisting}
+    \end{column}
+    \begin{column}{.50\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class person {
+public:
+  (*@\listinghlt{person}@*)(string name);
+
+  auto (*@\listinghlt{name}@*)() const -> string_view;
+  auto (*@\listinghlt{current_location}@*)() -> auto&;
+  auto (*@\listinghlt{enter}@*)(location&);
+  auto (*@\listinghlt{is_thrown_to}@*)(location&);
+  void (*@\listinghlt{say}@*)(const string&);
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class king : public person {
+public:
+  (*@\listinghlt{king}@*)(string name);
+};
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class mysterious_force {
+public:
+  (*@\listinghlt{mysterious_force}@*)(location&);
+  void (*@\listinghlt{throw_into_chasm}@*)(person&);
+};
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{set the scene\ldots}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+scene at_the_bridge;
+chaiscript::ChaiScript (*@\listinghls{chai}@*);
+
+(*@\listinghlt{add_to}@*)(
+  (*@\listinghls{chai}@*), (*@\listinghl{make_sequence}@*)(
+  mirror(mysterious_force),
+  mirror(scene), mirror(location),
+  mirror(person), mirror(king), mirror(at_the_bridge)));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+chai(*@{\footnote{should have done this in Python!}@*)(R"(
+  var road = location("road leading to the bridge", at_the_bridge);
+  var bridge = location("bridge of death", at_the_bridge);
+  var chasm = location("chasm", at_the_bridge);
+
+  var the_force = mysterious_force(chasm);
+
+  var bridgekeeper = person("the Bridgekeeper");
+  var king_arthur = king("king Arthur");
+  var sir_lancelot = person("sir Lancelot");
+  var sir_robin = person("sir Robin");
+  var sir_galahad = person("sir Galahad");
+  var sir_bedevere = person("sir Bedevere");
+  )");
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{\ldots and {\em \larger action!}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+chai(R"(
+  bridgekeeper.enter(bridge);
+  king_arthur.enter(road);
+  sir_lancelot.enter(road);
+  sir_robin.enter(road);
+  sir_galahad.enter(road);
+  sir_bedevere.enter(road);
+  )");
+
+  bridgekeeper.say(
+    "Stop."
+    "Who would cross the Bridge of Death "
+    "must answer me these questions three, "
+    "ere the other side he see.");
+  sir_lancelot.say(
+    "Ask me the questions, bridgekeeper. "
+    "I am not afraid.");
+  \end{lstlisting}
+  \ldots
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+  )");
+  \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
