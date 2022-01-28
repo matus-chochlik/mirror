@@ -1067,7 +1067,7 @@ public:
 \begin{frame}[c]
   \Huge
   \centering
-  Representational state transfer\footnote{today I finally learned what ReST means\ldots} API\\
+  Representational state transfer\footnote{where I finally learned what ReST means\ldots} API\\
   \Large
   automating the boilerplate
   
@@ -1087,7 +1087,7 @@ public:
     string_view format,
     const auto&... args);
 
-  auto str(*@\footnote{returns the JSON string}@*)() const -> string;
+  auto json_str() const -> string;
 };
   \end{lstlisting}
 \end{frame}
@@ -1232,7 +1232,7 @@ bool (*@\listinghlt{handle_call}@*)(
 
     if((*@\listinghlt{handle_args}@*)(
       arg_names, arg_values, request, response)) {
-      return (*@\listinghl{apply}@*)( /* ... */);
+      return (*@\listinghl{apply}@*)(mf, /* ... */);
     }
     return false;
 }
@@ -1250,7 +1250,7 @@ bool (*@\listinghlt{handle_call}@*)(
 template <typename Value>
 auto (*@\listinghlt{handle_arg}@*)(
   string_view name,
-  Value& dst,
+  Value& (*@\listinghls{dst}@*),
   const url& request,
   rest_api_response& response) -> bool {
     if(const auto arg{request.(*@\listinghls{argument}@*)(name)}) {
@@ -1269,6 +1269,121 @@ if((*@\listinghlt{handle_args}@*)(
     (*@\listinghls{arg_values}@*), response);
 }
   \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the backend}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class too_smart_home {
+public:
+  enum class (*@\listinghls{error_code}@*) { no_such_room, /* ... */ };
+
+  template <typename T>
+  using result = variant<T, (*@\listinghls{error_code}@*)>;
+  using session_id_t = uintmax_t;
+
+  auto (*@\listinghlt{add_user}@*)(
+    session_id_t sid, string username, string password)
+    -> result<string>;
+  auto (*@\listinghlt{login}@*)(string username, string password)
+    -> result<session_id_t>;
+  auto (*@\listinghlt{logout}@*)(session_id_t sid) -> result<string>;
+
+  auto (*@\listinghlt{open_windows}@*)(session_id_t sid, string room_name)
+    -> result<string>;
+  auto (*@\listinghlt{close_windows}@*)(session_id_t sid, string room_name)
+    -> result<string>;
+  auto (*@\listinghlt{windows_status}@*)(session_id_t sid, string room_name)
+    -> result<string>;
+  // ...
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{putting it together\ldots}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+rest_api_adaptor<too_smart_home>
+  (*@\listinghlt{server}@*)("https", "home", {});
+
+const auto (*@\listinghls{get}@*) =
+  [&](const url& request) -> optional<string> {
+    rest_api_response response;
+    if(server.(*@\listinghlt{handle}@*)(request, response)) {
+      return {response.json_str()};
+    } else {
+      cerr << server.(*@\listinghlt{domain}@*)() << ": "
+           << response.json_str() << endl;
+    }
+    return {};
+};
+
+const auto (*@\listinghl{show}@*) = [&](const auto& response) {
+  if(response) {
+      cout << server.(*@\listinghlt{domain}@*)() << ": " << *response << endl;
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{usage\footnote{{\em sans} the boring networking part}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+rest_api_adaptor<(*@\listinghlt{too_smart_home}@*)> server("https", "home");
+
+auto sid =
+  (*@\listinghls{get}@*)({"https://admin:supersecret(*@\footnote{sending passwords in URLs; don't try this @home!}@*)@home/(*@\listinghlt{login}@*)"});
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+if(sid) {
+  show((*@\listinghls{get}@*)(
+    {"https://home/(*@\listinghlt{add_user}@*)?username=johnny+password=qwerty+sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *sid}));
+
+  sid = (*@\listinghls{get}@*)({"https://johnny:qwerty@home/(*@\listinghlt{login}@*)"});
+  show((*@\listinghls{get}@*)({"http://home/(*@\listinghlt{shutdown}@*)?sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=kitchen+sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{window_status}@*)?room_name=bathroom+sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{windows_status}@*)?room_name=bathroom+sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{close_windows}@*)?room_name=study+sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=bedroom+sid=" + *sid}));
+
+  sid = (*@\listinghls{get}@*)({"https://admin:supersecret@home/(*@\listinghlt{login}@*)"});
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *sid}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *sid}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the output}
+  \smaller
+  \begin{verbatim}
+home: "user added"
+home: "Bye, admin!"
+home: {"error_code": "invalid_scheme",
+       "message": {
+         "format": "invalid scheme `{1}` in request",
+         "args": ["http"]}}
+home: {"error_code": "permission_denied"}
+home: "windows opened"
+home: {"error_code": "invalid_path",
+       "message": {
+         "format": "invalid path `{1}` in request",
+         "args": ["/window_status"]}}
+home: "closed"
+home: "already closed"
+home: "Bye, johnny!"
+home: {"error_code": "invalid_session"}
+home: "shutdown"
+home: {"error_code": "is_offline"}
+  \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
