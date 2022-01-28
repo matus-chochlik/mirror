@@ -21,6 +21,7 @@
     \end{itemize}
     \item Remote procedure call stubs and skeletons
     \item Generic ReST API adapter
+    \item Scripting language bindings
     \item \ldots
   \end{itemize}
 \end{frame}
@@ -1502,7 +1503,7 @@ if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 template <typename T, typename... P>
 void (*@\listinghlt{add_constructor}@*)(
-  chaiscript::ChaiScript& chai,
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
   (*@\listinghl{type_identity}@*)<T>,
   (*@\listinghl{type_list}@*)<P...>,
   const string& name) {
@@ -1566,7 +1567,7 @@ if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 template <typename T>
 void (*@\listinghlt{add_type}@*)(
-  chaiscript::ChaiScript& chai,
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
   (*@\listinghl{type_identity}@*)<T>,
   const string& name) {
     (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::user_type<T>(), name);
@@ -1589,7 +1590,7 @@ if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Scripting}
-  \framesubtitle{C++ theatre}
+  \framesubtitle{Monty C++'s Flying Circus}
   \begin{columns}
     \begin{column}{.50\textwidth}
     \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
@@ -1670,7 +1671,7 @@ chai(*@{\footnote{should have done this in Python!}@*)(R"(
   var sir_robin = person("sir Robin");
   var sir_galahad = person("sir Galahad");
   var sir_bedevere = person("sir Bedevere");
-  )");
+)");
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1685,7 +1686,6 @@ chai(R"(
   sir_robin.enter(road);
   sir_galahad.enter(road);
   sir_bedevere.enter(road);
-  )");
 
   bridgekeeper.say(
     "Stop."
@@ -1695,10 +1695,12 @@ chai(R"(
   sir_lancelot.say(
     "Ask me the questions, bridgekeeper. "
     "I am not afraid.");
-  \end{lstlisting}
-  \ldots
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-  )");
+  // ...
+  the_force.throw_into_chasm(sir_robin);
+  sir_robin.say("Auuuuuuuugh.");
+
+  // ...
+)");
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
