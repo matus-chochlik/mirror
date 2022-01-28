@@ -25,5 +25,6 @@ mirror_add_latex_presentation(
 	FIGURES
 		rpc_class rpc_sequence
 		serialize_class deserialize_class
+		cards_class
 )
 add_dependencies(doc-latex doc-use_cases-pdf)

@@ -22,6 +22,7 @@
     \item Remote procedure call stubs and skeletons
     \item Generic ReST API adapter
     \item Scripting language bindings
+    \item Generating UML diagrams
     \item \ldots
   \end{itemize}
 \end{frame}
@@ -172,15 +173,15 @@ enum class (*@\listinghlt{greeting}@*) {
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 cout << (*@\listinghl{join\footnote{algorithm}}@*)(
-          (*@\listinghl{get_enumerators\footnote{
-            metaobject sequence getter}}@*)(mirror(*@\footnote{
-            reflection operator}@*)((*@\listinghlt{greeting}@*))(*@\footnote{
-            reflection in action -- returns a metaobject}@*)),
-          to_string((*@\listinghl{get_name\footnote{
-            metadata (name) getter}}@*)((*@\listinghls{_1}@*)(*@\footnote{
-            placeholder}@*)))(*@\footnote{
-            placeholder expression}@*),
-          string(" "))
+      (*@\listinghl{get_enumerators\footnote{
+        metaobject sequence getter}}@*)(mirror(*@\footnote{
+        reflection operator}@*)((*@\listinghlt{greeting}@*))(*@\footnote{
+        reflection in action -- returns a metaobject}@*)),
+      to_string((*@\listinghl{get_name\footnote{
+        metadata (name) getter}}@*)((*@\listinghls{_1}@*)(*@\footnote{
+        placeholder}@*)))(*@\footnote{
+        placeholder expression}@*),
+      string(" "))
      << "!\n";
   \end{lstlisting}
 \end{frame}
@@ -407,7 +408,7 @@ auto string_to_enum(string_view s) noexcept
   \frametitle{Enumeration conversions}
   \framesubtitle{example}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-enum class weekdays : int { monday, /*...*/ };
+enum class weekdays : int { monday, tuesday, /*...*/ };
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 weekdays next_day(weekdays d);
@@ -733,7 +734,7 @@ struct write_driver {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Serialization}
-  \framesubtitle{How it fits together\ldots}
+  \framesubtitle{how it fits together\ldots}
   \begin{columns}
     \begin{column}{.50\textwidth}
       \colorbox{gray}{
@@ -762,7 +763,7 @@ struct write_driver {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Serialization}
-  \framesubtitle{The generic API functions}
+  \framesubtitle{the generic API functions}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename T, write_backend Backend>
 auto write(
@@ -1428,16 +1429,16 @@ metaobject auto ms(*@\footnote{the scope}@*)) {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Scripting}
-  \framesubtitle{handling sequences\footnote{\say{That’s easy!} -- sir Robin}}
+  \framesubtitle{handling sequences\footnote{\say{That’s easy!} -- sir Robin of Camelot}}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 void do_add_to(
   chaiscript::ChaiScript& (*@\listinghls{chai}@*),
   metaobject auto mo,
   metaobject auto ms) {
     if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
-        (*@\listinghl{for_each}@*)(mo, [&](auto me) {
-          (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), me, ms);
-        });
+      (*@\listinghl{for_each}@*)(mo, [&](auto me) {
+        (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), me, ms);
+      });
     } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
       /* ... */
     } else {
@@ -1484,15 +1485,15 @@ void (*@\listinghlt{do_add_to}@*)(
 const string name{(*@\listinghl{get_name}@*)(mo)};
 
 if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
-    if constexpr((*@\listinghl{reflects_record_member}@*)(mo)) {
-      if constexpr((*@\listinghl{is_public}@*)(mo)) {
-          (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun(
-            (*@\listinghl{get_pointer}@*)(mo)), name);
-      }
-    } else {
-      (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::var(
-          (*@\listinghl{get_reference}@*)(mo)), name);
+  if constexpr((*@\listinghl{reflects_record_member}@*)(mo)) {
+    if constexpr((*@\listinghl{is_public}@*)(mo)) {
+        (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun(
+          (*@\listinghl{get_pointer}@*)(mo)), name);
     }
+  } else {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::var(
+        (*@\listinghl{get_reference}@*)(mo)), name);
+  }
 }
   \end{lstlisting}
 \end{frame}
@@ -1659,14 +1660,14 @@ chaiscript::ChaiScript (*@\listinghls{chai}@*);
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
 chai(*@{\footnote{should have done this in Python!}@*)(R"(
-  var road = location("road leading to the bridge", at_the_bridge);
+  var road = (*@\listinghlt{location}@*)("road leading to the bridge", at_the_bridge);
   var bridge = location("bridge of death", at_the_bridge);
   var chasm = location("chasm", at_the_bridge);
 
-  var the_force = mysterious_force(chasm);
+  var the_force = (*@\listinghlt{mysterious_force}@*)(chasm);
 
-  var bridgekeeper = person("the Bridgekeeper");
-  var king_arthur = king("king Arthur");
+  var bridgekeeper = (*@\listinghlt{person}@*)("the Bridgekeeper");
+  var king_arthur = (*@\listinghlt{king}@*)("king Arthur");
   var sir_lancelot = person("sir Lancelot");
   var sir_robin = person("sir Robin");
   var sir_galahad = person("sir Galahad");
@@ -1680,14 +1681,14 @@ chai(*@{\footnote{should have done this in Python!}@*)(R"(
   \framesubtitle{\ldots and {\em \larger action!}}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 chai(R"(
-  bridgekeeper.enter(bridge);
+  bridgekeeper.(*@\listinghlt{enter}@*)(bridge);
   king_arthur.enter(road);
   sir_lancelot.enter(road);
   sir_robin.enter(road);
   sir_galahad.enter(road);
   sir_bedevere.enter(road);
 
-  bridgekeeper.say(
+  bridgekeeper.(*@\listinghlt{say}@*)(
     "Stop."
     "Who would cross the Bridge of Death "
     "must answer me these questions three, "
@@ -1696,12 +1697,190 @@ chai(R"(
     "Ask me the questions, bridgekeeper. "
     "I am not afraid.");
   // ...
-  the_force.throw_into_chasm(sir_robin);
+  the_force.(*@\listinghlt{throw_into_chasm}@*)(sir_robin);
   sir_robin.say("Auuuuuuuugh.");
 
   // ...
 )");
   \end{lstlisting}
+\end{frame}
+% - UML ------------------------------------------------------------------------
+\section{UML}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  UML diagrams\\
+  \Large
+  without external tools
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{UML}
+  \framesubtitle{the entry point}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename... T>
+ostream& (*@\listinghlt{print_puml}@*)(ostream& out) {
+  out << "@startuml\n";
+  (..., (*@\listinghlt{print_type_puml}@*)(
+    out, (*@\listinghl{get_aliased}@*)(mirror(T))));
+
+  out << "\n";
+
+  (..., (*@\listinghlt{print_type_rel_puml}@*)(
+    out, (*@\listinghl{get_aliased}@*)(mirror(T))));
+  out << "@enduml\n";
+
+  return out;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{UML}
+  \framesubtitle{the helpers}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{print_type_puml}@*)(*@\footnote{
+    \inlinecode{is_enum}, \inlinecode{is_union}, \inlinecode{get_name}, for-each data member, yadi yadi yada\ldots}@*)(auto mt, auto ms);
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+auto (*@\listinghlt{get_related_type_name}@*)(auto mt, auto ms)
+  -> string_view ;
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{print_type_rel_puml}@*)(ostream& out, auto mt) {
+  if constexpr((*@\listinghl{reflects_record}@*)(mt)) {
+    (*@\listinghl{for_each}@*)(
+      (*@\listinghl{get_member_functions}@*)(mt),
+      [&](auto mf) {
+        auto rel_name = (*@\listinghlt{get_related_type_name}@*)(
+          (*@\listinghl{get_type}@*)(mf), (*@\listinghl{get_scope}@*)(mt));
+        if(!rel_name.empty()) {
+            out << (*@\listinghl{get_name}@*)(mt)
+                << " --> " << rel_name << "\n";
+          });
+      // ... 
+    }
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{UML}
+  \framesubtitle{source and output}
+  \begin{columns}
+    \begin{column}{.72\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class rank {
+  ace = 1, two, /* ... */ king };
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class suit {
+  hearts, spades, diamonds, clubs };
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct card {
+  enum rank rank;
+  enum suit suit;
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class deck {
+public:
+  auto shuffle(auto& gen) -> deck&;
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class player {
+public:
+  void receive_card(card c);
+};
+    \end{lstlisting}
+    \end{column}
+    \begin{column}{.27\textwidth}
+      \colorbox{gray}{
+        \begin{minipage}{\dimexpr\textwidth\relax}
+        \centering
+        \includegraphics[
+            width=\textwidth,
+            keepaspectratio
+        ]{cards_class.pdf}
+        \end{minipage}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+% - Outro ----------------------------------------------------------------------
+\section{Outro}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Almost done
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusions}
+  \Large
+  \begin{itemize}
+    \item Reflection is not complicated
+    \item Reflection has many use-cases
+    \begin{itemize}
+      \smaller
+      \item as we have seen, but also:
+      \item defining concepts based on metadata,
+      \item implementing the {\em factory} pattern,
+      \item generating GUIs for visualization and data input,
+      \item generating \inlinecode{boost::spirit} parsers and formatters,
+      \item \ldots
+    \end{itemize}
+    \item We are just beginning
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What's next for reflection?}
+  \Large
+  \begin{itemize}
+    \item More things to reflect
+    \begin{itemize}
+      \smaller
+      \item templates
+      \item specifiers
+      \item \ldots
+    \end{itemize}
+    \item More \say{un-reflection}
+    \begin{itemize}
+      \smaller
+      \item code fragment splicing
+      \item splicing {\em \larger identifiers} depending on metaobjects\footnote{
+          maybe even with custom formatting}
+    \end{itemize}
+    \item Support for more use-cases
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Links}
+  \smaller
+  \begin{itemize}
+    \item {\em The Mirror library repository} --
+      \url{https://github.com/matus-chochlik/mirror}
+    \item {\em The Mirror library reference (W.I.P.)} --
+      \url{https://matus-chochlik.github.io/mirror/doxygen/}
+    \item {\em Reflection TS in \inlinecode{clang}} --
+      \url{https://github.com/matus-chochlik/llvm-project}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{That's all\dots}
+  \centering
+  \Huge
+  Thanks for your attention!\\
+  \Large
+  Happy to answer any additional questions.
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
