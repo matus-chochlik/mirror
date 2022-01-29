@@ -23,6 +23,7 @@
     \item Scripting language bindings
     \item Generating UML diagrams
     \item Fetching of structured data from a RDB
+    \item Generating SQL queries
     \item \ldots
   \end{itemize}
 \end{frame}
@@ -245,7 +246,7 @@ auto extract(extractable const auto&) -> const auto&;
   This is quite common\ldots
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
   auto (*@\listinghlt{get_opt_val}@*)(auto... params)
-  -> (*@\listinghl{extractable}@*);
+    -> (*@\listinghl{extractable}@*);
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
@@ -266,7 +267,7 @@ template <typename T>
 auto from_string(
   const string_view src,
   (*@\listinghlt{type_identity}@*)<T> = {})
-  -> (*@\listinghl{extractable}@*);
+    -> (*@\listinghl{extractable}@*);
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
@@ -274,7 +275,7 @@ template <typename T>
 auto from_extractable_string(
   const (*@\listinghl{extractable}@*) auto src,
   (*@\listinghlt{type_identity}@*)<T> tid = {})
-  -> (*@\listinghl{extractable}@*)
+    -> (*@\listinghl{extractable}@*)
   requires((*@\listinghl{has_value_type}@*)<string_view>(src));
   \end{lstlisting}
 \end{frame}
@@ -284,7 +285,7 @@ auto from_extractable_string(
   \framesubtitle{common combo with \say{un-reflection}}
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 auto get_reflected_type(metaobject auto mo)
-  -> (*@\listinghlt{type_identity}@*)<(*@\listinghl{unspecified}@*)>
+    -> (*@\listinghlt{type_identity}@*)<(*@\listinghl{unspecified}@*)>
   requires((*@\listinghl{reflects_type}@*)(mo));
   \end{lstlisting}
   \vfill
@@ -694,8 +695,7 @@ struct read_driver {
   auto read(
     Backend& backend,
     typename Backend::context_param ctx,
-    T& value) const
-    -> read_errors {
+    T& value) const -> read_errors {
       deserializer<remove_cv_t<T>> (*@\listinghls{reader}@*);
       return (*@\listinghls{reader}@*).(*@\listinghlt{read}@*)(
         *this,
@@ -770,7 +770,7 @@ auto write(
   const T& value,
   Backend& backend,
   typename Backend::context_param ctx) noexcept
-  -> write_errors;
+    -> write_errors;
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
@@ -779,7 +779,7 @@ auto read(
   T& value,
   Backend& backend,
   typename Backend::context_param ctx) noexcept
-  -> read_errors;
+    -> read_errors;
   \end{lstlisting}
 \end{frame}
 % - Parsing options ------------------------------------------------------------
@@ -1833,13 +1833,13 @@ public:
 
   auto size() const -> size_t;
   auto index_of(string_view column_name) const
-  -> optional<size_t>;
+    -> optional<size_t>;
 
   auto value(size_t idx) const
-  -> optional<string_view>;
+    -> optional<string_view>;
 
   auto (*@\listinghlt{value_of}@*)(string_view column_name) const
-  -> optional<string_view>;
+    -> optional<string_view>;
 
   template <typename T>
   auto (*@\listinghlt{fetch}@*)(T& instance) const -> bool
@@ -1955,11 +1955,11 @@ public:
   using result = typename Impl::result<T>;
 
   auto (*@\listinghlt{get_by_given_name}@*)(string_view name)
-  -> result<(*@\listinghl{person}@*)> {
+    -> result<(*@\listinghl{person}@*)> {
     return (*@\listinghls{_impl}@*)(mirror(((*@\listinghlt{get_by_given_name}@*)(name))), name);
   }
   auto (*@\listinghlt{get_by_email}@*)(string_view email)
-  -> result<(*@\listinghl{person}@*)> {
+    -> result<(*@\listinghl{person}@*)> {
     return (*@\listinghls{_impl}@*)(mirror(((*@\listinghlt{get_by_email}@*)(email))), email);
   }
 };
@@ -1978,7 +1978,7 @@ public:
   };
 
   auto operator()(metaobject auto me, const auto& arg)
-  -> string {
+    -> string {
     const auto mf = (*@\listinghl{get_callable}@*)((*@\listinghl{get_subexpression}@*)(me));
     const auto mt = (*@\listinghl{get_type}@*)(mf);
 
