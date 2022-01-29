@@ -6,7 +6,6 @@
 % - Intro/Recap ----------------------------------------------------------------
 \section{Intro/Recap}
 % ------------------------------------------------------------------------------
-\frame{\titlepage}
 \begin{frame}
   \frametitle{Contents}
   \begin{itemize}
@@ -23,6 +22,7 @@
     \item Generic ReST API adapter
     \item Scripting language bindings
     \item Generating UML diagrams
+    \item Fetching of structured data from a RDB
     \item \ldots
   \end{itemize}
 \end{frame}
@@ -1900,6 +1900,121 @@ public:
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{usage}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct (*@\listinghl{person}@*) {
+  uintmax_t person_id;
+  string given_name;
+  string family_name;
+  string email_address;
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+sqlite3_db (*@\listinghls{db}@*){"people.db"};
+vector<(*@\listinghl{person}@*)> ps;
+
+(*@\listinghls{db}@*).ensure_table(*@\footnote{scans DB schema and ensures that there is a matching \inlinecode{person} table}@*)<(*@\listinghl{person}@*)>();
+
+string query{"SELECT * FROM person"};
+
+for(const auto& p : (*@\listinghls{db}@*).(*@\listinghlt{fetch}@*)(query, ps)) {
+  cout << p.given_name << " "
+       << p.family_name << endl;
+}
+  \end{lstlisting}
+\end{frame}
+% - SQL ------------------------------------------------------------------------
+\section{SQL}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  RDB queries\\
+  \Large
+  generating SQL from C++
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Generating SQL queries}
+  \framesubtitle{the schema}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct (*@\listinghl{person}@*) {
+    string given_name;
+    string family_name;
+    string email;
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Impl>
+struct operations {
+  Impl (*@\listinghls{_impl}@*);
+public:
+  template <typename T>
+  using result = typename Impl::result<T>;
+
+  auto (*@\listinghlt{get_by_given_name}@*)(string_view name)
+  -> result<(*@\listinghl{person}@*)> {
+    return (*@\listinghls{_impl}@*)(mirror(((*@\listinghlt{get_by_given_name}@*)(name))), name);
+  }
+  auto (*@\listinghlt{get_by_email}@*)(string_view email)
+  -> result<(*@\listinghl{person}@*)> {
+    return (*@\listinghls{_impl}@*)(mirror(((*@\listinghlt{get_by_email}@*)(email))), email);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Generating SQL queries}
+  \framesubtitle{the implementation}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class query_generator_impl {
+public:
+  template <typename T>
+  struct result : string {
+      result(string s) : string{move(s)} {}
+  };
+
+  auto operator()(metaobject auto me, const auto& arg)
+  -> string {
+    const auto mf = (*@\listinghl{get_callable}@*)((*@\listinghl{get_subexpression}@*)(me));
+    const auto mt = (*@\listinghl{get_type}@*)(mf);
+
+    stringstream query;
+    query << "SELECT * FROM ";
+    query << _table_name((*@\listinghl{get_reflected_type}@*)(mt));
+    query << " WHERE ";
+    query << (*@\listinghl{get_name}@*)(mf).substr("get_by_"sv.size());
+    query << " = " << quoted(arg);
+    query << ";";
+    return query.str();
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Generating SQL queries}
+  \framesubtitle{usage}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+using query_generator =
+  operations<query_generator_impl>;
+
+query_generator (*@\listinghls{gen}@*);
+
+cout << (*@\listinghls{gen}@*).(*@\listinghlt{get_by_first_name}@*)("Joe")
+     << endl;
+cout << (*@\listinghls{gen}@*).(*@\listinghlt{get_by_email}@*)("joe@example.com")
+     << endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+SELECT * FROM person WHERE email = 'joe@example.com';
+SELECT * FROM person WHERE first_name = 'Joe';
+  \end{verbatim}
+\end{frame}
 % - Outro ----------------------------------------------------------------------
 \section{Outro}
 % ------------------------------------------------------------------------------
