@@ -120,13 +120,10 @@ public:
         for_each(get_data_members(mirror(T)), [&](auto mdm) {
             using mirror::has_value;
             using mirror::extract;
-            if(const auto col_idx{index_of(get_name(mdm))};
-               has_value(col_idx)) {
-                if(const auto opt_val{from_extractable_string(
-                     value(*col_idx), get_reflected_type(get_type(mdm)))};
-                   has_value(opt_val)) {
-                    get_reference(mdm, instance) = extract(opt_val);
-                }
+            if(const auto opt_val{from_extractable_string(
+                 value_of(get_name(mdm)), get_reflected_type(get_type(mdm)))};
+               has_value(opt_val)) {
+                get_reference(mdm, instance) = extract(opt_val);
             } else {
                 result = false;
             }
