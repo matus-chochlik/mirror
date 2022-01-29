@@ -1811,6 +1811,95 @@ public:
     \end{column}
   \end{columns}
 \end{frame}
+% - RDB ------------------------------------------------------------------------
+\section{RDB}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Relational DBs\\
+  \Large
+  fetching structured data
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{table row wrapper}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class sqlite3_row {
+public:
+  auto names() const -> span<string_view>;
+  auto values() const -> span<string_view>;
+
+  auto size() const -> size_t;
+  auto index_of(string_view column_name) const
+  -> optional<size_t>;
+
+  auto value(size_t idx) const
+  -> optional<string_view>;
+
+  auto (*@\listinghlt{value_of}@*)(string_view column_name) const
+  -> optional<string_view>;
+
+  template <typename T>
+  auto (*@\listinghlt{fetch}@*)(T& instance) const -> bool
+    requires(is_class_v<T>);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{into a class instance}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+auto (*@\listinghlt{fetch}@*)(T& (*@\listinghls{instance}@*)) const -> bool
+  requires(is_class_v<T>) {
+    bool result = true;
+
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)(mirror(T)),
+      [&](auto mdm) {
+        if(const auto opt_val{from_extractable_string(
+             (*@\listinghlt{value_of}@*)((*@\listinghl{get_name}@*)(mdm)),
+             (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))};
+           has_value(opt_val)) {
+
+            (*@\listinghl{get_reference}@*)(mdm, (*@\listinghls{instance}@*)) =
+              extract(opt_val);
+        } else {
+            result = false;
+        }
+      });
+    return result;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{database wrapper}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class sqlite3_db {
+public:
+  void (*@\listinghl{execute}@*)(
+    string_view sql,
+    function<void(const sqlite3_row&> callback);
+
+  template <typename T>
+  auto (*@\listinghlt{fetch}@*)(
+    string_view sql, vector<T>& dest) -> auto&
+    requires(is_class_v<T>) {
+      (*@\listinghl{execute}@*)(sql, [&](const auto& (*@\listinghls{row}@*)) {
+        T instance{};
+        if((*@\listinghls{row}@*).(*@\listinghlt{fetch}@*)(instance)) {
+            dest.emplace_back(move(instance));
+        }
+      });
+      return dest;
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
 % - Outro ----------------------------------------------------------------------
 \section{Outro}
 % ------------------------------------------------------------------------------
