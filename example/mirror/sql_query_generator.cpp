@@ -15,8 +15,8 @@
 class query_generator_impl {
 public:
     template <typename T>
-    struct dataset : std::string {
-        dataset(std::string s) noexcept
+    struct result : std::string {
+        result(std::string s) noexcept
           : std::string{std::move(s)} {}
     };
 
@@ -27,7 +27,7 @@ private:
     }
 
     template <typename T>
-    static auto _table_name(std::type_identity<dataset<T>>) {
+    static auto _table_name(std::type_identity<result<T>>) {
         return _table_name(std::type_identity<T>{});
     }
 
@@ -50,7 +50,7 @@ public:
 namespace schema {
 
 struct person {
-    std::string first_name;
+    std::string given_name;
     std::string family_name;
     std::string email;
 };
@@ -64,13 +64,13 @@ private:
 
 public:
     template <typename T>
-    using dataset = typename Impl::template dataset<T>;
+    using result = typename Impl::template result<T>;
 
-    auto get_by_first_name(std::string_view name) -> dataset<schema::person> {
-        return _impl(mirror((get_by_first_name(name))), name);
+    auto get_by_given_name(std::string_view name) -> result<schema::person> {
+        return _impl(mirror((get_by_given_name(name))), name);
     }
 
-    auto get_by_email(std::string_view email) -> dataset<schema::person> {
+    auto get_by_email(std::string_view email) -> result<schema::person> {
         return _impl(mirror((get_by_email(email))), email);
     }
 };
@@ -80,8 +80,8 @@ using query_generator = operations<query_generator_impl>;
 int main() {
     query_generator gen;
 
-    // SELECT * FROM person WHERE first_name = "Joe";
-    std::cout << gen.get_by_first_name("Joe") << std::endl;
+    // SELECT * FROM person WHERE given_name = "Joe";
+    std::cout << gen.get_by_given_name("Joe") << std::endl;
 
     // SELECT * FROM person WHERE email = "joe@example.com";
     std::cout << gen.get_by_email("joe@example.com") << std::endl;

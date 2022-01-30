@@ -196,9 +196,10 @@ int main() {
         }
         return {};
     };
-    const auto show = [&](const auto& response) {
-        if(response) {
-            std::cout << server.domain() << ": " << *response << std::endl;
+    const auto show = [&](const auto& result) {
+        if(mirror::has_value(result)) {
+            std::cout << server.domain() << ": " << mirror::extract(result)
+                      << std::endl;
         }
     };
 

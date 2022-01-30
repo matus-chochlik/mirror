@@ -1,0 +1,38 @@
+@startuml
+
+interface write_backend {
+  +enum_as_string()
+  +begin()
+  +write()
+  +begin_list()
+  +finish_list()
+  +begin_element()
+  +finish_element()
+  +begin_record()
+  +finish_record()
+  +begin_attribute()
+  +finish_attribute()
+  +finish()
+}
+
+class json_write_backend {
+  -json_document: _doc
+  ---
+  +write()
+}
+
+class serializer<T> {
+  +write(...)
+}
+
+class write_driver {
+  +write(...)
+}
+
+json_write_backend ..|> write_backend : implements
+serializer <.. write_driver : creates
+serializer --> write_driver : uses
+serializer --> write_backend : uses
+write_driver --> write_backend : uses
+
+@enduml

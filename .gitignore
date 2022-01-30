@@ -1,5 +1,6 @@
 /_build
-/LLVM_PREFIX
+/toolchain.cmake
+/tools/toolchain.cmake
 
 # editor swap files
 .*.swp

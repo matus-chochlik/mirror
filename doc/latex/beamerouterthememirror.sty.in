@@ -1,0 +1,75 @@
+\mode<presentation>
+
+\newcommand{\miniscule}{\@setfontsize\miniscule{4}{5}}
+\setbeamerfont{headline}{size=\miniscule}
+
+\beamer@compresstrue
+
+\AtBeginDocument{
+  {
+    \usebeamerfont*{headline}
+    \colorlet{global.bg}{bg}
+    \usebeamercolor{section in head/foot}
+    \usebeamercolor{frametitle}
+
+    \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+       color(0ex)=(global.bg);%
+       color(1ex)=(section in head/foot.bg);%
+       color(7ex)=(section in head/foot.bg)%
+     }
+    \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+       color(0ex)=(frametitle.bg);%
+       color(1ex)=(frametitle.bg);%
+       color(2ex)=(section in head/foot.bg)
+     }
+
+    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+      color(0ex)=(global.bg);%
+      color(1ex)=(frametitle.bg)
+    }
+  }
+}
+                                % Head
+\defbeamertemplate*{headline}{mirror theme}
+{%
+  \vskip-7ex%
+  \begin{tcolorbox}[
+    enhanced,
+    left=0pt,right=0pt,top=0pt,bottom=0pt,
+    boxrule=0pt,outer arc=0pt,arc=0pt,
+    interior code={
+      \shade [
+        left color=mirrormajor!85!white,
+        middle color=mirrormajor!85!mirrorminor,
+        right color=mirrormajor!25!mirrorpage
+      ](interior.north west) rectangle (interior.south east);
+    },
+    width=\paperwidth,height=0.7cm]
+			\insertnavigation{1em}
+      \hfill
+      \smash{\raisebox{-0.22cm}{\includegraphics[width=0.7cm,height=0.7cm]{mirror.png}}}
+  \end{tcolorbox}
+}%
+
+
+\defbeamertemplate*{frametitle}{mirror theme}
+{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=1em,rightskip=1em]{frametitle}%
+    \vskip1mm%
+    \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle
+    \ifx\insertframesubtitle\@empty%
+    \else
+    \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}~-- \insertframesubtitle%
+    \fi
+    \vskip1mm%
+  \end{beamercolorbox}
+}
+
+\defbeamertemplate*{navigation symbols}{}
+  
+\mode
+<all>
+
+\setbeamertemplate{page number in head/foot}[totalframenumber]
+\setbeamertemplate{bibliography item}[text]

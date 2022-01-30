@@ -5,6 +5,12 @@
 #
 cmake_minimum_required(VERSION 3.16)
 
+if(NOT EXISTS "${CMAKE_TOOLCHAIN_FILE}")
+	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/toolchain.cmake")
+		set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/toolchain.cmake")
+	endif()
+endif()
+
 project(Mirror CXX)
 
 file(STRINGS VERSION MIRROR_VERSION)

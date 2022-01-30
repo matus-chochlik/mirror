@@ -1,0 +1,38 @@
+@startuml
+
+interface read_backend {
+  +enum_as_string()
+  +begin()
+  +read()
+  +begin_list()
+  +finish_list()
+  +begin_element()
+  +finish_element()
+  +begin_record()
+  +finish_record()
+  +begin_attribute()
+  +finish_attribute()
+  +finish()
+}
+
+class json_read_backend {
+  -json_document: _doc
+  ---
+  +read()
+}
+
+class deserializer<T> {
+  +read(...)
+}
+
+class read_driver {
+  +read(...)
+}
+
+json_read_backend ..|> read_backend : implements
+deserializer <.. read_driver : creates
+deserializer --> read_driver : uses
+deserializer --> read_backend : uses
+read_driver --> read_backend : uses
+
+@enduml

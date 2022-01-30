@@ -1,0 +1,2090 @@
+\documentclass[compress,table,xcolor=table]{beamer}
+\input{beamer_mirror.tex}
+\begin{document}
+% ------------------------------------------------------------------------------
+\title{Reflection use-cases}
+% - Intro/Recap ----------------------------------------------------------------
+\section{Intro/Recap}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Contents}
+  \begin{itemize}
+    \item Metadata, metaobjects, reflection, \say{un-reflection}
+    \item Enumeration/string conversions
+    \item Serialization and deserialization
+    \item Parsing of application options 
+    \begin{itemize}
+      \smaller
+      \item from command-line arguments,
+      \item from configuration files
+    \end{itemize}
+    \item Remote procedure call stubs and skeletons
+    \item Generic ReST API adapter
+    \item Scripting language bindings
+    \item Generating UML diagrams
+    \item Fetching of structured data from a RDB
+    \item Generating SQL queries
+    \item \ldots
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Crash course\\
+  \large
+  metadata, metaobjects, reflection
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Metadata}
+  \framesubtitle{describing program declarations}
+  \larger
+  \begin{itemize}
+    \item type of a variable,
+    \item data members of a \inlinecode{struct},
+    \item constructors or member functions of a \inlinecode{class},
+    \item base classes of a \inlinecode{class},
+    \item return type or parameters of a function,
+    \item enumerators in an \inlinecode{enum} type,
+    \item name of a namespace, type, function, data member, parameter, etc.
+    \item address of a variable, data member or member function,
+    \item specifier like \inlinecode{virtual}, \inlinecode{constexpr},
+      \inlinecode{static}, etc.
+    \item source location,
+    \item \ldots
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Metaobject}
+  \begin{itemize}
+    \item A {\em meta-level} representation of a {\em base-level} entity\footnote{
+      namespace, type, class, function, constructor, destructor, variable,
+        enumerator, expression, \ldots}
+    \item On the {\em meta-level\footnote{unlike the base-level (namespaces,
+      constructors, etc)}} all of the above are \say{reified}
+    \item We say a metaobject \say{reflects} the {\em base-level} entity
+    \item Provides access to {\em metadata} describing the reflected
+      {\em base-level} entity
+    \item A compile-time constant
+    {\larger value} of a type satisfying the~following concept:
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x]
+template <typename X>
+concept (*@\listinghl{metaobject}@*) = (*@{\em not-really-important-here}@*);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection~~~~~~~~~~~~~~~~~~~~~~~\ldots and
+  \say{un-reflection}\footnote{a.k.a. \say{"splicing"}}}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item The process of obtaining metadata or metaobjects which provide metadata
+          indirectly
+        \item Done through a~dedicated operator or~language expression
+        \item For example
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto (*@\listinghlt{meta_string}@*) =
+  (*@\listinghl{mirror}@*)(string);
+  \end{lstlisting}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item Getting back to the base-level entity reflected by a metaobject
+        \item \ldots through an operation on a metaobject reflecting that
+          {\em base-level} entity
+        \item \say{Splicing} can also mean emitting a snippet of code involving
+          base-level entities, reflected by metaobjects
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection API}
+  \larger
+  Set of compile-time\footnote{\inlinecode{consteval}, \inlinecode{constexpr}
+    assumed, but omitted here to save space on slides}
+   functions operating on {\em metaobjects}
+  \smaller
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item classification
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{reflects_type}, \inlinecode{reflects_callable},
+              \ldots
+          \end{itemize}
+        \item primitive operations
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{get_name}, \inlinecode{get_scope},
+              \inlinecode{get_type}, \inlinecode{get_aliased},
+              \inlinecode{get_enumerators}, \inlinecode{is_constexpr},
+              \inlinecode{is_scoped_enum},
+              \inlinecode{invoke}, \inlinecode{apply}, \ldots
+          \end{itemize}
+        \item sequence operations
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{is_empty}, \inlinecode{get_size},
+              \inlinecode{get_element}, \inlinecode{concat}, \ldots
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.50\textwidth}
+      \begin{itemize}
+        \item algorithms
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{for_each}, \inlinecode{fold},
+              \inlinecode{join}, \inlinecode{transform},
+              \inlinecode{filter}, \inlinecode{remove_if},
+              \inlinecode{find_if}, \inlinecode{find_if_not},
+              \inlinecode{find_ranking}, \ldots
+          \end{itemize}
+        \item comparators
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{reflects_same}, \ldots
+          \end{itemize}
+        \item syntax sugar, placeholder expressions
+          \begin{itemize}
+            \smaller
+            \item \inlinecode{_1}, \inlinecode{_2},
+              \inlinecode{get_type(_1)}, \inlinecode{reflects_same(_1, _2)},
+              \ldots
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\say{hello world of reflection!}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+enum class (*@\listinghlt{greeting}@*) {
+  hello, world, of, reflection
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+cout << (*@\listinghl{join\footnote{algorithm}}@*)(
+      (*@\listinghl{get_enumerators\footnote{
+        metaobject sequence getter}}@*)(mirror(*@\footnote{
+        reflection operator}@*)((*@\listinghlt{greeting}@*))(*@\footnote{
+        reflection in action -- returns a metaobject}@*)),
+      to_string((*@\listinghl{get_name\footnote{
+        metadata (name) getter}}@*)((*@\listinghls{_1}@*)(*@\footnote{
+        placeholder}@*)))(*@\footnote{
+        placeholder expression}@*),
+      string(" "))
+     << "!\n";
+  \end{lstlisting}
+\end{frame}
+% - Utilities ------------------------------------------------------------------
+\section{Utilities}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\em Extractable}
+  \framesubtitle{concepts}
+  \larger
+  \begin{itemize}
+    \item Types which can optionally refer to or store a value
+    \item Unifies usage of
+    \begin{itemize}
+      \item raw pointers, smart pointers,
+      \item \inlinecode{optional}, \inlinecode{expected},
+      \item \ldots
+    \end{itemize}
+    \item \ldots in some specific cases
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+concept extractable = requires(T v) {
+	{ declval<(*@\listinghl{extracted_type_t}@*)<T>>() };
+  { (*@\listinghl{has_value}@*)(v) } -> convertible_to<bool>;
+  (*@\listinghl{extract}@*)(v);
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\em Extractable}
+  \framesubtitle{operations}
+  \begin{itemize}
+    \item \inlinecode{has_value_type} -- indicates if the extracted value has
+      a~specific type
+    \item \inlinecode{has_value} -- indicates if an extractable has a value
+    \item \inlinecode{extract} -- provides access to a value in an extractable
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename V>
+consteval auto has_value_type(
+  const extractable auto& v)
+  noexcept -> bool;
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto has_value(
+  extractable auto &) noexcept -> bool;
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+auto extract(extractable auto&) -> auto&;
+auto extract(extractable auto&&) -> const auto&&;
+auto extract(extractable const auto&) -> const auto&;
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{\em Extractable}
+  \framesubtitle{the idiom}
+  This is quite common\ldots
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+  auto (*@\listinghlt{get_opt_val}@*)(auto... params)
+    -> (*@\listinghl{extractable}@*);
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+  if(const auto opt{(*@\listinghlt{get_opt_val}@*)(args...)};
+     (*@\listinghl{has_value}@*)(opt)) {
+
+    do_something((*@\listinghl{extract}@*)(opt));
+  } else {
+    do_something_else();
+  }
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Conversion from string}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+auto from_string(
+  const string_view src,
+  (*@\listinghlt{type_identity}@*)<T> = {})
+    -> (*@\listinghl{extractable}@*);
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+auto from_extractable_string(
+  const (*@\listinghl{extractable}@*) auto src,
+  (*@\listinghlt{type_identity}@*)<T> tid = {})
+    -> (*@\listinghl{extractable}@*)
+  requires((*@\listinghl{has_value_type}@*)<string_view>(src));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Conversion from string}
+  \framesubtitle{common combo with \say{un-reflection}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto get_reflected_type(metaobject auto mo)
+    -> (*@\listinghlt{type_identity}@*)<(*@\listinghl{unspecified}@*)>
+  requires((*@\listinghl{reflects_type}@*)(mo));
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto mo = mirror(some_type);
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+auto opt_val = (*@\listinghl{from_string}@*)(
+  get_some_string(),
+  (*@\listinghlt{get_reflected_type}@*)(mo));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Command-line arguments}
+  \begin{columns}
+    \begin{column}{.57\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_arg {
+public:
+  auto next() -> program_arg;
+
+  auto is_short_tag(
+    string_view) -> bool;
+  auto is_long_tag(
+    string_view) -> bool;
+  // ...
+  operator string_view();
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_args {
+public:
+  program_args(int, const char**);
+  auto begin();
+  auto end();
+  auto command() -> string_view;
+  // ...
+  auto find(string_view)
+    -> program_arg;
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.44\textwidth}
+      \small
+      \begin{itemize}
+        \item \inlinecode{program_arg} -- represents a single program argument.
+        \begin{itemize}
+          \smaller
+          \item get previous and next argument,
+          \item check for \verb@-o@ and \verb@--long-opt@ options,
+          \item starts-with, ends-with,
+          \item \ldots
+        \end{itemize}
+        \item \inlinecode{program_args} -- represents all program arguments
+        \begin{itemize}
+          \smaller
+          \item iteration, search,
+          \item command, first, last,
+          \item \ldots
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% - Enums ----------------------------------------------------------------------
+\section{Enums}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Enumeration\\
+  \large
+  conversion utilities\footnote{let's start easy\ldots}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{enum-to-string}
+  \begin{lstlisting}[language=c++2x]
+template <typename E>
+auto enum_to_string(E e) noexcept
+  -> (*@\listinghlt{string_view}@*) {
+
+  return (*@\listinghlt{select}@*)(
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    [](auto& (*@\listinghlt{result}@*), auto mo, auto c) {
+        if((*@\listinghl{get_constant}@*)(mo) == c) {
+            (*@\listinghlt{result}@*) = (*@\listinghl{get_name}@*)(mo);
+        }
+    },
+    (*@\listinghlt{string_view}@*){},
+    e);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{string-to-enum}
+  \begin{lstlisting}[language=c++2x]
+template <typename E>
+auto string_to_enum(string_view s) noexcept
+  -> (*@\listinghlt{optional}@*)<E> {
+
+  return (*@\listinghlt{select}@*)(
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    [](auto& (*@\listinghlt{result}@*), auto mo, auto n) {
+        if((*@\listinghl{get_name}@*)(mo) == n) {
+            (*@\listinghlt{result}@*) = (*@\listinghl{get_constant}@*)(mo);
+        }
+    },
+    (*@\listinghlt{optional}@*)<E>{},
+    s);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Enumeration conversions}
+  \framesubtitle{example}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class weekdays : int { monday, tuesday, /*...*/ };
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+weekdays next_day(weekdays d);
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void (*@\listinghls{print_next_day}@*)(string_view name) {
+  if(auto opt_day{(*@\listinghlt{string_to_enum}@*)<weekdays>(name)};
+     has_value(opt_day)) {
+    cout << name << " -> " << (*@\listinghlt{enum_to_string}@*)(
+             next_day(extract(opt_day)))
+         << endl;
+  }
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+(*@\listinghl{for_each}@*)(
+  (*@\listinghl{get_enumerators}@*)(mirror(weekdays)),
+  [](auto mo) {
+    (*@\listinghls{print_next_day}@*)((*@\listinghl{get_name}@*)(mo));
+});
+  \end{lstlisting}
+  \smaller
+  \begin{verbatim}
+  monday -> tuesday
+  ...
+  \end{verbatim}
+\end{frame}
+% - Serialization --------------------------------------------------------------
+\section{Serialization}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Serialization\\
+  \Large
+  and deserialization\footnote{the {\em cliché} of reflection use-cases}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{read-backend concept}
+  \smaller
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+concept (*@\listinghls{read_backend}@*) =
+  requires(T v) {
+
+  { v.(*@\listinghlt{enum_as_string}@*)(
+    declval<T::context&>())
+  } -> convertible_to<bool>;
+
+  { v.(*@\listinghlt{begin}@*)(declval<T::context&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{read}@*)(
+    declval<read_driver>(),
+    declval<T::context&>(),
+    declval<(*@\listinghl{unspecified}@*)&>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{begin_list}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+  { v.(*@\listinghlt{begin_element}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+  { v.(*@\listinghlt{separate_element}@*)(
+    declval<T::context&>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{finish_element}@*)(
+    declval<T::context&>(),
+    declval<size_t>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{finish_list}@*)(
+    declval<T::context&>())
+  } -> same_as<read_errors>;
+
+  { v.(*@\listinghlt{begin_record}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{begin_attribute}@*)(
+    declval<T::context&>(),
+    declval<string_view>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+    { v.(*@\listinghlt{finish}@*)(
+      declval<T::context&>())
+    } -> same_as<read_errors>;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{write-backend concept}
+  \smaller
+  \begin{columns}
+    \begin{column}{.65\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+concept (*@\listinghls{write_backend}@*) =
+  requires(T v) {
+
+  { v.(*@\listinghlt{enum_as_string}@*)(
+    declval<T::context&>())
+  } -> convertible_to<bool>;
+
+  { v.(*@\listinghlt{begin}@*)(declval<T::context&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{write}@*)(
+    declval<write_driver>(),
+    declval<T::context&>(),
+    declval<const (*@\listinghl{unspecified}@*)&>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{begin_list}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+  { v.(*@\listinghlt{begin_element}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+  { v.(*@\listinghlt{separate_element}@*)(
+    declval<T::context&>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{finish_element}@*)(
+    declval<T::context&>(),
+    declval<size_t>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{finish_list}@*)(
+    declval<T::context&>())
+  } -> same_as<write_errors>;
+
+  { v.(*@\listinghlt{begin_record}@*)(
+    declval<T::context&>(),
+    declval<size_t&>())
+  } -> extractable;
+
+  { v.(*@\listinghlt{begin_attribute}@*)(
+    declval<T::context&>(),
+    declval<string_view>())
+  } -> extractable;
+      \end{lstlisting}
+      \ldots
+      \begin{lstlisting}[language=c++2x,basicstyle=\miniscule\ttfamily]
+    { v.(*@\listinghlt{finish}@*)(
+      declval<T::context&>())
+    } -> same_as<write_errors>;
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{deserializer}}
+  Default implementation for types that can be read directly by the~{\em backend}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename T>
+struct deserializer {
+  template <read_backend Backend>
+  static auto read(
+    const read_driver& driver,
+    Backend& (*@\listinghls{backend}@*),
+    typename Backend::context_param ctx,
+    T& value) noexcept {
+      // delegate the work to the backend
+      return (*@\listinghls{backend}@*).(*@\listinghlt{read}@*)(driver, ctx, value);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{deserializer} -- \inlinecode{enum} types}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+static auto read(
+  const read_driver& (*@\listinghls{driver}@*),
+  read_backend auto& (*@\listinghls{backend}@*), /*...*/ ctx,
+  T& value) noexcept {
+    read_errors errors{};
+
+    if((*@\listinghls{backend}@*).(*@\listinghlt{enum_as_string}@*)(ctx)) {
+        string name;
+        errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, name);
+
+        if(const auto conv{(*@\listinghl{string_to_enum}@*)<T>(name)};
+           has_value(conv)) {
+            value = extract(conv);
+        } else {
+            errors |= read_error_code::invalid_format;
+        }
+    } else {
+        underlying_type_t<T> temp{};
+        errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(backend, ctx, temp);
+        value = static_cast<T>(temp);
+    }
+    return errors;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{deserializer} -- classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+static auto read(
+  const read_driver& (*@\listinghls{driver}@*),
+  read_backend auto& (*@\listinghls{backend}@*), /*...*/ ctx,
+  T& value) noexcept {
+    read_errors errors{};
+
+    const auto mdms{filter((*@\listinghl{get_data_members(mt)}@*), not_((*@\listinghl{is_static}@*)(_1)))};
+    size_t count{get_size(mdms)};
+    auto subctx{(*@\listinghls{backend}@*).(*@\listinghlt{begin_record}@*)(ctx, count)};
+
+    if(has_value(subctx)) {
+      bool first = true;
+      (*@\listinghl{for_each}@*)(mdms, [&](auto mdm) {
+          errors |= (*@\listinghls{backend}@*).(*@\listinghlt{separate_attribute}@*)(extract(subctx));
+
+          const auto name{(*@\listinghl{get_name}@*)(mdm)};
+          auto subsubctx{(*@\listinghls{backend}@*).(*@\listinghlt{begin_attribute}@*)(extract(subctx), name)};
+          if(has_value(subsubctx)) {
+            errors |= (*@\listinghls{driver}@*).(*@\listinghlt{read}@*)(
+              (*@\listinghls{backend}@*), extract(subsubctx), (*@\listinghl{get_reference}@*)(mdm, value));
+            errors |= (*@\listinghls{backend}@*).(*@\listinghlt{finish_attribute}@*)(extract(subsubctx), name);
+          } else {
+            errors |= get_error(subsubctx);
+          }
+      });
+      errors |= (*@\listinghls{backend}@*).(*@\listinghlt{finish_record}@*)(extract(subctx));
+    } else {
+      errors |= get_error(subctx);
+    }
+    return errors;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{\inlinecode{read_driver}}
+  Used by the {\em backend} and some \inlinecode{deserializer} specializations.
+  Creates appropriate nested \inlinecode{deserializer} and uses it.
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct read_driver {
+  template <typename T, read_backend Backend>
+  auto read(
+    Backend& backend,
+    typename Backend::context_param ctx,
+    T& value) const -> read_errors {
+      deserializer<remove_cv_t<T>> (*@\listinghls{reader}@*);
+      return (*@\listinghls{reader}@*).(*@\listinghlt{read}@*)(
+        *this,
+        backend,
+        ctx,
+        value);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  Writing is done analogously:
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename T>
+struct serializer {
+  template <write_backend Backend>
+  static auto write(
+    const write_driver& driver,
+    Backend& backend,
+    typename Backend::context_param ctx,
+    T& value) noexcept;
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct write_driver {
+  template <typename T, write_backend Backend>
+  auto write(
+    Backend& backend,
+    typename Backend::context_param ctx,
+    T& value) const -> write_errors;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{how it fits together\ldots}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+      \colorbox{gray}{
+        \begin{minipage}{\dimexpr\textwidth\relax}
+        \centering
+        \includegraphics[
+            width=\textwidth,
+            keepaspectratio
+        ]{serialize_class.pdf}
+        \end{minipage}
+      }
+    \end{column}
+    \begin{column}{.50\textwidth}
+      \colorbox{gray}{
+        \begin{minipage}{\dimexpr\textwidth\relax}
+        \centering
+        \includegraphics[
+            width=\textwidth,
+            keepaspectratio
+        ]{deserialize_class.pdf}
+        \end{minipage}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Serialization}
+  \framesubtitle{the generic API functions}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename T, write_backend Backend>
+auto write(
+  const T& value,
+  Backend& backend,
+  typename Backend::context_param ctx) noexcept
+    -> write_errors;
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename T, read_backend Backend>
+auto read(
+  T& value,
+  Backend& backend,
+  typename Backend::context_param ctx) noexcept
+    -> read_errors;
+  \end{lstlisting}
+\end{frame}
+% - Parsing options ------------------------------------------------------------
+\section{Options}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Application options\\
+  \large
+  parsing from command-line arguments\\
+  and external configuration files
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{into a structure}
+  \small
+  \begin{itemize}
+    \item \inlinecode{options} -- application-specific data structure
+      storing options
+    \item \inlinecode{parse_args} -- generic function that parses and stores
+      command-line argument values into a structure
+    \begin{itemize}
+      \item can be implemented using reflection
+    \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+struct options {
+  int (*@\listinghlt{count}@*){3};
+  string (*@\listinghlt{message}@*){"Hello, world!"};
+  chrono::milliseconds (*@\listinghlt{interval}@*){500};
+};
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename T>
+bool (*@\listinghl{parse_options}@*)(T& opts, const program_args&);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{usage}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+int main(int argc, const char** argv) {
+
+    const program_args (*@\listinghls{args}@*){argc, argv};
+    options (*@\listinghlt{opts}@*);
+
+    if((*@\listinghl{parse_options}@*)((*@\listinghlt{opts}@*), (*@\listinghls{args}@*))) {
+      const auto repeats{
+        ranges::views::iota(1, opts.(*@\listinghlt{count}@*) + 1)};
+
+      for(auto i : repeats) {
+          cout << i << ": "
+               << opts.(*@\listinghlt{message}@*) << endl;
+
+          this_thread::sleep_for(opts.(*@\listinghlt{interval}@*));
+      }
+    }
+}  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Parsing arguments}
+  \framesubtitle{how to implement {\em \larger generic} \inlinecode{parse_options}?}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+bool parse_options(T& opts, const program_args& args) {
+  bool parsed = true;
+
+  for(const auto& arg : args) {
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghlt{mirror}@*)(T)), [&](auto mdm) {
+      if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
+        if(const auto opt{from_string(
+          arg.next(), (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
+        ) {
+           (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
+        } else {
+            cerr << "invalid value '" << arg.next()
+                 << "' for option " << arg
+                 << "!" << endl;
+            parsed = false;
+        }
+      }
+    });
+  }
+  return parsed;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Loading options from file}
+  \framesubtitle{good thing we implemented serialization!}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+auto (*@\listinghlt{parse}@*)(options& opts, istream& cfg_in) -> bool {
+  const auto errors =
+    (*@\listinghl{read_rapidjson_stream}@*)(opts, cfg_in);
+  return !errors;
+}
+  \end{lstlisting}
+  \begin{verbatim}
+{
+  "message": "Hello reflection!",
+  "interval": "250ms",
+  "count": 4
+}
+  \end{verbatim}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+options opts;
+ifstream cfg_in{"config.json"};
+if((*@\listinghlt{parse}@*)(opts, cfg_in)) {
+    for(int i : ranges::views::iota(1, opts.count + 1)) {
+        cout << i << ": " << opts.message << endl;
+        this_thread::sleep_for(opts.interval);
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% - RPC ------------------------------------------------------------------------
+\section{RPC}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Remote procedure calls\\
+  \Large
+  skipping the source code generator\footnote{{\em almost} completely}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Remote procedure calls}
+  \framesubtitle{class overview}
+  \colorbox{gray}{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.65\textwidth,
+        keepaspectratio
+    ]{rpc_class.pdf}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Remote procedure calls}
+  \framesubtitle{synchronous call sequence}
+  \colorbox{lightgray}{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.9\textwidth,
+        keepaspectratio
+    ]{rpc_sequence.pdf}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the interface}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+struct calculator {
+  virtual float add(float, float) = 0;
+  virtual float subtract(float, float) = 0;
+  virtual float multiply(float, float) = 0;
+  virtual float divide(float, float) = 0;
+  virtual float negate(float) = 0;
+  virtual float invert(float) = 0;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the stub}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class calculator_stub : public calculator {
+private:
+    (*@\listinghl{rpc_stub_impl}@*) _impl;
+public:
+  float (*@\listinghlt{add}@*)(float l, float r) final {
+    return _impl.(*@\listinghl{make_call}@*)(
+      (*@\listinghl{mirror}@*)((calculator::(*@\listinghlt{add}@*)(l, r)))(*@\footnote{
+        expression reflection}@*), l, r);
+  }
+
+  float (*@\listinghlt{subtract}@*)(float l, float r) final {
+    return _impl.make_call(
+      mirror((calculator::(*@\listinghlt{subtract}@*)(l, r))), l, r);
+  }
+  float multiply(float l, float r) final;
+  float divide(float l, float r) final;
+  float negate(float x) final;
+  float invert(float x) final;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the generic stub implementation\footnote{pseudocode}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class rpc_stub_impl {
+  template <typename T>
+  auto _deserialize(packet&, (*@\listinghlt{type_identity}@*)<T>) -> T;
+public:
+  auto make_call(metaobject auto mo, auto&... args) {
+
+    packet request;
+    _serialize(request, mo, args...);
+    packed response{_send_and_receive(request)};
+
+    return _deserialize(
+      response,
+      (*@\listinghlt{get_reflected_type}@*)(
+        (*@\listinghl{get_type}@*)(
+          (*@\listinghl{get_callable}@*)(
+            (*@\listinghl{get_subexpression}@*)(mo)))));
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the skeleton interface}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct rpc_skeleton {
+  virtual void (*@\listinghls{dispatch}@*)(
+    packet& request,
+    packet& response) = 0;
+};
+  \end{lstlisting}
+  \begin{itemize}
+    \item Could be plugged-into a network connection
+    \item Handle incoming data
+    \item After call is finished the connection can send the response
+  \end{itemize}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class connection {
+  unique_ptr<skeleton> (*@\listinghlt{_skel}@*);
+  // ...
+  void send(address host, packet& data);
+  void on_received(address host, packet& request) {
+    packet response;
+    (*@\listinghlt{_skel}@*)->(*@\listinghls{dispatch}@*)(request, response);
+    send(host, response);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{RPC stubs/skeletons}
+  \framesubtitle{the skeleton implementation\footnote{pseudocode}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Intf>
+class rpc_skeleton_impl : public rpc_skeleton {
+private:
+  unique_ptr<Intf> _impl;
+public:
+  void (*@\listinghls{dispatch}@*)(packet& request, packet& response) final {
+    const auto method_id{_get_method_id(request)};
+
+    for_each(get_member_functions(mirror(Intf)),
+      [&](auto mf) {
+        if(_get_method_id(mf) == method_id) {
+          auto params = (*@\listinghlt{make_value_tuple}@*)(
+            (*@\listinghl{transform}@*)((*@\listinghl{get_parameters}@*)(mf), (*@\listinghl{get_type}@*)(_1)));
+
+          deserialize(params, request);
+          auto result = (*@\listinghl{apply}@*)(mf, *_impl, params);
+          serialize(method_id, result, response);
+        }
+    });
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% - REST -----------------------------------------------------------------------
+\section{ReST API}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Representational state transfer\footnote{where I finally learned what ReST means\ldots} API\\
+  \Large
+  automating the boilerplate
+  
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the API operation result}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+class rest_api_response {
+private:
+  /* ... */(*@\footnote{rapidjson inside}@*)
+public:
+  void set_result(const auto& result);
+  void set_error_code(auto code);
+  void set_error_message(
+    string_view format,
+    const auto&... args);
+
+  auto json_str() const -> string;
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the adapter}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <typename Backend>
+class rest_api_adapter {
+  Backend (*@\listinghl{_backend}@*)(*@\footnote{
+    implements the actual application functionality}@*){};
+public:
+  auto (*@\listinghlt{handle}@*)(
+    const url& request,
+    rest_api_response& response) -> bool {
+    if((*@\listinghls{request}@*)) {
+      return (*@\listinghlt{handle_scheme}@*)(request, response);
+    } else {
+      response.set_error_message(
+        "invalid URL `{1}`",
+        request.str());
+    }
+    return false;
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{some unimportant URL checking\ldots}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+bool (*@\listinghlt{handle_scheme}@*)(const url& request, rest_api_response& response) {
+  if(request.(*@\listinghls{has_scheme}@*)(_scheme)) {
+    return (*@\listinghlt{handle_domain}@*)(request, response);
+  } else {
+    if(const auto scheme{request.scheme()}) {
+      response.set_error_code(error_code::invalid_scheme);
+    } else {
+      response.set_error_code(error_code::missing_scheme);
+    }
+  }
+  return false;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+bool (*@\listinghlt{handle_domain}@*)(const url& request, rest_api_response& response) {
+  if(request.(*@\listinghls{has_host}@*)(_domain)) {
+      return (*@\listinghlt{handle_dispatch}@*)(request, response);
+  } else {
+    if(const auto domain{request.host()}) {
+      response.set_error_code(error_code::invalid_domain);
+    } else {
+      response.set_error_code(error_code::missing_domain);
+    }
+  }
+  return false;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{little more suspense\ldots}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+bool (*@\listinghlt{handle_dispatch}@*)(
+  const url& request,
+  rest_api_response& response) {
+
+  bool success{false};
+  if(const auto opt_path{request.(*@\listinghls{path}@*)()}) {
+    bool found{false};
+
+    (*@\listinghlt{/* this is where it happens */}@*)
+
+    if(!found) {
+        response.set_error_code(error_code::invalid_path);
+    }
+  } else {
+    response.set_error_code(error_code::missing_path);
+  }
+  return success;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{find the correct function from URL path}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+const auto& path{extract(opt_path)};
+(*@\listinghl{for_each}@*)(
+  (*@\listinghl{filter}@*)(
+    (*@\listinghl{get_member_functions}@*)(mirror(Backend)),
+    (*@\listinghl{is_public}@*)(_1)),
+  [&](auto mf) {
+    const auto func_name{(*@\listinghl{get_name}@*)(mf)};
+
+    if(path.(*@\listinghls{starts_with}@*)("/") &&
+       path.(*@\listinghls{ends_with}@*)(func_name)) {
+        found = true;
+        success =
+          (*@\listinghlt{handle_call}@*)(mf, request, response);
+    }
+  });
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{\ldots scan the function parameters, prepare space for arguments\ldots}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+bool (*@\listinghlt{handle_call}@*)(
+  metaobject auto mf,
+  const url& request,
+  rest_api_response& response) {
+    const auto mp{(*@\listinghl{get_parameters}@*)(mf)};
+
+    const auto arg_names{
+      (*@\listinghlt{make_array_of}@*)<string_view>(
+      mp, (*@\listinghl{get_name}@*)(_1))};
+    }
+    auto arg_values{
+      (*@\listinghlt{make_value_tuple}@*)(
+        (*@\listinghl{transform}@*)(mp, (*@\listinghl{get_type}@*)(_1)))};
+
+    if((*@\listinghlt{handle_args}@*)(
+      arg_names, arg_values, request, response)) {
+      return (*@\listinghl{apply}@*)(mf, /* ... */);
+    }
+    return false;
+}
+  \end{lstlisting}
+  \centering $\downarrow$
+  \vfill
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{\ldots extract the argument values, and make the call}
+  \smaller
+  \centering $\downarrow$
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Value>
+auto (*@\listinghlt{handle_arg}@*)(
+  string_view name,
+  Value& (*@\listinghls{dst}@*),
+  const url& request,
+  rest_api_response& response) -> bool {
+    if(const auto arg{request.(*@\listinghls{argument}@*)(name)}) {
+      if(const auto value{from_string<Value>(extract(arg))};
+         has_value(value)) {
+        (*@\listinghls{dst}@*) = extract(value);
+      }
+    }
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+if((*@\listinghlt{handle_args}@*)(
+  arg_names, (*@\listinghls{arg_values}@*), request, response)) {
+  return (*@\listinghl{apply}@*)(
+    mf, (*@\listinghlt{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mf)),
+    (*@\listinghls{arg_values}@*), response);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the backend}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class too_smart_home {
+public:
+  enum class (*@\listinghls{error_code}@*) { no_such_room, /* ... */ };
+
+  template <typename T>
+  using result = variant<T, (*@\listinghls{error_code}@*)>;
+  using session_id_t = uintmax_t;
+
+  auto (*@\listinghlt{add_user}@*)(
+    session_id_t sid, string username, string password)
+    -> result<string>;
+  auto (*@\listinghlt{login}@*)(string username, string password)
+    -> result<session_id_t>;
+  auto (*@\listinghlt{logout}@*)(session_id_t sid) -> result<string>;
+
+  auto (*@\listinghlt{open_windows}@*)(session_id_t sid, string room_name)
+    -> result<string>;
+  auto (*@\listinghlt{close_windows}@*)(session_id_t sid, string room_name)
+    -> result<string>;
+  auto (*@\listinghlt{windows_status}@*)(session_id_t sid, string room_name)
+    -> result<string>;
+  // ...
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{putting it together\ldots}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+rest_api_adaptor<too_smart_home>
+  (*@\listinghlt{server}@*)("https", "home", {});
+
+const auto (*@\listinghls{get}@*) =
+  [&](const url& request) -> optional<string> {
+    rest_api_response response;
+    if(server.(*@\listinghlt{handle}@*)(request, response)) {
+      return {response.json_str()};
+    } else {
+      cerr << server.(*@\listinghlt{domain}@*)() << ": "
+           << response.json_str() << endl;
+    }
+    return {};
+};
+
+const auto show = [&](const auto& result) {
+  if(has_value(result)) {
+      cout << server.(*@\listinghlt{domain}@*)() << ": "
+           << extract(result) << endl;
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{usage\footnote{{\em sans} the boring networking part}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+rest_api_adaptor<(*@\listinghlt{too_smart_home}@*)> server("https", "home");
+auto (*@\listinghl{sid}@*)(*@\footnote{login session id}@*) =
+  (*@\listinghls{get}@*)({"https://admin:supersecret(*@\footnote{sending passwords in URLs; don't try this @home!}@*)@home/(*@\listinghlt{login}@*)"});
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+if((*@\listinghl{sid}@*)) {
+  show((*@\listinghls{get}@*)(
+    {"https://home/(*@\listinghlt{add_user}@*)?username=johnny+password=qwerty+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+
+  (*@\listinghl{sid}@*) = (*@\listinghls{get}@*)({"https://johnny:qwerty@home/(*@\listinghlt{login}@*)"});
+  show((*@\listinghls{get}@*)({"http://home/(*@\listinghlt{shutdown}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=kitchen+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{window_status}@*)?room_name=bathroom+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{windows_status}@*)?room_name=bathroom+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{close_windows}@*)?room_name=study+sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{open_windows}@*)?room_name=bedroom+sid=" + *(*@\listinghl{sid}@*)}));
+
+  (*@\listinghl{sid}@*) = (*@\listinghls{get}@*)({"https://admin:supersecret@home/(*@\listinghlt{login}@*)"});
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{shutdown}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+  show((*@\listinghls{get}@*)({"https://home/(*@\listinghlt{logout}@*)?sid=" + *(*@\listinghl{sid}@*)}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{ReST}
+  \framesubtitle{the output}
+  \smaller
+  \begin{verbatim}
+home: "user added"
+home: "Bye, admin!"
+home: {"error_code": "invalid_scheme",
+       "message": {
+         "format": "invalid scheme `{1}` in request",
+         "args": ["http"]}}
+home: {"error_code": "permission_denied"}
+home: "windows opened"
+home: {"error_code": "invalid_path",
+       "message": {
+         "format": "invalid path `{1}` in request",
+         "args": ["/window_status"]}}
+home: "closed"
+home: "already closed"
+home: "Bye, johnny!"
+home: {"error_code": "invalid_session"}
+home: "shutdown"
+home: {"error_code": "is_offline"}
+  \end{verbatim}
+\end{frame}
+% - Scripting ------------------------------------------------------------------
+\section{Scripting}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Scripting\\
+  \Large
+  language bindings\footnote{reflection on a quest\ldots}
+  
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{is fun, hand-coding bindings, not so much}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void (*@\listinghlt{add_to}@*)(chaiscript::ChaiScript& (*@\listinghls{chai}@*), auto mos)
+  requires((*@\listinghl{is_object_sequence}@*)(mos));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{do_add_to}@*)(
+chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+metaobject auto mo(*@\footnote{what is being registered}@*),
+metaobject auto ms(*@\footnote{the scope}@*)) {
+  if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+    /* ... */
+  } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+    /* ... */
+  } else {
+    const string name{(*@\listinghl{get_name}@*)(mo)};
+    if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_constructor}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
+    }
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{handling sequences\footnote{\say{That’s easy!} -- sir Robin of Camelot}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+void do_add_to(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  metaobject auto mo,
+  metaobject auto ms) {
+    if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+      (*@\listinghl{for_each}@*)(mo, [&](auto me) {
+        (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), me, ms);
+      });
+    } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+      /* ... */
+    } else {
+      /* ... */
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{base classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Base, typename Derived>
+void (*@\listinghlt{add_base_class}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<Base>,
+  (*@\listinghl{type_identity}@*)<Derived>) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::base_class<Base, Derived>());
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{do_add_to}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  metaobject auto mo,
+  metaobject auto ms) {
+    if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+      (*@\listinghlt{add_base_class}@*)(
+        (*@\listinghls{chai}@*),
+        (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_class}@*)(mo)),
+        (*@\listinghl{get_reflected_type}@*)(ms));
+    } else {
+      /* ... */
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{variables and data members}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
+  if constexpr((*@\listinghl{reflects_record_member}@*)(mo)) {
+    if constexpr((*@\listinghl{is_public}@*)(mo)) {
+        (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun(
+          (*@\listinghl{get_pointer}@*)(mo)), name);
+    }
+  } else {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::var(
+        (*@\listinghl{get_reference}@*)(mo)), name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{constructors}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T, typename... P>
+void (*@\listinghlt{add_constructor}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<T>,
+  (*@\listinghl{type_list}@*)<P...>,
+  const string& name) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::constructor<T(P...)>(), name);
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_constructor}@*)(mo)) {
+  if constexpr((*@\listinghl{is_public}@*)(mo)) {
+      (*@\listinghlt{add_constructor}@*)(
+        (*@\listinghls{chai}@*),
+        (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_scope}@*)(mo)),
+        (*@\listinghl{extract_types}@*)((*@\listinghl{transform}@*)(
+          (*@\listinghl{get_parameters}@*)(mo),
+          (*@\listinghl{get_type}@*)(_1))),
+        name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{functions and operators}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename From, typename To>
+void (*@\listinghlt{add_conversion}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  type_identity<From>,
+  type_identity<To>) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::type_conversion<From, To>());
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
+  if constexpr((*@\listinghl{reflects_record_member}@*)(mo) && (*@\listinghl{is_public}@*)(mo)) {
+      if constexpr((*@\listinghl{reflects_conversion_operator}@*)(mo)) {
+        if constexpr(!(*@\listinghl{is_deleted}@*)(mo)) {
+            (*@\listinghlt{add_conversion}@*)(
+              (*@\listinghls{chai}@*),
+              (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_scope}@*)(mo)),
+              (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mo)));
+        }
+      } else {
+        if constexpr(!(*@\listinghl{is_deleted}@*)(mo)) {
+          (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun((*@\listinghl{get_pointer}@*)(mo)), name);
+        }
+      }
+  } else {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun((*@\listinghl{get_pointer}@*)(mo)), name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{types and classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename T>
+void (*@\listinghlt{add_type}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<T>,
+  const string& name) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::user_type<T>(), name);
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
+  (*@\listinghlt{add_type}@*)((*@\listinghls{chai}@*),  (*@\listinghl{get_reflected_type}@*)(mo), name);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_base_classes}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_member_types}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_data_members}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_constructors}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_member_functions}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_operators}@*)(mo), mo);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{Monty C++'s Flying Circus}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class scene {
+public:
+  void (*@\listinghlt{person_says}@*)(
+    const person&, string_view line);
+  void (*@\listinghlt{person_relocates}@*)(
+    person& p, string_view how);
+  void (*@\listinghlt{event_happens}@*)(
+    string_view what);
+  void (*@\listinghlt{pause}@*)();
+};
+
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class location {
+public:
+  (*@\listinghlt{location}@*)(string name, scene&);
+  auto (*@\listinghlt{name}@*)() const -> string_view;
+};
+    \end{lstlisting}
+    \end{column}
+    \begin{column}{.50\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class person {
+public:
+  (*@\listinghlt{person}@*)(string name);
+
+  auto (*@\listinghlt{name}@*)() const -> string_view;
+  auto (*@\listinghlt{current_location}@*)() -> auto&;
+  auto (*@\listinghlt{enter}@*)(location&);
+  auto (*@\listinghlt{is_thrown_to}@*)(location&);
+  void (*@\listinghlt{say}@*)(const string&);
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class king : public person {
+public:
+  (*@\listinghlt{king}@*)(string name);
+};
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class mysterious_force {
+public:
+  (*@\listinghlt{mysterious_force}@*)(location&);
+  void (*@\listinghlt{throw_into_chasm}@*)(person&);
+};
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{set the scene\ldots}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+scene at_the_bridge;
+chaiscript::ChaiScript (*@\listinghls{chai}@*);
+
+(*@\listinghlt{add_to}@*)(
+  (*@\listinghls{chai}@*), (*@\listinghl{make_sequence}@*)(
+  mirror(mysterious_force),
+  mirror(scene), mirror(location),
+  mirror(person), mirror(king), mirror(at_the_bridge)));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+chai(*@{\footnote{should have done this in Python!}@*)(R"(
+  var road = (*@\listinghlt{location}@*)("road leading to the bridge", at_the_bridge);
+  var bridge = location("bridge of death", at_the_bridge);
+  var chasm = location("chasm", at_the_bridge);
+
+  var the_force = (*@\listinghlt{mysterious_force}@*)(chasm);
+
+  var bridgekeeper = (*@\listinghlt{person}@*)("the Bridgekeeper");
+  var king_arthur = (*@\listinghlt{king}@*)("king Arthur");
+  var sir_lancelot = person("sir Lancelot");
+  var sir_robin = person("sir Robin");
+  var sir_galahad = person("sir Galahad");
+  var sir_bedevere = person("sir Bedevere");
+)");
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{\ldots and {\em \larger action!}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+chai(R"(
+  bridgekeeper.(*@\listinghlt{enter}@*)(bridge);
+  king_arthur.enter(road);
+  sir_lancelot.enter(road);
+  sir_robin.enter(road);
+  sir_galahad.enter(road);
+  sir_bedevere.enter(road);
+
+  bridgekeeper.(*@\listinghlt{say}@*)(
+    "Stop."
+    "Who would cross the Bridge of Death "
+    "must answer me these questions three, "
+    "ere the other side he see.");
+  sir_lancelot.say(
+    "Ask me the questions, bridgekeeper. "
+    "I am not afraid.");
+  // ...
+  the_force.(*@\listinghlt{throw_into_chasm}@*)(sir_robin);
+  sir_robin.say("Auuuuuuuugh.");
+
+  // ...
+)");
+  \end{lstlisting}
+\end{frame}
+% - UML ------------------------------------------------------------------------
+\section{UML}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  UML diagrams\\
+  \Large
+  without external tools
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{UML}
+  \framesubtitle{the entry point}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename... T>
+ostream& (*@\listinghlt{print_puml}@*)(ostream& out) {
+  out << "@startuml\n";
+  (..., (*@\listinghlt{print_type_puml}@*)(
+    out, (*@\listinghl{get_aliased}@*)(mirror(T))));
+
+  out << "\n";
+
+  (..., (*@\listinghlt{print_type_rel_puml}@*)(
+    out, (*@\listinghl{get_aliased}@*)(mirror(T))));
+  out << "@enduml\n";
+
+  return out;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{UML}
+  \framesubtitle{the helpers}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{print_type_puml}@*)(*@\footnote{
+    \inlinecode{is_enum}, \inlinecode{is_union}, \inlinecode{get_name}, for-each data member, yadi yadi yada\ldots}@*)(auto mt, auto ms);
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+auto (*@\listinghlt{get_related_type_name}@*)(auto mt, auto ms)
+  -> string_view ;
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{print_type_rel_puml}@*)(ostream& out, auto mt) {
+  if constexpr((*@\listinghl{reflects_record}@*)(mt)) {
+    (*@\listinghl{for_each}@*)(
+      (*@\listinghl{get_member_functions}@*)(mt),
+      [&](auto mf) {
+        auto rel_name = (*@\listinghlt{get_related_type_name}@*)(
+          (*@\listinghl{get_type}@*)(mf), (*@\listinghl{get_scope}@*)(mt));
+        if(!rel_name.empty()) {
+            out << (*@\listinghl{get_name}@*)(mt)
+                << " --> " << rel_name << "\n";
+          });
+      // ... 
+    }
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{UML}
+  \framesubtitle{source and output}
+  \begin{columns}
+    \begin{column}{.72\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class rank {
+  ace = 1, two, /* ... */ king };
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+enum class suit {
+  hearts, spades, diamonds, clubs };
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct card {
+  enum rank rank;
+  enum suit suit;
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class deck {
+public:
+  auto shuffle(auto& gen) -> deck&;
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class player {
+public:
+  void receive_card(card c);
+};
+    \end{lstlisting}
+    \end{column}
+    \begin{column}{.27\textwidth}
+      \colorbox{gray}{
+        \begin{minipage}{\dimexpr\textwidth\relax}
+        \centering
+        \includegraphics[
+            width=\textwidth,
+            keepaspectratio
+        ]{cards_class.pdf}
+        \end{minipage}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+% - RDB ------------------------------------------------------------------------
+\section{RDB}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Relational DBs\\
+  \Large
+  fetching structured data
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{table row wrapper}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class sqlite3_row {
+public:
+  auto names() const -> span<string_view>;
+  auto values() const -> span<string_view>;
+
+  auto size() const -> size_t;
+  auto index_of(string_view column_name) const
+    -> optional<size_t>;
+
+  auto value(size_t idx) const
+    -> optional<string_view>;
+
+  auto (*@\listinghlt{value_of}@*)(string_view column_name) const
+    -> optional<string_view>;
+
+  template <typename T>
+  auto (*@\listinghlt{fetch}@*)(T& instance) const -> bool
+    requires(is_class_v<T>);
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{into a class instance}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+auto (*@\listinghlt{fetch}@*)(T& (*@\listinghls{instance}@*)) const -> bool
+  requires(is_class_v<T>) {
+    bool result = true;
+
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)(mirror(T)),
+      [&](auto mdm) {
+        if(const auto opt_val{from_extractable_string(
+             (*@\listinghlt{value_of}@*)((*@\listinghl{get_name}@*)(mdm)),
+             (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))};
+           has_value(opt_val)) {
+
+            (*@\listinghl{get_reference}@*)(mdm, (*@\listinghls{instance}@*)) =
+              extract(opt_val);
+        } else {
+            result = false;
+        }
+      });
+    return result;
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{database wrapper}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+class sqlite3_db {
+public:
+  void (*@\listinghl{execute}@*)(
+    string_view sql,
+    function<void(const sqlite3_row&> callback);
+
+  template <typename T>
+  auto (*@\listinghlt{fetch}@*)(
+    string_view sql, vector<T>& dest) -> auto&
+    requires(is_class_v<T>) {
+      (*@\listinghl{execute}@*)(sql, [&](const auto& (*@\listinghls{row}@*)) {
+        T instance{};
+        if((*@\listinghls{row}@*).(*@\listinghlt{fetch}@*)(instance)) {
+            dest.emplace_back(move(instance));
+        }
+      });
+      return dest;
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Fetching data from SQLite3}
+  \framesubtitle{usage}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+struct (*@\listinghl{person}@*) {
+  uintmax_t person_id;
+  string given_name;
+  string family_name;
+  string email_address;
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+sqlite3_db (*@\listinghls{db}@*){"people.db"};
+vector<(*@\listinghl{person}@*)> ps;
+
+(*@\listinghls{db}@*).ensure_table(*@\footnote{scans DB schema and ensures that there is a matching \inlinecode{person} table}@*)<(*@\listinghl{person}@*)>();
+
+string query{"SELECT * FROM person"};
+
+for(const auto& p : (*@\listinghls{db}@*).(*@\listinghlt{fetch}@*)(query, ps)) {
+  cout << p.given_name << " "
+       << p.family_name << endl;
+}
+  \end{lstlisting}
+\end{frame}
+% - SQL ------------------------------------------------------------------------
+\section{SQL}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  RDB queries\\
+  \Large
+  generating SQL from C++
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Generating SQL queries}
+  \framesubtitle{the schema}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct (*@\listinghl{person}@*) {
+    string given_name;
+    string family_name;
+    string email;
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Impl>
+struct operations {
+  Impl (*@\listinghls{_impl}@*);
+public:
+  template <typename T>
+  using result = typename Impl::result<T>;
+
+  auto (*@\listinghlt{get_by_given_name}@*)(string_view name)
+    -> result<(*@\listinghl{person}@*)> {
+    return (*@\listinghls{_impl}@*)(mirror(((*@\listinghlt{get_by_given_name}@*)(name))), name);
+  }
+  auto (*@\listinghlt{get_by_email}@*)(string_view email)
+    -> result<(*@\listinghl{person}@*)> {
+    return (*@\listinghls{_impl}@*)(mirror(((*@\listinghlt{get_by_email}@*)(email))), email);
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Generating SQL queries}
+  \framesubtitle{the implementation}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class query_generator_impl {
+public:
+  template <typename T>
+  struct result : string {
+      result(string s) : string{move(s)} {}
+  };
+
+  auto operator()(metaobject auto me, const auto& arg)
+    -> string {
+    const auto mf = (*@\listinghl{get_callable}@*)((*@\listinghl{get_subexpression}@*)(me));
+    const auto mt = (*@\listinghl{get_type}@*)(mf);
+
+    stringstream query;
+    query << "SELECT * FROM ";
+    query << _table_name((*@\listinghl{get_reflected_type}@*)(mt));
+    query << " WHERE ";
+    query << (*@\listinghl{get_name}@*)(mf).substr("get_by_"sv.size());
+    query << " = " << quoted(arg);
+    query << ";";
+    return query.str();
+  }
+};
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Generating SQL queries}
+  \framesubtitle{usage}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+using query_generator =
+  operations<query_generator_impl>;
+
+query_generator (*@\listinghls{gen}@*);
+
+cout << (*@\listinghls{gen}@*).(*@\listinghlt{get_by_first_name}@*)("Joe")
+     << endl;
+cout << (*@\listinghls{gen}@*).(*@\listinghlt{get_by_email}@*)("joe@example.com")
+     << endl;
+  \end{lstlisting}
+  Output:
+  \begin{verbatim}
+SELECT * FROM person WHERE email = 'joe@example.com';
+SELECT * FROM person WHERE first_name = 'Joe';
+  \end{verbatim}
+\end{frame}
+% - Outro ----------------------------------------------------------------------
+\section{Outro}
+% ------------------------------------------------------------------------------
+\begin{frame}[c]
+  \Huge
+  \centering
+  Almost done
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusions}
+  \Large
+  \begin{itemize}
+    \item Reflection is not complicated
+    \item Reflection has many use-cases
+    \begin{itemize}
+      \smaller
+      \item as we have seen, but also:
+      \item defining concepts based on metadata,
+      \item implementing the {\em factory} pattern,
+      \item generating GUIs for visualization and data input,
+      \item generating \inlinecode{boost::spirit} parsers and formatters,
+      \item \ldots
+    \end{itemize}
+    \item We are just beginning
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What's next for reflection?}
+  \Large
+  \begin{itemize}
+    \item More things to reflect
+    \begin{itemize}
+      \smaller
+      \item templates
+      \item specifiers
+      \item \ldots
+    \end{itemize}
+    \item More \say{un-reflection}
+    \begin{itemize}
+      \smaller
+      \item code fragment splicing
+      \item splicing {\em \larger identifiers} depending on metaobjects\footnote{
+          maybe even with custom formatting}
+    \end{itemize}
+    \item Support for more use-cases
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Links}
+  \smaller
+  \begin{itemize}
+    \item {\em The Mirror library repository} --
+      \url{https://github.com/matus-chochlik/mirror}
+    \item {\em The Mirror library reference (W.I.P.)} --
+      \url{https://matus-chochlik.github.io/mirror/doxygen/}
+    \item {\em Reflection TS in \inlinecode{clang}} --
+      \url{https://github.com/matus-chochlik/llvm-project}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{That's all\dots}
+  \centering
+  \Huge
+  Thanks for your attention!\\
+  \Large
+  Happy to answer any additional questions.
+\end{frame}
+% ------------------------------------------------------------------------------
+\end{document}

@@ -18,9 +18,10 @@ struct options {
     int count{3};
 };
 
-static auto parse(options& opts, const mirror::program_args& args) -> bool {
+template <typename T>
+static auto parse(T& opts, const mirror::program_args& args) -> bool {
     bool parsed = true;
-    const auto mo = mirror(options);
+    const auto mo = mirror(T);
     for(const auto& arg : args) {
         for_each(get_data_members(mo), [&](auto mdm) {
             if(arg.is_long_tag(get_name(mdm))) {

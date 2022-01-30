@@ -1,0 +1,24 @@
+@startuml
+
+actor User as user
+participant stub
+participant stub_impl
+participant connection as local_connection #C0C0C0
+participant connection as remote_connection #C0C0C0
+participant skeleton
+participant implementation #C0C0C0
+
+user -> stub : calls
+stub -> stub_impl : serialize
+stub_impl -> local_connection : send request
+local_connection -> remote_connection : transmit
+remote_connection -> skeleton : notify
+skeleton -> implementation : dispatch/invoke
+implementation -> skeleton : return result
+skeleton -> remote_connection : send response
+remote_connection -> local_connection : transmit
+local_connection -> stub_impl : receive response
+stub_impl -> stub : deserialize
+stub -> user : return result
+
+@enduml

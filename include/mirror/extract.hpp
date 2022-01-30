@@ -12,7 +12,9 @@
 #include <concepts>
 #include <memory>
 #include <optional>
+#include <string_view>
 #include <system_error>
+#include <type_traits>
 #include <variant>
 
 namespace mirror {
@@ -22,9 +24,9 @@ namespace mirror {
 /// @ingroup utilities
 /// @see has_value
 /// @see extract
-/// This is a concept for types that can optionally store and/or provide access
-/// to a value. Examples of extractable types are pointers, smart pointers,
-/// optionals, etc.
+/// This is a concept for types that can optionally store and/or provide
+/// access to a value. Examples of extractable types are pointers, smart
+/// pointers, optionals, etc.
 template <typename X>
 concept extractable = __unspecified;
 
@@ -41,15 +43,26 @@ constexpr auto has_value(extractable auto p) noexcept -> bool;
 constexpr auto extract(extractable auto p) noexcept -> const auto&;
 #endif
 
-// clang-format off
 template <typename T>
-concept extractable = requires(T v) {
-    { has_value(v) } -> std::convertible_to<bool>;
-    extract(v);
-};
-// clang-format on
+struct extracted_traits;
+
+/// @brief Returns the value type of an extractable.
+/// @ingroup utilities
+/// @see extract
+template <typename T>
+using extracted_type_t = std::remove_cv_t<typename extracted_traits<
+  std::remove_cv_t<std::remove_reference_t<T>>>::value_type>;
+
+template <typename E, typename V>
+static constexpr const auto has_value_type_v =
+  std::is_convertible_v<extracted_type_t<E>, V>;
 
 // nullptr
+template <>
+struct extracted_traits<nullptr_t> {
+    using value_type = void;
+};
+
 constexpr auto has_value(const nullptr_t) noexcept -> bool {
     return false;
 }
@@ -58,7 +71,26 @@ constexpr auto extract(const nullptr_t) noexcept -> int {
     return 0;
 }
 
+// c-str
+template <>
+struct extracted_traits<char*> {
+    using value_type = std::string_view;
+};
+
+static constexpr auto has_value(const char* p) noexcept -> bool {
+    return p != nullptr;
+}
+
+static constexpr auto extract(const char* s) noexcept -> std::string_view {
+    return {s};
+}
+
 // pointer
+template <typename T>
+struct extracted_traits<T*> {
+    using value_type = T;
+};
+
 template <typename T>
 constexpr auto has_value(const T* p) noexcept -> bool {
     return p != nullptr;
@@ -71,6 +103,11 @@ constexpr auto extract(const T* p) noexcept -> const T& {
 
 // unique_ptr
 template <typename T, typename D>
+struct extracted_traits<std::unique_ptr<T, D>> {
+    using value_type = T;
+};
+
+template <typename T, typename D>
 constexpr auto has_value(const std::unique_ptr<T, D>& p) noexcept -> bool {
     return p != nullptr;
 }
@@ -81,6 +118,11 @@ constexpr auto extract(const std::unique_ptr<T, D>& p) noexcept -> const T& {
 }
 
 // shared_ptr
+template <typename T>
+struct extracted_traits<std::shared_ptr<T>> {
+    using value_type = T;
+};
+
 template <typename T>
 constexpr auto has_value(const std::shared_ptr<T>& p) noexcept -> bool {
     return p != nullptr;
@@ -93,6 +135,11 @@ constexpr auto extract(const std::shared_ptr<T>& p) noexcept -> const T& {
 
 // optional
 template <typename T>
+struct extracted_traits<std::optional<T>> {
+    using value_type = T;
+};
+
+template <typename T>
 constexpr auto has_value(const std::optional<T>& o) noexcept -> bool {
     return o.has_value();
 }
@@ -103,6 +150,11 @@ constexpr auto extract(const std::optional<T>& o) noexcept -> const T& {
 }
 
 // variant (expected)
+template <typename T, typename E>
+struct extracted_traits<std::variant<T, E>> {
+    using value_type = T;
+};
+
 template <typename T, typename E>
 constexpr auto has_value(const std::variant<T, E>& v) noexcept -> bool {
     return std::holds_alternative<T>(v);
@@ -121,6 +173,24 @@ constexpr auto extract(std::variant<T, E>& v) noexcept -> T& {
 template <typename T, typename E>
 constexpr auto get_error(const std::variant<T, E>& v) noexcept -> const E& {
     return std::get<E>(v);
+}
+
+// clang-format off
+template <typename T>
+concept extractable = requires(T v) {
+    { has_value(v) } -> std::convertible_to<bool>;
+	{ std::declval<mirror::extracted_type_t<T>>() };
+	extract(v);
+};
+// clang-format on
+
+/// @brief Indicates in an extractable has value type of @c V.
+/// @see extract
+/// @see extracted_type_t
+/// @ingroup utilities
+template <typename V>
+consteval auto has_value_type(const extractable auto& v) noexcept -> bool {
+    return has_value_type_v<decltype(v), V>;
 }
 
 } // namespace mirror

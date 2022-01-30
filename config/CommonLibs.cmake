@@ -24,3 +24,23 @@ add_library(Mirror::Deps::DynLink INTERFACE IMPORTED)
 		"Mirror::Deps::RunTime;Mirror::Deps::DynLink"
 	)
 endif()
+
+add_library(Mirror::Deps::SQLite3 INTERFACE IMPORTED)
+
+find_package(SQLite3)
+if(SQLite3_FOUND)
+	target_compile_definitions(
+		Mirror::Deps::SQLite3
+		INTERFACE MIRROR_HAS_SQLITE3=1
+	)
+	set_target_properties(
+		Mirror::Deps::SQLite3 PROPERTIES
+		INTERFACE_LINK_LIBRARIES
+		SQLite::SQLite3
+	)
+else()
+	target_compile_definitions(
+		Mirror::Deps::SQLite3
+		INTERFACE MIRROR_HAS_SQLITE3=0
+	)
+endif()

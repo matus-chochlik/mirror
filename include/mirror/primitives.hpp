@@ -1192,6 +1192,7 @@ constexpr auto get_constant(wrapped_metaobject<M>) noexcept
 /// @see reflects_member_function
 /// @see get_pointer
 /// @see invoke
+/// @see apply
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke_on(
   wrapped_metaobject<M> mo,
@@ -1211,6 +1212,7 @@ constexpr auto invoke_on(
 /// @see is_static
 /// @see get_pointer
 /// @see invoke_on
+/// @see apply_on
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, A&&... args) requires(
   __metaobject_is_meta_function(M) ||
@@ -1225,6 +1227,7 @@ constexpr auto invoke(wrapped_metaobject<M>, A&&... args) requires(
 /// @see get_pointer
 /// @see get_reference
 /// @see invoke_on
+/// @see apply
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, C& obj, A&&... args) requires(
   __metaobject_is_meta_member_function(M) && !__metaobject_is_static(M)) {
@@ -1236,6 +1239,7 @@ constexpr auto invoke(wrapped_metaobject<M>, C& obj, A&&... args) requires(
 /// @see reflects_constructor
 /// @see get_pointer
 /// @see invoke_on
+/// @see apply
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, A&&... args) -> __unrefltype(
   __metaobject_get_scope(M)) requires(__metaobject_is_meta_constructor(M)) {
@@ -1462,6 +1466,8 @@ constexpr auto get_data_members(wrapped_metaobject<M>) noexcept
 /// @see get_pointer
 /// @see invoke_on
 /// @see invoke
+/// @see apply
+/// @see apply_on
 /// @see metaobject_operation
 template <__metaobject_id M>
 constexpr auto get_member_functions(wrapped_metaobject<M>) noexcept
@@ -1627,6 +1633,7 @@ consteval auto get_reflected_type(wrapped_metaobject<M>) noexcept
 /// @see reflects_type
 /// @see get_reflected_type
 /// @see get_type
+/// @see get_sizeof
 /// @see get_reflected_type_t
 template <__metaobject_id M>
 consteval auto get_reflected_type_of(wrapped_metaobject<M>) noexcept
@@ -1644,6 +1651,21 @@ template <template <typename T> class Transform, __metaobject_id M>
 consteval auto get_transformed_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_type(M)) {
     return _get_transformed_type<Transform, M>{};
+}
+
+/// @brief Returns the size (in bytes) of the reflected type.
+/// @ingroup operations
+/// @see reflects_type
+/// @see get_reflected_type
+/// @see get_type
+template <__metaobject_id M>
+consteval auto get_sizeof(wrapped_metaobject<M> mo) noexcept
+  requires(__metaobject_is_meta_type(M) || __metaobject_is_meta_typed(M)) {
+    if constexpr(__metaobject_is_meta_typed(M)) {
+        return get_sizeof(get_type(mo));
+    } else {
+        return sizeof(__unrefltype(M));
+    }
 }
 
 /// @brief Indicates if type-reflecting metaobject reflects the specified type.

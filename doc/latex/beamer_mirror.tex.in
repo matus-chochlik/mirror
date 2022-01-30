@@ -1,0 +1,103 @@
+\usetheme{Montpellier}
+
+\hypersetup{pdfstartview={Fit}}
+
+\usecolortheme{mirror}
+\useoutertheme{mirror}
+
+\usepackage[utf8]{inputenc}
+\usepackage[most]{tcolorbox}
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{syntax}
+\usepackage{relsize}
+\usepackage{gensymb}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{dirtytalk}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{seqsplit}
+\usepackage{ragged2e}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning}
+
+\graphicspath{
+    {$<TARGET_PROPERTY:doc-latex,SOURCE_DIR>/../logo}
+    {$<TARGET_PROPERTY:doc-latex,SOURCE_DIR>/../}
+    {$<TARGET_PROPERTY:doc-latex,SOURCE_DIR>/}
+}
+
+\newcommand{\fitfig}[1]{
+  \makebox[\linewidth][c]{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \includegraphics[
+        width=\textwidth,
+        height=\textheight,
+        keepaspectratio
+    ]{#1}
+    \end{minipage}
+  }
+}
+
+\newcommand{\cmdname}[1]{\texttt{\larger{#1}}}
+\newcommand{\inlinecode}[1]{\texttt{\color{mirrortext}{\mbox{\protect{#1}}}}}
+\newcommand{\inlinecodebreak}[1]{\texttt{\color{mirrortext}{\protect{#1}}}}
+\newcommand{\listinghl}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite0}{\protect{#1}}}}
+\newcommand{\listinghlt}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite1}{\protect{#1}}}}
+\newcommand{\listinghls}[1]{\em \texttt \bfseries \larger {\color{mirrorhilite2}{\protect{#1}}}}
+
+\usepackage{listings}
+\lstdefinestyle{mirrorcode}{
+    basicstyle=\normalsize\ttfamily,
+    backgroundcolor = \color{mirrorlisting},
+    breaklines=false,
+    prebreak=\textbackslash,
+    showstringspaces=false,
+		stringstyle=\color{mirrorstring},
+    commentstyle=\itshape\color{mirrorcomment},
+    keywordstyle=\itshape\bfseries\color{mirrorkeyword},
+    tabsize=2,
+    escapeinside={(*@}{@*)}
+}
+\lstdefinelanguage{c++2x}{
+	language = c++,
+  morekeywords = {
+    concept,
+		constinit,
+		consteval,
+		constexpr,
+		decltype,
+		declval,
+		final,
+		mirror,
+		noexcept,
+		override,
+		requires,
+    size_t,
+		static_assert
+  }
+}
+\lstdefinelanguage{cmake}{
+  alsodigit = {-},
+  keywords = {
+        and, or, not,
+        set, option,
+        add_executable,
+        add_library,
+        find_program,
+        set_target_properties,
+        if,endif,
+        PROPERTIES
+ }
+}
+\lstset{style=mirrorcode}
+
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+
+\let\raggedright=\RaggedRight
+

@@ -623,6 +623,13 @@ constexpr auto get_size(placeholder_expr<X> e) {
     }};
 }
 
+template <size_t I, typename X>
+constexpr auto get_element(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_element<I>(e(a...));
+    }};
+}
+
 template <typename X>
 constexpr auto get_pointer(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
@@ -849,6 +856,13 @@ constexpr auto get_transformed_type(placeholder_expr<X> e) {
     }};
 }
 
+template <typename X>
+constexpr auto get_sizeof(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_sizeof(e(a...));
+    }};
+}
+
 template <typename T, typename X>
 constexpr auto is_type(placeholder_expr<X> e, type_identity<T> tid = {}) {
     return placeholder_expr{[e, tid](auto... a) {
@@ -991,6 +1005,13 @@ template <typename X, typename F>
 constexpr auto remove_if(placeholder_expr<X> e, F predicate) {
     return placeholder_expr{[e, predicate](auto... a) {
         return remove_if(e(a...), predicate);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto count_if(placeholder_expr<X> e, F predicate) {
+    return placeholder_expr{[e, predicate](auto... a) {
+        return count_if(e(a...), predicate);
     }};
 }
 

@@ -29,33 +29,38 @@ Build and install `clang` and `libc++`:
     -b /path/to/llvm/build/dir \
     -i /path/to/llvm/install/dir
 
-Setting up the environment
---------------------------
+Setting up the toolchain
+------------------------
 
 In order for the build system of the `Mirror` library to use `clang` built
-and installed in the previous step either set and export an environment variable:
+and installed in the previous step either copy the default toolchain file:
 
 ::
 
- export MIRROR_LLVM_PREFIX=/path/to/llvm/install/dir
+ cd /path/to/mirror/src/dir && \
+ cp toolchain.cmake.bak toolchain.cmake
 
-or create a file named `LLVM_PREFIX` containing the path to the `clang`
-install directory, in the root of the cloned `Mirror` repository:
+or create your own cmake toolchain file which needs at least to set
+the following variables:
 
 ::
 
- echo -n "/path/to/llvm/install/dir" > /path/to/mirror/src/dir/LLVM_PREFIX
+  set(MIRROR_LLVM_PREFIX /path/to/installed/llvm)
+  set(CMAKE_CXX_COMPILER ${MIRROR_LLVM_PREFIX}/bin/clang++)
 
 Building Mirror
 ---------------
 
-In order to build the `Mirror` library and its examples you can do:
+In order to build the `Mirror` library and its examples with the appropriate
+toolchain you can do:
 
 ::
 
  mkdir -p /path/to/mirror/build/dir && \
  cd /path/to/mirror/build/dir && \
- cmake /path/to/mirror/src/dir && \
+ cmake \
+   -DCMAKE_TOOLCHAIN_FILE=/path/to/mirror/toolchain.cmake \
+   /path/to/mirror/src/dir && \
  make -j N
 
 or
@@ -64,7 +69,10 @@ or
 
  mkdir -p /path/to/mirror/build/dir && \
  cd /path/to/mirror/build/dir && \
- cmake -G Ninja /path/to/mirror/src/dir && \
+ cmake \
+   -G Ninja \
+   -DCMAKE_TOOLCHAIN_FILE=/path/to/mirror/toolchain.cmake \
+   /path/to/mirror/src/dir && \
  ninja
 
 License

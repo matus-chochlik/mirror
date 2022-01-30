@@ -1,0 +1,42 @@
+@startuml
+
+class connection #C0C0C0 {
+  +void send()
+  +void on_received()
+}
+
+interface interface {
+  +void foo()
+  +void bar()
+  +void baz()
+}
+
+class implementation #C0C0C0 {
+  +void foo()
+  +void bar()
+  +void baz()
+}
+
+class stub {
+  +void foo()
+  +void bar()
+  +void baz()
+}
+
+class stub_impl {
+  +void make_call()
+}
+
+
+class skeleton {
+  +void dispatch()
+}
+
+interface <|-- implementation
+interface <|-- stub
+stub_impl --* stub
+stub_impl --> connection
+skeleton <-- connection
+skeleton o-- interface
+
+@enduml

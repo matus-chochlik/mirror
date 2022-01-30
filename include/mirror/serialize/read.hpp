@@ -10,6 +10,8 @@
 #define MIRROR_SERIALIZE_READ_HPP
 
 #include "../branch_predict.hpp"
+#include "../enum_utils.hpp"
+#include "../extract.hpp"
 #include "../placeholder.hpp"
 #include "../sequence.hpp"
 #include "../tribool.hpp"
@@ -358,15 +360,14 @@ private:
       metaobject auto mt) const noexcept -> read_errors
       requires(reflects_enum(mt)) {
         read_errors errors{};
-        const auto mes{get_enumerators(mt)};
         if(backend.enum_as_string(ctx)) {
             std::string name;
             errors |= driver.read(backend, ctx, name);
-            for_each(mes, [&](auto me) {
-                if(get_name(me) == name) {
-                    value = get_constant(me);
-                }
-            });
+            if(const auto conv{string_to_enum<T>(name)}; has_value(conv)) {
+                value = extract(conv);
+            } else {
+                errors |= read_error_code::invalid_format;
+            }
         } else {
             std::underlying_type_t<T> temp{};
             errors |= driver.read(backend, ctx, temp);

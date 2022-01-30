@@ -68,6 +68,11 @@ set_target_properties(
 	PROPERTIES FOLDER "Documentation"
 )
 
+add_dependencies(
+	doc
+	doc-doxygen-html
+)
+
 install(
 	DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doxygen
 	DESTINATION share/mirror/doc

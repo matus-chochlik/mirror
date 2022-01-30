@@ -207,7 +207,7 @@ constexpr auto join(
     return join(unpack(mo), std::move(transform), std::move(separator));
 }
 
-// join to st5ring
+// join to string
 template <typename F, typename S>
 auto join_to_string(unpacked_metaobject_sequence<>, const F&, std::string_view)
   -> std::string {

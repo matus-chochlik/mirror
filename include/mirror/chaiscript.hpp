@@ -64,7 +64,7 @@ void _do_add_to(
   metaobject auto mo,
   metaobject auto ms) {
     if constexpr(reflects_object_sequence(mo)) {
-        _do_add_to(chai, unpack(mo), ms);
+        for_each(mo, [&](auto me) { _do_add_to(chai, me, ms); });
     } else if constexpr(reflects_base(mo)) {
         _add_base_class(
           chai, get_reflected_type(get_class(mo)), get_reflected_type(ms));
@@ -115,14 +115,6 @@ void _do_add_to(
     }
 }
 
-template <__metaobject_id... M>
-void _do_add_to(
-  chaiscript::ChaiScript& chai,
-  unpacked_metaobject_sequence<M...>,
-  metaobject auto ms) {
-    (void)(..., _do_add_to(chai, wrapped_metaobject<M>{}, ms));
-}
-
 static inline void add_to(chaiscript::ChaiScript& chai, metaobject auto mo) {
     _do_add_to(chai, mo, no_metaobject);
 }
@@ -131,7 +123,7 @@ template <__metaobject_id... M>
 void add_to(
   chaiscript::ChaiScript& chai,
   unpacked_metaobject_sequence<M...> mos) {
-    _do_add_to(chai, mos, no_metaobject);
+    for_each(mos, [&](auto me) { _do_add_to(chai, me, no_metaobject); });
 }
 
 } // namespace mirror
