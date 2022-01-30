@@ -1,4 +1,4 @@
-# Rename this file to `toolchain.cmake` and change as necessary
+# Copy this file to `toolchain.cmake` and change as necessary
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
