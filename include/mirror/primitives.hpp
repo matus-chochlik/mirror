@@ -36,7 +36,7 @@ _LIBCPP_WARNING("mirror cannot be used without -freflection-ext ")
    !defined(_LIBCPP_HAS_NO_REFLECTION_EXT))
 
 #if defined(MIRROR_DOXYGEN)
-/// @brief Internal type, values of which represent metaobjects.
+/// @brief Internal type, values of which represent metaobjects in the compiler.
 /// @ingroup metaobjects
 using __metaobject_id = __unspecified;
 #elif defined(MIRROR_YCM)
@@ -61,14 +61,14 @@ struct type_list {};
 template <__metaobject_id M>
 struct wrapped_metaobject {};
 
-/// @brief Indicates if the argument is a metaobject.
-/// @ingroup classification
-/// @see reflects_object
 template <__metaobject_id M>
 consteval auto is_object(wrapped_metaobject<M>) noexcept -> bool {
     return true;
 }
 
+/// @brief Indicates if the argument is a metaobject.
+/// @ingroup classification
+/// @see reflects_object
 template <typename X>
 consteval auto is_object(const X&) noexcept -> bool {
     return false;
@@ -88,23 +88,24 @@ consteval auto unwrap(wrapped_metaobject<M>) noexcept -> __metaobject_id {
     return M;
 }
 
-template <__metaobject_id... M>
-using expanded_metaobject_sequence = type_list<wrapped_metaobject<M>...>;
-
 /// @brief Special instance of metaobject that does not reflect anything.
 /// @ingroup metaobjects
 /// @see metaobject
 constinit const wrapped_metaobject<__reflexpr_id()> no_metaobject{};
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects any base-level entity.
 /// @ingroup classification
 /// @see find_if
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_object(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_object(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_object(M);
 }
+#endif
 
 template <__metaobject_id M>
 consteval auto has_value(wrapped_metaobject<M>) noexcept -> bool {
@@ -116,6 +117,7 @@ constexpr auto extract(wrapped_metaobject<M> mo) noexcept {
     return mo;
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the argument reflects a sequence of metaobjects.
 /// @ingroup classification
 /// @see is_object_sequence
@@ -124,12 +126,16 @@ constexpr auto extract(wrapped_metaobject<M> mo) noexcept {
 /// @see get_element
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_object_sequence(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_object_sequence(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_object_sequence(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a named base-level entity.
 /// @ingroup classification
 /// @see reflects_alias
@@ -139,11 +145,15 @@ consteval auto reflects_object_sequence(wrapped_metaobject<M>) noexcept
 /// @see get_full_name
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_named(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_named(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_named(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a base-level alias.
 /// @ingroup classification
 /// @see reflects_named
@@ -151,11 +161,15 @@ consteval auto reflects_named(wrapped_metaobject<M>) noexcept -> bool {
 /// @see remove_all_aliases
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_alias(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_alias(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_alias(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a base-level entity with a type.
 /// @ingroup classification
 /// @see get_type
@@ -163,11 +177,15 @@ consteval auto reflects_alias(wrapped_metaobject<M>) noexcept -> bool {
 /// @see has_type_trait
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_typed(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_typed(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_typed(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a base-level scope.
 /// @ingroup classification
 /// @see reflects_namespace
@@ -177,26 +195,36 @@ consteval auto reflects_typed(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_scope
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_scope(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_scope(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_scope(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a base-level scope member.
 /// @ingroup classification
 /// @see reflects_scope
 /// @see get_scope
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_scope_member(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_scope_member(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_scope_member(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a base-level global scope member.
 /// @ingroup classification
 /// @see reflects_global_scope
 /// @see get_scope
+consteval auto reflects_global_scope_member(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_global_scope_member(wrapped_metaobject<M>) noexcept
   -> bool {
@@ -206,7 +234,9 @@ consteval auto reflects_global_scope_member(wrapped_metaobject<M>) noexcept
         return false;
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects an enumerator.
 /// @ingroup classification
 /// @see reflects_constant
@@ -215,11 +245,15 @@ consteval auto reflects_global_scope_member(wrapped_metaobject<M>) noexcept
 /// @see get_underlying_type
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_enumerator(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_enumerator(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_enumerator(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a record member.
 /// @ingroup classification
 /// @see reflects_scope_member
@@ -229,11 +263,15 @@ consteval auto reflects_enumerator(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_member_functions
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_record_member(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_record_member(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_record_member(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a base class specifier.
 /// @ingroup classification
 /// @see get_base_classes
@@ -244,11 +282,15 @@ consteval auto reflects_record_member(wrapped_metaobject<M>) noexcept -> bool {
 /// @see is_virtual
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_base(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_base(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_base(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a namespace.
 /// @ingroup classification
 /// @see reflects_inline_namespace
@@ -256,16 +298,22 @@ consteval auto reflects_base(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_scope
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_namespace(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_namespace(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_namespace(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects an inline namespace.
 /// @ingroup classification
 /// @see reflects_namespace
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_inline_namespace(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_inline_namespace(wrapped_metaobject<M>) noexcept
   -> bool {
@@ -275,28 +323,38 @@ consteval auto reflects_inline_namespace(wrapped_metaobject<M>) noexcept
         return false;
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects the global scope.
 /// @ingroup classification
 /// @see reflects_namespace
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_global_scope(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_global_scope(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_global_scope(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a type.
 /// @ingroup classification
 /// @see get_type
 /// @see get_reflected_type
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_type(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_type(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_type(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects an enumeration type.
 /// @ingroup classification
 /// @see reflects_enumerator
@@ -305,11 +363,15 @@ consteval auto reflects_type(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_underlying_type
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_enum(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_enum(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_enum(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a record types (union or class).
 /// @ingroup classification
 /// @see reflects_type
@@ -322,11 +384,15 @@ consteval auto reflects_enum(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_operators
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_record(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_record(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_record(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a class.
 /// @ingroup classification
 /// @see reflects_type
@@ -341,11 +407,15 @@ consteval auto reflects_record(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_base_classes
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_class(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_class(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_class(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a lambda closure type.
 /// @ingroup classification
 /// @see reflects_record
@@ -353,11 +423,15 @@ consteval auto reflects_class(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_captures
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_lambda(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_lambda(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_lambda(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a constant.
 /// @ingroup classification
 /// @see reflects_enumerator
@@ -365,11 +439,15 @@ consteval auto reflects_lambda(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_value
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_constant(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_constant(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_constant(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a variable.
 /// @ingroup classification
 /// @see reflects_function_parameter
@@ -379,11 +457,15 @@ consteval auto reflects_constant(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_value
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_variable(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_variable(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_variable(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a lambda capture.
 /// @ingroup classification
 /// @see reflects_lambda
@@ -391,11 +473,15 @@ consteval auto reflects_variable(wrapped_metaobject<M>) noexcept -> bool {
 /// @see is_explicitly_captured
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_lambda_capture(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_lambda_capture(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_lambda_capture(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a function parameter.
 /// @ingroup classification
 /// @see reflects_callable
@@ -403,12 +489,16 @@ consteval auto reflects_lambda_capture(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_parameters
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_function_parameter(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_function_parameter(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_function_parameter(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a callable base-level entity.
 /// @ingroup classification
 /// @see reflects_function
@@ -416,11 +506,15 @@ consteval auto reflects_function_parameter(wrapped_metaobject<M>) noexcept
 /// @see get_parameters
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_callable(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_callable(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_callable(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a function.
 /// @ingroup classification
 /// @see reflects_callable
@@ -431,11 +525,15 @@ consteval auto reflects_callable(wrapped_metaobject<M>) noexcept -> bool {
 /// @see is_deleted
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_function(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_function(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_function(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a record member function.
 /// @ingroup classification
 /// @see reflects_callable
@@ -448,12 +546,16 @@ consteval auto reflects_function(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_parameters
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_member_function(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_member_function(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_member_function(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a special member function.
 /// @ingroup classification
 /// @see reflects_callable
@@ -468,12 +570,17 @@ consteval auto reflects_member_function(wrapped_metaobject<M>) noexcept
 /// @see is_deleted
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_special_member_function(metaobject auto) noexcept
+  -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_special_member_function(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_special_member_function(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a constructor.
 /// @ingroup classification
 /// @see reflects_callable
@@ -487,11 +594,15 @@ consteval auto reflects_special_member_function(wrapped_metaobject<M>) noexcept
 /// @see is_deleted
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_constructor(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_constructor(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_constructor(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a destructor.
 /// @ingroup classification
 /// @see reflects_callable
@@ -504,11 +615,15 @@ consteval auto reflects_constructor(wrapped_metaobject<M>) noexcept -> bool {
 /// @see is_deleted
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_destructor(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_destructor(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_destructor(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects an operator.
 /// @ingroup classification
 /// @see reflects_function
@@ -520,11 +635,15 @@ consteval auto reflects_destructor(wrapped_metaobject<M>) noexcept -> bool {
 /// @see is_deleted
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_operator(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_operator(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_operator(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a conversion operator.
 /// @ingroup classification
 /// @see reflects_function
@@ -535,12 +654,16 @@ consteval auto reflects_operator(wrapped_metaobject<M>) noexcept -> bool {
 /// @see get_parameters
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_conversion_operator(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_conversion_operator(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_conversion_operator(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects an expression.
 /// @ingroup classification
 /// @see reflects_parenthesized_expression
@@ -548,11 +671,15 @@ consteval auto reflects_conversion_operator(wrapped_metaobject<M>) noexcept
 /// @see reflects_function_call_expression
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_expression(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_expression(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_expression(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a parenthesized expression.
 /// @ingroup classification
 /// @see reflects_expression
@@ -560,12 +687,17 @@ consteval auto reflects_expression(wrapped_metaobject<M>) noexcept -> bool {
 /// @see reflects_function_call_expression
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_parenthesized_expression(metaobject auto) noexcept
+  -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_parenthesized_expression(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a constructor call expression.
 /// @ingroup classification
 /// @see reflects_expression
@@ -573,12 +705,17 @@ consteval auto reflects_parenthesized_expression(wrapped_metaobject<M>) noexcept
 /// @see reflects_function_call_expression
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_construction_expression(metaobject auto) noexcept
+  -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_construction_expression(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_construction_expression(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a function call expression.
 /// @ingroup classification
 /// @see reflects_expression
@@ -586,20 +723,28 @@ consteval auto reflects_construction_expression(wrapped_metaobject<M>) noexcept
 /// @see reflects_construction_expression
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_function_call_expression(metaobject auto) noexcept
+  -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_function_call_expression(wrapped_metaobject<M>) noexcept
   -> bool {
     return __metaobject_is_meta_function_call_expression(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects a specifier.
 /// @ingroup classification
 /// @see meta_trait
 /// @see has_trait
+consteval auto reflects_specifier(metaobject auto) noexcept -> bool;
+#else
 template <__metaobject_id M>
 consteval auto reflects_specifier(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_specifier(M);
 }
+#endif
 
 // unary operations
 // boolean
@@ -1590,17 +1735,6 @@ template <size_t I, __metaobject_id M>
 constexpr auto get_element(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return wrapped_metaobject<__metaobject_get_element(M, I)>{};
-}
-
-/// @brief Unpacks a sequence metaobject into sequence of separate metaobjects.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see unpack
-template <__metaobject_id M>
-constexpr auto expand(wrapped_metaobject<M>) noexcept
-  -> __unpack_metaobject_seq<expanded_metaobject_sequence, M> requires(
-    __metaobject_is_meta_object_sequence(M)) {
-    return {};
 }
 
 // type unreflection

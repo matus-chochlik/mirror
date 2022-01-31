@@ -22,11 +22,6 @@ namespace mirror {
 template <__metaobject_id... M>
 struct unpacked_metaobject_sequence {};
 
-/// @brief Indicates if the argument is a sequence of metaobjects.
-/// @ingroup classification
-/// @see reflects_object_sequence
-/// @see is_empty
-/// @see get_size
 template <__metaobject_id M>
 consteval auto is_object_sequence(wrapped_metaobject<M>) noexcept -> bool {
     return __metaobject_is_meta_object_sequence(M);
@@ -38,11 +33,20 @@ consteval auto is_object_sequence(unpacked_metaobject_sequence<M...>) noexcept
     return true;
 }
 
+/// @brief Indicates if the argument is a sequence of metaobjects.
+/// @ingroup classification
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see get_size
 template <typename X>
 consteval auto is_object_sequence(const X&) noexcept -> bool {
     return false;
 }
 
+/// @brief Concept for metaobject sequence types.
+/// @ingroup classification
+/// @see reflects_object_sequence
+/// @see is_object_sequence
 template <typename X>
 concept metaobject_sequence = is_object_sequence(X{});
 
