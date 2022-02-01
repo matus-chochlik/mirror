@@ -55,15 +55,19 @@ consteval auto get_size(unpacked_metaobject_sequence<M...>) noexcept -> size_t {
     return sizeof...(M);
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Unpacks a sequence metaobject into sequence of separate metaobject ids.
 /// @ingroup sequence_operations
 /// @see reflects_object_sequence
+constexpr auto unpack(metaobject_sequence auto mo) noexcept;
+#else
 template <__metaobject_id M>
 constexpr auto unpack(wrapped_metaobject<M>) noexcept
   -> __unpack_metaobject_seq<unpacked_metaobject_sequence, M> requires(
     __metaobject_is_meta_object_sequence(M)) {
     return {};
 }
+#endif
 
 template <__metaobject_id... M>
 constexpr auto unpack(unpacked_metaobject_sequence<M...> ms) noexcept {
@@ -84,6 +88,14 @@ constexpr auto make_sequence(wrapped_metaobject<M>...) noexcept
 #endif
 
 // count if
+#if defined(MIRROR_DOXYGEN)
+/// @brief Counts elements in a metaobject sequence satisfying a predicate.
+/// @ingroup sequence_operations
+/// @see find_if
+/// @see find_if_not
+constexpr auto count_if(metaobject_sequence auto mo, auto predicate) noexcept
+  -> size_t;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto
 count_if(unpacked_metaobject_sequence<M...>, F predicate) noexcept -> size_t {
@@ -95,8 +107,17 @@ constexpr auto count_if(wrapped_metaobject<M> mo, F predicate) noexcept
   -> size_t requires(__metaobject_is_meta_object_sequence(M)) {
     return count_if(unpack(mo), predicate);
 }
+#endif
 
 // transform
+#if defined(MIRROR_DOXYGEN)
+/// @brief Transforms each element in a sequence by applying the given function
+/// @ingroup sequence_operations
+/// @see transform_types
+/// @see for_each
+/// @see fold
+constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto
 transform(unpacked_metaobject_sequence<M...>, F function) noexcept {
@@ -109,8 +130,28 @@ constexpr auto transform(wrapped_metaobject<M> mo, F function) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return transform(unpack(mo), function);
 }
+#endif
 
 // transform types
+#if defined(MIRROR_DOXYGEN)
+/// @brief Unreflects and transforms by Transform and instantiates Container
+/// @ingroup sequence_operations
+/// @see transform
+/// @see transform_types
+/// @see for_each
+/// @see fold
+///
+/// This function takes a sequence of metaobjects reflecting types, un-reflects
+/// them, applies the Transform template on each one and then instantiates
+/// the Container template with the resulting types.
+template <
+  template <typename...>
+  class Container,
+  template <typename>
+  class Transform>
+constexpr auto store_transformed_types(metaobject_sequence auto mo) noexcept
+  -> Container<Transform<__unspecified>...>;
+#else
 template <
   template <typename...>
   class Container,
@@ -132,7 +173,24 @@ constexpr auto store_transformed_types(wrapped_metaobject<M> mo) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return store_transformed_types(unpack(mo));
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Unreflects metaobject in a sequence and transforms by Transform
+/// @ingroup sequence_operations
+/// @see transform
+/// @see store_transformed_types
+/// @see extract_types
+/// @see for_each
+/// @see fold
+///
+/// This function takes a sequence of metaobjects reflecting types, un-reflects
+/// them, applies the Transform template on each one and then instantiates
+/// the type_list template with the resulting types.
+template <template <typename> class Transform>
+constexpr auto transform_types(metaobject_sequence auto mo) noexcept
+  -> type_list<Transform<__unspecified>...>;
+#else
 template <template <typename> class Transform, __metaobject_id... M>
 constexpr auto transform_types(unpacked_metaobject_sequence<M...> ms) noexcept {
     return store_transformed_types<type_list, Transform>(ms);
@@ -143,8 +201,24 @@ constexpr auto transform_types(wrapped_metaobject<M> mo) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return store_transformed_types<type_list, Transform>(unpack(mo));
 }
+#endif
 
 // extract types
+#if defined(MIRROR_DOXYGEN)
+/// @brief Unreflects metaobject in a sequence and stores them in type_list
+/// @ingroup sequence_operations
+/// @see transform
+/// @see store_transformed_types
+/// @see transform_types
+/// @see for_each
+/// @see fold
+///
+/// This function takes a sequence of metaobjects reflecting types, un-reflects
+/// them, applies the Transform template on each one and then instantiates
+/// the type_list template with the resulting types.
+constexpr auto extract_types(metaobject_sequence auto mo) noexcept
+  -> type_list<__unspecified...>;
+#else
 template <__metaobject_id... M>
 constexpr auto extract_types(unpacked_metaobject_sequence<M...> ms) noexcept {
     return transform_types<std::type_identity>(ms);
@@ -155,8 +229,23 @@ constexpr auto extract_types(wrapped_metaobject<M> mo) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return transform_types<std::type_identity>(unpack(mo));
 }
+#endif
 
 // fold
+#if defined(MIRROR_DOXYGEN)
+/// @brief Transforms each metaobject in sequence and then aggregates the result.
+/// @ingroup sequence_operations
+/// @see transform
+/// @see transform_types
+/// @see for_each
+/// @see join
+///
+/// This function takes a sequence of metaobjects applies the specified transform
+/// function on each one of them and then makes a single call to the (variadic)
+/// aggregate function with the transformed metaobjects as arguments and returns
+/// the aggregated result.
+constexpr auto fold(metaobject_sequence auto mo, auto transform, auto aggregate);
+#else
 template <__metaobject_id... M, typename F, typename A>
 constexpr auto
 fold(unpacked_metaobject_sequence<M...>, F transform, A aggregate) {
@@ -170,8 +259,22 @@ constexpr auto fold(
   A aggregate) requires(__metaobject_is_meta_object_sequence(M)) {
     return fold(unpack(mo), transform, aggregate);
 }
+#endif
 
 // join
+#if defined(MIRROR_DOXYGEN)
+/// @brief Transforms each metaobject in sequence and aggregates them.
+/// @ingroup sequence_operations
+/// @see transform
+/// @see transform_types
+/// @see for_each
+/// @see fold
+constexpr auto join(
+  metaobject_sequence auto mo,
+  auto transform,
+  auto separator,
+  auto aggregate);
+#else
 template <typename F, typename S, typename A>
 constexpr auto join(unpacked_metaobject_sequence<>, F, S, A) {
     return S{};
@@ -208,6 +311,7 @@ constexpr auto join(
   S separator) requires(__metaobject_is_meta_object_sequence(M)) {
     return join(unpack(mo), std::move(transform), std::move(separator));
 }
+#endif
 
 // join to string
 template <typename F, typename S>

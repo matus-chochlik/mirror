@@ -49,6 +49,8 @@ using std::integral_constant;
 using std::string_view;
 using std::type_identity;
 
+/// @brief Represents a list of types. Unlike tuple does not store values.
+/// @ingroup utilities
 template <typename... T>
 struct type_list {};
 
