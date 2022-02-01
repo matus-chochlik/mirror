@@ -748,178 +748,255 @@ consteval auto reflects_specifier(wrapped_metaobject<M>) noexcept -> bool {
 
 // unary operations
 // boolean
+
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c constexpr.
 /// @ingroup operations
 /// @see reflects_variable
 /// @see reflects_callable
 /// @see metaobject_operation
+consteval auto is_constexpr(metaobject auto mo) noexcept
+  -> bool requires(reflects_variable(mo) || reflects_callable(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_constexpr(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_callable(M)) {
     return __metaobject_is_constexpr(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c noexcept.
 /// @ingroup operations
 /// @see reflects_callable
 /// @see metaobject_operation
+consteval auto is_noexcept(metaobject auto mo) noexcept
+  -> bool requires(reflects_callable(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_noexcept(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_callable(M)) {
     return __metaobject_is_noexcept(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c explicit.
 /// @ingroup operations
 /// @see reflects_constructor
 /// @see reflects_conversion_operator
 /// @see metaobject_operation
+consteval auto is_explicit(metaobject auto mo) noexcept
+  -> bool requires(reflects_constructor(mo) || reflects_conversion_operator(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_explicit(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_constructor(M) ||
   __metaobject_is_meta_conversion_operator(M)) {
     return __metaobject_is_explicit(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c inline.
 /// @ingroup operations
 /// @see reflects_namespace
 /// @see reflects_variable
 /// @see reflects_callable
 /// @see metaobject_operation
+consteval auto is_inline(metaobject auto mo) noexcept -> bool requires(
+  reflects_namespace(mo) || reflects_variable(mo) || reflects_callable(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_inline(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_namespace(M) || __metaobject_is_meta_variable(M) ||
   __metaobject_is_meta_callable(M)) {
     return __metaobject_is_inline(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c thread_local.
 /// @ingroup operations
 /// @see reflects_variable
 /// @see metaobject_operation
+consteval auto is_thread_local(metaobject auto mo) noexcept
+  -> bool requires(reflects_variable(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_thread_local(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_variable(M)) {
     return __metaobject_is_thread_local(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c static.
 /// @ingroup operations
 /// @see reflects_variable
 /// @see reflects_member_function
 /// @see metaobject_operation
+consteval auto is_static(metaobject auto mo) noexcept
+  -> bool requires(reflects_variable(mo) || reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_static(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_member_function(M)) {
     return __metaobject_is_static(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c virtual.
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_destructor
 /// @see reflects_member_function
 /// @see metaobject_operation
+consteval auto is_virtual(metaobject auto mo) noexcept -> bool requires(
+  reflects_base(mo) || reflects_destructor(mo) || reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_base(M) || __metaobject_is_meta_destructor(M) ||
   __metaobject_is_meta_member_function(M)) {
     return __metaobject_is_virtual(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is pure @c virtual.
 /// @ingroup operations
 /// @see reflects_destructor
 /// @see reflects_member_function
 /// @see metaobject_operation
+consteval auto is_pure_virtual(metaobject auto mo) noexcept
+  -> bool requires(reflects_destructor(mo) || reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_pure_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_destructor(M) ||
   __metaobject_is_meta_member_function(M)) {
     return __metaobject_is_pure_virtual(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c final.
 /// @ingroup operations
 /// @see reflects_class
 /// @see reflects_member_function
 /// @see metaobject_operation
+consteval auto is_final(metaobject auto mo) noexcept
+  -> bool requires(reflects_class(mo) || reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_final(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_class(M) || __metaobject_is_meta_member_function(M)) {
     return __metaobject_is_final(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c private.
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_record_member
 /// @see metaobject_operation
+consteval auto is_private(metaobject auto mo) noexcept
+  -> bool requires(reflects_record_member(mo) || reflects_base(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_private(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
     return __metaobject_is_private(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c protected.
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_record_member
 /// @see metaobject_operation
+consteval auto is_protected(metaobject auto mo) noexcept
+  -> bool requires(reflects_record_member(mo) || reflects_base(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_protected(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
     return __metaobject_is_protected(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is @c public.
 /// @ingroup operations
 /// @see reflects_base
 /// @see reflects_record_member
 /// @see metaobject_operation
+consteval auto is_public(metaobject auto mo) noexcept
+  -> bool requires(reflects_record_member(mo) || reflects_base(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_public(wrapped_metaobject<M>) noexcept -> bool requires(
   __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
     return __metaobject_is_public(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is unnamed.
 /// @ingroup operations
 /// @see reflects_named
 /// @see get_name
 /// @see get_display_name
 /// @see metaobject_operation
+consteval auto is_unnamed(metaobject auto mo) noexcept
+  -> bool requires(reflects_named(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_unnamed(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_named(M)) {
     return __metaobject_is_unnamed(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is an @c enum.
 /// @ingroup operations
 /// @see reflects_type
 /// @see reflects_enum
 /// @see is_scoped_enum
 /// @see metaobject_operation
+consteval auto is_enum(metaobject auto mo) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_enum(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return __metaobject_is_enum(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is a scoped @c enum.
 /// @ingroup operations
 /// @see reflects_type
 /// @see reflects_enum
 /// @see is_enum
 /// @see metaobject_operation
+consteval auto is_scoped_enum(metaobject auto mo) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_scoped_enum(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return __metaobject_is_scoped_enum(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected base-level entity is an @c union.
 /// @ingroup operations
 /// @see reflects_type
@@ -927,93 +1004,133 @@ consteval auto is_scoped_enum(wrapped_metaobject<M>) noexcept
 /// @see uses_class_key
 /// @see uses_struct_key
 /// @see metaobject_operation
+consteval auto is_union(metaobject auto mo) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_union(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return __metaobject_is_union(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected record type uses a @c class specifier.
 /// @ingroup operations
 /// @see reflects_type
 /// @see is_union
 /// @see uses_struct_key
 /// @see metaobject_operation
+consteval auto uses_class_key(metaobject auto mo) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <__metaobject_id M>
 consteval auto uses_class_key(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return __metaobject_uses_class_key(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected record type uses a @c struct specifier.
 /// @ingroup operations
 /// @see reflects_type
 /// @see is_union
 /// @see uses_class_key
 /// @see metaobject_operation
+consteval auto uses_struct_key(metaobject auto mo) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <__metaobject_id M>
 consteval auto uses_struct_key(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return __metaobject_uses_struct_key(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected lambda closure uses default capture by copy.
 /// @ingroup operations
 /// @see reflects_lambda
 /// @see uses_default_reference_capture
 /// @see get_captures
 /// @see metaobject_operation
+consteval auto uses_default_copy_capture(metaobject auto mo) noexcept
+  -> bool requires(reflects_lambda(mo));
+#else
 template <__metaobject_id M>
 consteval auto uses_default_copy_capture(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda(M)) {
     return __metaobject_uses_default_copy_capture(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected lambda closure uses default capture by reference.
 /// @ingroup operations
 /// @see reflects_lambda
 /// @see uses_default_copy_capture
 /// @see get_captures
 /// @see metaobject_operation
+consteval auto uses_default_reference_capture(metaobject auto mo) noexcept
+  -> bool requires(reflects_lambda(mo));
+#else
 template <__metaobject_id M>
 consteval auto uses_default_reference_capture(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda(M)) {
     return __metaobject_uses_default_reference_capture(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected lambda closure's call operator is @c const.
 /// @ingroup operations
 /// @see reflects_lambda
 /// @see get_captures
 /// @see metaobject_operation
+consteval auto is_call_operator_const(metaobject auto mo) noexcept
+  -> bool requires(reflects_lambda(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_call_operator_const(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda(M)) {
     return __metaobject_is_call_operator_const(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected lambda capture is explicitly captured.
 /// @ingroup operations
 /// @see reflects_lambda_capture
 /// @see get_captures
 /// @see metaobject_operation
+consteval auto is_explicitly_captured(metaobject auto mo) noexcept
+  -> bool requires(reflects_lambda_capture(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_explicitly_captured(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_lambda_capture(M)) {
     return __metaobject_is_explicitly_captured(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected function parameter has default argument.
 /// @ingroup operations
 /// @see reflects_function_parameter
 /// @see get_parameters
 /// @see metaobject_operation
+consteval auto has_default_argument(metaobject auto mo) noexcept
+  -> bool requires(reflects_function_parameter(mo));
+#else
 template <__metaobject_id M>
 consteval auto has_default_argument(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_function_parameter(M)) {
     return __metaobject_has_default_argument(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected member function is @c const.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1021,12 +1138,17 @@ consteval auto has_default_argument(wrapped_metaobject<M>) noexcept
 /// @see has_lvalueref_qualifier
 /// @see has_rvalueref_qualifier
 /// @see metaobject_operation
+consteval auto is_const(metaobject auto mo) noexcept
+  -> bool requires(reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_const(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
     return __metaobject_is_const(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected member function is @c volatile.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1034,12 +1156,17 @@ consteval auto is_const(wrapped_metaobject<M>) noexcept
 /// @see has_lvalueref_qualifier
 /// @see has_rvalueref_qualifier
 /// @see metaobject_operation
+consteval auto is_volatile(metaobject auto mo) noexcept
+  -> bool requires(reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_volatile(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
     return __metaobject_is_volatile(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected member function has lvalue-ref qualifier.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1047,12 +1174,17 @@ consteval auto is_volatile(wrapped_metaobject<M>) noexcept
 /// @see is_volatile
 /// @see has_rvalueref_qualifier
 /// @see metaobject_operation
+consteval auto has_lvalueref_qualifier(metaobject auto mo) noexcept
+  -> bool requires(reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto has_lvalueref_qualifier(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
     return __metaobject_has_lvalueref_qualifier(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected member function has rvalue-ref qualifier.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1060,12 +1192,17 @@ consteval auto has_lvalueref_qualifier(wrapped_metaobject<M>) noexcept
 /// @see is_volatile
 /// @see has_rvalueref_qualifier
 /// @see metaobject_operation
+consteval auto has_rvalueref_qualifier(metaobject auto mo) noexcept
+  -> bool requires(reflects_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto has_rvalueref_qualifier(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_member_function(M)) {
     return __metaobject_has_rvalueref_qualifier(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected special member function is implicitly declared.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1073,12 +1210,17 @@ consteval auto has_rvalueref_qualifier(wrapped_metaobject<M>) noexcept
 /// @see is_defaulted
 /// @see is_deleted
 /// @see metaobject_operation
+consteval auto is_implicitly_declared(metaobject auto mo) noexcept
+  -> bool requires(reflects_special_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_implicitly_declared(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_special_member_function(M)) {
     return __metaobject_is_implicitly_declared(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected special member function is defaulted.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1086,12 +1228,17 @@ consteval auto is_implicitly_declared(wrapped_metaobject<M>) noexcept
 /// @see is_implicitly_declared
 /// @see is_deleted
 /// @see metaobject_operation
+consteval auto is_defaulted(metaobject auto mo) noexcept
+  -> bool requires(reflects_special_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_defaulted(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_special_member_function(M)) {
     return __metaobject_is_defaulted(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected function is deleted.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1099,12 +1246,17 @@ consteval auto is_defaulted(wrapped_metaobject<M>) noexcept
 /// @see is_implicitly_declared
 /// @see is_defaulted
 /// @see metaobject_operation
+consteval auto is_deleted(metaobject auto mo) noexcept
+  -> bool requires(reflects_callable(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_deleted(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_callable(M)) {
     return __metaobject_is_deleted(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected constructor is copy constructor.
 /// @ingroup operations
 /// @see reflects_constructor
@@ -1112,12 +1264,17 @@ consteval auto is_deleted(wrapped_metaobject<M>) noexcept
 /// @see is_move_constructor
 /// @see is_copy_assignment_operator
 /// @see metaobject_operation
+consteval auto is_copy_constructor(metaobject auto mo) noexcept
+  -> bool requires(reflects_constructor(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_copy_constructor(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_constructor(M)) {
     return __metaobject_is_copy_constructor(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected constructor is move constructor.
 /// @ingroup operations
 /// @see reflects_constructor
@@ -1125,12 +1282,17 @@ consteval auto is_copy_constructor(wrapped_metaobject<M>) noexcept
 /// @see is_copy_constructor
 /// @see is_move_assignment_operator
 /// @see metaobject_operation
+consteval auto is_move_constructor(metaobject auto mo) noexcept
+  -> bool requires(reflects_constructor(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_move_constructor(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_constructor(M)) {
     return __metaobject_is_move_constructor(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected operator is copy assignment operator.
 /// @ingroup operations
 /// @see reflects_operator
@@ -1139,6 +1301,10 @@ consteval auto is_move_constructor(wrapped_metaobject<M>) noexcept
 /// @see is_copy_constructor
 /// @see is_move_assignment_operator
 /// @see metaobject_operation
+consteval auto is_copy_assignment_operator(metaobject auto mo) noexcept
+  -> bool requires(
+    reflects_operator(mo) && reflects_special_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_copy_assignment_operator(wrapped_metaobject<M>) noexcept
   -> bool requires(
@@ -1146,7 +1312,9 @@ consteval auto is_copy_assignment_operator(wrapped_metaobject<M>) noexcept
     __metaobject_is_meta_special_member_function(M)) {
     return __metaobject_is_copy_assignment_operator(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the reflected operator is move assignment operator.
 /// @ingroup operations
 /// @see reflects_operator
@@ -1155,6 +1323,10 @@ consteval auto is_copy_assignment_operator(wrapped_metaobject<M>) noexcept
 /// @see is_move_constructor
 /// @see is_copy_assignment_operator
 /// @see metaobject_operation
+consteval auto is_move_assignment_operator(metaobject auto mo) noexcept
+  -> bool requires(
+    reflects_operator(mo) && reflects_special_member_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_move_assignment_operator(wrapped_metaobject<M>) noexcept
   -> bool requires(
@@ -1162,37 +1334,54 @@ consteval auto is_move_assignment_operator(wrapped_metaobject<M>) noexcept
     __metaobject_is_meta_special_member_function(M)) {
     return __metaobject_is_move_assignment_operator(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the metaobject sequence is empty.
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see get_size
 /// @see get_element
 /// @see metaobject_operation
+consteval auto is_empty(metaobject auto mo) noexcept
+  -> bool requires(reflects_object_sequence(mo));
+#else
 template <__metaobject_id M>
 consteval auto is_empty(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return __metaobject_is_empty(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the two metaobjects reflect the same base-level entity.
 /// @ingroup operations
+consteval auto reflects_same(metaobject auto ml, metaobject auto mr) noexcept
+  -> bool;
+#else
 template <__metaobject_id Ml, __metaobject_id Mr>
 consteval auto
 reflects_same(wrapped_metaobject<Ml>, wrapped_metaobject<Mr>) noexcept -> bool {
     return __metaobject_reflects_same(Ml, Mr);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the base name of the reflected entity is equal to @p str.
 /// @ingroup operations
 /// @see reflects_named
 /// @see get_name
 /// @see get_display_name
+template <size_t L>
+consteval auto has_name(metaobject auto mo, const char (&str)[L]) noexcept
+  -> bool requires(reflects_named(mo));
+#else
 template <__metaobject_id M, size_t L>
 consteval auto has_name(wrapped_metaobject<M>, const char (&str)[L]) noexcept
   -> bool requires(__metaobject_is_meta_named(M)) {
     return __builtin_strcmp(__metaobject_get_name(M), str) == 0;
 }
+#endif
 
 // integer
 /// @brief Returns a unique metaobject identifier value.
