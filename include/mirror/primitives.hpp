@@ -1384,48 +1384,65 @@ consteval auto has_name(wrapped_metaobject<M>, const char (&str)[L]) noexcept
 #endif
 
 // integer
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a unique metaobject identifier value.
 /// @ingroup operations
 /// @see reflects_object
 /// @see metaobject_operation
+consteval auto get_id(metaobject auto mo) noexcept -> size_t;
+#else
 template <__metaobject_id M>
 consteval auto get_id(wrapped_metaobject<M>) noexcept -> size_t {
     return __metaobject_get_id_value(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns source file line of the reflected entity if available.
 /// @ingroup operations
 /// @see reflects_object
 /// @see get_source_column
 /// @see get_source_file_name
 /// @see metaobject_operation
+consteval auto get_source_line(metaobject auto mo) noexcept -> size_t;
+#else
 template <__metaobject_id M>
 consteval auto get_source_line(wrapped_metaobject<M>) noexcept -> size_t {
     return __metaobject_get_source_line(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns source file column of the reflected entity if available.
 /// @ingroup operations
 /// @see reflects_object
 /// @see get_source_line
 /// @see get_source_file_name
 /// @see metaobject_operation
+consteval auto get_source_column(metaobject auto mo) noexcept -> size_t;
+#else
 template <__metaobject_id M>
 consteval auto get_source_column(wrapped_metaobject<M>) noexcept -> size_t {
     return __metaobject_get_source_column(M);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the number of elements in a metaobject sequence.
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see is_empty
 /// @see get_element
 /// @see metaobject_operation
+consteval auto get_size(metaobject auto mo) noexcept -> size_t
+  requires(reflects_object_sequence(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_size(wrapped_metaobject<M>) noexcept -> size_t
   requires(__metaobject_is_meta_object_sequence(M)) {
     return __metaobject_get_size(M);
 }
+#endif
 
 consteval auto get_size(std::string_view s) noexcept -> size_t {
     return s.size();
@@ -1437,6 +1454,7 @@ struct _get_pointer
       __unrefltype(__metaobject_get_pointer(M)),
       __metaobject_get_pointer(M)> {};
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a pointer to the reflected base-level entity.
 /// @ingroup operations
 /// @see reflects_variable
@@ -1445,24 +1463,34 @@ struct _get_pointer
 /// @see get_reference
 /// @see get_constant
 /// @see metaobject_operation
+consteval auto get_pointer(metaobject auto mo) noexcept
+  requires(reflects_variable(mo) || reflects_function(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_pointer(wrapped_metaobject<M>) noexcept requires(
   __metaobject_is_meta_variable(M) || __metaobject_is_meta_function(M)) {
     return _get_pointer<M>::value;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the value of the reflected base-level entity.
 /// @ingroup operations
 /// @see reflects_variable
 /// @see get_pointer
 /// @see get_reference
 /// @see get_constant
+constexpr const auto& get_value(metaobject auto mo) noexcept
+  requires(reflects_variable(mo));
+#else
 template <__metaobject_id M>
 constexpr const auto& get_value(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_variable(M)) {
     return *_get_pointer<M>::value;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the value of the reflected base-level data member in @p obj.
 /// @ingroup operations
 /// @see reflects_record_member
@@ -1470,25 +1498,36 @@ constexpr const auto& get_value(wrapped_metaobject<M>) noexcept
 /// @see get_pointer
 /// @see get_reference
 /// @see get_constant
+template <class C>
+constexpr const auto& get_value(metaobject auto mo, const C& obj) noexcept
+  requires(reflects_record_member(mo) && reflects_variable(mo));
+#else
 template <__metaobject_id M, class C>
 constexpr const auto& get_value(wrapped_metaobject<M>, const C& obj) noexcept
   requires(
     __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)) {
     return obj.*_get_pointer<M>::value;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reference to the reflected base-level entity.
 /// @ingroup operations
 /// @see reflects_variable
 /// @see get_value
 /// @see get_pointer
 /// @see get_constant
+constexpr auto& get_reference(metaobject auto mo) noexcept
+  requires(reflects_variable(mo));
+#else
 template <__metaobject_id M>
 constexpr auto& get_reference(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_variable(M)) {
     return *_get_pointer<M>::value;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reference to the reflected base-level data member in @p obj.
 /// @ingroup operations
 /// @see reflects_record_member
@@ -1496,11 +1535,16 @@ constexpr auto& get_reference(wrapped_metaobject<M>) noexcept
 /// @see get_value
 /// @see get_pointer
 /// @see get_constant
+template <class C>
+constexpr auto& get_reference(metaobject auto mo, C& obj) noexcept
+  requires(reflects_record_member(mo) && reflects_variable(mo));
+#else
 template <__metaobject_id M, class C>
 constexpr auto& get_reference(wrapped_metaobject<M>, C& obj) noexcept requires(
   __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)) {
     return obj.*_get_pointer<M>::value;
 }
+#endif
 
 template <__metaobject_id M>
 struct _get_constant
@@ -1508,6 +1552,7 @@ struct _get_constant
       __unrefltype(__metaobject_get_constant(M)),
       __metaobject_get_constant(M)> {};
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the value of the reflected base-level constant.
 /// @ingroup operations
 /// @see reflects_constant
@@ -1515,18 +1560,26 @@ struct _get_constant
 /// @see get_reference
 /// @see get_value
 /// @see metaobject_operation
+constexpr auto get_constant(metaobject auto mo) noexcept
+  requires(reflects_constant(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_constant(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_constant(M)) {
     return _get_constant<M>::value;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Invokes the reflected member function on @p obj with specified @p args.
 /// @ingroup operations
 /// @see reflects_member_function
 /// @see get_pointer
 /// @see invoke
 /// @see apply
+constexpr auto invoke_on(metaobject auto mo auto& obj, auto&&... args) requires(
+  reflects_member_function(mo));
+#else
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke_on(
   wrapped_metaobject<M> mo,
@@ -1538,7 +1591,9 @@ constexpr auto invoke_on(
         return (obj.*_get_pointer<M>::value)(std::forward<A>(args)...);
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Invokes the reflected function with the specified @p args.
 /// @ingroup operations
 /// @see reflects_function
@@ -1547,13 +1602,19 @@ constexpr auto invoke_on(
 /// @see get_pointer
 /// @see invoke_on
 /// @see apply_on
+constexpr auto invoke(metaobject auto mo, auto&&... args) requires(
+  reflects_function(mo) ||
+  (reflects_member_function(mo) && __metaobject_is_static(M)));
+#else
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, A&&... args) requires(
   __metaobject_is_meta_function(M) ||
   (__metaobject_is_meta_member_function(M) && __metaobject_is_static(M))) {
     return (*_get_pointer<M>::value)(std::forward<A>(args)...);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Invokes the reflected member function on @p obj with specified @p args.
 /// @ingroup operations
 /// @see reflects_member_function
@@ -1562,23 +1623,32 @@ constexpr auto invoke(wrapped_metaobject<M>, A&&... args) requires(
 /// @see get_reference
 /// @see invoke_on
 /// @see apply
+constexpr auto invoke(metaobject auto mo, auto& obj, auto&&... args) requires(
+  reflects_member_function(mo) && !is_static(mo));
+#else
 template <__metaobject_id M, typename C, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, C& obj, A&&... args) requires(
   __metaobject_is_meta_member_function(M) && !__metaobject_is_static(M)) {
     return (obj.*_get_pointer<M>::value)(std::forward<A>(args)...);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Invokes the reflected constructor with the specified @p args.
 /// @ingroup operations
 /// @see reflects_constructor
 /// @see get_pointer
 /// @see invoke_on
 /// @see apply
+constexpr auto
+invoke(metaobject auto mo, auto&&... args) requires(reflects_constructor(mo));
+#else
 template <__metaobject_id M, typename... A>
 constexpr auto invoke(wrapped_metaobject<M>, A&&... args) -> __unrefltype(
   __metaobject_get_scope(M)) requires(__metaobject_is_meta_constructor(M)) {
     return __unrefltype(__metaobject_get_scope(M))(std::forward<A>(args)...);
 }
+#endif
 
 // string
 consteval auto get_debug_info_view(__metaobject_id mo) noexcept -> string_view {
