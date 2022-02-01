@@ -52,12 +52,6 @@ using std::type_identity;
 template <typename... T>
 struct type_list {};
 
-/// @brief Template implementing the metaobject type reflecting base-level entities.
-/// @ingroup metaobjects
-/// @see metaobject
-/// @see reflects_metaobject
-/// @see no_metaobject
-/// @see unpacked_metaobject_sequence
 template <__metaobject_id M>
 struct wrapped_metaobject {};
 
@@ -78,7 +72,6 @@ consteval auto is_object(const X&) noexcept -> bool {
 /// @ingroup classification
 /// @see reflects_object
 /// @see is_object
-/// @see wrapped_metaobject
 /// @see no_metaobject
 template <typename X>
 concept metaobject = is_object(X{});
@@ -88,10 +81,14 @@ consteval auto unwrap(wrapped_metaobject<M>) noexcept -> __metaobject_id {
     return M;
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Special instance of metaobject that does not reflect anything.
 /// @ingroup metaobjects
 /// @see metaobject
+constinit const __unspecified no_metaobject{};
+#else
 constinit const wrapped_metaobject<__reflexpr_id()> no_metaobject{};
+#endif
 
 #if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject reflects any base-level entity.
@@ -1667,22 +1664,27 @@ consteval auto get_source_file_name_view(__metaobject_id mo) noexcept
       __metaobject_source_file_name_len(mo)};
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns source file column of the reflected entity if available.
 /// @ingroup operations
 /// @see reflects_object
 /// @see get_source_line
 /// @see get_source_column
 /// @see metaobject_operation
+consteval auto get_source_file_name(metaobject auto mo) noexcept -> string_view;
+#else
 template <__metaobject_id M>
 consteval auto get_source_file_name(wrapped_metaobject<M>) noexcept
   -> string_view {
     return get_source_file_name_view(M);
 }
+#endif
 
 consteval auto get_name_view(__metaobject_id mo) noexcept -> string_view {
     return {__metaobject_get_name(mo), __metaobject_name_len(mo)};
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the unqualified "base name" of the reflected base-level entity.
 /// @ingroup operations
 /// @see reflects_named
@@ -1690,11 +1692,15 @@ consteval auto get_name_view(__metaobject_id mo) noexcept -> string_view {
 /// @see get_display_name
 /// @see has_name
 /// @see metaobject_operation
+consteval auto get_name(metaobject auto mo) noexcept -> string_view
+  requires(reflects_named(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_name(wrapped_metaobject<M>) noexcept -> string_view
   requires(__metaobject_is_meta_named(M)) {
     return get_name_view(M);
 }
+#endif
 
 consteval auto get_display_name_view(__metaobject_id mo) noexcept
   -> string_view {
@@ -1702,69 +1708,97 @@ consteval auto get_display_name_view(__metaobject_id mo) noexcept
       __metaobject_get_display_name(mo), __metaobject_display_name_len(mo)};
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the user-friendly name of the reflected base-level entity.
 /// @ingroup operations
 /// @see reflects_named
 /// @see get_name
 /// @see get_display_name
 /// @see metaobject_operation
+consteval auto get_display_name(metaobject auto mo) noexcept -> string_view
+  requires(reflects_named(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_display_name(wrapped_metaobject<M>) noexcept -> string_view
   requires(__metaobject_is_meta_named(M)) {
     return get_display_name_view(M);
 }
+#endif
 
 // metaobject
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reflection of the scope of a reflected scope member.
 /// @ingroup operations
 /// @see reflects_scope_member
 /// @see reflects_scope
 /// @see metaobject_operation
+constexpr auto get_scope(metaobject auto mo) noexcept
+  requires(reflects_scope_member(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_scope(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_scope_member(M)) {
     return wrapped_metaobject<__metaobject_get_scope(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reflection of the type of a reflected typed entity.
 /// @ingroup operations
 /// @see reflects_typed
 /// @see get_reflected_type
 /// @see metaobject_operation
+constexpr auto get_type(metaobject auto mo) noexcept
+  requires(reflects_typed(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_typed(M)) {
     return wrapped_metaobject<__metaobject_get_type(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reflection of the underlying type of a reflected enum,
 /// @ingroup operations
 /// @see get_constant
 /// @see reflects_enum
 /// @see metaobject_operation
+constexpr auto get_underlying_type(metaobject auto mo) noexcept
+  requires(reflects_enum(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_underlying_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_enum(M)) {
     return wrapped_metaobject<__metaobject_get_underlying_type(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reflection of the aliased entity reflected by a reflected alias.
 /// @ingroup operations
 /// @see reflects_named
 /// @see reflects_alias
 /// @see remove_all_aliases
 /// @see metaobject_operation
+constexpr auto get_aliased(metaobject auto mo) noexcept
+  requires(reflects_alias(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_aliased(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_alias(M)) {
     return wrapped_metaobject<__metaobject_get_aliased(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Removes all aliases from a potentially aliased reflected entity.
 /// @ingroup operations
 /// @see reflects_alias
 /// @see get_aliased
 /// @see metaobject_operation
+constexpr auto remove_all_aliases(metaobject auto mo) noexcept;
+#else
 template <__metaobject_id M>
 constexpr auto remove_all_aliases(wrapped_metaobject<M> mo) noexcept {
     if constexpr(__metaobject_is_meta_alias(M)) {
@@ -1774,7 +1808,9 @@ constexpr auto remove_all_aliases(wrapped_metaobject<M> mo) noexcept {
         return mo;
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the reflection of the class in a reflected base class specifier.
 /// @ingroup operations
 /// @see get_base_classes
@@ -1784,12 +1820,17 @@ constexpr auto remove_all_aliases(wrapped_metaobject<M> mo) noexcept {
 /// @see is_public
 /// @see is_virtual
 /// @see metaobject_operation
+constexpr auto get_class(metaobject auto mo) noexcept
+  requires(reflects_base(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_class(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_base(M)) {
     return wrapped_metaobject<__metaobject_get_class(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the reflection of the sub-expression of a parenthesized expression.
 /// @ingroup operations
 /// @see reflects_parenthesized_expression
@@ -1797,12 +1838,17 @@ constexpr auto get_class(wrapped_metaobject<M>) noexcept
 /// @see reflects_construction_expression
 /// @see get_callable
 /// @see metaobject_operation
+constexpr auto get_subexpression(metaobject auto mo) noexcept
+  requires(reflects_parenthesized_expression(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_subexpression(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_parenthesized_expression(M)) {
     return wrapped_metaobject<__metaobject_get_subexpression(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the reflection of the sub-expression of a parenthesized expression.
 /// @ingroup operations
 /// @see reflects_parenthesized_expression
@@ -1810,13 +1856,19 @@ constexpr auto get_subexpression(wrapped_metaobject<M>) noexcept
 /// @see reflects_function_call_expression
 /// @see get_subexpression
 /// @see metaobject_operation
+constexpr auto get_callable(metaobject auto mo) noexcept requires(
+  reflects_construction_expression(mo) ||
+  reflects_function_call_expression(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_callable(wrapped_metaobject<M>) noexcept requires(
   __metaobject_is_meta_construction_expression(M) ||
   __metaobject_is_meta_function_call_expression(M)) {
     return wrapped_metaobject<__metaobject_get_callable(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of base class specifier reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1825,12 +1877,17 @@ constexpr auto get_callable(wrapped_metaobject<M>) noexcept requires(
 /// @see get_size
 /// @see get_class
 /// @see metaobject_operation
+constexpr auto get_base_classes(metaobject auto mo) noexcept
+  requires(reflects_class(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_base_classes(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_class(M)) {
     return wrapped_metaobject<__metaobject_get_base_classes(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of member type reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1839,12 +1896,17 @@ constexpr auto get_base_classes(wrapped_metaobject<M>) noexcept
 /// @see get_size
 /// @see get_type
 /// @see metaobject_operation
+constexpr auto get_member_types(metaobject auto mo) noexcept
+  requires(reflects_record(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_member_types(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
     return wrapped_metaobject<__metaobject_get_member_types(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of member type reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1855,12 +1917,17 @@ constexpr auto get_member_types(wrapped_metaobject<M>) noexcept
 /// @see get_reference
 /// @see get_value
 /// @see metaobject_operation
+constexpr auto get_data_members(metaobject auto mo) noexcept
+  requires(reflects_record(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_data_members(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
     return wrapped_metaobject<__metaobject_get_data_members(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of member function reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1873,12 +1940,17 @@ constexpr auto get_data_members(wrapped_metaobject<M>) noexcept
 /// @see apply
 /// @see apply_on
 /// @see metaobject_operation
+constexpr auto get_member_functions(metaobject auto mo) noexcept
+  requires(reflects_record(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_member_functions(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
     return wrapped_metaobject<__metaobject_get_member_functions(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of constructor reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1888,12 +1960,17 @@ constexpr auto get_member_functions(wrapped_metaobject<M>) noexcept
 /// @see invoke_on
 /// @see invoke
 /// @see metaobject_operation
+constexpr auto get_constructors(metaobject auto mo) noexcept
+  requires(reflects_record(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_constructors(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
     return wrapped_metaobject<__metaobject_get_constructors(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of destructors reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1901,12 +1978,17 @@ constexpr auto get_constructors(wrapped_metaobject<M>) noexcept
 /// @see is_empty
 /// @see get_size
 /// @see metaobject_operation
+constexpr auto get_destructors(metaobject auto mo) noexcept
+  requires(reflects_record(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_destructors(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
     return wrapped_metaobject<__metaobject_get_destructors(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of operator reflections of a reflected class.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1916,12 +1998,17 @@ constexpr auto get_destructors(wrapped_metaobject<M>) noexcept
 /// @see invoke_on
 /// @see invoke
 /// @see metaobject_operation
+constexpr auto get_operators(metaobject auto mo) noexcept
+  requires(reflects_record(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_operators(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_record(M)) {
     return wrapped_metaobject<__metaobject_get_operators(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of enumerator reflections of a reflected enum type.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1930,12 +2017,17 @@ constexpr auto get_operators(wrapped_metaobject<M>) noexcept
 /// @see get_size
 /// @see get_constant
 /// @see metaobject_operation
+constexpr auto get_enumerators(metaobject auto mo) noexcept
+  requires(reflects_enum(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_enumerators(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_enum(M)) {
     return wrapped_metaobject<__metaobject_get_enumerators(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of parameter reflections of a reflected callable.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1944,12 +2036,17 @@ constexpr auto get_enumerators(wrapped_metaobject<M>) noexcept
 /// @see get_size
 /// @see has_default_argument
 /// @see metaobject_operation
+constexpr auto get_parameters(metaobject auto mo) noexcept
+  requires(reflects_callable(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_parameters(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_callable(M)) {
     return wrapped_metaobject<__metaobject_get_parameters(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence of capture reflections of a reflected closure.
 /// @ingroup operations
 /// @see reflects_object_sequence
@@ -1958,48 +2055,69 @@ constexpr auto get_parameters(wrapped_metaobject<M>) noexcept
 /// @see get_size
 /// @see is_explicitly_captured
 /// @see metaobject_operation
+constexpr auto get_captures(metaobject auto mo) noexcept
+  requires(reflects_lambda(mo));
+#else
 template <__metaobject_id M>
 constexpr auto get_captures(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_lambda(M)) {
     return wrapped_metaobject<__metaobject_get_captures(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence with private elements filtered out.
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see hide_protected
 /// @see metaobject_operation
+constexpr auto hide_private(metaobject auto mo) noexcept
+  requires(reflects_object_sequence(mo));
+#else
 template <__metaobject_id M>
 constexpr auto hide_private(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return wrapped_metaobject<__metaobject_hide_private(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns a sequence with private and protected elements filtered out.
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see hide_private
 /// @see metaobject_operation
+constexpr auto hide_protected(metaobject auto mo) noexcept
+  requires(reflects_object_sequence(mo));
+#else
 template <__metaobject_id M>
 constexpr auto hide_protected(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return wrapped_metaobject<__metaobject_hide_protected(M)>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the I-th metaobject in a metaobject sequence.
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see get_size
+template <size_t I>
+constexpr auto get_element(metaobject auto mo) noexcept
+  requires(reflects_object_sequence(mo));
+#else
 template <size_t I, __metaobject_id M>
 constexpr auto get_element(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return wrapped_metaobject<__metaobject_get_element(M, I)>{};
 }
+#endif
 
 // type unreflection
 template <__metaobject_id M>
 using _get_reflected_type = type_identity<__unrefltype(M)>;
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the base-level type reflected by a type reflecting metaobject.
 /// @ingroup operations
 /// @see reflects_type
@@ -2007,20 +2125,30 @@ using _get_reflected_type = type_identity<__unrefltype(M)>;
 /// @see get_reflected_type
 /// @see get_transformed_type_t
 template <typename M>
+using get_reflected_type_t = __unspecified;
+#else
+template <typename M>
 using get_reflected_type_t = __unrefltype(unwrap(M{}));
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns type_identity of base-level type reflected by a metaobject.
 /// @ingroup operations
 /// @see reflects_type
 /// @see get_reflected_type_of
 /// @see get_type
 /// @see get_reflected_type_t
+consteval auto get_reflected_type(metaobject auto mo) noexcept
+  requires(reflects_type(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_reflected_type(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_type(M)) {
     return _get_reflected_type<M>{};
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns type_identity of base-level type from a typed metaobject.
 /// @ingroup operations
 /// @see reflects_type
@@ -2028,11 +2156,15 @@ consteval auto get_reflected_type(wrapped_metaobject<M>) noexcept
 /// @see get_type
 /// @see get_sizeof
 /// @see get_reflected_type_t
+consteval auto get_reflected_type_of(metaobject auto mo) noexcept
+  requires(reflects_typed(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_reflected_type_of(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_typed(M)) {
     return _get_reflected_type<__metaobject_get_type(M)>{};
 }
+#endif
 
 template <template <typename T> class Transform, __metaobject_id M>
 using _get_transformed_type = Transform<__unrefltype(M)>;
@@ -2046,11 +2178,15 @@ consteval auto get_transformed_type(wrapped_metaobject<M>) noexcept
     return _get_transformed_type<Transform, M>{};
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns the size (in bytes) of the reflected type.
 /// @ingroup operations
 /// @see reflects_type
 /// @see get_reflected_type
 /// @see get_type
+consteval auto get_sizeof(metaobject auto mo) noexcept
+  requires(reflects_type(mo) || reflects_typed(mo));
+#else
 template <__metaobject_id M>
 consteval auto get_sizeof(wrapped_metaobject<M> mo) noexcept
   requires(__metaobject_is_meta_type(M) || __metaobject_is_meta_typed(M)) {
@@ -2060,7 +2196,9 @@ consteval auto get_sizeof(wrapped_metaobject<M> mo) noexcept
         return sizeof(__unrefltype(M));
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if type-reflecting metaobject reflects the specified type.
 /// @ingroup operations
 /// @see reflects_type
@@ -2069,12 +2207,18 @@ consteval auto get_sizeof(wrapped_metaobject<M> mo) noexcept
 /// @see has_type_with_trait
 /// @see get_type
 /// @see get_reflected_type
+template <typename T>
+consteval auto is_type(metaobject auto mo, type_identity<T> = {}) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <typename T, __metaobject_id M>
 consteval auto is_type(wrapped_metaobject<M>, type_identity<T> = {}) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return std::is_same_v<__unrefltype(M), T>;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if type-reflecting metaobject reflects the specified type.
 /// @ingroup operations
 /// @see reflects_type
@@ -2083,12 +2227,17 @@ consteval auto is_type(wrapped_metaobject<M>, type_identity<T> = {}) noexcept
 /// @see has_type_with_trait
 /// @see get_type
 /// @see get_reflected_type
+consteval auto has_type_trait(metaobject auto mo) noexcept
+  -> bool requires(reflects_type(mo));
+#else
 template <template <typename> class Trait, __metaobject_id M>
 consteval auto has_type_trait(wrapped_metaobject<M>) noexcept
   -> bool requires(__metaobject_is_meta_type(M)) {
     return Trait<__unrefltype(M)>::value;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if typed metaobject has the specified type.
 /// @ingroup operations
 /// @see reflects_typed
@@ -2097,6 +2246,10 @@ consteval auto has_type_trait(wrapped_metaobject<M>) noexcept
 /// @see has_type_with_trait
 /// @see get_type
 /// @see get_reflected_type_of
+template <typename T>
+consteval auto has_type(metaobject auto mo, type_identity<T> = {}) noexcept
+  -> bool;
+#else
 template <typename T, __metaobject_id M>
 consteval auto has_type(wrapped_metaobject<M>, type_identity<T> = {}) noexcept
   -> bool {
@@ -2106,7 +2259,9 @@ consteval auto has_type(wrapped_metaobject<M>, type_identity<T> = {}) noexcept
         return false;
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if typed metaobject has type with specified trait.
 /// @ingroup operations
 /// @see reflects_type
@@ -2115,6 +2270,9 @@ consteval auto has_type(wrapped_metaobject<M>, type_identity<T> = {}) noexcept
 /// @see has_type_with_trait
 /// @see get_type
 /// @see get_reflected_type
+template <template <typename> class Trait>
+consteval auto has_type_with_trait(metaobject auto mo) noexcept -> bool;
+#else
 template <template <typename> class Trait, __metaobject_id M>
 consteval auto has_type_with_trait(wrapped_metaobject<M>) noexcept -> bool {
     if constexpr(__metaobject_is_meta_typed(M)) {
@@ -2123,6 +2281,7 @@ consteval auto has_type_with_trait(wrapped_metaobject<M>) noexcept -> bool {
         return false;
     }
 }
+#endif
 
 // reflection "operator"
 #if defined(MIRROR_YCM)

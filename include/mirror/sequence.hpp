@@ -14,11 +14,6 @@
 
 namespace mirror {
 
-/// @brief Template implementing an unpacked sequence of individual metaobjects,
-/// @ingroup metaobjects
-/// @see is_metaobject_sequence
-/// @see reflects_metaobject_sequence
-/// @see wrapped_metaobject
 template <__metaobject_id... M>
 struct unpacked_metaobject_sequence {};
 
@@ -63,7 +58,6 @@ consteval auto get_size(unpacked_metaobject_sequence<M...>) noexcept -> size_t {
 /// @brief Unpacks a sequence metaobject into sequence of separate metaobject ids.
 /// @ingroup sequence_operations
 /// @see reflects_object_sequence
-/// @see expand
 template <__metaobject_id M>
 constexpr auto unpack(wrapped_metaobject<M>) noexcept
   -> __unpack_metaobject_seq<unpacked_metaobject_sequence, M> requires(
@@ -76,14 +70,18 @@ constexpr auto unpack(unpacked_metaobject_sequence<M...> ms) noexcept {
     return ms;
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Makes an unpacked_metaobject_sequence from individual metaobjects.
 /// @ingroup sequence_operations
 /// @see is_object_sequence
+constexpr auto make_sequence(metaobject auto...) noexcept;
+#else
 template <__metaobject_id... M>
 constexpr auto make_sequence(wrapped_metaobject<M>...) noexcept
   -> unpacked_metaobject_sequence<M...> {
     return {};
 }
+#endif
 
 // count if
 template <__metaobject_id... M, typename F>
