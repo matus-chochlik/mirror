@@ -314,6 +314,17 @@ constexpr auto join(
 #endif
 
 // join to string
+#if defined(MIRROR_DOXYGEN)
+/// @brief Transforms each metaobject and joins the results separated by separator
+/// @ingroup sequence_operations
+/// @see transform
+/// @see for_each
+/// @see join
+constexpr auto join_to_string(
+  metaobject_sequence auto mo,
+  auto transform,
+  std::string_view separator) -> std::string;
+#else
 template <typename F, typename S>
 auto join_to_string(unpacked_metaobject_sequence<>, const F&, std::string_view)
   -> std::string {
@@ -346,8 +357,17 @@ auto join_to_string(
   requires(__metaobject_is_meta_object_sequence(M)) {
     return join_to_string(unpack(mo), std::move(transform), separator);
 }
+#endif
 
 // for each
+#if defined(MIRROR_DOXYGEN)
+/// @brief Calls the specified function for each metaobject in a sequence.
+/// @ingroup sequence_operations
+/// @see transform
+/// @see fold
+/// @see join
+constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept;
+#else
 template <__metaobject_id... M, typename F>
 constexpr void
 for_each(unpacked_metaobject_sequence<M...>, F function) noexcept {
@@ -359,8 +379,13 @@ constexpr void for_each(wrapped_metaobject<M> mo, F function) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return for_each(unpack(mo), std::move(function));
 }
+#endif
 
 // for each with iteration info
+/// @brief Class used to provide information about sequence element iteration.
+/// @ingroup utilities
+/// @see for_each
+/// @see for_each_info
 class for_each_iteration_info {
 private:
     std::size_t _index;
@@ -373,23 +398,46 @@ public:
       : _index{index}
       , _count{count} {}
 
+    /// @brief Indicates that this is the first iteation.
+    /// @see is_last
     constexpr auto is_first() const noexcept -> bool {
         return _index == 0Z;
     }
 
+    /// @brief Indicates that this is the last iteation.
+    /// @see is_first
     constexpr auto is_last() const noexcept -> bool {
         return _index + 1Z >= _count;
     }
 
+    /// @brief Returns the iteration index.
+    /// @see count
     constexpr auto index() const noexcept -> std::size_t {
         return _index;
     }
 
+    /// @brief Returns the total number of iterations.
+    /// @see index
     constexpr auto count() const noexcept -> std::size_t {
         return _count;
     }
 };
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Calls the specified function for each metaobject in a sequence.
+/// @ingroup sequence_operations
+/// @see for_each
+/// @see for_each_iteration_info
+/// @see transform
+/// @see fold
+/// @see join
+///
+/// This function call the provided function for each metaobject in a sequence
+/// where the first argument is the metaobject and the second is an instance
+/// of for_each_iteration_info providing information about each cycle.
+constexpr void
+for_each_info(metaobject_sequence auto mo, auto function) noexcept;
+#else
 template <__metaobject_id M, typename F>
 constexpr void for_each_info(wrapped_metaobject<M> mo, F function) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
@@ -399,6 +447,7 @@ constexpr void for_each_info(wrapped_metaobject<M> mo, F function) noexcept
         function(me, for_each_iteration_info(index++, count));
     });
 }
+#endif
 
 // find if
 template <typename F>
