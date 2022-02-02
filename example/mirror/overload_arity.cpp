@@ -1,4 +1,4 @@
-/// @example mirror/test.cpp
+/// @example mirror/overload_arity.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
