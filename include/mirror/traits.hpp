@@ -331,23 +331,21 @@ MIRROR_IMPLEMENT_MAP_TRAIT(is_void)
 template <object_trait O>
 struct map_object_trait : map_operation<O> {};
 
-#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                                     \
-    template <>                                                              \
-    struct map_operation<object_trait::NAME> {                               \
-        template <__metaobject_id M>                                         \
-        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
-        }                                                                    \
-        template <__metaobject_id M>                                         \
-        static consteval auto apply(wrapped_metaobject<M>) -> bool {         \
-            return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
-        }                                                                    \
-        static constexpr auto make_optional(bool v) -> tribool {             \
-            return {v};                                                      \
-        }                                                                    \
-        static constexpr auto fallback() -> tribool {                        \
-            return indeterminate;                                            \
-        }                                                                    \
+#define MIRROR_IMPLEMENT_MAP_TRAIT(NAME)                                  \
+    template <>                                                           \
+    struct map_operation<object_trait::NAME> {                            \
+        static consteval auto is_applicable(__metaobject_id mo) -> bool { \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, mo);            \
+        }                                                                 \
+        static consteval auto apply(__metaobject_id mo) -> bool {         \
+            return MIRROR_JOIN(__metaobject_, NAME)(mo);                  \
+        }                                                                 \
+        static constexpr auto make_optional(bool v) -> tribool {          \
+            return {v};                                                   \
+        }                                                                 \
+        static constexpr auto fallback() -> tribool {                     \
+            return indeterminate;                                         \
+        }                                                                 \
     };
 
 MIRROR_IMPLEMENT_MAP_TRAIT(is_call_operator_const)
@@ -478,9 +476,9 @@ struct trait {
 /// @see meta_trait
 /// @see metaobject_operation
 /// @see get_traits
-template <meta_trait T, __metaobject_id M>
-constexpr auto has_trait(wrapped_metaobject<M>) noexcept -> bool {
-    return map_meta_trait<T>::apply(M);
+template <meta_trait T>
+consteval auto has_trait(__metaobject_id mo) noexcept -> bool {
+    return map_meta_trait<T>::apply(mo);
 }
 
 /// @brief Gets all metaobject traits.
