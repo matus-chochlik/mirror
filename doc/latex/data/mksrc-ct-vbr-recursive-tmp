@@ -7,21 +7,15 @@
 N=${1}
 cat << EOD
 template <int I>
-struct wrapper { consteval operator int() const { return I;} };
-
-template <int I>
-consteval int foo(wrapper<I> w) {
-    return w;
+consteval int foo() {
+	if constexpr(I <= 0) {
+	    return 0;
+	} else {
+		return foo<I-1>();
+	}	
 }
 
 int main() {
-EOD
-#
-for I in $(seq 1 $((N-1)))
-do echo "	foo(wrapper<$((I))>{});"
-done
-#
-cat << EOD
-	return foo(wrapper<$((N))>{});
+	return foo<${N}>();
 }
 EOD

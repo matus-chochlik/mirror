@@ -9,12 +9,12 @@ cat << EOD
 template <int I>
 struct wrapper { consteval operator int() const { return I;} };
 
-static int foo(wrapper<0>) {
+consteval int foo(wrapper<0>) {
     return 0;
 }
 
 template <int I>
-int foo(wrapper<I>) {
+consteval int foo(wrapper<I>) {
     return foo(wrapper<I-1>{});
 }
 
