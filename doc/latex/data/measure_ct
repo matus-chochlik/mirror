@@ -6,8 +6,9 @@
 #
 K=200
 S=100
-F="$(basename ${0} .sh)"
 J=$(grep -c -e 'processor\s\+:\s\+[0-9]\+' < /proc/cpuinfo)
+T="$(basename ${0})"
+F="${T}"
 TIMEFORMAT=%3R
 #
 while getopts "k:s:j:f:" arg
@@ -49,23 +50,7 @@ N=$((M * S))
 #
 echo "	src-${N}.csv \\" >> "${work_dir}/Makefile"
 #
-cat << EOD > "${work_dir}/src-${N}.cpp"
-template <int I>
-struct wrapper { consteval operator int() const { return I;} };
-
-static int foo(wrapper<0>) {
-    return 0;
-}
-
-template <int I>
-int foo(wrapper<I>) {
-    return foo(wrapper<I-1>{});
-}
-
-int main() {
-	return foo(wrapper<$((N))>{});
-}
-EOD
+"${this_dir}/mksrc-${T}" ${N} > "${work_dir}/src-${N}.cpp"
 done
 cat << EOD >> "${work_dir}/Makefile"
 	empty
