@@ -107,6 +107,10 @@ class DataSet:
     # --------------------------------------------------------------------------
     def get_row(self, key):
         try:
+            key = float(key)
+        except ValueError:
+            pass
+        try:
             return self._data[key]
         except KeyError:
             result = self._data[key] = {}
@@ -143,7 +147,7 @@ class DataSet:
 
     # --------------------------------------------------------------------------
     def key_column(self):
-        return self._key_head, numpy.fromiter(self._data.keys(), float)
+        return self._key_head, numpy.fromiter(sorted(self._data.keys()), float)
 
     # --------------------------------------------------------------------------
     def column_index(self, col_name):
@@ -155,7 +159,9 @@ class DataSet:
 
     # --------------------------------------------------------------------------
     def data_column(self, col_name):
-        return col_name, numpy.fromiter((v.get(col_name) for k, v in self._data.items()), float)
+        return col_name, numpy.fromiter(
+            (v.get(col_name) for k, v in sorted(self._data.items())),
+            float)
 
     # --------------------------------------------------------------------------
     def data_columns(self):

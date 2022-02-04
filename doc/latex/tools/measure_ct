@@ -52,12 +52,12 @@ src-%.cpp: ${this_dir}/mksrc-${T}
 
 measurements.csv: \\
 EOD
-for M in $(seq 1 ${K})
+for M in $(seq 1 ${K} | shuf)
 do echo "	src-$((M * S)).csv \\" >> "${work_dir}/Makefile"
 done
 cat << EOD >> "${work_dir}/Makefile"
 	empty
-	cat \$^ > \$@
+	sort -n -t \; \$^ > \$@
 EOD
 
 cd "${work_dir}" && make dryrun && ./dryrun
