@@ -48,7 +48,7 @@ src-%.time: src-%.cpp
 	(TIMEFORMAT=%3R /bin/bash -c "time \$(CXX) \$(CXXFLAGS) -o /dev/null \$<") 2> \$@
 
 src-%.cpp: ${this_dir}/mksrc-${T}
-	\$< \$* > src-\$*.cpp
+	\$< \$* ${S} > src-\$*.cpp
 
 measurements.csv: \\
 EOD
