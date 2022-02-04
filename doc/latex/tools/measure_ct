@@ -10,14 +10,17 @@ J=$(grep -c -e 'processor\s\+:\s\+[0-9]\+' < /proc/cpuinfo)
 T="$(basename ${0})"
 F="${T}"
 TIMEFORMAT=%3R
+order=(cat)
 #
-while getopts "k:s:j:f:" arg
+while getopts "k:s:j:f:SR" arg
 do
 	case ${arg} in
 		k) K=${OPTARG};;
 		s) S=${OPTARG};;
 		j) J=${OPTARG};;
 		f) F=${OPTARG};;
+		S) order=(shuf);;
+		R) order=(sort -n -r);;
 		*) exit 1;;
 	esac
 done
@@ -52,7 +55,7 @@ src-%.cpp: ${this_dir}/mksrc-${T}
 
 measurements.csv: \\
 EOD
-for M in $(seq 1 ${K} | shuf)
+for M in $(seq 1 ${K} | ${order[@]})
 do echo "	src-$((M * S)).csv \\" >> "${work_dir}/Makefile"
 done
 cat << EOD >> "${work_dir}/Makefile"

@@ -7,15 +7,15 @@
 N=${1}
 S=${2}
 K=$((N/S))
-if [[ ${K} -ge 10 ]]
-then D=$((K/10))
-else D=1
-fi
 if [[ ${S} -ge 10 ]]
-then E=$((S/10))
+then F=$((S/10))
+else F=1
+fi
+if [[ ${K} -ge 10 ]]
+then E=$((K/10))
 else E=1
 fi
-F=$((N / (D * E)))
+D=$((N / (F * E)))
 cat << EOD
 // ${N} = ${D} * ${E} * ${F}
 #include <utility>
