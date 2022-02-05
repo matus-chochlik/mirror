@@ -91,45 +91,6 @@ concept (*@\listinghl{metaobject}@*) = (*@\listinghlt{unspecified}@*);
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Reflection}
-  \framesubtitle{Usage}
-  \begin{columns}
-    \begin{column}{.05\textwidth}
-    \rotatebox{90}{\Large value-based}
-    \end{column}
-    \begin{column}{.85\textwidth}
-    \normalsize
-    Dual syntax. Rules when to use which, are sort of complicated:
-    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
-    \end{lstlisting}
-    or
-    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>();
-    \end{lstlisting}
-    \end{column}
-  \end{columns}
-  \hrule
-  \vfill
-  \begin{columns}
-    \begin{column}{.05\textwidth}
-    \rotatebox{90}{\Large type-based}
-    \end{column}
-    \begin{column}{.85\textwidth}
-    \normalsize
-    Uniform syntax:
-    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
-    \end{lstlisting}
-    and
-    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
-    \end{lstlisting}
-    \end{column}
-  \end{columns}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Reflection}
   \framesubtitle{Implementation}
   \begin{columns}
     \begin{column}{.05\textwidth}
@@ -138,11 +99,11 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
     \begin{column}{.85\textwidth}
     \normalsize
     Very fast to compile:
-    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 consteval auto foo((*@\listinghls{info}@*) mo);
     \end{lstlisting}
     Somewhat slower to compile:
-    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 template <(*@\listinghls{info}@*) MO>
 consteval auto bar();
     \end{lstlisting}
@@ -158,13 +119,54 @@ consteval auto bar();
     \normalsize
     Very fast to compile, but requires \inlinecode{consteval} conversion
     from \inlinecode{metaobject} to \inlinecode{info}:
-    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 consteval auto foo((*@\listinghls{info}@*) mo);
     \end{lstlisting}
     Slower to compile:
     \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <(*@\listinghls{info}@*) (*@\listinghlt{MO}@*)>
 consteval auto bar((*@\listinghl{__metaobject}@*)<(*@\listinghlt{MO}@*)> mo);
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \framesubtitle{Usage}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Dual syntax:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+    \end{lstlisting}
+    or
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>();
+    \end{lstlisting}
+    Rules when to use which, are sort of complicated.
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Uniform syntax:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+    \end{lstlisting}
+    and
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
     \end{lstlisting}
     \end{column}
   \end{columns}
