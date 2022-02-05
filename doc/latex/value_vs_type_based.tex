@@ -8,7 +8,7 @@
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Reflection}
-  \framesubtitle{metaobjects}
+  \framesubtitle{Metaobjects}
   \begin{columns}
     \begin{column}{.05\textwidth}
     \rotatebox{90}{\Large value-based}
@@ -148,7 +148,7 @@ use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>();
     \end{lstlisting}
-    Rules when to use which, are sort of complicated.
+    When to use which?
     \end{column}
   \end{columns}
   \vfill
@@ -172,10 +172,118 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
   \end{columns}
 \end{frame}
 % ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \framesubtitle{Containers}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Spans, vectors, etc. must be fixed to work in \inlinecode{consteval}.
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+    span<(*@\listinghls{info}@*)> x = members_of(...);
+    vector<(*@\listinghls{info}@*)> y = bases_of(...);
+    \end{lstlisting}
+    Can be used with some STL algorithms, unless splicing is involved.
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+      Containers (sequences) are metaobjects themselves.
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+    (*@\listinghls{auto}@*) x = get_data_members(...);
+    (*@\listinghls{auto}@*) y = get_base_classes(...);
+    \end{lstlisting}
+    Have their own implementation of reflection-related algorithms, splicing
+      is no problem.
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection}
+  \framesubtitle{Pros}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \large
+    \begin{itemize}
+      \item Faster to compile
+      \item Uses less resources to compile
+    \end{itemize}
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \large
+    \begin{itemize}
+      \item Consistent and unified API
+      \item More friendly to generic programming
+      \item Plays better with ADL
+      \item Better usability
+      \item Easier to teach
+    \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Reflection}
+  \framesubtitle{Cons}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \large
+    \begin{itemize}
+      \item Inconsistent API
+      \item The \inlinecode{foo(...)} vs. \inlinecode{bar<...>()} syntax
+        makes it less generic
+      \item Rules when to use which, are sort of complicated and may look arbitrary
+      \item More complicated to teach
+      \item Issues with ADL on NTTPs
+    \end{itemize}
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \large
+    \begin{itemize}
+      \item Slower to compile
+      \item Uses more resources to compile
+    \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
 \section{clang}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{What is the cost of reflection in a \say{large-ish} project?}
+  \frametitle{What would be the cost of reflection in a \say{large-ish} project?}
   \LARGE
   \begin{itemize}
     \item Let's try \inlinecode{clang}
