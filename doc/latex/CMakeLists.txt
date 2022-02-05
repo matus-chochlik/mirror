@@ -28,3 +28,9 @@ mirror_add_latex_presentation(
 		cards_class
 )
 add_dependencies(doc-latex doc-use_cases-pdf)
+
+mirror_add_latex_presentation(
+	value_vs_type_based
+)
+add_dependencies(doc-latex doc-value_vs_type_based-pdf)
+

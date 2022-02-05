@@ -1,0 +1,307 @@
+\documentclass[compress,table,xcolor=table]{beamer}
+\input{beamer_mirror.tex}
+\begin{document}
+% ------------------------------------------------------------------------------
+\title{Value- vs. type-based reflection}
+% ------------------------------------------------------------------------------
+\section{Metaobjects}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \framesubtitle{metaobjects}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Reflection uses constant values of a single built-in type:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+(*@\listinghls{info}@*) x = (*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*));
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Reflection uses constant values of multiple types:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+(*@\listinghls{auto}@*) x = (*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*));
+    \end{lstlisting}
+    The actual (implementation-defined) type might be:
+    \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <(*@\listinghls{info}@*) X>
+struct __metaobject {
+  consteval operator (*@\listinghls{info}@*)() const {
+    return X;
+  }
+};
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \framesubtitle{APIs}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Either purely \inlinecode{consteval} or template functions with
+    non-type template parameters:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval auto foo((*@\listinghls{info}@*) mo);
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <(*@\listinghls{info}@*) MO>
+consteval auto bar();
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    \normalsize
+    \inlinecode{consteval} functions taking metaobject as function arguments:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval auto foo((*@\listinghl{metaobject}@*) (*@\listinghls{auto}@*) mo);
+consteval auto bar((*@\listinghl{metaobject}@*) (*@\listinghls{auto}@*) mo);
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <typename T>
+concept (*@\listinghl{metaobject}@*) = (*@\listinghlt{unspecified}@*);
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \framesubtitle{Usage}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Dual syntax. Rules when to use which, are sort of complicated:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+    \end{lstlisting}
+    or
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>();
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Uniform syntax:
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+    \end{lstlisting}
+    and
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Reflection}
+  \framesubtitle{Implementation}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Very fast to compile:
+    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+consteval auto foo((*@\listinghls{info}@*) mo);
+    \end{lstlisting}
+    Somewhat slower to compile:
+    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <(*@\listinghls{info}@*) MO>
+consteval auto bar();
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    Very fast to compile, but requires \inlinecode{consteval} conversion
+    from \inlinecode{metaobject} to \inlinecode{info}:
+    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+consteval auto foo((*@\listinghls{info}@*) mo);
+    \end{lstlisting}
+    Slower to compile:
+    \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <(*@\listinghls{info}@*) (*@\listinghlt{MO}@*)>
+consteval auto bar((*@\listinghl{__metaobject}@*)<(*@\listinghlt{MO}@*)> mo);
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\section{clang}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What is the cost of reflection in a \say{large-ish} project?}
+  \LARGE
+  \begin{itemize}
+    \item Let's try \inlinecode{clang}
+    \begin{itemize}
+      \Large
+      \item Estimate the number of \say{things} to reflect
+      \item Measure the overall compilation time
+      \item Measure the contribution of reflection
+      \item Compare purely value-based and typed metaobjects
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Estimating number of declarations in \inlinecode{clang}}
+  Let's try {\em \larger documented} declarations
+  \vfill
+  Edit \inlinecode{doxygen-cfg.in}:
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+- GENERATE_XML   = (*@\listinghls{NO}@*)
++ GENERATE_XML   = (*@\listinghlt{YES}@*)
+  \end{lstlisting}
+  Configure:
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+cmake \
+  -D(*@\listinghl{LLVM_ENABLE_DOXYGEN}@*)=(*@\listinghl{On}@*) \
+  ...
+  \end{lstlisting}
+  Generate Doxygen docs:
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+ninja doxygen-clang
+  \end{lstlisting}
+  Merge into a single XML file \inlinecode{clang.xml}: 
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+xsltproc combine.xslt index.xml > (*@\listinghl{clang.xml}@*)
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Counting documented declarations in \inlinecode{clang}}
+  Create \inlinecode{count.xslt}:
+  \begin{lstlisting}[language=xslt,basicstyle=\scriptsize\ttfamily]
+<?xml version="1.0" encoding="utf8"?>
+<xsl:stylesheet version = '1.0'
+ xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>
+  <xsl:template match="/">
+    <xsl:value-of select="(*@\listinghlt{count}@*)(
+      descendant::(*@\listinghl{compounddef}@*)(*@\footnote{
+        \inlinecode{struct}, \inlinecode{class}, \inlinecode{enum}, \ldots}@*)|
+      descendant::(*@\listinghl{member}@*)(*@\footnote{
+        data members, member functions, enumerators, \ldots}@*)|
+      descendant::(*@\listinghl{value}@*)(*@\footnote{
+        enumerator values, default arguments, \ldots}@*)|
+      descendant::(*@\listinghl{para}@*)(*@\footnote{
+        function/constructor/operator parameters, \ldots}@*)|
+      descendant::(*@\listinghl{param}@*)(*@\footnote{
+        template parameters, \ldots}@*))
+    "/>
+  </xsl:template>
+</xsl:stylesheet>
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Counting documented declarations in \inlinecode{clang}}
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \Large
+      Measure!
+      \begin{lstlisting}[language=bash,basicstyle=\small\ttfamily]
+xsltproc \
+    (*@\listinghlt{count.xslt}@*) \
+    (*@\listinghl{clang.xml}@*)
+      \end{lstlisting}
+      The result:
+      \begin{verbatim}
+379091
+      \end{verbatim}
+    \end{column}
+    \begin{column}{.55\textwidth}
+      \large
+      \begin{itemize}
+        \item That's for version 15.0.0
+        \item Around FEB-05-2022
+        \item Round that up to 1'000'000
+        \item Let's assume we want to reflect every single declaration
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Clean build of \inlinecode{clang}}
+  Edit \inlinecode{toolchain.cmake}:
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+set(LLVM_USE_LINKER (*@\listinghl{lld}@*))
+set(CMAKE_EXE_LINKER_FLAGS -fuse-ld=${LLVM_USE_LINKER})
+set(CMAKE_SHARED_LINKER_FLAGS -fuse-ld=${LLVM_USE_LINKER})
+  \end{lstlisting}
+  Configure:
+  \begin{lstlisting}[language=bash,basicstyle=\footnotesize\ttfamily]
+cmake \
+  -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" \
+  -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
+  -DLLVM_TOOLCHAIN_FILE="toolchain.cmake" \
+  ...
+  \end{lstlisting}
+  Build and measure elapsed time:
+  \begin{lstlisting}[language=bash,basicstyle=\footnotesize\ttfamily]
+time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Clean build of \inlinecode{clang}}
+  \Large
+  Results:
+  \begin{verbatim}
+real  34m45,899s    # 2085 [s]
+user  525m16,660s   # 31516 [s]
+sys   17m5,738s     # 1025 [s]
+  \end{verbatim}
+  \begin{itemize}
+    \item The CPU time = user + sys
+    \item Some of that is linking, copying files, \ldots
+    \item Let's round that down to 30'000 seconds
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\end{document}
+
