@@ -154,7 +154,8 @@ class DataSet:
                     col_info = self._col_infos[col_idx] = col_info
 
                 col_info["sources"].append((set_name, head))
-                col_info["label"] = head
+                col_info["set_name"] = set_name
+                col_info["head"] = head
                 result.append(col_idx)
                 self._col_index[col_key] = col_idx
 
@@ -184,7 +185,7 @@ class DataSet:
 
     # --------------------------------------------------------------------------
     def column_label(self, col_index):
-        return self._col_infos[col_index]["label"]
+        return self._col_infos[col_index]["set_name"]
 
     # --------------------------------------------------------------------------
     def data_column(self, col_index):
