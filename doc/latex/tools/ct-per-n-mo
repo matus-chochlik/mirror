@@ -22,6 +22,13 @@ def make_argparser():
     return ArgParser(prog=os.path.basename(__file__))
 
 # ------------------------------------------------------------------------------
+def _format_bignum(s, pos=None):
+    if s >= 1000000:
+        return "%1.0fM" % (s / 1000000)
+    if s >= 1000:
+        return "%1.0fk" % (s / 1000)
+    return "%1.0f" % s
+# ------------------------------------------------------------------------------
 def do_plot(options):
     dataset = DataSet()
 
@@ -43,6 +50,7 @@ def do_plot(options):
             linewidth=2,
             color=options.dataset_color(dataset, cn))
 
+    spl.xaxis.set_major_formatter(pltckr.FuncFormatter(_format_bignum))
     spl.set_xlabel("Number of metaobjects")
     spl.set_ylabel("Compilation time [s]")
     spl.grid(axis="both", alpha=0.25)
