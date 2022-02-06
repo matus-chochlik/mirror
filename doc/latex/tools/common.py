@@ -11,12 +11,23 @@ import argparse
 # ------------------------------------------------------------------------------
 class PlotArgParser(argparse.ArgumentParser):
     # --------------------------------------------------------------------------
+    def _add_baseline_input_arg(self):
+        self.add_argument(
+            '-b', '--baseline',
+            metavar='INPUT-FILE',
+            nargs='?',
+            default=None,
+            dest='baseline_path',
+            type=os.path.realpath
+        )
+    # --------------------------------------------------------------------------
     def _add_single_input_arg(self):
         self.add_argument(
             '-i', '--input',
             metavar='INPUT-FILE',
-            dest='input_path',
             nargs='?',
+            default=None,
+            dest='input_path',
             type=os.path.realpath
         )
     # --------------------------------------------------------------------------
@@ -24,8 +35,9 @@ class PlotArgParser(argparse.ArgumentParser):
         self.add_argument(
             '-i', '--input',
             metavar='INPUT-FILE',
-            dest='input_path',
             nargs='?',
+            default=None,
+            dest='input_path',
             type=os.path.realpath,
             action="append"
         )
@@ -72,10 +84,9 @@ class PlotArgParser(argparse.ArgumentParser):
                 )
 
             # ------------------------------------------------------------------
-            def dataset_color(self, dataset, col_name):
+            def dataset_color(self, dataset, col_index):
                 return self.color_from_to(
-                    dataset.column_index(col_name),
-                    0, dataset.column_count() - 1);
+                    col_index, 0, dataset.column_count() - 1);
 
             # ------------------------------------------------------------------
             def finalize(self, plot):
@@ -95,9 +106,10 @@ class PlotArgParser(argparse.ArgumentParser):
 class DataSet:
     # --------------------------------------------------------------------------
     def __init__(self):
-        self._key_head = "key"
-        self._col_heads = {}
+        self._key_name = ""
+        self._bln_index = None
         self._col_index = {}
+        self._col_infos = {}
         self._data = {}
 
     # --------------------------------------------------------------------------
@@ -117,55 +129,81 @@ class DataSet:
             return result
 
     # --------------------------------------------------------------------------
-    def merge_head(self, row, col_names, key_col):
+    def merge_head(self, row, set_name, key_col):
+        result = []
         for i in range(len(row)):
-            col_name = col_names[i]
-            if not self._col_index.get(col_name):
-                self._col_index[col_name] = len(self._col_index)
-            if i != key_col:
-                self._col_heads[col_name] = row[i]
+            head = row[i]
+            if i == key_col:
+                col_key = None
             else:
-                self._key_head = row[i]
+                col_key = (set_name, head)
+
+            try:
+                result.append(self._col_index[col_key])
+            except KeyError:
+                if i == key_col:
+                    col_idx = None
+                else:
+                    col_idx = len(self._col_index)
+                try:
+                    col_info = self._col_infos[col_idx]
+                except:
+                    col_info = {
+                        "sources": []
+                    }
+                    col_info = self._col_infos[col_idx] = col_info
+
+                col_info["sources"].append((set_name, head))
+                col_info["label"] = head
+                result.append(col_idx)
+                self._col_index[col_key] = col_idx
+
+        return result
 
     # --------------------------------------------------------------------------
-    def merge_row(self, row, col_names, key_col):
+    def merge_row(self, row, col_indices, key_col):
         rowdata = self.get_row(row[key_col])
         for i in range(len(row)):
-            rowdata[col_names[i]] = float(row[i])
+            if col_indices[i] is not None:
+                rowdata[col_indices[i]] = float(row[i])
 
     # --------------------------------------------------------------------------
-    def merge_csv(self, csv, col_names, key_col=0):
-        if not isinstance(col_names, dict):
-            if not isinstance(col_names, list):
-                col_names = ["", col_names]
-            col_names = {i:col_names[i] for i in range(len(col_names))}
+    def merge_csv(self, csv, set_name, key_col=0, bln_col=None):
+        col_indices = self.merge_head(
+            self.parse_row(csv.readline()), set_name, key_col)
 
-        self.merge_head(self.parse_row(csv.readline()), col_names, key_col)
+        if bln_col is not None:
+            self._bln_index = col_indices[bln_col]
 
         for line in csv.readlines():
-            self.merge_row(self.parse_row(line), col_names, key_col)
-
-    # --------------------------------------------------------------------------
-    def key_column(self):
-        return self._key_head, numpy.fromiter(sorted(self._data.keys()), float)
-
-    # --------------------------------------------------------------------------
-    def column_index(self, col_name):
-        return self._col_index[col_name]
+            self.merge_row(self.parse_row(line), col_indices, key_col)
 
     # --------------------------------------------------------------------------
     def column_count(self):
         return len(self._col_index)
 
     # --------------------------------------------------------------------------
-    def data_column(self, col_name):
-        return col_name, numpy.fromiter(
-            (v.get(col_name) for k, v in sorted(self._data.items())),
-            float)
+    def column_label(self, col_index):
+        return self._col_infos[col_index]["label"]
+
+    # --------------------------------------------------------------------------
+    def data_column(self, col_index):
+        try:
+            _gen = ((k, v[col_index]) for k, v in sorted(self._data.items()))
+            temp = numpy.array([e for e in _gen]).transpose()
+        except KeyError:
+            _gen = ([k, 0.0] for k in sorted(self._data.keys()))
+            temp = numpy.array([e for e in _gen]).transpose()
+        return (col_index, temp[0], temp[1])
 
     # --------------------------------------------------------------------------
     def data_columns(self):
-        for col_name in self._col_heads.keys():
-            yield self.data_column(col_name)
+        for col_index in self._col_index.values():
+            if col_index is not None and col_index != self._bln_index:
+                yield self.data_column(col_index)
+
+    # --------------------------------------------------------------------------
+    def baseline_column(self):
+        return self.data_column(self._bln_index)
 
 # ------------------------------------------------------------------------------

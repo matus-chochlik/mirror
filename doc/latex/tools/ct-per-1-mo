@@ -16,6 +16,7 @@ class ArgParser(PlotArgParser):
     def __init__(self, **kw):
         PlotArgParser.__init__(self, **kw)
 
+        self._add_baseline_input_arg()
         self._add_multi_input_arg()
 # ------------------------------------------------------------------------------
 def make_argparser():
@@ -32,23 +33,28 @@ def _format_bignum(s, pos=None):
 def do_plot(options):
     dataset = DataSet()
 
+    if options.baseline_path:
+        with open(options.baseline_path, "rt") as csv:
+            name = os.path.splitext(os.path.basename(options.baseline_path))[0]
+            dataset.merge_csv(csv, set_name=name, bln_col=1)
+
     for input_path in options.input_path:
         with open(input_path, "rt") as csv:
-            dataset.merge_csv(csv, col_names=
-                os.path.splitext(os.path.basename(input_path))[0])
+            name = os.path.splitext(os.path.basename(input_path))[0]
+            dataset.merge_csv(csv, set_name=name)
 
     plt.style.use('dark_background')
     fig, spl = plt.subplots()
     options.initialize(plt, fig)
 
-    kn, x = dataset.key_column()
+    i, u, b = dataset.baseline_column()
 
-    for cn, y in dataset.data_columns():
+    for i, x, y in dataset.data_columns():
         spl.plot(
-            x, (1000000*y)/x,
-            label=cn,
+            x, (1000000*(y - b))/x,
+            label=dataset.column_label(i),
             linewidth=2,
-            color=options.dataset_color(dataset, cn))
+            color=options.dataset_color(dataset, i))
 
     spl.xaxis.set_major_formatter(pltckr.FuncFormatter(_format_bignum))
     spl.set_xlabel("Number of metaobjects")
