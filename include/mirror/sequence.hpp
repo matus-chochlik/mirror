@@ -450,6 +450,15 @@ constexpr void for_each_info(wrapped_metaobject<M> mo, F function) noexcept
 #endif
 
 // find if
+#if defined(MIRROR_DOXYGEN)
+/// @brief Finds first metaobject in sequence satisfying a predicate
+/// @ingroup sequence_operations
+/// @see find_if_not
+/// @see find_ranking
+/// @see for_each
+/// @see count_if
+constexpr auto find_if(metaobject_sequence auto mo, auto predicate) noexcept;
+#else
 template <typename F>
 constexpr auto find_if(unpacked_metaobject_sequence<>, F) noexcept {
     return no_metaobject;
@@ -470,8 +479,18 @@ constexpr auto find_if(wrapped_metaobject<M> mo, F predicate) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return find_if(unpack(mo), predicate);
 }
+#endif
 
 // find if not
+#if defined(MIRROR_DOXYGEN)
+/// @brief Finds first metaobject in sequence not satisfying a predicate
+/// @ingroup sequence_operations
+/// @see find_if
+/// @see find_ranking
+/// @see for_each
+/// @see count_if
+constexpr auto find_if_not(metaobject_sequence auto mo, auto predicate) noexcept;
+#else
 template <typename F>
 constexpr auto find_if_not(unpacked_metaobject_sequence<>, F) noexcept {
     return no_metaobject;
@@ -492,8 +511,23 @@ constexpr auto find_if_not(wrapped_metaobject<M> mo, F predicate) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return find_if_not(unpack(mo), predicate);
 }
+#endif
 
 // find ranking
+#if defined(MIRROR_DOXYGEN)
+/// @brief Finds metaobject with ranking value of some property.
+/// @ingroup sequence_operations
+/// @see find_if
+/// @see find_if_not
+/// @see for_each
+/// @see get_top_value
+///
+/// This function extracts the value of a property for each metaobjects
+/// is a sequence and returns the metaobject for which the value is highest
+/// according to a binary compare function.
+constexpr auto
+find_ranking(metaobject_sequence auto mo, auto transform, auto compare);
+#else
 template <__metaobject_id M, typename F, typename C>
 constexpr auto find_ranking(unpacked_metaobject_sequence<M>, F, C) {
     return wrapped_metaobject<M>{};
@@ -532,7 +566,21 @@ constexpr auto find_ranking(
           unpacked_metaobject_sequence<M0, M2, Ms...>{}, transform, compare);
     }
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Finds metaobject with highest value of some property.
+/// @ingroup sequence_operations
+/// @see find_if
+/// @see find_if_not
+/// @see for_each
+/// @see get_top_value
+///
+/// This function extracts the value of a property for each metaobjects
+/// is a sequence and returns the metaobject for which the value is highest
+/// according to a less than operator.
+constexpr auto find_ranking(metaobject_sequence auto mo, auto transform);
+#else
 template <__metaobject_id M, typename F, typename C>
 constexpr auto find_ranking(
   wrapped_metaobject<M> mo,
@@ -546,8 +594,21 @@ constexpr auto
 find_ranking(S seq, F transform) requires(is_object_sequence(seq)) {
     return find_ranking(seq, transform, [](auto l, auto r) { return l < r; });
 }
+#endif
 
 // get top value
+#if defined(MIRROR_DOXYGEN)
+/// @brief Finds the highest value of a property of metaobjects in a sequence
+/// @ingroup sequence_operations
+/// @see find_ranking
+/// @see is_sorted
+/// @see for_each
+///
+/// This function extracts the value of a property for each metaobjects
+/// is a sequence and returns that value which is highest according to a binary
+/// compare function.
+constexpr auto get_top_value(metaobject_sequence auto mo, auto transform);
+#else
 template <__metaobject_id... M, typename F, typename C>
 constexpr auto
 get_top_value(unpacked_metaobject_sequence<M...> seq, F transform, C compare) {
@@ -567,8 +628,17 @@ constexpr auto
 get_top_value(S seq, F transform) requires(is_object_sequence(seq)) {
     return get_top_value(seq, transform, [](auto l, auto r) { return l < r; });
 }
+#endif
 
 // filter
+#if defined(MIRROR_DOXYGEN)
+/// @brief Removes metaobjects not satisfying a predicate from a sequence.
+/// @ingroup sequence_operations
+/// @see remove_if
+/// @see for_each
+/// @see select
+constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto do_filter(
   unpacked_metaobject_sequence<M...>,
@@ -610,8 +680,17 @@ constexpr auto filter(wrapped_metaobject<M> mo, F predicate) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return filter(unpack(mo), predicate);
 }
+#endif
 
 // remove if
+#if defined(MIRROR_DOXYGEN)
+/// @brief Removes metaobjects satisfying a predicate from a sequence.
+/// @ingroup sequence_operations
+/// @see filter
+/// @see for_each
+/// @see select
+constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto
 remove_if(unpacked_metaobject_sequence<M...> seq, F predicate) noexcept {
@@ -623,8 +702,16 @@ constexpr auto remove_if(wrapped_metaobject<M> mo, F predicate) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return remove_if(unpack(mo), predicate);
 }
+#endif
 
 // is sorted
+#if defined(MIRROR_DOXYGEN)
+/// @brief Tests if metaobjects in a sequence are sorted according to compare function
+/// @ingroup sequence_operations
+/// @see find_ranking
+/// @see get_top_value
+constexpr auto is_sorted(unpacked_metaobject_sequence<>, auto compare) -> bool;
+#else
 template <typename F>
 constexpr auto is_sorted(unpacked_metaobject_sequence<>, F) {
     return true;
@@ -657,8 +744,18 @@ constexpr auto is_sorted(wrapped_metaobject<M> mo, F compare) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return is_sorted(unpack(mo), compare);
 }
+#endif
 
 // all of
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if all metaobjects in a sequence satisfy a predicate
+/// @ingroup sequence_operations
+/// @see filter
+/// @see any_of
+/// @see none_of
+constexpr auto all_of(metaobject_sequence auto mo, auto predicate) noexcept
+  -> bool;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto all_of(unpacked_metaobject_sequence<M...>, F predicate) noexcept
   -> bool {
@@ -670,8 +767,18 @@ constexpr auto all_of(wrapped_metaobject<M> mo, F predicate) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return all_of(unpack(mo), predicate);
 }
+#endif
 
 // any_of
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if some metaobjects in a sequence satisfy a predicate
+/// @ingroup sequence_operations
+/// @see filter
+/// @see all_of
+/// @see none_of
+constexpr auto any_of(metaobject_sequence auto mo, auto predicate) noexcept
+  -> bool;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto any_of(unpacked_metaobject_sequence<M...>, F predicate) noexcept
   -> bool {
@@ -683,8 +790,18 @@ constexpr auto any_of(wrapped_metaobject<M> mo, F predicate) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return any_of(unpack(mo), predicate);
 }
+#endif
 
 // none_of
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if no metaobjects in a sequence satisfy a predicate
+/// @ingroup sequence_operations
+/// @see filter
+/// @see all_of
+/// @see none_of
+constexpr auto none_of(metaobject_sequence auto mo, auto predicate) noexcept
+  -> bool;
+#else
 template <__metaobject_id... M, typename F>
 constexpr auto none_of(unpacked_metaobject_sequence<M...>, F predicate) noexcept
   -> bool {
@@ -696,6 +813,7 @@ constexpr auto none_of(wrapped_metaobject<M> mo, F predicate) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return none_of(unpack(mo), predicate);
 }
+#endif
 
 // select
 template <typename T, __metaobject_id... M, typename F, typename... P>
