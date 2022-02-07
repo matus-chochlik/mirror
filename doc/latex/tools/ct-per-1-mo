@@ -47,11 +47,9 @@ def do_plot(options):
     fig, spl = plt.subplots()
     options.initialize(plt, fig)
 
-    i, u, b = dataset.baseline_column()
-
     for i, x, y in dataset.data_columns():
         spl.plot(
-            x, (1000000*(y - b))/x,
+            x, (1000000*y)/x,
             label=dataset.column_label(i),
             linewidth=2,
             color=options.dataset_color(dataset, i))

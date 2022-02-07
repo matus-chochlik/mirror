@@ -189,12 +189,17 @@ class DataSet:
 
     # --------------------------------------------------------------------------
     def data_column(self, col_index):
-        try:
-            _gen = ((k, v[col_index]) for k, v in sorted(self._data.items()))
-            temp = numpy.array([e for e in _gen]).transpose()
-        except KeyError:
-            _gen = ([k, 0.0] for k in sorted(self._data.keys()))
-            temp = numpy.array([e for e in _gen]).transpose()
+        def _gen():
+            for k, v in sorted(self._data.items()):
+                try:
+                    if self._bln_index is None:
+                        yield k, v[col_index]
+                    else:
+                        yield k, v[col_index]-v[self._bln_index]
+                except KeyError:
+                    pass
+
+        temp = numpy.array([e for e in _gen()]).transpose()
         return (col_index, temp[0], temp[1])
 
     # --------------------------------------------------------------------------
@@ -202,9 +207,5 @@ class DataSet:
         for col_index in self._col_index.values():
             if col_index is not None and col_index != self._bln_index:
                 yield self.data_column(col_index)
-
-    # --------------------------------------------------------------------------
-    def baseline_column(self):
-        return self.data_column(self._bln_index)
 
 # ------------------------------------------------------------------------------
