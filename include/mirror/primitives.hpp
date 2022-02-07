@@ -724,10 +724,8 @@ consteval auto reflects_specifier(__metaobject_id mo) noexcept -> bool {
 consteval auto is_constexpr(metaobject auto mo) noexcept
   -> bool requires(reflects_variable(mo) || reflects_callable(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_constexpr(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_variable(M) || __metaobject_is_meta_callable(M)) {
-    return __metaobject_is_constexpr(M);
+consteval auto is_constexpr(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_constexpr(mo);
 }
 #endif
 
@@ -739,10 +737,8 @@ consteval auto is_constexpr(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_noexcept(metaobject auto mo) noexcept
   -> bool requires(reflects_callable(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_noexcept(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_callable(M)) {
-    return __metaobject_is_noexcept(M);
+consteval auto is_noexcept(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_noexcept(mo);
 }
 #endif
 
@@ -755,11 +751,8 @@ consteval auto is_noexcept(wrapped_metaobject<M>) noexcept
 consteval auto is_explicit(metaobject auto mo) noexcept
   -> bool requires(reflects_constructor(mo) || reflects_conversion_operator(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_explicit(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_constructor(M) ||
-  __metaobject_is_meta_conversion_operator(M)) {
-    return __metaobject_is_explicit(M);
+consteval auto is_explicit(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_explicit(mo);
 }
 #endif
 
@@ -773,11 +766,8 @@ consteval auto is_explicit(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_inline(metaobject auto mo) noexcept -> bool requires(
   reflects_namespace(mo) || reflects_variable(mo) || reflects_callable(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_inline(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_namespace(M) || __metaobject_is_meta_variable(M) ||
-  __metaobject_is_meta_callable(M)) {
-    return __metaobject_is_inline(M);
+consteval auto is_inline(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_inline(mo);
 }
 #endif
 
@@ -789,10 +779,8 @@ consteval auto is_inline(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_thread_local(metaobject auto mo) noexcept
   -> bool requires(reflects_variable(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_thread_local(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_variable(M)) {
-    return __metaobject_is_thread_local(M);
+consteval auto is_thread_local(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_thread_local(mo);
 }
 #endif
 
@@ -805,10 +793,8 @@ consteval auto is_thread_local(wrapped_metaobject<M>) noexcept
 consteval auto is_static(metaobject auto mo) noexcept
   -> bool requires(reflects_variable(mo) || reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_static(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_variable(M) || __metaobject_is_meta_member_function(M)) {
-    return __metaobject_is_static(M);
+consteval auto is_static(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_static(mo);
 }
 #endif
 
@@ -822,11 +808,8 @@ consteval auto is_static(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_virtual(metaobject auto mo) noexcept -> bool requires(
   reflects_base(mo) || reflects_destructor(mo) || reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_base(M) || __metaobject_is_meta_destructor(M) ||
-  __metaobject_is_meta_member_function(M)) {
-    return __metaobject_is_virtual(M);
+consteval auto is_virtual(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_virtual(mo);
 }
 #endif
 
@@ -839,11 +822,8 @@ consteval auto is_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_pure_virtual(metaobject auto mo) noexcept
   -> bool requires(reflects_destructor(mo) || reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_pure_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_destructor(M) ||
-  __metaobject_is_meta_member_function(M)) {
-    return __metaobject_is_pure_virtual(M);
+consteval auto is_pure_virtual(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_pure_virtual(mo);
 }
 #endif
 
@@ -856,10 +836,8 @@ consteval auto is_pure_virtual(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_final(metaobject auto mo) noexcept
   -> bool requires(reflects_class(mo) || reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_final(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_class(M) || __metaobject_is_meta_member_function(M)) {
-    return __metaobject_is_final(M);
+consteval auto is_final(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_final(mo);
 }
 #endif
 
@@ -872,10 +850,8 @@ consteval auto is_final(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_private(metaobject auto mo) noexcept
   -> bool requires(reflects_record_member(mo) || reflects_base(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_private(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
-    return __metaobject_is_private(M);
+consteval auto is_private(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_private(mo);
 }
 #endif
 
@@ -888,10 +864,8 @@ consteval auto is_private(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_protected(metaobject auto mo) noexcept
   -> bool requires(reflects_record_member(mo) || reflects_base(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_protected(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
-    return __metaobject_is_protected(M);
+consteval auto is_protected(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_protected(mo);
 }
 #endif
 
@@ -904,10 +878,8 @@ consteval auto is_protected(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_public(metaobject auto mo) noexcept
   -> bool requires(reflects_record_member(mo) || reflects_base(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_public(wrapped_metaobject<M>) noexcept -> bool requires(
-  __metaobject_is_meta_record_member(M) || __metaobject_is_meta_base(M)) {
-    return __metaobject_is_public(M);
+consteval auto is_public(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_public(mo);
 }
 #endif
 
@@ -921,10 +893,8 @@ consteval auto is_public(wrapped_metaobject<M>) noexcept -> bool requires(
 consteval auto is_unnamed(metaobject auto mo) noexcept
   -> bool requires(reflects_named(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_unnamed(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_named(M)) {
-    return __metaobject_is_unnamed(M);
+consteval auto is_unnamed(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_unnamed(mo);
 }
 #endif
 
@@ -938,10 +908,8 @@ consteval auto is_unnamed(wrapped_metaobject<M>) noexcept
 consteval auto is_enum(metaobject auto mo) noexcept
   -> bool requires(reflects_type(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_enum(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_type(M)) {
-    return __metaobject_is_enum(M);
+consteval auto is_enum(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_enum(mo);
 }
 #endif
 
@@ -955,10 +923,8 @@ consteval auto is_enum(wrapped_metaobject<M>) noexcept
 consteval auto is_scoped_enum(metaobject auto mo) noexcept
   -> bool requires(reflects_type(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_scoped_enum(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_type(M)) {
-    return __metaobject_is_scoped_enum(M);
+consteval auto is_scoped_enum(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_scoped_enum(mo);
 }
 #endif
 
@@ -973,10 +939,8 @@ consteval auto is_scoped_enum(wrapped_metaobject<M>) noexcept
 consteval auto is_union(metaobject auto mo) noexcept
   -> bool requires(reflects_type(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_union(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_type(M)) {
-    return __metaobject_is_union(M);
+consteval auto is_union(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_union(mo);
 }
 #endif
 
@@ -990,10 +954,8 @@ consteval auto is_union(wrapped_metaobject<M>) noexcept
 consteval auto uses_class_key(metaobject auto mo) noexcept
   -> bool requires(reflects_type(mo));
 #else
-template <__metaobject_id M>
-consteval auto uses_class_key(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_type(M)) {
-    return __metaobject_uses_class_key(M);
+consteval auto uses_class_key(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_uses_class_key(mo);
 }
 #endif
 
@@ -1007,10 +969,8 @@ consteval auto uses_class_key(wrapped_metaobject<M>) noexcept
 consteval auto uses_struct_key(metaobject auto mo) noexcept
   -> bool requires(reflects_type(mo));
 #else
-template <__metaobject_id M>
-consteval auto uses_struct_key(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_type(M)) {
-    return __metaobject_uses_struct_key(M);
+consteval auto uses_struct_key(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_uses_struct_key(mo);
 }
 #endif
 
@@ -1024,10 +984,8 @@ consteval auto uses_struct_key(wrapped_metaobject<M>) noexcept
 consteval auto uses_default_copy_capture(metaobject auto mo) noexcept
   -> bool requires(reflects_lambda(mo));
 #else
-template <__metaobject_id M>
-consteval auto uses_default_copy_capture(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_lambda(M)) {
-    return __metaobject_uses_default_copy_capture(M);
+consteval auto uses_default_copy_capture(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_uses_default_copy_capture(mo);
 }
 #endif
 
@@ -1041,10 +999,9 @@ consteval auto uses_default_copy_capture(wrapped_metaobject<M>) noexcept
 consteval auto uses_default_reference_capture(metaobject auto mo) noexcept
   -> bool requires(reflects_lambda(mo));
 #else
-template <__metaobject_id M>
-consteval auto uses_default_reference_capture(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_lambda(M)) {
-    return __metaobject_uses_default_reference_capture(M);
+consteval auto uses_default_reference_capture(__metaobject_id mo) noexcept
+  -> bool {
+    return __metaobject_uses_default_reference_capture(mo);
 }
 #endif
 
@@ -1057,10 +1014,8 @@ consteval auto uses_default_reference_capture(wrapped_metaobject<M>) noexcept
 consteval auto is_call_operator_const(metaobject auto mo) noexcept
   -> bool requires(reflects_lambda(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_call_operator_const(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_lambda(M)) {
-    return __metaobject_is_call_operator_const(M);
+consteval auto is_call_operator_const(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_call_operator_const(mo);
 }
 #endif
 
@@ -1073,10 +1028,8 @@ consteval auto is_call_operator_const(wrapped_metaobject<M>) noexcept
 consteval auto is_explicitly_captured(metaobject auto mo) noexcept
   -> bool requires(reflects_lambda_capture(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_explicitly_captured(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_lambda_capture(M)) {
-    return __metaobject_is_explicitly_captured(M);
+consteval auto is_explicitly_captured(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_explicitly_captured(mo);
 }
 #endif
 
@@ -1089,10 +1042,8 @@ consteval auto is_explicitly_captured(wrapped_metaobject<M>) noexcept
 consteval auto has_default_argument(metaobject auto mo) noexcept
   -> bool requires(reflects_function_parameter(mo));
 #else
-template <__metaobject_id M>
-consteval auto has_default_argument(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_function_parameter(M)) {
-    return __metaobject_has_default_argument(M);
+consteval auto has_default_argument(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_has_default_argument(mo);
 }
 #endif
 
@@ -1107,10 +1058,8 @@ consteval auto has_default_argument(wrapped_metaobject<M>) noexcept
 consteval auto is_const(metaobject auto mo) noexcept
   -> bool requires(reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_const(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_member_function(M)) {
-    return __metaobject_is_const(M);
+consteval auto is_const(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_const(mo);
 }
 #endif
 
@@ -1125,10 +1074,8 @@ consteval auto is_const(wrapped_metaobject<M>) noexcept
 consteval auto is_volatile(metaobject auto mo) noexcept
   -> bool requires(reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_volatile(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_member_function(M)) {
-    return __metaobject_is_volatile(M);
+consteval auto is_volatile(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_volatile(mo);
 }
 #endif
 
@@ -1143,10 +1090,8 @@ consteval auto is_volatile(wrapped_metaobject<M>) noexcept
 consteval auto has_lvalueref_qualifier(metaobject auto mo) noexcept
   -> bool requires(reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto has_lvalueref_qualifier(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_member_function(M)) {
-    return __metaobject_has_lvalueref_qualifier(M);
+consteval auto has_lvalueref_qualifier(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_has_lvalueref_qualifier(mo);
 }
 #endif
 
@@ -1161,10 +1106,8 @@ consteval auto has_lvalueref_qualifier(wrapped_metaobject<M>) noexcept
 consteval auto has_rvalueref_qualifier(metaobject auto mo) noexcept
   -> bool requires(reflects_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto has_rvalueref_qualifier(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_member_function(M)) {
-    return __metaobject_has_rvalueref_qualifier(M);
+consteval auto has_rvalueref_qualifier(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_has_rvalueref_qualifier(mo);
 }
 #endif
 
@@ -1179,10 +1122,8 @@ consteval auto has_rvalueref_qualifier(wrapped_metaobject<M>) noexcept
 consteval auto is_implicitly_declared(metaobject auto mo) noexcept
   -> bool requires(reflects_special_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_implicitly_declared(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_special_member_function(M)) {
-    return __metaobject_is_implicitly_declared(M);
+consteval auto is_implicitly_declared(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_implicitly_declared(mo);
 }
 #endif
 
@@ -1197,10 +1138,8 @@ consteval auto is_implicitly_declared(wrapped_metaobject<M>) noexcept
 consteval auto is_defaulted(metaobject auto mo) noexcept
   -> bool requires(reflects_special_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_defaulted(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_special_member_function(M)) {
-    return __metaobject_is_defaulted(M);
+consteval auto is_defaulted(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_defaulted(mo);
 }
 #endif
 
@@ -1215,10 +1154,8 @@ consteval auto is_defaulted(wrapped_metaobject<M>) noexcept
 consteval auto is_deleted(metaobject auto mo) noexcept
   -> bool requires(reflects_callable(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_deleted(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_callable(M)) {
-    return __metaobject_is_deleted(M);
+consteval auto is_deleted(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_deleted(mo);
 }
 #endif
 
@@ -1233,10 +1170,8 @@ consteval auto is_deleted(wrapped_metaobject<M>) noexcept
 consteval auto is_copy_constructor(metaobject auto mo) noexcept
   -> bool requires(reflects_constructor(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_copy_constructor(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_constructor(M)) {
-    return __metaobject_is_copy_constructor(M);
+consteval auto is_copy_constructor(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_copy_constructor(mo);
 }
 #endif
 
@@ -1251,10 +1186,8 @@ consteval auto is_copy_constructor(wrapped_metaobject<M>) noexcept
 consteval auto is_move_constructor(metaobject auto mo) noexcept
   -> bool requires(reflects_constructor(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_move_constructor(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_constructor(M)) {
-    return __metaobject_is_move_constructor(M);
+consteval auto is_move_constructor(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_move_constructor(mo);
 }
 #endif
 
@@ -1271,12 +1204,9 @@ consteval auto is_copy_assignment_operator(metaobject auto mo) noexcept
   -> bool requires(
     reflects_operator(mo) && reflects_special_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_copy_assignment_operator(wrapped_metaobject<M>) noexcept
-  -> bool requires(
-    __metaobject_is_meta_operator(M) &&
-    __metaobject_is_meta_special_member_function(M)) {
-    return __metaobject_is_copy_assignment_operator(M);
+consteval auto is_copy_assignment_operator(__metaobject_id mo) noexcept
+  -> bool {
+    return __metaobject_is_copy_assignment_operator(mo);
 }
 #endif
 
@@ -1293,12 +1223,9 @@ consteval auto is_move_assignment_operator(metaobject auto mo) noexcept
   -> bool requires(
     reflects_operator(mo) && reflects_special_member_function(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_move_assignment_operator(wrapped_metaobject<M>) noexcept
-  -> bool requires(
-    __metaobject_is_meta_operator(M) &&
-    __metaobject_is_meta_special_member_function(M)) {
-    return __metaobject_is_move_assignment_operator(M);
+consteval auto is_move_assignment_operator(__metaobject_id mo) noexcept
+  -> bool {
+    return __metaobject_is_move_assignment_operator(mo);
 }
 #endif
 
@@ -1312,10 +1239,8 @@ consteval auto is_move_assignment_operator(wrapped_metaobject<M>) noexcept
 consteval auto is_empty(metaobject auto mo) noexcept
   -> bool requires(reflects_object_sequence(mo));
 #else
-template <__metaobject_id M>
-consteval auto is_empty(wrapped_metaobject<M>) noexcept
-  -> bool requires(__metaobject_is_meta_object_sequence(M)) {
-    return __metaobject_is_empty(M);
+consteval auto is_empty(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_is_empty(mo);
 }
 #endif
 

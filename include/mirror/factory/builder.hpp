@@ -228,11 +228,13 @@ public:
     }
 
     auto is_move_constructor() const noexcept -> bool final {
-        return mirror::is_move_constructor(_meta_ctr);
+        using mirror::is_move_constructor;
+        return is_move_constructor(_meta_ctr);
     }
 
     auto is_copy_constructor() const noexcept -> bool final {
-        return mirror::is_copy_constructor(_meta_ctr);
+        using mirror::is_copy_constructor;
+        return is_copy_constructor(_meta_ctr);
     }
 
     auto parameter_count() const noexcept -> size_t final {
