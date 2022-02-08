@@ -280,10 +280,55 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
   \end{columns}
 \end{frame}
 % ------------------------------------------------------------------------------
+\section{setup}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Test hardware setup}
+  \larger
+  \begin{itemize}
+  \item Old desktop\footnote{2010}:
+    \begin{itemize}
+    \smaller
+    \item i5-2400U @ 3.10GHz (4 cores)
+    \item 24GB RAM
+    \end{itemize}
+  \item Corporate dev laptop\footnote{2021}:
+    \begin{itemize}
+    \smaller
+    \item i7-1185G7 @ 3.0GHz (8 cores)
+    \item 32GB RAM
+    \end{itemize}
+  \item Mid-range gaming laptop\footnote{2019}:
+    \begin{itemize}
+    \smaller
+    \item AMD Ryzen7 4800HS (16 cores)
+    \item 16GB RAM
+    \end{itemize}
+  \item RPi 4B
+    \begin{itemize}
+    \smaller
+    \item ARM v7l
+    \item 4GB RAM
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\section{measurements}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i5-2400 -- compile time increase per N metaobjects}
+  \fitfig{ct-per-n-i5-2400}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i5-2400 -- compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-i5-2400}
+\end{frame}
+% ------------------------------------------------------------------------------
 \section{clang}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{What would be the cost of reflection in a \say{large-ish} project?}
+  \frametitle{The cost of reflection in a \say{large-ish} project?}
   \LARGE
   \begin{itemize}
     \item Let's try \inlinecode{clang}
