@@ -188,14 +188,19 @@ class DataSet:
         return self._col_infos[col_index]["set_name"]
 
     # --------------------------------------------------------------------------
+    def subtract_baseline(self, x, y, i):
+        j = self._bln_index
+        if j is not None:
+            return y[i] - y[j]
+
+        return y[i]
+
+    # --------------------------------------------------------------------------
     def data_column(self, col_index):
         def _gen():
             for k, v in sorted(self._data.items()):
                 try:
-                    if self._bln_index is None:
-                        yield k, v[col_index]
-                    else:
-                        yield k, v[col_index]-v[self._bln_index]
+                    yield k, self.subtract_baseline(k, v, col_index)
                 except KeyError:
                     pass
 
