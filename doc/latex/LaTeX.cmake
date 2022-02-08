@@ -25,13 +25,17 @@ macro(mirror_generate_figure NAME)
     cmake_parse_arguments(
         MIRROR_FIGURE
     	""
-        "GENERATOR;BASELINE"
+		"GENERATOR;BASELINE;LABEL"
         "SOURCE_DATA"
         ${ARGN}
     )
     if(PYTHON3_COMMAND)
         set(FIG_DEPS)
         set(GEN_ARGS)
+		foreach(LABEL ${MIRROR_FIGURE_LABEL})
+			list(APPEND GEN_ARGS "-L")
+			list(APPEND GEN_ARGS "${LABEL}")
+		endforeach()
     	foreach(SRC_DATA ${MIRROR_FIGURE_BASELINE})
     		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
     			list(APPEND GEN_ARGS "-b")

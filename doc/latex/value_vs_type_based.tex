@@ -4,7 +4,7 @@
 % ------------------------------------------------------------------------------
 \title{Value- vs. type-based reflection}
 % ------------------------------------------------------------------------------
-\section{Metaobjects}
+\section{reflection}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Reflection}
@@ -76,7 +76,7 @@ consteval auto bar();
     \begin{column}{.85\textwidth}
     \normalsize
     \normalsize
-    \inlinecode{consteval} functions taking metaobject as function arguments:
+    \inlinecode{consteval} template functions taking metaobjects as function arguments:
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 consteval auto foo((*@\listinghl{metaobject}@*) (*@\listinghls{auto}@*) mo);
 consteval auto bar((*@\listinghl{metaobject}@*) (*@\listinghls{auto}@*) mo);
@@ -282,8 +282,168 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
 % ------------------------------------------------------------------------------
 \section{setup}
 % ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{How to materialize 100'000s of metaobjects?}
+  Use a shell script\ldots
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+L=100  # number of repeats
+S=1000 # sampling step size
+for l in $(seq 1 ${L})
+do
+  (*@\listinghl{N}@*)=$((l * S))
+  # factorize N into three integers
+  (*@\listinghl{D}@*)=...; (*@\listinghl{E}@*)=...; (*@\listinghl{F}@*)=...
+  \end{lstlisting}
+  \ldots to generate a C++ source file\ldots
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+  int main() {
+    return bool((*@\listinghlt{qux}@*)(make_index_sequence<(*@\listinghl{\$\{D\}}@*)>{})) ? 0 : 1;
+  }
+  \end{lstlisting}
+  \ldots, compile and measure:
+  \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily]
+  time $(CXX) $(CXXFLAGS) -o /dev/null $<
+done
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{The boilerplate}
+  \framesubtitle{level 1}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t ... K>
+consteval auto (*@\listinghlt{qux}@*)(index_sequence<(*@\listinghls{K}@*)...>) {
+	return ( ... + (*@\listinghlt{baz}@*)(
+		integral_constant<size_t, (*@\listinghls{K}@*)>{},
+		make_index_sequence<(*@\listinghl{\$\{E\}}@*)>{}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{The boilerplate}
+  \framesubtitle{level 2}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t K, size_t ... J>
+consteval auto (*@\listinghlt{baz}@*)(
+	integral_constant<size_t, (*@\listinghls{K}@*)>,
+	index_sequence<(*@\listinghls{J}@*)...>) {
+	return ( ... + (*@\listinghlt{bar}@*)(
+		integral_constant<size_t, (*@\listinghls{K}@*)>{},
+		integral_constant<size_t, (*@\listinghls{J}@*)>{},
+		make_index_sequence<(*@\listinghl{\$\{F\}}@*)>{}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{The boilerplate}
+  \framesubtitle{level 3}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t K, size_t J, size_t ... I>
+consteval auto (*@\listinghlt{bar}@*)(
+	integral_constant<size_t, (*@\listinghls{K}@*)>,
+	integral_constant<size_t, (*@\listinghls{J}@*)>,
+	index_sequence<(*@\listinghls{I}@*)...>) {
+    // Simulate the metaobject "id" as:
+    // (*@\listinghls{MOID}@*) = 
+    //   (*@\listinghls{K}@*) * $(((*@\listinghl{N}@*) / (*@\listinghl{D}@*))) +
+    //   (*@\listinghls{J}@*) * $(((*@\listinghl{N}@*) / ((*@\listinghl{D}@*) * (*@\listinghl{E}@*)))) +
+    //   (*@\listinghls{I}@*);
+    return /* Do something with (*@\listinghls{MOID}@*)... */
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{The baseline}
+  Just sum the {\em MOID} values at compile-time
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t K, size_t J, size_t ... I>
+consteval auto (*@\listinghlt{bar}@*)(
+	integral_constant<size_t, (*@\listinghls{K}@*)>,
+	integral_constant<size_t, (*@\listinghls{J}@*)>,
+	index_sequence<(*@\listinghls{I}@*)...>) {
+    return (... + 
+      (*@\listinghls{K}@*) * $(((*@\listinghl{N}@*) / (*@\listinghl{D}@*))) +
+      (*@\listinghls{J}@*) * $(((*@\listinghl{N}@*) / ((*@\listinghl{D}@*) * (*@\listinghl{E}@*)))) +
+      (*@\listinghls{I}@*));
+}
+  \end{lstlisting}
+  Measure how long does this take to compile and subtract from \say{real}
+  measurements.
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Type-based metaobject \& template function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t M>
+struct (*@\listinghl{wrapper}@*) {
+	consteval operator size_t() const {
+		return M;
+	}
+};
+
+template <size_t M>
+consteval size_t (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<M> w) {
+	return w;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+return ( ... + (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<(*@\listinghls{MOID}@*)>{}));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Type-based metaobject \& consteval function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t M>
+struct (*@\listinghl{wrapper}@*) {
+	consteval operator size_t() const {
+		return M;
+	}
+};
+
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+return ( ... + (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<(*@\listinghls{MOID}@*)>{}));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Value-based metaobject \& template function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t M>
+consteval size_t (*@\listinghlt{foo}@*)() {
+	return M;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+return ( ... + (*@\listinghlt{foo}@*)<(*@\listinghls{MOID}@*)>());
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Value-based metaobject \& consteval function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval size_t (*@\listinghlt{foo}@*)(size_t i) {
+	return i;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Test hardware setup}
+  \frametitle{Test hardware}
   \larger
   \begin{itemize}
   \item Old desktop\footnote{2010}:
@@ -323,6 +483,36 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
 \begin{frame}
   \frametitle{i5-2400 -- compile time increase per 1 metaobject}
   \fitfig{ct-per-1-i5-2400}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i7-1185 -- compile time increase per N metaobjects}
+  \fitfig{ct-per-n-i7-1185}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i7-1185 -- compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-i7-1185}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS-- compile time increase per N metaobjects}
+  \fitfig{ct-per-n-R7-4800}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS -- compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-R7-4800}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{ARMv7-- compile time increase per N metaobjects}
+  \fitfig{ct-per-n-ARMv7l}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{ARMv7-- compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-ARMv7l}
 \end{frame}
 % ------------------------------------------------------------------------------
 \section{clang}
@@ -413,7 +603,7 @@ xsltproc \
       \begin{itemize}
         \item That's for version 15.0.0
         \item Around FEB-05-2022
-        \item Round that up to 1'000'000
+        \item Round that up to 400'000, 500'000 or even 1'000'000
         \item Let's assume we want to reflect every single declaration
       \end{itemize}
     \end{column}
@@ -442,20 +632,94 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Clean build of \inlinecode{clang}}
   \Large
   Results:
-  \begin{verbatim}
-real  34m45,899s    # 2085 [s]
-user  525m16,660s   # 31516 [s]
-sys   17m5,738s     # 1025 [s]
-  \end{verbatim}
+  \normalsize
+  \begin{center}
+  {\rowcolors{2}{mirrorpage}{darkgray}
+    \begin{tabular}{|p{3cm}|p{2cm}|p{2cm}|p{2cm}|}
+    \hline
+      CPU: & i5-2400 & i7-1185 & Ryzen 7 \\
+    \hline
+      real & 122m25,943s &  66m59,909s &  34m45,899s \\
+      user & 433m50,123s & 510m55,382s & 525m16,660s \\
+      sys  &  11m22,881s &  12m52,287s &  17m5,738s  \\
+    \hline
+    \end{tabular}
+  }
+  \end{center}
+  \vfill
+  \Large
+  Added, rounded and converted to seconds:
+  \normalsize
+  \begin{center}
+  {\rowcolors{2}{mirrorpage}{darkgray}
+    \begin{tabular}{|p{3.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
+    \hline
+      CPU: & i5-2400 & i7-1185 & Ryzen 7 \\
+    \hline
+      real-time           &  7346s &  4020s &  2086s \\
+      cpu-time (user+sys) & 27313s & 31427s & 32543s \\
+    \hline
+    \end{tabular}
+  }
+  \end{center}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Compared to build-time with 400'000 metaobjects}
+  \large
+  Compile-time of a typical \inlinecode{clang} build vs.\\
+  compile-time spent on materializing 400'000 metaobjects:
+  \normalsize
+  \begin{center}
+  {\rowcolors{2}{mirrorpage}{darkgray}
+    \begin{tabular}{|p{4.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
+    \hline
+      CPU:    & i5-2400 & i7-1185 & Ryzen 7 \\
+    \hline
+      clang:                   & 27313s  & 31427s  & 32543s  \\
+    \hline
+      400k MO (TB-template):   & 115.9s  &  48.8s  &  62.4s  \\
+                               & 0.42\%  & 0.16\%  &  0.19\% \\
+    \hline
+      400k MO (TB-consteval):  & 111.3s  &  53.4s  &  62.7   \\
+                               & 0.41\%  & 0.16\%  &  0.19\% \\
+    \hline
+      400k MO (VB-template):   &  36.3s  &  16.5s  &  19.0s  \\
+                               & 0.13\%  & 0.05\%  &  0.06\% \\
+    \hline
+      400k MO (VB-consteval):  &  50.3s  &  27.4s  &  29.6s  \\
+                               & 0.18\%  & 0.09\%  &  0.09\% \\
+    \hline
+    \end{tabular}
+  }
+  \end{center}
+\end{frame}
+% ------------------------------------------------------------------------------
+\section{conclusion}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusions}
+  \Large
   \begin{itemize}
-    \item The CPU time = user + sys
-    \item Some of that is linking, copying files, \ldots
-    \item Let's round that down to 30'000 seconds
+    \item The typical compile-time overhead of materializing a metaobject
+      is on the order of tens or hundreds of microseconds
+    \item Most typical reflection use-cases don't require reflecting every
+      declaration in a project
+    \item Even if reflecting almost everything, the~overhead compared
+      to~total build time is a~fraction of~a~percent even in~the~worst case
   \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{The {\larger big} question}
+  \Large
+  \centering
+  Is the improvement in compile-time worth the decrease in usability
+  of the value-based reflection API?
 \end{frame}
 % ------------------------------------------------------------------------------
 \end{document}
