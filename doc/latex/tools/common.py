@@ -108,10 +108,10 @@ class PlotArgParser(argparse.ArgumentParser):
                     found = self._fmt_re_rk.search(name)
                     if found:
                         return {
-                            "tbr-tmp":"type-based template",
-                            "tbr-cmp":"type-based consteval",
-                            "vbr-tmp":"value-based template",
-                            "vbr-cmp":"value-based consteval"
+                            "tbr-tmp":"TB template",
+                            "tbr-cmp":"TB consteval",
+                            "vbr-tmp":"VB template",
+                            "vbr-cmp":"VB consteval"
                         }["%s-%s" % (found.group(1), found.group(2))]
                         print()
                     

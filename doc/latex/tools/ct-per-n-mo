@@ -56,7 +56,7 @@ def do_plot(options):
 
     spl.xaxis.set_major_formatter(pltckr.FuncFormatter(_format_bignum))
     spl.set_xlabel("Number of metaobjects")
-    spl.set_ylabel("Compilation time [s]")
+    spl.set_ylabel("Compile-time increase [s]")
     spl.grid(axis="both", alpha=0.25)
     spl.legend()
 
