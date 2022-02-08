@@ -50,7 +50,7 @@ def do_plot(options):
     for i, x, y in dataset.data_columns():
         spl.plot(
             x, y,
-            label=dataset.column_label(i),
+            label=dataset.column_label(options, i),
             linewidth=2,
             color=options.dataset_color(dataset, i))
 

@@ -5,6 +5,7 @@
 #  http://www.boost.org/LICENSE_1_0.txt
 # ------------------------------------------------------------------------------
 import os
+import re
 import numpy
 import argparse
 
@@ -60,6 +61,15 @@ class PlotArgParser(argparse.ArgumentParser):
             action="store_true"
         )
 
+        self.add_argument(
+            '-L', '--label-format',
+            dest='label_format',
+            default=None,
+            choices=[
+                "reflection_kind"
+            ]
+        )
+
     # --------------------------------------------------------------------------
     def make_options(self):
         opts = self.parse_args()
@@ -69,6 +79,7 @@ class PlotArgParser(argparse.ArgumentParser):
             def __init__(self, base):
                 self.__dict__.update(base.__dict__)
                 self.min_jobs = 1
+                self._fmt_re_rk = re.compile(".*-(tbr|vbr).*-(tmp|cmp)-.*")
             # ------------------------------------------------------------------
             def initialize(self, plot, fig):
                 if self.output_path:
@@ -78,15 +89,33 @@ class PlotArgParser(argparse.ArgumentParser):
             def color_from_to(self, i, mini, maxi):
                 lc = (1.0, 0.8, 0.1)
                 rc = (0.6, 0.8, 1.0)
+                mul = [0.85, 1.15]
+                m = mul[i % len(mul)]
                 f = (i - mini) / (maxi - mini)
                 return tuple(
-                    max(min(l * (1.0 - f) + r * f, 1), 0) for l, r in zip(lc, rc)
+                    max(min(m * (l * (1.0 - f) + r * f), 1), 0)
+                    for l, r in zip(lc, rc)
                 )
 
             # ------------------------------------------------------------------
             def dataset_color(self, dataset, col_index):
                 return self.color_from_to(
                     col_index, 0, dataset.column_count() - 1);
+
+            # ------------------------------------------------------------------
+            def measurement_label(self, name):
+                if self.label_format == "reflection_kind":
+                    found = self._fmt_re_rk.search(name)
+                    if found:
+                        return {
+                            "tbr-tmp":"type-based template",
+                            "tbr-cmp":"type-based consteval",
+                            "vbr-tmp":"value-based template",
+                            "vbr-cmp":"value-based consteval"
+                        }["%s-%s" % (found.group(1), found.group(2))]
+                        print()
+                    
+                return name
 
             # ------------------------------------------------------------------
             def finalize(self, plot):
@@ -184,8 +213,8 @@ class DataSet:
         return len(self._col_index)
 
     # --------------------------------------------------------------------------
-    def column_label(self, col_index):
-        return self._col_infos[col_index]["set_name"]
+    def column_label(self, options, col_index):
+        return options.measurement_label(self._col_infos[col_index]["set_name"])
 
     # --------------------------------------------------------------------------
     def subtract_baseline(self, x, y, i):
