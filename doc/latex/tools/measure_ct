@@ -11,7 +11,7 @@ T="$(basename ${0})"
 F="${T}"
 TIMEFORMAT=%3R
 what=()
-order=(cat)
+order=(shuf)
 #
 while getopts "k:s:j:f:W:SR" arg
 do
@@ -21,7 +21,7 @@ do
 		j) J=${OPTARG};;
 		f) F=${OPTARG};;
 		W) what+=(${OPTARG});;
-		S) order=(shuf);;
+		S) order=(cat);;
 		R) order=(sort -n -r);;
 		*) exit 1;;
 	esac
