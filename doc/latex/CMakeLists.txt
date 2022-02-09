@@ -133,6 +133,58 @@ mirror_generate_figure(
         time-vbr-sequence-cmp-250x1000-ARMv7l
 )
 
+mirror_generate_figure(
+    ct-ratios-i5-2400
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    BASELINE
+        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+    SOURCE_DATA
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+)
+
+mirror_generate_figure(
+    ct-ratios-i7-1185
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    BASELINE
+        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+    SOURCE_DATA
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+)
+
+mirror_generate_figure(
+    ct-ratios-R7-4800
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    BASELINE
+        time-baseline-sequence-500x1000-Ryzen7-4800HS
+    SOURCE_DATA
+        time-tbr-sequence-tmp-400x1000-Ryzen7-4800HS
+        time-vbr-sequence-tmp-500x1000-Ryzen7-4800HS
+        time-tbr-sequence-cmp-400x1000-Ryzen7-4800HS
+        time-vbr-sequence-cmp-500x1000-Ryzen7-4800HS
+)
+
+mirror_generate_figure(
+	ct-ratios-ARMv7l
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    BASELINE
+        time-baseline-sequence-250x1000-ARMv7l
+    SOURCE_DATA
+        time-tbr-sequence-tmp-150x1000-ARMv7l
+        time-vbr-sequence-tmp-250x1000-ARMv7l
+        time-tbr-sequence-cmp-150x1000-ARMv7l
+        time-vbr-sequence-cmp-250x1000-ARMv7l
+)
+
 mirror_add_latex_presentation(
     value_vs_type_based
     FIGURES
@@ -144,6 +196,10 @@ mirror_add_latex_presentation(
         ct-per-n-R7-4800
 		ct-per-1-ARMv7l
 		ct-per-n-ARMv7l
+        ct-ratios-i5-2400
+        ct-ratios-i7-1185
+        ct-ratios-R7-4800
+		ct-ratios-ARMv7l
 )
 add_dependencies(doc-latex doc-value_vs_type_based-pdf)
 
