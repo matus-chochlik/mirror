@@ -34,12 +34,12 @@ mirror_generate_figure(
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-500x1000-i5-2400@3.1GHz
+        time-baseline-sequence-500x1000-i5-2400@3.1GHz
     SOURCE_DATA
-        ct-tbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        ct-tbr-sequence-cmp-500x1000-i5-2400@3.1GHz
-        ct-vbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        ct-vbr-sequence-cmp-500x1000-i5-2400@3.1GHz
+        time-tbr-sequence-tmp-500x1000-i5-2400@3.1GHz
+        time-tbr-sequence-cmp-500x1000-i5-2400@3.1GHz
+        time-vbr-sequence-tmp-500x1000-i5-2400@3.1GHz
+        time-vbr-sequence-cmp-500x1000-i5-2400@3.1GHz
 )
 
 mirror_generate_figure(
@@ -47,12 +47,12 @@ mirror_generate_figure(
     GENERATOR ct-per-n-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-500x1000-i5-2400@3.1GHz
+        time-baseline-sequence-500x1000-i5-2400@3.1GHz
     SOURCE_DATA
-        ct-tbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        ct-tbr-sequence-cmp-500x1000-i5-2400@3.1GHz
-        ct-vbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        ct-vbr-sequence-cmp-500x1000-i5-2400@3.1GHz
+        time-tbr-sequence-tmp-500x1000-i5-2400@3.1GHz
+        time-tbr-sequence-cmp-500x1000-i5-2400@3.1GHz
+        time-vbr-sequence-tmp-500x1000-i5-2400@3.1GHz
+        time-vbr-sequence-cmp-500x1000-i5-2400@3.1GHz
 )
 
 mirror_generate_figure(
@@ -60,12 +60,12 @@ mirror_generate_figure(
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
     SOURCE_DATA
-        ct-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        ct-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
-        ct-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        ct-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
 )
 
 mirror_generate_figure(
@@ -73,12 +73,12 @@ mirror_generate_figure(
     GENERATOR ct-per-n-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
     SOURCE_DATA
-        ct-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        ct-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
-        ct-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        ct-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
 )
 
 mirror_generate_figure(
@@ -86,12 +86,12 @@ mirror_generate_figure(
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-500x1000-Ryzen7-4800HS
+        time-baseline-sequence-500x1000-Ryzen7-4800HS
     SOURCE_DATA
-        ct-tbr-sequence-tmp-400x1000-Ryzen7-4800HS
-        ct-tbr-sequence-cmp-400x1000-Ryzen7-4800HS
-        ct-vbr-sequence-tmp-500x1000-Ryzen7-4800HS
-        ct-vbr-sequence-cmp-500x1000-Ryzen7-4800HS
+        time-tbr-sequence-tmp-400x1000-Ryzen7-4800HS
+        time-tbr-sequence-cmp-400x1000-Ryzen7-4800HS
+        time-vbr-sequence-tmp-500x1000-Ryzen7-4800HS
+        time-vbr-sequence-cmp-500x1000-Ryzen7-4800HS
 )
 
 mirror_generate_figure(
@@ -99,12 +99,12 @@ mirror_generate_figure(
     GENERATOR ct-per-n-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-500x1000-Ryzen7-4800HS
+        time-baseline-sequence-500x1000-Ryzen7-4800HS
     SOURCE_DATA
-        ct-tbr-sequence-tmp-400x1000-Ryzen7-4800HS
-        ct-tbr-sequence-cmp-400x1000-Ryzen7-4800HS
-        ct-vbr-sequence-tmp-500x1000-Ryzen7-4800HS
-        ct-vbr-sequence-cmp-500x1000-Ryzen7-4800HS
+        time-tbr-sequence-tmp-400x1000-Ryzen7-4800HS
+        time-tbr-sequence-cmp-400x1000-Ryzen7-4800HS
+        time-vbr-sequence-tmp-500x1000-Ryzen7-4800HS
+        time-vbr-sequence-cmp-500x1000-Ryzen7-4800HS
 )
 
 mirror_generate_figure(
@@ -112,12 +112,12 @@ mirror_generate_figure(
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-250x1000-ARMv7l
+        time-baseline-sequence-250x1000-ARMv7l
     SOURCE_DATA
-        ct-tbr-sequence-tmp-150x1000-ARMv7l
-        ct-tbr-sequence-cmp-150x1000-ARMv7l
-        ct-vbr-sequence-tmp-250x1000-ARMv7l
-        ct-vbr-sequence-cmp-250x1000-ARMv7l
+        time-tbr-sequence-tmp-150x1000-ARMv7l
+        time-tbr-sequence-cmp-150x1000-ARMv7l
+        time-vbr-sequence-tmp-250x1000-ARMv7l
+        time-vbr-sequence-cmp-250x1000-ARMv7l
 )
 
 mirror_generate_figure(
@@ -125,12 +125,12 @@ mirror_generate_figure(
     GENERATOR ct-per-n-mo
 	LABEL reflection_kind
     BASELINE
-        ct-baseline-sequence-250x1000-ARMv7l
+        time-baseline-sequence-250x1000-ARMv7l
     SOURCE_DATA
-        ct-tbr-sequence-tmp-150x1000-ARMv7l
-        ct-tbr-sequence-cmp-150x1000-ARMv7l
-        ct-vbr-sequence-tmp-250x1000-ARMv7l
-        ct-vbr-sequence-cmp-250x1000-ARMv7l
+        time-tbr-sequence-tmp-150x1000-ARMv7l
+        time-tbr-sequence-cmp-150x1000-ARMv7l
+        time-vbr-sequence-tmp-250x1000-ARMv7l
+        time-vbr-sequence-cmp-250x1000-ARMv7l
 )
 
 mirror_add_latex_presentation(
