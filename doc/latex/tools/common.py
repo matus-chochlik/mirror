@@ -217,6 +217,12 @@ class DataSet:
         return options.measurement_label(self._col_infos[col_index]["set_name"])
 
     # --------------------------------------------------------------------------
+    def column_indices(self):
+        for col_index in self._col_index.values():
+            if col_index is not None and col_index != self._bln_index:
+                yield col_index
+
+    # --------------------------------------------------------------------------
     def subtract_baseline(self, x, y, i):
         j = self._bln_index
         if j is not None:
@@ -238,8 +244,19 @@ class DataSet:
 
     # --------------------------------------------------------------------------
     def data_columns(self):
-        for col_index in self._col_index.values():
-            if col_index is not None and col_index != self._bln_index:
-                yield self.data_column(col_index)
+        for col_index in self.column_indices():
+            yield self.data_column(col_index)
+
+    # --------------------------------------------------------------------------
+    def column_ratios(self, i, j):
+        def _gen():
+            for k, v in sorted(self._data.items()):
+                try:
+                    yield k, v[i] / v[j]
+                except KeyError:
+                    pass
+
+        temp = numpy.array([e for e in _gen()]).transpose()
+        return (temp[0], temp[1])
 
 # ------------------------------------------------------------------------------
