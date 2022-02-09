@@ -181,7 +181,7 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
     \end{column}
     \begin{column}{.85\textwidth}
     \normalsize
-    Spans, vectors, etc. must be fixed to work in \inlinecode{consteval}.
+    Vectors, etc. must be fixed to work in \inlinecode{consteval}.
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
     span<(*@\listinghls{info}@*)> x = members_of(...);
     vector<(*@\listinghls{info}@*)> y = bases_of(...);
@@ -607,7 +607,7 @@ xsltproc combine.xslt index.xml > (*@\listinghl{clang.xml}@*)
   \begin{columns}
     \begin{column}{.35\textwidth}
       \Large
-      Measure!
+      Calculate!
       \begin{lstlisting}[language=bash,basicstyle=\small\ttfamily]
 xsltproc \
     (*@\listinghlt{count.xslt}@*) \
@@ -727,6 +727,16 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
   \begin{itemize}
     \item The typical compile-time overhead of materializing a metaobject
       is on the order of tens or hundreds of microseconds
+    \item The type-based metaobject representation is between 2x and 4x
+      slower to compile compared to the purely value-based representation
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusions}
+  \framesubtitle{(cont.)}
+  \Large
+  \begin{itemize}
     \item Most typical reflection use-cases don't require reflecting every
       declaration in a project
     \item Even if reflecting almost everything, the~overhead compared
