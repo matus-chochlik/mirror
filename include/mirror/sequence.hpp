@@ -767,6 +767,12 @@ constexpr auto all_of(wrapped_metaobject<M> mo, F predicate) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return all_of(unpack(mo), predicate);
 }
+
+template <typename... E, typename F>
+constexpr auto all_of(type_list<E...>, F predicate) noexcept
+  -> bool requires(...&& is_object_sequence(E{})) {
+    return (... && predicate(E{}));
+}
 #endif
 
 // any_of
@@ -790,6 +796,12 @@ constexpr auto any_of(wrapped_metaobject<M> mo, F predicate) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return any_of(unpack(mo), predicate);
 }
+
+template <typename... E, typename F>
+constexpr auto any_of(type_list<E...>, F predicate) noexcept
+  -> bool requires(...&& is_object_sequence(E{})) {
+    return (... || predicate(E{}));
+}
 #endif
 
 // none_of
@@ -812,6 +824,12 @@ template <__metaobject_id M, typename F>
 constexpr auto none_of(wrapped_metaobject<M> mo, F predicate) noexcept
   -> bool requires(__metaobject_is_meta_object_sequence(M)) {
     return none_of(unpack(mo), predicate);
+}
+
+template <typename... E, typename F>
+constexpr auto none_of(type_list<E...>, F predicate) noexcept
+  -> bool requires(...&& is_object_sequence(E{})) {
+    return !(... && predicate(E{}));
 }
 #endif
 
@@ -854,6 +872,20 @@ constexpr auto concat(M ms) noexcept {
 template <metaobject_sequence M, metaobject_sequence... Ms>
 constexpr auto concat(M h, Ms... t) noexcept {
     return concat(unpack(h), concat(unpack(t)...));
+}
+
+// group by
+template <__metaobject_id... M, typename F>
+auto group_by(unpacked_metaobject_sequence<M...> s, F transform) {
+    return type_list<decltype(filter(s, [transform](auto e) {
+        return transform(e) == transform(wrapped_metaobject<M>{});
+    }))...>{};
+}
+
+template <__metaobject_id M, typename F>
+auto group_by(wrapped_metaobject<M> mo, F transform) requires(
+  __metaobject_is_meta_object_sequence(M)) {
+    return group_by(unpack(mo), transform);
 }
 
 // flatten

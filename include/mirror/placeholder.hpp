@@ -1072,6 +1072,13 @@ constexpr auto select(
     }};
 }
 
+template <typename X, typename F>
+constexpr auto group_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return group_by(e(a...), transform);
+    }};
+}
+
 template <typename X>
 constexpr auto flatten(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
