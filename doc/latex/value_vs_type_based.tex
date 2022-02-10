@@ -363,7 +363,7 @@ consteval void my_reusable_algo(
       \item parsing of command line arguments into a config structure,
       \item RPC stubs and skeletons,
       \item generic wrapper for a REST API,
-      \item Automated registering with a scripting engine,
+      \item automated registering with a scripting engine,
       \item generating UML diagrams from code,
       \item fetching and converting data from an SQL database,
       \item generating SQL queries from the names in an \say{interface} class,
@@ -655,7 +655,7 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{What about executable sizes?}
-  \larger
+  \Large
   \begin{itemize}
     \item This is boring\ldots
     \item When the reflection-related functions are \inlinecode{consteval},
@@ -875,6 +875,7 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
       to~total build time is a~fraction of~a~percent even in~the~worst case
     \item For projects similar in complexity to \inlinecode{clang},
       this results in 1-2 minutes added to several hours of compilation-time
+      in the worst case
 
   \end{itemize}
 \end{frame}
