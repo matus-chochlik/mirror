@@ -349,7 +349,7 @@ consteval void my_reusable_algo(
   one of the main points of this API.
 \end{frame}
 % ------------------------------------------------------------------------------
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{BTW, why so much focus on splicing?}
   \framesubtitle{some anecdotes\ldots}
   \begin{itemize}
@@ -375,6 +375,30 @@ consteval void my_reusable_algo(
 \end{frame}
 % ------------------------------------------------------------------------------
 \section{setup}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{What are we trying to do?}
+  Determine what is the actual overhead of this:
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <(*@\listinghls{info}@*) X>
+struct (*@\listinghlt{__metaobject}@*) {
+  consteval operator (*@\listinghls{info}@*)() const {
+    return X;
+  }
+};
+concept (*@\listinghlt{metaobject}@*) = (*@\listinghlt{unspecified}@*);
+
+consteval auto foo(info mo);
+consteval auto bar((*@\listinghlt{metaobject}@*) auto mo);
+  \end{lstlisting}
+  compared to this:
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+consteval auto foo((*@\listinghls{info}@*) mo);
+
+template <(*@\listinghls{info}@*) MO>
+consteval auto bar();
+  \end{lstlisting}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{How to materialize 100'000s of metaobjects?}
@@ -629,6 +653,20 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
   \fitfig{ct-ratios-ARMv7l}
 \end{frame}
 % ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What about executable sizes?}
+  \larger
+  \begin{itemize}
+    \item This is boring\ldots
+    \item When the reflection-related functions are \inlinecode{consteval},
+      the executable size stays the same regardless of the representation
+      of metaobjects or their count
+    \item The test source code shown above always compiles into an~executable
+      roughly 16kB  in size
+
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
 \section{clang}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -835,6 +873,22 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
       declaration in a project
     \item Even if reflecting almost everything, the~overhead compared
       to~total build time is a~fraction of~a~percent even in~the~worst case
+    \item For projects similar in complexity to \inlinecode{clang},
+      this results in 1-2 minutes added to several hours of compilation-time
+
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusions}
+  \framesubtitle{(cont.)}
+  \Large
+  \begin{itemize}
+    \item Some of the compile-time advantage of value-based API disappears,
+      when splicing is involved
+    \item In the value-based API splicing requires passing metaobject
+      as non-type template arguments
+    \item Splicing is quite common in various use-cases
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
