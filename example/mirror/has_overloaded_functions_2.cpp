@@ -43,7 +43,7 @@ int main() {
     using mirror::_1;
     const auto has_overloaded_functions = any_of(
       group_by(get_member_functions(_1), get_name(_1)),
-      [](auto ms) { return get_size(ms) > 1Z; });
+      has_multiple_elements(_1));
 
     std::cout << has_overloaded_functions(mirror(foo)) << std::endl;
     std::cout << has_overloaded_functions(mirror(bar)) << std::endl;

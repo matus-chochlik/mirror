@@ -26,6 +26,10 @@ struct my_interface : mirror::interface<my_interface> {
     auto bar(int j) {
         return bar(1, j);
     }
+
+    auto bar() {
+        return bar(1, 2);
+    }
 };
 
 int main() {
@@ -55,7 +59,8 @@ int main() {
 
     std::cout << "\noverload sets:\n";
     for_each(group_by(mfs, get_name(_1)), [&](auto mo) {
-        print_name(get_element<0>(mo));
+        std::cout << get_name(get_element<0>(mo)) << ": (" << get_size(mo)
+                  << ")\n";
     });
 
     return 0;

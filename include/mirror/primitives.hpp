@@ -1233,6 +1233,8 @@ consteval auto is_move_assignment_operator(__metaobject_id mo) noexcept
 /// @brief Indicates if the metaobject sequence is empty.
 /// @ingroup operations
 /// @see reflects_object_sequence
+/// @see has_one_element
+/// @see has_multiple_elements
 /// @see get_size
 /// @see get_element
 /// @see metaobject_operation
@@ -1241,6 +1243,40 @@ consteval auto is_empty(metaobject auto mo) noexcept
 #else
 consteval auto is_empty(__metaobject_id mo) noexcept -> bool {
     return __metaobject_is_empty(mo);
+}
+#endif
+
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if the metaobject sequence has exactly one element.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see has_multiple_elements
+/// @see get_size
+/// @see get_element
+/// @see metaobject_operation
+consteval auto has_one_element(metaobject auto mo) noexcept
+  -> bool requires(reflects_object_sequence(mo));
+#else
+consteval auto has_one_element(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_get_size(mo) == 1Z;
+}
+#endif
+
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if the metaobject sequence has more than one element.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see has_one_element
+/// @see get_size
+/// @see get_element
+/// @see metaobject_operation
+consteval auto has_multiple_elements(metaobject auto mo) noexcept
+  -> bool requires(reflects_object_sequence(mo));
+#else
+consteval auto has_multiple_elements(__metaobject_id mo) noexcept -> bool {
+    return __metaobject_get_size(mo) > 1Z;
 }
 #endif
 

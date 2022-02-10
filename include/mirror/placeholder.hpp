@@ -18,15 +18,8 @@ template <typename F>
 struct placeholder_expr {
     F f;
 
-    template <__metaobject_id M>
-    constexpr auto operator()(wrapped_metaobject<M> mo) const {
-        return f(mo);
-    }
-
-    template <__metaobject_id Ml, __metaobject_id Mr>
-    constexpr auto
-    operator()(wrapped_metaobject<Ml> ml, wrapped_metaobject<Mr> mr) const {
-        return f(ml, mr);
+    constexpr auto operator()(auto... args) const {
+        return f(args...);
     }
 };
 
@@ -70,23 +63,18 @@ constexpr auto operator<(placeholder_expr<El> l, placeholder_expr<Er> r) {
 
 template <>
 struct placeholder_expr<std::integral_constant<size_t, 1>> {
-    template <__metaobject_id M>
-    constexpr auto operator()(wrapped_metaobject<M> mo) const {
+    constexpr auto operator()(auto mo) const {
         return mo;
     }
 
-    template <__metaobject_id Ml, __metaobject_id Mr>
-    constexpr auto
-    operator()(wrapped_metaobject<Ml> mo, wrapped_metaobject<Mr>) const {
+    constexpr auto operator()(auto mo, auto) const {
         return mo;
     }
 };
 
 template <>
 struct placeholder_expr<std::integral_constant<size_t, 2>> {
-    template <__metaobject_id Ml, __metaobject_id Mr>
-    constexpr auto
-    operator()(wrapped_metaobject<Ml>, wrapped_metaobject<Mr> mo) const {
+    constexpr auto operator()(auto, auto mo) const {
         return mo;
     }
 };
@@ -591,6 +579,20 @@ template <typename X>
 constexpr auto is_empty(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return is_empty(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto has_one_element(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return has_one_element(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto has_multiple_elements(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return has_multiple_elements(e(a...));
     }};
 }
 

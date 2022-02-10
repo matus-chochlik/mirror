@@ -56,6 +56,18 @@ consteval auto is_empty(unpacked_metaobject_sequence<M...>) noexcept -> bool {
 }
 
 template <__metaobject_id... M>
+consteval auto has_one_element(unpacked_metaobject_sequence<M...>) noexcept
+  -> bool {
+    return sizeof...(M) == 1Z;
+}
+
+template <__metaobject_id... M>
+consteval auto
+has_multiple_elements(unpacked_metaobject_sequence<M...>) noexcept -> bool {
+    return sizeof...(M) > 1Z;
+}
+
+template <__metaobject_id... M>
 consteval auto get_size(unpacked_metaobject_sequence<M...>) noexcept -> size_t {
     return sizeof...(M);
 }
