@@ -28,6 +28,11 @@ consteval auto is_object_sequence(unpacked_metaobject_sequence<M...>) noexcept
     return true;
 }
 
+template <typename... E>
+consteval auto is_object_sequence(type_list<E...>) noexcept -> bool {
+    return (... && (is_object(E{}) || is_object_sequence(E{})));
+}
+
 /// @brief Indicates if the argument is a sequence of metaobjects.
 /// @ingroup classification
 /// @see reflects_object_sequence
@@ -53,6 +58,12 @@ consteval auto is_empty(unpacked_metaobject_sequence<M...>) noexcept -> bool {
 template <__metaobject_id... M>
 consteval auto get_size(unpacked_metaobject_sequence<M...>) noexcept -> size_t {
     return sizeof...(M);
+}
+
+template <typename... E>
+consteval auto get_size(type_list<E...> tl) noexcept -> size_t
+  requires(is_object_sequence(tl)) {
+    return sizeof...(E);
 }
 
 #if defined(MIRROR_DOXYGEN)
@@ -129,6 +140,12 @@ template <__metaobject_id M, typename F>
 constexpr auto transform(wrapped_metaobject<M> mo, F function) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return transform(unpack(mo), function);
+}
+
+template <typename... E, typename F>
+constexpr auto transform(type_list<E...> tl, F function) noexcept
+  requires(is_object_sequence(tl)) {
+    return type_list<decltype(function(E{}))...>{};
 }
 #endif
 
@@ -378,6 +395,11 @@ template <__metaobject_id M, typename F>
 constexpr void for_each(wrapped_metaobject<M> mo, F function) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return for_each(unpack(mo), std::move(function));
+}
+
+template <typename... E, typename F>
+constexpr void for_each(type_list<E...>, F function) noexcept {
+    (void)(..., function(E{}));
 }
 #endif
 
@@ -769,8 +791,8 @@ constexpr auto all_of(wrapped_metaobject<M> mo, F predicate) noexcept
 }
 
 template <typename... E, typename F>
-constexpr auto all_of(type_list<E...>, F predicate) noexcept
-  -> bool requires(...&& is_object_sequence(E{})) {
+constexpr auto all_of(type_list<E...> tl, F predicate) noexcept
+  -> bool requires(is_object_sequence(tl)) {
     return (... && predicate(E{}));
 }
 #endif
@@ -798,8 +820,8 @@ constexpr auto any_of(wrapped_metaobject<M> mo, F predicate) noexcept
 }
 
 template <typename... E, typename F>
-constexpr auto any_of(type_list<E...>, F predicate) noexcept
-  -> bool requires(...&& is_object_sequence(E{})) {
+constexpr auto any_of(type_list<E...> tl, F predicate) noexcept
+  -> bool requires(is_object_sequence(tl)) {
     return (... || predicate(E{}));
 }
 #endif
@@ -827,8 +849,8 @@ constexpr auto none_of(wrapped_metaobject<M> mo, F predicate) noexcept
 }
 
 template <typename... E, typename F>
-constexpr auto none_of(type_list<E...>, F predicate) noexcept
-  -> bool requires(...&& is_object_sequence(E{})) {
+constexpr auto none_of(type_list<E...> tl, F predicate) noexcept
+  -> bool requires(is_object_sequence(tl)) {
     return !(... && predicate(E{}));
 }
 #endif
@@ -855,6 +877,14 @@ select(wrapped_metaobject<M> mo, F function, T fallback, P&&... param) noexcept
       std::forward<P>(param)...);
 }
 
+template <typename T, typename... E, typename F, typename... P>
+constexpr auto
+select(type_list<E...> tl, F function, T fallback, P&&... param) noexcept -> T
+  requires(is_object_sequence(tl)) {
+    (void)(..., function(fallback, E{}, std::forward<P>(param)...));
+    return fallback;
+}
+
 // concat
 template <__metaobject_id... L, __metaobject_id... R>
 constexpr auto concat(
@@ -875,11 +905,28 @@ constexpr auto concat(M h, Ms... t) noexcept {
 }
 
 // group by
+template <typename... E, typename F>
+auto do_group_by(unpacked_metaobject_sequence<>, type_list<E...> result, F) {
+    return result;
+}
+
+template <__metaobject_id M, __metaobject_id... Mt, typename... T, typename F>
+auto do_group_by(
+  unpacked_metaobject_sequence<M, Mt...> src,
+  type_list<T...>,
+  F transform) {
+    const auto compare = [=](auto mo) {
+        return transform(mo) == transform(wrapped_metaobject<M>{});
+    };
+    return do_group_by(
+      remove_if(src, compare),
+      type_list<T..., decltype(filter(src, compare))>{},
+      transform);
+}
+
 template <__metaobject_id... M, typename F>
 auto group_by(unpacked_metaobject_sequence<M...> s, F transform) {
-    return type_list<decltype(filter(s, [transform](auto e) {
-        return transform(e) == transform(wrapped_metaobject<M>{});
-    }))...>{};
+    return do_group_by(s, type_list<>{}, transform);
 }
 
 template <__metaobject_id M, typename F>
@@ -895,6 +942,68 @@ constexpr auto flatten(unpacked_metaobject_sequence<M...>) requires(
     return concat(wrapped_metaobject<M>{}...);
 }
 
+template <typename... E>
+constexpr auto flatten(type_list<E...> tl) requires(is_object_sequence(tl)) {
+    return concat(E{}...);
+}
+
+// KOKOTINY
+template <size_t I, __metaobject_id M, __metaobject_id... Mt>
+consteval auto get(mirror::unpacked_metaobject_sequence<M, Mt...>) noexcept {
+    if constexpr(I == 0Z) {
+        return mirror::wrapped_metaobject<M>{};
+    } else {
+        return get<I - 1Z>(mirror::unpacked_metaobject_sequence<Mt...>{});
+    }
+}
+
+template <size_t I, __metaobject_id... M>
+constexpr auto get_element(unpacked_metaobject_sequence<M...> mos) noexcept {
+    return get<I>(mos);
+}
+
+template <size_t I, typename E, typename... Et>
+consteval auto get(mirror::type_list<E, Et...>) noexcept {
+    if constexpr(I == 0Z) {
+        return E{};
+    } else {
+        return get<I - 1Z>(mirror::type_list<Et...>{});
+    }
+}
+
+template <size_t I, typename... E>
+constexpr auto get_element(type_list<E...> tl) noexcept
+  requires(is_object_sequence(tl)) {
+    return get<I>(tl);
+}
+
 } // namespace mirror
+
+namespace std {
+
+template <__metaobject_id... M>
+struct tuple_size<mirror::unpacked_metaobject_sequence<M...>>
+  : integral_constant<size_t, sizeof...(M)> {};
+
+template <typename... E>
+struct tuple_size<mirror::type_list<E...>>
+  : integral_constant<size_t, sizeof...(E)> {};
+
+template <__metaobject_id M, __metaobject_id... Mt>
+struct tuple_element<0Z, mirror::unpacked_metaobject_sequence<M, Mt...>>
+  : type_identity<mirror::wrapped_metaobject<M>> {};
+
+template <size_t I, __metaobject_id M, __metaobject_id... Mt>
+struct tuple_element<I, mirror::unpacked_metaobject_sequence<M, Mt...>>
+  : tuple_element<I - 1Z, mirror::unpacked_metaobject_sequence<Mt...>> {};
+
+template <typename E, typename... Et>
+struct tuple_element<0Z, mirror::type_list<E, Et...>> : type_identity<E> {};
+
+template <size_t I, typename E, typename... Et>
+struct tuple_element<I, mirror::type_list<E, Et...>>
+  : tuple_element<I - 1Z, mirror::type_list<Et...>> {};
+
+} // namespace std
 
 #endif // MIRROR_SEQUENCE_HPP
