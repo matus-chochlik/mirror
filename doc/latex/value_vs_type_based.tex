@@ -280,6 +280,100 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
   \end{columns}
 \end{frame}
 % ------------------------------------------------------------------------------
+\section{usability}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Usability issues}
+  \framesubtitle{the dual value-based API}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+// span<meta::info>, vector<meta::info>
+auto (*@\listinghls{mem}@*) = members_of(^T);
+auto (*@\listinghlt{func}@*) = // some callable, example later
+  \end{lstlisting}
+  The following is possible only for a subset of possible reflection
+  operations:
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+std::count_if(*@\footnote{
+  or any other of countless possible algorithms}@*)((*@\listinghls{mem}@*).begin(), (*@\listinghls{mem}@*).end(), func);
+  \end{lstlisting}
+  Specifically the \inlinecode{func} cannot use splicing, because
+  \inlinecode{count_if} will call it as:
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+(*@\listinghlt{func}@*)((*@\listinghl{element}@*));
+  \end{lstlisting}
+  and not as:
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+(*@\listinghlt{func}@*)<(*@\listinghl{element}@*)>();
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Usability issues}
+  \framesubtitle{writing generic algorithms}
+  Users\footnote{and library authors} will want to write their own reusable
+  algorithms, that take other functions\footnote{predicates, transforms, etc.}
+  as their arguments:
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+consteval void my_reusable_algo(
+  span<meta::info> (*@\listinghls{s}@*),
+  function<bool(meta::info)> (*@\listinghlt{predicate}@*),
+  function<void(meta::info)> (*@\listinghlt{function}@*)) {
+  for(auto (*@\listinghl{e}@*) : (*@\listinghls{s}@*)) {
+    if((*@\listinghlt{predicate}@*)((*@\listinghl{e}@*)) && something_else((*@\listinghl{e}@*))) {
+      (*@\listinghlt{function}@*)((*@\listinghl{e}@*));
+    }
+  }
+}
+  \end{lstlisting}
+  \inlinecode{predicate}, \inlinecode{something_else} and \inlinecode{function}
+  cannot do splicing\ldots
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Usability issues}
+  \framesubtitle{supporting splicing}
+  \ldots to support splicing we'd have to:
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <auto (*@\listinghls{s}@*)>
+consteval void my_reusable_algo(
+  auto (*@\listinghlt{predicate}@*),
+  auto (*@\listinghlt{function}@*)) {
+  template for(auto (*@\listinghl{e}@*) : (*@\listinghls{s}@*)) {
+    if((*@\listinghlt{predicate}@*)<(*@\listinghl{e}@*)>() && something_else<(*@\listinghl{e}@*)>()) {
+      (*@\listinghlt{function}@*)<(*@\listinghl{e}@*)>();
+    }
+  }
+}
+  \end{lstlisting}
+  making everything a template. But then this becomes slower to compile, defeating
+  one of the main points of this API.
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{BTW, why so much focus on splicing?}
+  \framesubtitle{some anecdotes\ldots}
+  \begin{itemize}
+  \item Out of these use-cases\footnote{all implemented here:
+    \url{https://github.com/matus-chochlik/mirror}}\footnote{
+      and there is a whole other presentation about the details}
+    \begin{itemize}
+      \smaller
+      \item enum / string conversion,
+      \item serialization and deserialization,
+      \item parsing of command line arguments into a config structure,
+      \item RPC stubs and skeletons,
+      \item generic wrapper for a REST API,
+      \item Automated registering with a scripting engine,
+      \item generating UML diagrams from code,
+      \item fetching and converting data from an SQL database,
+      \item generating SQL queries from the names in an \say{interface} class,
+      \item implementation of the factory pattern.
+    \end{itemize}
+  \item All but one\footnote{UML generation} required splicing
+  \item Various forms of splicing are {\em \larger very} common in use-cases
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
 \section{setup}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
