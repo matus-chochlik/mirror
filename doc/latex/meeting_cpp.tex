@@ -678,7 +678,7 @@ auto get_size(auto mo) -> size_t
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  Get the I-th element 
+  Get the I-th element
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 template <size_t I>
 auto get_element(auto mo)
@@ -1130,20 +1130,15 @@ enum class month : int {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Does a class have overloaded functions?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto has_overloaded_functions =
-  [](metaobject auto mo) {
-    const auto mfs = (*@\listinghl{get_member_functions}@*)(mo);
-    return (*@\listinghlt{fold}@*)(
-      mfs,
-      [mfs](auto mf1) {
-        return (*@\listinghl{any_of}@*)(mfs, [mf1](auto mf2) {
-          return !(*@\listinghl{reflects_same}@*)(mf1, mf2) &&
-             (*@\listinghl{get_name}@*)(mf1) == (*@\listinghl{get_name}@*)(mf2);
-        });
-      },
-      (*@\listinghlt{[]}@*)(auto... b) { return (... || b); });
-  };
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+const auto has_overloaded_functions =
+  (*@\listinghl{any_of}@*)(
+    (*@\listinghl{group_by}@*)(
+      (*@\listinghl{get_member_functions}@*)(_1),
+      (*@\listinghl{get_name}@*)(_1)),
+    [](auto ms) {
+      return (*@\listinghl{get_size}@*)(ms) > 1Z;
+    });
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
