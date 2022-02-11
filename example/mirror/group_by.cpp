@@ -49,7 +49,7 @@ int main() {
     std::cout << "\nnon static functions:\n";
     for_each(non_static, print_name);
 
-    auto [virtual_, non_virtual] = group_by(mfs, is_virtual(_1));
+    auto [non_virtual, virtual_] = group_by(mfs, is_virtual(_1));
 
     std::cout << "\nvirtual functions:\n";
     for_each(virtual_, print_name);
