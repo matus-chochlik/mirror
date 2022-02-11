@@ -2003,6 +2003,7 @@ constexpr auto hide_protected(wrapped_metaobject<M>) noexcept
 /// @ingroup operations
 /// @see reflects_object_sequence
 /// @see get_size
+/// @see get_front
 template <size_t I>
 constexpr auto get_element(metaobject auto mo) noexcept
   requires(reflects_object_sequence(mo));
@@ -2011,6 +2012,22 @@ template <size_t I, __metaobject_id M>
 constexpr auto get_element(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return wrapped_metaobject<__metaobject_get_element(M, I)>{};
+}
+#endif
+
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns the I-th metaobject in a metaobject sequence.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see get_size
+/// @see get_element
+constexpr auto get_front(metaobject auto mo) noexcept
+  requires(reflects_object_sequence(mo) && !is_empty(mo));
+#else
+template <__metaobject_id M>
+constexpr auto get_front(wrapped_metaobject<M>) noexcept requires(
+  __metaobject_is_meta_object_sequence(M) && !__metaobject_is_empty(M)) {
+    return wrapped_metaobject<__metaobject_get_element(M, 0Z)>{};
 }
 #endif
 

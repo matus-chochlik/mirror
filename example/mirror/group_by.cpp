@@ -59,8 +59,7 @@ int main() {
 
     std::cout << "\noverload sets:\n";
     for_each(group_by(mfs, get_name(_1)), [&](auto mo) {
-        std::cout << get_name(get_element<0>(mo)) << ": (" << get_size(mo)
-                  << ")\n";
+        std::cout << get_name(get_front(mo)) << ": (" << get_size(mo) << ")\n";
     });
 
     return 0;

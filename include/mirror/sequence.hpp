@@ -974,6 +974,11 @@ constexpr auto get_element(unpacked_metaobject_sequence<M...> mos) noexcept {
     return get<I>(mos);
 }
 
+template <__metaobject_id... M>
+constexpr auto get_front(unpacked_metaobject_sequence<M...> mos) noexcept {
+    return get<0Z>(mos);
+}
+
 template <size_t I, typename E, typename... Et>
 consteval auto get(mirror::type_list<E, Et...>) noexcept {
     if constexpr(I == 0Z) {
@@ -987,6 +992,12 @@ template <size_t I, typename... E>
 constexpr auto get_element(type_list<E...> tl) noexcept
   requires(is_object_sequence(tl)) {
     return get<I>(tl);
+}
+
+template <typename... E>
+constexpr auto get_front(type_list<E...> tl) noexcept
+  requires(is_object_sequence(tl) && sizeof...(E) != 0Z) {
+    return get<0Z>(tl);
 }
 
 } // namespace mirror

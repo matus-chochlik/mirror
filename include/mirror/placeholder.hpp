@@ -633,6 +633,13 @@ constexpr auto get_element(placeholder_expr<X> e) {
 }
 
 template <typename X>
+constexpr auto get_front(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_front(e(a...));
+    }};
+}
+
+template <typename X>
 constexpr auto get_pointer(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return get_pointer(e(a...));
