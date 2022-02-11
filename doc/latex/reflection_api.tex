@@ -1178,20 +1178,13 @@ enum class month : int {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Does a class have overloaded functions?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto has_overloaded_functions =
-  [](metaobject auto mo) {
-    const auto mfs = (*@\listinghl{get_member_functions}@*)(mo);
-    return (*@\listinghlt{fold}@*)(
-      mfs,
-      [mfs](auto mf1) {
-        return (*@\listinghl{any_of}@*)(mfs, [mf1](auto mf2) {
-          return !(*@\listinghl{reflects_same}@*)(mf1, mf2) &&
-             (*@\listinghl{get_name}@*)(mf1) == (*@\listinghl{get_name}@*)(mf2);
-        });
-      },
-      (*@\listinghlt{[]}@*)(auto... b) { return (... || b); });
-  };
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+const auto has_overloaded_functions =
+  (*@\listinghl{any_of}@*)(
+    (*@\listinghl{group_by}@*)(
+      (*@\listinghl{get_member_functions}@*)(_1),
+      (*@\listinghl{get_name}@*)(_1)),
+    (*@\listinghl{has_multiple_elements}@*)(_1));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
