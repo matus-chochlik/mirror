@@ -142,11 +142,11 @@ consteval auto bar((*@\listinghl{__metaobject}@*)<(*@\listinghlt{MO}@*)> mo);
     \normalsize
     Dual syntax:
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{lstlisting}
     or
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>();
+use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>());
     \end{lstlisting}
     When to use which?
     \end{column}
@@ -162,11 +162,11 @@ use(bar<(*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))>();
     \normalsize
     Uniform syntax:
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+use(foo((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{lstlisting}
     and
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*)));
+use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{lstlisting}
     \end{column}
   \end{columns}
