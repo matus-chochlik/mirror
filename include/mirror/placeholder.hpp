@@ -1102,6 +1102,34 @@ constexpr auto sort_by(placeholder_expr<X> e, F transform) {
     }};
 }
 
+template <typename X, typename F>
+constexpr auto reverse_sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return reverse_sort_by(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F, typename C>
+constexpr auto group_and_sort_by(placeholder_expr<X> e, F transform, C compare) {
+    return placeholder_expr{[e, transform, compare](auto... a) {
+        return group_and_sort_by(e(a...), transform, compare);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto group_and_sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return group_and_sort_by(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto reverse_group_and_sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return reverse_group_and_sort_by(e(a...), transform);
+    }};
+}
+
 template <typename X>
 constexpr auto flatten(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {

@@ -11,10 +11,6 @@
 #include <iostream>
 
 struct my_interface : mirror::interface<my_interface> {
-    static auto name() {
-        return get_name(mirror(my_interface));
-    }
-
     virtual auto foo(int i, int j) -> int = 0;
 
     auto foo(int i) {
@@ -30,6 +26,10 @@ struct my_interface : mirror::interface<my_interface> {
     auto bar(int j) {
         return bar(1, j);
     }
+
+    static auto name() {
+        return get_name(mirror(my_interface));
+    }
 };
 
 int main() {
@@ -41,8 +41,7 @@ int main() {
 
     const auto mfs = get_member_functions(mirror(my_interface));
 
-    auto [non_static, static_] =
-      sort_by(group_by(mfs, is_static(_1)), is_static(get_front(_1)));
+    auto [non_static, static_] = group_and_sort_by(mfs, is_static(_1));
 
     std::cout << "\nstatic functions:\n";
     for_each(static_, print_name);
@@ -63,6 +62,13 @@ int main() {
     for_each(sort_by(group_by(mfs, get_name(_1)), get_size(_1)), [&](auto mo) {
         std::cout << get_name(get_front(mo)) << ": (" << get_size(mo) << ")\n";
     });
+
+    std::cout << "\nfunctions with most parameters:\n";
+    for_each(
+      sort_by(
+        get_front(reverse_group_and_sort_by(mfs, get_size(get_parameters(_1)))),
+        get_name(_1)),
+      print_name);
 
     return 0;
 }

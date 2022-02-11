@@ -944,11 +944,11 @@ constexpr auto do_sort_by(type_list<E...> result, type_list<>, F, C) {
     return result;
 }
 
-template <typename... L, typename M, typename... R, typename F, typename C>
+template <typename... L, typename E, typename... R, typename F, typename C>
 constexpr auto
-do_sort_by(type_list<L...>, type_list<M, R...>, F transform, C compare) {
+do_sort_by(type_list<L...>, type_list<E, R...>, F transform, C compare) {
     return do_sort_by(
-      do_insert_by<M>(type_list<>{}, type_list<L...>{}, transform, compare),
+      do_insert_by<E>(type_list<>{}, type_list<L...>{}, transform, compare),
       type_list<R...>{},
       transform,
       compare);
@@ -976,8 +976,13 @@ constexpr auto sort_by(
 
 template <typename S, typename F>
 constexpr auto sort_by(S s, F transform) requires(is_object_sequence(s)) {
-    return do_sort_by(
-      type_list<>{}, s, transform, [](auto l, auto r) { return l < r; });
+    return sort_by(s, transform, [](auto l, auto r) { return l < r; });
+}
+
+template <typename S, typename F>
+constexpr auto
+reverse_sort_by(S s, F transform) requires(is_object_sequence(s)) {
+    return sort_by(s, transform, [](auto l, auto r) { return l > r; });
 }
 
 // group by
@@ -1010,6 +1015,30 @@ template <__metaobject_id M, typename F>
 constexpr auto group_by(wrapped_metaobject<M> mo, F transform) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return group_by(unpack(mo), transform);
+}
+
+// group and sort by
+template <typename S, typename F, typename C>
+constexpr auto
+group_and_sort_by(S s, F transform, C compare) requires(is_object_sequence(s)) {
+    return sort_by(
+      group_by(s, transform),
+      [transform](auto e) { return transform(get_front(e)); },
+      compare);
+}
+
+template <typename S, typename F>
+constexpr auto
+group_and_sort_by(S s, F transform) requires(is_object_sequence(s)) {
+    return group_and_sort_by(
+      s, transform, [](auto l, auto r) { return l < r; });
+}
+
+template <typename S, typename F>
+constexpr auto
+reverse_group_and_sort_by(S s, F transform) requires(is_object_sequence(s)) {
+    return group_and_sort_by(
+      s, transform, [](auto l, auto r) { return l > r; });
 }
 
 // flatten
