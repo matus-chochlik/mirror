@@ -1088,6 +1088,20 @@ constexpr auto group_by(placeholder_expr<X> e, F transform) {
     }};
 }
 
+template <typename X, typename F, typename C>
+constexpr auto sort_by(placeholder_expr<X> e, F transform, C compare) {
+    return placeholder_expr{[e, transform, compare](auto... a) {
+        return sort_by(e(a...), transform, compare);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return sort_by(e(a...), transform);
+    }};
+}
+
 template <typename X>
 constexpr auto flatten(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {

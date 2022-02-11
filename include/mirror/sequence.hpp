@@ -916,14 +916,79 @@ constexpr auto concat(M h, Ms... t) noexcept {
     return concat(unpack(h), concat(unpack(t)...));
 }
 
+// sort by
+template <typename E, typename... L, typename F, typename C>
+constexpr auto do_insert_by(type_list<L...>, type_list<>, F, C) {
+    return type_list<L..., E>{};
+}
+
+template <
+  typename E,
+  typename... L,
+  typename M,
+  typename... R,
+  typename F,
+  typename C>
+constexpr auto
+do_insert_by(type_list<L...>, type_list<M, R...>, F transform, C compare) {
+    if constexpr(compare(transform(E{}), transform(M{}))) {
+        return type_list<L..., E, M, R...>{};
+    } else {
+        return do_insert_by<E>(
+          type_list<L..., M>{}, type_list<R...>{}, transform, compare);
+    }
+}
+
+template <typename... E, typename F, typename C>
+constexpr auto do_sort_by(type_list<E...> result, type_list<>, F, C) {
+    return result;
+}
+
+template <typename... L, typename M, typename... R, typename F, typename C>
+constexpr auto
+do_sort_by(type_list<L...>, type_list<M, R...>, F transform, C compare) {
+    return do_sort_by(
+      do_insert_by<M>(type_list<>{}, type_list<L...>{}, transform, compare),
+      type_list<R...>{},
+      transform,
+      compare);
+}
+
+template <typename... E, typename F, typename C>
+constexpr auto sort_by(type_list<E...> s, F transform, C compare) requires(
+  is_object_sequence(s)) {
+    return do_sort_by(type_list<>{}, s, transform, compare);
+}
+
+template <__metaobject_id... M, typename F, typename C>
+constexpr auto
+sort_by(unpacked_metaobject_sequence<M...>, F transform, C compare) {
+    return sort_by(type_list<wrapped_metaobject<M>...>{}, transform, compare);
+}
+
+template <__metaobject_id M, typename F, typename C>
+constexpr auto sort_by(
+  wrapped_metaobject<M> mo,
+  F transform,
+  C compare) requires(__metaobject_is_meta_object_sequence(M)) {
+    return sort_by(unpack(mo), transform, compare);
+}
+
+template <typename S, typename F>
+constexpr auto sort_by(S s, F transform) requires(is_object_sequence(s)) {
+    return do_sort_by(
+      type_list<>{}, s, transform, [](auto l, auto r) { return l < r; });
+}
+
 // group by
 template <typename... E, typename F>
-auto do_group_by(unpacked_metaobject_sequence<>, type_list<E...> result, F) {
+constexpr auto
+do_group_by(unpacked_metaobject_sequence<>, type_list<E...> result, F) {
     return result;
 }
 
 template <__metaobject_id M, __metaobject_id... Mt, typename... T, typename F>
-auto do_group_by(
+constexpr auto do_group_by(
   unpacked_metaobject_sequence<M, Mt...> src,
   type_list<T...>,
   F transform) {
@@ -937,12 +1002,12 @@ auto do_group_by(
 }
 
 template <__metaobject_id... M, typename F>
-auto group_by(unpacked_metaobject_sequence<M...> s, F transform) {
+constexpr auto group_by(unpacked_metaobject_sequence<M...> s, F transform) {
     return do_group_by(s, type_list<>{}, transform);
 }
 
 template <__metaobject_id M, typename F>
-auto group_by(wrapped_metaobject<M> mo, F transform) requires(
+constexpr auto group_by(wrapped_metaobject<M> mo, F transform) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return group_by(unpack(mo), transform);
 }
