@@ -914,6 +914,12 @@ constexpr auto concat(
     return {};
 }
 
+template <typename... L, typename... R>
+constexpr auto concat(type_list<L...>, type_list<R...>) noexcept
+  -> type_list<L..., R...> {
+    return {};
+}
+
 template <metaobject_sequence M>
 constexpr auto concat(M ms) noexcept {
     return ms;
