@@ -898,6 +898,14 @@ select(type_list<E...> tl, F function, T fallback, P&&... param) noexcept -> T
 }
 
 // concat
+#if defined(MIRROR_DOXYGEN)
+/// @brief Concatenates multiple metaobject sequences
+/// @ingroup sequence_operations
+/// @see for_each
+/// @see make_sequence
+/// @see flatten
+constexpr auto concat(auto... mo) noexcept requires(...&& is_object(mo));
+#else
 template <__metaobject_id... L, __metaobject_id... R>
 constexpr auto concat(
   unpacked_metaobject_sequence<L...>,
@@ -915,8 +923,23 @@ template <metaobject_sequence M, metaobject_sequence... Ms>
 constexpr auto concat(M h, Ms... t) noexcept {
     return concat(unpack(h), concat(unpack(t)...));
 }
+#endif
 
 // sort by
+#if defined(MIRROR_DOXYGEN)
+/// @brief Sorts metaobjects by the value returned by transform according to compare.
+/// @ingroup sequence_operations
+/// @see is_sorted
+/// @see group_by
+/// @see group_and_sort_by
+/// @see filter
+///
+/// This function applies the transform function on each metaobject in a sequence
+/// and then returns a new sequence of those metaobjects sorted by the result
+/// of the transform according to the specified compare function.
+constexpr auto
+sort_by(auto mo, auto transform, auto compare) requires(is_object_sequence(mo));
+#else
 template <typename E, typename... L, typename F, typename C>
 constexpr auto do_insert_by(type_list<L...>, type_list<>, F, C) {
     return type_list<L..., E>{};
@@ -984,8 +1007,23 @@ constexpr auto
 reverse_sort_by(S s, F transform) requires(is_object_sequence(s)) {
     return sort_by(s, transform, [](auto l, auto r) { return l > r; });
 }
+#endif
 
 // group by
+#if defined(MIRROR_DOXYGEN)
+/// @brief Groups metaobjects into sub-sequences by the value returned by transform
+/// @ingroup sequence_operations
+/// @see is_sorted
+/// @see sort_by
+/// @see group_and_sort_by
+/// @see flatten
+///
+/// This function applies the transform function on each metaobject in a sequence
+/// and then returns a new sequence of metaobject sequences where the metaobjects
+/// in each sequence the result of transform is the same.
+constexpr auto
+group_by(auto mo, auto transform) requires(is_object_sequence(mo));
+#else
 template <typename... E, typename F>
 constexpr auto
 do_group_by(unpacked_metaobject_sequence<>, type_list<E...> result, F) {
@@ -1016,8 +1054,26 @@ constexpr auto group_by(wrapped_metaobject<M> mo, F transform) requires(
   __metaobject_is_meta_object_sequence(M)) {
     return group_by(unpack(mo), transform);
 }
+#endif
 
 // group and sort by
+#if defined(MIRROR_DOXYGEN)
+/// @brief Groups and sorts metaobjects by the value returned by transform
+/// @ingroup sequence_operations
+/// @see is_sorted
+/// @see sort_by
+/// @see group_by
+/// @see flatten
+///
+/// This function applies the transform function on each metaobject in a
+/// sequence and then returns a new sequence of metaobject sequences where the
+/// metaobjects in each sequence the result of transform is the same and then
+/// sorts the sub-sequences according to the result of the compare function.
+constexpr auto group_and_sort_by(
+  auto mo,
+  auto transform,
+  auto compare) requires(is_object_sequence(mo));
+#else
 template <typename S, typename F, typename C>
 constexpr auto
 group_and_sort_by(S s, F transform, C compare) requires(is_object_sequence(s)) {
@@ -1040,8 +1096,17 @@ reverse_group_and_sort_by(S s, F transform) requires(is_object_sequence(s)) {
     return group_and_sort_by(
       s, transform, [](auto l, auto r) { return l > r; });
 }
+#endif
 
 // flatten
+#if defined(MIRROR_DOXYGEN)
+/// @brief Flattens a sequence of sub-sequences into one sequence of elements
+/// @ingroup sequence_operations
+/// @see group_by
+/// @see sort_and_group_by
+/// @see concat
+constexpr auto flatten(auto mo) requires(is_object_sequence(mo));
+#else
 template <__metaobject_id... M>
 constexpr auto flatten(unpacked_metaobject_sequence<M...>) requires(
   ...&& is_object_sequence(wrapped_metaobject<M>{})) {
@@ -1052,8 +1117,8 @@ template <typename... E>
 constexpr auto flatten(type_list<E...> tl) requires(is_object_sequence(tl)) {
     return concat(E{}...);
 }
+#endif
 
-// KOKOTINY
 template <size_t I, __metaobject_id M, __metaobject_id... Mt>
 consteval auto get(mirror::unpacked_metaobject_sequence<M, Mt...>) noexcept {
     if constexpr(I == 0Z) {
