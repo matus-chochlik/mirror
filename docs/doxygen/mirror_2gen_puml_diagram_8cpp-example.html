@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -70,8 +70,8 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <p>Copyright Matus Chochlik. Distributed under the Boost Software License, Version 1.0. See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="all_8hpp.html">mirror/all.hpp</a>&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="all_8hpp.html">mirror/all.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> MT&gt;</div>
@@ -85,11 +85,11 @@ $(function() {
 <div class="line">    }</div>
 <div class="line">    out &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; get_name(mt) &lt;&lt; <span class="stringliteral">&quot; {\n&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">if</span> constexpr(is_enum(mt)) {</div>
-<div class="line">        for_each(get_enumerators(mt), [&amp;](<span class="keyword">auto</span> mo) {</div>
+<div class="line">        <a name="a0"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_enumerators(mt), [&amp;](<span class="keyword">auto</span> mo) {</div>
 <div class="line">            out &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; get_name(mo) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">        });</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">        for_each_info(get_member_functions(mt), [&amp;](<span class="keyword">auto</span> mo, <span class="keyword">auto</span> info) {</div>
+<div class="line">        <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_member_functions(mt), [&amp;](<span class="keyword">auto</span> mo) {</div>
 <div class="line">            out &lt;&lt; <span class="stringliteral">&quot;  &quot;</span>;</div>
 <div class="line">            <span class="keywordflow">if</span>(is_private(mo)) {</div>
 <div class="line">                out &lt;&lt; <span class="stringliteral">&quot;-&quot;</span>;</div>
@@ -100,17 +100,17 @@ $(function() {
 <div class="line">            }</div>
 <div class="line">            out &lt;&lt; get_name(get_type(mo)) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
 <div class="line">            out &lt;&lt; get_name(mo) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span>;</div>
-<div class="line">            for_each(get_parameters(mo), [&amp;](<span class="keyword">auto</span> mp) {</div>
-<div class="line">                <span class="keywordflow">if</span>(!info.is_first()) {</div>
-<div class="line">                    out &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line">                }</div>
-<div class="line">                out &lt;&lt; get_name(mp) &lt;&lt; <span class="stringliteral">&quot;: &quot;</span>;</div>
-<div class="line">                out &lt;&lt; get_name(get_type(mp));</div>
-<div class="line">            });</div>
+<div class="line">            out &lt;&lt; join(</div>
+<div class="line">              get_parameters(mo),</div>
+<div class="line">              [](<span class="keyword">auto</span> mp) {</div>
+<div class="line">                  <span class="keywordflow">return</span> std::string(get_name(mp)) + <span class="stringliteral">&quot;: &quot;</span> +</div>
+<div class="line">                         std::string(get_name(get_type(mp)));</div>
+<div class="line">              },</div>
+<div class="line">              std::string(<span class="stringliteral">&quot;, &quot;</span>));</div>
 <div class="line">            out &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
 <div class="line">        });</div>
 <div class="line">        out &lt;&lt; <span class="stringliteral">&quot;  __\n&quot;</span>;</div>
-<div class="line">        for_each(get_data_members(mt), [&amp;](<span class="keyword">auto</span> mo) {</div>
+<div class="line">        <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_data_members(mt), [&amp;](<span class="keyword">auto</span> mo) {</div>
 <div class="line">            out &lt;&lt; <span class="stringliteral">&quot;  &quot;</span>;</div>
 <div class="line">            <span class="keywordflow">if</span>(is_private(mo)) {</div>
 <div class="line">                out &lt;&lt; <span class="stringliteral">&quot;-&quot;</span>;</div>
@@ -130,7 +130,7 @@ $(function() {
 <div class="line">std::string_view do_get_related_type_name(std::type_identity&lt;T&gt;, MS ms) {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mt = get_aliased(<a class="code" href="namespacemirror.html">mirror</a>(T));</div>
 <div class="line">    <span class="keywordflow">if</span> constexpr(reflects_scope_member(mt)) {</div>
-<div class="line">        <span class="keywordflow">if</span> constexpr(<a name="a0"></a><a class="code" href="group__operations.html#ga283bfea41616787cfaee96d806732070">reflects_same</a>(get_scope(mt), ms)) {</div>
+<div class="line">        <span class="keywordflow">if</span> constexpr(<a name="a1"></a><a class="code" href="group__operations.html#ga1adfd0450023500c3c44e80f67e83822">reflects_same</a>(get_scope(mt), ms)) {</div>
 <div class="line">            <span class="keywordflow">return</span> get_name(mt);</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
@@ -161,12 +161,12 @@ $(function() {
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> MT&gt;</div>
 <div class="line"><span class="keywordtype">void</span> print_type_rel_puml(std::ostream&amp; out, MT mt) {</div>
 <div class="line">    <span class="keywordflow">if</span> constexpr(reflects_record(mt)) {</div>
-<div class="line">        for_each(get_member_functions(mt), [&amp;](<span class="keyword">auto</span> mf) {</div>
+<div class="line">        <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_member_functions(mt), [&amp;](<span class="keyword">auto</span> mf) {</div>
 <div class="line">            <span class="keyword">auto</span> rel_name = get_related_type_name(get_type(mf), get_scope(mt));</div>
 <div class="line">            <span class="keywordflow">if</span>(!rel_name.empty()) {</div>
 <div class="line">                out &lt;&lt; get_name(mt) &lt;&lt; <span class="stringliteral">&quot; --&gt; &quot;</span> &lt;&lt; rel_name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">            }</div>
-<div class="line">            for_each(get_parameters(mf), [&amp;](<span class="keyword">auto</span> mp) {</div>
+<div class="line">            <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_parameters(mf), [&amp;](<span class="keyword">auto</span> mp) {</div>
 <div class="line">                rel_name = get_related_type_name(get_type(mp), get_scope(mt));</div>
 <div class="line">                <span class="keywordflow">if</span>(!rel_name.empty()) {</div>
 <div class="line">                    out &lt;&lt; get_name(mt) &lt;&lt; <span class="stringliteral">&quot; --&gt; &quot;</span> &lt;&lt; rel_name &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -175,7 +175,7 @@ $(function() {
 <div class="line">        });</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> constexpr(reflects_class(mt)) {</div>
-<div class="line">        for_each(get_base_classes(mt), [&amp;](<span class="keyword">auto</span> mb) {</div>
+<div class="line">        <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_base_classes(mt), [&amp;](<span class="keyword">auto</span> mb) {</div>
 <div class="line">            out &lt;&lt; get_name(get_class(mb)) &lt;&lt; <span class="stringliteral">&quot; &lt;|- &quot;</span> &lt;&lt; get_name(mt) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">        });</div>
 <div class="line">    }</div>
@@ -288,14 +288,15 @@ $(function() {
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aall_8hpp_html"><div class="ttname"><a href="all_8hpp.html">all.hpp</a></div></div>
-<div class="ttc" id="agroup__operations_html_ga283bfea41616787cfaee96d806732070"><div class="ttname"><a href="group__operations.html#ga283bfea41616787cfaee96d806732070">mirror::reflects_same</a></div><div class="ttdeci">consteval auto reflects_same(wrapped_metaobject&lt; Ml &gt;, wrapped_metaobject&lt; Mr &gt;) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1021</div></div>
+<div class="ttc" id="agroup__operations_html_ga1adfd0450023500c3c44e80f67e83822"><div class="ttname"><a href="group__operations.html#ga1adfd0450023500c3c44e80f67e83822">mirror::reflects_same</a></div><div class="ttdeci">consteval auto reflects_same(metaobject auto ml, metaobject auto mr) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

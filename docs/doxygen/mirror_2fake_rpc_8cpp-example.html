@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -70,7 +70,8 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <p>Copyright Matus Chochlik. Distributed under the Boost Software License, Version 1.0. See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="hash_8hpp.html">mirror/hash.hpp</a>&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="apply_8hpp.html">mirror/apply.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="hash_8hpp.html">mirror/hash.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="interface_8hpp.html">mirror/interface.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="make__tuple_8hpp.html">mirror/make_tuple.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="placeholder_8hpp.html">mirror/placeholder.hpp</a>&gt;</span></div>
@@ -142,11 +143,6 @@ $(function() {
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">    Intf&amp; _impl;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metaobject, <span class="keyword">typename</span> Tup, <span class="keywordtype">size_t</span>... I&gt;</div>
-<div class="line">    <span class="keyword">auto</span> _apply(Metaobject mo, Tup&amp; tup, std::index_sequence&lt;I...&gt;) {</div>
-<div class="line">        <span class="keywordflow">return</span> (_impl.*get_pointer(mo))(std::get&lt;I&gt;(tup)...);</div>
-<div class="line">    }</div>
-<div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    fake_rpc_skeleton_impl(Intf&amp; impl) noexcept</div>
 <div class="line">      : _impl{impl} {}</div>
@@ -161,18 +157,14 @@ $(function() {
 <div class="line">        <span class="keyword">auto</span> header = std::tie(rpc_id, invocation_id);</div>
 <div class="line">        mirror::serialize::read_rapidjson_stream(header, request_header);</div>
 <div class="line"> </div>
-<div class="line">        for_each(get_member_functions(<a class="code" href="namespacemirror.html">mirror</a>(Intf)), [&amp;](<span class="keyword">auto</span> mf) {</div>
+<div class="line">        <a name="a2"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_member_functions(<a class="code" href="namespacemirror.html">mirror</a>(Intf)), [&amp;](<span class="keyword">auto</span> mf) {</div>
 <div class="line">            <span class="keywordflow">if</span>(get_hash(mf) == rpc_id) {</div>
 <div class="line">                <span class="keyword">auto</span> params = make_value_tuple(</div>
-<div class="line">                  transform(get_parameters(mf), get_type(mirror::_1)));</div>
+<div class="line">                  <a name="a3"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(get_parameters(mf), get_type(mirror::_1)));</div>
 <div class="line">                mirror::serialize::read_rapidjson_stream(params, request_data);</div>
 <div class="line">                mirror::serialize::write_rapidjson_stream(</div>
 <div class="line">                  invocation_id, response_header);</div>
-<div class="line">                <span class="keyword">auto</span> result = _apply(</div>
-<div class="line">                  mf,</div>
-<div class="line">                  params,</div>
-<div class="line">                  std::make_index_sequence&lt;</div>
-<div class="line">                    std::tuple_size_v&lt;decltype(params)&gt;&gt;{});</div>
+<div class="line">                <span class="keyword">auto</span> result = <a name="a4"></a><a class="code" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">apply_on</a>(mf, _impl, params);</div>
 <div class="line">                mirror::serialize::write_rapidjson_stream(</div>
 <div class="line">                  result, response_data);</div>
 <div class="line">            }</div>
@@ -264,8 +256,12 @@ $(function() {
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="aapply_8hpp_html"><div class="ttname"><a href="apply_8hpp.html">apply.hpp</a></div></div>
 <div class="ttc" id="aclassmirror_1_1interface_html"><div class="ttname"><a href="classmirror_1_1interface.html">mirror::interface</a></div><div class="ttdoc">Base template for abstract interfaces, implements common functionality.</div><div class="ttdef"><b>Definition:</b> interface.hpp:18</div></div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:84</div></div>
+<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__operations_html_ga8d2fc18dc2dc104571e1de6df92dc4c1"><div class="ttname"><a href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">mirror::apply_on</a></div><div class="ttdeci">constexpr auto apply_on(wrapped_metaobject&lt; M &gt; mo, C &amp;obj, A &amp;&amp;args) requires(__metaobject_is_meta_member_function(M))</div><div class="ttdoc">Applies the reflected member function on obj with specified args.</div><div class="ttdef"><b>Definition:</b> apply.hpp:43</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
 <div class="ttc" id="ahash_8hpp_html"><div class="ttname"><a href="hash_8hpp.html">hash.hpp</a></div></div>
 <div class="ttc" id="ainterface_8hpp_html"><div class="ttname"><a href="interface_8hpp.html">interface.hpp</a></div></div>
 <div class="ttc" id="amake__tuple_8hpp_html"><div class="ttname"><a href="make__tuple_8hpp.html">make_tuple.hpp</a></div></div>
@@ -278,7 +274,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

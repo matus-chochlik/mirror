@@ -1,23 +1,6 @@
 var searchData=
 [
-  ['operator_20bool_498',['operator bool',['../classmirror_1_1program__arg.html#ad4d7cb8214f05cd7e4679c48579d1bee',1,'mirror::program_arg::operator bool()'],['../classmirror_1_1weakbool.html#a9280678eb7e8d153c7044a74a6969adc',1,'mirror::weakbool::operator bool()'],['../classmirror_1_1tribool.html#a30bb7d52b2b267d593aaa511b7d9df0a',1,'mirror::tribool::operator bool()'],['../classmirror_1_1bitfield.html#ad3fb3ecfb82efb5bb6fd7f829ae44894',1,'mirror::bitfield::operator bool() const noexcept']]],
-  ['operator_20value_5ftype_499',['operator value_type',['../classmirror_1_1bitfield.html#a3176af10e6ac6dbf3856d46c146d1226',1,'mirror::bitfield::operator value_type()'],['../classmirror_1_1program__arg.html#a4973fb9fb47810d59a9f7665bcdc91da',1,'mirror::program_arg::operator value_type()']]],
-  ['operator_21_500',['operator!',['../classmirror_1_1weakbool.html#a21442d99e9918fe86973d80b5e275dc3',1,'mirror::weakbool::operator!()'],['../classmirror_1_1tribool.html#ae2accab4382a64877cd24a64e58d5517',1,'mirror::tribool::operator!()']]],
-  ['operator_21_3d_501',['operator!=',['../classmirror_1_1program__arg.html#ae0a3535442a3f5380c98b91b611891da',1,'mirror::program_arg']]],
-  ['operator_26_26_502',['operator&amp;&amp;',['../group__utilities.html#ga5de4fdbb18c29d9db8d1da4fdb441298',1,'mirror']]],
-  ['operator_26_3d_503',['operator&amp;=',['../classmirror_1_1bitfield.html#a753b40a01811e0086ab9441c8de330e5',1,'mirror::bitfield']]],
-  ['operator_2a_504',['operator*',['../classmirror_1_1program__arg__iterator.html#a2b36ddf335b336426d579d373e622334',1,'mirror::program_arg_iterator::operator*() noexcept -&gt; reference'],['../classmirror_1_1program__arg__iterator.html#accb3a1e7709f936d86c199f84334ec82',1,'mirror::program_arg_iterator::operator*() const noexcept -&gt; const_reference'],['../classmirror_1_1tribool.html#a1fd8c0b089a651da0cbee31aaf1c3f88',1,'mirror::tribool::operator*()']]],
-  ['operator_2b_505',['operator+',['../classmirror_1_1program__arg__iterator.html#a7e0a112655efeaf1de46e55c2ff83d0e',1,'mirror::program_arg_iterator']]],
-  ['operator_2b_2b_506',['operator++',['../classmirror_1_1program__arg__iterator.html#a0938ed02296b4dd1a44c29a69b9023de',1,'mirror::program_arg_iterator::operator++(int) noexcept -&gt; this_class'],['../classmirror_1_1program__arg__iterator.html#a792f836ee542a7393303cbc3736cf4ce',1,'mirror::program_arg_iterator::operator++() noexcept -&gt; this_class &amp;']]],
-  ['operator_2b_3d_507',['operator+=',['../classmirror_1_1program__arg__iterator.html#a00fe1117033d17ce3ab03eb64e0828a5',1,'mirror::program_arg_iterator']]],
-  ['operator_2d_508',['operator-',['../classmirror_1_1program__arg__iterator.html#ae2d845c3896984411c3ef053bea54f11',1,'mirror::program_arg_iterator']]],
-  ['operator_2d_2d_509',['operator--',['../classmirror_1_1program__arg__iterator.html#a06f38356bd2cd4ff22acf8318e84a147',1,'mirror::program_arg_iterator::operator--() noexcept -&gt; this_class &amp;'],['../classmirror_1_1program__arg__iterator.html#afbdc747a4c0ded2c424e67c80faaef33',1,'mirror::program_arg_iterator::operator--(int) noexcept -&gt; this_class']]],
-  ['operator_2d_3d_510',['operator-=',['../classmirror_1_1program__arg__iterator.html#a4046836cccaead2238986fc864ecbc1d',1,'mirror::program_arg_iterator']]],
-  ['operator_3d_511',['operator=',['../classmirror_1_1interface.html#a039b033ab20444e5c6ef5afdb9a34381',1,'mirror::interface::operator=(interface &amp;&amp;)=delete'],['../classmirror_1_1interface.html#aae2ed6a8815f86df6a86f945348fa3ee',1,'mirror::interface::operator=(const interface &amp;)=delete'],['../classmirror_1_1abstract.html#a662f93210c56bef05d228a2b7e666f30',1,'mirror::abstract::operator=(abstract &amp;&amp;) noexcept -&gt; abstract &amp;=default'],['../classmirror_1_1abstract.html#ade4817650ae3d49adadab04222d6b908',1,'mirror::abstract::operator=(const abstract &amp;) noexcept -&gt; abstract &amp;=default']]],
-  ['operator_3d_3d_512',['operator==',['../classmirror_1_1program__arg.html#a1a0b213c329a7f54ab2d4932e0c3addb',1,'mirror::program_arg']]],
-  ['operator_5b_5d_513',['operator[]',['../classmirror_1_1program__args.html#a97e7d2cb9d6deb72a160518310b214d9',1,'mirror::program_args']]],
-  ['operator_7c_3d_514',['operator|=',['../classmirror_1_1bitfield.html#af5eb236dbb932f654c6f6318c2fa41dc',1,'mirror::bitfield']]],
-  ['operator_7c_7c_515',['operator||',['../group__utilities.html#ga6c4fc4113bcb0d5fa7435ca5b7a69599',1,'mirror']]],
-  ['operator_7e_516',['operator~',['../classmirror_1_1tribool.html#aa8e3933fef6ba1be215659e219f52dcc',1,'mirror::tribool']]],
-  ['optional_3c_20bool_20_3e_517',['optional&lt; bool &gt;',['../classmirror_1_1tribool.html#af30f7a7ee49efad3e6623d19a8ec0fea',1,'mirror::tribool']]]
+  ['next_605',['next',['../classmirror_1_1program__arg.html#af6c06bd6da888c330a1a96f602daebf9',1,'mirror::program_arg']]],
+  ['none_606',['none',['../classmirror_1_1program__args.html#ab2ee12544c95c675810c13e6533cb2ed',1,'mirror::program_args']]],
+  ['none_5fof_607',['none_of',['../group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec',1,'mirror']]]
 ];

@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -65,7 +65,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_adeb71b4288c502c918dea5bc17871cd.html">mirror</a></li><li class="navelem"><a class="el" href="dir_0fa6b4de985af0fa5fc0748fd6ecc44b.html">serialize</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_43e621d1f8059ef23e6d554162653e23.html">mirror</a></li><li class="navelem"><a class="el" href="dir_496d53c94861e3a75d1ee2e73b4705bb.html">serialize</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -179,7 +179,7 @@ $(function() {
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;          count_if(mes, [&amp;](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> value.has(get_constant(me)); })};</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">auto</span> subctx{backend.begin_list(ctx, size)};</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">if</span>(MIRROR_LIKELY(has_value(subctx))) {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            for_each(mes, [&amp;](<span class="keyword">auto</span> me) {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mes, [&amp;](<span class="keyword">auto</span> me) {</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                <span class="keyword">const</span> <span class="keyword">auto</span> bit{get_constant(me)};</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                <span class="keywordflow">if</span>(value.has(bit)) {</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                    <span class="keyword">auto</span> subsubctx{backend.begin_element(extract(subctx), 0Z)};</div>
@@ -189,7 +189,7 @@ $(function() {
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            });</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            errors |= backend.finish_list(extract(subctx));</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            errors |= std::get&lt;write_errors&gt;(subctx);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            errors |= get_error(subctx);</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keywordflow">return</span> errors;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
@@ -214,7 +214,7 @@ $(function() {
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            }</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            errors |= backend.finish_list(extract(subctx));</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            errors |= std::get&lt;write_errors&gt;(subctx);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            errors |= get_error(subctx);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        }</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">return</span> errors;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    }</div>
@@ -247,7 +247,7 @@ $(function() {
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            }</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            errors |= backend.finish_list(extract(subctx));</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            errors |= std::get&lt;write_errors&gt;(subctx);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            errors |= get_error(subctx);</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        }</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keywordflow">return</span> errors;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    }</div>
@@ -341,7 +341,7 @@ $(function() {
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;              std::make_index_sequence&lt;<span class="keyword">sizeof</span>...(T)&gt;{});</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            errors |= backend.finish_list(extract(subctx));</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            errors |= std::get&lt;write_errors&gt;(subctx);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            errors |= get_error(subctx);</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        }</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordflow">return</span> errors;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    }</div>
@@ -363,7 +363,7 @@ $(function() {
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keyword">auto</span> subctx{backend.begin_record(ctx, get_size(mdms))};</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="keywordflow">if</span>(has_value(subctx)) {</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            for_each(mdms, [&amp;](<span class="keyword">auto</span> mdm) {</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mdms, [&amp;](<span class="keyword">auto</span> mdm) {</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                <span class="keywordflow">if</span>(first) {</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                    first = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                } <span class="keywordflow">else</span> {</div>
@@ -373,16 +373,16 @@ $(function() {
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                <span class="keyword">auto</span> subsubctx{backend.begin_attribute(extract(subctx), name)};</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                <span class="keywordflow">if</span>(has_value(subsubctx)) {</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                    errors |= driver.write(</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                      backend, extract(subsubctx), <a class="code" href="group__operations.html#gac040042568b4a1950b9cbb5afac91f05">get_value</a>(mdm, value));</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                      backend, extract(subsubctx), <a class="code" href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">get_value</a>(mdm, value));</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                    errors |=</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                      backend.finish_attribute(extract(subsubctx), name);</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                    errors |= std::get&lt;write_errors&gt;(subsubctx);</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                    errors |= get_error(subsubctx);</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                }</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            });</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            errors |= backend.finish_record(extract(subctx));</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            errors |= std::get&lt;write_errors&gt;(subctx);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            errors |= get_error(subctx);</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        }</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keywordflow">return</span> errors;</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    }</div>
@@ -398,7 +398,7 @@ $(function() {
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> errors{};</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> mes{get_enumerators(mt)};</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        <span class="keywordflow">if</span>(backend.enum_as_string(ctx)) {</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            for_each(mes, [&amp;](<span class="keyword">auto</span> me) {</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mes, [&amp;](<span class="keyword">auto</span> me) {</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                <span class="keywordflow">if</span>(get_constant(me) == value) {</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                    errors |= driver.write(backend, ctx, get_name(me));</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                }</div>
@@ -433,7 +433,7 @@ $(function() {
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        errors |= driver.write(backend, extract(subctx), value);</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        errors |= backend.finish(extract(subctx));</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        errors |= std::get&lt;write_errors&gt;(subctx);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        errors |= get_error(subctx);</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    }</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">return</span> errors;</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;}</div>
@@ -442,8 +442,9 @@ $(function() {
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassmirror_1_1bitfield_html"><div class="ttname"><a href="classmirror_1_1bitfield.html">mirror::bitfield</a></div><div class="ttdoc">Class for manipulating and testing a group of enumeration-based bits.</div><div class="ttdef"><b>Definition:</b> bitfield.hpp:20</div></div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:84</div></div>
-<div class="ttc" id="agroup__operations_html_gac040042568b4a1950b9cbb5afac91f05"><div class="ttname"><a href="group__operations.html#gac040042568b4a1950b9cbb5afac91f05">mirror::get_value</a></div><div class="ttdeci">constexpr const auto &amp; get_value(wrapped_metaobject&lt; M &gt; mo) noexcept requires(reflects_variable(mo))</div><div class="ttdoc">Returns the value of the reflected base-level entity.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1107</div></div>
+<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__operations_html_ga906b1bf1e11139592467bb4b9c801abd"><div class="ttname"><a href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">mirror::get_value</a></div><div class="ttdeci">constexpr const auto &amp; get_value(metaobject auto mo) noexcept requires(reflects_variable(mo))</div><div class="ttdoc">Returns the value of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="aresult_8hpp_html_ad9dfa3b4d91ceffaa91ccf4122305ecb"><div class="ttname"><a href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">mirror::serialize::write_errors</a></div><div class="ttdeci">bitfield&lt; write_error_code &gt; write_errors</div><div class="ttdoc">Alias for serialization error bitfield.</div><div class="ttdef"><b>Definition:</b> result.hpp:70</div></div>
 <div class="ttc" id="awrite_8hpp_html_ae36beaaa9d5e8fd04429a36915094311"><div class="ttname"><a href="write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311">mirror::serialize::write</a></div><div class="ttdeci">auto write(const T &amp;value, Backend &amp;backend, typename Backend::context_param ctx) noexcept -&gt; write_errors</div><div class="ttdoc">Serializes a value with the specified serialization backend.</div><div class="ttdef"><b>Definition:</b> write.hpp:360</div></div>
@@ -453,7 +454,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

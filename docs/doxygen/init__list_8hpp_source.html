@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -65,7 +65,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_adeb71b4288c502c918dea5bc17871cd.html">mirror</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_43e621d1f8059ef23e6d554162653e23.html">mirror</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -83,35 +83,38 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M, <span class="keyword">typename</span> F, <span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;fold_init_list_of(unpacked_metaobject_sequence&lt;M...&gt;, F transform, A aggregate) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordflow">return</span> aggregate(</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;      std::initializer_list&lt;T&gt;{transform(wrapped_metaobject&lt;M&gt;{})...});</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M, <span class="keyword">typename</span> F, <span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;fold_init_list(unpacked_metaobject_sequence&lt;M...&gt;, F transform, A aggregate) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">return</span> aggregate(</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      std::initializer_list&lt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        std::common_type_t&lt;decltype(transform(wrapped_metaobject&lt;M&gt;{}))...&gt;&gt;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        transform(wrapped_metaobject&lt;M&gt;{})...});</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M, <span class="keyword">typename</span> F, <span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;constexpr <span class="keyword">auto</span> fold_init_list(</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  wrapped_metaobject&lt;M&gt; mo,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  F transform,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  A aggregate) requires(reflects_object_sequence(mo)) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> fold_init_list(<a class="code" href="group__sequence__operations.html#ga646428542416567edf4dc4555dd39ca3">unpack</a>(mo), transform, aggregate);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;} <span class="comment">// namespace mirror</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;constexpr <span class="keyword">auto</span> apply_init_list_of(</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  unpacked_metaobject_sequence&lt;M...&gt;,</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  A aggregate) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">return</span> aggregate(</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;      std::initializer_list&lt;T&gt;{<a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(wrapped_metaobject&lt;M&gt;{})...});</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M, <span class="keyword">typename</span> F, <span class="keyword">typename</span> A&gt;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;constexpr <span class="keyword">auto</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;apply_init_list(unpacked_metaobject_sequence&lt;M...&gt;, F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, A aggregate) {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">return</span> aggregate(</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;      std::initializer_list&lt;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        std::common_type_t&lt;decltype(<a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(wrapped_metaobject&lt;M&gt;{}))...&gt;&gt;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(wrapped_metaobject&lt;M&gt;{})...});</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M, <span class="keyword">typename</span> F, <span class="keyword">typename</span> A&gt;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;constexpr <span class="keyword">auto</span> apply_init_list(</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  wrapped_metaobject&lt;M&gt; mo,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  A aggregate) requires(__metaobject_is_meta_object_sequence(M)) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> apply_init_list(<a class="code" href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">unpack</a>(mo), <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, aggregate);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_MAKE_ARRAY_HPP</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="ttc" id="agroup__metaobjects_html_gac73ffa6847a81ec9595dfb2687982627"><div class="ttname"><a href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a></div><div class="ttdeci">unspecified __metaobject_id</div><div class="ttdoc">Internal type, values of which represent metaobjects.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:41</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_ga646428542416567edf4dc4555dd39ca3"><div class="ttname"><a href="group__sequence__operations.html#ga646428542416567edf4dc4555dd39ca3">mirror::unpack</a></div><div class="ttdeci">constexpr auto unpack(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; __unpack_metaobject_seq&lt; unpacked_metaobject_sequence, M &gt; requires(reflects_object_sequence(mo))</div><div class="ttdoc">Unpacks a sequence metaobject into sequence of separate metaobject ids.</div><div class="ttdef"><b>Definition:</b> sequence.hpp:63</div></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_MAKE_ARRAY_HPP</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="ttc" id="agroup__metaobjects_html_gac73ffa6847a81ec9595dfb2687982627"><div class="ttname"><a href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a></div><div class="ttdeci">unspecified __metaobject_id</div><div class="ttdoc">Internal type, values of which represent metaobjects in the compiler.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:41</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gae340caaff2cf7508bf16375f12f54355"><div class="ttname"><a href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">mirror::unpack</a></div><div class="ttdeci">constexpr auto unpack(metaobject_sequence auto mo) noexcept</div><div class="ttdoc">Unpacks a sequence metaobject into sequence of separate metaobject ids.</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -119,7 +122,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

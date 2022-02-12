@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_5ferror_5fcode_606',['write_error_code',['../result_8hpp.html#ab7334f59b89b70095d1d91e2c4cd69fb',1,'mirror::serialize']]]
+  ['type_5ftrait_731',['type_trait',['../group__classification.html#ga5ceece5e7d888a9a58ff517d818af83e',1,'mirror']]]
 ];

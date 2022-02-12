@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -73,6 +73,7 @@ $(function() {
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="extract_8hpp.html">mirror/extract.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="init__list_8hpp.html">mirror/init_list.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="operations_8hpp.html">mirror/operations.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="placeholder_8hpp.html">mirror/placeholder.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;concepts&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
@@ -110,23 +111,17 @@ $(function() {
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> print_info(<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> mo) {</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mes = concat(</div>
-<div class="line">      get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#gaec28c08a08fc204984c80af2049a4b66">mirror::unary_op_boolean</a>)),</div>
-<div class="line">      get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#ga157249653a3403a77719ed366a6807a0">mirror::unary_op_integer</a>)),</div>
-<div class="line">      get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#ga599b63422261d772f03368cf40d9e1ad">mirror::unary_op_pointer</a>)),</div>
-<div class="line">      get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#ga588a347cc97327ba20345c0c3da57124">mirror::unary_op_string</a>)),</div>
-<div class="line">      get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#gad4a65d8c731d609459d068a8689e470b">mirror::unary_op_metaobject</a>)));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mes = flatten(<a name="a1"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(</div>
+<div class="line">      mirror::all_metaobject_operation_kinds(), get_enumerators(mirror::_1)));</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> maxl = fold_init_list(</div>
-<div class="line">      mes,</div>
-<div class="line">      [](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> get_name(me).size(); },</div>
-<div class="line">      [](<span class="keyword">auto</span> l) { <span class="keywordflow">return</span> std::max(l); });</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> maxl = apply_init_list(</div>
+<div class="line">      mes, get_size(get_name(mirror::_1)), [](<span class="keyword">auto</span> l) { <span class="keywordflow">return</span> std::max(l); });</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;meta-info for &quot;</span> &lt;&lt; get_display_name(mo) &lt;&lt; std::endl;</div>
-<div class="line">    for_each(mes, [&amp;](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> me) {</div>
+<div class="line">    <a name="a2"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mes, [&amp;](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> me) {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; get_name(me) &lt;&lt; <span class="stringliteral">&quot;: &quot;</span></div>
 <div class="line">                  &lt;&lt; std::string(maxl - get_name(me).size(), <span class="charliteral">&#39; &#39;</span>);</div>
-<div class="line">        print_value(<a name="a1"></a><a class="code" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">try_apply</a>&lt;get_constant(me)&gt;(mo));</div>
+<div class="line">        print_value(<a name="a3"></a><a class="code" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">try_apply</a>&lt;get_constant(me)&gt;(mo));</div>
 <div class="line">        std::cout &lt;&lt; std::endl;</div>
 <div class="line">    });</div>
 <div class="line">    std::cout &lt;&lt; std::endl;</div>
@@ -140,22 +135,20 @@ $(function() {
 <div class="line">    <span class="keywordflow">return</span> argc - 1;</div>
 <div class="line">}</div>
 <div class="ttc" id="aextract_8hpp_html"><div class="ttname"><a href="extract_8hpp.html">extract.hpp</a></div></div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:84</div></div>
-<div class="ttc" id="agroup__operations_html_ga157249653a3403a77719ed366a6807a0"><div class="ttname"><a href="group__operations.html#ga157249653a3403a77719ed366a6807a0">mirror::unary_op_integer</a></div><div class="ttdeci">unary_op_integer</div><div class="ttdoc">Enumeration of integer-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:143</div></div>
-<div class="ttc" id="agroup__operations_html_ga3e49631a802f86f2ff84d0ac6533978a"><div class="ttname"><a href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">mirror::try_apply</a></div><div class="ttdeci">constexpr auto try_apply(wrapped_metaobject&lt; M &gt; mo) noexcept</div><div class="ttdoc">Calls the specified unary operation on a metaobject if it's applicable.</div><div class="ttdef"><b>Definition:</b> operations.hpp:555</div></div>
-<div class="ttc" id="agroup__operations_html_ga588a347cc97327ba20345c0c3da57124"><div class="ttname"><a href="group__operations.html#ga588a347cc97327ba20345c0c3da57124">mirror::unary_op_string</a></div><div class="ttdeci">unary_op_string</div><div class="ttdoc">Enumeration of string-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:209</div></div>
-<div class="ttc" id="agroup__operations_html_ga599b63422261d772f03368cf40d9e1ad"><div class="ttname"><a href="group__operations.html#ga599b63422261d772f03368cf40d9e1ad">mirror::unary_op_pointer</a></div><div class="ttdeci">unary_op_pointer</div><div class="ttdoc">Enumeration of pointer -returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:179</div></div>
-<div class="ttc" id="agroup__operations_html_gad4a65d8c731d609459d068a8689e470b"><div class="ttname"><a href="group__operations.html#gad4a65d8c731d609459d068a8689e470b">mirror::unary_op_metaobject</a></div><div class="ttdeci">unary_op_metaobject</div><div class="ttdoc">Enumeration of metaobject-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:244</div></div>
-<div class="ttc" id="agroup__operations_html_gaec28c08a08fc204984c80af2049a4b66"><div class="ttname"><a href="group__operations.html#gaec28c08a08fc204984c80af2049a4b66">mirror::unary_op_boolean</a></div><div class="ttdeci">unary_op_boolean</div><div class="ttdoc">Enumeration of boolean-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:33</div></div>
+<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__operations_html_ga3e49631a802f86f2ff84d0ac6533978a"><div class="ttname"><a href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">mirror::try_apply</a></div><div class="ttdeci">constexpr auto try_apply(wrapped_metaobject&lt; M &gt; mo) noexcept</div><div class="ttdoc">Calls the specified unary operation on a metaobject if it's applicable.</div><div class="ttdef"><b>Definition:</b> operations.hpp:486</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
 <div class="ttc" id="ainit__list_8hpp_html"><div class="ttname"><a href="init__list_8hpp.html">init_list.hpp</a></div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="aoperations_8hpp_html"><div class="ttname"><a href="operations_8hpp.html">operations.hpp</a></div></div>
+<div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

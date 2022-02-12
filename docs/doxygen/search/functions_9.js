@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['make_5fsequence_495',['make_sequence',['../group__sequence__operations.html#ga7542369925d691c4f43f677ec8f143c6',1,'mirror']]]
+  ['limit_5fcast_602',['limit_cast',['../group__utilities.html#gac7237366d3ae694bc7202a878e4e5d6d',1,'mirror']]],
+  ['login_603',['login',['../classmirror_1_1url.html#aa5acc33b10ba0a962caeb713b64e5a1b',1,'mirror::url']]]
 ];

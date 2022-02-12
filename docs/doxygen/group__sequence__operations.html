@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -74,34 +74,102 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga646428542416567edf4dc4555dd39ca3"><td class="memTemplParams" colspan="2">template&lt;__metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga646428542416567edf4dc4555dd39ca3"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga646428542416567edf4dc4555dd39ca3">mirror::unpack</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt; mo) noexcept -&gt; __unpack_metaobject_seq&lt; <a class="el" href="structmirror_1_1unpacked__metaobject__sequence.html">unpacked_metaobject_sequence</a>, M &gt; requires(reflects_object_sequence(mo))</td></tr>
-<tr class="memdesc:ga646428542416567edf4dc4555dd39ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpacks a sequence metaobject into sequence of separate metaobject ids.  <a href="group__sequence__operations.html#ga646428542416567edf4dc4555dd39ca3">More...</a><br /></td></tr>
-<tr class="separator:ga646428542416567edf4dc4555dd39ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7542369925d691c4f43f677ec8f143c6"><td class="memTemplParams" colspan="2">template&lt;__metaobject_id... M&gt; </td></tr>
-<tr class="memitem:ga7542369925d691c4f43f677ec8f143c6"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga7542369925d691c4f43f677ec8f143c6">mirror::make_sequence</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;...) noexcept -&gt; <a class="el" href="structmirror_1_1unpacked__metaobject__sequence.html">unpacked_metaobject_sequence</a>&lt; M... &gt;</td></tr>
-<tr class="memdesc:ga7542369925d691c4f43f677ec8f143c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an <a class="el" href="structmirror_1_1unpacked__metaobject__sequence.html" title="Template implementing an unpacked sequence of individual metaobjects,.">unpacked_metaobject_sequence</a> from individual metaobjects.  <a href="group__sequence__operations.html#ga7542369925d691c4f43f677ec8f143c6">More...</a><br /></td></tr>
-<tr class="separator:ga7542369925d691c4f43f677ec8f143c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae340caaff2cf7508bf16375f12f54355"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">mirror::unpack</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo) noexcept</td></tr>
+<tr class="memdesc:gae340caaff2cf7508bf16375f12f54355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpacks a sequence metaobject into sequence of separate metaobject ids.  <a href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">More...</a><br /></td></tr>
+<tr class="separator:gae340caaff2cf7508bf16375f12f54355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c9617206b686bee1489c0fdc7db435b"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga9c9617206b686bee1489c0fdc7db435b">mirror::make_sequence</a> (<a class="el" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> auto...) noexcept</td></tr>
+<tr class="memdesc:ga9c9617206b686bee1489c0fdc7db435b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an unpacked_metaobject_sequence from individual metaobjects.  <a href="group__sequence__operations.html#ga9c9617206b686bee1489c0fdc7db435b">More...</a><br /></td></tr>
+<tr class="separator:ga9c9617206b686bee1489c0fdc7db435b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b94f3093e1a0a11eaa6ae1d4f3db9f4"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga5b94f3093e1a0a11eaa6ae1d4f3db9f4">mirror::count_if</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept -&gt; size_t</td></tr>
+<tr class="memdesc:ga5b94f3093e1a0a11eaa6ae1d4f3db9f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts elements in a metaobject sequence satisfying a predicate.  <a href="group__sequence__operations.html#ga5b94f3093e1a0a11eaa6ae1d4f3db9f4">More...</a><br /></td></tr>
+<tr class="separator:ga5b94f3093e1a0a11eaa6ae1d4f3db9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0696f940d3d01e608be7aa9f336b3c43"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto function) noexcept</td></tr>
+<tr class="memdesc:ga0696f940d3d01e608be7aa9f336b3c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms each element in a sequence by applying the given function.  <a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">More...</a><br /></td></tr>
+<tr class="separator:ga0696f940d3d01e608be7aa9f336b3c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfd64b0f20d508eacfe8a0eb7116243d"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; class Container, template&lt; typename &gt; class Transform&gt; </td></tr>
+<tr class="memitem:gadfd64b0f20d508eacfe8a0eb7116243d"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gadfd64b0f20d508eacfe8a0eb7116243d">mirror::store_transformed_types</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo) noexcept -&gt; Container&lt; Transform&lt; unspecified &gt;... &gt;</td></tr>
+<tr class="memdesc:gadfd64b0f20d508eacfe8a0eb7116243d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unreflects and transforms by Transform and instantiates Container.  <a href="group__sequence__operations.html#gadfd64b0f20d508eacfe8a0eb7116243d">More...</a><br /></td></tr>
+<tr class="separator:gadfd64b0f20d508eacfe8a0eb7116243d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa737687acfcac20aa23906d36b161873"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename &gt; class Transform&gt; </td></tr>
+<tr class="memitem:gaa737687acfcac20aa23906d36b161873"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873">mirror::transform_types</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo) noexcept -&gt; <a class="el" href="structmirror_1_1type__list.html">type_list</a>&lt; Transform&lt; unspecified &gt;... &gt;</td></tr>
+<tr class="memdesc:gaa737687acfcac20aa23906d36b161873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unreflects metaobject in a sequence and transforms by Transform.  <a href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873">More...</a><br /></td></tr>
+<tr class="separator:gaa737687acfcac20aa23906d36b161873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b708f82557982085eec3eddaf7f4be7"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">mirror::extract_types</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo) noexcept -&gt; <a class="el" href="structmirror_1_1type__list.html">type_list</a>&lt; unspecified... &gt;</td></tr>
+<tr class="memdesc:ga1b708f82557982085eec3eddaf7f4be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unreflects metaobject in a sequence and stores them in <a class="el" href="structmirror_1_1type__list.html" title="Represents a list of types. Unlike tuple does not store values.">type_list</a>.  <a href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">More...</a><br /></td></tr>
+<tr class="separator:ga1b708f82557982085eec3eddaf7f4be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bffe08ee07cf9fcb1b2861f2335733f"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f">mirror::fold</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, auto aggregate)</td></tr>
+<tr class="memdesc:ga3bffe08ee07cf9fcb1b2861f2335733f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms each metaobject in sequence and then aggregates the result.  <a href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f">More...</a><br /></td></tr>
+<tr class="separator:ga3bffe08ee07cf9fcb1b2861f2335733f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60752a8eedaee05717e682b93e8b5448"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga60752a8eedaee05717e682b93e8b5448">mirror::join</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, auto separator, auto aggregate)</td></tr>
+<tr class="memdesc:ga60752a8eedaee05717e682b93e8b5448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms each metaobject in sequence and aggregates them.  <a href="group__sequence__operations.html#ga60752a8eedaee05717e682b93e8b5448">More...</a><br /></td></tr>
+<tr class="separator:ga60752a8eedaee05717e682b93e8b5448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedbdfd4fe1762bec643bfdfe8f4c8075"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaedbdfd4fe1762bec643bfdfe8f4c8075">mirror::join_to_string</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, std::string_view separator) -&gt; std::string</td></tr>
+<tr class="memdesc:gaedbdfd4fe1762bec643bfdfe8f4c8075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms each metaobject and joins the results separated by separator.  <a href="group__sequence__operations.html#gaedbdfd4fe1762bec643bfdfe8f4c8075">More...</a><br /></td></tr>
+<tr class="separator:gaedbdfd4fe1762bec643bfdfe8f4c8075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67f4371722cd048fd660f4429279c2dc"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto function) noexcept</td></tr>
+<tr class="memdesc:ga67f4371722cd048fd660f4429279c2dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified function for each metaobject in a sequence.  <a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">More...</a><br /></td></tr>
+<tr class="separator:ga67f4371722cd048fd660f4429279c2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a8155f77b7fb4e62d8c02463aaad911"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga6a8155f77b7fb4e62d8c02463aaad911">mirror::for_each_info</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto function) noexcept</td></tr>
+<tr class="memdesc:ga6a8155f77b7fb4e62d8c02463aaad911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified function for each metaobject in a sequence.  <a href="group__sequence__operations.html#ga6a8155f77b7fb4e62d8c02463aaad911">More...</a><br /></td></tr>
+<tr class="separator:ga6a8155f77b7fb4e62d8c02463aaad911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb7958a7ab2c0a7dd9870d53bbd09617"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gabb7958a7ab2c0a7dd9870d53bbd09617">mirror::find_if</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept</td></tr>
+<tr class="memdesc:gabb7958a7ab2c0a7dd9870d53bbd09617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds first metaobject in sequence satisfying a predicate.  <a href="group__sequence__operations.html#gabb7958a7ab2c0a7dd9870d53bbd09617">More...</a><br /></td></tr>
+<tr class="separator:gabb7958a7ab2c0a7dd9870d53bbd09617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a877cc958eacedc3c9606159977921d"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga2a877cc958eacedc3c9606159977921d">mirror::find_if_not</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept</td></tr>
+<tr class="memdesc:ga2a877cc958eacedc3c9606159977921d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds first metaobject in sequence not satisfying a predicate.  <a href="group__sequence__operations.html#ga2a877cc958eacedc3c9606159977921d">More...</a><br /></td></tr>
+<tr class="separator:ga2a877cc958eacedc3c9606159977921d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96941ef41030eb456d7c20189dfee588"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga96941ef41030eb456d7c20189dfee588">mirror::find_ranking</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, auto compare)</td></tr>
+<tr class="memdesc:ga96941ef41030eb456d7c20189dfee588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds metaobject with ranking value of some property.  <a href="group__sequence__operations.html#ga96941ef41030eb456d7c20189dfee588">More...</a><br /></td></tr>
+<tr class="separator:ga96941ef41030eb456d7c20189dfee588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b059ede5ae9cbbf28eaf2d75500b99d"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga4b059ede5ae9cbbf28eaf2d75500b99d">mirror::find_ranking</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>)</td></tr>
+<tr class="memdesc:ga4b059ede5ae9cbbf28eaf2d75500b99d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds metaobject with highest value of some property.  <a href="group__sequence__operations.html#ga4b059ede5ae9cbbf28eaf2d75500b99d">More...</a><br /></td></tr>
+<tr class="separator:ga4b059ede5ae9cbbf28eaf2d75500b99d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf8ab21eee9a8e366a84f479d68ac4a8"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gacf8ab21eee9a8e366a84f479d68ac4a8">mirror::get_top_value</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>)</td></tr>
+<tr class="memdesc:gacf8ab21eee9a8e366a84f479d68ac4a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the highest value of a property of metaobjects in a sequence.  <a href="group__sequence__operations.html#gacf8ab21eee9a8e366a84f479d68ac4a8">More...</a><br /></td></tr>
+<tr class="separator:gacf8ab21eee9a8e366a84f479d68ac4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78dfa41bbca6ddb9e0297d344622b7f6"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga78dfa41bbca6ddb9e0297d344622b7f6">mirror::filter</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept</td></tr>
+<tr class="memdesc:ga78dfa41bbca6ddb9e0297d344622b7f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes metaobjects not satisfying a predicate from a sequence.  <a href="group__sequence__operations.html#ga78dfa41bbca6ddb9e0297d344622b7f6">More...</a><br /></td></tr>
+<tr class="separator:ga78dfa41bbca6ddb9e0297d344622b7f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43ba48902c8ad476466f21f1595778b1"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga43ba48902c8ad476466f21f1595778b1">mirror::is_sorted</a> (unpacked_metaobject_sequence&lt;&gt;, auto compare) -&gt; bool</td></tr>
+<tr class="memdesc:ga43ba48902c8ad476466f21f1595778b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if metaobjects in a sequence are sorted according to compare function.  <a href="group__sequence__operations.html#ga43ba48902c8ad476466f21f1595778b1">More...</a><br /></td></tr>
+<tr class="separator:ga43ba48902c8ad476466f21f1595778b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga482ca759537fad4a2904655f06f71718"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga482ca759537fad4a2904655f06f71718">mirror::all_of</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ga482ca759537fad4a2904655f06f71718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if all metaobjects in a sequence satisfy a predicate.  <a href="group__sequence__operations.html#ga482ca759537fad4a2904655f06f71718">More...</a><br /></td></tr>
+<tr class="separator:ga482ca759537fad4a2904655f06f71718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2c1088d89c13aafaacfc0734f22eb37"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">mirror::any_of</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:gac2c1088d89c13aafaacfc0734f22eb37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if some metaobjects in a sequence satisfy a predicate.  <a href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">More...</a><br /></td></tr>
+<tr class="separator:gac2c1088d89c13aafaacfc0734f22eb37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3219452e233df77e0d990d94fc56cec"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec">mirror::none_of</a> (<a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto mo, auto predicate) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:gaf3219452e233df77e0d990d94fc56cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if no metaobjects in a sequence satisfy a predicate.  <a href="group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec">More...</a><br /></td></tr>
+<tr class="separator:gaf3219452e233df77e0d990d94fc56cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga7542369925d691c4f43f677ec8f143c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7542369925d691c4f43f677ec8f143c6">&#9670;&nbsp;</a></span>make_sequence()</h2>
+<a id="ga482ca759537fad4a2904655f06f71718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga482ca759537fad4a2904655f06f71718">&#9670;&nbsp;</a></span>all_of()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;__metaobject_id... M&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto mirror::make_sequence </td>
+          <td class="memname">constexpr auto mirror::all_of </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td> -&gt; <a class="el" href="structmirror_1_1unpacked__metaobject__sequence.html">unpacked_metaobject_sequence</a>&lt;M...&gt; </td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  bool</td>
         </tr>
       </table>
   </td>
@@ -111,22 +179,919 @@ template&lt;__metaobject_id... M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Makes an <a class="el" href="structmirror_1_1unpacked__metaobject__sequence.html" title="Template implementing an unpacked sequence of individual metaobjects,.">unpacked_metaobject_sequence</a> from individual metaobjects. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__classification.html#ga4fbe5fcc9ff7c026647b6e0cce372c6a" title="Indicates if the argument is a sequence of metaobjects.">is_object_sequence</a> </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2filter_8cpp-example.html#a0">mirror/filter.cpp</a>.</dd>
+<p>Indicates if all metaobjects in a sequence satisfy a predicate. </p>
+<dl class="section see"><dt>See also</dt><dd>filter </dd>
+<dd>
+any_of </dd>
+<dd>
+none_of </dd></dl>
+
+</div>
+</div>
+<a id="gac2c1088d89c13aafaacfc0734f22eb37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2c1088d89c13aafaacfc0734f22eb37">&#9670;&nbsp;</a></span>any_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::any_of </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates if some metaobjects in a sequence satisfy a predicate. </p>
+<dl class="section see"><dt>See also</dt><dd>filter </dd>
+<dd>
+all_of </dd>
+<dd>
+none_of </dd></dl>
+
+</div>
+</div>
+<a id="ga5b94f3093e1a0a11eaa6ae1d4f3db9f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b94f3093e1a0a11eaa6ae1d4f3db9f4">&#9670;&nbsp;</a></span>count_if()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::count_if </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  size_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Counts elements in a metaobject sequence satisfying a predicate. </p>
+<dl class="section see"><dt>See also</dt><dd>find_if </dd>
+<dd>
+find_if_not </dd></dl>
+
+</div>
+</div>
+<a id="ga1b708f82557982085eec3eddaf7f4be7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1b708f82557982085eec3eddaf7f4be7">&#9670;&nbsp;</a></span>extract_types()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::extract_types </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em></td><td>)</td>
+          <td> -&gt;  <a class="el" href="structmirror_1_1type__list.html">type_list</a>&lt; unspecified... &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unreflects metaobject in a sequence and stores them in <a class="el" href="structmirror_1_1type__list.html" title="Represents a list of types. Unlike tuple does not store values.">type_list</a>. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gadfd64b0f20d508eacfe8a0eb7116243d" title="Unreflects and transforms by Transform and instantiates Container.">store_transformed_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873" title="Unreflects metaobject in a sequence and transforms by Transform.">transform_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+fold</dd></dl>
+<p>This function takes a sequence of metaobjects reflecting types, un-reflects them, applies the Transform template on each one and then instantiates the <a class="el" href="structmirror_1_1type__list.html" title="Represents a list of types. Unlike tuple does not store values.">type_list</a> template with the resulting types. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2has_padding_8cpp-example.html#a1">mirror/has_padding.cpp</a>.</dd>
 </dl>
 
-<p class="reference">Referenced by <a class="el" href="group__operations.html#ga6db2290bfb37bec2ab8593c41dd2329b">mirror::for_each_metaobject_unary_op()</a>.</p>
+</div>
+</div>
+<a id="ga78dfa41bbca6ddb9e0297d344622b7f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78dfa41bbca6ddb9e0297d344622b7f6">&#9670;&nbsp;</a></span>filter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::filter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes metaobjects not satisfying a predicate from a sequence. </p>
+<p>Removes metaobjects satisfying a predicate from a sequence.</p>
+<dl class="section see"><dt>See also</dt><dd>remove_if </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+select</dd>
+<dd>
+filter </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+select </dd></dl>
 
 </div>
 </div>
-<a id="ga646428542416567edf4dc4555dd39ca3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga646428542416567edf4dc4555dd39ca3">&#9670;&nbsp;</a></span>unpack()</h2>
+<a id="gabb7958a7ab2c0a7dd9870d53bbd09617"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb7958a7ab2c0a7dd9870d53bbd09617">&#9670;&nbsp;</a></span>find_if()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::find_if </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds first metaobject in sequence satisfying a predicate. </p>
+<dl class="section see"><dt>See also</dt><dd>find_if_not </dd>
+<dd>
+find_ranking </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+count_if </dd></dl>
+
+</div>
+</div>
+<a id="ga2a877cc958eacedc3c9606159977921d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2a877cc958eacedc3c9606159977921d">&#9670;&nbsp;</a></span>find_if_not()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::find_if_not </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds first metaobject in sequence not satisfying a predicate. </p>
+<dl class="section see"><dt>See also</dt><dd>find_if </dd>
+<dd>
+find_ranking </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+count_if </dd></dl>
+
+</div>
+</div>
+<a id="ga4b059ede5ae9cbbf28eaf2d75500b99d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b059ede5ae9cbbf28eaf2d75500b99d">&#9670;&nbsp;</a></span>find_ranking() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::find_ranking </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds metaobject with highest value of some property. </p>
+<dl class="section see"><dt>See also</dt><dd>find_if </dd>
+<dd>
+find_if_not </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+get_top_value</dd></dl>
+<p>This function extracts the value of a property for each metaobjects is a sequence and returns the metaobject for which the value is highest according to a less than operator. </p>
+
+</div>
+</div>
+<a id="ga96941ef41030eb456d7c20189dfee588"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga96941ef41030eb456d7c20189dfee588">&#9670;&nbsp;</a></span>find_ranking() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::find_ranking </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>compare</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds metaobject with ranking value of some property. </p>
+<dl class="section see"><dt>See also</dt><dd>find_if </dd>
+<dd>
+find_if_not </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+get_top_value</dd></dl>
+<p>This function extracts the value of a property for each metaobjects is a sequence and returns the metaobject for which the value is highest according to a binary compare function. </p>
+
+</div>
+</div>
+<a id="ga3bffe08ee07cf9fcb1b2861f2335733f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3bffe08ee07cf9fcb1b2861f2335733f">&#9670;&nbsp;</a></span>fold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::fold </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>aggregate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transforms each metaobject in sequence and then aggregates the result. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873" title="Unreflects metaobject in a sequence and transforms by Transform.">transform_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+join</dd></dl>
+<p>This function takes a sequence of metaobjects applies the specified transform function on each one of them and then makes a single call to the (variadic) aggregate function with the transformed metaobjects as arguments and returns the aggregated result. </p>
+
+</div>
+</div>
+<a id="ga67f4371722cd048fd660f4429279c2dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga67f4371722cd048fd660f4429279c2dc">&#9670;&nbsp;</a></span>for_each()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void mirror::for_each </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>function</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls the specified function for each metaobject in a sequence. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+fold </dd>
+<dd>
+join </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2fake_rpc_8cpp-example.html#a2">mirror/fake_rpc.cpp</a>, <a class="el" href="mirror_2filter_8cpp-example.html#a0">mirror/filter.cpp</a>, <a class="el" href="mirror_2gen_puml_diagram_8cpp-example.html#a0">mirror/gen_puml_diagram.cpp</a>, <a class="el" href="mirror_2group_by_8cpp-example.html#a1">mirror/group_by.cpp</a>, <a class="el" href="mirror_2next_weekday_8cpp-example.html#a1">mirror/next_weekday.cpp</a>, <a class="el" href="mirror_2print_enumerators_8cpp-example.html#a0">mirror/print_enumerators.cpp</a>, <a class="el" href="mirror_2print_op_results_8cpp-example.html#a2">mirror/print_op_results.cpp</a>, <a class="el" href="mirror_2print_traits_8cpp-example.html#a1">mirror/print_traits.cpp</a>, <a class="el" href="mirror_2remove_if_8cpp-example.html#a0">mirror/remove_if.cpp</a>, <a class="el" href="mirror_2repeat_message_args_8cpp-example.html#a1">mirror/repeat_message_args.cpp</a>, <a class="el" href="mirror_2row_polymorphism_8cpp-example.html#a0">mirror/row_polymorphism.cpp</a>, and <a class="el" href="mirror_2sort_by_8cpp-example.html#a1">mirror/sort_by.cpp</a>.</dd>
+</dl>
+
+<p class="reference">Referenced by <a class="el" href="group__sequence__operations.html#ga6a8155f77b7fb4e62d8c02463aaad911">mirror::for_each_info()</a>, <a class="el" href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">mirror::for_each_metaobject_operation()</a>, and <a class="el" href="group__classification.html#gae5dab47a9201e77ba52c2d38c8e551d2">mirror::get_traits()</a>.</p>
+
+</div>
+</div>
+<a id="ga6a8155f77b7fb4e62d8c02463aaad911"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6a8155f77b7fb4e62d8c02463aaad911">&#9670;&nbsp;</a></span>for_each_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr void mirror::for_each_info </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>function</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls the specified function for each metaobject in a sequence. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+<a class="el" href="classmirror_1_1for__each__iteration__info.html" title="Class used to provide information about sequence element iteration.">for_each_iteration_info</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+fold </dd>
+<dd>
+join</dd></dl>
+<p>This function call the provided function for each metaobject in a sequence where the first argument is the metaobject and the second is an instance of <a class="el" href="classmirror_1_1for__each__iteration__info.html" title="Class used to provide information about sequence element iteration.">for_each_iteration_info</a> providing information about each cycle. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2print_struct_8cpp-example.html#a0">mirror/print_struct.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="gacf8ab21eee9a8e366a84f479d68ac4a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf8ab21eee9a8e366a84f479d68ac4a8">&#9670;&nbsp;</a></span>get_top_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::get_top_value </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds the highest value of a property of metaobjects in a sequence. </p>
+<dl class="section see"><dt>See also</dt><dd>find_ranking </dd>
+<dd>
+is_sorted </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a></dd></dl>
+<p>This function extracts the value of a property for each metaobjects is a sequence and returns that value which is highest according to a binary compare function. </p>
+
+</div>
+</div>
+<a id="ga43ba48902c8ad476466f21f1595778b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga43ba48902c8ad476466f21f1595778b1">&#9670;&nbsp;</a></span>is_sorted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::is_sorted </td>
+          <td>(</td>
+          <td class="paramtype">unpacked_metaobject_sequence&lt;&gt;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>compare</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tests if metaobjects in a sequence are sorted according to compare function. </p>
+<dl class="section see"><dt>See also</dt><dd>find_ranking </dd>
+<dd>
+get_top_value </dd></dl>
+
+</div>
+</div>
+<a id="ga60752a8eedaee05717e682b93e8b5448"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga60752a8eedaee05717e682b93e8b5448">&#9670;&nbsp;</a></span>join()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::join </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>separator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>aggregate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transforms each metaobject in sequence and aggregates them. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873" title="Unreflects metaobject in a sequence and transforms by Transform.">transform_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+fold </dd></dl>
+
+</div>
+</div>
+<a id="gaedbdfd4fe1762bec643bfdfe8f4c8075"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaedbdfd4fe1762bec643bfdfe8f4c8075">&#9670;&nbsp;</a></span>join_to_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::join_to_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>separator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  std::string</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transforms each metaobject and joins the results separated by separator. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+join </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2overload_arity_8cpp-example.html#a0">mirror/overload_arity.cpp</a>, and <a class="el" href="mirror_2remove_if_8cpp-example.html#a2">mirror/remove_if.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9c9617206b686bee1489c0fdc7db435b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9c9617206b686bee1489c0fdc7db435b">&#9670;&nbsp;</a></span>make_sequence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::make_sequence </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a>&#160;</td>
+          <td class="paramname"><em>auto...</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Makes an unpacked_metaobject_sequence from individual metaobjects. </p>
+<dl class="section see"><dt>See also</dt><dd>is_object_sequence </dd></dl>
+
+</div>
+</div>
+<a id="gaf3219452e233df77e0d990d94fc56cec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3219452e233df77e0d990d94fc56cec">&#9670;&nbsp;</a></span>none_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::none_of </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>predicate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates if no metaobjects in a sequence satisfy a predicate. </p>
+<dl class="section see"><dt>See also</dt><dd>filter </dd>
+<dd>
+all_of </dd>
+<dd>
+none_of </dd></dl>
+
+</div>
+</div>
+<a id="gadfd64b0f20d508eacfe8a0eb7116243d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadfd64b0f20d508eacfe8a0eb7116243d">&#9670;&nbsp;</a></span>store_transformed_types()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;__metaobject_id M&gt; </div>
+template&lt;template&lt; typename... &gt; class Container, template&lt; typename &gt; class Transform&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::store_transformed_types </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em></td><td>)</td>
+          <td> -&gt;  Container&lt; Transform&lt; unspecified &gt;... &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unreflects and transforms by Transform and instantiates Container. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873" title="Unreflects metaobject in a sequence and transforms by Transform.">transform_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+fold</dd></dl>
+<p>This function takes a sequence of metaobjects reflecting types, un-reflects them, applies the Transform template on each one and then instantiates the Container template with the resulting types. </p>
+
+</div>
+</div>
+<a id="ga0696f940d3d01e608be7aa9f336b3c43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0696f940d3d01e608be7aa9f336b3c43">&#9670;&nbsp;</a></span>transform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::transform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>function</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transforms each element in a sequence by applying the given function. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#gaa737687acfcac20aa23906d36b161873" title="Unreflects metaobject in a sequence and transforms by Transform.">transform_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+fold </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2fake_rpc_8cpp-example.html#a3">mirror/fake_rpc.cpp</a>, <a class="el" href="mirror_2find_if_8cpp-example.html#a3">mirror/find_if.cpp</a>, <a class="el" href="mirror_2has_padding_8cpp-example.html#a2">mirror/has_padding.cpp</a>, and <a class="el" href="mirror_2print_op_results_8cpp-example.html#a1">mirror/print_op_results.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa737687acfcac20aa23906d36b161873"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa737687acfcac20aa23906d36b161873">&#9670;&nbsp;</a></span>transform_types()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;template&lt; typename &gt; class Transform&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::transform_types </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em></td><td>)</td>
+          <td> -&gt;  <a class="el" href="structmirror_1_1type__list.html">type_list</a>&lt; Transform&lt; unspecified &gt;... &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unreflects metaobject in a sequence and transforms by Transform. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43" title="Transforms each element in a sequence by applying the given function.">transform</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gadfd64b0f20d508eacfe8a0eb7116243d" title="Unreflects and transforms by Transform and instantiates Container.">store_transformed_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7" title="Unreflects metaobject in a sequence and stores them in type_list.">extract_types</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+fold</dd></dl>
+<p>This function takes a sequence of metaobjects reflecting types, un-reflects them, applies the Transform template on each one and then instantiates the <a class="el" href="structmirror_1_1type__list.html" title="Represents a list of types. Unlike tuple does not store values.">type_list</a> template with the resulting types. </p>
+
+</div>
+</div>
+<a id="gae340caaff2cf7508bf16375f12f54355"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae340caaff2cf7508bf16375f12f54355">&#9670;&nbsp;</a></span>unpack()</h2>
+
+<div class="memitem">
+<div class="memproto">
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -134,10 +1099,9 @@ template&lt;__metaobject_id M&gt; </div>
         <tr>
           <td class="memname">constexpr auto mirror::unpack </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga0b607ecede165ae8700887b521b1785e">metaobject_sequence</a> auto&#160;</td>
           <td class="paramname"><em>mo</em></td><td>)</td>
-          <td> -&gt; __unpack_metaobject_seq&lt;<a class="el" href="structmirror_1_1unpacked__metaobject__sequence.html">unpacked_metaobject_sequence</a>, M&gt; requires(
-    reflects_object_sequence(mo)) </td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -148,9 +1112,9 @@ template&lt;__metaobject_id M&gt; </div>
 </div><div class="memdoc">
 
 <p>Unpacks a sequence metaobject into sequence of separate metaobject ids. </p>
-<dl class="section see"><dt>See also</dt><dd>reflects_object_sequence </dd>
-<dd>
-<a class="el" href="group__operations.html#ga547b9c2b424e7de57427b56d833295c1" title="Unpacks a sequence metaobject into sequence of separate metaobjects.">expand</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>reflects_object_sequence </dd></dl>
+
+<p class="reference">Referenced by <a class="el" href="group__sequence__operations.html#ga6a8155f77b7fb4e62d8c02463aaad911">mirror::for_each_info()</a>.</p>
 
 </div>
 </div>
@@ -159,7 +1123,7 @@ template&lt;__metaobject_id M&gt; </div>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

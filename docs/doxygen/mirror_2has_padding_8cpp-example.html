@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -85,14 +85,14 @@ $(function() {
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... T&gt;</div>
-<div class="line">constexpr <span class="keyword">auto</span> sum_sizeofs(mirror::type_list&lt;T...&gt;) {</div>
+<div class="line">constexpr <span class="keyword">auto</span> sum_sizeofs(<a name="_a0"></a><a class="code" href="structmirror_1_1type__list.html">mirror::type_list&lt;T...&gt;</a>) {</div>
 <div class="line">    <span class="keywordflow">return</span> (0Z + ... + <span class="keyword">sizeof</span>(T));</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">constexpr <span class="keyword">auto</span> has_padding() -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line">    <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(T) &gt;</div>
-<div class="line">           sum_sizeofs(extract_types(transform(</div>
+<div class="line">           sum_sizeofs(<a name="a1"></a><a class="code" href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">extract_types</a>(<a name="a2"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(</div>
 <div class="line">             filter(get_data_members(<a class="code" href="namespacemirror.html">mirror</a>(T)), not_(is_static(mirror::_1))),</div>
 <div class="line">             get_type(mirror::_1))));</div>
 <div class="line">}</div>
@@ -109,15 +109,18 @@ $(function() {
 <div class="line">    print_has_padding&lt;S2&gt;();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga1b708f82557982085eec3eddaf7f4be7"><div class="ttname"><a href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">mirror::extract_types</a></div><div class="ttdeci">constexpr auto extract_types(metaobject_sequence auto mo) noexcept -&gt; type_list&lt; unspecified... &gt;</div><div class="ttdoc">Unreflects metaobject in a sequence and stores them in type_list.</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
+<div class="ttc" id="astructmirror_1_1type__list_html"><div class="ttname"><a href="structmirror_1_1type__list.html">mirror::type_list</a></div><div class="ttdoc">Represents a list of types. Unlike tuple does not store values.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:55</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -92,44 +92,52 @@ $(function() {
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> ms = <a class="code" href="namespacemirror.html">mirror</a>(mystruct);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> found_by_name =</div>
-<div class="line">      find_if(get_data_members(ms), [](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> <a name="a0"></a><a class="code" href="group__operations.html#ga3fdb4c2ad31d6346ee75d3efd102ea76">has_name</a>(me, <span class="stringliteral">&quot;i&quot;</span>); });</div>
+<div class="line">      find_if(get_data_members(ms), [](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> <a name="a0"></a><a class="code" href="group__operations.html#ga7eef8d7b505b360c381db1fe49d6989a">has_name</a>(me, <span class="stringliteral">&quot;i&quot;</span>); });</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span>(reflects_variable(found_by_name)) {</div>
-<div class="line">        std::cout &lt;&lt; <a name="a1"></a><a class="code" href="group__operations.html#gac040042568b4a1950b9cbb5afac91f05">get_value</a>(found_by_name, x) &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <a name="a1"></a><a class="code" href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">get_value</a>(found_by_name, x) &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> found_by_having_type =</div>
 <div class="line">      find_if(get_data_members(ms), has_type&lt;std::string&gt;(_1));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span>(reflects_variable(found_by_having_type)) {</div>
-<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#gac040042568b4a1950b9cbb5afac91f05">get_value</a>(found_by_having_type, x) &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">get_value</a>(found_by_having_type, x) &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> found_by_having_trait = find_if(</div>
 <div class="line">      get_data_members(ms), has_type_with_trait&lt;std::is_floating_point&gt;(_1));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span>(reflects_variable(found_by_having_trait)) {</div>
-<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#gac040042568b4a1950b9cbb5afac91f05">get_value</a>(found_by_having_trait, x) &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">get_value</a>(found_by_having_trait, x) &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> found_by_being_type =</div>
 <div class="line">      find_if(get_member_types(ms), is_type&lt;char&gt;(_1));</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span>(<a name="a2"></a><a class="code" href="group__classification.html#gaa50080f02384c0106fb2c1f665297bef">reflects_type</a>(found_by_being_type)) {</div>
+<div class="line">    <span class="keywordflow">if</span>(<a name="a2"></a><a class="code" href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">reflects_type</a>(found_by_being_type)) {</div>
 <div class="line">        std::cout &lt;&lt; get_name(found_by_being_type) &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> found_default_ctr = find_if(</div>
-<div class="line">      transform(get_constructors(ms), get_parameters(_1)), is_empty(_1));</div>
+<div class="line">      <a name="a3"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(get_constructors(ms), get_parameters(_1)), is_empty(_1));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span>(reflects_object(found_default_ctr)) {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;has default constructor&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> found_nondefault_ctr = find_if_not(</div>
+<div class="line">      <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(get_constructors(ms), get_parameters(_1)), is_empty(_1));</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span>(reflects_object(found_nondefault_ctr)) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;has non-default constructor&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__classification_html_gaa50080f02384c0106fb2c1f665297bef"><div class="ttname"><a href="group__classification.html#gaa50080f02384c0106fb2c1f665297bef">mirror::reflects_type</a></div><div class="ttdeci">consteval auto reflects_type(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a type.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:296</div></div>
-<div class="ttc" id="agroup__operations_html_ga3fdb4c2ad31d6346ee75d3efd102ea76"><div class="ttname"><a href="group__operations.html#ga3fdb4c2ad31d6346ee75d3efd102ea76">mirror::has_name</a></div><div class="ttdeci">consteval auto has_name(wrapped_metaobject&lt; M &gt; mo, const char(&amp;str)[L]) noexcept -&gt; bool requires(reflects_named(mo))</div><div class="ttdoc">Indicates if the base name of the reflected entity is equal to str.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1031</div></div>
-<div class="ttc" id="agroup__operations_html_gac040042568b4a1950b9cbb5afac91f05"><div class="ttname"><a href="group__operations.html#gac040042568b4a1950b9cbb5afac91f05">mirror::get_value</a></div><div class="ttdeci">constexpr const auto &amp; get_value(wrapped_metaobject&lt; M &gt; mo) noexcept requires(reflects_variable(mo))</div><div class="ttdoc">Returns the value of the reflected base-level entity.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1107</div></div>
+<div class="ttc" id="agroup__classification_html_gab6cadc34965b8326c55b21c48bdccd84"><div class="ttname"><a href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">mirror::reflects_type</a></div><div class="ttdeci">consteval auto reflects_type(metaobject auto) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a type.</div></div>
+<div class="ttc" id="agroup__operations_html_ga7eef8d7b505b360c381db1fe49d6989a"><div class="ttname"><a href="group__operations.html#ga7eef8d7b505b360c381db1fe49d6989a">mirror::has_name</a></div><div class="ttdeci">consteval auto has_name(metaobject auto mo, const char(&amp;str)[L]) noexcept -&gt; bool requires(reflects_named(mo))</div><div class="ttdoc">Indicates if the base name of the reflected entity is equal to str.</div></div>
+<div class="ttc" id="agroup__operations_html_ga906b1bf1e11139592467bb4b9c801abd"><div class="ttname"><a href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">mirror::get_value</a></div><div class="ttdeci">constexpr const auto &amp; get_value(metaobject auto mo) noexcept requires(reflects_variable(mo))</div><div class="ttdoc">Returns the value of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
@@ -138,7 +146,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

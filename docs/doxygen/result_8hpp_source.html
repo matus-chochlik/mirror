@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -65,7 +65,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_adeb71b4288c502c918dea5bc17871cd.html">mirror</a></li><li class="navelem"><a class="el" href="dir_0fa6b4de985af0fa5fc0748fd6ecc44b.html">serialize</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_43e621d1f8059ef23e6d554162653e23.html">mirror</a></li><li class="navelem"><a class="el" href="dir_496d53c94861e3a75d1ee2e73b4705bb.html">serialize</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -109,43 +109,9 @@ $(function() {
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="result_8hpp.html#aedb71c0bee09f4c958c1b5dad9f9ce85">   76</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classmirror_1_1bitfield.html">read_errors</a> = <a class="code" href="classmirror_1_1bitfield.html">bitfield&lt;read_error_code&gt;</a>;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;constexpr <span class="keyword">auto</span> has_value(<span class="keyword">const</span> std::variant&lt;T, write_errors&gt;&amp; v) noexcept</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> std::holds_alternative&lt;T&gt;(v);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;constexpr <span class="keyword">auto</span> extract(std::variant&lt;T, write_errors&gt;&amp; v) noexcept -&gt; T&amp; {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> std::get&lt;T&gt;(v);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;constexpr <span class="keyword">auto</span> extract(<span class="keyword">const</span> std::variant&lt;T, write_errors&gt;&amp; v) noexcept</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  -&gt; <span class="keyword">const</span> T&amp; {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> std::get&lt;T&gt;(v);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;constexpr <span class="keyword">auto</span> has_value(<span class="keyword">const</span> std::variant&lt;T, read_errors&gt;&amp; v) noexcept</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">return</span> std::holds_alternative&lt;T&gt;(v);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;constexpr <span class="keyword">auto</span> extract(std::variant&lt;T, read_errors&gt;&amp; v) noexcept -&gt; T&amp; {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">return</span> std::get&lt;T&gt;(v);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;constexpr <span class="keyword">auto</span> extract(<span class="keyword">const</span> std::variant&lt;T, read_errors&gt;&amp; v) noexcept</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  -&gt; <span class="keyword">const</span> T&amp; {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">return</span> std::get&lt;T&gt;(v);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;} <span class="comment">// namespace mirror::serialize</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// EAGINE_SERIALIZE_RESULT_HPP</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;} <span class="comment">// namespace mirror::serialize</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// EAGINE_SERIALIZE_RESULT_HPP</span></div>
 <div class="ttc" id="aclassmirror_1_1bitfield_html"><div class="ttname"><a href="classmirror_1_1bitfield.html">mirror::bitfield</a></div><div class="ttdoc">Class for manipulating and testing a group of enumeration-based bits.</div><div class="ttdef"><b>Definition:</b> bitfield.hpp:20</div></div>
 <div class="ttc" id="aresult_8hpp_html_a64f543fd3c7d111138138f51cf5d4c22"><div class="ttname"><a href="result_8hpp.html#a64f543fd3c7d111138138f51cf5d4c22">mirror::serialize::read_error_code</a></div><div class="ttdeci">read_error_code</div><div class="ttdoc">Deserialization error code bits enumeration.</div><div class="ttdef"><b>Definition:</b> result.hpp:41</div></div>
 <div class="ttc" id="aresult_8hpp_html_a64f543fd3c7d111138138f51cf5d4c22a02ab35267cf3d18a230dee3149cc2a55"><div class="ttname"><a href="result_8hpp.html#a64f543fd3c7d111138138f51cf5d4c22a02ab35267cf3d18a230dee3149cc2a55">mirror::serialize::read_error_code::excess_member</a></div><div class="ttdeci">@ excess_member</div><div class="ttdoc">Superfluous data for class data member.</div></div>
@@ -168,7 +134,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

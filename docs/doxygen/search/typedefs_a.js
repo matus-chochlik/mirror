@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['trait_590',['trait',['../group__classification.html#gae122c280f5ec320b670b616d772330f2',1,'mirror']]],
-  ['traits_591',['traits',['../group__classification.html#ga1a54b3a65f7c33ed42201b96bd235093',1,'mirror']]]
+  ['read_5ferrors_718',['read_errors',['../result_8hpp.html#aedb71c0bee09f4c958c1b5dad9f9ce85',1,'mirror::serialize']]],
+  ['reference_719',['reference',['../classmirror_1_1program__arg__iterator.html#ae9b3efe5969d080088af3f5f46fc6dad',1,'mirror::program_arg_iterator']]]
 ];

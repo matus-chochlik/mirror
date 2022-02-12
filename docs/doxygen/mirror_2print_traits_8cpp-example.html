@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -72,6 +72,7 @@ $(function() {
 <p>Copyright Matus Chochlik. Distributed under the Boost Software License, Version 1.0. See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="weekday_8hpp.html">testdecl/weekday.hpp</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="init__list_8hpp.html">mirror/init_list.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="placeholder_8hpp.html">mirror/placeholder.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="traits_8hpp.html">mirror/traits.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
@@ -80,13 +81,10 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> print_traits(<a name="a0"></a><a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> mo) {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mes = get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__classification.html#ga2559456b200346fa3cbbff9003fd5438">mirror::meta_trait</a>));</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> maxl = fold_init_list(</div>
-<div class="line">      mes,</div>
-<div class="line">      [](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> get_name(me).size(); },</div>
-<div class="line">      [](<span class="keyword">auto</span> l) { <span class="keywordflow">return</span> std::max(l); });</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> maxl = get_top_value(mes, get_size(get_name(mirror::_1)));</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;traits of &quot;</span> &lt;&lt; get_display_name(mo) &lt;&lt; std::endl;</div>
-<div class="line">    for_each(mes, [&amp;](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> me) {</div>
+<div class="line">    <a name="a1"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mes, [&amp;](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> me) {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; get_name(me) &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; std::boolalpha</div>
 <div class="line">                  &lt;&lt; std::string(maxl - get_name(me).size(), <span class="charliteral">&#39; &#39;</span>)</div>
 <div class="line">                  &lt;&lt; has_trait&lt;get_constant(me)&gt;(mo) &lt;&lt; std::endl;</div>
@@ -103,10 +101,12 @@ $(function() {
 <div class="line">    print_traits(<a class="code" href="namespacemirror.html">mirror</a>(example::weekday::friday));</div>
 <div class="line">    <span class="keywordflow">return</span> argc - 1;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:84</div></div>
-<div class="ttc" id="agroup__classification_html_ga2559456b200346fa3cbbff9003fd5438"><div class="ttname"><a href="group__classification.html#ga2559456b200346fa3cbbff9003fd5438">mirror::meta_trait</a></div><div class="ttdeci">meta_trait</div><div class="ttdoc">Enumeration of metaobject trait operations.</div><div class="ttdef"><b>Definition:</b> traits.hpp:24</div></div>
+<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__classification_html_ga2559456b200346fa3cbbff9003fd5438"><div class="ttname"><a href="group__classification.html#ga2559456b200346fa3cbbff9003fd5438">mirror::meta_trait</a></div><div class="ttdeci">meta_trait</div><div class="ttdoc">Enumeration of metaobject trait operations.</div><div class="ttdef"><b>Definition:</b> traits.hpp:29</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
 <div class="ttc" id="ainit__list_8hpp_html"><div class="ttname"><a href="init__list_8hpp.html">init_list.hpp</a></div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="atraits_8hpp_html"><div class="ttname"><a href="traits_8hpp.html">traits.hpp</a></div></div>
 <div class="ttc" id="aweekday_8hpp_html"><div class="ttname"><a href="weekday_8hpp.html">weekday.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -114,7 +114,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -117,7 +117,7 @@ $(function() {
 <div class="line">                        <span class="keyword">const</span> <span class="keyword">auto</span> get_arg = [&amp;]&lt;<span class="keyword">class </span>P&gt;(P) {</div>
 <div class="line">                            <span class="keywordflow">return</span> (</div>
 <div class="line">                              [&amp;]</div>
-<div class="line">                              -&gt; <a name="a0"></a><a class="code" href="group__operations.html#ga4f0dd0a973907d274ad526d599cbd4ba">meta::get_reflected_type_t</a>&lt;meta::get_type_t&lt;P&gt;&gt; {</div>
+<div class="line">                              -&gt; <a name="a0"></a><a class="code" href="group__operations.html#ga2f0790c5e1b819140ccc6f2c6457762f">meta::get_reflected_type_t</a>&lt;meta::get_type_t&lt;P&gt;&gt; {</div>
 <div class="line">                                  <span class="keywordflow">if</span> constexpr(</div>
 <div class="line">                                    std::string_view{meta::get_name_v&lt;P&gt;} ==</div>
 <div class="line">                                    std::string_view{args.name}) {</div>
@@ -167,13 +167,13 @@ $(function() {
 <div class="line">    <span class="stringliteral">&quot;baz&quot;</span>_fn(f, <span class="stringliteral">&quot;i&quot;</span>_arg = 4, <span class="stringliteral">&quot;d&quot;</span>_arg = 2.0); <span class="comment">// prints baz: 4, 2</span></div>
 <div class="line">    <span class="stringliteral">&quot;baz&quot;</span>_fn(f, <span class="stringliteral">&quot;d&quot;</span>_arg = 0., <span class="stringliteral">&quot;i&quot;</span>_arg = 42); <span class="comment">// prints baz: 42, 0</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__operations_html_ga4f0dd0a973907d274ad526d599cbd4ba"><div class="ttname"><a href="group__operations.html#ga4f0dd0a973907d274ad526d599cbd4ba">mirror::get_reflected_type_t</a></div><div class="ttdeci">__unrefltype(unwrap(M{})) get_reflected_type_t</div><div class="ttdoc">Returns the base-level type reflected by a type reflecting metaobject.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1579</div></div>
+<div class="ttc" id="agroup__operations_html_ga2f0790c5e1b819140ccc6f2c6457762f"><div class="ttname"><a href="group__operations.html#ga2f0790c5e1b819140ccc6f2c6457762f">mirror::get_reflected_type_t</a></div><div class="ttdeci">unspecified get_reflected_type_t</div><div class="ttdoc">Returns the base-level type reflected by a type reflecting metaobject.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:2046</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

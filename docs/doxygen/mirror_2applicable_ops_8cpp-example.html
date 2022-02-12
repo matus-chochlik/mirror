@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -80,7 +80,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;operations applicable to &quot;</span> &lt;&lt; get_display_name(mo)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
-<div class="line">    <a name="a1"></a><a class="code" href="group__operations.html#ga6db2290bfb37bec2ab8593c41dd2329b">mirror::for_each_metaobject_unary_op</a>([&amp;](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> me) {</div>
+<div class="line">    <a name="a1"></a><a class="code" href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">mirror::for_each_metaobject_operation</a>([&amp;](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> me) {</div>
 <div class="line">        <span class="keywordflow">if</span>(<a name="a2"></a><a class="code" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">is_applicable</a>&lt;get_constant(me)&gt;(mo)) {</div>
 <div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; get_name(me) &lt;&lt; std::endl;</div>
 <div class="line">        }</div>
@@ -97,9 +97,9 @@ $(function() {
 <div class="line">    print_info(<a class="code" href="namespacemirror.html">mirror</a>(example::weekday::friday));</div>
 <div class="line">    <span class="keywordflow">return</span> argc - 1;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:84</div></div>
-<div class="ttc" id="agroup__operations_html_ga6db2290bfb37bec2ab8593c41dd2329b"><div class="ttname"><a href="group__operations.html#ga6db2290bfb37bec2ab8593c41dd2329b">mirror::for_each_metaobject_unary_op</a></div><div class="ttdeci">constexpr void for_each_metaobject_unary_op(F function)</div><div class="ttdoc">Calls the specified function on each unary_op meta-enumerator.</div><div class="ttdef"><b>Definition:</b> operations.hpp:576</div></div>
-<div class="ttc" id="agroup__operations_html_ga716ef323e318d0dcd964bbcca5f06725"><div class="ttname"><a href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a></div><div class="ttdeci">constexpr auto is_applicable(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the specified operation is applicable to metaobject.</div><div class="ttdef"><b>Definition:</b> operations.hpp:517</div></div>
+<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__operations_html_ga4568eae30ebba6764a90f8265bc02949"><div class="ttname"><a href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">mirror::for_each_metaobject_operation</a></div><div class="ttdeci">constexpr void for_each_metaobject_operation(F function)</div><div class="ttdoc">Calls the specified function on each operation meta-enumerator.</div><div class="ttdef"><b>Definition:</b> operations.hpp:521</div></div>
+<div class="ttc" id="agroup__operations_html_ga716ef323e318d0dcd964bbcca5f06725"><div class="ttname"><a href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a></div><div class="ttdeci">constexpr auto is_applicable(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the specified operation is applicable to metaobject.</div><div class="ttdef"><b>Definition:</b> operations.hpp:448</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="aoperations_8hpp_html"><div class="ttname"><a href="operations_8hpp.html">operations.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
@@ -109,7 +109,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

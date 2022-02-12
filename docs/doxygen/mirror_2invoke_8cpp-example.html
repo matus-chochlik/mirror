@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -100,26 +100,26 @@ $(function() {
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mmc = <a class="code" href="namespacemirror.html">mirror</a>(myclass);</div>
 <div class="line">    std::cout &lt;&lt; get_name(mmc) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">    <a name="a0"></a><a class="code" href="group__operations.html#gae473cafe9f17c46ee68764b3f1bd3be0">invoke_on</a>(get_element&lt;0&gt;(get_member_functions(mmc)), x);</div>
+<div class="line">    <a name="a0"></a><a class="code" href="group__operations.html#ga30da3240559456deead23706feb73d71">invoke_on</a>(get_element&lt;0&gt;(get_member_functions(mmc)), x);</div>
 <div class="line">    std::cout &lt;&lt; invoke_on(get_element&lt;1&gt;(get_member_functions(mmc)), x)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; invoke_on(get_element&lt;2&gt;(get_member_functions(mmc)), x, 5, 5)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">    <a name="a1"></a><a class="code" href="group__operations.html#ga45b99666808f75af8a2e6495a3cad7d0">invoke</a>(get_element&lt;0&gt;(get_member_functions(mmc)));</div>
+<div class="line">    <a name="a1"></a><a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(get_element&lt;0&gt;(get_member_functions(mmc)));</div>
 <div class="line">    std::cout &lt;&lt; invoke(get_element&lt;1&gt;(get_member_functions(mmc)), x)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; invoke(get_element&lt;2&gt;(get_member_functions(mmc)), 21, 21)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> y = <a class="code" href="group__operations.html#ga45b99666808f75af8a2e6495a3cad7d0">invoke</a>(get_element&lt;1&gt;(get_constructors(mmc)), 4);</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> y = <a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(get_element&lt;1&gt;(get_constructors(mmc)), 4);</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; invoke(get_element&lt;0&gt;(get_operators(mmc)), y, 3) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__operations_html_ga45b99666808f75af8a2e6495a3cad7d0"><div class="ttname"><a href="group__operations.html#ga45b99666808f75af8a2e6495a3cad7d0">mirror::invoke</a></div><div class="ttdeci">constexpr auto invoke(wrapped_metaobject&lt; M &gt; mo, A &amp;&amp;... args) requires(reflects_function(mo)||(reflects_member_function(mo) &amp;&amp;__metaobject_is_static(M)))</div><div class="ttdoc">Invokes the reflected function with the specified args.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1195</div></div>
-<div class="ttc" id="agroup__operations_html_gae473cafe9f17c46ee68764b3f1bd3be0"><div class="ttname"><a href="group__operations.html#gae473cafe9f17c46ee68764b3f1bd3be0">mirror::invoke_on</a></div><div class="ttdeci">constexpr auto invoke_on(wrapped_metaobject&lt; M &gt; mo, C &amp;obj, A &amp;&amp;... args) requires(reflects_member_function(mo))</div><div class="ttdoc">Invokes the reflected member function on obj with specified args.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:1176</div></div>
+<div class="ttc" id="agroup__operations_html_ga30da3240559456deead23706feb73d71"><div class="ttname"><a href="group__operations.html#ga30da3240559456deead23706feb73d71">mirror::invoke_on</a></div><div class="ttdeci">constexpr auto invoke_on(metaobject auto mo auto &amp;obj, auto &amp;&amp;... args) requires(reflects_member_function(mo))</div><div class="ttdoc">Invokes the reflected member function on obj with specified args.</div></div>
+<div class="ttc" id="agroup__operations_html_ga90674b973395384ad8f29a3b31c1c7bd"><div class="ttname"><a href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">mirror::invoke</a></div><div class="ttdeci">constexpr auto invoke(metaobject auto mo, auto &amp;&amp;... args) requires(reflects_function(mo)||(reflects_member_function(mo) &amp;&amp;__metaobject_is_static(M)))</div><div class="ttdoc">Invokes the reflected function with the specified args.</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
 <div class="ttc" id="aprimitives_8hpp_html"><div class="ttname"><a href="primitives_8hpp.html">primitives.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -127,7 +127,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

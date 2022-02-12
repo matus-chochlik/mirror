@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.4.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -65,12 +65,14 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_adeb71b4288c502c918dea5bc17871cd.html">mirror</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_43e621d1f8059ef23e6d554162653e23.html">mirror</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">extract.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -78,7 +80,9 @@ $(function() {
 <div class="textblock"><code>#include &lt;concepts&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;optional&gt;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;system_error&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;variant&gt;</code><br />
 </div>
 <p><a href="extract_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -88,6 +92,20 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacemirror"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemirror.html">mirror</a></td></tr>
 <tr class="memdesc:namespacemirror"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mirror's code is placed in this namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5b27a5ca3e684dbccea750e30cc932ad"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ga5b27a5ca3e684dbccea750e30cc932ad"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga5b27a5ca3e684dbccea750e30cc932ad">mirror::extracted_type_t</a> = std::remove_cv_t&lt; typename extracted_traits&lt; std::remove_cv_t&lt; std::remove_reference_t&lt; T &gt; &gt;&gt;::value_type &gt;</td></tr>
+<tr class="memdesc:ga5b27a5ca3e684dbccea750e30cc932ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value type of an extractable.  <a href="group__utilities.html#ga5b27a5ca3e684dbccea750e30cc932ad">More...</a><br /></td></tr>
+<tr class="separator:ga5b27a5ca3e684dbccea750e30cc932ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga66506cc171e679aa5bded2bdd014f5d0"><td class="memTemplParams" colspan="2">template&lt;typename V &gt; </td></tr>
+<tr class="memitem:ga66506cc171e679aa5bded2bdd014f5d0"><td class="memTemplItemLeft" align="right" valign="top">consteval auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga66506cc171e679aa5bded2bdd014f5d0">mirror::has_value_type</a> (const extractable auto &amp;v) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ga66506cc171e679aa5bded2bdd014f5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates in an extractable has value type of <code>V</code>.  <a href="group__utilities.html#ga66506cc171e679aa5bded2bdd014f5d0">More...</a><br /></td></tr>
+<tr class="separator:ga66506cc171e679aa5bded2bdd014f5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Copyright Matus Chochlik. Distributed under the Boost Software License, Version 1.0. See accompanying file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a> </p>
@@ -96,7 +114,7 @@ Namespaces</h2></td></tr>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Wed Jan 5 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

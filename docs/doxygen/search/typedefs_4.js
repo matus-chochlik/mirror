@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_5freflected_5ftype_5ft_582',['get_reflected_type_t',['../group__operations.html#ga4f0dd0a973907d274ad526d599cbd4ba',1,'mirror']]]
+  ['extracted_5ftype_5ft_705',['extracted_type_t',['../group__utilities.html#ga5b27a5ca3e684dbccea750e30cc932ad',1,'mirror']]]
 ];
