@@ -1030,35 +1030,57 @@ reverse_sort_by(S s, F transform) requires(is_object_sequence(s)) {
 constexpr auto
 group_by(auto mo, auto transform) requires(is_object_sequence(mo));
 #else
-template <typename... E, typename F>
+template <typename... E, typename F, typename C>
 constexpr auto
-do_group_by(unpacked_metaobject_sequence<>, type_list<E...> result, F) {
+do_group_by(unpacked_metaobject_sequence<>, type_list<E...> result, F, C) {
     return result;
 }
 
-template <__metaobject_id M, __metaobject_id... Mt, typename... T, typename F>
+template <
+  __metaobject_id M,
+  __metaobject_id... Mt,
+  typename... T,
+  typename F,
+  typename C>
 constexpr auto do_group_by(
   unpacked_metaobject_sequence<M, Mt...> src,
   type_list<T...>,
-  F transform) {
-    const auto compare = [=](auto mo) {
-        return transform(mo) == transform(wrapped_metaobject<M>{});
+  F transform,
+  C equal) {
+    const auto predicate = [=](auto mo) {
+        return equal(transform(mo), transform(wrapped_metaobject<M>{}));
     };
     return do_group_by(
-      remove_if(src, compare),
-      type_list<T..., decltype(filter(src, compare))>{},
-      transform);
+      remove_if(src, predicate),
+      type_list<T..., decltype(filter(src, predicate))>{},
+      transform,
+      equal);
+}
+
+template <__metaobject_id... M, typename F, typename C>
+constexpr auto
+group_by(unpacked_metaobject_sequence<M...> s, F transform, C equal) {
+    return do_group_by(s, type_list<>{}, transform, equal);
+}
+
+template <__metaobject_id M, typename F, typename C>
+constexpr auto group_by(
+  wrapped_metaobject<M> mo,
+  F transform,
+  C equal) requires(__metaobject_is_meta_object_sequence(M)) {
+    return group_by(unpack(mo), transform, equal);
 }
 
 template <__metaobject_id... M, typename F>
 constexpr auto group_by(unpacked_metaobject_sequence<M...> s, F transform) {
-    return do_group_by(s, type_list<>{}, transform);
+    return do_group_by(
+      s, type_list<>{}, transform, [](auto l, auto r) { return l == r; });
 }
 
 template <__metaobject_id M, typename F>
-constexpr auto group_by(wrapped_metaobject<M> mo, F transform) requires(
+constexpr auto group_by(wrapped_metaobject<M> ms, F transform) requires(
   __metaobject_is_meta_object_sequence(M)) {
-    return group_by(unpack(mo), transform);
+    return group_by(unpack(ms), transform);
 }
 #endif
 
