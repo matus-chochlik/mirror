@@ -315,6 +315,7 @@ struct decorate<T<P...>> : defaults {
 
 } // namespace _full_type_name
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Returns fully qualified name of the reflected base-level entity.
 /// @ingroup operations
 /// @see reflects_type
@@ -322,6 +323,8 @@ struct decorate<T<P...>> : defaults {
 /// @see get_name
 /// @see get_display_name
 /// @see has_name
+auto get_full_name(metaobject auto mo) -> std::string;
+#else
 template <__metaobject_id Mp>
 auto get_full_name(wrapped_metaobject<Mp> mo) -> std::string {
     if constexpr(reflects_type(mo)) {
@@ -333,6 +336,7 @@ auto get_full_name(wrapped_metaobject<Mp> mo) -> std::string {
         return {};
     }
 }
+#endif
 
 } // namespace mirror
 
