@@ -1137,6 +1137,13 @@ constexpr auto flatten(placeholder_expr<X> e) {
     }};
 }
 
+template <typename Xl, typename Xr>
+constexpr auto reflect_same(placeholder_expr<Xl> el, placeholder_expr<Xr> er) {
+    return placeholder_expr{[el, er](auto... a) {
+        return reflect_same(el(a...), er(a...));
+    }};
+}
+
 } // namespace mirror
 
 #endif // MIRROR_PLACEHOLDER_HPP

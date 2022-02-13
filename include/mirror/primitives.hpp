@@ -1283,12 +1283,12 @@ consteval auto has_multiple_elements(__metaobject_id mo) noexcept -> bool {
 #if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the two metaobjects reflect the same base-level entity.
 /// @ingroup operations
-consteval auto reflects_same(metaobject auto ml, metaobject auto mr) noexcept
+consteval auto reflect_same(metaobject auto ml, metaobject auto mr) noexcept
   -> bool;
 #else
 template <__metaobject_id Ml, __metaobject_id Mr>
 consteval auto
-reflects_same(wrapped_metaobject<Ml>, wrapped_metaobject<Mr>) noexcept -> bool {
+reflect_same(wrapped_metaobject<Ml>, wrapped_metaobject<Mr>) noexcept -> bool {
     return __metaobject_reflects_same(Ml, Mr);
 }
 #endif
