@@ -233,7 +233,7 @@ int main() {
     \begin{itemize}
       \smaller
       \item \inlinecode{get_source_line}, \inlinecode{get_source_column},
-        \inlinecode{reflects_same}, \ldots
+        \inlinecode{reflect_same}, \ldots
     \end{itemize}
   \item Some only on metaobjects reflecting specific {\em base-level} entities
     \begin{itemize}
@@ -783,7 +783,7 @@ has_type_trait<std::is_floating_point>(_1);
   \frametitle{Placeholder expressions}
   \framesubtitle{comparators}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-reflects_same(_1, _2);
+reflect_same(_1, _2);
 get_name(_1) < get_name(_2);
 get_sizeof(_1) == get_sizeof(_2);
 get_size(get_name(_1)) > get_size(get_name(_2));
