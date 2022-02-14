@@ -50,27 +50,75 @@ consteval auto is_object_sequence(const X&) noexcept -> bool {
 template <typename X>
 concept metaobject_sequence = is_object_sequence(X{});
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if the metaobject sequence is empty.
+/// @ingroup sequence_operations
+/// @see reflects_object_sequence
+/// @see has_one_element
+/// @see has_multiple_elements
+/// @see get_size
+/// @see get_element
+/// @see metaobject_operation
+consteval auto is_empty(metaobject_sequence auto mo) noexcept -> bool;
+#else
 template <__metaobject_id... M>
 consteval auto is_empty(unpacked_metaobject_sequence<M...>) noexcept -> bool {
     return sizeof...(M) == 0Z;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if the metaobject sequence has exactly one element.
+/// @ingroup sequence_operations
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see has_multiple_elements
+/// @see get_size
+/// @see get_element
+/// @see metaobject_operation
+consteval auto has_one_element(metaobject_sequence auto mo) noexcept -> bool;
+#else
 template <__metaobject_id... M>
 consteval auto has_one_element(unpacked_metaobject_sequence<M...>) noexcept
   -> bool {
     return sizeof...(M) == 1Z;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Indicates if the metaobject sequence has more than one element.
+/// @ingroup sequence_operations
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see has_one_element
+/// @see get_size
+/// @see get_element
+/// @see metaobject_operation
+consteval auto has_multiple_elements(metaobject_sequence auto mo) noexcept
+  -> bool;
+#else
 template <__metaobject_id... M>
 consteval auto
 has_multiple_elements(unpacked_metaobject_sequence<M...>) noexcept -> bool {
     return sizeof...(M) > 1Z;
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns the number of elements in a metaobject sequence.
+/// @ingroup sequence_operations
+/// @see reflects_object_sequence
+/// @see is_empty
+/// @see get_element
+/// @see metaobject_operation
+consteval auto get_size(metaobject_sequence auto mo) noexcept -> size_t
+  requires(reflects_object_sequence(mo));
+#else
 template <__metaobject_id... M>
 consteval auto get_size(unpacked_metaobject_sequence<M...>) noexcept -> size_t {
     return sizeof...(M);
 }
+#endif
 
 template <typename... E>
 consteval auto get_size(type_list<E...> tl) noexcept -> size_t
@@ -1131,7 +1179,7 @@ reverse_group_and_sort_by(S s, F transform) requires(is_object_sequence(s)) {
 /// @brief Flattens a sequence of sub-sequences into one sequence of elements
 /// @ingroup sequence_operations
 /// @see group_by
-/// @see sort_and_group_by
+/// @see group_and_sort_by
 /// @see concat
 constexpr auto flatten(auto mo) requires(is_object_sequence(mo));
 #else
@@ -1156,15 +1204,36 @@ consteval auto get(mirror::unpacked_metaobject_sequence<M, Mt...>) noexcept {
     }
 }
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns the I-th metaobject in a metaobject sequence.
+/// @ingroup sequence_operations
+/// @see reflects_object_sequence
+/// @see get_size
+/// @see get_front
+template <size_t I>
+constexpr auto get_element(metaobject_sequence auto mo) noexcept
+  requires(reflects_object_sequence(mo));
+#else
 template <size_t I, __metaobject_id... M>
 constexpr auto get_element(unpacked_metaobject_sequence<M...> mos) noexcept {
     return get<I>(mos);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns the I-th metaobject in a metaobject sequence.
+/// @ingroup operations
+/// @see reflects_object_sequence
+/// @see get_size
+/// @see get_element
+constexpr auto get_front(metaobject auto mo) noexcept
+  requires(reflects_object_sequence(mo) && !is_empty(mo));
+#else
 template <__metaobject_id... M>
 constexpr auto get_front(unpacked_metaobject_sequence<M...> mos) noexcept {
     return get<0Z>(mos);
 }
+#endif
 
 template <size_t I, typename E, typename... Et>
 consteval auto get(mirror::type_list<E, Et...>) noexcept {

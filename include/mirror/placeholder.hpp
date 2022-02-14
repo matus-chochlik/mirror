@@ -79,8 +79,13 @@ struct placeholder_expr<std::integral_constant<size_t, 2>> {
     }
 };
 
+#if defined(MIRROR_DOXYGEN)
+static const wrapped_metaobject<__metaobject_id{}> _1{};
+static const wrapped_metaobject<__metaobject_id{}> _2{};
+#else
 static constinit const placeholder_expr<std::integral_constant<size_t, 1>> _1{};
 static constinit const placeholder_expr<std::integral_constant<size_t, 2>> _2{};
+#endif
 
 template <typename X>
 constexpr auto not_(placeholder_expr<X> e) {

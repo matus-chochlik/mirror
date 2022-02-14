@@ -36,8 +36,11 @@ _LIBCPP_WARNING("mirror cannot be used without -freflection-ext ")
    !defined(_LIBCPP_HAS_NO_REFLECTION_EXT))
 
 #if defined(MIRROR_DOXYGEN)
+using __unspecified = unsigned;
+
 /// @brief Internal type, values of which represent metaobjects in the compiler.
 /// @ingroup metaobjects
+/// @see wrapped_metaobject
 using __metaobject_id = __unspecified;
 #elif defined(MIRROR_YCM)
 using __metaobject_id = unsigned;
@@ -54,6 +57,9 @@ using std::type_identity;
 template <typename... T>
 struct type_list {};
 
+/// @brief Internal representation of metaobjects.
+/// @ingroup metaobjects
+/// @warning Do not use directly. Use the metaobject concept instead.
 template <__metaobject_id M>
 struct wrapped_metaobject {
     consteval operator __metaobject_id() const noexcept {
@@ -1229,56 +1235,17 @@ consteval auto is_move_assignment_operator(__metaobject_id mo) noexcept
 }
 #endif
 
-#if defined(MIRROR_DOXYGEN)
-/// @brief Indicates if the metaobject sequence is empty.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see has_one_element
-/// @see has_multiple_elements
-/// @see get_size
-/// @see get_element
-/// @see metaobject_operation
-consteval auto is_empty(metaobject auto mo) noexcept
-  -> bool requires(reflects_object_sequence(mo));
-#else
 consteval auto is_empty(__metaobject_id mo) noexcept -> bool {
     return __metaobject_is_empty(mo);
 }
-#endif
 
-#if defined(MIRROR_DOXYGEN)
-/// @brief Indicates if the metaobject sequence has exactly one element.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see is_empty
-/// @see has_multiple_elements
-/// @see get_size
-/// @see get_element
-/// @see metaobject_operation
-consteval auto has_one_element(metaobject auto mo) noexcept
-  -> bool requires(reflects_object_sequence(mo));
-#else
 consteval auto has_one_element(__metaobject_id mo) noexcept -> bool {
     return __metaobject_get_size(mo) == 1Z;
 }
-#endif
 
-#if defined(MIRROR_DOXYGEN)
-/// @brief Indicates if the metaobject sequence has more than one element.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see is_empty
-/// @see has_one_element
-/// @see get_size
-/// @see get_element
-/// @see metaobject_operation
-consteval auto has_multiple_elements(metaobject auto mo) noexcept
-  -> bool requires(reflects_object_sequence(mo));
-#else
 consteval auto has_multiple_elements(__metaobject_id mo) noexcept -> bool {
     return __metaobject_get_size(mo) > 1Z;
 }
-#endif
 
 #if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the two metaobjects reflect the same base-level entity.
@@ -1351,20 +1318,9 @@ consteval auto get_source_column(__metaobject_id mo) noexcept -> size_t {
 }
 #endif
 
-#if defined(MIRROR_DOXYGEN)
-/// @brief Returns the number of elements in a metaobject sequence.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see is_empty
-/// @see get_element
-/// @see metaobject_operation
-consteval auto get_size(metaobject auto mo) noexcept -> size_t
-  requires(reflects_object_sequence(mo));
-#else
 consteval auto get_size(__metaobject_id mo) noexcept -> size_t {
     return __metaobject_get_size(mo);
 }
-#endif
 
 consteval auto get_size(std::string_view s) noexcept -> size_t {
     return s.size();
@@ -1998,38 +1954,17 @@ constexpr auto hide_protected(wrapped_metaobject<M>) noexcept
 }
 #endif
 
-#if defined(MIRROR_DOXYGEN)
-/// @brief Returns the I-th metaobject in a metaobject sequence.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see get_size
-/// @see get_front
-template <size_t I>
-constexpr auto get_element(metaobject auto mo) noexcept
-  requires(reflects_object_sequence(mo));
-#else
 template <size_t I, __metaobject_id M>
 constexpr auto get_element(wrapped_metaobject<M>) noexcept
   requires(__metaobject_is_meta_object_sequence(M)) {
     return wrapped_metaobject<__metaobject_get_element(M, I)>{};
 }
-#endif
 
-#if defined(MIRROR_DOXYGEN)
-/// @brief Returns the I-th metaobject in a metaobject sequence.
-/// @ingroup operations
-/// @see reflects_object_sequence
-/// @see get_size
-/// @see get_element
-constexpr auto get_front(metaobject auto mo) noexcept
-  requires(reflects_object_sequence(mo) && !is_empty(mo));
-#else
 template <__metaobject_id M>
 constexpr auto get_front(wrapped_metaobject<M>) noexcept requires(
   __metaobject_is_meta_object_sequence(M) && !__metaobject_is_empty(M)) {
     return wrapped_metaobject<__metaobject_get_element(M, 0Z)>{};
 }
-#endif
 
 // type unreflection
 template <__metaobject_id M>
@@ -2205,6 +2140,9 @@ consteval auto has_type_with_trait(wrapped_metaobject<M>) noexcept -> bool {
 #if defined(MIRROR_YCM)
 #define mirror(...) \
     ::mirror::wrapped_metaobject<0U> {}
+#elif defined(MIRROR_DOXYGEN)
+#define mirror(...) \
+    ::mirror::wrapped_metaobject<__metaobject_id{}> {}
 #else
 #define mirror(...) \
     ::mirror::wrapped_metaobject<__reflexpr_id(__VA_ARGS__)> {}
