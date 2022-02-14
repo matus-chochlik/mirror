@@ -233,7 +233,7 @@ int main() {
     \begin{itemize}
       \smaller
       \item \inlinecode{get_source_line}, \inlinecode{get_source_column},
-        \inlinecode{reflects_same}, \ldots
+        \inlinecode{reflect_same}, \ldots
     \end{itemize}
   \item Some only on metaobjects reflecting specific {\em base-level} entities
     \begin{itemize}
@@ -809,7 +809,7 @@ has_type_trait<std::is_floating_point>(_1);
   \frametitle{Placeholder expressions}
   \framesubtitle{comparators}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-reflects_same(_1, _2);
+reflect_same(_1, _2);
 get_name(_1) < get_name(_2);
 get_sizeof(_1) == get_sizeof(_2);
 get_size(get_name(_1)) > get_size(get_name(_2));
@@ -1003,9 +1003,9 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto (*@\listinghlt{query}@*))
   \begin{itemize}
     \item There are more such algorithms
     \begin{itemize}
-      \item \inlinecode{fold}
-      \item \inlinecode{join}
-      \item \inlinecode{is_sorted}
+      \item \inlinecode{fold}, \inlinecode{join}
+      \item \inlinecode{flatten},
+      \item \inlinecode{is_sorted}, \inlinecode{sort_by}, \inlinecode{group_by}, 
       \item \inlinecode{all_of}, \inlinecode{any_of}, \inlinecode{none_of}
       \item \ldots
     \end{itemize}
@@ -1178,20 +1178,13 @@ enum class month : int {
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Does a class have overloaded functions?}
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto has_overloaded_functions =
-  [](metaobject auto mo) {
-    const auto mfs = (*@\listinghl{get_member_functions}@*)(mo);
-    return (*@\listinghlt{fold}@*)(
-      mfs,
-      [mfs](auto mf1) {
-        return (*@\listinghl{any_of}@*)(mfs, [mf1](auto mf2) {
-          return !(*@\listinghl{reflects_same}@*)(mf1, mf2) &&
-             (*@\listinghl{get_name}@*)(mf1) == (*@\listinghl{get_name}@*)(mf2);
-        });
-      },
-      (*@\listinghlt{[]}@*)(auto... b) { return (... || b); });
-  };
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+const auto has_overloaded_functions =
+  (*@\listinghl{any_of}@*)(
+    (*@\listinghl{group_by}@*)(
+      (*@\listinghl{get_member_functions}@*)(_1),
+      (*@\listinghl{get_name}@*)(_1)),
+    (*@\listinghl{has_multiple_elements}@*)(_1));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1354,15 +1347,11 @@ template <typename E>
 auto enum_to_string(E e) noexcept
   -> (*@\listinghlt{string_view}@*) {
 
-  return (*@\listinghlt{select}@*)(
-    (*@\listinghl{get_enumerators}@*)(mirror(E)),
-    [](auto& result, auto mo, auto c) {
-        if((*@\listinghl{get_constant}@*)(mo) == c) {
-            (*@\listinghlt{result}@*) = (*@\listinghl{get_name}@*)(mo);
-        }
-    },
+  return select(
     (*@\listinghlt{string_view}@*){},
-    e);
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    (*@\listinghl{has_value}@*)(_1, e),
+    (*@\listinghl{get_name}@*)(_1));
 }
   \end{lstlisting}
 \end{frame}
@@ -1375,15 +1364,11 @@ template <typename E>
 auto string_to_enum(string_view s) noexcept
   -> (*@\listinghlt{optional}@*)<E> {
 
-  return (*@\listinghlt{select}@*)(
-    (*@\listinghl{get_enumerators}@*)(mirror(E)),
-    [](auto& result, auto mo, auto n) {
-        if((*@\listinghl{get_name}@*)(mo) == n) {
-            (*@\listinghlt{result}@*) = (*@\listinghl{get_constant}@*)(mo);
-        }
-    },
+  return select(
     (*@\listinghlt{optional}@*)<E>{},
-    s);
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    (*@\listinghl{has_name}@*)(_1, s),
+    (*@\listinghl{get_value}@*)(_1));
 }
   \end{lstlisting}
 \end{frame}

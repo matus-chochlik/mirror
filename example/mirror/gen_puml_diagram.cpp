@@ -65,7 +65,7 @@ template <typename T, typename MS>
 std::string_view do_get_related_type_name(std::type_identity<T>, MS ms) {
     const auto mt = get_aliased(mirror(T));
     if constexpr(reflects_scope_member(mt)) {
-        if constexpr(reflects_same(get_scope(mt), ms)) {
+        if constexpr(reflect_same(get_scope(mt), ms)) {
             return get_name(mt);
         }
     }

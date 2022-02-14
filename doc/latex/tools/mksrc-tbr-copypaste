@@ -1,0 +1,27 @@
+#!/bin/bash
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
+#
+N=${1}
+cat << EOD
+template <int I>
+struct wrapper { consteval operator int() const { return I;} };
+
+template <int I>
+consteval int foo(wrapper<I> w) {
+    return w;
+}
+
+int main() {
+EOD
+#
+for I in $(seq 1 $((N-1)))
+do echo "	foo(wrapper<$((I))>{});"
+done
+#
+cat << EOD
+	return foo(wrapper<$((N))>{});
+}
+EOD

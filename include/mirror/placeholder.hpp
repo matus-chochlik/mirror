@@ -18,15 +18,8 @@ template <typename F>
 struct placeholder_expr {
     F f;
 
-    template <__metaobject_id M>
-    constexpr auto operator()(wrapped_metaobject<M> mo) const {
-        return f(mo);
-    }
-
-    template <__metaobject_id Ml, __metaobject_id Mr>
-    constexpr auto
-    operator()(wrapped_metaobject<Ml> ml, wrapped_metaobject<Mr> mr) const {
-        return f(ml, mr);
+    constexpr auto operator()(auto... args) const {
+        return f(args...);
     }
 };
 
@@ -70,29 +63,29 @@ constexpr auto operator<(placeholder_expr<El> l, placeholder_expr<Er> r) {
 
 template <>
 struct placeholder_expr<std::integral_constant<size_t, 1>> {
-    template <__metaobject_id M>
-    constexpr auto operator()(wrapped_metaobject<M> mo) const {
+    constexpr auto operator()(auto mo) const {
         return mo;
     }
 
-    template <__metaobject_id Ml, __metaobject_id Mr>
-    constexpr auto
-    operator()(wrapped_metaobject<Ml> mo, wrapped_metaobject<Mr>) const {
+    constexpr auto operator()(auto mo, auto) const {
         return mo;
     }
 };
 
 template <>
 struct placeholder_expr<std::integral_constant<size_t, 2>> {
-    template <__metaobject_id Ml, __metaobject_id Mr>
-    constexpr auto
-    operator()(wrapped_metaobject<Ml>, wrapped_metaobject<Mr> mo) const {
+    constexpr auto operator()(auto, auto mo) const {
         return mo;
     }
 };
 
+#if defined(MIRROR_DOXYGEN)
+static const wrapped_metaobject<__metaobject_id{}> _1{};
+static const wrapped_metaobject<__metaobject_id{}> _2{};
+#else
 static constinit const placeholder_expr<std::integral_constant<size_t, 1>> _1{};
 static constinit const placeholder_expr<std::integral_constant<size_t, 2>> _2{};
+#endif
 
 template <typename X>
 constexpr auto not_(placeholder_expr<X> e) {
@@ -594,6 +587,20 @@ constexpr auto is_empty(placeholder_expr<X> e) {
     }};
 }
 
+template <typename X>
+constexpr auto has_one_element(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return has_one_element(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto has_multiple_elements(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return has_multiple_elements(e(a...));
+    }};
+}
+
 // integer
 template <typename X>
 constexpr auto get_id(placeholder_expr<X> e) {
@@ -631,9 +638,9 @@ constexpr auto get_element(placeholder_expr<X> e) {
 }
 
 template <typename X>
-constexpr auto get_pointer(placeholder_expr<X> e) {
+constexpr auto get_front(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
-        return get_pointer(e(a...));
+        return get_front(e(a...));
     }};
 }
 
@@ -641,6 +648,34 @@ template <typename X>
 constexpr auto get_constant(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return get_constant(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto get_pointer(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_pointer(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto get_value(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_value(e(a...));
+    }};
+}
+
+template <typename X, typename T>
+constexpr auto has_value(placeholder_expr<X> e, const T value) {
+    return placeholder_expr{[e, value](auto... a) {
+        return has_value(e(a...), value);
+    }};
+}
+
+template <typename X>
+constexpr auto get_reference(placeholder_expr<X> e) -> auto& {
+    return placeholder_expr{[e](auto... a) {
+        return get_reference(e(a...));
     }};
 }
 
@@ -663,6 +698,13 @@ template <typename X>
 constexpr auto get_name(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return get_name(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto has_name(placeholder_expr<X> e, string_view str) {
+    return placeholder_expr{[e, str](auto... a) {
+        return has_name(e(a...), str);
     }};
 }
 
@@ -1057,18 +1099,60 @@ constexpr auto get_top_value(placeholder_expr<X> e, F transform) {
     }};
 }
 
-template <typename X, typename Function, typename Fallback, typename... P>
-constexpr auto select(
-  placeholder_expr<X> e,
-  Function function,
-  Fallback fallback,
-  P&&... param) {
-    return placeholder_expr{[e, &function, &fallback, &param...](auto... a) {
-        return select(
-          e(a...),
-          std::move(function),
-          std::move(fallback),
-          std::forward<P>(param)...);
+template <typename T, typename X, typename C, typename F>
+constexpr auto
+select(T fallback, placeholder_expr<X> e, C condition, F transform) {
+    return placeholder_expr{[e, &fallback, condition, transform](auto... a) {
+        return select(std::move(fallback), e(a...), condition, transform);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto group_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return group_by(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F, typename C>
+constexpr auto sort_by(placeholder_expr<X> e, F transform, C compare) {
+    return placeholder_expr{[e, transform, compare](auto... a) {
+        return sort_by(e(a...), transform, compare);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return sort_by(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto reverse_sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return reverse_sort_by(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F, typename C>
+constexpr auto group_and_sort_by(placeholder_expr<X> e, F transform, C compare) {
+    return placeholder_expr{[e, transform, compare](auto... a) {
+        return group_and_sort_by(e(a...), transform, compare);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto group_and_sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return group_and_sort_by(e(a...), transform);
+    }};
+}
+
+template <typename X, typename F>
+constexpr auto reverse_group_and_sort_by(placeholder_expr<X> e, F transform) {
+    return placeholder_expr{[e, transform](auto... a) {
+        return reverse_group_and_sort_by(e(a...), transform);
     }};
 }
 
@@ -1076,6 +1160,13 @@ template <typename X>
 constexpr auto flatten(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return flatten(e(a...));
+    }};
+}
+
+template <typename Xl, typename Xr>
+constexpr auto reflect_same(placeholder_expr<Xl> el, placeholder_expr<Xr> er) {
+    return placeholder_expr{[el, er](auto... a) {
+        return reflect_same(el(a...), er(a...));
     }};
 }
 

@@ -243,24 +243,22 @@ struct map_operation<operation_integer::get_constant> {
     }
 };
 
-#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                  \
-    template <>                                                              \
-    struct map_operation<operation_integer::NAME> {                          \
-        template <__metaobject_id M>                                         \
-        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool { \
-            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                \
-        }                                                                    \
-        template <__metaobject_id M>                                         \
-        static consteval auto apply(wrapped_metaobject<M>) -> size_t {       \
-            return MIRROR_JOIN(__metaobject_, NAME)(M);                      \
-        }                                                                    \
-        static constexpr auto make_optional(size_t v)                        \
-          -> std::optional<size_t> {                                         \
-            return {v};                                                      \
-        }                                                                    \
-        static constexpr auto fallback() -> std::optional<size_t> {          \
-            return {};                                                       \
-        }                                                                    \
+#define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                               \
+    template <>                                                           \
+    struct map_operation<operation_integer::NAME> {                       \
+        static consteval auto is_applicable(__metaobject_id mo) -> bool { \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, mo);            \
+        }                                                                 \
+        static consteval auto apply(__metaobject_id mo) -> size_t {       \
+            return MIRROR_JOIN(__metaobject_, NAME)(mo);                  \
+        }                                                                 \
+        static constexpr auto make_optional(size_t v)                     \
+          -> std::optional<size_t> {                                      \
+            return {v};                                                   \
+        }                                                                 \
+        static constexpr auto fallback() -> std::optional<size_t> {       \
+            return {};                                                    \
+        }                                                                 \
     };
 
 MIRROR_IMPLEMENT_MAP_UNARY_OP(get_size)
@@ -291,14 +289,11 @@ struct map_operation<operation_pointer::get_pointer> {
 #define MIRROR_IMPLEMENT_MAP_UNARY_OP(NAME)                                   \
     template <>                                                               \
     struct map_operation<operation_string::NAME> {                            \
-        template <__metaobject_id M>                                          \
-        static consteval auto is_applicable(wrapped_metaobject<M>) -> bool {  \
-            return MIRROR_JOIN(__metaobject_, NAME)(bool, M);                 \
+        static consteval auto is_applicable(__metaobject_id mo) -> bool {     \
+            return MIRROR_JOIN(__metaobject_, NAME)(bool, mo);                \
         }                                                                     \
-        template <__metaobject_id M>                                          \
-        static consteval auto apply(wrapped_metaobject<M>)                    \
-          -> std::string_view {                                               \
-            return MIRROR_JOIN(NAME, _view)(M);                               \
+        static consteval auto apply(__metaobject_id mo) -> std::string_view { \
+            return NAME(mo);                                                  \
         }                                                                     \
         static constexpr auto make_optional(std::string_view v)               \
           -> std::optional<std::string_view> {                                \

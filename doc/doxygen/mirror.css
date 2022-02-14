@@ -223,17 +223,17 @@ div.fragment {
 }
 
 .memproto, dl.reflist dt {
-        border-top: 1px solid #A8B8D9;
-        border-left: 1px solid #A8B8D9;
-        border-right: 1px solid #A8B8D9;
-        padding: 6px 0px 6px 0px;
-        color: #F0F0F0;
-        font-weight: bold;
-        background-color: #404040;
+    border-top: 1px solid #A8B8D9;
+    border-left: 1px solid #A8B8D9;
+    border-right: 1px solid #A8B8D9;
+    padding: 6px 0px 6px 0px;
+    color: #F0F0F0;
+    font-weight: bold;
+    background-color: #404040;
 }
 
 .memItemLeft, .memTemplItemLeft {
-        white-space: pre-line;
+    white-space: pre-line;
 }
 
 .paramname {
@@ -287,8 +287,8 @@ p.startli, p.startdd {
 }
 
 th p.starttd, p.intertd, p.endtd {
-        font-size: 100%;
-        font-weight: 700;
+    font-size: 100%;
+    font-weight: 700;
 }
 
 p.starttd {
@@ -321,13 +321,13 @@ caption {
 }
 
 span.legend {
-        font-size: 70%;
-        text-align: center;
+    font-size: 70%;
+    text-align: center;
 }
 
 h3.version {
-        font-size: 90%;
-        text-align: center;
+    font-size: 90%;
+    text-align: center;
 }
 
 div.qindex, div.navtab{
@@ -357,7 +357,7 @@ a.qindexHL {
 }
 
 .contents a.qindexHL:visited {
-        color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 a.el {
@@ -380,20 +380,20 @@ dl.el {
 }
 
 ul {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 #side-nav ul {
-  overflow: visible;
+    overflow: visible;
 }
 
 #main-nav ul {
-  overflow: visible;
+    overflow: visible;
 }
 
 div.line {
     font-family: monospace, fixed;
-        font-size: 13px;
+    font-size: 13px;
     min-height: 13px;
     line-height: 1.0;
     text-wrap: unrestricted;
@@ -455,12 +455,12 @@ div.ah, span.ah {
 }
 
 div.classindex ul {
-        list-style: none;
-        padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 div.classindex span.ai {
-        display: inline-block;
+    display: inline-block;
 }
 
 div.groupHeader {
@@ -477,7 +477,7 @@ div.groupText {
 body {
     background-color: white;
     color: black;
-        margin: 0;
+    margin: 0;
 }
 
 div.contents {
@@ -492,8 +492,8 @@ td.indexkey {
     border: 1px solid #C4CFE5;
     margin: 2px 0px 2px 0;
     padding: 2px 10px;
-        white-space: nowrap;
-        vertical-align: top;
+    white-space: nowrap;
+    vertical-align: top;
 }
 
 td.indexvalue {
@@ -527,9 +527,9 @@ img.formulaInl, img.inline {
 
 div.center {
     text-align: center;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
 }
 
 div.center img {
@@ -547,10 +547,10 @@ img.footer {
 }
 
 blockquote {
-        background-color: #F7F8FB;
-        border-left: 2px solid #9CAFD4;
-        margin: 0 24px 0 4px;
-        padding: 0 12px 0 16px;
+    background-color: #F7F8FB;
+    border-left: 2px solid #9CAFD4;
+    margin: 0 24px 0 4px;
+    padding: 0 12px 0 16px;
 }
 
 blockquote.DocNodeRTL {
@@ -617,10 +617,10 @@ table.memberdecls {
 }
 
 .memSeparator {
-        border-bottom: 1px solid #DEE4F0;
-        line-height: 1px;
-        margin: 0px;
-        padding: 0px;
+    border-bottom: 1px solid #DEE4F0;
+    line-height: 1px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .memItemRight, .memTemplItemRight {
@@ -643,9 +643,9 @@ table.memberdecls {
 
 .permalink
 {
-        font-size: 65%;
-        display: inline-block;
-        vertical-align: middle;
+    font-size: 65%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .memtemplate {
@@ -672,22 +672,22 @@ table.memberdecls {
     padding: 0;
     margin-bottom: 10px;
     margin-right: 5px;
-        -webkit-transition: box-shadow 0.5s linear;
-        -moz-transition: box-shadow 0.5s linear;
-        -ms-transition: box-shadow 0.5s linear;
-        -o-transition: box-shadow 0.5s linear;
-        transition: box-shadow 0.5s linear;
-        display: table !important;
-        width: 100%;
+    -webkit-transition: box-shadow 0.5s linear;
+    -moz-transition: box-shadow 0.5s linear;
+    -ms-transition: box-shadow 0.5s linear;
+    -o-transition: box-shadow 0.5s linear;
+    transition: box-shadow 0.5s linear;
+    display: table !important;
+    width: 100%;
 }
 
 .memitem.glow {
-         box-shadow: 0 0 15px cyan;
+     box-shadow: 0 0 15px cyan;
 }
 
 .memname {
-        font-weight: 400;
-        margin-left: 6px;
+    font-weight: 400;
+    margin-left: 6px;
 }
 
 .memname td {
@@ -700,33 +700,33 @@ table.memberdecls {
 }
 
 .memdoc, dl.reflist dd {
-        border-bottom: 1px solid #A8B8D9;
-        border-left: 1px solid #A8B8D9;
-        border-right: 1px solid #A8B8D9;
-        padding: 6px 10px 2px 10px;
-        border-top-width: 0;
-        background-color: #303030;
-        /* opera specific markup */
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
-        /* firefox specific markup */
-        -moz-border-radius-bottomleft: 4px;
-        -moz-border-radius-bottomright: 4px;
-        -moz-box-shadow: rgba(0, 0, 0, 0.15) 5px 5px 5px;
-        /* webkit specific markup */
-        -webkit-border-bottom-left-radius: 4px;
-        -webkit-border-bottom-right-radius: 4px;
-        -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid #A8B8D9;
+    border-left: 1px solid #A8B8D9;
+    border-right: 1px solid #A8B8D9;
+    padding: 6px 10px 2px 10px;
+    border-top-width: 0;
+    background-color: #303030;
+    /* opera specific markup */
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+    /* firefox specific markup */
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.15) 5px 5px 5px;
+    /* webkit specific markup */
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
 }
 
 dl.reflist dt {
-        padding: 5px;
+    padding: 5px;
 }
 
 dl.reflist dd {
-        margin: 0px 0px 10px 0px;
-        padding: 5px;
+    margin: 0px 0px 10px 0px;
+    padding: 5px;
 }
 
 .paramkey {
@@ -741,27 +741,27 @@ dl.reflist dd {
     font-style: normal;
 }
 .paramname code {
-        line-height: 14px;
+    line-height: 14px;
 }
 
 .params, .retval, .exception, .tparams {
-        margin-left: 0px;
-        padding-left: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
 .params .paramname, .retval .paramname, .tparams .paramname, .exception .paramname {
-        font-weight: bold;
-        vertical-align: top;
+    font-weight: bold;
+    vertical-align: top;
 }
 
 .params .paramtype, .tparams .paramtype {
-        font-style: italic;
-        vertical-align: top;
+    font-style: italic;
+    vertical-align: top;
 }
 
 .params .paramdir, .tparams .paramdir {
-        font-family: "courier new",courier,monospace;
-        vertical-align: top;
+    font-family: "courier new",courier,monospace;
+    vertical-align: top;
 }
 
 table.mlabels {
@@ -780,15 +780,15 @@ td.mlabels-right {
 }
 
 span.mlabels {
-        margin-left: 8px;
+    margin-left: 8px;
 }
 
 span.mlabel {
-        background-color: #728DC1;
-        border-top:1px solid #5373B4;
-        border-left:1px solid #5373B4;
-        border-right:1px solid #C4CFE5;
-        border-bottom:1px solid #C4CFE5;
+    background-color: #728DC1;
+    border-top:1px solid #5373B4;
+    border-left:1px solid #5373B4;
+    border-right:1px solid #C4CFE5;
+    border-bottom:1px solid #C4CFE5;
     text-shadow: none;
     color: white;
     margin-right: 4px;
@@ -800,39 +800,39 @@ span.mlabel {
 }
 
 div.directory {
-        margin: 10px 0px;
-        border-top: 1px solid #9CAFD4;
-        border-bottom: 1px solid #9CAFD4;
-        width: 100%;
+    margin: 10px 0px;
+    border-top: 1px solid #9CAFD4;
+    border-bottom: 1px solid #9CAFD4;
+    width: 100%;
 }
 
 .directory table {
-        border-collapse:collapse;
+    border-collapse:collapse;
 }
 
 .directory td {
-        margin: 0px;
-        padding: 0px;
+    margin: 0px;
+    padding: 0px;
     vertical-align: top;
 }
 
 .directory td.entry {
-        white-space: nowrap;
-        padding-right: 6px;
+    white-space: nowrap;
+    padding-right: 6px;
     padding-top: 3px;
 }
 
 .directory td.entry a {
-        outline:none;
+    outline:none;
 }
 
 .directory td.entry a img {
-        border: none;
+    border: none;
 }
 
 .directory td.desc {
-        width: 100%;
-        padding-left: 6px;
+    width: 100%;
+    padding-left: 6px;
     padding-right: 6px;
     padding-top: 3px;
     border-left: 1px solid rgba(0,0,0,0.05);
@@ -847,16 +847,16 @@ div.directory {
 }
 
 .directory .levels {
-        white-space: nowrap;
-        width: 100%;
-        text-align: right;
-        font-size: 9pt;
+    white-space: nowrap;
+    width: 100%;
+    text-align: right;
+    font-size: 9pt;
 }
 
 .directory .levels span {
-        cursor: pointer;
-        padding-left: 2px;
-        padding-right: 2px;
+    cursor: pointer;
+    padding-left: 2px;
+    padding-right: 2px;
     color: #3D578C;
 }
 
@@ -933,7 +933,7 @@ table.directory {
 }
 
 div.dynheader {
-        margin-top: 8px;
+    margin-top: 8px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -953,8 +953,8 @@ table.doxtable caption {
 
 table.doxtable {
     border-collapse:collapse;
-        margin-top: 4px;
-        margin-bottom: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 table.doxtable td, table.doxtable th {
@@ -971,67 +971,67 @@ table.doxtable th {
 }
 
 table.fieldtable {
-        /*width: 100%;*/
-        margin-bottom: 10px;
-        border: 1px solid #A8B8D9;
-        border-spacing: 0px;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-        -moz-box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2px;
-        -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+    /*width: 100%;*/
+    margin-bottom: 10px;
+    border: 1px solid #A8B8D9;
+    border-spacing: 0px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 2px;
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
 }
 
 .fieldtable td, .fieldtable th {
-        padding: 3px 7px 2px;
+    padding: 3px 7px 2px;
 }
 
 .fieldtable td.fieldtype, .fieldtable td.fieldname {
-        white-space: nowrap;
-        border-right: 1px solid #A8B8D9;
-        border-bottom: 1px solid #A8B8D9;
-        vertical-align: top;
+    white-space: nowrap;
+    border-right: 1px solid #A8B8D9;
+    border-bottom: 1px solid #A8B8D9;
+    vertical-align: top;
 }
 
 .fieldtable td.fieldname {
-        padding-top: 3px;
+    padding-top: 3px;
 }
 
 .fieldtable td.fielddoc {
-        border-bottom: 1px solid #A8B8D9;
-        /*width: 100%;*/
+    border-bottom: 1px solid #A8B8D9;
+    /*width: 100%;*/
 }
 
 .fieldtable td.fielddoc p:first-child {
-        margin-top: 0px;
+    margin-top: 0px;
 }
 
 .fieldtable td.fielddoc p:last-child {
-        margin-bottom: 2px;
+    margin-bottom: 2px;
 }
 
 .fieldtable tr:last-child td {
-        border-bottom: none;
+    border-bottom: none;
 }
 
 .fieldtable th {
-        background-image:url('nav_f.png');
-        background-repeat:repeat-x;
-        background-color: #E2E8F2;
-        font-size: 90%;
-        color: #253555;
-        padding-bottom: 4px;
-        padding-top: 5px;
-        text-align:left;
-        font-weight: 400;
-        -moz-border-radius-topleft: 4px;
-        -moz-border-radius-topright: 4px;
-        -webkit-border-top-left-radius: 4px;
-        -webkit-border-top-right-radius: 4px;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-        border-bottom: 1px solid #A8B8D9;
+    background-image:url('nav_f.png');
+    background-repeat:repeat-x;
+    background-color: #E2E8F2;
+    font-size: 90%;
+    color: #253555;
+    padding-bottom: 4px;
+    padding-top: 5px;
+    text-align:left;
+    font-weight: 400;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid #A8B8D9;
 }
 
 
@@ -1086,15 +1086,15 @@ table.fieldtable {
 }
 
 .navpath li.footer {
-        list-style-type:none;
-        float:right;
-        padding-left:10px;
-        padding-right:15px;
-        background-image:none;
-        background-repeat:no-repeat;
-        background-position:right;
-        color:#364D7C;
-        font-size: 8pt;
+    list-style-type:none;
+    float:right;
+    padding-left:10px;
+    padding-right:15px;
+    background-image:none;
+    background-repeat:no-repeat;
+    background-position:right;
+    color:#364D7C;
+    font-size: 8pt;
 }
 
 div.summary {
@@ -1110,14 +1110,14 @@ div.summary a {
 }
 
 table.classindex {
-        margin: 10px;
-        white-space: nowrap;
-        margin-left: 3%;
-        margin-right: 3%;
-        width: 94%;
-        border: 0;
-        border-spacing: 0;
-        padding: 0;
+    margin: 10px;
+    white-space: nowrap;
+    margin-left: 3%;
+    margin-right: 3%;
+    width: 94%;
+    border: 0;
+    border-spacing: 0;
+    padding: 0;
 }
 
 div.ingroups {
@@ -1140,7 +1140,7 @@ div.headertitle {
 }
 
 dl {
-        padding: 0 0 0 0;
+    padding: 0 0 0 0;
 }
 
 dl.section {
@@ -1288,7 +1288,7 @@ dl.section dd {
 }
 
 #projectalign {
-        vertical-align: middle;
+    vertical-align: middle;
 }
 
 #projectname {
@@ -1317,23 +1317,23 @@ dl.section dd {
 }
 
 .image {
-        text-align: center;
+    text-align: center;
 }
 
 .dotgraph {
-        text-align: center;
+    text-align: center;
 }
 
 .mscgraph {
-        text-align: center;
+    text-align: center;
 }
 
 .plantumlgraph {
-        text-align: center;
+    text-align: center;
 }
 
 .diagraph {
-        text-align: center;
+    text-align: center;
 }
 
 .caption {
@@ -1345,31 +1345,31 @@ div.zoom {
 }
 
 dl.citelist {
-        margin-bottom:50px;
+    margin-bottom:50px;
 }
 
 dl.citelist dt {
-        color:#334975;
-        float:left;
-        font-weight:bold;
-        margin-right:10px;
-        padding:5px;
+    color:#334975;
+    float:left;
+    font-weight:bold;
+    margin-right:10px;
+    padding:5px;
 }
 
 dl.citelist dd {
-        margin:2px 0;
-        padding:5px 0;
+    margin:2px 0;
+    padding:5px 0;
 }
 
 div.toc {
-        padding: 14px 25px;
-        background-color: #F4F6FA;
-        border: 1px solid #D8DFEE;
-        border-radius: 7px 7px 7px 7px;
-        float: right;
-        height: auto;
-        margin: 0 8px 10px 10px;
-        width: 200px;
+    padding: 14px 25px;
+    background-color: #F4F6FA;
+    border: 1px solid #D8DFEE;
+    border-radius: 7px 7px 7px 7px;
+    float: right;
+    height: auto;
+    margin: 0 8px 10px 10px;
+    width: 200px;
 }
 
 .PageDocRTL-title div.toc {
@@ -1378,11 +1378,11 @@ div.toc {
 }
 
 div.toc li {
-        background: url("bdwn.png") no-repeat scroll 0 5px transparent;
-        font: 10px/1.2 Verdana,DejaVu Sans,Geneva,sans-serif;
-        margin-top: 5px;
-        padding-left: 10px;
-        padding-top: 2px;
+    background: url("bdwn.png") no-repeat scroll 0 5px transparent;
+    font: 10px/1.2 Verdana,DejaVu Sans,Geneva,sans-serif;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-top: 2px;
 }
 
 .PageDocRTL-title div.toc li {
@@ -1392,32 +1392,32 @@ div.toc li {
 }
 
 div.toc h3 {
-        font: bold 12px/1.2 Arial,FreeSans,sans-serif;
+    font: bold 12px/1.2 Arial,FreeSans,sans-serif;
     color: #4665A2;
-        border-bottom: 0 none;
-        margin: 0;
+    border-bottom: 0 none;
+    margin: 0;
 }
 
 div.toc ul {
-        list-style: none outside none;
-        border: medium none;
-        padding: 0px;
+    list-style: none outside none;
+    border: medium none;
+    padding: 0px;
 }
 
 div.toc li.level1 {
-        margin-left: 0px;
+    margin-left: 0px;
 }
 
 div.toc li.level2 {
-        margin-left: 15px;
+    margin-left: 15px;
 }
 
 div.toc li.level3 {
-        margin-left: 30px;
+    margin-left: 30px;
 }
 
 div.toc li.level4 {
-        margin-left: 45px;
+    margin-left: 45px;
 }
 
 .PageDocRTL-title div.toc li.level1 {
@@ -1441,9 +1441,9 @@ div.toc li.level4 {
 }
 
 .inherit_header {
-        font-weight: bold;
-        color: gray;
-        cursor: pointer;
+    font-weight: bold;
+    color: gray;
+    cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -1453,21 +1453,21 @@ div.toc li.level4 {
 }
 
 .inherit_header td {
-        padding: 6px 0px 2px 5px;
+    padding: 6px 0px 2px 5px;
 }
 
 .inherit {
-        display: none;
+    display: none;
 }
 
 tr.heading h2 {
-        margin-top: 12px;
-        margin-bottom: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
 }
 
 .ttc {
-        position: absolute;
-        display: none;
+    position: absolute;
+    display: none;
 }
 
 #powerTip {
@@ -1487,26 +1487,26 @@ tr.heading h2 {
 }
 
 #powerTip div.ttdoc {
-        color: grey;
+    color: grey;
     font-style: italic;
 }
 
 #powerTip div.ttname a {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 #powerTip div.ttname {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 #powerTip div.ttdeci {
-        color: #006318;
+    color: #006318;
 }
 
 #powerTip div {
-        margin: 0px;
-        padding: 0px;
-        font: 12px/16px Roboto,sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font: 12px/16px Roboto,sans-serif;
 }
 
 #powerTip:before, #powerTip:after {
@@ -1635,27 +1635,26 @@ tr.heading h2 {
 }
 
 @media print {
-  #top { display: none; }
-  #side-nav { display: none; }
-  #nav-path { display: none; }
-  body { overflow:visible; }
-  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
-  .summary { display: none; }
-  .memitem { page-break-inside: avoid; }
-  #doc-content
-  {
-    margin-left:0 !important;
-    height:auto !important;
-    width:auto !important;
-    overflow:inherit;
-    display:inline;
-  }
+    #top { display: none; }
+    #side-nav { display: none; }
+    #nav-path { display: none; }
+    body { overflow:visible; }
+    h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+    .summary { display: none; }
+    .memitem { page-break-inside: avoid; }
+    #doc-content {
+        margin-left:0 !important;
+        height:auto !important;
+        width:auto !important;
+        overflow:inherit;
+        display:inline;
+    }
 }
 
 table.markdownTable {
     border-collapse:collapse;
-        margin-top: 4px;
-        margin-bottom: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 table.markdownTable td, table.markdownTable th {

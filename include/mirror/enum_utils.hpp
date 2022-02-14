@@ -9,6 +9,7 @@
 #ifndef MIRROR_ENUM_UTILS_HPP
 #define MIRROR_ENUM_UTILS_HPP
 
+#include "placeholder.hpp"
 #include "primitives.hpp"
 #include <optional>
 
@@ -20,14 +21,10 @@ namespace mirror {
 template <typename E>
 auto enum_to_string(E e) noexcept -> string_view {
     return select(
+      std::string_view{},
       get_enumerators(mirror(E)),
-      [](auto& result, auto mo, auto c) {
-          if(get_constant(mo) == c) {
-              result = get_name(mo);
-          }
-      },
-      string_view{},
-      e);
+      has_value(_1, e),
+      get_name(_1));
 }
 
 /// @brief Finds the value of enum type @c E with the specified name.
@@ -36,14 +33,10 @@ auto enum_to_string(E e) noexcept -> string_view {
 template <typename E>
 auto string_to_enum(string_view s) noexcept -> std::optional<E> {
     return select(
-      get_enumerators(mirror(E)),
-      [](auto& result, auto mo, auto n) {
-          if(get_name(mo) == n) {
-              result = get_constant(mo);
-          }
-      },
       std::optional<E>{},
-      s);
+      get_enumerators(mirror(E)),
+      has_name(_1, s),
+      get_value(_1));
 }
 
 } // namespace mirror

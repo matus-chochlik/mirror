@@ -24,27 +24,44 @@ find_program(PYTHON3_COMMAND python3)
 macro(mirror_generate_figure NAME)
     cmake_parse_arguments(
         MIRROR_FIGURE
-        ""
-        "GENERATOR"
+    	""
+		"GENERATOR;BASELINE;LABEL"
         "SOURCE_DATA"
         ${ARGN}
     )
     if(PYTHON3_COMMAND)
         set(FIG_DEPS)
         set(GEN_ARGS)
-        foreach(SRC_DATA ${MIRROR_FIGURE_SOURCE_NAME})
-            list(APPEND GEN_ARGS "-i")
-            list(APPEND GEN_ARGS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.json")
-            list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.json")
+		foreach(LABEL ${MIRROR_FIGURE_LABEL})
+			list(APPEND GEN_ARGS "-L")
+			list(APPEND GEN_ARGS "${LABEL}")
+		endforeach()
+    	foreach(SRC_DATA ${MIRROR_FIGURE_BASELINE})
+    		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
+    			list(APPEND GEN_ARGS "-b")
+    			list(APPEND GEN_ARGS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
+    			list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
+    		else()
+    			message(FATAL_ERROR "Invalid figure source ${SRC_DATA}")
+    		endif()
+    	endforeach()
+    	foreach(SRC_DATA ${MIRROR_FIGURE_SOURCE_DATA})
+    		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
+    			list(APPEND GEN_ARGS "-i")
+    			list(APPEND GEN_ARGS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
+    			list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/data/${SRC_DATA}.csv")
+    		else()
+    			message(FATAL_ERROR "Invalid figure source ${SRC_DATA}")
+    		endif()
         endforeach()
+
         list(APPEND GEN_ARGS "-o")
         list(APPEND GEN_ARGS "${NAME}.pdf")
-        list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/tools/${MIRROR_FIGURE_GENERATOR}.py")
+        list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/tools/${MIRROR_FIGURE_GENERATOR}")
 
         add_custom_command(
             OUTPUT ${NAME}.pdf
-            COMMAND "${PYTHON3_COMMAND}" "-B"
-            "${CMAKE_CURRENT_SOURCE_DIR}/tools/${MIRROR_FIGURE_GENERATOR}.py"
+            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/${MIRROR_FIGURE_GENERATOR}"
             ${GEN_ARGS}
             WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
             DEPENDS ${FIG_DEPS}

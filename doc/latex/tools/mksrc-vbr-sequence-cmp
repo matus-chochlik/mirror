@@ -1,0 +1,55 @@
+#!/bin/bash
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
+#
+N=${1}
+S=${2}
+K=$((N/S))
+if [[ ${S} -ge 10 ]]
+then F=$((S/10))
+else F=1
+fi
+if [[ ${K} -ge 10 ]]
+then E=$((K/10))
+else E=1
+fi
+D=$((N / (F * E)))
+cat << EOD
+// ${N} = ${D} * ${E} * ${F}
+#include <utility>
+
+consteval std::size_t foo(std::size_t i) {
+	return i;
+}
+
+template <std::size_t K, std::size_t J, std::size_t ... I>
+consteval auto bar(
+	std::integral_constant<std::size_t, K>,
+	std::integral_constant<std::size_t, J>,
+	std::index_sequence<I...>) {
+	return ( ... + foo(K * $((N / D)) + J * $((N / (D * E))) + I));
+}
+
+template <std::size_t K, std::size_t ... J>
+consteval auto baz(
+	std::integral_constant<std::size_t, K>,
+	std::index_sequence<J...>) {
+	return ( ... + bar(
+		std::integral_constant<std::size_t, K>{},
+		std::integral_constant<std::size_t, J>{},
+		std::make_index_sequence<${F}>{}));
+}
+
+template <std::size_t ... K>
+consteval auto qux(std::index_sequence<K...>) {
+	return ( ... + baz(
+		std::integral_constant<std::size_t, K>{},
+		std::make_index_sequence<${E}>{}));
+}
+
+int main() {
+	return bool(qux(std::make_index_sequence<${D}>{})) ? 0 : 1;
+}
+EOD

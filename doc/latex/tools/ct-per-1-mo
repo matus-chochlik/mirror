@@ -1,0 +1,73 @@
+#!/usr/bin/python3 -B
+# coding=utf8
+# Copyright Matus Chochlik.
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at
+#  http://www.boost.org/LICENSE_1_0.txt
+# ------------------------------------------------------------------------------
+import os
+import matplotlib.pyplot as plt
+import matplotlib.ticker as pltckr
+
+from common import DataSet, PlotArgParser
+
+class ArgParser(PlotArgParser):
+    # --------------------------------------------------------------------------
+    def __init__(self, **kw):
+        PlotArgParser.__init__(self, **kw)
+
+        self._add_baseline_input_arg()
+        self._add_multi_input_arg()
+# ------------------------------------------------------------------------------
+def make_argparser():
+    return ArgParser(prog=os.path.basename(__file__))
+
+# ------------------------------------------------------------------------------
+def _format_bignum(s, pos=None):
+    if s >= 1000000:
+        return "%1.0fM" % (s / 1000000)
+    if s >= 1000:
+        return "%1.0fk" % (s / 1000)
+    return "%1.0f" % s
+# ------------------------------------------------------------------------------
+def do_plot(options):
+    dataset = DataSet()
+
+    if options.baseline_path:
+        with open(options.baseline_path, "rt") as csv:
+            name = os.path.splitext(os.path.basename(options.baseline_path))[0]
+            dataset.merge_csv(csv, set_name=name, bln_col=1)
+
+    for input_path in options.input_path:
+        with open(input_path, "rt") as csv:
+            name = os.path.splitext(os.path.basename(input_path))[0]
+            dataset.merge_csv(csv, set_name=name)
+
+    plt.style.use('dark_background')
+    fig, spl = plt.subplots()
+    options.initialize(plt, fig)
+
+    for i, x, y in dataset.data_columns():
+        spl.plot(
+            x, (1000000*y)/x,
+            label=dataset.column_label(options, i),
+            linewidth=2,
+            color=options.dataset_color(dataset, i))
+
+    spl.xaxis.set_major_formatter(pltckr.FuncFormatter(_format_bignum))
+    spl.set_xlabel("Number of metaobjects")
+    spl.set_ylabel("Compile-time increase [μs]")
+    spl.grid(axis="both", alpha=0.25)
+    spl.legend()
+
+    options.finalize(plt)
+
+# ------------------------------------------------------------------------------
+def main():
+    do_plot(make_argparser().make_options())
+    return 0
+# ------------------------------------------------------------------------------
+if __name__ == "__main__":
+    exit(main())
+# ------------------------------------------------------------------------------
+

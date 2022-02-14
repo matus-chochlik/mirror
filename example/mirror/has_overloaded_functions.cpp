@@ -45,7 +45,7 @@ int main() {
           mfs,
           [mfs](auto mf1) {
               return any_of(mfs, [mf1](auto mf2) {
-                  return !reflects_same(mf1, mf2) &&
+                  return !reflect_same(mf1, mf2) &&
                          get_name(mf1) == get_name(mf2);
               });
           },

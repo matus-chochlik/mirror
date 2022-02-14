@@ -59,5 +59,5 @@ cmake \
 	-DLLVM_PARALLEL_COMPILE_JOBS=${compile_jobs} \
 	-DLLVM_PARALLEL_LINK_JOBS=${link_jobs} \
 	"${root_dir}/submodules/llvm-project/llvm" && \
-ninja "${ninja_args[@]}" install install-cxx install-cxxabi && \
+time ninja "${ninja_args[@]}" install install-cxx install-cxxabi && \
 popd

@@ -133,7 +133,7 @@ auto (*@\listinghlt{meta_string}@*) =
           \begin{itemize}
             \smaller
             \item \inlinecode{is_empty}, \inlinecode{get_size},
-              \inlinecode{get_element}, \inlinecode{concat}, \ldots
+              \inlinecode{get_element}, \inlinecode{concat}, \inlinecode{flatten}, \ldots
           \end{itemize}
       \end{itemize}
     \end{column}
@@ -145,19 +145,20 @@ auto (*@\listinghlt{meta_string}@*) =
             \item \inlinecode{for_each}, \inlinecode{fold},
               \inlinecode{join}, \inlinecode{transform},
               \inlinecode{filter}, \inlinecode{remove_if},
+              \inlinecode{sort_by}, \inlinecode{group_by},
               \inlinecode{find_if}, \inlinecode{find_if_not},
               \inlinecode{find_ranking}, \ldots
           \end{itemize}
         \item comparators
           \begin{itemize}
             \smaller
-            \item \inlinecode{reflects_same}, \ldots
+            \item \inlinecode{reflect_same}, \ldots
           \end{itemize}
         \item syntax sugar, placeholder expressions
           \begin{itemize}
             \smaller
             \item \inlinecode{_1}, \inlinecode{_2},
-              \inlinecode{get_type(_1)}, \inlinecode{reflects_same(_1, _2)},
+              \inlinecode{get_type(_1)}, \inlinecode{reflect_same(_1, _2)},
               \ldots
           \end{itemize}
       \end{itemize}
@@ -371,15 +372,11 @@ template <typename E>
 auto enum_to_string(E e) noexcept
   -> (*@\listinghlt{string_view}@*) {
 
-  return (*@\listinghlt{select}@*)(
-    (*@\listinghl{get_enumerators}@*)(mirror(E)),
-    [](auto& (*@\listinghlt{result}@*), auto mo, auto c) {
-        if((*@\listinghl{get_constant}@*)(mo) == c) {
-            (*@\listinghlt{result}@*) = (*@\listinghl{get_name}@*)(mo);
-        }
-    },
+  return select(
     (*@\listinghlt{string_view}@*){},
-    e);
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    (*@\listinghl{has_value}@*)(_1, e),
+    (*@\listinghl{get_name}@*)(_1));
 }
   \end{lstlisting}
 \end{frame}
@@ -392,15 +389,11 @@ template <typename E>
 auto string_to_enum(string_view s) noexcept
   -> (*@\listinghlt{optional}@*)<E> {
 
-  return (*@\listinghlt{select}@*)(
-    (*@\listinghl{get_enumerators}@*)(mirror(E)),
-    [](auto& (*@\listinghlt{result}@*), auto mo, auto n) {
-        if((*@\listinghl{get_name}@*)(mo) == n) {
-            (*@\listinghlt{result}@*) = (*@\listinghl{get_constant}@*)(mo);
-        }
-    },
+  return select(
     (*@\listinghlt{optional}@*)<E>{},
-    s);
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    (*@\listinghl{has_name}@*)(_1, s),
+    (*@\listinghl{get_value}@*)(_1));
 }
   \end{lstlisting}
 \end{frame}

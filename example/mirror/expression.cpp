@@ -34,7 +34,7 @@ int main() {
     static_assert(reflects_function(msd));
     static_assert(reflects_constructor(mfc));
 
-    static_assert(!reflects_same(msf, msd));
+    static_assert(!reflect_same(msf, msd));
 
     std::cout << invoke(msf, 1.0F) << std::endl;
     std::cout << invoke(msd, 0.50) << std::endl;
