@@ -645,6 +645,13 @@ constexpr auto get_front(placeholder_expr<X> e) {
 }
 
 template <typename X>
+constexpr auto get_constant(placeholder_expr<X> e) {
+    return placeholder_expr{[e](auto... a) {
+        return get_constant(e(a...));
+    }};
+}
+
+template <typename X>
 constexpr auto get_pointer(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return get_pointer(e(a...));
@@ -652,9 +659,23 @@ constexpr auto get_pointer(placeholder_expr<X> e) {
 }
 
 template <typename X>
-constexpr auto get_constant(placeholder_expr<X> e) {
+constexpr auto get_value(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
-        return get_constant(e(a...));
+        return get_value(e(a...));
+    }};
+}
+
+template <typename X, typename T>
+constexpr auto has_value(placeholder_expr<X> e, const T value) {
+    return placeholder_expr{[e, value](auto... a) {
+        return has_value(e(a...), value);
+    }};
+}
+
+template <typename X>
+constexpr auto get_reference(placeholder_expr<X> e) -> auto& {
+    return placeholder_expr{[e](auto... a) {
+        return get_reference(e(a...));
     }};
 }
 
@@ -677,6 +698,13 @@ template <typename X>
 constexpr auto get_name(placeholder_expr<X> e) {
     return placeholder_expr{[e](auto... a) {
         return get_name(e(a...));
+    }};
+}
+
+template <typename X>
+constexpr auto has_name(placeholder_expr<X> e, string_view str) {
+    return placeholder_expr{[e, str](auto... a) {
+        return has_name(e(a...), str);
     }};
 }
 

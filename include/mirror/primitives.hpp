@@ -1266,14 +1266,19 @@ reflect_same(wrapped_metaobject<Ml>, wrapped_metaobject<Mr>) noexcept -> bool {
 /// @see reflects_named
 /// @see get_name
 /// @see get_display_name
-template <size_t L>
-consteval auto has_name(metaobject auto mo, const char (&str)[L]) noexcept
+consteval auto has_name(metaobject auto mo, string_view str) noexcept
   -> bool requires(reflects_named(mo));
 #else
 template <__metaobject_id M, size_t L>
 consteval auto has_name(wrapped_metaobject<M>, const char (&str)[L]) noexcept
   -> bool requires(__metaobject_is_meta_named(M)) {
     return __builtin_strcmp(__metaobject_get_name(M), str) == 0;
+}
+
+template <__metaobject_id M>
+constexpr auto has_name(wrapped_metaobject<M> mo, string_view str) noexcept
+  -> bool requires(__metaobject_is_meta_named(M)) {
+    return get_name(mo) == str;
 }
 #endif
 
@@ -1351,6 +1356,48 @@ consteval auto get_pointer(wrapped_metaobject<M>) noexcept requires(
 }
 #endif
 
+template <__metaobject_id M>
+struct _get_constant
+  : integral_constant<
+      __unrefltype(__metaobject_get_constant(M)),
+      __metaobject_get_constant(M)> {};
+
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns the value of the reflected base-level constant.
+/// @ingroup operations
+/// @see reflects_constant
+/// @see get_pointer
+/// @see get_reference
+/// @see get_value
+/// @see metaobject_operation
+constexpr auto get_constant(metaobject auto mo) noexcept
+  requires(reflects_constant(mo));
+#else
+template <__metaobject_id M>
+constexpr auto get_constant(wrapped_metaobject<M>) noexcept
+  requires(__metaobject_is_meta_constant(M)) {
+    return _get_constant<M>::value;
+}
+#endif
+
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns the value of the reflected base-level constant.
+/// @ingroup operations
+/// @see reflects_constant
+/// @see get_pointer
+/// @see get_reference
+/// @see get_constant
+/// @see metaobject_operation
+constexpr auto get_value(metaobject auto mo) noexcept
+  requires(reflects_constant(mo));
+#else
+template <__metaobject_id M>
+constexpr auto get_value(wrapped_metaobject<M>) noexcept
+  requires(__metaobject_is_meta_constant(M)) {
+    return _get_constant<M>::value;
+}
+#endif
+
 #if defined(MIRROR_DOXYGEN)
 /// @brief Returns the value of the reflected base-level entity.
 /// @ingroup operations
@@ -1388,6 +1435,12 @@ constexpr const auto& get_value(wrapped_metaobject<M>, const C& obj) noexcept
 }
 #endif
 
+template <__metaobject_id M, typename T>
+constexpr auto has_value(wrapped_metaobject<M> mo, const T value) noexcept
+  -> bool {
+    return get_value(mo) == value;
+}
+
 #if defined(MIRROR_DOXYGEN)
 /// @brief Returns a reference to the reflected base-level entity.
 /// @ingroup operations
@@ -1421,30 +1474,6 @@ template <__metaobject_id M, class C>
 constexpr auto& get_reference(wrapped_metaobject<M>, C& obj) noexcept requires(
   __metaobject_is_meta_record_member(M) && __metaobject_is_meta_variable(M)) {
     return obj.*_get_pointer<M>::value;
-}
-#endif
-
-template <__metaobject_id M>
-struct _get_constant
-  : integral_constant<
-      __unrefltype(__metaobject_get_constant(M)),
-      __metaobject_get_constant(M)> {};
-
-#if defined(MIRROR_DOXYGEN)
-/// @brief Returns the value of the reflected base-level constant.
-/// @ingroup operations
-/// @see reflects_constant
-/// @see get_pointer
-/// @see get_reference
-/// @see get_value
-/// @see metaobject_operation
-constexpr auto get_constant(metaobject auto mo) noexcept
-  requires(reflects_constant(mo));
-#else
-template <__metaobject_id M>
-constexpr auto get_constant(wrapped_metaobject<M>) noexcept
-  requires(__metaobject_is_meta_constant(M)) {
-    return _get_constant<M>::value;
 }
 #endif
 
