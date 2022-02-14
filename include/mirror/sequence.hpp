@@ -916,33 +916,39 @@ constexpr auto none_of(type_list<E...> tl, F predicate) noexcept
 #endif
 
 // select
-template <typename T, __metaobject_id... M, typename F, typename... P>
+template <typename T, __metaobject_id... M, typename C, typename F>
 constexpr auto select(
-  unpacked_metaobject_sequence<M...>,
-  F function,
   T fallback,
-  P&&... param) noexcept -> T {
-    (void)(..., function(fallback, wrapped_metaobject<M>{}, std::forward<P>(param)...));
+  unpacked_metaobject_sequence<M...>,
+  C condition,
+  F transform) noexcept -> T {
+    const auto function = [&fallback, condition, transform](auto mo) {
+        if(condition(mo)) {
+            fallback = transform(mo);
+        }
+    };
+    (void)(..., function(wrapped_metaobject<M>{}));
     return fallback;
 }
 
-template <typename T, __metaobject_id M, typename F, typename... P>
+template <typename T, typename... E, typename C, typename F>
 constexpr auto
-select(wrapped_metaobject<M> mo, F function, T fallback, P&&... param) noexcept
-  -> T requires(__metaobject_is_meta_object_sequence(M)) {
-    return select(
-      unpack(mo),
-      std::move(function),
-      std::move(fallback),
-      std::forward<P>(param)...);
-}
-
-template <typename T, typename... E, typename F, typename... P>
-constexpr auto
-select(type_list<E...> tl, F function, T fallback, P&&... param) noexcept -> T
+select(T fallback, type_list<E...> tl, C condition, F transform) noexcept -> T
   requires(is_object_sequence(tl)) {
-    (void)(..., function(fallback, E{}, std::forward<P>(param)...));
+    const auto function = [&fallback, condition, transform](auto mo) {
+        if(condition(mo)) {
+            fallback = transform(mo);
+        }
+    };
+    (void)(..., function(E{}));
     return fallback;
+}
+
+template <typename T, __metaobject_id M, typename C, typename F>
+constexpr auto
+select(T fallback, wrapped_metaobject<M> mo, C condition, F transform) noexcept
+  -> T requires(__metaobject_is_meta_object_sequence(M)) {
+    return select(std::move(fallback), unpack(mo), condition, transform);
 }
 
 // concat

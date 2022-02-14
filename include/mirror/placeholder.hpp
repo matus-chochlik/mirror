@@ -1099,18 +1099,11 @@ constexpr auto get_top_value(placeholder_expr<X> e, F transform) {
     }};
 }
 
-template <typename X, typename Function, typename Fallback, typename... P>
-constexpr auto select(
-  placeholder_expr<X> e,
-  Function function,
-  Fallback fallback,
-  P&&... param) {
-    return placeholder_expr{[e, &function, &fallback, &param...](auto... a) {
-        return select(
-          e(a...),
-          std::move(function),
-          std::move(fallback),
-          std::forward<P>(param)...);
+template <typename T, typename X, typename C, typename F>
+constexpr auto
+select(T fallback, placeholder_expr<X> e, C condition, F transform) {
+    return placeholder_expr{[e, &fallback, condition, transform](auto... a) {
+        return select(std::move(fallback), e(a...), condition, transform);
     }};
 }
 
