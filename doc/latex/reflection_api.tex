@@ -1347,15 +1347,11 @@ template <typename E>
 auto enum_to_string(E e) noexcept
   -> (*@\listinghlt{string_view}@*) {
 
-  return (*@\listinghlt{select}@*)(
-    (*@\listinghl{get_enumerators}@*)(mirror(E)),
-    [](auto& result, auto mo, auto c) {
-        if((*@\listinghl{get_constant}@*)(mo) == c) {
-            (*@\listinghlt{result}@*) = (*@\listinghl{get_name}@*)(mo);
-        }
-    },
+  return select(
     (*@\listinghlt{string_view}@*){},
-    e);
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    (*@\listinghl{has_value}@*)(_1, e),
+    (*@\listinghl{get_name}@*)(_1));
 }
   \end{lstlisting}
 \end{frame}
@@ -1368,15 +1364,11 @@ template <typename E>
 auto string_to_enum(string_view s) noexcept
   -> (*@\listinghlt{optional}@*)<E> {
 
-  return (*@\listinghlt{select}@*)(
-    (*@\listinghl{get_enumerators}@*)(mirror(E)),
-    [](auto& result, auto mo, auto n) {
-        if((*@\listinghl{get_name}@*)(mo) == n) {
-            (*@\listinghlt{result}@*) = (*@\listinghl{get_constant}@*)(mo);
-        }
-    },
+  return select(
     (*@\listinghlt{optional}@*)<E>{},
-    s);
+    (*@\listinghl{get_enumerators}@*)(mirror(E)),
+    (*@\listinghl{has_name}@*)(_1, s),
+    (*@\listinghl{get_value}@*)(_1));
 }
   \end{lstlisting}
 \end{frame}
