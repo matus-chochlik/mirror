@@ -916,6 +916,20 @@ constexpr auto none_of(type_list<E...> tl, F predicate) noexcept
 #endif
 
 // select
+#if defined(MIRROR_DOXYGEN)
+/// @brief Get result of transform where condition is true or resturn fallback.
+/// @ingroup sequence_operations
+/// @see remove_if
+/// @see for_each
+/// @see filter
+/// @see fold
+///
+/// This function either returns the value returned by transform on the first
+/// metaobject in a sequence where a condition is true or return fallback
+/// if condition is false for every metaobject in the sequence.
+constexpr auto
+select(auto fallback, metaobject_sequence auto, auto condition, auto transform);
+#else
 template <typename T, __metaobject_id... M, typename C, typename F>
 constexpr auto select(
   T fallback,
@@ -950,6 +964,7 @@ select(T fallback, wrapped_metaobject<M> mo, C condition, F transform) noexcept
   -> T requires(__metaobject_is_meta_object_sequence(M)) {
     return select(std::move(fallback), unpack(mo), condition, transform);
 }
+#endif
 
 // concat
 #if defined(MIRROR_DOXYGEN)
