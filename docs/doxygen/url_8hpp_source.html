@@ -73,29 +73,38 @@ $(function() {
 <div class="title">url.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="url_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_URL_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_URL_HPP</span></div>
+<a href="url_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_URL_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_URL_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="diagnostic_8hpp.html">diagnostic.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;charconv&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;regex&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="diagnostic_8hpp.html">&quot;diagnostic.hpp&quot;</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">cassert</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">charconv</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">optional</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">regex</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">string_view</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mirror</a> {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmirror_1_1url.html">url</a> {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/// @brief Class parsing and providing access to parts of a URL.</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html">   23</a></span>&#160;<span class="keyword">class</span> url {</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classmirror_1_1url.html#addcc95ee8ba5a5b1ce6c6fa33dfb6fdf">url</a>(std::string, std::match_results&lt;std::string::iterator&gt;) noexcept;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    url(std::string, std::match_results&lt;std::string::iterator&gt;) <span class="keyword">noexcept</span>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> _cover(</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;      std::string_view&amp; part,</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;      <span class="keyword">const</span> std::match_results&lt;std::string::iterator&gt;&amp; match,</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;      <span class="keyword">const</span> std::size_t index) <span class="keyword">const</span> noexcept;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;      <span class="keyword">const</span> std::size_t index) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_regex() noexcept -&gt; <span class="keyword">const</span> std::regex&amp;;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_regex() <span class="keyword">noexcept</span> -&gt; <span class="keyword">const</span> std::regex&amp;;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    std::string _url_str;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    std::string_view _scheme;</div>
@@ -108,69 +117,88 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::string_view _fragment;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">bool</span> _parsed{<span class="keyword">false</span>};</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_opt(std::string_view <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>) noexcept</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_opt(std::string_view str) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      -&gt; std::optional&lt;std::string_view&gt; {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>.empty()) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">return</span> {<a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>};</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">if</span>(!str.empty()) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">return</span> {str};</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> {};</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#addcc95ee8ba5a5b1ce6c6fa33dfb6fdf">   55</a></span>&#160;    <a class="code" href="classmirror_1_1url.html#addcc95ee8ba5a5b1ce6c6fa33dfb6fdf">url</a>() noexcept = default;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">/// @brief Default constructor.</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#abf886987d8422a9a3409665526485be5">   55</a></span>&#160;    url() <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a56c29c14839ae823cac7d9afa7d1bc51">   58</a></span>&#160;    <a class="code" href="classmirror_1_1url.html">url</a>(std::<span class="keywordtype">string</span> url_str) noexcept</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      : <a class="code" href="classmirror_1_1url.html">url</a>{std::move(url_str), std::match_results&lt;std::string::iterator&gt;{}} {}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">/// @brief Construction from a string.</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aeb4bf8d0860d2bfedd22cb96c9f34e44">   58</a></span>&#160;    url(std::string url_str) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      : url{std::move(url_str), std::match_results&lt;std::string::iterator&gt;{}} {}</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a0562b4c99380b28306920fdfc17a31db">   62</a></span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a0562b4c99380b28306920fdfc17a31db">operator==</a>(<span class="keyword">const</span> <a class="code" href="classmirror_1_1url.html">url</a>&amp; l, <span class="keyword">const</span> <a class="code" href="classmirror_1_1url.html">url</a>&amp; r) noexcept {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">/// @brief Equality comparison.</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a0562b4c99380b28306920fdfc17a31db">   62</a></span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> operator==(<span class="keyword">const</span> url&amp; l, <span class="keyword">const</span> url&amp; r) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> l._url_str == r._url_str;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aff66936e3e99e059b59f8f393ef70097">   67</a></span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#aff66936e3e99e059b59f8f393ef70097">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="classmirror_1_1url.html">url</a>&amp; l, <span class="keyword">const</span> <a class="code" href="classmirror_1_1url.html">url</a>&amp; r) noexcept {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">/// @brief Less-thancomparison.</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aff66936e3e99e059b59f8f393ef70097">   67</a></span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> operator&lt;(<span class="keyword">const</span> url&amp; l, <span class="keyword">const</span> url&amp; r) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">return</span> l._url_str &lt; r._url_str;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a02d10d374d52cb091eb769ce9aa1f32c">   72</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a02d10d374d52cb091eb769ce9aa1f32c">is_valid</a>() const noexcept {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">/// @brief Indicates if the URL was parsed successfully.</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a5a67f60a8ce83e893ac3f0d36fa2e460">   72</a></span>&#160;    <span class="keyword">auto</span> is_valid() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> _parsed;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aacb93561ae89388409f2246bcbadfc3b">   78</a></span>&#160;    <span class="keyword">explicit</span> <span class="keyword">operator</span> bool() const noexcept {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classmirror_1_1url.html#a02d10d374d52cb091eb769ce9aa1f32c">is_valid</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">/// @brief Indicates if the URL was parsed successfully.</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">/// @see is_valid</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a420e60e9788bfa3b52aa3aab72ea3a5e">   78</a></span>&#160;    <span class="keyword">explicit</span> operator <span class="keywordtype">bool</span>() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">return</span> is_valid();</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">   83</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>() const noexcept -&gt; std::string_view {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">/// @brief Returns the whole URL string.</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#ac5e60c4b48d74ddd6470387ad4a65d1a">   83</a></span>&#160;    <span class="keyword">auto</span> str() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::string_view {</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">return</span> {_url_str};</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a3b8ebb9e2436e8a6d7770c2ab608de75">   89</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a3b8ebb9e2436e8a6d7770c2ab608de75">scheme</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">/// @brief Returns the scheme.</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">/// @see has_scheme</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a3227293229e07ca6e6f5fda7b50f9cad">   89</a></span>&#160;    <span class="keyword">auto</span> scheme() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordflow">return</span> _get_opt(_scheme);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#ab9a23f397dc9c9797ddca92a5e2fb4ac">   95</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#ab9a23f397dc9c9797ddca92a5e2fb4ac">has_scheme</a>(<span class="keyword">const</span> std::string_view <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>) <span class="keyword">const</span> noexcept -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a> == _scheme;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="comment">/// @brief Checks if the url scheme matches the given string.</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">/// @see scheme</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#ac7c1810711d1034607773c8533dc3d74">   95</a></span>&#160;    <span class="keyword">auto</span> has_scheme(<span class="keyword">const</span> std::string_view str) <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> str == _scheme;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aa5acc33b10ba0a962caeb713b64e5a1b">  100</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#aa5acc33b10ba0a962caeb713b64e5a1b">login</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="comment">/// @brief Returns the login name.</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a2e3abc97a56ebacb31c7ee374af93983">  100</a></span>&#160;    <span class="keyword">auto</span> login() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> _get_opt(_login);</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a273b61c202ac2803dfb63a2448df7bc4">  105</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a273b61c202ac2803dfb63a2448df7bc4">password</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment">/// @brief Returns the login password.</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a3a2c627e1404bc191cf29bb6ef2a9d4d">  105</a></span>&#160;    <span class="keyword">auto</span> password() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span> _get_opt(_passwd);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aecf44e26574a609be07a2fd3e786c608">  110</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#aecf44e26574a609be07a2fd3e786c608">host</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">/// @brief Returns the host name or IP address.</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a9afadd096bf5307cc6d3cfad7a835f2f">  110</a></span>&#160;    <span class="keyword">auto</span> host() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">return</span> _get_opt(_host);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a1d6b40bcad622c79ef585e92d075527f">  116</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a1d6b40bcad622c79ef585e92d075527f">has_host</a>(<span class="keyword">const</span> std::string_view <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>) <span class="keyword">const</span> noexcept -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a> == _host;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="comment">/// @brief Checks if the url host matches the given string.</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment">/// @see host</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#af0d3883140932ec56adb892756fcef7d">  116</a></span>&#160;    <span class="keyword">auto</span> has_host(<span class="keyword">const</span> std::string_view str) <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">return</span> str == _host;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#adab5fc91ac6ae06a2896048ff3d7c020">  121</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#adab5fc91ac6ae06a2896048ff3d7c020">port_str</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="comment">/// @brief Returns the port string.</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a04db5e317394a53412d95bb29d26d97a">  121</a></span>&#160;    <span class="keyword">auto</span> port_str() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">return</span> _get_opt(_port);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    }</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#aaf1f5c81e2493c359e17d79c1b7bdd55">  126</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#aaf1f5c81e2493c359e17d79c1b7bdd55">port</a>() const noexcept -&gt; std::optional&lt;<span class="keywordtype">int</span>&gt; {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="comment">/// @brief Returns the port number.</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a7098f7cf84f7e0d9d83b57c40a08a85b">  126</a></span>&#160;    <span class="keyword">auto</span> port() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;<span class="keywordtype">int</span>&gt; {</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordtype">int</span> result = 0;</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordflow">if</span>(std::from_chars(_port.begin(), _port.end(), result).ec == std::errc{}) {</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            <span class="keywordflow">return</span> {result};</div>
@@ -178,56 +206,64 @@ $(function() {
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">return</span> {};</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#afd263778f128b6a774b8c8bb7675da64">  135</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#afd263778f128b6a774b8c8bb7675da64">path</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="comment">/// @brief Returns the path string.</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a49b2999049564b5285761525eb538be4">  135</a></span>&#160;    <span class="keyword">auto</span> path() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">return</span> _get_opt(_path);</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#ab0e61a8756ff58447263fe169d4213df">  142</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#ab0e61a8756ff58447263fe169d4213df">has_path</a>(<span class="keyword">const</span> std::string_view <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a>) <span class="keyword">const</span> noexcept -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">str</a> == _path;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="comment">/// @brief Checks if the path matches the given string.</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="comment">/// @see path_str</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="comment">/// @see path</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a45539cdb3c3471c5794fdaf3f9b59cdc">  142</a></span>&#160;    <span class="keyword">auto</span> has_path(<span class="keyword">const</span> std::string_view str) <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">return</span> str == _path;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    }</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a76d82305b0fb371320e364d22617014f">  147</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a76d82305b0fb371320e364d22617014f">query</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="comment">/// @brief Returns the query string.</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#abc03c7cf1fec107f0ec17d2b7f7f86b8">  147</a></span>&#160;    <span class="keyword">auto</span> query() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordflow">return</span> _get_opt(_query);</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    }</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a3e5d92ac0ade626d8d40e1fe4eb88ce0">argument</a>(<span class="keyword">const</span> std::string_view arg_name) <span class="keyword">const</span> noexcept</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="comment">/// @brief Returns the value of the specified query argument.</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">/// @see query</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">auto</span> argument(<span class="keyword">const</span> std::string_view arg_name) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      -&gt; std::optional&lt;std::string_view&gt;;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#ac458d049bcedbdc08fab4066fb3c60cb">  157</a></span>&#160;    <span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#ac458d049bcedbdc08fab4066fb3c60cb">fragment</a>() const noexcept -&gt; std::optional&lt;std::string_view&gt; {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="comment">/// @brief Returns the fragment.</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#afbf7aeeffb4e6ab2c601e7910f749944">  157</a></span>&#160;    <span class="keyword">auto</span> fragment() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordflow">return</span> _get_opt(_fragment);</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    }</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;};</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="keyword">inline</span> <span class="keyword">auto</span> url::_get_regex() noexcept -&gt; const std::regex&amp; {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">#ifdef __clang__</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="keyword">inline</span> <span class="keyword">auto</span> url::_get_regex() <span class="keyword">noexcept</span> -&gt; <span class="keyword">const</span> std::regex&amp; {</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifdef</span> __clang__</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    MIRROR_DIAG_PUSH()</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    MIRROR_DIAG_OFF(exit-time-destructors)</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="comment">// clang-format off</span></div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::regex re{</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      R<span class="stringliteral">&quot;(^((([\w]+):)?\/\/)(([^:]+)(:(\S+))?@)?((((\w[\w_-]{0,62}(\.\w[\w_-]{0,62})*))|((10|127)(\.\d{1,3}){3})|((169\.254|192\.168)(\.\d{1,3}){2})|(172\.(1[6-9]|2\d|3[0-1])(\.\d{1,3}){2})|([1-9]\d?|1\d\d|2[01]\d|22[0-3])(\.(1?\d{1,2}|2[0-4]\d|25[0-5])){2}(\.([1-9]\d?|1\d\d|2[0-4]\d|25[0-4])))(:(\d{1,5}))?)?((/[\w_-]+)*/?)?(\?(([\w_]+=[^+#]*)(\+([\w_]+=[^+#]*))*))?(#([\w_-]*))?$)&quot;,</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="stringliteral">      std::regex::ECMAScript};</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="stringliteral">    </span><span class="comment">// clang-format on</span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#ifdef __clang__</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      R&quot;(^((([\w]+):)?\/\/)(([^:]+)(:(\S+))?@)?((((\w[\w_-]{0,62}(\.\w[\w_-]{0,62})*))|((10|127)(\.\d{1,3}){3})|((169\.254|192\.168)(\.\d{1,3}){2})|(172\.(1[6-9]|2\d|3[0-1])(\.\d{1,3}){2})|([1-9]\d?|1\d\d|2[01]\d|22[0-3])(\.(1?\d{1,2}|2[0-4]\d|25[0-5])){2}(\.([1-9]\d?|1\d\d|2[0-4]\d|25[0-4])))(:(\d{1,5}))?)?((/[\w_-]+)*/?)?(\?(([\w_]+=[^+#]*)(\+([\w_]+=[^+#]*))*))?(#([\w_-]*))?$)&quot;,</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      std::regex::ECMAScript};</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="comment">// clang-format on</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifdef</span> __clang__</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    MIRROR_DIAG_POP()</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> re;</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;}</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> url::_cover(</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  std::string_view&amp; part,</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keyword">const</span> std::match_results&lt;std::string::iterator&gt;&amp; match,</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keyword">const</span> std::size_t index) <span class="keyword">const</span> noexcept {</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keyword">const</span> std::size_t index) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    assert(index &lt; match.size());</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keyword">auto</span>&amp; m = match[index];</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    part = str().substr(</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(m.first - _url_str.begin()),</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(m.second - m.first));</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <span class="keyword">static_cast</span>&lt;std::size_t&gt;(m.first - _url_str.begin()),</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keyword">static_cast</span>&lt;std::size_t&gt;(m.second - m.first));</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keyword">inline</span> <a class="code" href="classmirror_1_1url.html#addcc95ee8ba5a5b1ce6c6fa33dfb6fdf">url::url</a>(</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keyword">inline</span> url::url(</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  std::string url_str,</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  std::match_results&lt;std::string::iterator&gt; match) noexcept</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  std::match_results&lt;std::string::iterator&gt; match) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  : _url_str{std::move(url_str)}</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  , _parsed{</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;      std::regex_match(_url_str.begin(), _url_str.end(), match, _get_regex())} {</div>
@@ -244,11 +280,11 @@ $(function() {
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    }</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a3e5d92ac0ade626d8d40e1fe4eb88ce0">  208</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="classmirror_1_1url.html#a3e5d92ac0ade626d8d40e1fe4eb88ce0">url::argument</a>(<span class="keyword">const</span> std::string_view arg_name) <span class="keyword">const</span> noexcept</div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classmirror_1_1url.html#a66f65f2122ccc63c0653966849d05154">  208</a></span>&#160;<span class="keyword">auto</span> url::argument(<span class="keyword">const</span> std::string_view arg_name) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  -&gt; std::optional&lt;std::string_view&gt; {</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keyword">auto</span> src = _query;</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordflow">while</span>(!src.empty()) {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> pos = src.find(<span class="charliteral">&#39;+&#39;</span>);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> pos = src.find(<span class="stringliteral">&#39;+&#39;</span>);</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> pair = src.substr(0Z, pos);</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordflow">if</span>(pair.starts_with(arg_name)) {</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            <span class="keywordflow">return</span> pair.substr(arg_name.size() + 1Z);</div>
@@ -260,34 +296,13 @@ $(function() {
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassmirror_1_1url_html"><div class="ttname"><a href="classmirror_1_1url.html">mirror::url</a></div><div class="ttdoc">Class parsing and providing access to parts of a URL.</div><div class="ttdef"><b>Definition:</b> url.hpp:23</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a02d10d374d52cb091eb769ce9aa1f32c"><div class="ttname"><a href="classmirror_1_1url.html#a02d10d374d52cb091eb769ce9aa1f32c">mirror::url::is_valid</a></div><div class="ttdeci">auto is_valid() const noexcept</div><div class="ttdoc">Indicates if the URL was parsed successfully.</div><div class="ttdef"><b>Definition:</b> url.hpp:72</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a0562b4c99380b28306920fdfc17a31db"><div class="ttname"><a href="classmirror_1_1url.html#a0562b4c99380b28306920fdfc17a31db">mirror::url::operator==</a></div><div class="ttdeci">friend auto operator==(const url &amp;l, const url &amp;r) noexcept</div><div class="ttdoc">Equality comparison.</div><div class="ttdef"><b>Definition:</b> url.hpp:62</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a1d6b40bcad622c79ef585e92d075527f"><div class="ttname"><a href="classmirror_1_1url.html#a1d6b40bcad622c79ef585e92d075527f">mirror::url::has_host</a></div><div class="ttdeci">auto has_host(const std::string_view str) const noexcept -&gt; bool</div><div class="ttdoc">Checks if the url host matches the given string.</div><div class="ttdef"><b>Definition:</b> url.hpp:116</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a273b61c202ac2803dfb63a2448df7bc4"><div class="ttname"><a href="classmirror_1_1url.html#a273b61c202ac2803dfb63a2448df7bc4">mirror::url::password</a></div><div class="ttdeci">auto password() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the login password.</div><div class="ttdef"><b>Definition:</b> url.hpp:105</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a3b8ebb9e2436e8a6d7770c2ab608de75"><div class="ttname"><a href="classmirror_1_1url.html#a3b8ebb9e2436e8a6d7770c2ab608de75">mirror::url::scheme</a></div><div class="ttdeci">auto scheme() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the scheme.</div><div class="ttdef"><b>Definition:</b> url.hpp:89</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a3e5d92ac0ade626d8d40e1fe4eb88ce0"><div class="ttname"><a href="classmirror_1_1url.html#a3e5d92ac0ade626d8d40e1fe4eb88ce0">mirror::url::argument</a></div><div class="ttdeci">auto argument(const std::string_view arg_name) const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the value of the specified query argument.</div><div class="ttdef"><b>Definition:</b> url.hpp:208</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_a76d82305b0fb371320e364d22617014f"><div class="ttname"><a href="classmirror_1_1url.html#a76d82305b0fb371320e364d22617014f">mirror::url::query</a></div><div class="ttdeci">auto query() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the query string.</div><div class="ttdef"><b>Definition:</b> url.hpp:147</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_aa5acc33b10ba0a962caeb713b64e5a1b"><div class="ttname"><a href="classmirror_1_1url.html#aa5acc33b10ba0a962caeb713b64e5a1b">mirror::url::login</a></div><div class="ttdeci">auto login() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the login name.</div><div class="ttdef"><b>Definition:</b> url.hpp:100</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_aaf1f5c81e2493c359e17d79c1b7bdd55"><div class="ttname"><a href="classmirror_1_1url.html#aaf1f5c81e2493c359e17d79c1b7bdd55">mirror::url::port</a></div><div class="ttdeci">auto port() const noexcept -&gt; std::optional&lt; int &gt;</div><div class="ttdoc">Returns the port number.</div><div class="ttdef"><b>Definition:</b> url.hpp:126</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_ab01c8a8649a76180119ca98aa6e36074"><div class="ttname"><a href="classmirror_1_1url.html#ab01c8a8649a76180119ca98aa6e36074">mirror::url::str</a></div><div class="ttdeci">auto str() const noexcept -&gt; std::string_view</div><div class="ttdoc">Returns the whole URL string.</div><div class="ttdef"><b>Definition:</b> url.hpp:83</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_ab0e61a8756ff58447263fe169d4213df"><div class="ttname"><a href="classmirror_1_1url.html#ab0e61a8756ff58447263fe169d4213df">mirror::url::has_path</a></div><div class="ttdeci">auto has_path(const std::string_view str) const noexcept -&gt; bool</div><div class="ttdoc">Checks if the path matches the given string.</div><div class="ttdef"><b>Definition:</b> url.hpp:142</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_ab9a23f397dc9c9797ddca92a5e2fb4ac"><div class="ttname"><a href="classmirror_1_1url.html#ab9a23f397dc9c9797ddca92a5e2fb4ac">mirror::url::has_scheme</a></div><div class="ttdeci">auto has_scheme(const std::string_view str) const noexcept -&gt; bool</div><div class="ttdoc">Checks if the url scheme matches the given string.</div><div class="ttdef"><b>Definition:</b> url.hpp:95</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_ac458d049bcedbdc08fab4066fb3c60cb"><div class="ttname"><a href="classmirror_1_1url.html#ac458d049bcedbdc08fab4066fb3c60cb">mirror::url::fragment</a></div><div class="ttdeci">auto fragment() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the fragment.</div><div class="ttdef"><b>Definition:</b> url.hpp:157</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_adab5fc91ac6ae06a2896048ff3d7c020"><div class="ttname"><a href="classmirror_1_1url.html#adab5fc91ac6ae06a2896048ff3d7c020">mirror::url::port_str</a></div><div class="ttdeci">auto port_str() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the port string.</div><div class="ttdef"><b>Definition:</b> url.hpp:121</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_addcc95ee8ba5a5b1ce6c6fa33dfb6fdf"><div class="ttname"><a href="classmirror_1_1url.html#addcc95ee8ba5a5b1ce6c6fa33dfb6fdf">mirror::url::url</a></div><div class="ttdeci">url() noexcept=default</div><div class="ttdoc">Default constructor.</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_aecf44e26574a609be07a2fd3e786c608"><div class="ttname"><a href="classmirror_1_1url.html#aecf44e26574a609be07a2fd3e786c608">mirror::url::host</a></div><div class="ttdeci">auto host() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the host name or IP address.</div><div class="ttdef"><b>Definition:</b> url.hpp:110</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_afd263778f128b6a774b8c8bb7675da64"><div class="ttname"><a href="classmirror_1_1url.html#afd263778f128b6a774b8c8bb7675da64">mirror::url::path</a></div><div class="ttdeci">auto path() const noexcept -&gt; std::optional&lt; std::string_view &gt;</div><div class="ttdoc">Returns the path string.</div><div class="ttdef"><b>Definition:</b> url.hpp:135</div></div>
-<div class="ttc" id="aclassmirror_1_1url_html_aff66936e3e99e059b59f8f393ef70097"><div class="ttname"><a href="classmirror_1_1url.html#aff66936e3e99e059b59f8f393ef70097">mirror::url::operator&lt;</a></div><div class="ttdeci">friend auto operator&lt;(const url &amp;l, const url &amp;r) noexcept</div><div class="ttdoc">Less-thancomparison.</div><div class="ttdef"><b>Definition:</b> url.hpp:67</div></div>
-<div class="ttc" id="adiagnostic_8hpp_html"><div class="ttname"><a href="diagnostic_8hpp.html">diagnostic.hpp</a></div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

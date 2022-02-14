@@ -92,14 +92,14 @@ $(function() {
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">constexpr <span class="keyword">auto</span> has_padding() -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line">    <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(T) &gt;</div>
-<div class="line">           sum_sizeofs(<a name="a1"></a><a class="code" href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">extract_types</a>(<a name="a2"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(</div>
-<div class="line">             filter(get_data_members(<a class="code" href="namespacemirror.html">mirror</a>(T)), not_(is_static(mirror::_1))),</div>
-<div class="line">             get_type(mirror::_1))));</div>
+<div class="line">           sum_sizeofs(<a name="a1"></a><a class="code" href="group__sequence__operations.html#gae7c9b595ebad653ac53e3dcd2a4c7126">extract_types</a>(<a name="a2"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(</div>
+<div class="line">             <a name="a3"></a><a class="code" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">filter</a>(<a name="a4"></a><a class="code" href="group__operations.html#ga2dcfe7539bcf9d3ffeebd9bae784067d">get_data_members</a>(<a class="code" href="namespacemirror.html">mirror</a>(T)), not_(<a name="a5"></a><a class="code" href="group__operations.html#gafdf87390eff1a6f2d778524aac9e641d">is_static</a>(mirror::_1))),</div>
+<div class="line">             <a name="a6"></a><a class="code" href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">get_type</a>(mirror::_1))));</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keywordtype">void</span> print_has_padding() {</div>
-<div class="line">    std::cout &lt;&lt; get_name(remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(T))) &lt;&lt; <span class="stringliteral">&quot;: &quot;</span></div>
+<div class="line">    std::cout &lt;&lt; <a name="a7"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(<a name="a8"></a><a class="code" href="group__operations.html#gadf5019ccf067d449888efeb660e5ab27">remove_all_aliases</a>(<a class="code" href="namespacemirror.html">mirror</a>(T))) &lt;&lt; <span class="stringliteral">&quot;: &quot;</span></div>
 <div class="line">              &lt;&lt; (has_padding&lt;T&gt;() ? <span class="stringliteral">&quot;has some&quot;</span> : <span class="stringliteral">&quot;has no&quot;</span>) &lt;&lt; <span class="stringliteral">&quot; padding&quot;</span></div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line">}</div>
@@ -109,18 +109,24 @@ $(function() {
 <div class="line">    print_has_padding&lt;S2&gt;();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__operations_html_ga2dcfe7539bcf9d3ffeebd9bae784067d"><div class="ttname"><a href="group__operations.html#ga2dcfe7539bcf9d3ffeebd9bae784067d">mirror::get_data_members</a></div><div class="ttdeci">constexpr auto get_data_members(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member type reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga658f1934110d936b9cf38e4b50d7c314"><div class="ttname"><a href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">mirror::get_type</a></div><div class="ttdeci">constexpr auto get_type(metaobject auto mo) noexcept requires(reflects_typed(mo))</div><div class="ttdoc">Returns a reflection of the type of a reflected typed entity.</div></div>
+<div class="ttc" id="agroup__operations_html_gadf5019ccf067d449888efeb660e5ab27"><div class="ttname"><a href="group__operations.html#gadf5019ccf067d449888efeb660e5ab27">mirror::remove_all_aliases</a></div><div class="ttdeci">constexpr auto remove_all_aliases(metaobject auto mo) noexcept</div><div class="ttdoc">Removes all aliases from a potentially aliased reflected entity.</div></div>
+<div class="ttc" id="agroup__operations_html_gafdf87390eff1a6f2d778524aac9e641d"><div class="ttname"><a href="group__operations.html#gafdf87390eff1a6f2d778524aac9e641d">mirror::is_static</a></div><div class="ttdeci">consteval auto is_static(metaobject auto mo) noexcept -&gt; bool requires(reflects_variable(mo)||reflects_member_function(mo))</div><div class="ttdoc">Indicates if the reflected base-level entity is static.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_ga1b708f82557982085eec3eddaf7f4be7"><div class="ttname"><a href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">mirror::extract_types</a></div><div class="ttdeci">constexpr auto extract_types(metaobject_sequence auto mo) noexcept -&gt; type_list&lt; unspecified... &gt;</div><div class="ttdoc">Unreflects metaobject in a sequence and stores them in type_list.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga6feaae2b4cbd8c482875e62c33007f9c"><div class="ttname"><a href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">mirror::filter</a></div><div class="ttdeci">constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept</div><div class="ttdoc">Removes metaobjects not satisfying a predicate from a sequence.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gae7c9b595ebad653ac53e3dcd2a4c7126"><div class="ttname"><a href="group__sequence__operations.html#gae7c9b595ebad653ac53e3dcd2a4c7126">mirror::extract_types</a></div><div class="ttdeci">constexpr auto extract_types(metaobject_sequence auto mo) noexcept -&gt; type_list&lt; __unspecified... &gt;</div><div class="ttdoc">Unreflects metaobject in a sequence and stores them in type_list.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
-<div class="ttc" id="astructmirror_1_1type__list_html"><div class="ttname"><a href="structmirror_1_1type__list.html">mirror::type_list</a></div><div class="ttdoc">Represents a list of types. Unlike tuple does not store values.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:55</div></div>
+<div class="ttc" id="astructmirror_1_1type__list_html"><div class="ttname"><a href="structmirror_1_1type__list.html">mirror::type_list</a></div><div class="ttdoc">Represents a list of types. Unlike tuple does not store values.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:58</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

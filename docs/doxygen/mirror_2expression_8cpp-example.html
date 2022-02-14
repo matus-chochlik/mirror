@@ -87,36 +87,41 @@ $(function() {
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> msde = <a class="code" href="namespacemirror.html">mirror</a>((std::asin(1.0)));</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mfce = <a class="code" href="namespacemirror.html">mirror</a>((foo(1, 1)));</div>
 <div class="line"> </div>
-<div class="line">    static_assert(reflects_parenthesized_expression(msfe));</div>
-<div class="line">    static_assert(reflects_parenthesized_expression(msde));</div>
-<div class="line">    static_assert(reflects_parenthesized_expression(mfce));</div>
+<div class="line">    static_assert(<a name="a0"></a><a class="code" href="group__classification.html#gaac7b598e603a9632aa9704d0d60f47cb">reflects_parenthesized_expression</a>(msfe));</div>
+<div class="line">    static_assert(<a class="code" href="group__classification.html#gaac7b598e603a9632aa9704d0d60f47cb">reflects_parenthesized_expression</a>(msde));</div>
+<div class="line">    static_assert(<a class="code" href="group__classification.html#gaac7b598e603a9632aa9704d0d60f47cb">reflects_parenthesized_expression</a>(mfce));</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> msf = get_callable(get_subexpression(msfe));</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> msd = get_callable(get_subexpression(msde));</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mfc = get_callable(get_subexpression(mfce));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> msf = <a name="a1"></a><a class="code" href="group__operations.html#gaa4bb91364a731327e36055b9034818fc">get_callable</a>(<a name="a2"></a><a class="code" href="group__operations.html#ga8a49c57c9e19b3c0298f08f4a86c2e59">get_subexpression</a>(msfe));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> msd = <a class="code" href="group__operations.html#gaa4bb91364a731327e36055b9034818fc">get_callable</a>(<a class="code" href="group__operations.html#ga8a49c57c9e19b3c0298f08f4a86c2e59">get_subexpression</a>(msde));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mfc = <a class="code" href="group__operations.html#gaa4bb91364a731327e36055b9034818fc">get_callable</a>(<a class="code" href="group__operations.html#ga8a49c57c9e19b3c0298f08f4a86c2e59">get_subexpression</a>(mfce));</div>
 <div class="line"> </div>
-<div class="line">    static_assert(reflects_function(msf));</div>
-<div class="line">    static_assert(reflects_function(msd));</div>
-<div class="line">    static_assert(reflects_constructor(mfc));</div>
+<div class="line">    static_assert(<a name="a3"></a><a class="code" href="group__classification.html#ga4a74c9a8a3cd3e509164ea40b304d637">reflects_function</a>(msf));</div>
+<div class="line">    static_assert(<a class="code" href="group__classification.html#ga4a74c9a8a3cd3e509164ea40b304d637">reflects_function</a>(msd));</div>
+<div class="line">    static_assert(<a name="a4"></a><a class="code" href="group__classification.html#ga118beeb028f448932c3bcb66ad1182a8">reflects_constructor</a>(mfc));</div>
 <div class="line"> </div>
-<div class="line">    static_assert(!<a name="a0"></a><a class="code" href="group__operations.html#ga1adfd0450023500c3c44e80f67e83822">reflects_same</a>(msf, msd));</div>
+<div class="line">    static_assert(!<a name="a5"></a><a class="code" href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">reflect_same</a>(msf, msd));</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <a name="a1"></a><a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(msf, 1.0F) &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <a name="a6"></a><a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(msf, 1.0F) &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; <a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(msd, 0.50) &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; <a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(mfc, 4, 5) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__operations_html_ga1adfd0450023500c3c44e80f67e83822"><div class="ttname"><a href="group__operations.html#ga1adfd0450023500c3c44e80f67e83822">mirror::reflects_same</a></div><div class="ttdeci">consteval auto reflects_same(metaobject auto ml, metaobject auto mr) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div></div>
+<div class="ttc" id="agroup__classification_html_ga118beeb028f448932c3bcb66ad1182a8"><div class="ttname"><a href="group__classification.html#ga118beeb028f448932c3bcb66ad1182a8">mirror::reflects_constructor</a></div><div class="ttdeci">consteval auto reflects_constructor(metaobject auto) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a constructor.</div></div>
+<div class="ttc" id="agroup__classification_html_ga4a74c9a8a3cd3e509164ea40b304d637"><div class="ttname"><a href="group__classification.html#ga4a74c9a8a3cd3e509164ea40b304d637">mirror::reflects_function</a></div><div class="ttdeci">consteval auto reflects_function(metaobject auto) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a function.</div></div>
+<div class="ttc" id="agroup__classification_html_gaac7b598e603a9632aa9704d0d60f47cb"><div class="ttname"><a href="group__classification.html#gaac7b598e603a9632aa9704d0d60f47cb">mirror::reflects_parenthesized_expression</a></div><div class="ttdeci">consteval auto reflects_parenthesized_expression(metaobject auto) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a parenthesized expression.</div></div>
+<div class="ttc" id="agroup__operations_html_ga1371812c3203b417ac7df817c1ea8342"><div class="ttname"><a href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">mirror::reflect_same</a></div><div class="ttdeci">consteval auto reflect_same(metaobject auto ml, metaobject auto mr) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga8a49c57c9e19b3c0298f08f4a86c2e59"><div class="ttname"><a href="group__operations.html#ga8a49c57c9e19b3c0298f08f4a86c2e59">mirror::get_subexpression</a></div><div class="ttdeci">constexpr auto get_subexpression(metaobject auto mo) noexcept requires(reflects_parenthesized_expression(mo))</div><div class="ttdoc">Returns the reflection of the sub-expression of a parenthesized expression.</div></div>
 <div class="ttc" id="agroup__operations_html_ga90674b973395384ad8f29a3b31c1c7bd"><div class="ttname"><a href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">mirror::invoke</a></div><div class="ttdeci">constexpr auto invoke(metaobject auto mo, auto &amp;&amp;... args) requires(reflects_function(mo)||(reflects_member_function(mo) &amp;&amp;__metaobject_is_static(M)))</div><div class="ttdoc">Invokes the reflected function with the specified args.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__operations_html_gaa4bb91364a731327e36055b9034818fc"><div class="ttname"><a href="group__operations.html#gaa4bb91364a731327e36055b9034818fc">mirror::get_callable</a></div><div class="ttdeci">constexpr auto get_callable(metaobject auto mo) noexcept requires(reflects_construction_expression(mo)||reflects_function_call_expression(mo))</div><div class="ttdoc">Returns the reflection of the sub-expression of a parenthesized expression.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aprimitives_8hpp_html"><div class="ttname"><a href="primitives_8hpp.html">primitives.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

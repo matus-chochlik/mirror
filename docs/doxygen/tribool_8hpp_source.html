@@ -73,113 +73,151 @@ $(function() {
 <div class="title">tribool.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="tribool_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_TRIBOOL_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_TRIBOOL_HPP</span></div>
+<a href="tribool_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_TRIBOOL_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_TRIBOOL_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">optional</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace</span> <a class="code" href="namespacemirror.html">mirror</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">enum class</span> _tribool_value_t : unsigned char {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">enum</span> <span class="keyword">class</span> _tribool_value_t : <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    _false = 0x00,</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    _true = 0x01,</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    _unknown = 0x02</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structmirror_1_1indeterminate__t.html">   26</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a> {};</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/// @brief Type of the @c indeterminate constant assignable to @c tribool.</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/// @see weakbool</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">/// @see tribool</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structmirror_1_1indeterminate__t.html">   26</a></span>&#160;<span class="keyword">struct</span> indeterminate_t {};</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">   30</a></span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">const</span> <a class="code" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a> <a class="code" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">indeterminate</a>{};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">/// @brief Constant representing unspecified @c tribool value.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="group__utilities.html#ga3bf371f1d082649cc7949d49c380828a">   30</a></span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">const</span> indeterminate_t indeterminate{};</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>tribool;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class</span> tribool;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html">   38</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmirror_1_1weakbool.html">weakbool</a> {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">/// @brief Weak tri-state boolean value.</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/// @see tribool</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">/// @see indeterminate</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html">   38</a></span>&#160;<span class="keyword">class</span> weakbool {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">using</span> _value_t = _tribool_value_t;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html#a9280678eb7e8d153c7044a74a6969adc">   43</a></span>&#160;    constexpr <span class="keyword">explicit</span> <span class="keyword">operator</span> bool() const noexcept {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">/// @brief Returns true, if the stored value is not @c false.</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html#a7990d8e87d9eab2383f94c88c23a6488">   43</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">explicit</span> operator <span class="keywordtype">bool</span>() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> _value != _value_t::_false;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html#a21442d99e9918fe86973d80b5e275dc3">   48</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1weakbool.html#a21442d99e9918fe86973d80b5e275dc3">operator!</a>() const noexcept {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">/// @brief Returns true, if the stored value is not @c true.</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html#a2b37ec1e6d5224b08f7350c8ff716fc2">   48</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator!() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> _value != _value_t::_true;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html#a1d1602ddceae365a3582cb039587f8f3">   53</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1weakbool.html#a1d1602ddceae365a3582cb039587f8f3">is</a>(<span class="keyword">const</span> <a class="code" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) <span class="keyword">const</span> noexcept -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">///@ brief Checks if the stored value is indeterminate.</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classmirror_1_1weakbool.html#a339e7105adc1dee8b5800babe01f3757">   53</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> is(<span class="keyword">const</span> indeterminate_t) <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> _value == _value_t::_unknown;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    _value_t _value;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classmirror_1_1tribool.html">tribool</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class</span> tribool;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    constexpr <span class="keyword">explicit</span> <a class="code" href="classmirror_1_1weakbool.html">weakbool</a>(<span class="keyword">const</span> _value_t value) noexcept</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">explicit</span> weakbool(<span class="keyword">const</span> _value_t value) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      : _value{value} {}</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html">   70</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmirror_1_1tribool.html">tribool</a> {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">/// @brief Tri-state boolean value.</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">/// @see weakbool</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">/// @see indeterminate</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html">   70</a></span>&#160;<span class="keyword">class</span> tribool {</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">using</span> _value_t = _tribool_value_t;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a86e191b8a65930d55e65e12d8feb466d">   75</a></span>&#160;    constexpr <a class="code" href="classmirror_1_1tribool.html#a86e191b8a65930d55e65e12d8feb466d">tribool</a>() noexcept = default;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">/// @brief Default constructor.</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a377ea114ae986318214ca39b6a8db217">   75</a></span>&#160;    <span class="keyword">constexpr</span> tribool() <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a75feb4bf74cf4a74e1314927f8b94c85">   78</a></span>&#160;    constexpr <a class="code" href="classmirror_1_1tribool.html">tribool</a>(const <span class="keywordtype">bool</span> value) noexcept</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">/// @brief Constructions from boolean value.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#aa12d8ca28295be44628548fff33e6bf4">   78</a></span>&#160;    <span class="keyword">constexpr</span> tribool(<span class="keyword">const</span> <span class="keywordtype">bool</span> value) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      : _value{value ? _value_t::_true : _value_t::_false} {}</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a121a286e8c8d69c5cc855a1e983b41eb">   82</a></span>&#160;    constexpr <a class="code" href="classmirror_1_1tribool.html#a121a286e8c8d69c5cc855a1e983b41eb">tribool</a>(<span class="keyword">const</span> <a class="code" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) noexcept</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">/// @brief Constructions from indeterminate value.</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#ac5127815f4c7bec9d866b91069331954">   82</a></span>&#160;    <span class="keyword">constexpr</span> tribool(<span class="keyword">const</span> indeterminate_t) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      : _value{_value_t::_unknown} {}</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a1f25c771c521eeebbf594fa82b05eb2b">   86</a></span>&#160;    constexpr <a class="code" href="classmirror_1_1tribool.html#a1f25c771c521eeebbf594fa82b05eb2b">tribool</a>(<span class="keyword">const</span> std::optional&lt;bool&gt; value) noexcept</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">/// @brief Construction from a std::optional</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a09047f229d1eb89f8d1def2f186a84a3">   86</a></span>&#160;    <span class="keyword">constexpr</span> tribool(<span class="keyword">const</span> std::optional&lt;<span class="keywordtype">bool</span>&gt; value) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      : _value(</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;          !value.has_value() ? _value_t::_unknown</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;          : value.value()    ? _value_t::_true</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                             : _value_t::_false) {}</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a06f2364b6566121f356641f9a65122f9">   93</a></span>&#160;    constexpr <a class="code" href="classmirror_1_1tribool.html#a06f2364b6566121f356641f9a65122f9">tribool</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span> value, <span class="keyword">const</span> <span class="keywordtype">bool</span> is_unknown) noexcept</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">/// @brief Construction with separate true/false, known/unknown arguments.</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a741ff928e839080c99b3e0dfad60a06c">   93</a></span>&#160;    <span class="keyword">constexpr</span> tribool(<span class="keyword">const</span> <span class="keywordtype">bool</span> value, <span class="keyword">const</span> <span class="keywordtype">bool</span> is_unknown) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      : _value(</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;          is_unknown ? _value_t::_unknown</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;          : value    ? _value_t::_true</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                     : _value_t::_false) {}</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a30bb7d52b2b267d593aaa511b7d9df0a">  100</a></span>&#160;    constexpr <span class="keyword">explicit</span> <span class="keyword">operator</span> bool() const noexcept {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="comment">/// @brief Returns true, if the stored value is true.</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a7990d8e87d9eab2383f94c88c23a6488">  100</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">explicit</span> operator <span class="keywordtype">bool</span>() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> _value == _value_t::_true;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#ae2accab4382a64877cd24a64e58d5517">  105</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#ae2accab4382a64877cd24a64e58d5517">operator!</a>() const noexcept {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment">/// @brief Returns true, if the stored value is false.</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a2b37ec1e6d5224b08f7350c8ff716fc2">  105</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator!() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span> _value == _value_t::_false;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#af30f7a7ee49efad3e6623d19a8ec0fea">  110</a></span>&#160;    constexpr <span class="keyword">operator</span> std::optional&lt;bool&gt;() const noexcept {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">using</span> R = std::optional&lt;bool&gt;;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">/// @brief Conversion to optional</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#ae4a7bc8ca98b86012a744d5668cf9f95">  110</a></span>&#160;    <span class="keyword">constexpr</span> operator std::optional&lt;<span class="keywordtype">bool</span>&gt;() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">using</span> R = std::optional&lt;<span class="keywordtype">bool</span>&gt;;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">return</span> _value == _value_t::_true    ? R{<span class="keyword">true</span>}</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;               : _value == _value_t::_false ? R{<span class="keyword">false</span>}</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                                            : R{};</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a1fd8c0b089a651da0cbee31aaf1c3f88">  118</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#a1fd8c0b089a651da0cbee31aaf1c3f88">operator*</a>() const noexcept -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="comment">/// @brief Returns true, if the stored value is indeterminate.</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a66dd99b66e41a5f99fd4fd8c575c810a">  118</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator*() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordflow">return</span> _value == _value_t::_unknown;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#aa8e3933fef6ba1be215659e219f52dcc">  123</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#aa8e3933fef6ba1be215659e219f52dcc">operator~</a>() const noexcept -&gt; <a class="code" href="classmirror_1_1weakbool.html">weakbool</a> {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classmirror_1_1weakbool.html">weakbool</a>{_value};</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="comment">/// @brief Converts this value to @c weakbool.</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#adca529d7087ac2b6c2721af58d7babd4">  123</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator~() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; weakbool {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">return</span> weakbool{_value};</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a236ddddad2568c346b5f1b0c9cb1beef">  128</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#a236ddddad2568c346b5f1b0c9cb1beef">is</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span> value) <span class="keyword">const</span> noexcept -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment">/// @brief Returns true if the stored value is known and equal to @p value.</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#ade39cd88880e7a7e4ea1166f547fb557">  128</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> is(<span class="keyword">const</span> <span class="keywordtype">bool</span> value) <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> _value == (value ? _value_t::_true : _value_t::_false);</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a9d131b1e0c1464842252ad5b284c6d13">  133</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#a9d131b1e0c1464842252ad5b284c6d13">is</a>(<span class="keyword">const</span> <a class="code" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) <span class="keyword">const</span> noexcept -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">return</span> *(*this);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="comment">/// @brief Returns true if the stored value is indeterminate.</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#a339e7105adc1dee8b5800babe01f3757">  133</a></span>&#160;    <span class="keyword">constexpr</span> <span class="keyword">auto</span> is(<span class="keyword">const</span> indeterminate_t) <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">return</span> *(*<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    }</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#ab98f1e91c957d374fa4b6ae039f37688">  138</a></span>&#160;    <span class="keyword">friend</span> constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#ab98f1e91c957d374fa4b6ae039f37688">operator==</a>(<span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> a, <span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> b) noexcept</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      -&gt; <a class="code" href="classmirror_1_1tribool.html">tribool</a> {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="comment">/// @brief Equality comparison.</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#ab98f1e91c957d374fa4b6ae039f37688">  138</a></span>&#160;    <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator==(<span class="keyword">const</span> tribool a, <span class="keyword">const</span> tribool b) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      -&gt; tribool {</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="keywordflow">return</span> {a._value == b._value, (*a || *b)};</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    }</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#acac23063a72fd5457773fef4c52c5a3b">  144</a></span>&#160;    <span class="keyword">friend</span> constexpr <span class="keyword">auto</span> <a class="code" href="classmirror_1_1tribool.html#acac23063a72fd5457773fef4c52c5a3b">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> a, <span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> b) noexcept</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      -&gt; <a class="code" href="classmirror_1_1tribool.html">tribool</a> {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="comment">/// @brief Non-equality comparison.</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="classmirror_1_1tribool.html#acac23063a72fd5457773fef4c52c5a3b">  144</a></span>&#160;    <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator!=(<span class="keyword">const</span> tribool a, <span class="keyword">const</span> tribool b) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      -&gt; tribool {</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keywordflow">return</span> {a._value != b._value, (*a || *b)};</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    }</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
@@ -187,57 +225,41 @@ $(function() {
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    _value_t _value{_value_t::_false};</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;};</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span> has_value(tribool v) noexcept {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">return</span> !v.is(<a class="code" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">indeterminate</a>);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> has_value(tribool v) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">return</span> !v.is(indeterminate);</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;}</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span> extract(tribool v) noexcept -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">return</span> bool(v);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> extract(tribool v) <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">return</span> <span class="keywordtype">bool</span>(v);</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;}</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="group__utilities.html#ga5de4fdbb18c29d9db8d1da4fdb441298">  163</a></span>&#160;constexpr <span class="keyword">auto</span> <a class="code" href="group__utilities.html#ga5de4fdbb18c29d9db8d1da4fdb441298">operator&amp;&amp;</a>(<span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> a, <span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> b) noexcept {</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> !a   ? <a class="code" href="classmirror_1_1tribool.html">tribool</a>{<span class="keyword">false</span>}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">/// @brief Tri-state boolean and operator.</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="group__utilities.html#ga5de4fdbb18c29d9db8d1da4fdb441298">  163</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> operator&amp;&amp;(<span class="keyword">const</span> tribool a, <span class="keyword">const</span> tribool b) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> !a   ? tribool{<span class="keyword">false</span>}</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;           : a  ? b</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;           : !b ? <a class="code" href="classmirror_1_1tribool.html">tribool</a>{<span class="keyword">false</span>}</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                : <a class="code" href="classmirror_1_1tribool.html">tribool</a>{<a class="code" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">indeterminate</a>};</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;           : !b ? tribool{<span class="keyword">false</span>}</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                : tribool{indeterminate};</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;}</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="line" href="group__utilities.html#ga6c4fc4113bcb0d5fa7435ca5b7a69599">  172</a></span>&#160;constexpr <span class="keyword">auto</span> <a class="code" href="group__utilities.html#ga6c4fc4113bcb0d5fa7435ca5b7a69599">operator||</a>(<span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> a, <span class="keyword">const</span> <a class="code" href="classmirror_1_1tribool.html">tribool</a> b) noexcept {</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">return</span> a    ? <a class="code" href="classmirror_1_1tribool.html">tribool</a>{<span class="keyword">true</span>}</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">/// @brief Tri-state boolean or operator.</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno"><a class="line" href="group__utilities.html#ga6c4fc4113bcb0d5fa7435ca5b7a69599">  172</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> operator||(<span class="keyword">const</span> tribool a, <span class="keyword">const</span> tribool b) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">return</span> a    ? tribool{<span class="keyword">true</span>}</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;           : !a ? b</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;           : b  ? <a class="code" href="classmirror_1_1tribool.html">tribool</a>{<span class="keyword">true</span>}</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                : <a class="code" href="classmirror_1_1tribool.html">tribool</a>{<a class="code" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">indeterminate</a>};</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;           : b  ? tribool{<span class="keyword">true</span>}</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                : tribool{indeterminate};</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_TRIBOOL_HPP</span></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html"><div class="ttname"><a href="classmirror_1_1tribool.html">mirror::tribool</a></div><div class="ttdoc">Tri-state boolean value.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:70</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a06f2364b6566121f356641f9a65122f9"><div class="ttname"><a href="classmirror_1_1tribool.html#a06f2364b6566121f356641f9a65122f9">mirror::tribool::tribool</a></div><div class="ttdeci">constexpr tribool(const bool value, const bool is_unknown) noexcept</div><div class="ttdoc">Construction with separate true/false, known/unknown arguments.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:93</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a121a286e8c8d69c5cc855a1e983b41eb"><div class="ttname"><a href="classmirror_1_1tribool.html#a121a286e8c8d69c5cc855a1e983b41eb">mirror::tribool::tribool</a></div><div class="ttdeci">constexpr tribool(const indeterminate_t) noexcept</div><div class="ttdoc">Constructions from indeterminate value.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:82</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a1f25c771c521eeebbf594fa82b05eb2b"><div class="ttname"><a href="classmirror_1_1tribool.html#a1f25c771c521eeebbf594fa82b05eb2b">mirror::tribool::tribool</a></div><div class="ttdeci">constexpr tribool(const std::optional&lt; bool &gt; value) noexcept</div><div class="ttdoc">Construction from a std::optional.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:86</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a1fd8c0b089a651da0cbee31aaf1c3f88"><div class="ttname"><a href="classmirror_1_1tribool.html#a1fd8c0b089a651da0cbee31aaf1c3f88">mirror::tribool::operator*</a></div><div class="ttdeci">constexpr auto operator*() const noexcept -&gt; bool</div><div class="ttdoc">Returns true, if the stored value is indeterminate.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:118</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a236ddddad2568c346b5f1b0c9cb1beef"><div class="ttname"><a href="classmirror_1_1tribool.html#a236ddddad2568c346b5f1b0c9cb1beef">mirror::tribool::is</a></div><div class="ttdeci">constexpr auto is(const bool value) const noexcept -&gt; bool</div><div class="ttdoc">Returns true if the stored value is known and equal to value.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:128</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a86e191b8a65930d55e65e12d8feb466d"><div class="ttname"><a href="classmirror_1_1tribool.html#a86e191b8a65930d55e65e12d8feb466d">mirror::tribool::tribool</a></div><div class="ttdeci">constexpr tribool() noexcept=default</div><div class="ttdoc">Default constructor.</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_a9d131b1e0c1464842252ad5b284c6d13"><div class="ttname"><a href="classmirror_1_1tribool.html#a9d131b1e0c1464842252ad5b284c6d13">mirror::tribool::is</a></div><div class="ttdeci">constexpr auto is(const indeterminate_t) const noexcept -&gt; bool</div><div class="ttdoc">Returns true if the stored value is indeterminate.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:133</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_aa8e3933fef6ba1be215659e219f52dcc"><div class="ttname"><a href="classmirror_1_1tribool.html#aa8e3933fef6ba1be215659e219f52dcc">mirror::tribool::operator~</a></div><div class="ttdeci">constexpr auto operator~() const noexcept -&gt; weakbool</div><div class="ttdoc">Converts this value to weakbool.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:123</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_ab98f1e91c957d374fa4b6ae039f37688"><div class="ttname"><a href="classmirror_1_1tribool.html#ab98f1e91c957d374fa4b6ae039f37688">mirror::tribool::operator==</a></div><div class="ttdeci">constexpr friend auto operator==(const tribool a, const tribool b) noexcept -&gt; tribool</div><div class="ttdoc">Equality comparison.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:138</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_acac23063a72fd5457773fef4c52c5a3b"><div class="ttname"><a href="classmirror_1_1tribool.html#acac23063a72fd5457773fef4c52c5a3b">mirror::tribool::operator!=</a></div><div class="ttdeci">constexpr friend auto operator!=(const tribool a, const tribool b) noexcept -&gt; tribool</div><div class="ttdoc">Non-equality comparison.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:144</div></div>
-<div class="ttc" id="aclassmirror_1_1tribool_html_ae2accab4382a64877cd24a64e58d5517"><div class="ttname"><a href="classmirror_1_1tribool.html#ae2accab4382a64877cd24a64e58d5517">mirror::tribool::operator!</a></div><div class="ttdeci">constexpr auto operator!() const noexcept</div><div class="ttdoc">Returns true, if the stored value is false.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:105</div></div>
-<div class="ttc" id="aclassmirror_1_1weakbool_html"><div class="ttname"><a href="classmirror_1_1weakbool.html">mirror::weakbool</a></div><div class="ttdoc">Weak tri-state boolean value.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:38</div></div>
-<div class="ttc" id="aclassmirror_1_1weakbool_html_a1d1602ddceae365a3582cb039587f8f3"><div class="ttname"><a href="classmirror_1_1weakbool.html#a1d1602ddceae365a3582cb039587f8f3">mirror::weakbool::is</a></div><div class="ttdeci">constexpr auto is(const indeterminate_t) const noexcept -&gt; bool</div><div class="ttdoc">@ brief Checks if the stored value is indeterminate.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:53</div></div>
-<div class="ttc" id="aclassmirror_1_1weakbool_html_a21442d99e9918fe86973d80b5e275dc3"><div class="ttname"><a href="classmirror_1_1weakbool.html#a21442d99e9918fe86973d80b5e275dc3">mirror::weakbool::operator!</a></div><div class="ttdeci">constexpr auto operator!() const noexcept</div><div class="ttdoc">Returns true, if the stored value is not true.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:48</div></div>
-<div class="ttc" id="agroup__utilities_html_ga5de4fdbb18c29d9db8d1da4fdb441298"><div class="ttname"><a href="group__utilities.html#ga5de4fdbb18c29d9db8d1da4fdb441298">mirror::operator&amp;&amp;</a></div><div class="ttdeci">constexpr auto operator&amp;&amp;(const tribool a, const tribool b) noexcept</div><div class="ttdoc">Tri-state boolean and operator.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:163</div></div>
-<div class="ttc" id="agroup__utilities_html_ga6c4fc4113bcb0d5fa7435ca5b7a69599"><div class="ttname"><a href="group__utilities.html#ga6c4fc4113bcb0d5fa7435ca5b7a69599">mirror::operator||</a></div><div class="ttdeci">constexpr auto operator||(const tribool a, const tribool b) noexcept</div><div class="ttdoc">Tri-state boolean or operator.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:172</div></div>
-<div class="ttc" id="agroup__utilities_html_gad3388d209d188e52431189b389d6e7ae"><div class="ttname"><a href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">mirror::indeterminate</a></div><div class="ttdeci">static constexpr const indeterminate_t indeterminate</div><div class="ttdoc">Constant representing unspecified tribool value.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:30</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
-<div class="ttc" id="astructmirror_1_1indeterminate__t_html"><div class="ttname"><a href="structmirror_1_1indeterminate__t.html">mirror::indeterminate_t</a></div><div class="ttdoc">Type of the indeterminate constant assignable to tribool.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:26</div></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// MIRROR_TRIBOOL_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

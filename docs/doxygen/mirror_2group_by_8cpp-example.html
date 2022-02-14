@@ -77,7 +77,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>my_interface : <a name="_a0"></a><a class="code" href="classmirror_1_1interface.html">mirror::interface</a>&lt;my_interface&gt; {</div>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">auto</span> name() {</div>
-<div class="line">        <span class="keywordflow">return</span> get_name(<a class="code" href="namespacemirror.html">mirror</a>(my_interface));</div>
+<div class="line">        <span class="keywordflow">return</span> <a name="a1"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(<a class="code" href="namespacemirror.html">mirror</a>(my_interface));</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> foo(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) -&gt; <span class="keywordtype">int</span> = 0;</div>
@@ -99,22 +99,23 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="keyword">using</span> mirror::_1;</div>
+<div class="line">    <span class="keyword">using</span> mirror::_2;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> print_name = [](<span class="keyword">auto</span> mo) {</div>
-<div class="line">        std::cout &lt;&lt; get_name(mo) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(mo) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    };</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mfs = get_member_functions(<a class="code" href="namespacemirror.html">mirror</a>(my_interface));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mfs = <a name="a2"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(<a class="code" href="namespacemirror.html">mirror</a>(my_interface));</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> [static_, non_static] = group_by(mfs, is_static(_1));</div>
+<div class="line">    <span class="keyword">auto</span> [static_, non_static] = <a name="a3"></a><a class="code" href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">group_by</a>(mfs, <a name="a4"></a><a class="code" href="group__operations.html#gafdf87390eff1a6f2d778524aac9e641d">is_static</a>(_1));</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\nstatic functions:\n&quot;</span>;</div>
-<div class="line">    <a name="a1"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(static_, print_name);</div>
+<div class="line">    <a name="a5"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(static_, print_name);</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\nnon static functions:\n&quot;</span>;</div>
 <div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(non_static, print_name);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> [non_virtual, virtual_] = group_by(mfs, is_virtual(_1));</div>
+<div class="line">    <span class="keyword">auto</span> [non_virtual, virtual_] = <a class="code" href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">group_by</a>(mfs, <a name="a6"></a><a class="code" href="group__operations.html#ga4c3e81c254cffc9f12210c86bce01d1e">is_virtual</a>(_1));</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\nvirtual functions:\n&quot;</span>;</div>
 <div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(virtual_, print_name);</div>
@@ -123,16 +124,30 @@ $(function() {
 <div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(non_virtual, print_name);</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\noverload sets:\n&quot;</span>;</div>
-<div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(group_by(mfs, get_name(_1)), [&amp;](<span class="keyword">auto</span> mo) {</div>
-<div class="line">        std::cout &lt;&lt; get_name(get_front(mo)) &lt;&lt; <span class="stringliteral">&quot;: (&quot;</span> &lt;&lt; get_size(mo) &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(<a class="code" href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">group_by</a>(mfs, <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(_1)), [&amp;](<span class="keyword">auto</span> mo) {</div>
+<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(<a name="a7"></a><a class="code" href="group__operations.html#ga5d192993132f5af37dc3f5abb725f591">get_front</a>(mo)) &lt;&lt; <span class="stringliteral">&quot;: (&quot;</span> &lt;&lt; <a name="a8"></a><a class="code" href="group__sequence__operations.html#gab395d369ea130c82a024dcfe0daac492">get_size</a>(mo) &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line">    });</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\nreturn values:\n&quot;</span>;</div>
+<div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(<a class="code" href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">group_by</a>(mfs, <a name="a9"></a><a class="code" href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">get_type</a>(_1), <a name="a10"></a><a class="code" href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">reflect_same</a>(_1, _2)), [&amp;](<span class="keyword">auto</span> mo) {</div>
+<div class="line">        std::cout &lt;&lt; <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(<a class="code" href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">get_type</a>(<a class="code" href="group__operations.html#ga5d192993132f5af37dc3f5abb725f591">get_front</a>(mo))) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    });</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassmirror_1_1interface_html"><div class="ttname"><a href="classmirror_1_1interface.html">mirror::interface</a></div><div class="ttdoc">Base template for abstract interfaces, implements common functionality.</div><div class="ttdef"><b>Definition:</b> interface.hpp:18</div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga1371812c3203b417ac7df817c1ea8342"><div class="ttname"><a href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">mirror::reflect_same</a></div><div class="ttdeci">consteval auto reflect_same(metaobject auto ml, metaobject auto mr) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga4c3e81c254cffc9f12210c86bce01d1e"><div class="ttname"><a href="group__operations.html#ga4c3e81c254cffc9f12210c86bce01d1e">mirror::is_virtual</a></div><div class="ttdeci">consteval auto is_virtual(metaobject auto mo) noexcept -&gt; bool requires(reflects_base(mo)||reflects_destructor(mo)||reflects_member_function(mo))</div><div class="ttdoc">Indicates if the reflected base-level entity is virtual.</div></div>
+<div class="ttc" id="agroup__operations_html_ga5d192993132f5af37dc3f5abb725f591"><div class="ttname"><a href="group__operations.html#ga5d192993132f5af37dc3f5abb725f591">mirror::get_front</a></div><div class="ttdeci">constexpr auto get_front(metaobject auto mo) noexcept requires(reflects_object_sequence(mo) &amp;&amp;!is_empty(mo))</div><div class="ttdoc">Returns the I-th metaobject in a metaobject sequence.</div></div>
+<div class="ttc" id="agroup__operations_html_ga658f1934110d936b9cf38e4b50d7c314"><div class="ttname"><a href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">mirror::get_type</a></div><div class="ttdeci">constexpr auto get_type(metaobject auto mo) noexcept requires(reflects_typed(mo))</div><div class="ttdoc">Returns a reflection of the type of a reflected typed entity.</div></div>
+<div class="ttc" id="agroup__operations_html_gafdf87390eff1a6f2d778524aac9e641d"><div class="ttname"><a href="group__operations.html#gafdf87390eff1a6f2d778524aac9e641d">mirror::is_static</a></div><div class="ttdeci">consteval auto is_static(metaobject auto mo) noexcept -&gt; bool requires(reflects_variable(mo)||reflects_member_function(mo))</div><div class="ttdoc">Indicates if the reflected base-level entity is static.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gaa7c64008717f9608f2ff88b07ec5e292"><div class="ttname"><a href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">mirror::group_by</a></div><div class="ttdeci">constexpr auto group_by(auto mo, auto transform) requires(is_object_sequence(mo))</div><div class="ttdoc">Groups metaobjects into sub-sequences by the value returned by transform.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gab395d369ea130c82a024dcfe0daac492"><div class="ttname"><a href="group__sequence__operations.html#gab395d369ea130c82a024dcfe0daac492">mirror::get_size</a></div><div class="ttdeci">consteval auto get_size(metaobject_sequence auto mo) noexcept -&gt; size_t requires(reflects_object_sequence(mo))</div><div class="ttdoc">Returns the number of elements in a metaobject sequence.</div></div>
 <div class="ttc" id="ainterface_8hpp_html"><div class="ttname"><a href="interface_8hpp.html">interface.hpp</a></div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -140,7 +155,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

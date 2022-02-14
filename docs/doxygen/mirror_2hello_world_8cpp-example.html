@@ -78,19 +78,20 @@ $(function() {
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    hello world;</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; get_name(<a class="code" href="namespacemirror.html">mirror</a>(hello)) &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; get_name(<a class="code" href="namespacemirror.html">mirror</a>(world))</div>
+<div class="line">    std::cout &lt;&lt; <a name="a0"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(<a class="code" href="namespacemirror.html">mirror</a>(hello)) &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(<a class="code" href="namespacemirror.html">mirror</a>(world))</div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aprimitives_8hpp_html"><div class="ttname"><a href="primitives_8hpp.html">primitives.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

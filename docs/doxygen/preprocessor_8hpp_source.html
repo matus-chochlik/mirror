@@ -73,34 +73,41 @@ $(function() {
 <div class="title">preprocessor.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="preprocessor_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_PREPROCESSOR_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_PREPROCESSOR_HPP</span></div>
+<a href="preprocessor_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_PREPROCESSOR_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_PREPROCESSOR_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define MIRROR_STRINGIFY(EXPR) MIRROR_DO_STRINGIFY(EXPR)</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define MIRROR_DO_STRINGIFY(EXPR) #EXPR</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_STRINGIFY</span><span class="preprocessor">(</span><span class="preprocessor">EXPR</span><span class="preprocessor">)</span> <a class="code" href="preprocessor_8hpp.html#a9e17de630de5fe4f2baafbb5d299df9d">MIRROR_DO_STRINGIFY</a><span class="preprocessor">(</span><span class="preprocessor">EXPR</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_DO_STRINGIFY</span><span class="preprocessor">(</span><span class="preprocessor">EXPR</span><span class="preprocessor">)</span> <span class="preprocessor">#</span><span class="preprocessor">EXPR</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define MIRROR_JOIN(L, R) MIRROR_DO_JOIN(L, R)</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define MIRROR_DO_JOIN(L, R) MIRROR_DO_JOIN2(L, R)</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define MIRROR_DO_JOIN2(L, R) L##R</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_JOIN</span><span class="preprocessor">(</span><span class="preprocessor">L</span><span class="preprocessor">,</span> <span class="preprocessor">R</span><span class="preprocessor">)</span> <a class="code" href="preprocessor_8hpp.html#ab527866c48e1378906b3a6d382851fd8">MIRROR_DO_JOIN</a><span class="preprocessor">(</span><span class="preprocessor">L</span><span class="preprocessor">,</span> <span class="preprocessor">R</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_DO_JOIN</span><span class="preprocessor">(</span><span class="preprocessor">L</span><span class="preprocessor">,</span> <span class="preprocessor">R</span><span class="preprocessor">)</span> <a class="code" href="preprocessor_8hpp.html#a24a242745bcb72789506659f3b053bcb">MIRROR_DO_JOIN2</a><span class="preprocessor">(</span><span class="preprocessor">L</span><span class="preprocessor">,</span> <span class="preprocessor">R</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_DO_JOIN2</span><span class="preprocessor">(</span><span class="preprocessor">L</span><span class="preprocessor">,</span> <span class="preprocessor">R</span><span class="preprocessor">)</span> <span class="preprocessor">L</span><span class="preprocessor">##</span><span class="preprocessor">R</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#if defined(__clang__) || defined(__GNUC__)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span>__clang__<span class="preprocessor">)</span> <span class="preprocessor">||</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span>__GNUC__<span class="preprocessor">)</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define MIRROR_PRAGMA(x) _Pragma(MIRROR_STRINGIFY(x))</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_PRAGMA</span><span class="preprocessor">(</span><span class="preprocessor">x</span><span class="preprocessor">)</span> <span class="preprocessor">_Pragma</span><span class="preprocessor">(</span><a class="code" href="preprocessor_8hpp.html#afe65296f6c29b2b7cde51d8ddf8b063f">MIRROR_STRINGIFY</a><span class="preprocessor">(</span><span class="preprocessor">x</span><span class="preprocessor">)</span><span class="preprocessor">)</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#elif defined(_MSC_VER)</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">elif</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">_MSC_VER</span><span class="preprocessor">)</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define MIRROR_PRAGMA(x) __pragma(x)</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_PRAGMA</span><span class="preprocessor">(</span><span class="preprocessor">x</span><span class="preprocessor">)</span> <span class="preprocessor">__pragma</span><span class="preprocessor">(</span><span class="preprocessor">x</span><span class="preprocessor">)</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_PREPROCESSOR_HPP</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// MIRROR_PREPROCESSOR_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

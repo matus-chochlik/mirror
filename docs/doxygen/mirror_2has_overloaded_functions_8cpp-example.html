@@ -105,13 +105,13 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> has_overloaded_functions = [](<span class="keyword">auto</span> mo) {</div>
-<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> mfs = get_member_functions(mo);</div>
-<div class="line">        <span class="keywordflow">return</span> fold(</div>
+<div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> mfs = <a name="a0"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mo);</div>
+<div class="line">        <span class="keywordflow">return</span> <a name="a1"></a><a class="code" href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f">fold</a>(</div>
 <div class="line">          mfs,</div>
 <div class="line">          [mfs](<span class="keyword">auto</span> mf1) {</div>
-<div class="line">              <span class="keywordflow">return</span> any_of(mfs, [mf1](<span class="keyword">auto</span> mf2) {</div>
-<div class="line">                  <span class="keywordflow">return</span> !<a name="a0"></a><a class="code" href="group__operations.html#ga1adfd0450023500c3c44e80f67e83822">reflects_same</a>(mf1, mf2) &amp;&amp;</div>
-<div class="line">                         get_name(mf1) == get_name(mf2);</div>
+<div class="line">              <span class="keywordflow">return</span> <a name="a2"></a><a class="code" href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">any_of</a>(mfs, [mf1](<span class="keyword">auto</span> mf2) {</div>
+<div class="line">                  <span class="keywordflow">return</span> !<a name="a3"></a><a class="code" href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">reflect_same</a>(mf1, mf2) &amp;&amp;</div>
+<div class="line">                         <a name="a4"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(mf1) == <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(mf2);</div>
 <div class="line">              });</div>
 <div class="line">          },</div>
 <div class="line">          [](<span class="keyword">auto</span>... b) { <span class="keywordflow">return</span> (... || b); });</div>
@@ -122,15 +122,19 @@ $(function() {
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__operations_html_ga1adfd0450023500c3c44e80f67e83822"><div class="ttname"><a href="group__operations.html#ga1adfd0450023500c3c44e80f67e83822">mirror::reflects_same</a></div><div class="ttdeci">consteval auto reflects_same(metaobject auto ml, metaobject auto mr) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga1371812c3203b417ac7df817c1ea8342"><div class="ttname"><a href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">mirror::reflect_same</a></div><div class="ttdeci">consteval auto reflect_same(metaobject auto ml, metaobject auto mr) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the two metaobjects reflect the same base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga3bffe08ee07cf9fcb1b2861f2335733f"><div class="ttname"><a href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f">mirror::fold</a></div><div class="ttdeci">constexpr auto fold(metaobject_sequence auto mo, auto transform, auto aggregate)</div><div class="ttdoc">Transforms each metaobject in sequence and then aggregates the result.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gac2c1088d89c13aafaacfc0734f22eb37"><div class="ttname"><a href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">mirror::any_of</a></div><div class="ttdeci">constexpr auto any_of(metaobject_sequence auto mo, auto predicate) noexcept -&gt; bool</div><div class="ttdoc">Indicates if some metaobjects in a sequence satisfy a predicate.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['object_5ftraits_710',['object_traits',['../group__classification.html#ga0b1b89b0975978aaf021e977030e665a',1,'mirror']]],
-  ['operation_5fboolean_711',['operation_boolean',['../group__operations.html#ga3420230f0f3e40da38a3ce140380c4de',1,'mirror']]],
-  ['operations_5fboolean_712',['operations_boolean',['../group__classification.html#ga4407af7ebc0c00fdb9c8f53392b2bd64',1,'mirror']]],
-  ['operations_5finteger_713',['operations_integer',['../group__classification.html#ga8f364bb691a7012ee07823ec9304ec42',1,'mirror']]],
-  ['operations_5fmetaobject_714',['operations_metaobject',['../group__classification.html#ga0d62ad972ea3a97567b7b7bbcaedde24',1,'mirror']]],
-  ['operations_5fpointer_715',['operations_pointer',['../group__classification.html#gaf13d80f4f0b726b170f67b2369530e9e',1,'mirror']]],
-  ['operations_5fstring_716',['operations_string',['../group__classification.html#ga9abcd2edee5be99855cd77ed3666635d',1,'mirror']]]
+  ['object_5ftraits_728',['object_traits',['../group__classification.html#gae15c2edb42ae79d2dfb43734a4e22577',1,'mirror']]],
+  ['operation_5fboolean_729',['operation_boolean',['../group__operations.html#ga913d5382cb2a592cb8293d1a9ba3e4b5',1,'mirror']]],
+  ['operations_5fboolean_730',['operations_boolean',['../group__classification.html#gab87fa8e0d0db2735dae45f4af1cf6078',1,'mirror']]],
+  ['operations_5finteger_731',['operations_integer',['../group__classification.html#ga94f93f07948f669fc330b4068033e499',1,'mirror']]],
+  ['operations_5fmetaobject_732',['operations_metaobject',['../group__classification.html#ga427d5aa16cbe9866c9d3209beb9b25e7',1,'mirror']]],
+  ['operations_5fpointer_733',['operations_pointer',['../group__classification.html#ga22916c3f2654794f630eef6b0af52cbb',1,'mirror']]],
+  ['operations_5fstring_734',['operations_string',['../group__classification.html#ga257510967e658e285dc2409c469ad0c7',1,'mirror']]]
 ];

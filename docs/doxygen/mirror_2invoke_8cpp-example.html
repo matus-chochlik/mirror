@@ -98,36 +98,40 @@ $(function() {
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="keyword">const</span> myclass x;</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> mmc = <a class="code" href="namespacemirror.html">mirror</a>(myclass);</div>
-<div class="line">    std::cout &lt;&lt; get_name(mmc) &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <a name="a0"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(mmc) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">    <a name="a0"></a><a class="code" href="group__operations.html#ga30da3240559456deead23706feb73d71">invoke_on</a>(get_element&lt;0&gt;(get_member_functions(mmc)), x);</div>
-<div class="line">    std::cout &lt;&lt; invoke_on(get_element&lt;1&gt;(get_member_functions(mmc)), x)</div>
+<div class="line">    <a name="a1"></a><a class="code" href="group__operations.html#ga30da3240559456deead23706feb73d71">invoke_on</a>(get_element&lt;0&gt;(<a name="a2"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mmc)), x);</div>
+<div class="line">    std::cout &lt;&lt; invoke_on(get_element&lt;1&gt;(<a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mmc)), x)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
-<div class="line">    std::cout &lt;&lt; invoke_on(get_element&lt;2&gt;(get_member_functions(mmc)), x, 5, 5)</div>
-<div class="line">              &lt;&lt; std::endl;</div>
-<div class="line"> </div>
-<div class="line">    <a name="a1"></a><a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(get_element&lt;0&gt;(get_member_functions(mmc)));</div>
-<div class="line">    std::cout &lt;&lt; invoke(get_element&lt;1&gt;(get_member_functions(mmc)), x)</div>
-<div class="line">              &lt;&lt; std::endl;</div>
-<div class="line">    std::cout &lt;&lt; invoke(get_element&lt;2&gt;(get_member_functions(mmc)), 21, 21)</div>
+<div class="line">    std::cout &lt;&lt; invoke_on(get_element&lt;2&gt;(<a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mmc)), x, 5, 5)</div>
 <div class="line">              &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> y = <a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(get_element&lt;1&gt;(get_constructors(mmc)), 4);</div>
+<div class="line">    <a name="a3"></a><a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(get_element&lt;0&gt;(<a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mmc)));</div>
+<div class="line">    std::cout &lt;&lt; invoke(get_element&lt;1&gt;(<a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mmc)), x)</div>
+<div class="line">              &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; invoke(get_element&lt;2&gt;(<a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mmc)), 21, 21)</div>
+<div class="line">              &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; invoke(get_element&lt;0&gt;(get_operators(mmc)), y, 3) &lt;&lt; std::endl;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> y = <a class="code" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">invoke</a>(get_element&lt;1&gt;(<a name="a4"></a><a class="code" href="group__operations.html#ga0669069e14adc7a5462bdfa3cdad1fb2">get_constructors</a>(mmc)), 4);</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; invoke(get_element&lt;0&gt;(<a name="a5"></a><a class="code" href="group__operations.html#ga3485a06c9d66141680a2845d96774113">get_operators</a>(mmc)), y, 3) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__operations_html_ga0669069e14adc7a5462bdfa3cdad1fb2"><div class="ttname"><a href="group__operations.html#ga0669069e14adc7a5462bdfa3cdad1fb2">mirror::get_constructors</a></div><div class="ttdeci">constexpr auto get_constructors(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of constructor reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
 <div class="ttc" id="agroup__operations_html_ga30da3240559456deead23706feb73d71"><div class="ttname"><a href="group__operations.html#ga30da3240559456deead23706feb73d71">mirror::invoke_on</a></div><div class="ttdeci">constexpr auto invoke_on(metaobject auto mo auto &amp;obj, auto &amp;&amp;... args) requires(reflects_member_function(mo))</div><div class="ttdoc">Invokes the reflected member function on obj with specified args.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3485a06c9d66141680a2845d96774113"><div class="ttname"><a href="group__operations.html#ga3485a06c9d66141680a2845d96774113">mirror::get_operators</a></div><div class="ttdeci">constexpr auto get_operators(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of operator reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
 <div class="ttc" id="agroup__operations_html_ga90674b973395384ad8f29a3b31c1c7bd"><div class="ttname"><a href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd">mirror::invoke</a></div><div class="ttdeci">constexpr auto invoke(metaobject auto mo, auto &amp;&amp;... args) requires(reflects_function(mo)||(reflects_member_function(mo) &amp;&amp;__metaobject_is_static(M)))</div><div class="ttdoc">Invokes the reflected function with the specified args.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aprimitives_8hpp_html"><div class="ttname"><a href="primitives_8hpp.html">primitives.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

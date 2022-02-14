@@ -73,35 +73,42 @@ $(function() {
 <div class="title">from_string.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="from__string_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_FROM_STRING_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_FROM_STRING_HPP</span></div>
+<a href="from__string_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_FROM_STRING_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_FROM_STRING_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="enum__utils_8hpp.html">enum_utils.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="extract_8hpp.html">extract.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="is__within__limits_8hpp.html">is_within_limits.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="tribool_8hpp.html">tribool.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;charconv&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="enum__utils_8hpp.html">&quot;enum_utils.hpp&quot;</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="extract_8hpp.html">&quot;extract.hpp&quot;</a></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="is__within__limits_8hpp.html">&quot;is_within_limits.hpp&quot;</a></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="tribool_8hpp.html">&quot;tribool.hpp&quot;</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">algorithm</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">array</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">charconv</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">chrono</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">cstdlib</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">string</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">string_view</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mirror</a> {</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;bool&gt;) noexcept</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  -&gt; std::variant&lt;bool, std::errc&gt; {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;<span class="keywordtype">bool</span>&gt;) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  -&gt; std::variant&lt;<span class="keywordtype">bool</span>, std::errc&gt; {</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">const</span> std::array&lt;const std::string_view, 5&gt; true_strs{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">const</span> std::array&lt;<span class="keyword">const</span> std::string_view, 5&gt; true_strs{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      {{<span class="stringliteral">&quot;true&quot;</span>}, {<span class="stringliteral">&quot;True&quot;</span>}, {<span class="stringliteral">&quot;1&quot;</span>}, {<span class="stringliteral">&quot;t&quot;</span>}, {<span class="stringliteral">&quot;T&quot;</span>}}};</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">if</span>(std::find(true_strs.begin(), true_strs.end(), src) != true_strs.end()) {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> {<span class="keyword">true</span>};</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">const</span> std::array&lt;const std::string_view, 5&gt; false_strs{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">const</span> std::array&lt;<span class="keyword">const</span> std::string_view, 5&gt; false_strs{</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      {{<span class="stringliteral">&quot;false&quot;</span>}, {<span class="stringliteral">&quot;False&quot;</span>}, {<span class="stringliteral">&quot;0&quot;</span>}, {<span class="stringliteral">&quot;f&quot;</span>}, {<span class="stringliteral">&quot;F&quot;</span>}}};</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">if</span>(std::find(false_strs.begin(), false_strs.end(), src) != false_strs.end()) {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">return</span> {<span class="keyword">false</span>};</div>
@@ -112,27 +119,27 @@ $(function() {
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span> from_string(</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">const</span> std::string_view src,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;tribool&gt;) noexcept</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;tribool&gt;) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  -&gt; std::variant&lt;tribool, std::errc&gt; {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span>(<span class="keyword">const</span> <span class="keyword">auto</span> val{from_string(src, std::type_identity&lt;bool&gt;{})};</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span>(<span class="keyword">const</span> <span class="keyword">auto</span> val{from_string(src, std::type_identity&lt;<span class="keywordtype">bool</span>&gt;{})};</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;       has_value(val)) {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> {tribool{extract(val)}};</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> std::array&lt;const std::string_view, 4&gt; unknown_strs{</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> std::array&lt;<span class="keyword">const</span> std::string_view, 4&gt; unknown_strs{</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      {{<span class="stringliteral">&quot;indeterminate&quot;</span>}, {<span class="stringliteral">&quot;Indeterminate&quot;</span>}, {<span class="stringliteral">&quot;unknown&quot;</span>}, {<span class="stringliteral">&quot;-&quot;</span>}}};</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span>(</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      std::find(unknown_strs.begin(), unknown_strs.end(), src) !=</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      unknown_strs.end()) {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> {<a class="code" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">indeterminate</a>};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> {indeterminate};</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">return</span> {std::errc::invalid_argument};</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;char&gt;) noexcept</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  -&gt; std::variant&lt;char, std::errc&gt; {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;<span class="keywordtype">char</span>&gt;) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  -&gt; std::variant&lt;<span class="keywordtype">char</span>, std::errc&gt; {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">if</span>(src.size() == 1) {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> {src.front()};</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
@@ -141,8 +148,8 @@ $(function() {
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;T&gt;) noexcept</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  -&gt; std::variant&lt;T, std::errc&gt; requires(std::is_integral_v&lt;T&gt;) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;T&gt;) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  -&gt; std::variant&lt;T, std::errc&gt; <span class="keyword">requires</span>(std::is_integral_v&lt;T&gt;) {</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    T value{};</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> res{</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      std::from_chars&lt;T&gt;(src.data(), src.data() + src.size(), value, 10)};</div>
@@ -157,8 +164,8 @@ $(function() {
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;T&gt;) noexcept</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  -&gt; std::variant&lt;T, std::errc&gt; requires(std::is_enum_v&lt;T&gt;) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;from_string(<span class="keyword">const</span> std::string_view src, <span class="keyword">const</span> std::type_identity&lt;T&gt;) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  -&gt; std::variant&lt;T, std::errc&gt; <span class="keyword">requires</span>(std::is_enum_v&lt;T&gt;) {</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span>(<span class="keyword">const</span> <span class="keyword">auto</span> converted{string_to_enum&lt;T&gt;(src)}) {</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">return</span> {extract(converted)};</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
@@ -167,14 +174,14 @@ $(function() {
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span> from_string(</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keyword">const</span> std::string_view src,</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::string_view&gt;) noexcept</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::string_view&gt;) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  -&gt; std::variant&lt;std::string_view, std::errc&gt; {</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> {src};</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span> from_string(</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keyword">const</span> std::string_view src,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::string&gt;) noexcept</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::string&gt;) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  -&gt; std::variant&lt;std::string, std::errc&gt; {</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">return</span> {std::string{src}};</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
@@ -183,7 +190,7 @@ $(function() {
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span> convert_from_string(</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keyword">const</span> std::string_view src,</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keyword">const</span> std::string_view suffix,</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::chrono::duration&lt;Rep, Period&gt;&gt;) noexcept</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::chrono::duration&lt;Rep, Period&gt;&gt;) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  -&gt; std::optional&lt;std::chrono::duration&lt;Rep, Period&gt;&gt; {</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">using</span> D = std::chrono::duration&lt;Rep, Period&gt;;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
@@ -201,7 +208,7 @@ $(function() {
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Rep, <span class="keyword">typename</span> Period&gt;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">auto</span> from_string(</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keyword">const</span> std::string_view src,</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::chrono::duration&lt;Rep, Period&gt;&gt;) noexcept</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keyword">const</span> std::type_identity&lt;std::chrono::duration&lt;Rep, Period&gt;&gt;) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  -&gt; std::variant&lt;std::chrono::duration&lt;Rep, Period&gt;, std::errc&gt; {</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keyword">using</span> D = std::chrono::duration&lt;Rep, Period&gt;;</div>
@@ -252,20 +259,23 @@ $(function() {
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">return</span> {std::errc::invalid_argument};</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">#if defined(MIRROR_DOXYGEN)</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="keyword">auto</span> from_string(<span class="keyword">const</span> std::string_view src) noexcept -&gt; extractable;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">/// @brief Converts the string representation in @p src to a value of type @p T.</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment">/// @ingroup utilities</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">/// @see is_within_limits</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">T</a>&gt;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">from_string</a>(<span class="keyword">const</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">string_view</a> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">src</a>) <span class="keyword">noexcept</span> -&gt; <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">extractable</a>;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="group__utilities.html#ga2a82cc7dcc73a15dcc5a577f62dfdeca">  196</a></span>&#160;<span class="keyword">auto</span> from_string(<span class="keyword">const</span> std::string_view src) noexcept {</div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">  196</a></span>&#160;<span class="keyword">auto</span> from_string(<span class="keyword">const</span> std::string_view src) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordflow">return</span> from_string(src, std::type_identity&lt;T&gt;{});</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="keyword">auto</span> from_extractable_string(</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keyword">const</span> extractable <span class="keyword">auto</span> src,</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  std::type_identity&lt;T&gt; tid = {}) noexcept -&gt; std::optional&lt;T&gt; {</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  std::type_identity&lt;T&gt; tid = {}) <span class="keyword">noexcept</span> -&gt; std::optional&lt;T&gt; {</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordflow">if</span>(has_value_type&lt;std::string_view&gt;(src) &amp;&amp; has_value(src)) {</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">if</span>(<span class="keyword">auto</span> converted{from_string(extract(src), tid)};</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;           has_value(converted)) {</div>
@@ -277,19 +287,13 @@ $(function() {
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_FROM_STRING_HPP</span></div>
-<div class="ttc" id="aenum__utils_8hpp_html"><div class="ttname"><a href="enum__utils_8hpp.html">enum_utils.hpp</a></div></div>
-<div class="ttc" id="aextract_8hpp_html"><div class="ttname"><a href="extract_8hpp.html">extract.hpp</a></div></div>
-<div class="ttc" id="agroup__utilities_html_gad3388d209d188e52431189b389d6e7ae"><div class="ttname"><a href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae">mirror::indeterminate</a></div><div class="ttdeci">static constexpr const indeterminate_t indeterminate</div><div class="ttdoc">Constant representing unspecified tribool value.</div><div class="ttdef"><b>Definition:</b> tribool.hpp:30</div></div>
-<div class="ttc" id="ais__within__limits_8hpp_html"><div class="ttname"><a href="is__within__limits_8hpp.html">is_within_limits.hpp</a></div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
-<div class="ttc" id="atribool_8hpp_html"><div class="ttname"><a href="tribool_8hpp.html">tribool.hpp</a></div></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// MIRROR_FROM_STRING_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

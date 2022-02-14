@@ -107,8 +107,8 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, fixed_<span class="keywordtype">string</span> Name&gt;</div>
 <div class="line">concept has_member_name = [](<span class="keyword">auto</span> mo) {</div>
-<div class="line">    <span class="keywordflow">return</span> any_of(mo, [](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> get_name(me) == Name; });</div>
-<div class="line">}(get_data_members(<a class="code" href="namespacemirror.html">mirror</a>(T)));</div>
+<div class="line">    <span class="keywordflow">return</span> <a name="a0"></a><a class="code" href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">any_of</a>(mo, [](<span class="keyword">auto</span> me) { <span class="keywordflow">return</span> <a name="a1"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(me) == Name; });</div>
+<div class="line">}(<a name="a2"></a><a class="code" href="group__operations.html#ga2dcfe7539bcf9d3ffeebd9bae784067d">get_data_members</a>(<a class="code" href="namespacemirror.html">mirror</a>(T)));</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span>... Ts&gt;</div>
 <div class="line"><span class="keyword">struct </span>rows : Ts... {</div>
@@ -117,9 +117,9 @@ $(function() {
 <div class="line">      rows(<span class="keyword">const</span> T&amp; t) {</div>
 <div class="line">        (</div>
 <div class="line">          [&amp;] {</div>
-<div class="line">              <a name="a0"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_data_members(get_aliased(<a class="code" href="namespacemirror.html">mirror</a>(T))), [&amp;](<span class="keyword">auto</span> mo) {</div>
-<div class="line">                  <span class="keywordflow">if</span>(Ts::name == get_name(mo)) {</div>
-<div class="line">                      Ts::value = <a name="a1"></a><a class="code" href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">get_value</a>(mo, t);</div>
+<div class="line">              <a name="a3"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(<a class="code" href="group__operations.html#ga2dcfe7539bcf9d3ffeebd9bae784067d">get_data_members</a>(<a name="a4"></a><a class="code" href="group__operations.html#ga41ab890ac8f81cca55fdf59ae91c36ce">get_aliased</a>(<a class="code" href="namespacemirror.html">mirror</a>(T))), [&amp;](<span class="keyword">auto</span> mo) {</div>
+<div class="line">                  <span class="keywordflow">if</span>(Ts::name == <a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(mo)) {</div>
+<div class="line">                      Ts::value = <a name="a5"></a><a class="code" href="group__operations.html#gaf6b9f86f53f7e03881b446ab671905fe">get_value</a>(mo, t);</div>
 <div class="line">                  }</div>
 <div class="line">              });</div>
 <div class="line">          }(),</div>
@@ -181,16 +181,20 @@ $(function() {
 <div class="line">    shrink(foo{.a = 1, .b = 2});         <span class="comment">// prints 1, 2</span></div>
 <div class="line">    shrink(bar{.c = 8, .b = 4, .a = 2}); <span class="comment">// prints 2, 4</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__operations_html_ga906b1bf1e11139592467bb4b9c801abd"><div class="ttname"><a href="group__operations.html#ga906b1bf1e11139592467bb4b9c801abd">mirror::get_value</a></div><div class="ttdeci">constexpr const auto &amp; get_value(metaobject auto mo) noexcept requires(reflects_variable(mo))</div><div class="ttdoc">Returns the value of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga2dcfe7539bcf9d3ffeebd9bae784067d"><div class="ttname"><a href="group__operations.html#ga2dcfe7539bcf9d3ffeebd9bae784067d">mirror::get_data_members</a></div><div class="ttdeci">constexpr auto get_data_members(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member type reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga41ab890ac8f81cca55fdf59ae91c36ce"><div class="ttname"><a href="group__operations.html#ga41ab890ac8f81cca55fdf59ae91c36ce">mirror::get_aliased</a></div><div class="ttdeci">constexpr auto get_aliased(metaobject auto mo) noexcept requires(reflects_alias(mo))</div><div class="ttdoc">Returns a reflection of the aliased entity reflected by a reflected alias.</div></div>
+<div class="ttc" id="agroup__operations_html_gaf6b9f86f53f7e03881b446ab671905fe"><div class="ttname"><a href="group__operations.html#gaf6b9f86f53f7e03881b446ab671905fe">mirror::get_value</a></div><div class="ttdeci">constexpr auto get_value(metaobject auto mo) noexcept requires(reflects_constant(mo))</div><div class="ttdoc">Returns the value of the reflected base-level constant.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gac2c1088d89c13aafaacfc0734f22eb37"><div class="ttname"><a href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">mirror::any_of</a></div><div class="ttdeci">constexpr auto any_of(metaobject_sequence auto mo, auto predicate) noexcept -&gt; bool</div><div class="ttdoc">Indicates if some metaobjects in a sequence satisfy a predicate.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

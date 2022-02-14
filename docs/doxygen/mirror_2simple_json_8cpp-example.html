@@ -93,26 +93,26 @@ $(function() {
 <div class="line">        <span class="keywordflow">return</span> {ctx};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <a name="a0"></a><a class="code" href="write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311">write</a>(<span class="keyword">const</span> write_driver&amp;, context_param ctx, <span class="keywordtype">bool</span> v) -&gt; <a name="a1"></a><a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> <a name="a0"></a><a class="code" href="write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311">write</a>(<span class="keyword">const</span> write_driver&amp;, context_param ctx, <span class="keywordtype">bool</span> v) -&gt; <a name="a1"></a><a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; std::boolalpha &lt;&lt; v;</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">auto</span> <a class="code" href="write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311">write</a>(<span class="keyword">const</span> write_driver&amp;, context_param ctx, std::string_view v)</div>
-<div class="line">      -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">      -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; std::quoted(v);</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">auto</span> <a class="code" href="write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311">write</a>(<span class="keyword">const</span> write_driver&amp;, context_param ctx, <span class="keyword">const</span> std::string&amp; v)</div>
-<div class="line">      -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">      -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; std::quoted(v);</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">    <span class="keyword">auto</span> <a class="code" href="write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311">write</a>(<span class="keyword">const</span> write_driver&amp;, context_param ctx, <span class="keyword">const</span> T&amp; v)</div>
-<div class="line">      -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">      -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; v;</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
@@ -128,16 +128,16 @@ $(function() {
 <div class="line">        <span class="keywordflow">return</span> {ctx};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> separate_element(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> separate_element(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> finish_element(context_param, <span class="keywordtype">size_t</span>) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> finish_element(context_param, <span class="keywordtype">size_t</span>) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> finish_list(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> finish_list(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; <span class="charliteral">&#39;]&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
@@ -154,21 +154,21 @@ $(function() {
 <div class="line">        <span class="keywordflow">return</span> {ctx};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> separate_attribute(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> separate_attribute(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> finish_attribute(context_param, std::string_view) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> finish_attribute(context_param, std::string_view) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> finish_record(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> finish_record(context_param ctx) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        ctx.out &lt;&lt; <span class="charliteral">&#39;}&#39;</span>;</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> finish(context_param) -&gt; <a class="code" href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">write_errors</a> {</div>
+<div class="line">    <span class="keyword">auto</span> finish(context_param) -&gt; <a class="code" href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">write_errors</a> {</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line">};</div>
@@ -205,7 +205,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aresult_8hpp_html_ad9dfa3b4d91ceffaa91ccf4122305ecb"><div class="ttname"><a href="result_8hpp.html#ad9dfa3b4d91ceffaa91ccf4122305ecb">mirror::serialize::write_errors</a></div><div class="ttdeci">bitfield&lt; write_error_code &gt; write_errors</div><div class="ttdoc">Alias for serialization error bitfield.</div><div class="ttdef"><b>Definition:</b> result.hpp:70</div></div>
+<div class="ttc" id="aresult_8hpp_html_abb3887e9d15e815b4e104f17a6120e84"><div class="ttname"><a href="result_8hpp.html#abb3887e9d15e815b4e104f17a6120e84">mirror::serialize::write_errors</a></div><div class="ttdeci">bitfield&lt; write_error_code &gt; write_errors</div><div class="ttdoc">Alias for serialization error bitfield.</div><div class="ttdef"><b>Definition:</b> result.hpp:70</div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 <div class="ttc" id="atetrahedron_8hpp_html"><div class="ttname"><a href="tetrahedron_8hpp.html">tetrahedron.hpp</a></div></div>
 <div class="ttc" id="aweekday_8hpp_html"><div class="ttname"><a href="weekday_8hpp.html">weekday.hpp</a></div></div>
@@ -216,7 +216,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

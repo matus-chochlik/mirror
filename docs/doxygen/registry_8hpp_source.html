@@ -73,148 +73,155 @@ $(function() {
 <div class="title">registry.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="registry_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_REGISTRY_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_REGISTRY_HPP</span></div>
+<a href="registry_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_REGISTRY_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_REGISTRY_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="base__type_8hpp.html">base_type.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="element__type_8hpp.html">element_type.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="hash_8hpp.html">hash.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="init__list_8hpp.html">init_list.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="metadata_8hpp.html">metadata.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="placeholder_8hpp.html">placeholder.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="base__type_8hpp.html">&quot;base_type.hpp&quot;</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="element__type_8hpp.html">&quot;element_type.hpp&quot;</a></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="hash_8hpp.html">&quot;hash.hpp&quot;</a></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="init__list_8hpp.html">&quot;init_list.hpp&quot;</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="metadata_8hpp.html">&quot;metadata.hpp&quot;</a></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="placeholder_8hpp.html">&quot;placeholder.hpp&quot;</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">map</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mirror</a> {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span>stored_metadata;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class</span> stored_metadata;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">auto</span> get_no_metadata(metadata_registry&amp;) noexcept -&gt; <span class="keyword">const</span> metadata&amp;;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">auto</span> get_no_metadata(metadata_registry&amp;) <span class="keyword">noexcept</span> -&gt; <span class="keyword">const</span> metadata&amp;;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">auto</span> get_metadata(wrapped_metaobject&lt;M&gt;, metadata_registry&amp;) noexcept</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id M&gt;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">auto</span> get_metadata(wrapped_metaobject&lt;M&gt;, metadata_registry&amp;) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  -&gt; stored_metadata&amp;;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>stored_metadata : <span class="keyword">public</span> metadata {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class</span> stored_metadata : <span class="keyword">public</span> metadata {</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_boolean_results(<span class="keyword">auto</span> mo) noexcept {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_boolean_results(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> apply_init_list_of&lt;operation_boolean&gt;(</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;          filter(</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__classification.html#ga6dae7d4d6cd3b8634dac45ba790ccb1e">object_trait</a>)), <a class="code" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">mirror::try_apply</a>(_1, mo)),</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(object_trait)), mirror::try_apply(_1, mo)),</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;          get_constant(_1),</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> <a class="code" href="group__classification.html#ga4407af7ebc0c00fdb9c8f53392b2bd64">operations_boolean</a>{il}; });</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> operations_boolean{il}; });</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_boolean_applicable(<span class="keyword">auto</span> mo) noexcept {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_boolean_applicable(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">return</span> apply_init_list_of&lt;operation_boolean&gt;(</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;          filter(</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__classification.html#ga6dae7d4d6cd3b8634dac45ba790ccb1e">object_trait</a>)),</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a>(_1, mo)),</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(object_trait)),</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            mirror::is_applicable(_1, mo)),</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;          get_constant(_1),</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> <a class="code" href="group__classification.html#ga4407af7ebc0c00fdb9c8f53392b2bd64">operations_boolean</a>{il}; });</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> operations_boolean{il}; });</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_metaobject_applicable(<span class="keyword">auto</span> mo) noexcept {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_metaobject_applicable(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> apply_init_list_of&lt;operation_metaobject&gt;(</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;          filter(</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#gaf2bdacc614fbcee3f817af02c26daeb6">operation_metaobject</a>)),</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <a class="code" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a>(_1, mo)),</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(operation_metaobject)),</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            mirror::is_applicable(_1, mo)),</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;          get_constant(_1),</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> <a class="code" href="group__classification.html#ga0d62ad972ea3a97567b7b7bbcaedde24">operations_metaobject</a>{il}; });</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> operations_metaobject{il}; });</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_integer_applicable(<span class="keyword">auto</span> mo) noexcept {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_integer_applicable(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> apply_init_list_of&lt;operation_integer&gt;(</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;          filter(</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#ga4dc17d9b6ea07f840e83026e75557a2d">operation_integer</a>)),</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <a class="code" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a>(_1, mo)),</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(operation_integer)),</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            mirror::is_applicable(_1, mo)),</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;          get_constant(_1),</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> <a class="code" href="group__classification.html#ga8f364bb691a7012ee07823ec9304ec42">operations_integer</a>{il}; });</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> operations_integer{il}; });</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_string_applicable(<span class="keyword">auto</span> mo) noexcept {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_op_string_applicable(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">return</span> apply_init_list_of&lt;operation_string&gt;(</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;          filter(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            get_enumerators(<a class="code" href="namespacemirror.html">mirror</a>(<a class="code" href="group__operations.html#gae7b229cbb138a3f09e5234537e2fa5a0">operation_string</a>)),</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <a class="code" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a>(_1, mo)),</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(operation_string)),</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            mirror::is_applicable(_1, mo)),</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;          get_constant(_1),</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> <a class="code" href="group__classification.html#ga9abcd2edee5be99855cd77ed3666635d">operations_string</a>{il}; });</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;          [](<span class="keyword">auto</span> il) { <span class="keywordflow">return</span> operations_string{il}; });</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_name(<span class="keyword">auto</span> mo) noexcept -&gt; std::string_view {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span> constexpr(reflects_named(mo)) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_name(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> -&gt; std::string_view {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_named(mo)) {</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> get_name(mo);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">return</span> {};</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_display_name(<span class="keyword">auto</span> mo) noexcept -&gt; std::string_view {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">if</span> constexpr(reflects_named(mo)) {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _get_display_name(<span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> -&gt; std::string_view {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_named(mo)) {</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">return</span> get_display_name(mo);</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> {};</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> R, <span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">static</span> constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    _do_get_referenced_type(std::type_identity&lt;T&gt;, R&amp; r) noexcept</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    _do_get_referenced_type(std::type_identity&lt;T&gt;, R&amp; r) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      -&gt; <span class="keyword">const</span> metadata&amp; {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_pointer_v&lt;T&gt;) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(std::is_pointer_v&lt;T&gt;) {</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keyword">using</span> P =</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;              std::remove_cv_t&lt;typename std::pointer_traits&lt;T&gt;::value_type&gt;;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">return</span> get_metadata(get_aliased(<a class="code" href="namespacemirror.html">mirror</a>(P)), r);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(std::is_reference_v&lt;T&gt;) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;              std::remove_cv_t&lt;<span class="keyword">typename</span> std::pointer_traits&lt;T&gt;::value_type&gt;;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">return</span> get_metadata(get_aliased(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(P)), r);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(std::is_reference_v&lt;T&gt;) {</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keyword">using</span> P = std::remove_cv_t&lt;std::remove_reference_t&lt;T&gt;&gt;;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> get_metadata(get_aliased(<a class="code" href="namespacemirror.html">mirror</a>(P)), r);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> get_metadata(get_aliased(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(P)), r);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">return</span> r.get_none();</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">static</span> constexpr <span class="keyword">auto</span> _get_referenced_type(<span class="keyword">auto</span> mo, <span class="keyword">auto</span>&amp; r) noexcept</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> _get_referenced_type(<span class="keyword">auto</span> mo, <span class="keyword">auto</span>&amp; r) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      -&gt; <span class="keyword">const</span> metadata&amp; {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span> constexpr(<a class="code" href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">reflects_type</a>(mo)) {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_type(mo)) {</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordflow">return</span> _do_get_referenced_type(get_reflected_type(mo), r);</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">return</span> r.get_none();</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        }</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">template</span> &lt;<a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M&gt;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id... M&gt;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    _expand(unpacked_metaobject_sequence&lt;M...&gt;, metadata_registry&amp; r) noexcept</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      -&gt; std::vector&lt;const metadata*&gt; {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    _expand(unpacked_metaobject_sequence&lt;M...&gt;, metadata_registry&amp; r) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      -&gt; std::vector&lt;<span class="keyword">const</span> metadata*&gt; {</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordflow">return</span> {&amp;get_metadata(wrapped_metaobject&lt;M&gt;{}, r)...};</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> _init(</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      unpacked_metaobject_sequence&lt;&gt;,</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keyword">const</span> metadata_registry&amp;,</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keyword">const</span> std::vector&lt;const metadata*&gt;&amp;,</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <span class="keywordtype">size_t</span> = 0Z) noexcept {}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keyword">const</span> std::vector&lt;<span class="keyword">const</span> metadata*&gt;&amp;,</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      size_t = 0Z) <span class="keyword">noexcept</span> {}</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">template</span> &lt;<a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a> M, <a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... Ms&gt;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id M, __metaobject_id... Ms&gt;</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> _init(</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      unpacked_metaobject_sequence&lt;M, Ms...&gt;,</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      metadata_registry&amp; r,</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      std::vector&lt;const metadata*&gt;&amp; md,</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <span class="keywordtype">size_t</span> idx = 0Z) noexcept {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">static_cast&lt;</span>stored_metadata*<span class="keyword">&gt;</span>(<span class="keyword">const_cast&lt;</span>metadata*<span class="keyword">&gt;</span>(md[idx]))</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      std::vector&lt;<span class="keyword">const</span> metadata*&gt;&amp; md,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      size_t idx = 0Z) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">static_cast</span>&lt;stored_metadata*&gt;(<span class="keyword">const_cast</span>&lt;metadata*&gt;(md[idx]))</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;          -&gt;init(wrapped_metaobject&lt;M&gt;{}, r);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        _init(unpacked_metaobject_sequence&lt;Ms...&gt;{}, r, md, idx + 1Z);</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keyword">template</span> &lt;operation_meta<span class="keywordtype">object</span> O, __meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keyword">template</span> &lt;operation_metaobject O, __metaobject_id M&gt;</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _try_init(</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      wrapped_metaobject&lt;M&gt; mo,</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      metadata_registry&amp; r,</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <span class="keyword">const</span> metadata*&amp; pmd) -&gt; <span class="keyword">const</span> metadata* {</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">if</span>(pmd-&gt;is_none()) {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordflow">if</span> constexpr(mirror::is_applicable&lt;O&gt;(mo)) {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(mirror::is_applicable&lt;O&gt;(mo)) {</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                <span class="keyword">const</span> <span class="keyword">auto</span> ms = mirror::try_apply&lt;O&gt;(mo);</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                <span class="keyword">auto</span>&amp; md = get_metadata(ms, r);</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                pmd = &amp;md;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                <span class="keywordflow">if</span> constexpr(!<a class="code" href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">reflects_type</a>(ms)) {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(!reflects_type(ms)) {</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                    md.init(ms, r);</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                }</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            }</div>
@@ -222,23 +229,23 @@ $(function() {
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">return</span> pmd;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id M&gt;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _try_init_base_type(</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      wrapped_metaobject&lt;M&gt; mo,</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      metadata_registry&amp; r,</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      <span class="keyword">const</span> metadata*&amp; pmd) -&gt; <span class="keyword">const</span> metadata* {</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">if</span> constexpr(<a class="code" href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">reflects_type</a>(mo)) {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_type(mo)) {</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keywordflow">if</span>(pmd-&gt;is_none()) {</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                <span class="keyword">auto</span>&amp; md = get_metadata(get_base_type(mo), r);</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                pmd = &amp;md;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(reflects_typed(mo)) {</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_typed(mo)) {</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            <span class="keywordflow">return</span> _try_init_base_type(get_type(mo), r, pmd);</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        }</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">return</span> pmd;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id M&gt;</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> _try_init_element_type(</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      wrapped_metaobject&lt;M&gt; mo,</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      metadata_registry&amp; r,</div>
@@ -251,17 +258,17 @@ $(function() {
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    }</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    stored_metadata() noexcept = default;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    stored_metadata() <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    stored_metadata(</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      auto mo,</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;      hash_t <span class="keywordtype">id</span>,</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;      std::<span class="keywordtype">string</span> full_name,</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      metadata_registry&amp; r) noexcept</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      <span class="keyword">auto</span> mo,</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;      hash_t id,</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;      std::string full_name,</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      metadata_registry&amp; r) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      : metadata{</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;          id,</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;          <a class="code" href="group__classification.html#gae5dab47a9201e77ba52c2d38c8e551d2">get_traits</a>(mo),</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;          <a class="code" href="group__classification.html#gad2f36492db672dc9939b098c6543009c">get_type_traits</a>(mo),</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;          get_traits(mo),</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;          get_type_traits(mo),</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;          _get_op_boolean_results(mo),</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;          _get_op_boolean_applicable(mo),</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;          _get_op_metaobject_applicable(mo),</div>
@@ -273,19 +280,19 @@ $(function() {
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;          _get_display_name(mo),</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;          std::move(full_name),</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;          get_no_metadata(r)} {</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordflow">if</span> constexpr(<a class="code" href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">reflects_type</a>(mo)) {</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_type(mo)) {</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            _try_init_element_type(mo, r, _element_type);</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        }</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    }</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordtype">void</span> init(<span class="keyword">auto</span> mo, metadata_registry&amp; r) {</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordflow">if</span> constexpr(reflects_object_sequence(mo)) {</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_object_sequence(mo)) {</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            <span class="keywordflow">if</span>(_needs_elements()) {</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                <span class="keyword">const</span> <span class="keyword">auto</span> ms{<a class="code" href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">unpack</a>(mo)};</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                <span class="keyword">const</span> <span class="keyword">auto</span> ms{unpack(mo)};</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                _init(ms, r, _emplace_elements(_expand(ms, r)));</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(reflects_object(mo)) {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keyword">using</span> O = <a class="code" href="group__operations.html#gaf2bdacc614fbcee3f817af02c26daeb6">operation_metaobject</a>;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(reflects_object(mo)) {</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keyword">using</span> O = operation_metaobject;</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            _try_init&lt;O::get_scope&gt;(mo, r, _scope);</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            _try_init&lt;O::get_type&gt;(mo, r, _type);</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;            _try_init_base_type(mo, r, _base_type);</div>
@@ -307,7 +314,7 @@ $(function() {
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    }</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;};</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">class </span>metadata_registry_iterator {</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">class</span> metadata_registry_iterator {</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keyword">using</span> base_iter_t =</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      std::map&lt;hash_t, std::unique_ptr&lt;stored_metadata&gt;&gt;::const_iterator;</div>
@@ -320,116 +327,116 @@ $(function() {
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keyword">using</span> difference_type = base_iter_t::difference_type;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keyword">using</span> iterator_category = std::forward_iterator_tag;</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    metadata_registry_iterator(base_iter_t iter) noexcept</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    metadata_registry_iterator(base_iter_t iter) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      : _iter{iter} {}</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> operator==(</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      <span class="keyword">const</span> metadata_registry_iterator&amp; l,</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      <span class="keyword">const</span> metadata_registry_iterator&amp; r) noexcept -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      <span class="keyword">const</span> metadata_registry_iterator&amp; r) <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        <span class="keywordflow">return</span> l._iter == r._iter;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> operator!=(</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <span class="keyword">const</span> metadata_registry_iterator&amp; l,</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <span class="keyword">const</span> metadata_registry_iterator&amp; r) noexcept -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <span class="keyword">const</span> metadata_registry_iterator&amp; r) <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">return</span> l._iter != r._iter;</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    }</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keyword">auto</span> operator++() noexcept -&gt; auto&amp; {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keyword">auto</span> operator++() <span class="keyword">noexcept</span> -&gt; <span class="keyword">auto</span>&amp; {</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        ++_iter;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    }</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">auto</span> operator++(<span class="keywordtype">int</span>) noexcept -&gt; <span class="keyword">auto</span> {</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">auto</span> operator++(<span class="keywordtype">int</span>) <span class="keyword">noexcept</span> -&gt; <span class="keyword">auto</span> {</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keyword">auto</span> copy{*<span class="keyword">this</span>};</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        ++_iter;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordflow">return</span> copy;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    }</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keyword">auto</span> operator*() noexcept -&gt; const metadata&amp; {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keyword">auto</span> operator*() <span class="keyword">noexcept</span> -&gt; <span class="keyword">const</span> metadata&amp; {</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keywordflow">return</span> *_iter-&gt;second;</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    }</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;};</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="keyword">class </span>metadata_registry {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="keyword">class</span> metadata_registry {</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    std::map&lt;hash_t, std::unique_ptr&lt;stored_metadata&gt;&gt; _metadata;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> get_no_metadata(metadata_registry&amp; r) noexcept</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span> get_no_metadata(metadata_registry&amp; r) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      -&gt; <span class="keyword">const</span> metadata&amp; {</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordflow">return</span> r.get_none();</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    }</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keyword">auto</span> _get(wrapped_metaobject&lt;M&gt; mo) noexcept -&gt; stored_metadata&amp; {</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> <span class="keywordtype">id</span> = get_hash(mo);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keyword">auto</span> pos = _metadata.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id M&gt;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keyword">auto</span> _get(wrapped_metaobject&lt;M&gt; mo) <span class="keyword">noexcept</span> -&gt; stored_metadata&amp; {</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> id = get_hash(mo);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keyword">auto</span> pos = _metadata.find(id);</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keywordflow">if</span>(pos == _metadata.end()) {</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            pos = _metadata</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                    .emplace(</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                      <span class="keywordtype">id</span>,</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                      id,</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                      std::make_unique&lt;stored_metadata&gt;(</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                        mo, <span class="keywordtype">id</span>, get_full_name(mo), *<span class="keyword">this</span>))</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                        mo, id, get_full_name(mo), *<span class="keyword">this</span>))</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                    .first;</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        }</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">return</span> *pos-&gt;second;</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    }</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id M&gt;</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">friend</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    get_metadata(wrapped_metaobject&lt;M&gt; mo, metadata_registry&amp; r) noexcept</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    get_metadata(wrapped_metaobject&lt;M&gt; mo, metadata_registry&amp; r) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      -&gt; stored_metadata&amp; {</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        <span class="keywordflow">return</span> r._get(mo);</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    }</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keyword">auto</span> _find(<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> mo) -&gt; stored_metadata&amp; {</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> <span class="keywordtype">id</span> = get_hash(mo);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keyword">auto</span> pos = _metadata.find(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keyword">auto</span> _find(metaobject <span class="keyword">auto</span> mo) -&gt; stored_metadata&amp; {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> id = get_hash(mo);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keyword">auto</span> pos = _metadata.find(id);</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="keywordflow">if</span>(pos == _metadata.end()) {</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            <span class="keywordflow">throw</span> metadata_not_found();</div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        }</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keywordflow">return</span> *pos-&gt;second;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    }</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M&gt;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keyword">auto</span> _add(wrapped_metaobject&lt;M&gt; mo) noexcept -&gt; stored_metadata&amp; {</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">template</span> &lt;__metaobject_id M&gt;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keyword">auto</span> _add(wrapped_metaobject&lt;M&gt; mo) <span class="keyword">noexcept</span> -&gt; stored_metadata&amp; {</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="keyword">auto</span>&amp; md = _get(mo);</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        md.init(mo, *<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keywordflow">return</span> md;</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    }</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    metadata_registry() noexcept {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    metadata_registry() <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        _metadata.emplace(</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;          get_hash(<a class="code" href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">no_metaobject</a>), std::make_unique&lt;stored_metadata&gt;());</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;          get_hash(no_metaobject), std::make_unique&lt;stored_metadata&gt;());</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    }</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keyword">auto</span> size() const noexcept {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keyword">auto</span> size() <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        <span class="keywordflow">return</span> _metadata.size();</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    }</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keyword">auto</span> begin() const noexcept -&gt; metadata_registry_iterator {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keyword">auto</span> begin() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; metadata_registry_iterator {</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        <span class="keywordflow">return</span> {_metadata.begin()};</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    }</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keyword">auto</span> end() const noexcept -&gt; metadata_registry_iterator {</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keyword">auto</span> end() <span class="keyword">const</span> <span class="keyword">noexcept</span> -&gt; metadata_registry_iterator {</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        <span class="keywordflow">return</span> {_metadata.end()};</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    }</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keyword">auto</span> get_none() noexcept -&gt; const metadata&amp; {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <span class="keywordflow">return</span> *_metadata[get_hash(<a class="code" href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">no_metaobject</a>)];</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keyword">auto</span> get_none() <span class="keyword">noexcept</span> -&gt; <span class="keyword">const</span> metadata&amp; {</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <span class="keywordflow">return</span> *_metadata[get_hash(no_metaobject)];</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    }</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keyword">auto</span> add(<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> mo) noexcept -&gt; <span class="keyword">const</span> metadata&amp; {</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keyword">auto</span> add(metaobject <span class="keyword">auto</span> mo) <span class="keyword">noexcept</span> -&gt; <span class="keyword">const</span> metadata&amp; {</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        <span class="keywordflow">return</span> _add(mo);</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    }</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keyword">auto</span> find(<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> mo) -&gt; <span class="keyword">const</span> metadata&amp; {</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keyword">auto</span> find(metaobject <span class="keyword">auto</span> mo) -&gt; <span class="keyword">const</span> metadata&amp; {</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        <span class="keywordflow">return</span> _find(mo);</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    }</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keyword">auto</span> all() const -&gt; metadata_sequence {</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        std::vector&lt;const metadata*&gt; elements;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keyword">auto</span> all() <span class="keyword">const</span> -&gt; metadata_sequence {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        std::vector&lt;<span class="keyword">const</span> metadata*&gt; elements;</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        elements.reserve(_metadata.size());</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; p : _metadata) {</div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;            elements.push_back(std::get&lt;1&gt;(p).get());</div>
@@ -439,7 +446,7 @@ $(function() {
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keyword">auto</span> filtered(F predicate) <span class="keyword">const</span> -&gt; metadata_sequence {</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        std::vector&lt;const metadata*&gt; elements;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        std::vector&lt;<span class="keyword">const</span> metadata*&gt; elements;</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        elements.reserve(_metadata.size());</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; p : _metadata) {</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;            <span class="keywordflow">if</span>(predicate(*std::get&lt;1&gt;(p))) {</div>
@@ -452,38 +459,13 @@ $(function() {
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
-<div class="ttc" id="abase__type_8hpp_html"><div class="ttname"><a href="base__type_8hpp.html">base_type.hpp</a></div></div>
-<div class="ttc" id="aelement__type_8hpp_html"><div class="ttname"><a href="element__type_8hpp.html">element_type.hpp</a></div></div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
-<div class="ttc" id="agroup__classification_html_ga0d62ad972ea3a97567b7b7bbcaedde24"><div class="ttname"><a href="group__classification.html#ga0d62ad972ea3a97567b7b7bbcaedde24">mirror::operations_metaobject</a></div><div class="ttdeci">bitfield&lt; operation_metaobject &gt; operations_metaobject</div><div class="ttdoc">Bitfield of metaobject-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:203</div></div>
-<div class="ttc" id="agroup__classification_html_ga4407af7ebc0c00fdb9c8f53392b2bd64"><div class="ttname"><a href="group__classification.html#ga4407af7ebc0c00fdb9c8f53392b2bd64">mirror::operations_boolean</a></div><div class="ttdeci">bitfield&lt; operation_boolean &gt; operations_boolean</div><div class="ttdoc">Alias for object_traits.</div><div class="ttdef"><b>Definition:</b> operations.hpp:33</div></div>
-<div class="ttc" id="agroup__classification_html_ga6dae7d4d6cd3b8634dac45ba790ccb1e"><div class="ttname"><a href="group__classification.html#ga6dae7d4d6cd3b8634dac45ba790ccb1e">mirror::object_trait</a></div><div class="ttdeci">object_trait</div><div class="ttdoc">Enumeration of boolean-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> traits.hpp:178</div></div>
-<div class="ttc" id="agroup__classification_html_ga8f364bb691a7012ee07823ec9304ec42"><div class="ttname"><a href="group__classification.html#ga8f364bb691a7012ee07823ec9304ec42">mirror::operations_integer</a></div><div class="ttdeci">bitfield&lt; operation_integer &gt; operations_integer</div><div class="ttdoc">Bitfield of integer-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:65</div></div>
-<div class="ttc" id="agroup__classification_html_ga9abcd2edee5be99855cd77ed3666635d"><div class="ttname"><a href="group__classification.html#ga9abcd2edee5be99855cd77ed3666635d">mirror::operations_string</a></div><div class="ttdeci">bitfield&lt; operation_string &gt; operations_string</div><div class="ttdoc">Bitfield of string-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:136</div></div>
-<div class="ttc" id="agroup__classification_html_gab6cadc34965b8326c55b21c48bdccd84"><div class="ttname"><a href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">mirror::reflects_type</a></div><div class="ttdeci">consteval auto reflects_type(metaobject auto) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a type.</div></div>
-<div class="ttc" id="agroup__classification_html_gad2f36492db672dc9939b098c6543009c"><div class="ttname"><a href="group__classification.html#gad2f36492db672dc9939b098c6543009c">mirror::get_type_traits</a></div><div class="ttdeci">constexpr auto get_type_traits(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; type_traits</div><div class="ttdoc">Gets all type traits if metaobject reflects a type.</div><div class="ttdef"><b>Definition:</b> traits.hpp:530</div></div>
-<div class="ttc" id="agroup__classification_html_gae5dab47a9201e77ba52c2d38c8e551d2"><div class="ttname"><a href="group__classification.html#gae5dab47a9201e77ba52c2d38c8e551d2">mirror::get_traits</a></div><div class="ttdeci">constexpr auto get_traits(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; meta_traits</div><div class="ttdoc">Gets all metaobject traits.</div><div class="ttdef"><b>Definition:</b> traits.hpp:490</div></div>
-<div class="ttc" id="agroup__metaobjects_html_gac73ffa6847a81ec9595dfb2687982627"><div class="ttname"><a href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a></div><div class="ttdeci">unspecified __metaobject_id</div><div class="ttdoc">Internal type, values of which represent metaobjects in the compiler.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:41</div></div>
-<div class="ttc" id="agroup__metaobjects_html_gafebd6695d8facf073bcd63ca5530f201"><div class="ttname"><a href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">mirror::no_metaobject</a></div><div class="ttdeci">constinit const unspecified no_metaobject</div><div class="ttdoc">Special instance of metaobject that does not reflect anything.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:94</div></div>
-<div class="ttc" id="agroup__operations_html_ga3e49631a802f86f2ff84d0ac6533978a"><div class="ttname"><a href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">mirror::try_apply</a></div><div class="ttdeci">constexpr auto try_apply(wrapped_metaobject&lt; M &gt; mo) noexcept</div><div class="ttdoc">Calls the specified unary operation on a metaobject if it's applicable.</div><div class="ttdef"><b>Definition:</b> operations.hpp:486</div></div>
-<div class="ttc" id="agroup__operations_html_ga4dc17d9b6ea07f840e83026e75557a2d"><div class="ttname"><a href="group__operations.html#ga4dc17d9b6ea07f840e83026e75557a2d">mirror::operation_integer</a></div><div class="ttdeci">operation_integer</div><div class="ttdoc">Enumeration of integer-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:47</div></div>
-<div class="ttc" id="agroup__operations_html_ga716ef323e318d0dcd964bbcca5f06725"><div class="ttname"><a href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">mirror::is_applicable</a></div><div class="ttdeci">constexpr auto is_applicable(wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the specified operation is applicable to metaobject.</div><div class="ttdef"><b>Definition:</b> operations.hpp:448</div></div>
-<div class="ttc" id="agroup__operations_html_gae7b229cbb138a3f09e5234537e2fa5a0"><div class="ttname"><a href="group__operations.html#gae7b229cbb138a3f09e5234537e2fa5a0">mirror::operation_string</a></div><div class="ttdeci">operation_string</div><div class="ttdoc">Enumeration of string-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:117</div></div>
-<div class="ttc" id="agroup__operations_html_gaf2bdacc614fbcee3f817af02c26daeb6"><div class="ttname"><a href="group__operations.html#gaf2bdacc614fbcee3f817af02c26daeb6">mirror::operation_metaobject</a></div><div class="ttdeci">operation_metaobject</div><div class="ttdoc">Enumeration of metaobject-returning unary operations applicable to metaobjects.</div><div class="ttdef"><b>Definition:</b> operations.hpp:155</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_gae340caaff2cf7508bf16375f12f54355"><div class="ttname"><a href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">mirror::unpack</a></div><div class="ttdeci">constexpr auto unpack(metaobject_sequence auto mo) noexcept</div><div class="ttdoc">Unpacks a sequence metaobject into sequence of separate metaobject ids.</div></div>
-<div class="ttc" id="ahash_8hpp_html"><div class="ttname"><a href="hash_8hpp.html">hash.hpp</a></div></div>
-<div class="ttc" id="ainit__list_8hpp_html"><div class="ttname"><a href="init__list_8hpp.html">init_list.hpp</a></div></div>
-<div class="ttc" id="ametadata_8hpp_html"><div class="ttname"><a href="metadata_8hpp.html">metadata.hpp</a></div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
-<div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

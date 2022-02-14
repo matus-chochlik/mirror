@@ -7,7 +7,7 @@
 <meta name="copyright" content="Copyright 2008-2021 Matus Chochlik"/>
 <meta name="keywords" content="C++ Reflection"/>
 <meta name="description" content="C++ reflection API, utilities and examples"/>
-<title>mirror::tribool Class Reference</title>
+<title>tribool Class Reference</title>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -74,7 +74,7 @@ $(function() {
 <a href="#friends">Friends</a> &#124;
 <a href="classmirror_1_1tribool-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mirror::tribool Class Reference<div class="ingroups"><a class="el" href="group__utilities.html">Utilities</a></div></div>  </div>
+<div class="title">tribool Class Reference<div class="ingroups"><a class="el" href="group__utilities.html">Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -85,54 +85,54 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a86e191b8a65930d55e65e12d8feb466d"><td class="memItemLeft" align="right" valign="top"><a id="a86e191b8a65930d55e65e12d8feb466d"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a86e191b8a65930d55e65e12d8feb466d">tribool</a> () noexcept=default</td></tr>
-<tr class="memdesc:a86e191b8a65930d55e65e12d8feb466d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:a86e191b8a65930d55e65e12d8feb466d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75feb4bf74cf4a74e1314927f8b94c85"><td class="memItemLeft" align="right" valign="top"><a id="a75feb4bf74cf4a74e1314927f8b94c85"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a75feb4bf74cf4a74e1314927f8b94c85">tribool</a> (const bool value) noexcept</td></tr>
-<tr class="memdesc:a75feb4bf74cf4a74e1314927f8b94c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructions from boolean value. <br /></td></tr>
-<tr class="separator:a75feb4bf74cf4a74e1314927f8b94c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a121a286e8c8d69c5cc855a1e983b41eb"><td class="memItemLeft" align="right" valign="top"><a id="a121a286e8c8d69c5cc855a1e983b41eb"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a121a286e8c8d69c5cc855a1e983b41eb">tribool</a> (const <a class="el" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) noexcept</td></tr>
-<tr class="memdesc:a121a286e8c8d69c5cc855a1e983b41eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructions from indeterminate value. <br /></td></tr>
-<tr class="separator:a121a286e8c8d69c5cc855a1e983b41eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f25c771c521eeebbf594fa82b05eb2b"><td class="memItemLeft" align="right" valign="top"><a id="a1f25c771c521eeebbf594fa82b05eb2b"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a1f25c771c521eeebbf594fa82b05eb2b">tribool</a> (const std::optional&lt; bool &gt; value) noexcept</td></tr>
-<tr class="memdesc:a1f25c771c521eeebbf594fa82b05eb2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construction from a std::optional. <br /></td></tr>
-<tr class="separator:a1f25c771c521eeebbf594fa82b05eb2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06f2364b6566121f356641f9a65122f9"><td class="memItemLeft" align="right" valign="top"><a id="a06f2364b6566121f356641f9a65122f9"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a06f2364b6566121f356641f9a65122f9">tribool</a> (const bool value, const bool is_unknown) noexcept</td></tr>
-<tr class="memdesc:a06f2364b6566121f356641f9a65122f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construction with separate true/false, known/unknown arguments. <br /></td></tr>
-<tr class="separator:a06f2364b6566121f356641f9a65122f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30bb7d52b2b267d593aaa511b7d9df0a"><td class="memItemLeft" align="right" valign="top"><a id="a30bb7d52b2b267d593aaa511b7d9df0a"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a30bb7d52b2b267d593aaa511b7d9df0a">operator bool</a> () const noexcept</td></tr>
-<tr class="memdesc:a30bb7d52b2b267d593aaa511b7d9df0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true, if the stored value is true. <br /></td></tr>
-<tr class="separator:a30bb7d52b2b267d593aaa511b7d9df0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2accab4382a64877cd24a64e58d5517"><td class="memItemLeft" align="right" valign="top"><a id="ae2accab4382a64877cd24a64e58d5517"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#ae2accab4382a64877cd24a64e58d5517">operator!</a> () const noexcept</td></tr>
-<tr class="memdesc:ae2accab4382a64877cd24a64e58d5517"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true, if the stored value is false. <br /></td></tr>
-<tr class="separator:ae2accab4382a64877cd24a64e58d5517"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af30f7a7ee49efad3e6623d19a8ec0fea"><td class="memItemLeft" align="right" valign="top"><a id="af30f7a7ee49efad3e6623d19a8ec0fea"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#af30f7a7ee49efad3e6623d19a8ec0fea">operator std::optional&lt; bool &gt;</a> () const noexcept</td></tr>
-<tr class="memdesc:af30f7a7ee49efad3e6623d19a8ec0fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion to optional. <br /></td></tr>
-<tr class="separator:af30f7a7ee49efad3e6623d19a8ec0fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fd8c0b089a651da0cbee31aaf1c3f88"><td class="memItemLeft" align="right" valign="top"><a id="a1fd8c0b089a651da0cbee31aaf1c3f88"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a1fd8c0b089a651da0cbee31aaf1c3f88">operator*</a> () const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:a1fd8c0b089a651da0cbee31aaf1c3f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true, if the stored value is indeterminate. <br /></td></tr>
-<tr class="separator:a1fd8c0b089a651da0cbee31aaf1c3f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8e3933fef6ba1be215659e219f52dcc"><td class="memItemLeft" align="right" valign="top"><a id="aa8e3933fef6ba1be215659e219f52dcc"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#aa8e3933fef6ba1be215659e219f52dcc">operator~</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1weakbool.html">weakbool</a></td></tr>
-<tr class="memdesc:aa8e3933fef6ba1be215659e219f52dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts this value to <code>weakbool</code>. <br /></td></tr>
-<tr class="separator:aa8e3933fef6ba1be215659e219f52dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a236ddddad2568c346b5f1b0c9cb1beef"><td class="memItemLeft" align="right" valign="top"><a id="a236ddddad2568c346b5f1b0c9cb1beef"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a236ddddad2568c346b5f1b0c9cb1beef">is</a> (const bool value) const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:a236ddddad2568c346b5f1b0c9cb1beef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the stored value is known and equal to <code>value</code>. <br /></td></tr>
-<tr class="separator:a236ddddad2568c346b5f1b0c9cb1beef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d131b1e0c1464842252ad5b284c6d13"><td class="memItemLeft" align="right" valign="top"><a id="a9d131b1e0c1464842252ad5b284c6d13"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a9d131b1e0c1464842252ad5b284c6d13">is</a> (const <a class="el" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:a9d131b1e0c1464842252ad5b284c6d13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the stored value is indeterminate. <br /></td></tr>
-<tr class="separator:a9d131b1e0c1464842252ad5b284c6d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a377ea114ae986318214ca39b6a8db217"><td class="memItemLeft" align="right" valign="top"><a id="a377ea114ae986318214ca39b6a8db217"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a377ea114ae986318214ca39b6a8db217">tribool</a> () noexcept=default</td></tr>
+<tr class="memdesc:a377ea114ae986318214ca39b6a8db217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a377ea114ae986318214ca39b6a8db217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa12d8ca28295be44628548fff33e6bf4"><td class="memItemLeft" align="right" valign="top"><a id="aa12d8ca28295be44628548fff33e6bf4"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#aa12d8ca28295be44628548fff33e6bf4">tribool</a> (const bool value) noexcept</td></tr>
+<tr class="memdesc:aa12d8ca28295be44628548fff33e6bf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructions from boolean value. <br /></td></tr>
+<tr class="separator:aa12d8ca28295be44628548fff33e6bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5127815f4c7bec9d866b91069331954"><td class="memItemLeft" align="right" valign="top"><a id="ac5127815f4c7bec9d866b91069331954"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#ac5127815f4c7bec9d866b91069331954">tribool</a> (const <a class="el" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) noexcept</td></tr>
+<tr class="memdesc:ac5127815f4c7bec9d866b91069331954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructions from indeterminate value. <br /></td></tr>
+<tr class="separator:ac5127815f4c7bec9d866b91069331954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09047f229d1eb89f8d1def2f186a84a3"><td class="memItemLeft" align="right" valign="top"><a id="a09047f229d1eb89f8d1def2f186a84a3"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a09047f229d1eb89f8d1def2f186a84a3">tribool</a> (const std::optional&lt; bool &gt; value) noexcept</td></tr>
+<tr class="memdesc:a09047f229d1eb89f8d1def2f186a84a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construction from a std::optional. <br /></td></tr>
+<tr class="separator:a09047f229d1eb89f8d1def2f186a84a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741ff928e839080c99b3e0dfad60a06c"><td class="memItemLeft" align="right" valign="top"><a id="a741ff928e839080c99b3e0dfad60a06c"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a741ff928e839080c99b3e0dfad60a06c">tribool</a> (const bool value, const bool is_unknown) noexcept</td></tr>
+<tr class="memdesc:a741ff928e839080c99b3e0dfad60a06c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construction with separate true/false, known/unknown arguments. <br /></td></tr>
+<tr class="separator:a741ff928e839080c99b3e0dfad60a06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7990d8e87d9eab2383f94c88c23a6488"><td class="memItemLeft" align="right" valign="top"><a id="a7990d8e87d9eab2383f94c88c23a6488"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a7990d8e87d9eab2383f94c88c23a6488">operator bool</a> () const noexcept</td></tr>
+<tr class="memdesc:a7990d8e87d9eab2383f94c88c23a6488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true, if the stored value is true. <br /></td></tr>
+<tr class="separator:a7990d8e87d9eab2383f94c88c23a6488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b37ec1e6d5224b08f7350c8ff716fc2"><td class="memItemLeft" align="right" valign="top"><a id="a2b37ec1e6d5224b08f7350c8ff716fc2"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a2b37ec1e6d5224b08f7350c8ff716fc2">operator!</a> () const noexcept</td></tr>
+<tr class="memdesc:a2b37ec1e6d5224b08f7350c8ff716fc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true, if the stored value is false. <br /></td></tr>
+<tr class="separator:a2b37ec1e6d5224b08f7350c8ff716fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4a7bc8ca98b86012a744d5668cf9f95"><td class="memItemLeft" align="right" valign="top"><a id="ae4a7bc8ca98b86012a744d5668cf9f95"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#ae4a7bc8ca98b86012a744d5668cf9f95">operator std::optional&lt; bool &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:ae4a7bc8ca98b86012a744d5668cf9f95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion to optional. <br /></td></tr>
+<tr class="separator:ae4a7bc8ca98b86012a744d5668cf9f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66dd99b66e41a5f99fd4fd8c575c810a"><td class="memItemLeft" align="right" valign="top"><a id="a66dd99b66e41a5f99fd4fd8c575c810a"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a66dd99b66e41a5f99fd4fd8c575c810a">operator*</a> () const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a66dd99b66e41a5f99fd4fd8c575c810a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true, if the stored value is indeterminate. <br /></td></tr>
+<tr class="separator:a66dd99b66e41a5f99fd4fd8c575c810a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adca529d7087ac2b6c2721af58d7babd4"><td class="memItemLeft" align="right" valign="top"><a id="adca529d7087ac2b6c2721af58d7babd4"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#adca529d7087ac2b6c2721af58d7babd4">operator~</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1weakbool.html">weakbool</a></td></tr>
+<tr class="memdesc:adca529d7087ac2b6c2721af58d7babd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts this value to <code>weakbool</code>. <br /></td></tr>
+<tr class="separator:adca529d7087ac2b6c2721af58d7babd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade39cd88880e7a7e4ea1166f547fb557"><td class="memItemLeft" align="right" valign="top"><a id="ade39cd88880e7a7e4ea1166f547fb557"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#ade39cd88880e7a7e4ea1166f547fb557">is</a> (const bool value) const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ade39cd88880e7a7e4ea1166f547fb557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the stored value is known and equal to <code>value</code>. <br /></td></tr>
+<tr class="separator:ade39cd88880e7a7e4ea1166f547fb557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a339e7105adc1dee8b5800babe01f3757"><td class="memItemLeft" align="right" valign="top"><a id="a339e7105adc1dee8b5800babe01f3757"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1tribool.html#a339e7105adc1dee8b5800babe01f3757">is</a> (const <a class="el" href="structmirror_1_1indeterminate__t.html">indeterminate_t</a>) const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a339e7105adc1dee8b5800babe01f3757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the stored value is indeterminate. <br /></td></tr>
+<tr class="separator:a339e7105adc1dee8b5800babe01f3757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -149,7 +149,7 @@ constexpr friend auto&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <div class="textblock"><p>Tri-state boolean value. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1weakbool.html" title="Weak tri-state boolean value.">weakbool</a> </dd>
 <dd>
-<a class="el" href="group__utilities.html#gad3388d209d188e52431189b389d6e7ae" title="Constant representing unspecified tribool value.">indeterminate</a> </dd></dl>
+<a class="el" href="group__utilities.html#ga3bf371f1d082649cc7949d49c380828a" title="Constant representing unspecified tribool value.">indeterminate</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2to_json_string_8cpp-example.html#_a0">mirror/to_json_string.cpp</a>, and <a class="el" href="mirror_2to_rapidjson_8cpp-example.html#_a0">mirror/to_rapidjson.cpp</a>.</dd>
 </dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
@@ -160,7 +160,7 @@ constexpr friend auto&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

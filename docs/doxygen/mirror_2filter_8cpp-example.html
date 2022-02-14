@@ -77,36 +77,44 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <a name="a0"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(</div>
-<div class="line">      make_sequence(</div>
+<div class="line">      <a name="a1"></a><a class="code" href="group__sequence__operations.html#ga9c9617206b686bee1489c0fdc7db435b">make_sequence</a>(</div>
 <div class="line">        <a class="code" href="namespacemirror.html">mirror</a>(example::vector),</div>
 <div class="line">        <a class="code" href="namespacemirror.html">mirror</a>(example::triangle),</div>
 <div class="line">        <a class="code" href="namespacemirror.html">mirror</a>(example::tetrahedron)),</div>
-<div class="line">      [](<a name="a1"></a><a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> mo) {</div>
+<div class="line">      [](<a name="a2"></a><a class="code" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a> <span class="keyword">auto</span> mo) {</div>
 <div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;member functions without parameters: &quot;</span>;</div>
 <div class="line">          <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(</div>
-<div class="line">            filter(</div>
-<div class="line">              get_member_functions(mo), is_empty(get_parameters(mirror::_1))),</div>
-<div class="line">            [](<span class="keyword">auto</span> mf) { std::cout &lt;&lt; get_name(mf) &lt;&lt; <span class="stringliteral">&quot;; &quot;</span>; });</div>
+<div class="line">            <a name="a3"></a><a class="code" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">filter</a>(</div>
+<div class="line">              <a name="a4"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(mo), <a name="a5"></a><a class="code" href="group__sequence__operations.html#ga8c07903a3dea2be2fbd623f02d4192f6">is_empty</a>(<a name="a6"></a><a class="code" href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">get_parameters</a>(mirror::_1))),</div>
+<div class="line">            [](<span class="keyword">auto</span> mf) { std::cout &lt;&lt; <a name="a7"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(mf) &lt;&lt; <span class="stringliteral">&quot;; &quot;</span>; });</div>
 <div class="line">          std::cout &lt;&lt; std::endl;</div>
 <div class="line">      });</div>
 <div class="line"> </div>
 <div class="line">    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(</div>
-<div class="line">      make_sequence(</div>
+<div class="line">      <a class="code" href="group__sequence__operations.html#ga9c9617206b686bee1489c0fdc7db435b">make_sequence</a>(</div>
 <div class="line">        <a class="code" href="namespacemirror.html">mirror</a>(example::vector),</div>
 <div class="line">        <a class="code" href="namespacemirror.html">mirror</a>(example::triangle),</div>
 <div class="line">        <a class="code" href="namespacemirror.html">mirror</a>(example::tetrahedron)),</div>
-<div class="line">      [](<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> mo) {</div>
+<div class="line">      [](<a class="code" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a> <span class="keyword">auto</span> mo) {</div>
 <div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;count of constructors with parameters: &quot;</span>;</div>
-<div class="line">          std::cout &lt;&lt; get_size(filter(</div>
-<div class="line">            get_constructors(mo), not_(is_empty(get_parameters(mirror::_1)))));</div>
+<div class="line">          std::cout &lt;&lt; <a name="a8"></a><a class="code" href="group__sequence__operations.html#gab395d369ea130c82a024dcfe0daac492">get_size</a>(<a class="code" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">filter</a>(</div>
+<div class="line">            <a name="a9"></a><a class="code" href="group__operations.html#ga0669069e14adc7a5462bdfa3cdad1fb2">get_constructors</a>(mo), not_(<a class="code" href="group__sequence__operations.html#ga8c07903a3dea2be2fbd623f02d4192f6">is_empty</a>(<a class="code" href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">get_parameters</a>(mirror::_1)))));</div>
 <div class="line">          std::cout &lt;&lt; std::endl;</div>
 <div class="line">      });</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__classification_html_ga8cde85217b8f3e26e3aa5d41fdfcbbbe"><div class="ttname"><a href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:89</div></div>
+<div class="ttc" id="agroup__operations_html_ga0669069e14adc7a5462bdfa3cdad1fb2"><div class="ttname"><a href="group__operations.html#ga0669069e14adc7a5462bdfa3cdad1fb2">mirror::get_constructors</a></div><div class="ttdeci">constexpr auto get_constructors(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of constructor reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3b86bbc5fd4d3bf3288082dd72c741d2"><div class="ttname"><a href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">mirror::get_parameters</a></div><div class="ttdeci">constexpr auto get_parameters(metaobject auto mo) noexcept requires(reflects_callable(mo))</div><div class="ttdoc">Returns a sequence of parameter reflections of a reflected callable.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga6feaae2b4cbd8c482875e62c33007f9c"><div class="ttname"><a href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">mirror::filter</a></div><div class="ttdeci">constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept</div><div class="ttdoc">Removes metaobjects not satisfying a predicate from a sequence.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga8c07903a3dea2be2fbd623f02d4192f6"><div class="ttname"><a href="group__sequence__operations.html#ga8c07903a3dea2be2fbd623f02d4192f6">mirror::is_empty</a></div><div class="ttdeci">consteval auto is_empty(metaobject_sequence auto mo) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the metaobject sequence is empty.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga9c9617206b686bee1489c0fdc7db435b"><div class="ttname"><a href="group__sequence__operations.html#ga9c9617206b686bee1489c0fdc7db435b">mirror::make_sequence</a></div><div class="ttdeci">constexpr auto make_sequence(metaobject auto...) noexcept</div><div class="ttdoc">Makes an unpacked_metaobject_sequence from individual metaobjects.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gab395d369ea130c82a024dcfe0daac492"><div class="ttname"><a href="group__sequence__operations.html#gab395d369ea130c82a024dcfe0daac492">mirror::get_size</a></div><div class="ttdeci">consteval auto get_size(metaobject_sequence auto mo) noexcept -&gt; size_t requires(reflects_object_sequence(mo))</div><div class="ttdoc">Returns the number of elements in a metaobject sequence.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 <div class="ttc" id="atetrahedron_8hpp_html"><div class="ttname"><a href="tetrahedron_8hpp.html">tetrahedron.hpp</a></div></div>
@@ -115,7 +123,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

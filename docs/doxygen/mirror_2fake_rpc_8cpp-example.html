@@ -120,7 +120,7 @@ $(function() {
 <div class="line">    fake_rpc_stub_impl(fake_rpc_skeleton&amp; skel) noexcept</div>
 <div class="line">      : _skeleton{skel} {}</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> make_call(<a name="a1"></a><a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a> <span class="keyword">auto</span> mo, <span class="keyword">auto</span>&amp;... args) {</div>
+<div class="line">    <span class="keyword">auto</span> make_call(<a name="a1"></a><a class="code" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a> <span class="keyword">auto</span> mo, <span class="keyword">auto</span>&amp;... args) {</div>
 <div class="line">        std::stringstream request_header;</div>
 <div class="line">        std::stringstream request_data;</div>
 <div class="line"> </div>
@@ -134,7 +134,7 @@ $(function() {
 <div class="line">        <span class="keywordflow">return</span> _finish_fake_rpc(</div>
 <div class="line">          response_header,</div>
 <div class="line">          response_data,</div>
-<div class="line">          get_reflected_type(get_type(get_callable(get_subexpression(mo)))));</div>
+<div class="line">          <a name="a2"></a><a class="code" href="group__operations.html#gac2fe88ec9c9e9b3fd6d85e5c01707017">get_reflected_type</a>(<a name="a3"></a><a class="code" href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">get_type</a>(<a name="a4"></a><a class="code" href="group__operations.html#gaa4bb91364a731327e36055b9034818fc">get_callable</a>(<a name="a5"></a><a class="code" href="group__operations.html#ga8a49c57c9e19b3c0298f08f4a86c2e59">get_subexpression</a>(mo)))));</div>
 <div class="line">    }</div>
 <div class="line">};</div>
 <div class="line"> </div>
@@ -157,14 +157,14 @@ $(function() {
 <div class="line">        <span class="keyword">auto</span> header = std::tie(rpc_id, invocation_id);</div>
 <div class="line">        mirror::serialize::read_rapidjson_stream(header, request_header);</div>
 <div class="line"> </div>
-<div class="line">        <a name="a2"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(get_member_functions(<a class="code" href="namespacemirror.html">mirror</a>(Intf)), [&amp;](<span class="keyword">auto</span> mf) {</div>
+<div class="line">        <a name="a6"></a><a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(<a name="a7"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(<a class="code" href="namespacemirror.html">mirror</a>(Intf)), [&amp;](<span class="keyword">auto</span> mf) {</div>
 <div class="line">            <span class="keywordflow">if</span>(get_hash(mf) == rpc_id) {</div>
 <div class="line">                <span class="keyword">auto</span> params = make_value_tuple(</div>
-<div class="line">                  <a name="a3"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(get_parameters(mf), get_type(mirror::_1)));</div>
+<div class="line">                  <a name="a8"></a><a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(<a name="a9"></a><a class="code" href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">get_parameters</a>(mf), <a class="code" href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">get_type</a>(mirror::_1)));</div>
 <div class="line">                mirror::serialize::read_rapidjson_stream(params, request_data);</div>
 <div class="line">                mirror::serialize::write_rapidjson_stream(</div>
 <div class="line">                  invocation_id, response_header);</div>
-<div class="line">                <span class="keyword">auto</span> result = <a name="a4"></a><a class="code" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">apply_on</a>(mf, _impl, params);</div>
+<div class="line">                <span class="keyword">auto</span> result = <a name="a10"></a><a class="code" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">apply_on</a>(mf, _impl, params);</div>
 <div class="line">                mirror::serialize::write_rapidjson_stream(</div>
 <div class="line">                  result, response_data);</div>
 <div class="line">            }</div>
@@ -258,14 +258,20 @@ $(function() {
 <div class="line">}</div>
 <div class="ttc" id="aapply_8hpp_html"><div class="ttname"><a href="apply_8hpp.html">apply.hpp</a></div></div>
 <div class="ttc" id="aclassmirror_1_1interface_html"><div class="ttname"><a href="classmirror_1_1interface.html">mirror::interface</a></div><div class="ttdoc">Base template for abstract interfaces, implements common functionality.</div><div class="ttdef"><b>Definition:</b> interface.hpp:18</div></div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
+<div class="ttc" id="agroup__classification_html_ga8cde85217b8f3e26e3aa5d41fdfcbbbe"><div class="ttname"><a href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:89</div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3b86bbc5fd4d3bf3288082dd72c741d2"><div class="ttname"><a href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">mirror::get_parameters</a></div><div class="ttdeci">constexpr auto get_parameters(metaobject auto mo) noexcept requires(reflects_callable(mo))</div><div class="ttdoc">Returns a sequence of parameter reflections of a reflected callable.</div></div>
+<div class="ttc" id="agroup__operations_html_ga658f1934110d936b9cf38e4b50d7c314"><div class="ttname"><a href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">mirror::get_type</a></div><div class="ttdeci">constexpr auto get_type(metaobject auto mo) noexcept requires(reflects_typed(mo))</div><div class="ttdoc">Returns a reflection of the type of a reflected typed entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga8a49c57c9e19b3c0298f08f4a86c2e59"><div class="ttname"><a href="group__operations.html#ga8a49c57c9e19b3c0298f08f4a86c2e59">mirror::get_subexpression</a></div><div class="ttdeci">constexpr auto get_subexpression(metaobject auto mo) noexcept requires(reflects_parenthesized_expression(mo))</div><div class="ttdoc">Returns the reflection of the sub-expression of a parenthesized expression.</div></div>
 <div class="ttc" id="agroup__operations_html_ga8d2fc18dc2dc104571e1de6df92dc4c1"><div class="ttname"><a href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">mirror::apply_on</a></div><div class="ttdeci">constexpr auto apply_on(wrapped_metaobject&lt; M &gt; mo, C &amp;obj, A &amp;&amp;args) requires(__metaobject_is_meta_member_function(M))</div><div class="ttdoc">Applies the reflected member function on obj with specified args.</div><div class="ttdef"><b>Definition:</b> apply.hpp:43</div></div>
+<div class="ttc" id="agroup__operations_html_gaa4bb91364a731327e36055b9034818fc"><div class="ttname"><a href="group__operations.html#gaa4bb91364a731327e36055b9034818fc">mirror::get_callable</a></div><div class="ttdeci">constexpr auto get_callable(metaobject auto mo) noexcept requires(reflects_construction_expression(mo)||reflects_function_call_expression(mo))</div><div class="ttdoc">Returns the reflection of the sub-expression of a parenthesized expression.</div></div>
+<div class="ttc" id="agroup__operations_html_gac2fe88ec9c9e9b3fd6d85e5c01707017"><div class="ttname"><a href="group__operations.html#gac2fe88ec9c9e9b3fd6d85e5c01707017">mirror::get_reflected_type</a></div><div class="ttdeci">consteval auto get_reflected_type(metaobject auto mo) noexcept requires(reflects_type(mo))</div><div class="ttdoc">Returns type_identity of base-level type reflected by a metaobject.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
 <div class="ttc" id="ahash_8hpp_html"><div class="ttname"><a href="hash_8hpp.html">hash.hpp</a></div></div>
 <div class="ttc" id="ainterface_8hpp_html"><div class="ttname"><a href="interface_8hpp.html">interface.hpp</a></div></div>
 <div class="ttc" id="amake__tuple_8hpp_html"><div class="ttname"><a href="make__tuple_8hpp.html">make_tuple.hpp</a></div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="aread__rapidjson_8hpp_html"><div class="ttname"><a href="read__rapidjson_8hpp.html">read_rapidjson.hpp</a></div></div>
 <div class="ttc" id="awrite__rapidjson_8hpp_html"><div class="ttname"><a href="write__rapidjson_8hpp.html">write_rapidjson.hpp</a></div></div>
@@ -274,7 +280,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

@@ -106,16 +106,21 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="keyword">using</span> mirror::_1;</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> has_overloaded_functions = any_of(</div>
-<div class="line">      group_by(get_member_functions(_1), get_name(_1)),</div>
-<div class="line">      has_multiple_elements(_1));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> has_overloaded_functions = <a name="a0"></a><a class="code" href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">any_of</a>(</div>
+<div class="line">      <a name="a1"></a><a class="code" href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">group_by</a>(<a name="a2"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(_1), <a name="a3"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(_1)),</div>
+<div class="line">      <a name="a4"></a><a class="code" href="group__sequence__operations.html#gafa9bebbeec36ad414091fb0f95a78735">has_multiple_elements</a>(_1));</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; has_overloaded_functions(<a class="code" href="namespacemirror.html">mirror</a>(foo)) &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; has_overloaded_functions(<a class="code" href="namespacemirror.html">mirror</a>(bar)) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gaa7c64008717f9608f2ff88b07ec5e292"><div class="ttname"><a href="group__sequence__operations.html#gaa7c64008717f9608f2ff88b07ec5e292">mirror::group_by</a></div><div class="ttdeci">constexpr auto group_by(auto mo, auto transform) requires(is_object_sequence(mo))</div><div class="ttdoc">Groups metaobjects into sub-sequences by the value returned by transform.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gac2c1088d89c13aafaacfc0734f22eb37"><div class="ttname"><a href="group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37">mirror::any_of</a></div><div class="ttdeci">constexpr auto any_of(metaobject_sequence auto mo, auto predicate) noexcept -&gt; bool</div><div class="ttdoc">Indicates if some metaobjects in a sequence satisfy a predicate.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gafa9bebbeec36ad414091fb0f95a78735"><div class="ttname"><a href="group__sequence__operations.html#gafa9bebbeec36ad414091fb0f95a78735">mirror::has_multiple_elements</a></div><div class="ttdeci">consteval auto has_multiple_elements(metaobject_sequence auto mo) noexcept -&gt; bool</div><div class="ttdoc">Indicates if the metaobject sequence has more than one element.</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -123,7 +128,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

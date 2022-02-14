@@ -73,58 +73,86 @@ $(function() {
 <div class="title">make_array.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="make__array_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_MAKE_ARRAY_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_MAKE_ARRAY_HPP</span></div>
+<a href="make__array_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_MAKE_ARRAY_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_MAKE_ARRAY_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sequence_8hpp.html">sequence.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="sequence_8hpp.html">&quot;sequence.hpp&quot;</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">array</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mirror</a> {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M, <span class="keyword">typename</span> F&gt;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;make_array_of(unpacked_metaobject_sequence&lt;M...&gt;, F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  -&gt; std::array&lt;E, <span class="keyword">sizeof</span>...(M)&gt; {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">return</span> {{<a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(wrapped_metaobject&lt;M&gt;{})...}};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, __meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M, <span class="keyword">typename</span> F&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">auto</span> make_array_of(wrapped_metaobject&lt;M&gt; mo, F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  requires(__metaobject_is_meta_object_sequence(M)) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">return</span> make_array_of&lt;E&gt;(<a class="code" href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">unpack</a>(mo), <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M, <span class="keyword">typename</span> F&gt;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;make_array(unpacked_metaobject_sequence&lt;M...&gt;, F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  -&gt; std::array&lt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    std::common_type_t&lt;decltype(<a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(wrapped_metaobject&lt;M&gt;{}))...&gt;,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">sizeof</span>...(M)&gt; {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">return</span> {{<a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(wrapped_metaobject&lt;M&gt;{})...}};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">template</span> &lt;__meta<span class="keywordtype">object</span>_<span class="keywordtype">id</span> M, <span class="keyword">typename</span> F&gt;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">auto</span> make_array(wrapped_metaobject&lt;M&gt; mo, F <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  requires(__metaobject_is_meta_object_sequence(M)) {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> make_array(<a class="code" href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">unpack</a>(mo), <a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <span class="comment">// namespace mirror</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_MAKE_ARRAY_HPP</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="ttc" id="agroup__metaobjects_html_gac73ffa6847a81ec9595dfb2687982627"><div class="ttname"><a href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a></div><div class="ttdeci">unspecified __metaobject_id</div><div class="ttdoc">Internal type, values of which represent metaobjects in the compiler.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:41</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_gae340caaff2cf7508bf16375f12f54355"><div class="ttname"><a href="group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355">mirror::unpack</a></div><div class="ttdeci">constexpr auto unpack(metaobject_sequence auto mo) noexcept</div><div class="ttdoc">Unpacks a sequence metaobject into sequence of separate metaobject ids.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
-<div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/// @brief Makes an array of values of metaobject properties extracted by transform.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/// @ingroup sequence_operations</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">/// @see make_array</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/// This function applies the specified transform on each metaobject in a sequence</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">/// and returns the results as an array with explicitly specified element type</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/// @c E.</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>&gt;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="group__sequence__operations.html#ga059eae2813a96aa50ed939b525a69a2e">   26</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">make_array_of</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">metaobject</a> <span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mo</a>, <span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">transform</a>) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  -&gt; <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">array</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">__unspecified</a>&gt; <span class="keyword">requires</span>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">is_object_sequence</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mo</a>));</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, __metaobject_id... M, <span class="keyword">typename</span> F&gt;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;make_array_of(unpacked_metaobject_sequence&lt;M...&gt;, F transform) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  -&gt; std::array&lt;E, <span class="keyword">sizeof</span>...(M)&gt; {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">return</span> {{transform(wrapped_metaobject&lt;M&gt;{})...}};</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, __metaobject_id M, <span class="keyword">typename</span> F&gt;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">auto</span> make_array_of(wrapped_metaobject&lt;M&gt; mo, F transform) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">requires</span>(__metaobject_is_meta_object_sequence(M)) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">return</span> make_array_of&lt;E&gt;(unpack(mo), transform);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/// @brief Makes an array of values of metaobject properties extracted by transform.</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">/// @ingroup sequence_operations</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">/// @see make_array_of</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">/// This function applies the specified transform on each metaobject in a sequence</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">/// and returns the results as an array with element type auto-detected from</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">/// the return type of transform.</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">/// @c E.</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>&gt;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="group__sequence__operations.html#gacb9062363bfc91d09cb7e43a2368f432">   53</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">make_array</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">metaobject</a> <span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mo</a>, <span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">transform</a>) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  -&gt; <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">array</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">__unspecified</a>&gt; <span class="keyword">requires</span>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">is_object_sequence</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mo</a>));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id... M, <span class="keyword">typename</span> F&gt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;make_array(unpacked_metaobject_sequence&lt;M...&gt;, F transform) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  -&gt; std::array&lt;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">common_type_t</a>&lt;<span class="keyword">decltype</span>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">transform</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">wrapped_metaobject</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">M</a>&gt;{}))...&gt;,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">sizeof</span>...(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">M</a>)&gt; {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">return</span> {{<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">transform</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">wrapped_metaobject</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">M</a>&gt;{})...}};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">__metaobject_id</a> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">M</a>, <span class="keyword">typename</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">F</a>&gt;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">auto</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">make_array</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">wrapped_metaobject</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">M</a>&gt; <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mo</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">F</a> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">transform</a>) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keyword">requires</span>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">__metaobject_is_meta_object_sequence</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">M</a>)) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">make_array</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">unpack</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mo</a>), <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">transform</a>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;} <span class="comment">// namespace mirror</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// MIRROR_MAKE_ARRAY_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

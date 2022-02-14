@@ -73,76 +73,77 @@ $(function() {
 <div class="title">element_type.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="element__type_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_ELEMENT_TYPE_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_ELEMENT_TYPE_HPP</span></div>
+<a href="element__type_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_ELEMENT_TYPE_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_ELEMENT_TYPE_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="primitives_8hpp.html">primitives.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;span&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="primitives_8hpp.html">&quot;primitives.hpp&quot;</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">array</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">set</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">span</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">vector</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">mirror</a> {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span> _mirror_element_type(std::type_identity&lt;T&gt;) {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">no_metaobject</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> _mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">T</a>&gt;) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">no_metaobject</a>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span> _mirror_element_type(std::type_identity&lt;E[]&gt;) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">return</span> remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(E));</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> _mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>[]&gt;) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">remove_all_aliases</a>(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>));</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span> _mirror_element_type(std::type_identity&lt;E[N]&gt;) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(E));</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, size_t N&gt;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> _mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>[<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">N</a>]&gt;) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">remove_all_aliases</a>(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>));</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;_mirror_element_type(std::type_identity&lt;std::array&lt;E, N&gt;&gt;) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(E));</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, size_t N&gt;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;_mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">array</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">N</a>&gt;&gt;) {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">remove_all_aliases</a>(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>));</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <span class="keywordtype">size_t</span> X&gt;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span> _mirror_element_type(std::type_identity&lt;std::span&lt;E, X&gt;&gt;) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(E));</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, size_t X&gt;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> _mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">span</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">X</a>&gt;&gt;) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">remove_all_aliases</a>(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;_mirror_element_type(std::type_identity&lt;std::vector&lt;E, A&gt;&gt;) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">return</span> remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(E));</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;_mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">vector</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">A</a>&gt;&gt;) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">remove_all_aliases</a>(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>));</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <span class="keyword">typename</span> C, <span class="keyword">typename</span> A&gt;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;_mirror_element_type(std::type_identity&lt;std::set&lt;E, C, A&gt;&gt;) {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> remove_all_aliases(<a class="code" href="namespacemirror.html">mirror</a>(E));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;_mirror_element_type(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">type_identity</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">std</a>::<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">set</a>&lt;<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">C</a>, <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">A</a>&gt;&gt;) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">remove_all_aliases</a>(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(<a class="code" href="group__utilities.html#gab364426d404c1ab5036f9c692ef20f93">E</a>));</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">static</span> constexpr <span class="keyword">auto</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;get_element_type(<a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> mo) requires(<a class="code" href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">reflects_type</a>(mo)) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;get_element_type(metaobject <span class="keyword">auto</span> mo) <span class="keyword">requires</span>(reflects_type(mo)) {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">return</span> _mirror_element_type(get_reflected_type(mo));</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// MIRROR_ELEMENT_TYPE_HPP</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
-<div class="ttc" id="agroup__classification_html_gab6cadc34965b8326c55b21c48bdccd84"><div class="ttname"><a href="group__classification.html#gab6cadc34965b8326c55b21c48bdccd84">mirror::reflects_type</a></div><div class="ttdeci">consteval auto reflects_type(metaobject auto) noexcept -&gt; bool</div><div class="ttdoc">Indicates if a metaobject reflects a type.</div></div>
-<div class="ttc" id="agroup__metaobjects_html_gafebd6695d8facf073bcd63ca5530f201"><div class="ttname"><a href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">mirror::no_metaobject</a></div><div class="ttdeci">constinit const unspecified no_metaobject</div><div class="ttdoc">Special instance of metaobject that does not reflect anything.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:94</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
-<div class="ttc" id="aprimitives_8hpp_html"><div class="ttname"><a href="primitives_8hpp.html">primitives.hpp</a></div></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// MIRROR_ELEMENT_TYPE_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

@@ -73,26 +73,33 @@ $(function() {
 <div class="title">chaiscript.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="chaiscript_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef MIRROR_CHAISCRIPT_HPP</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define MIRROR_CHAISCRIPT_HPP</span></div>
+<a href="chaiscript_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// @file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/// Copyright Matus Chochlik.</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/// Distributed under the Boost Software License, Version 1.0.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/// See accompanying file LICENSE_1_0.txt or copy at</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///  http://www.boost.org/LICENSE_1_0.txt</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">MIRROR_CHAISCRIPT_HPP</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">MIRROR_CHAISCRIPT_HPP</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="diagnostic_8hpp.html">diagnostic.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="placeholder_8hpp.html">placeholder.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sequence_8hpp.html">sequence.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="diagnostic_8hpp.html">&quot;diagnostic.hpp&quot;</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="placeholder_8hpp.html">&quot;placeholder.hpp&quot;</a></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="sequence_8hpp.html">&quot;sequence.hpp&quot;</a></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;MIRROR_DIAG_PUSH()</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span>__clang__<span class="preprocessor">)</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;MIRROR_DIAG_OFF(documentation)</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;MIRROR_DIAG_OFF(<span class="keywordtype">double</span>-promotion)</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;MIRROR_DIAG_OFF(exit-time-destructors)</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;MIRROR_DIAG_OFF(reserved-identifier)</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;MIRROR_DIAG_OFF(<span class="keywordflow">switch</span>-<span class="keyword">enum</span>)</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;chaiscript/chaiscript.hpp&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">chaiscript</span><span class="preprocessor">/</span><span class="preprocessor">chaiscript</span><span class="preprocessor">.</span><span class="preprocessor">hpp</span><span class="preprocessor">&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;MIRROR_DIAG_POP()</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;namespace <a class="code" href="namespacemirror.html">mirror</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace</span> <a class="code" href="namespacemirror.html">mirror</a> {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> _add_type(</div>
@@ -106,7 +113,7 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> _add_constructor(</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  chaiscript::ChaiScript&amp; chai,</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  std::type_identity&lt;T&gt;,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  type_list&lt;P...&gt;,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <a class="code" href="structmirror_1_1type__list.html">type_list</a>&lt;P...&gt;,</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">const</span> std::string&amp; name) {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    chai.add(chaiscript::constructor&lt;T(P...)&gt;(), name);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
@@ -127,93 +134,82 @@ $(function() {
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    chai.add(chaiscript::type_conversion&lt;From, To&gt;());</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">void</span> _do_add_to(</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  chaiscript::ChaiScript&amp; chai,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> mo,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> ms) {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span> constexpr(reflects_object_sequence(mo)) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mo, [&amp;](<span class="keyword">auto</span> me) { _do_add_to(chai, me, ms); });</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(reflects_base(mo)) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        _add_base_class(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;          chai, get_reflected_type(get_class(mo)), get_reflected_type(ms));</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespacemirror.html">_do_add_to</a>(</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="namespacemirror.html">chaiscript</a>::<a class="code" href="namespacemirror.html">ChaiScript</a>&amp; <a class="code" href="namespacemirror.html">chai</a>,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="namespacemirror.html">metaobject</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="namespacemirror.html">metaobject</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">ms</a>) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_object_sequence</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="namespacemirror.html">for_each</a>(<a class="code" href="namespacemirror.html">mo</a>, [&amp;](<span class="keyword">auto</span> <a class="code" href="namespacemirror.html">me</a>) { <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">me</a>, <a class="code" href="namespacemirror.html">ms</a>); });</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_base</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="namespacemirror.html">_add_base_class</a>(</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;          <a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_reflected_type</a>(<a class="code" href="namespacemirror.html">get_class</a>(<a class="code" href="namespacemirror.html">mo</a>)), <a class="code" href="namespacemirror.html">get_reflected_type</a>(<a class="code" href="namespacemirror.html">ms</a>));</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">const</span> std::string name{get_name(mo)};</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span> constexpr(reflects_variable(mo)) {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">if</span> constexpr(reflects_record_member(mo)) {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keywordflow">if</span> constexpr(is_public(mo)) {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                    chai.add(chaiscript::fun(get_pointer(mo)), name);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacemirror.html">std</a>::<a class="code" href="namespacemirror.html">string</a> <a class="code" href="namespacemirror.html">name</a>{<a class="code" href="namespacemirror.html">get_name</a>(<a class="code" href="namespacemirror.html">mo</a>)};</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_variable</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_record_member</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">is_public</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                    <a class="code" href="namespacemirror.html">chai</a>.<a class="code" href="namespacemirror.html">add</a>(<a class="code" href="namespacemirror.html">chaiscript</a>::<a class="code" href="namespacemirror.html">fun</a>(<a class="code" href="namespacemirror.html">get_pointer</a>(<a class="code" href="namespacemirror.html">mo</a>)), <a class="code" href="namespacemirror.html">name</a>);</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                }</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                chai.add(chaiscript::var(<a class="code" href="group__operations.html#gaf2d62e24fe8d665078b71495aa1d069d">get_reference</a>(mo)), name);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <a class="code" href="namespacemirror.html">chai</a>.<a class="code" href="namespacemirror.html">add</a>(<a class="code" href="namespacemirror.html">chaiscript</a>::<a class="code" href="namespacemirror.html">var</a>(<a class="code" href="namespacemirror.html">get_reference</a>(<a class="code" href="namespacemirror.html">mo</a>)), <a class="code" href="namespacemirror.html">name</a>);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(reflects_constructor(mo)) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">if</span> constexpr(is_public(mo)) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                _add_constructor(</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                  chai,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                  get_reflected_type(get_scope(mo)),</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                  <a class="code" href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">extract_types</a>(<a class="code" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>(get_parameters(mo), get_type(_1))),</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                  name);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_constructor</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">is_public</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <a class="code" href="namespacemirror.html">_add_constructor</a>(</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                  <a class="code" href="namespacemirror.html">chai</a>,</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                  <a class="code" href="namespacemirror.html">get_reflected_type</a>(<a class="code" href="namespacemirror.html">get_scope</a>(<a class="code" href="namespacemirror.html">mo</a>)),</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                  <a class="code" href="namespacemirror.html">extract_types</a>(<a class="code" href="namespacemirror.html">transform</a>(<a class="code" href="namespacemirror.html">get_parameters</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">get_type</a>(<a class="code" href="namespacemirror.html">_1</a>))),</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                  <a class="code" href="namespacemirror.html">name</a>);</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(reflects_function(mo)) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">if</span> constexpr(reflects_record_member(mo) &amp;&amp; is_public(mo)) {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                <span class="keywordflow">if</span> constexpr(reflects_conversion_operator(mo)) {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                    <span class="keywordflow">if</span> constexpr(!is_deleted(mo)) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                        _add_conversion(</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                          chai,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                          get_reflected_type(get_scope(mo)),</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                          get_reflected_type(get_type(mo)));</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_function</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_record_member</a>(<a class="code" href="namespacemirror.html">mo</a>) &amp;&amp; <a class="code" href="namespacemirror.html">is_public</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_conversion_operator</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(!<a class="code" href="namespacemirror.html">is_deleted</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                        <a class="code" href="namespacemirror.html">_add_conversion</a>(</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                          <a class="code" href="namespacemirror.html">chai</a>,</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                          <a class="code" href="namespacemirror.html">get_reflected_type</a>(<a class="code" href="namespacemirror.html">get_scope</a>(<a class="code" href="namespacemirror.html">mo</a>)),</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                          <a class="code" href="namespacemirror.html">get_reflected_type</a>(<a class="code" href="namespacemirror.html">get_type</a>(<a class="code" href="namespacemirror.html">mo</a>)));</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                    }</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                    <span class="keywordflow">if</span> constexpr(!is_deleted(mo)) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                        chai.add(chaiscript::fun(get_pointer(mo)), name);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(!<a class="code" href="namespacemirror.html">is_deleted</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                        <a class="code" href="namespacemirror.html">chai</a>.<a class="code" href="namespacemirror.html">add</a>(<a class="code" href="namespacemirror.html">chaiscript</a>::<a class="code" href="namespacemirror.html">fun</a>(<a class="code" href="namespacemirror.html">get_pointer</a>(<a class="code" href="namespacemirror.html">mo</a>)), <a class="code" href="namespacemirror.html">name</a>);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                    }</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                chai.add(chaiscript::fun(get_pointer(mo)), name);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                <a class="code" href="namespacemirror.html">chai</a>.<a class="code" href="namespacemirror.html">add</a>(<a class="code" href="namespacemirror.html">chaiscript</a>::<a class="code" href="namespacemirror.html">fun</a>(<a class="code" href="namespacemirror.html">get_pointer</a>(<a class="code" href="namespacemirror.html">mo</a>)), <a class="code" href="namespacemirror.html">name</a>);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> constexpr(reflects_record(mo)) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            _add_type(chai, get_reflected_type(mo), name);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            _do_add_to(chai, get_base_classes(mo), mo);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            _do_add_to(chai, get_member_types(mo), mo);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            _do_add_to(chai, get_data_members(mo), mo);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            _do_add_to(chai, get_constructors(mo), mo);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            _do_add_to(chai, get_member_functions(mo), mo);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            _do_add_to(chai, get_operators(mo), mo);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<a class="code" href="namespacemirror.html">reflects_record</a>(<a class="code" href="namespacemirror.html">mo</a>)) {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <a class="code" href="namespacemirror.html">_add_type</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_reflected_type</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">name</a>);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_base_classes</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">mo</a>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_member_types</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">mo</a>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_data_members</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">mo</a>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_constructors</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">mo</a>);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_member_functions</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">mo</a>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">get_operators</a>(<a class="code" href="namespacemirror.html">mo</a>), <a class="code" href="namespacemirror.html">mo</a>);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> add_to(chaiscript::ChaiScript&amp; chai, <a class="code" href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">metaobject</a> <span class="keyword">auto</span> mo) {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    _do_add_to(chai, mo, <a class="code" href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">no_metaobject</a>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespacemirror.html">add_to</a>(<a class="code" href="namespacemirror.html">chaiscript</a>::<a class="code" href="namespacemirror.html">ChaiScript</a>&amp; <a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">metaobject</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>) {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="namespacemirror.html">_do_add_to</a>(<a class="code" href="namespacemirror.html">chai</a>, <a class="code" href="namespacemirror.html">mo</a>, <a class="code" href="namespacemirror.html">no_metaobject</a>);</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a>... M&gt;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id... M&gt;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keywordtype">void</span> add_to(</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  chaiscript::ChaiScript&amp; chai,</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  unpacked_metaobject_sequence&lt;M...&gt; mos) {</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <a class="code" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">for_each</a>(mos, [&amp;](<span class="keyword">auto</span> me) { _do_add_to(chai, me, <a class="code" href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">no_metaobject</a>); });</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    for_each(mos, [&amp;](<span class="keyword">auto</span> me) { _do_add_to(chai, me, no_metaobject); });</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;} <span class="comment">// namespace mirror</span></div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="adiagnostic_8hpp_html"><div class="ttname"><a href="diagnostic_8hpp.html">diagnostic.hpp</a></div></div>
-<div class="ttc" id="agroup__classification_html_ga03750eaa85e57af6f0518259e75027aa"><div class="ttname"><a href="group__classification.html#ga03750eaa85e57af6f0518259e75027aa">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:83</div></div>
-<div class="ttc" id="agroup__metaobjects_html_gac73ffa6847a81ec9595dfb2687982627"><div class="ttname"><a href="group__metaobjects.html#gac73ffa6847a81ec9595dfb2687982627">__metaobject_id</a></div><div class="ttdeci">unspecified __metaobject_id</div><div class="ttdoc">Internal type, values of which represent metaobjects in the compiler.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:41</div></div>
-<div class="ttc" id="agroup__metaobjects_html_gafebd6695d8facf073bcd63ca5530f201"><div class="ttname"><a href="group__metaobjects.html#gafebd6695d8facf073bcd63ca5530f201">mirror::no_metaobject</a></div><div class="ttdeci">constinit const unspecified no_metaobject</div><div class="ttdoc">Special instance of metaobject that does not reflect anything.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:94</div></div>
-<div class="ttc" id="agroup__operations_html_gaf2d62e24fe8d665078b71495aa1d069d"><div class="ttname"><a href="group__operations.html#gaf2d62e24fe8d665078b71495aa1d069d">mirror::get_reference</a></div><div class="ttdeci">constexpr auto &amp; get_reference(metaobject auto mo) noexcept requires(reflects_variable(mo))</div><div class="ttdoc">Returns a reference to the reflected base-level entity.</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_ga0696f940d3d01e608be7aa9f336b3c43"><div class="ttname"><a href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">mirror::transform</a></div><div class="ttdeci">constexpr auto transform(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Transforms each element in a sequence by applying the given function.</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_ga1b708f82557982085eec3eddaf7f4be7"><div class="ttname"><a href="group__sequence__operations.html#ga1b708f82557982085eec3eddaf7f4be7">mirror::extract_types</a></div><div class="ttdeci">constexpr auto extract_types(metaobject_sequence auto mo) noexcept -&gt; type_list&lt; unspecified... &gt;</div><div class="ttdoc">Unreflects metaobject in a sequence and stores them in type_list.</div></div>
-<div class="ttc" id="agroup__sequence__operations_html_ga67f4371722cd048fd660f4429279c2dc"><div class="ttname"><a href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc">mirror::for_each</a></div><div class="ttdeci">constexpr void for_each(metaobject_sequence auto mo, auto function) noexcept</div><div class="ttdoc">Calls the specified function for each metaobject in a sequence.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
-<div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
-<div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

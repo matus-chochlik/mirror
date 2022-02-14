@@ -95,22 +95,30 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="keyword">using</span> mirror::_1;</div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> highest_arity_overload = find_ranking(</div>
-<div class="line">      filter(get_member_functions(_1), ctre_match&lt;&quot;plus&quot;&gt;(get_name(_1))),</div>
-<div class="line">      get_size(get_parameters(_1)));</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> highest_arity_overload = <a name="a0"></a><a class="code" href="group__sequence__operations.html#ga96941ef41030eb456d7c20189dfee588">find_ranking</a>(</div>
+<div class="line">      <a name="a1"></a><a class="code" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">filter</a>(<a name="a2"></a><a class="code" href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">get_member_functions</a>(_1), ctre_match&lt;&quot;plus&quot;&gt;(<a name="a3"></a><a class="code" href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">get_name</a>(_1))),</div>
+<div class="line">      <a name="a4"></a><a class="code" href="group__sequence__operations.html#gab395d369ea130c82a024dcfe0daac492">get_size</a>(<a name="a5"></a><a class="code" href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">get_parameters</a>(_1)));</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="charliteral">&#39;(&#39;</span></div>
-<div class="line">              &lt;&lt; <a name="a0"></a><a class="code" href="group__sequence__operations.html#gaedbdfd4fe1762bec643bfdfe8f4c8075">join_to_string</a>(</div>
-<div class="line">                   get_parameters(highest_arity_overload(<a class="code" href="namespacemirror.html">mirror</a>(foo))),</div>
-<div class="line">                   get_display_name(get_type(_1)),</div>
+<div class="line">              &lt;&lt; <a name="a6"></a><a class="code" href="group__sequence__operations.html#gaedbdfd4fe1762bec643bfdfe8f4c8075">join_to_string</a>(</div>
+<div class="line">                   <a class="code" href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">get_parameters</a>(highest_arity_overload(<a class="code" href="namespacemirror.html">mirror</a>(foo))),</div>
+<div class="line">                   <a name="a7"></a><a class="code" href="group__operations.html#ga5a560e2805ff90a0790b4eb6d76c0659">get_display_name</a>(<a name="a8"></a><a class="code" href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">get_type</a>(_1)),</div>
 <div class="line">                   <span class="stringliteral">&quot;, &quot;</span>)</div>
 <div class="line">              &lt;&lt; <span class="charliteral">&#39;)&#39;</span> &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="actre__match_8hpp_html"><div class="ttname"><a href="ctre__match_8hpp.html">ctre_match.hpp</a></div></div>
+<div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3675c8c6f99dbb3699cf19033696e1eb"><div class="ttname"><a href="group__operations.html#ga3675c8c6f99dbb3699cf19033696e1eb">mirror::get_name</a></div><div class="ttdeci">consteval auto get_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the unqualified &quot;base name&quot; of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga3b86bbc5fd4d3bf3288082dd72c741d2"><div class="ttname"><a href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">mirror::get_parameters</a></div><div class="ttdeci">constexpr auto get_parameters(metaobject auto mo) noexcept requires(reflects_callable(mo))</div><div class="ttdoc">Returns a sequence of parameter reflections of a reflected callable.</div></div>
+<div class="ttc" id="agroup__operations_html_ga5a560e2805ff90a0790b4eb6d76c0659"><div class="ttname"><a href="group__operations.html#ga5a560e2805ff90a0790b4eb6d76c0659">mirror::get_display_name</a></div><div class="ttdeci">consteval auto get_display_name(metaobject auto mo) noexcept -&gt; string_view requires(reflects_named(mo))</div><div class="ttdoc">Returns the user-friendly name of the reflected base-level entity.</div></div>
+<div class="ttc" id="agroup__operations_html_ga658f1934110d936b9cf38e4b50d7c314"><div class="ttname"><a href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">mirror::get_type</a></div><div class="ttdeci">constexpr auto get_type(metaobject auto mo) noexcept requires(reflects_typed(mo))</div><div class="ttdoc">Returns a reflection of the type of a reflected typed entity.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga6feaae2b4cbd8c482875e62c33007f9c"><div class="ttname"><a href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">mirror::filter</a></div><div class="ttdeci">constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept</div><div class="ttdoc">Removes metaobjects not satisfying a predicate from a sequence.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_ga96941ef41030eb456d7c20189dfee588"><div class="ttname"><a href="group__sequence__operations.html#ga96941ef41030eb456d7c20189dfee588">mirror::find_ranking</a></div><div class="ttdeci">constexpr auto find_ranking(metaobject_sequence auto mo, auto transform, auto compare)</div><div class="ttdoc">Finds metaobject with ranking value of some property.</div></div>
+<div class="ttc" id="agroup__sequence__operations_html_gab395d369ea130c82a024dcfe0daac492"><div class="ttname"><a href="group__sequence__operations.html#gab395d369ea130c82a024dcfe0daac492">mirror::get_size</a></div><div class="ttdeci">consteval auto get_size(metaobject_sequence auto mo) noexcept -&gt; size_t requires(reflects_object_sequence(mo))</div><div class="ttdoc">Returns the number of elements in a metaobject sequence.</div></div>
 <div class="ttc" id="agroup__sequence__operations_html_gaedbdfd4fe1762bec643bfdfe8f4c8075"><div class="ttname"><a href="group__sequence__operations.html#gaedbdfd4fe1762bec643bfdfe8f4c8075">mirror::join_to_string</a></div><div class="ttdeci">constexpr auto join_to_string(metaobject_sequence auto mo, auto transform, std::string_view separator) -&gt; std::string</div><div class="ttdoc">Transforms each metaobject and joins the results separated by separator.</div></div>
-<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> mirror.hpp:16</div></div>
+<div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="asequence_8hpp_html"><div class="ttname"><a href="sequence_8hpp.html">sequence.hpp</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -118,7 +126,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

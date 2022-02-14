@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['begin_468',['begin',['../classmirror_1_1program__args.html#a80b08c639d164353319eb482143b7e10',1,'mirror::program_args']]],
-  ['bitfield_469',['bitfield',['../classmirror_1_1bitfield.html#a251f099f1c430799e214d2062bde2382',1,'mirror::bitfield::bitfield() noexcept=default'],['../classmirror_1_1bitfield.html#aedbce0af2523cd126a79f28498f9372f',1,'mirror::bitfield::bitfield(const value_type bits) noexcept'],['../classmirror_1_1bitfield.html#a583dc8fdc59a6b123c314c894ce16f97',1,'mirror::bitfield::bitfield(const bit_type _bit) noexcept']]],
-  ['bits_470',['bits',['../classmirror_1_1bitfield.html#aa7ccf6b176b37ec7a26d84608d715983',1,'mirror::bitfield']]]
+  ['begin_478',['begin',['../classmirror_1_1program__args.html#a798426cfecbf5a9cb9281a40410b9e21',1,'mirror::program_args']]],
+  ['bitfield_479',['bitfield',['../classmirror_1_1bitfield.html#a2381684c0159237595d1920465e7cc8a',1,'mirror::bitfield::bitfield() noexcept=default'],['../classmirror_1_1bitfield.html#a9f6f76ecad9c7071bd6f2d9dd0da72b0',1,'mirror::bitfield::bitfield(const value_type bits) noexcept'],['../classmirror_1_1bitfield.html#acd55357c9f9aff8a763633a44aa64468',1,'mirror::bitfield::bitfield(const bit_type _bit) noexcept']]],
+  ['bits_480',['bits',['../classmirror_1_1bitfield.html#aeb2d0936f26bebfe5782db43864fb621',1,'mirror::bitfield']]]
 ];

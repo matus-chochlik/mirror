@@ -94,19 +94,19 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga34bb88e60481fbddc0ceb339f09e7d8c"><td class="memTemplParams" colspan="2">template&lt;typename Dst , typename Src &gt; </td></tr>
-<tr class="memitem:ga34bb88e60481fbddc0ceb339f09e7d8c"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga34bb88e60481fbddc0ceb339f09e7d8c">mirror::is_within_limits</a> (const Src value) noexcept</td></tr>
+<tr class="memitem:ga34bb88e60481fbddc0ceb339f09e7d8c"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga34bb88e60481fbddc0ceb339f09e7d8c">is_within_limits</a> (const Src value) noexcept</td></tr>
 <tr class="memdesc:ga34bb88e60481fbddc0ceb339f09e7d8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if <code>value</code> fits into the specified Dst type.  <a href="group__utilities.html#ga34bb88e60481fbddc0ceb339f09e7d8c">More...</a><br /></td></tr>
 <tr class="separator:ga34bb88e60481fbddc0ceb339f09e7d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7237366d3ae694bc7202a878e4e5d6d"><td class="memTemplParams" colspan="2">template&lt;typename Dst , typename Src &gt; </td></tr>
-<tr class="memitem:gac7237366d3ae694bc7202a878e4e5d6d"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#gac7237366d3ae694bc7202a878e4e5d6d">mirror::limit_cast</a> (Src value) noexcept -&gt; std::enable_if_t&lt; std::is_convertible_v&lt; Src, Dst &gt;, Dst &gt;</td></tr>
+<tr class="memitem:gac7237366d3ae694bc7202a878e4e5d6d"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#gac7237366d3ae694bc7202a878e4e5d6d">limit_cast</a> (Src value) noexcept -&gt; std::enable_if_t&lt; std::is_convertible_v&lt; Src, Dst &gt;, Dst &gt;</td></tr>
 <tr class="memdesc:gac7237366d3ae694bc7202a878e4e5d6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts <code>value</code> to Dst type if the value fits in that type.  <a href="group__utilities.html#gac7237366d3ae694bc7202a878e4e5d6d">More...</a><br /></td></tr>
 <tr class="separator:gac7237366d3ae694bc7202a878e4e5d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga95fcb751b6212b6cc9fa25922c86bded"><td class="memTemplParams" colspan="2">template&lt;typename Src &gt; </td></tr>
-<tr class="memitem:ga95fcb751b6212b6cc9fa25922c86bded"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga95fcb751b6212b6cc9fa25922c86bded">mirror::signedness_cast</a> (Src value) noexcept</td></tr>
+<tr class="memitem:ga95fcb751b6212b6cc9fa25922c86bded"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga95fcb751b6212b6cc9fa25922c86bded">signedness_cast</a> (Src value) noexcept</td></tr>
 <tr class="memdesc:ga95fcb751b6212b6cc9fa25922c86bded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts <code>value</code> to a type with the opposite signedness.  <a href="group__utilities.html#ga95fcb751b6212b6cc9fa25922c86bded">More...</a><br /></td></tr>
 <tr class="separator:ga95fcb751b6212b6cc9fa25922c86bded"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga323dc0730024bb2d547afca26a115e51"><td class="memTemplParams" colspan="2">template&lt;typename Dst , typename Src &gt; </td></tr>
-<tr class="memitem:ga323dc0730024bb2d547afca26a115e51"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga323dc0730024bb2d547afca26a115e51">mirror::convert_if_fits</a> (Src value) noexcept -&gt; std::enable_if_t&lt; std::is_convertible_v&lt; Src, Dst &gt;, std::optional&lt; Dst &gt;&gt;</td></tr>
+<tr class="memitem:ga323dc0730024bb2d547afca26a115e51"><td class="memTemplItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__utilities.html#ga323dc0730024bb2d547afca26a115e51">convert_if_fits</a> (Src value) noexcept -&gt; std::enable_if_t&lt; std::is_convertible_v&lt; Src, Dst &gt;, std::optional&lt; Dst &gt;&gt;</td></tr>
 <tr class="memdesc:ga323dc0730024bb2d547afca26a115e51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optionally converts <code>value</code> to Dst type if the value fits in that type.  <a href="group__utilities.html#ga323dc0730024bb2d547afca26a115e51">More...</a><br /></td></tr>
 <tr class="separator:ga323dc0730024bb2d547afca26a115e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -117,7 +117,7 @@ Functions</h2></td></tr>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

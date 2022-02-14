@@ -7,7 +7,7 @@
 <meta name="copyright" content="Copyright 2008-2021 Matus Chochlik"/>
 <meta name="keywords" content="C++ Reflection"/>
 <meta name="description" content="C++ reflection API, utilities and examples"/>
-<title>mirror::program_arg Class Reference</title>
+<title>program_arg Class Reference</title>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -74,7 +74,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classmirror_1_1program__arg-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mirror::program_arg Class Reference<div class="ingroups"><a class="el" href="group__utilities.html">Utilities</a></div></div>  </div>
+<div class="title">program_arg Class Reference<div class="ingroups"><a class="el" href="group__utilities.html">Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -85,73 +85,73 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a2287450c2033ec7b72ad8a97633d678c"><td class="memItemLeft" align="right" valign="top"><a id="a2287450c2033ec7b72ad8a97633d678c"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> = std::string_view</td></tr>
-<tr class="memdesc:a2287450c2033ec7b72ad8a97633d678c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the argument value type. <br /></td></tr>
-<tr class="separator:a2287450c2033ec7b72ad8a97633d678c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae80aa567caa3d7897b356d5c4a47c1d2"><td class="memItemLeft" align="right" valign="top"><a id="ae80aa567caa3d7897b356d5c4a47c1d2"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> = std::string_view</td></tr>
+<tr class="memdesc:ae80aa567caa3d7897b356d5c4a47c1d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the argument value type. <br /></td></tr>
+<tr class="separator:ae80aa567caa3d7897b356d5c4a47c1d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae80fa9f00b08068f91d4188b8fec55d3"><td class="memItemLeft" align="right" valign="top"><a id="ae80fa9f00b08068f91d4188b8fec55d3"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ae80fa9f00b08068f91d4188b8fec55d3">program_arg</a> () noexcept=default</td></tr>
-<tr class="memdesc:ae80fa9f00b08068f91d4188b8fec55d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:ae80fa9f00b08068f91d4188b8fec55d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab87dbe813034e5285a9e9fb647386bf7"><td class="memItemLeft" align="right" valign="top"><a id="ab87dbe813034e5285a9e9fb647386bf7"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ab87dbe813034e5285a9e9fb647386bf7">has_value</a> () const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:ab87dbe813034e5285a9e9fb647386bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the arguments has_value. <br /></td></tr>
-<tr class="separator:ab87dbe813034e5285a9e9fb647386bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4d7cb8214f05cd7e4679c48579d1bee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ad4d7cb8214f05cd7e4679c48579d1bee">operator bool</a> () const noexcept</td></tr>
-<tr class="memdesc:ad4d7cb8214f05cd7e4679c48579d1bee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the arguments has value.  <a href="classmirror_1_1program__arg.html#ad4d7cb8214f05cd7e4679c48579d1bee">More...</a><br /></td></tr>
-<tr class="separator:ad4d7cb8214f05cd7e4679c48579d1bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb761add08481985b6e1af417a4cb1f7"><td class="memItemLeft" align="right" valign="top"><a id="adb761add08481985b6e1af417a4cb1f7"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#adb761add08481985b6e1af417a4cb1f7">position</a> () const noexcept</td></tr>
-<tr class="memdesc:adb761add08481985b6e1af417a4cb1f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index of this argument. <br /></td></tr>
-<tr class="separator:adb761add08481985b6e1af417a4cb1f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa569ec27a24d5b798d84391c31674126"><td class="memItemLeft" align="right" valign="top"><a id="aa569ec27a24d5b798d84391c31674126"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#aa569ec27a24d5b798d84391c31674126">is_first</a> () const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:aa569ec27a24d5b798d84391c31674126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this is the first command-line argument. <br /></td></tr>
-<tr class="separator:aa569ec27a24d5b798d84391c31674126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee1c8845b92866ab2543584dd4b4f0c3"><td class="memItemLeft" align="right" valign="top"><a id="aee1c8845b92866ab2543584dd4b4f0c3"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#aee1c8845b92866ab2543584dd4b4f0c3">is_last</a> () const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:aee1c8845b92866ab2543584dd4b4f0c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this is the last command-line argument. <br /></td></tr>
-<tr class="separator:aee1c8845b92866ab2543584dd4b4f0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65fd6cd9e9c31c93fc86acdff4f815d1"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a65fd6cd9e9c31c93fc86acdff4f815d1">get</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a></td></tr>
-<tr class="memdesc:a65fd6cd9e9c31c93fc86acdff4f815d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of this argument if valid, an empty string view otherwise.  <a href="classmirror_1_1program__arg.html#a65fd6cd9e9c31c93fc86acdff4f815d1">More...</a><br /></td></tr>
-<tr class="separator:a65fd6cd9e9c31c93fc86acdff4f815d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4973fb9fb47810d59a9f7665bcdc91da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a4973fb9fb47810d59a9f7665bcdc91da">operator value_type</a> () const noexcept</td></tr>
-<tr class="memdesc:a4973fb9fb47810d59a9f7665bcdc91da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit cast to value_type.  <a href="classmirror_1_1program__arg.html#a4973fb9fb47810d59a9f7665bcdc91da">More...</a><br /></td></tr>
-<tr class="separator:a4973fb9fb47810d59a9f7665bcdc91da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6c06bd6da888c330a1a96f602daebf9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#af6c06bd6da888c330a1a96f602daebf9">next</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1program__arg.html">program_arg</a></td></tr>
-<tr class="memdesc:af6c06bd6da888c330a1a96f602daebf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the argument following this one.  <a href="classmirror_1_1program__arg.html#af6c06bd6da888c330a1a96f602daebf9">More...</a><br /></td></tr>
-<tr class="separator:af6c06bd6da888c330a1a96f602daebf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a182509b795c8d06b4d66c178cd628242"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a182509b795c8d06b4d66c178cd628242">prev</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1program__arg.html">program_arg</a></td></tr>
-<tr class="memdesc:a182509b795c8d06b4d66c178cd628242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the argument preceding this one.  <a href="classmirror_1_1program__arg.html#a182509b795c8d06b4d66c178cd628242">More...</a><br /></td></tr>
-<tr class="separator:a182509b795c8d06b4d66c178cd628242"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb9aa624e6e1bc6ec75eee54cdd4fa75"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#aeb9aa624e6e1bc6ec75eee54cdd4fa75">starts_with</a> (<a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> str) const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:aeb9aa624e6e1bc6ec75eee54cdd4fa75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the argument starts with str.  <a href="classmirror_1_1program__arg.html#aeb9aa624e6e1bc6ec75eee54cdd4fa75">More...</a><br /></td></tr>
-<tr class="separator:aeb9aa624e6e1bc6ec75eee54cdd4fa75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad24e0f89d25a3043ea1943f99f367573"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ad24e0f89d25a3043ea1943f99f367573">ends_with</a> (<a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> str) const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:ad24e0f89d25a3043ea1943f99f367573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the argument ends with str.  <a href="classmirror_1_1program__arg.html#ad24e0f89d25a3043ea1943f99f367573">More...</a><br /></td></tr>
-<tr class="separator:ad24e0f89d25a3043ea1943f99f367573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a746da2f9726cde49cf5215fd5faa00cf"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a746da2f9726cde49cf5215fd5faa00cf">is_long_tag</a> (<a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> str) const noexcept -&gt; bool</td></tr>
-<tr class="memdesc:a746da2f9726cde49cf5215fd5faa00cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the argument is "--&lt;str&gt;".  <a href="classmirror_1_1program__arg.html#a746da2f9726cde49cf5215fd5faa00cf">More...</a><br /></td></tr>
-<tr class="separator:a746da2f9726cde49cf5215fd5faa00cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a0b213c329a7f54ab2d4932e0c3addb"><td class="memItemLeft" align="right" valign="top"><a id="a1a0b213c329a7f54ab2d4932e0c3addb"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a1a0b213c329a7f54ab2d4932e0c3addb">operator==</a> (const <a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> &amp;v) const noexcept</td></tr>
-<tr class="memdesc:a1a0b213c329a7f54ab2d4932e0c3addb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this argument's value is equal to the specified string. <br /></td></tr>
-<tr class="separator:a1a0b213c329a7f54ab2d4932e0c3addb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0a3535442a3f5380c98b91b611891da"><td class="memItemLeft" align="right" valign="top"><a id="ae0a3535442a3f5380c98b91b611891da"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ae0a3535442a3f5380c98b91b611891da">operator!=</a> (const <a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> &amp;v) const noexcept</td></tr>
-<tr class="memdesc:ae0a3535442a3f5380c98b91b611891da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this argument's value is different than the specified string. <br /></td></tr>
-<tr class="separator:ae0a3535442a3f5380c98b91b611891da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acef83ea1e008d735b0c8c9f394b084be"><td class="memItemLeft" align="right" valign="top"><a id="acef83ea1e008d735b0c8c9f394b084be"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#acef83ea1e008d735b0c8c9f394b084be">program_arg</a> () noexcept=default</td></tr>
+<tr class="memdesc:acef83ea1e008d735b0c8c9f394b084be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:acef83ea1e008d735b0c8c9f394b084be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9704ee9496a230ab7a12a09a09120eb9"><td class="memItemLeft" align="right" valign="top"><a id="a9704ee9496a230ab7a12a09a09120eb9"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a9704ee9496a230ab7a12a09a09120eb9">has_value</a> () const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a9704ee9496a230ab7a12a09a09120eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the arguments has_value. <br /></td></tr>
+<tr class="separator:a9704ee9496a230ab7a12a09a09120eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a420e60e9788bfa3b52aa3aab72ea3a5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a420e60e9788bfa3b52aa3aab72ea3a5e">operator bool</a> () const noexcept</td></tr>
+<tr class="memdesc:a420e60e9788bfa3b52aa3aab72ea3a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the arguments has value.  <a href="classmirror_1_1program__arg.html#a420e60e9788bfa3b52aa3aab72ea3a5e">More...</a><br /></td></tr>
+<tr class="separator:a420e60e9788bfa3b52aa3aab72ea3a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab581b4a1128f301c04a4016018fc0612"><td class="memItemLeft" align="right" valign="top"><a id="ab581b4a1128f301c04a4016018fc0612"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ab581b4a1128f301c04a4016018fc0612">position</a> () const noexcept</td></tr>
+<tr class="memdesc:ab581b4a1128f301c04a4016018fc0612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index of this argument. <br /></td></tr>
+<tr class="separator:ab581b4a1128f301c04a4016018fc0612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a31e7d0961ca883f448fc90a06a0c66"><td class="memItemLeft" align="right" valign="top"><a id="a6a31e7d0961ca883f448fc90a06a0c66"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a6a31e7d0961ca883f448fc90a06a0c66">is_first</a> () const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a6a31e7d0961ca883f448fc90a06a0c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this is the first command-line argument. <br /></td></tr>
+<tr class="separator:a6a31e7d0961ca883f448fc90a06a0c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fec66d2981ee62d4e1553942b9ba910"><td class="memItemLeft" align="right" valign="top"><a id="a7fec66d2981ee62d4e1553942b9ba910"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a7fec66d2981ee62d4e1553942b9ba910">is_last</a> () const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a7fec66d2981ee62d4e1553942b9ba910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this is the last command-line argument. <br /></td></tr>
+<tr class="separator:a7fec66d2981ee62d4e1553942b9ba910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1599d53c1afee8f43c2ae2d28938eeff"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a1599d53c1afee8f43c2ae2d28938eeff">get</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a></td></tr>
+<tr class="memdesc:a1599d53c1afee8f43c2ae2d28938eeff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of this argument if valid, an empty string view otherwise.  <a href="classmirror_1_1program__arg.html#a1599d53c1afee8f43c2ae2d28938eeff">More...</a><br /></td></tr>
+<tr class="separator:a1599d53c1afee8f43c2ae2d28938eeff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50634cb1006bee598073f3952b6a8c0e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a50634cb1006bee598073f3952b6a8c0e">operator value_type</a> () const noexcept</td></tr>
+<tr class="memdesc:a50634cb1006bee598073f3952b6a8c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit cast to value_type.  <a href="classmirror_1_1program__arg.html#a50634cb1006bee598073f3952b6a8c0e">More...</a><br /></td></tr>
+<tr class="separator:a50634cb1006bee598073f3952b6a8c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2aec1fdb52ff84446cc9860abc8774ee"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a2aec1fdb52ff84446cc9860abc8774ee">next</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1program__arg.html">program_arg</a></td></tr>
+<tr class="memdesc:a2aec1fdb52ff84446cc9860abc8774ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the argument following this one.  <a href="classmirror_1_1program__arg.html#a2aec1fdb52ff84446cc9860abc8774ee">More...</a><br /></td></tr>
+<tr class="separator:a2aec1fdb52ff84446cc9860abc8774ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4153a8f8c30b1c33725941397a6f12"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#aac4153a8f8c30b1c33725941397a6f12">prev</a> () const noexcept -&gt; <a class="el" href="classmirror_1_1program__arg.html">program_arg</a></td></tr>
+<tr class="memdesc:aac4153a8f8c30b1c33725941397a6f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the argument preceding this one.  <a href="classmirror_1_1program__arg.html#aac4153a8f8c30b1c33725941397a6f12">More...</a><br /></td></tr>
+<tr class="separator:aac4153a8f8c30b1c33725941397a6f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30bd9da8f2ddb0af13c018aebeee8a28"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a30bd9da8f2ddb0af13c018aebeee8a28">starts_with</a> (<a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> str) const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a30bd9da8f2ddb0af13c018aebeee8a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the argument starts with str.  <a href="classmirror_1_1program__arg.html#a30bd9da8f2ddb0af13c018aebeee8a28">More...</a><br /></td></tr>
+<tr class="separator:a30bd9da8f2ddb0af13c018aebeee8a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d25a3894ee1469f1aaa2c2c0a4fb61"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#ad3d25a3894ee1469f1aaa2c2c0a4fb61">ends_with</a> (<a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> str) const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ad3d25a3894ee1469f1aaa2c2c0a4fb61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the argument ends with str.  <a href="classmirror_1_1program__arg.html#ad3d25a3894ee1469f1aaa2c2c0a4fb61">More...</a><br /></td></tr>
+<tr class="separator:ad3d25a3894ee1469f1aaa2c2c0a4fb61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c879de6646256b0cb244cad2647b39d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a5c879de6646256b0cb244cad2647b39d">is_long_tag</a> (<a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> str) const noexcept -&gt; bool</td></tr>
+<tr class="memdesc:a5c879de6646256b0cb244cad2647b39d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the argument is "--&lt;str&gt;".  <a href="classmirror_1_1program__arg.html#a5c879de6646256b0cb244cad2647b39d">More...</a><br /></td></tr>
+<tr class="separator:a5c879de6646256b0cb244cad2647b39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cfe87987b14fc0f0b34d201585c6bef"><td class="memItemLeft" align="right" valign="top"><a id="a0cfe87987b14fc0f0b34d201585c6bef"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a0cfe87987b14fc0f0b34d201585c6bef">operator==</a> (const <a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> &amp;v) const noexcept</td></tr>
+<tr class="memdesc:a0cfe87987b14fc0f0b34d201585c6bef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this argument's value is equal to the specified string. <br /></td></tr>
+<tr class="separator:a0cfe87987b14fc0f0b34d201585c6bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8db56a21829f65d0986c36eaf3a5f9ae"><td class="memItemLeft" align="right" valign="top"><a id="a8db56a21829f65d0986c36eaf3a5f9ae"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmirror_1_1program__arg.html#a8db56a21829f65d0986c36eaf3a5f9ae">operator!=</a> (const <a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> &amp;v) const noexcept</td></tr>
+<tr class="memdesc:a8db56a21829f65d0986c36eaf3a5f9ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if this argument's value is different than the specified string. <br /></td></tr>
+<tr class="separator:a8db56a21829f65d0986c36eaf3a5f9ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing a single main function (command-line) argument. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__args.html" title="Class wrapping the main function arguments, providing a convenient API.">program_args</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Do not construct directly. Use program_arguments. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad24e0f89d25a3043ea1943f99f367573"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad24e0f89d25a3043ea1943f99f367573">&#9670;&nbsp;</a></span>ends_with()</h2>
+<a id="ad3d25a3894ee1469f1aaa2c2c0a4fb61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3d25a3894ee1469f1aaa2c2c0a4fb61">&#9670;&nbsp;</a></span>ends_with()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,9 +160,9 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto mirror::program_arg::ends_with </td>
+          <td class="memname">auto ends_with </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a>&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td> const -&gt; bool </td>
         </tr>
@@ -175,16 +175,16 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Indicates if the argument ends with str. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a65fd6cd9e9c31c93fc86acdff4f815d1" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a1599d53c1afee8f43c2ae2d28938eeff" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#aeb9aa624e6e1bc6ec75eee54cdd4fa75" title="Indicates if the argument starts with str.">starts_with</a> </dd>
+<a class="el" href="classmirror_1_1program__arg.html#a30bd9da8f2ddb0af13c018aebeee8a28" title="Indicates if the argument starts with str.">starts_with</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#a746da2f9726cde49cf5215fd5faa00cf" title="Indicates if the argument is &quot;--&lt;str&gt;&quot;.">is_long_tag</a> </dd></dl>
+<a class="el" href="classmirror_1_1program__arg.html#a5c879de6646256b0cb244cad2647b39d" title="Indicates if the argument is &quot;--&lt;str&gt;&quot;.">is_long_tag</a> </dd></dl>
 
 </div>
 </div>
-<a id="a65fd6cd9e9c31c93fc86acdff4f815d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65fd6cd9e9c31c93fc86acdff4f815d1">&#9670;&nbsp;</a></span>get()</h2>
+<a id="a1599d53c1afee8f43c2ae2d28938eeff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1599d53c1afee8f43c2ae2d28938eeff">&#9670;&nbsp;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -193,10 +193,10 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto mirror::program_arg::get </td>
+          <td class="memname">auto get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const -&gt; <a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> </td>
+          <td> const -&gt; <a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> </td>
         </tr>
       </table>
   </td>
@@ -207,16 +207,14 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Returns the value of this argument if valid, an empty string view otherwise. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#aeb9aa624e6e1bc6ec75eee54cdd4fa75" title="Indicates if the argument starts with str.">starts_with</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a30bd9da8f2ddb0af13c018aebeee8a28" title="Indicates if the argument starts with str.">starts_with</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#ad24e0f89d25a3043ea1943f99f367573" title="Indicates if the argument ends with str.">ends_with</a> </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classmirror_1_1program__arg.html#ad24e0f89d25a3043ea1943f99f367573">ends_with()</a>, <a class="el" href="classmirror_1_1program__arg.html#a746da2f9726cde49cf5215fd5faa00cf">is_long_tag()</a>, <a class="el" href="classmirror_1_1program__arg.html#a4973fb9fb47810d59a9f7665bcdc91da">operator value_type()</a>, <a class="el" href="classmirror_1_1program__arg.html#ae0a3535442a3f5380c98b91b611891da">operator!=()</a>, <a class="el" href="classmirror_1_1program__arg.html#a1a0b213c329a7f54ab2d4932e0c3addb">operator==()</a>, and <a class="el" href="classmirror_1_1program__arg.html#aeb9aa624e6e1bc6ec75eee54cdd4fa75">starts_with()</a>.</p>
+<a class="el" href="classmirror_1_1program__arg.html#ad3d25a3894ee1469f1aaa2c2c0a4fb61" title="Indicates if the argument ends with str.">ends_with</a> </dd></dl>
 
 </div>
 </div>
-<a id="a746da2f9726cde49cf5215fd5faa00cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a746da2f9726cde49cf5215fd5faa00cf">&#9670;&nbsp;</a></span>is_long_tag()</h2>
+<a id="a5c879de6646256b0cb244cad2647b39d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c879de6646256b0cb244cad2647b39d">&#9670;&nbsp;</a></span>is_long_tag()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,9 +223,9 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto mirror::program_arg::is_long_tag </td>
+          <td class="memname">auto is_long_tag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a>&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td> const -&gt; bool </td>
         </tr>
@@ -240,16 +238,16 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Indicates if the argument is "--&lt;str&gt;". </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a65fd6cd9e9c31c93fc86acdff4f815d1" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a1599d53c1afee8f43c2ae2d28938eeff" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#aeb9aa624e6e1bc6ec75eee54cdd4fa75" title="Indicates if the argument starts with str.">starts_with</a> </dd>
+<a class="el" href="classmirror_1_1program__arg.html#a30bd9da8f2ddb0af13c018aebeee8a28" title="Indicates if the argument starts with str.">starts_with</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#ad24e0f89d25a3043ea1943f99f367573" title="Indicates if the argument ends with str.">ends_with</a> </dd></dl>
+<a class="el" href="classmirror_1_1program__arg.html#ad3d25a3894ee1469f1aaa2c2c0a4fb61" title="Indicates if the argument ends with str.">ends_with</a> </dd></dl>
 
 </div>
 </div>
-<a id="af6c06bd6da888c330a1a96f602daebf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6c06bd6da888c330a1a96f602daebf9">&#9670;&nbsp;</a></span>next()</h2>
+<a id="a2aec1fdb52ff84446cc9860abc8774ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aec1fdb52ff84446cc9860abc8774ee">&#9670;&nbsp;</a></span>next()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,7 +256,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto mirror::program_arg::next </td>
+          <td class="memname">auto next </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const -&gt; <a class="el" href="classmirror_1_1program__arg.html">program_arg</a> </td>
@@ -272,12 +270,12 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Returns the argument following this one. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a182509b795c8d06b4d66c178cd628242" title="Returns the argument preceding this one.">prev</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#aac4153a8f8c30b1c33725941397a6f12" title="Returns the argument preceding this one.">prev</a> </dd></dl>
 
 </div>
 </div>
-<a id="ad4d7cb8214f05cd7e4679c48579d1bee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4d7cb8214f05cd7e4679c48579d1bee">&#9670;&nbsp;</a></span>operator bool()</h2>
+<a id="a420e60e9788bfa3b52aa3aab72ea3a5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a420e60e9788bfa3b52aa3aab72ea3a5e">&#9670;&nbsp;</a></span>operator bool()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,7 +284,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">mirror::program_arg::operator bool </td>
+          <td class="memname">operator bool </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -304,8 +302,8 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a4973fb9fb47810d59a9f7665bcdc91da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4973fb9fb47810d59a9f7665bcdc91da">&#9670;&nbsp;</a></span>operator value_type()</h2>
+<a id="a50634cb1006bee598073f3952b6a8c0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50634cb1006bee598073f3952b6a8c0e">&#9670;&nbsp;</a></span>operator value_type()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -314,7 +312,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">mirror::program_arg::operator <a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a> </td>
+          <td class="memname">operator <a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -328,12 +326,12 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Implicit cast to value_type. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a65fd6cd9e9c31c93fc86acdff4f815d1" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a1599d53c1afee8f43c2ae2d28938eeff" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd></dl>
 
 </div>
 </div>
-<a id="a182509b795c8d06b4d66c178cd628242"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a182509b795c8d06b4d66c178cd628242">&#9670;&nbsp;</a></span>prev()</h2>
+<a id="aac4153a8f8c30b1c33725941397a6f12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac4153a8f8c30b1c33725941397a6f12">&#9670;&nbsp;</a></span>prev()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,7 +340,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto mirror::program_arg::prev </td>
+          <td class="memname">auto prev </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const -&gt; <a class="el" href="classmirror_1_1program__arg.html">program_arg</a> </td>
@@ -356,12 +354,12 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Returns the argument preceding this one. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#af6c06bd6da888c330a1a96f602daebf9" title="Returns the argument following this one.">next</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a2aec1fdb52ff84446cc9860abc8774ee" title="Returns the argument following this one.">next</a> </dd></dl>
 
 </div>
 </div>
-<a id="aeb9aa624e6e1bc6ec75eee54cdd4fa75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb9aa624e6e1bc6ec75eee54cdd4fa75">&#9670;&nbsp;</a></span>starts_with()</h2>
+<a id="a30bd9da8f2ddb0af13c018aebeee8a28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30bd9da8f2ddb0af13c018aebeee8a28">&#9670;&nbsp;</a></span>starts_with()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -370,9 +368,9 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto mirror::program_arg::starts_with </td>
+          <td class="memname">auto starts_with </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmirror_1_1program__arg.html#a2287450c2033ec7b72ad8a97633d678c">value_type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmirror_1_1program__arg.html#ae80aa567caa3d7897b356d5c4a47c1d2">value_type</a>&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
           <td> const -&gt; bool </td>
         </tr>
@@ -385,11 +383,11 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Indicates if the argument starts with str. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a65fd6cd9e9c31c93fc86acdff4f815d1" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classmirror_1_1program__arg.html#a1599d53c1afee8f43c2ae2d28938eeff" title="Returns the value of this argument if valid, an empty string view otherwise.">get</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#ad24e0f89d25a3043ea1943f99f367573" title="Indicates if the argument ends with str.">ends_with</a> </dd>
+<a class="el" href="classmirror_1_1program__arg.html#ad3d25a3894ee1469f1aaa2c2c0a4fb61" title="Indicates if the argument ends with str.">ends_with</a> </dd>
 <dd>
-<a class="el" href="classmirror_1_1program__arg.html#a746da2f9726cde49cf5215fd5faa00cf" title="Indicates if the argument is &quot;--&lt;str&gt;&quot;.">is_long_tag</a> </dd></dl>
+<a class="el" href="classmirror_1_1program__arg.html#a5c879de6646256b0cb244cad2647b39d" title="Indicates if the argument is &quot;--&lt;str&gt;&quot;.">is_long_tag</a> </dd></dl>
 
 </div>
 </div>
@@ -401,7 +399,7 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Sat Feb 12 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->
