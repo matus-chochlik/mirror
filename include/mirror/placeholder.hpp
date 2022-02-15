@@ -1101,9 +1101,9 @@ constexpr auto get_top_value(placeholder_expr<X> e, F transform) {
 
 template <typename T, typename X, typename C, typename F>
 constexpr auto
-select(T fallback, placeholder_expr<X> e, C condition, F transform) {
+choose(T fallback, placeholder_expr<X> e, C condition, F transform) {
     return placeholder_expr{[e, &fallback, condition, transform](auto... a) {
-        return select(std::move(fallback), e(a...), condition, transform);
+        return choose(std::move(fallback), e(a...), condition, transform);
     }};
 }
 
