@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_712',['write',['../write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311',1,'mirror::serialize']]]
+  ['write_716',['write',['../write_8hpp.html#ae36beaaa9d5e8fd04429a36915094311',1,'mirror::serialize']]]
 ];

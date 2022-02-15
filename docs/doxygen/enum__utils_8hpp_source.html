@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.8.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -95,7 +95,7 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">/// @see string_to_enum</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt;</div>
 <div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="group__utilities.html#ga413c4a172d289c80ae4785cf8518d199">   22</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="group__utilities.html#ga413c4a172d289c80ae4785cf8518d199">enum_to_string</a>(<a class="code" href="group__utilities.html#ga413c4a172d289c80ae4785cf8518d199">E</a> <a class="code" href="group__utilities.html#ga413c4a172d289c80ae4785cf8518d199">e</a>) <span class="keyword">noexcept</span> -&gt; <a class="code" href="group__utilities.html#ga413c4a172d289c80ae4785cf8518d199">string_view</a> {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">return</span> select(</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">return</span> choose(</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;      std::string_view{},</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;      get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(E)),</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;      has_value(_1, e),</div>
@@ -107,7 +107,7 @@ $(function() {
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">/// @see enum_to_string</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt;</div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="group__utilities.html#gaa5c79576ba78e5259d528fe1f9daf79d">   34</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="group__utilities.html#gaa5c79576ba78e5259d528fe1f9daf79d">string_to_enum</a>(string_view s) <span class="keyword">noexcept</span> -&gt; std::optional&lt;E&gt; {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">return</span> select(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">return</span> choose(</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      std::optional&lt;E&gt;{},</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      get_enumerators(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(E)),</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      has_name(_1, s),</div>
@@ -122,7 +122,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

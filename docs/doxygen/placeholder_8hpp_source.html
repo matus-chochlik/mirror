@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.8.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -1176,9 +1176,9 @@ $(function() {
 <div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160; </div>
 <div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> X, <span class="keyword">typename</span> C, <span class="keyword">typename</span> F&gt;</div>
 <div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;select(T fallback, placeholder_expr&lt;X&gt; e, C condition, F transform) {</div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;choose(T fallback, placeholder_expr&lt;X&gt; e, C condition, F transform) {</div>
 <div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;    <span class="keywordflow">return</span> placeholder_expr{[e, &amp;fallback, condition, transform](<span class="keyword">auto</span>... a) {</div>
-<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;        <span class="keywordflow">return</span> select(std::move(fallback), e(a...), condition, transform);</div>
+<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;        <span class="keywordflow">return</span> choose(std::move(fallback), e(a...), condition, transform);</div>
 <div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;    }};</div>
 <div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;}</div>
 <div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160; </div>
@@ -1253,7 +1253,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

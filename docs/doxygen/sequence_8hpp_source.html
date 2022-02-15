@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.8.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -793,7 +793,7 @@ $(function() {
 <div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="comment">/// @ingroup sequence_operations</span></div>
 <div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment">/// @see remove_if</span></div>
 <div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="comment">/// @see for_each</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="comment">/// @see select</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="comment">/// @see choose</span></div>
 <div class="line"><a name="l00722"></a><span class="lineno"><a class="line" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c">  722</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">filter</a>(<a class="code" href="namespacemirror.html">metaobject_sequence</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>, <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">predicate</a>) <span class="keyword">noexcept</span>;</div>
 <div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id... M, <span class="keyword">typename</span> F&gt;</div>
@@ -845,7 +845,7 @@ $(function() {
 <div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;<span class="comment">/// @ingroup sequence_operations</span></div>
 <div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="comment">/// @see filter</span></div>
 <div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="comment">/// @see for_each</span></div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;<span class="comment">/// @see select</span></div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;<span class="comment">/// @see choose</span></div>
 <div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">filter</a>(<a class="code" href="namespacemirror.html">metaobject_sequence</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>, <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">predicate</a>) <span class="keyword">noexcept</span>;</div>
 <div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
 <div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id... M, <span class="keyword">typename</span> F&gt;</div>
@@ -990,7 +990,7 @@ $(function() {
 <div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;}</div>
 <div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160; </div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;<span class="comment">// select</span></div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;<span class="comment">// choose</span></div>
 <div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
 <div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;<span class="comment">/// @brief Get result of transform where condition is true or resturn fallback.</span></div>
 <div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;<span class="comment">/// @ingroup sequence_operations</span></div>
@@ -1003,10 +1003,10 @@ $(function() {
 <div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;<span class="comment">/// metaobject in a sequence where a condition is true or return fallback</span></div>
 <div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;<span class="comment">/// if condition is false for every metaobject in the sequence.</span></div>
 <div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00931"></a><span class="lineno"><a class="line" href="group__sequence__operations.html#gaa560d44be249d11f05c052bd1791ef93">  931</a></span>&#160;<a class="code" href="namespacemirror.html">select</a>(<span class="keyword">auto</span> <a class="code" href="namespacemirror.html">fallback</a>, <a class="code" href="namespacemirror.html">metaobject_sequence</a> <span class="keyword">auto</span>, <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">condition</a>, <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">transform</a>);</div>
+<div class="line"><a name="l00931"></a><span class="lineno"><a class="line" href="group__sequence__operations.html#gab87668aae2fcd511b5db658f63b6291e">  931</a></span>&#160;<a class="code" href="namespacemirror.html">choose</a>(<span class="keyword">auto</span> <a class="code" href="namespacemirror.html">fallback</a>, <a class="code" href="namespacemirror.html">metaobject_sequence</a> <span class="keyword">auto</span>, <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">condition</a>, <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">transform</a>);</div>
 <div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
 <div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, __metaobject_id... M, <span class="keyword">typename</span> C, <span class="keyword">typename</span> F&gt;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> select(</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> choose(</div>
 <div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;  T fallback,</div>
 <div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;  unpacked_metaobject_sequence&lt;M...&gt;,</div>
 <div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;  C condition,</div>
@@ -1022,7 +1022,7 @@ $(function() {
 <div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160; </div>
 <div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... E, <span class="keyword">typename</span> C, <span class="keyword">typename</span> F&gt;</div>
 <div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;select(T fallback, <a class="code" href="structmirror_1_1type__list.html">type_list</a>&lt;E...&gt; tl, C condition, F transform) <span class="keyword">noexcept</span> -&gt; T</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;choose(T fallback, <a class="code" href="structmirror_1_1type__list.html">type_list</a>&lt;E...&gt; tl, C condition, F transform) <span class="keyword">noexcept</span> -&gt; T</div>
 <div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;  <span class="keyword">requires</span>(is_object_sequence(tl)) {</div>
 <div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> function = [&amp;fallback, condition, transform](<span class="keyword">auto</span> mo) {</div>
 <div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;        <span class="keywordflow">if</span>(condition(mo)) {</div>
@@ -1035,9 +1035,9 @@ $(function() {
 <div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160; </div>
 <div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, __metaobject_id M, <span class="keyword">typename</span> C, <span class="keyword">typename</span> F&gt;</div>
 <div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;select(T fallback, <a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo, C condition, F transform) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;choose(T fallback, <a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo, C condition, F transform) <span class="keyword">noexcept</span></div>
 <div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;  -&gt; T <span class="keyword">requires</span>(__metaobject_is_meta_object_sequence(M)) {</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;    <span class="keywordflow">return</span> select(std::move(fallback), unpack(mo), condition, transform);</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;    <span class="keywordflow">return</span> choose(std::move(fallback), unpack(mo), condition, transform);</div>
 <div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;}</div>
 <div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160; </div>
@@ -1387,7 +1387,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

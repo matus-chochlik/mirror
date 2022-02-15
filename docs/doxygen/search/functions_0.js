@@ -1,11 +1,12 @@
 var searchData=
 [
-  ['abstract_470',['abstract',['../classmirror_1_1abstract.html#acae9ec14ef0d556c7a8f672915951ac0',1,'mirror::abstract::abstract() noexcept=default'],['../classmirror_1_1abstract.html#ad541d32560d1c68665c10ef76a1e33b8',1,'mirror::abstract::abstract(abstract &amp;&amp;) noexcept=default'],['../classmirror_1_1abstract.html#a923058efbdf886a9f4133f11ebc2c9dc',1,'mirror::abstract::abstract(const abstract &amp;) noexcept=default']]],
-  ['all_5fof_471',['all_of',['../group__sequence__operations.html#ga482ca759537fad4a2904655f06f71718',1,'mirror']]],
-  ['any_5fof_472',['any_of',['../group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37',1,'mirror']]],
-  ['apply_473',['apply',['../group__operations.html#ga32260338e82c2020aa9270497db2b815',1,'mirror::apply(wrapped_metaobject&lt; M &gt; mo) noexcept requires(is_applicable(mo))'],['../group__operations.html#ga871335218beea8eda83ca6eed77a12ce',1,'mirror::apply(wrapped_metaobject&lt; M &gt; mo, A &amp;&amp;args) requires(__metaobject_is_meta_function(M))']]],
-  ['apply_5fon_474',['apply_on',['../group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1',1,'mirror']]],
-  ['argc_475',['argc',['../classmirror_1_1program__args.html#a17ae4da69be4ccb42a7e69c22b8f7f05',1,'mirror::program_args']]],
-  ['argument_476',['argument',['../classmirror_1_1url.html#a66f65f2122ccc63c0653966849d05154',1,'mirror::url']]],
-  ['argv_477',['argv',['../classmirror_1_1program__args.html#add689cc890971d94015dcb3d6aa6a11d',1,'mirror::program_args']]]
+  ['abstract_472',['abstract',['../classmirror_1_1abstract.html#acae9ec14ef0d556c7a8f672915951ac0',1,'mirror::abstract::abstract() noexcept=default'],['../classmirror_1_1abstract.html#ad541d32560d1c68665c10ef76a1e33b8',1,'mirror::abstract::abstract(abstract &amp;&amp;) noexcept=default'],['../classmirror_1_1abstract.html#a923058efbdf886a9f4133f11ebc2c9dc',1,'mirror::abstract::abstract(const abstract &amp;) noexcept=default']]],
+  ['all_5fof_473',['all_of',['../group__sequence__operations.html#ga482ca759537fad4a2904655f06f71718',1,'mirror']]],
+  ['any_5fof_474',['any_of',['../group__sequence__operations.html#gac2c1088d89c13aafaacfc0734f22eb37',1,'mirror']]],
+  ['apply_475',['apply',['../group__operations.html#ga32260338e82c2020aa9270497db2b815',1,'mirror::apply(wrapped_metaobject&lt; M &gt; mo) noexcept requires(is_applicable(mo))'],['../group__operations.html#ga871335218beea8eda83ca6eed77a12ce',1,'mirror::apply(wrapped_metaobject&lt; M &gt; mo, A &amp;&amp;args) requires(__metaobject_is_meta_function(M))']]],
+  ['apply_5fon_476',['apply_on',['../group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1',1,'mirror']]],
+  ['apply_5fto_5finit_5flist_5fof_477',['apply_to_init_list_of',['../group__sequence__operations.html#ga77d495e637b2e2b4d33e9b340ec22150',1,'mirror']]],
+  ['argc_478',['argc',['../classmirror_1_1program__args.html#a17ae4da69be4ccb42a7e69c22b8f7f05',1,'mirror::program_args']]],
+  ['argument_479',['argument',['../classmirror_1_1url.html#a66f65f2122ccc63c0653966849d05154',1,'mirror::url']]],
+  ['argv_480',['argv',['../classmirror_1_1program__args.html#add689cc890971d94015dcb3d6aa6a11d',1,'mirror::program_args']]]
 ];

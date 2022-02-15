@@ -21,7 +21,7 @@
 		<div id="mirror-caption">
 	   		<div id="mirror-brief">
 					<span id="mirror-name">Mirror&#160;</span>
-					<span id="mirror-version">(0.7.0)</span> a C++ reflection library
+					<span id="mirror-version">(0.8.0)</span> a C++ reflection library
 				</div>
 		</div>
 		<hr/>
@@ -154,9 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf3219452e233df77e0d990d94fc56cec"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec">none_of</a> (<a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto mo, auto predicate) noexcept -&gt; bool</td></tr>
 <tr class="memdesc:gaf3219452e233df77e0d990d94fc56cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if no metaobjects in a sequence satisfy a predicate.  <a href="group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec">More...</a><br /></td></tr>
 <tr class="separator:gaf3219452e233df77e0d990d94fc56cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa560d44be249d11f05c052bd1791ef93"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaa560d44be249d11f05c052bd1791ef93">select</a> (auto fallback, <a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto, auto condition, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>)</td></tr>
-<tr class="memdesc:gaa560d44be249d11f05c052bd1791ef93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get result of transform where condition is true or resturn fallback.  <a href="group__sequence__operations.html#gaa560d44be249d11f05c052bd1791ef93">More...</a><br /></td></tr>
-<tr class="separator:gaa560d44be249d11f05c052bd1791ef93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab87668aae2fcd511b5db658f63b6291e"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gab87668aae2fcd511b5db658f63b6291e">choose</a> (auto fallback, <a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto, auto condition, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>)</td></tr>
+<tr class="memdesc:gab87668aae2fcd511b5db658f63b6291e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get result of transform where condition is true or resturn fallback.  <a href="group__sequence__operations.html#gab87668aae2fcd511b5db658f63b6291e">More...</a><br /></td></tr>
+<tr class="separator:gab87668aae2fcd511b5db658f63b6291e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga732c024777f6853a72443489de7bc965"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga732c024777f6853a72443489de7bc965">concat</a> (auto... mo) noexcept requires(... &amp;&amp;is_object(mo))</td></tr>
 <tr class="memdesc:ga732c024777f6853a72443489de7bc965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenates multiple metaobject sequences.  <a href="group__sequence__operations.html#ga732c024777f6853a72443489de7bc965">More...</a><br /></td></tr>
 <tr class="separator:ga732c024777f6853a72443489de7bc965"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,14 +176,21 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaca7d5dfc185e8679f87fbce26faa83e"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaaca7d5dfc185e8679f87fbce26faa83e">get_element</a> (<a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto mo) noexcept requires(<a class="el" href="group__classification.html#gab665f4ed545e1d5ce5f5d10761d5c76a">reflects_object_sequence</a>(mo))</td></tr>
 <tr class="memdesc:gaaca7d5dfc185e8679f87fbce26faa83e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the I-th metaobject in a metaobject sequence.  <a href="group__sequence__operations.html#gaaca7d5dfc185e8679f87fbce26faa83e">More...</a><br /></td></tr>
 <tr class="separator:gaaca7d5dfc185e8679f87fbce26faa83e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga059eae2813a96aa50ed939b525a69a2e"><td class="memTemplParams" colspan="2">template&lt;typename E &gt; </td></tr>
-<tr class="memitem:ga059eae2813a96aa50ed939b525a69a2e"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga059eae2813a96aa50ed939b525a69a2e">make_array_of</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept -&gt; std::array&lt; E, __unspecified &gt; requires(is_object_sequence(mo))</td></tr>
-<tr class="memdesc:ga059eae2813a96aa50ed939b525a69a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an array of values of metaobject properties extracted by transform.  <a href="group__sequence__operations.html#ga059eae2813a96aa50ed939b525a69a2e">More...</a><br /></td></tr>
-<tr class="separator:ga059eae2813a96aa50ed939b525a69a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb9062363bfc91d09cb7e43a2368f432"><td class="memTemplParams" colspan="2">template&lt;typename E &gt; </td></tr>
-<tr class="memitem:gacb9062363bfc91d09cb7e43a2368f432"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gacb9062363bfc91d09cb7e43a2368f432">make_array</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept -&gt; std::array&lt; E, __unspecified &gt; requires(is_object_sequence(mo))</td></tr>
-<tr class="memdesc:gacb9062363bfc91d09cb7e43a2368f432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an array of values of metaobject properties extracted by transform.  <a href="group__sequence__operations.html#gacb9062363bfc91d09cb7e43a2368f432">More...</a><br /></td></tr>
-<tr class="separator:gacb9062363bfc91d09cb7e43a2368f432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2ba0ff6c6172d596c51b3be17fa9a46"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gac2ba0ff6c6172d596c51b3be17fa9a46">make_value_tuple</a> (<a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> mo)</td></tr>
+<tr class="memdesc:gac2ba0ff6c6172d596c51b3be17fa9a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a default-initialized tuple from metaobjects reflecting types.  <a href="group__sequence__operations.html#gac2ba0ff6c6172d596c51b3be17fa9a46">More...</a><br /></td></tr>
+<tr class="separator:gac2ba0ff6c6172d596c51b3be17fa9a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf68914405eeff27b59265a609428e85c"><td class="memTemplParams" colspan="2">template&lt;typename E &gt; </td></tr>
+<tr class="memitem:gaf68914405eeff27b59265a609428e85c"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gaf68914405eeff27b59265a609428e85c">make_array_of</a> (<a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept -&gt; std::array&lt; E, __unspecified &gt;</td></tr>
+<tr class="memdesc:gaf68914405eeff27b59265a609428e85c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an array of values of metaobject properties extracted by transform.  <a href="group__sequence__operations.html#gaf68914405eeff27b59265a609428e85c">More...</a><br /></td></tr>
+<tr class="separator:gaf68914405eeff27b59265a609428e85c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf580d2da712fea0ec65b41dc12fd521"><td class="memTemplParams" colspan="2">template&lt;typename E &gt; </td></tr>
+<tr class="memitem:gadf580d2da712fea0ec65b41dc12fd521"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#gadf580d2da712fea0ec65b41dc12fd521">make_array</a> (<a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>) noexcept -&gt; std::array&lt; E, __unspecified &gt;</td></tr>
+<tr class="memdesc:gadf580d2da712fea0ec65b41dc12fd521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an array of values of metaobject properties extracted by transform.  <a href="group__sequence__operations.html#gadf580d2da712fea0ec65b41dc12fd521">More...</a><br /></td></tr>
+<tr class="separator:gadf580d2da712fea0ec65b41dc12fd521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77d495e637b2e2b4d33e9b340ec22150"><td class="memTemplParams" colspan="2">template&lt;typename E &gt; </td></tr>
+<tr class="memitem:ga77d495e637b2e2b4d33e9b340ec22150"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__sequence__operations.html#ga77d495e637b2e2b4d33e9b340ec22150">apply_to_init_list_of</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo, auto <a class="el" href="group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43">transform</a>, auto aggregate)</td></tr>
+<tr class="memdesc:ga77d495e637b2e2b4d33e9b340ec22150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies finction to init-list of values of properties from transform.  <a href="group__sequence__operations.html#ga77d495e637b2e2b4d33e9b340ec22150">More...</a><br /></td></tr>
+<tr class="separator:ga77d495e637b2e2b4d33e9b340ec22150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -272,6 +279,120 @@ Functions</h2></td></tr>
 <a class="el" href="group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec" title="Indicates if no metaobjects in a sequence satisfy a predicate.">none_of</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2good_example_8cpp-example.html#a0">mirror/good_example.cpp</a>, <a class="el" href="mirror_2has_overloaded_functions_8cpp-example.html#a2">mirror/has_overloaded_functions.cpp</a>, <a class="el" href="mirror_2has_overloaded_functions_2_8cpp-example.html#a0">mirror/has_overloaded_functions_2.cpp</a>, and <a class="el" href="mirror_2row_polymorphism_8cpp-example.html#a0">mirror/row_polymorphism.cpp</a>.</dd>
 </dl>
+
+</div>
+</div>
+<a id="ga77d495e637b2e2b4d33e9b340ec22150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga77d495e637b2e2b4d33e9b340ec22150">&#9670;&nbsp;</a></span>apply_to_init_list_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto apply_to_init_list_of </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
+          <td class="paramname"><em>mo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>aggregate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Applies finction to init-list of values of properties from transform. </p>
+<dl class="section see"><dt>See also</dt><dd>make_array_of </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gac2ba0ff6c6172d596c51b3be17fa9a46" title="Makes a default-initialized tuple from metaobjects reflecting types.">make_value_tuple</a> </dd>
+<dd>
+apply_to_init_list</dd></dl>
+<p>This function invokes the specified transform on each metaobject in a sequence creates an initializer list from the obtained values and calls the specified aggregate function on the init-list. In this version of the function allows to explicitly specify the list element type <code>E</code>.</p>
+<dl class="section see"><dt>See also</dt><dd>make_array </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gac2ba0ff6c6172d596c51b3be17fa9a46" title="Makes a default-initialized tuple from metaobjects reflecting types.">make_value_tuple</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga77d495e637b2e2b4d33e9b340ec22150" title="Applies finction to init-list of values of properties from transform.">apply_to_init_list_of</a></dd></dl>
+<p>This function invokes the specified transform on each metaobject in a sequence creates an initializer list from the obtained values and calls the specified aggregate function on the init-list. </p>
+
+</div>
+</div>
+<a id="gab87668aae2fcd511b5db658f63b6291e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab87668aae2fcd511b5db658f63b6291e">&#9670;&nbsp;</a></span>choose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::choose </td>
+          <td>(</td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>fallback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a>&#160;</td>
+          <td class="paramname"><em>auto</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>condition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto&#160;</td>
+          <td class="paramname"><em>transform</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get result of transform where condition is true or resturn fallback. </p>
+<dl class="section see"><dt>See also</dt><dd>remove_if </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c" title="Removes metaobjects not satisfying a predicate from a sequence.">filter</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f" title="Transforms each metaobject in sequence and then aggregates the result.">fold</a></dd></dl>
+<p>This function either returns the value returned by transform on the first metaobject in a sequence where a condition is true or return fallback if condition is false for every metaobject in the sequence. </p>
 
 </div>
 </div>
@@ -431,13 +552,13 @@ Functions</h2></td></tr>
 <dd>
 <a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
 <dd>
-<a class="el" href="group__sequence__operations.html#gaa560d44be249d11f05c052bd1791ef93" title="Get result of transform where condition is true or resturn fallback.">select</a></dd>
+<a class="el" href="group__sequence__operations.html#gab87668aae2fcd511b5db658f63b6291e" title="Get result of transform where condition is true or resturn fallback.">choose</a></dd>
 <dd>
 <a class="el" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c" title="Removes metaobjects not satisfying a predicate from a sequence.">filter</a> </dd>
 <dd>
 <a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
 <dd>
-<a class="el" href="group__sequence__operations.html#gaa560d44be249d11f05c052bd1791ef93" title="Get result of transform where condition is true or resturn fallback.">select</a> </dd></dl>
+<a class="el" href="group__sequence__operations.html#gab87668aae2fcd511b5db658f63b6291e" title="Get result of transform where condition is true or resturn fallback.">choose</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2amount_of_foo_8cpp-example.html#a2">mirror/amount_of_foo.cpp</a>, <a class="el" href="mirror_2filter_8cpp-example.html#a3">mirror/filter.cpp</a>, <a class="el" href="mirror_2has_padding_8cpp-example.html#a3">mirror/has_padding.cpp</a>, <a class="el" href="mirror_2interface_revision_8cpp-example.html#a1">mirror/interface_revision.cpp</a>, and <a class="el" href="mirror_2overload_arity_8cpp-example.html#a1">mirror/overload_arity.cpp</a>.</dd>
 </dl>
 
@@ -1313,8 +1434,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gacb9062363bfc91d09cb7e43a2368f432"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacb9062363bfc91d09cb7e43a2368f432">&#9670;&nbsp;</a></span>make_array()</h2>
+<a id="gadf580d2da712fea0ec65b41dc12fd521"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadf580d2da712fea0ec65b41dc12fd521">&#9670;&nbsp;</a></span>make_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1325,7 +1446,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">constexpr auto mirror::make_array </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto&#160;</td>
           <td class="paramname"><em>mo</em>, </td>
         </tr>
         <tr>
@@ -1337,7 +1458,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt;  std::array&lt; E, __unspecified &gt; requires(is_object_sequence(mo))</td>
+          <td></td><td> -&gt;  std::array&lt; E, __unspecified &gt;</td>
         </tr>
       </table>
   </td>
@@ -1348,13 +1469,17 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Makes an array of values of metaobject properties extracted by transform. </p>
-<dl class="section see"><dt>See also</dt><dd>make_array_of</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>make_array_of </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gac2ba0ff6c6172d596c51b3be17fa9a46" title="Makes a default-initialized tuple from metaobjects reflecting types.">make_value_tuple</a> </dd>
+<dd>
+apply_to_init_list</dd></dl>
 <p>This function applies the specified transform on each metaobject in a sequence and returns the results as an array with element type auto-detected from the return type of transform. <code>E</code>. </p>
 
 </div>
 </div>
-<a id="ga059eae2813a96aa50ed939b525a69a2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga059eae2813a96aa50ed939b525a69a2e">&#9670;&nbsp;</a></span>make_array_of()</h2>
+<a id="gaf68914405eeff27b59265a609428e85c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf68914405eeff27b59265a609428e85c">&#9670;&nbsp;</a></span>make_array_of()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1365,7 +1490,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">constexpr auto mirror::make_array_of </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a> auto&#160;</td>
           <td class="paramname"><em>mo</em>, </td>
         </tr>
         <tr>
@@ -1377,7 +1502,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt;  std::array&lt; E, __unspecified &gt; requires(is_object_sequence(mo))</td>
+          <td></td><td> -&gt;  std::array&lt; E, __unspecified &gt;</td>
         </tr>
       </table>
   </td>
@@ -1388,7 +1513,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Makes an array of values of metaobject properties extracted by transform. </p>
-<dl class="section see"><dt>See also</dt><dd>make_array</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>make_array </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#gac2ba0ff6c6172d596c51b3be17fa9a46" title="Makes a default-initialized tuple from metaobjects reflecting types.">make_value_tuple</a> </dd>
+<dd>
+<a class="el" href="group__sequence__operations.html#ga77d495e637b2e2b4d33e9b340ec22150" title="Applies finction to init-list of values of properties from transform.">apply_to_init_list_of</a></dd></dl>
 <p>This function applies the specified transform on each metaobject in a sequence and returns the results as an array with explicitly specified element type <code>E</code>. </p>
 
 </div>
@@ -1420,6 +1549,42 @@ Functions</h2></td></tr>
 <p>Makes an unpacked_metaobject_sequence from individual metaobjects. </p>
 <dl class="section see"><dt>See also</dt><dd>is_object_sequence </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2amount_of_foo_8cpp-example.html#a4">mirror/amount_of_foo.cpp</a>, <a class="el" href="mirror_2chai_on_mirror_8cpp-example.html#a0">mirror/chai_on_mirror.cpp</a>, <a class="el" href="mirror_2filter_8cpp-example.html#a1">mirror/filter.cpp</a>, and <a class="el" href="mirror_2remove_if_8cpp-example.html#a1">mirror/remove_if.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="gac2ba0ff6c6172d596c51b3be17fa9a46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2ba0ff6c6172d596c51b3be17fa9a46">&#9670;&nbsp;</a></span>make_value_tuple()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::make_value_tuple </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a>&#160;</td>
+          <td class="paramname"><em>mo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Makes a default-initialized tuple from metaobjects reflecting types. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__operations.html#gaed5794954e82025b6c6d90518c6b20c7" title="Returns the base-level type reflected by a type reflecting metaobject.">get_reflected_type_t</a> </dd>
+<dd>
+make_array </dd>
+<dd>
+make_array_of</dd></dl>
+<p>This function un-reflects the types reflected by metaobjects in a sequence and returns a default-initialized instantiation of std::tuple. </p>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2fake_rpc_8cpp-example.html#a8">mirror/fake_rpc.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -1464,64 +1629,6 @@ Functions</h2></td></tr>
 <a class="el" href="group__sequence__operations.html#ga482ca759537fad4a2904655f06f71718" title="Indicates if all metaobjects in a sequence satisfy a predicate.">all_of</a> </dd>
 <dd>
 <a class="el" href="group__sequence__operations.html#gaf3219452e233df77e0d990d94fc56cec" title="Indicates if no metaobjects in a sequence satisfy a predicate.">none_of</a> </dd></dl>
-
-</div>
-</div>
-<a id="gaa560d44be249d11f05c052bd1791ef93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa560d44be249d11f05c052bd1791ef93">&#9670;&nbsp;</a></span>select()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr auto mirror::select </td>
-          <td>(</td>
-          <td class="paramtype">auto&#160;</td>
-          <td class="paramname"><em>fallback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__classification.html#ga4ce8e7a47242447ba5c5bc63e7ee6296">metaobject_sequence</a>&#160;</td>
-          <td class="paramname"><em>auto</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">auto&#160;</td>
-          <td class="paramname"><em>condition</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">auto&#160;</td>
-          <td class="paramname"><em>transform</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get result of transform where condition is true or resturn fallback. </p>
-<dl class="section see"><dt>See also</dt><dd>remove_if </dd>
-<dd>
-<a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
-<dd>
-<a class="el" href="group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c" title="Removes metaobjects not satisfying a predicate from a sequence.">filter</a> </dd>
-<dd>
-<a class="el" href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f" title="Transforms each metaobject in sequence and then aggregates the result.">fold</a></dd></dl>
-<p>This function either returns the value returned by transform on the first metaobject in a sequence where a condition is true or return fallback if condition is false for every metaobject in the sequence. </p>
 
 </div>
 </div>
@@ -1655,7 +1762,7 @@ Functions</h2></td></tr>
 <a class="el" href="group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc" title="Calls the specified function for each metaobject in a sequence.">for_each</a> </dd>
 <dd>
 <a class="el" href="group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f" title="Transforms each metaobject in sequence and then aggregates the result.">fold</a> </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2fake_rpc_8cpp-example.html#a8">mirror/fake_rpc.cpp</a>, <a class="el" href="mirror_2find_if_8cpp-example.html#a8">mirror/find_if.cpp</a>, <a class="el" href="mirror_2has_padding_8cpp-example.html#a2">mirror/has_padding.cpp</a>, and <a class="el" href="mirror_2print_op_results_8cpp-example.html#a4">mirror/print_op_results.cpp</a>.</dd>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2fake_rpc_8cpp-example.html#a9">mirror/fake_rpc.cpp</a>, <a class="el" href="mirror_2find_if_8cpp-example.html#a8">mirror/find_if.cpp</a>, <a class="el" href="mirror_2has_padding_8cpp-example.html#a2">mirror/has_padding.cpp</a>, and <a class="el" href="mirror_2print_op_results_8cpp-example.html#a4">mirror/print_op_results.cpp</a>.</dd>
 </dl>
 
 </div>
@@ -1732,7 +1839,7 @@ Functions</h2></td></tr>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Mon Feb 14 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

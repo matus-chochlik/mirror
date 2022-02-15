@@ -7,7 +7,8 @@ var searchData=
   ['apply_5',['apply',['../group__operations.html#ga32260338e82c2020aa9270497db2b815',1,'mirror::apply(wrapped_metaobject&lt; M &gt; mo) noexcept requires(is_applicable(mo))'],['../group__operations.html#ga871335218beea8eda83ca6eed77a12ce',1,'mirror::apply(wrapped_metaobject&lt; M &gt; mo, A &amp;&amp;args) requires(__metaobject_is_meta_function(M))']]],
   ['apply_2ehpp_6',['apply.hpp',['../apply_8hpp.html',1,'']]],
   ['apply_5fon_7',['apply_on',['../group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1',1,'mirror']]],
-  ['argc_8',['argc',['../classmirror_1_1program__args.html#a17ae4da69be4ccb42a7e69c22b8f7f05',1,'mirror::program_args']]],
-  ['argument_9',['argument',['../classmirror_1_1url.html#a66f65f2122ccc63c0653966849d05154',1,'mirror::url']]],
-  ['argv_10',['argv',['../classmirror_1_1program__args.html#add689cc890971d94015dcb3d6aa6a11d',1,'mirror::program_args']]]
+  ['apply_5fto_5finit_5flist_5fof_8',['apply_to_init_list_of',['../group__sequence__operations.html#ga77d495e637b2e2b4d33e9b340ec22150',1,'mirror']]],
+  ['argc_9',['argc',['../classmirror_1_1program__args.html#a17ae4da69be4ccb42a7e69c22b8f7f05',1,'mirror::program_args']]],
+  ['argument_10',['argument',['../classmirror_1_1url.html#a66f65f2122ccc63c0653966849d05154',1,'mirror::url']]],
+  ['argv_11',['argv',['../classmirror_1_1program__args.html#add689cc890971d94015dcb3d6aa6a11d',1,'mirror::program_args']]]
 ];
