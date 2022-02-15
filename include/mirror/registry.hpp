@@ -30,7 +30,7 @@ auto get_metadata(wrapped_metaobject<M>, metadata_registry&) noexcept
 class stored_metadata : public metadata {
 private:
     static auto _get_op_boolean_results(auto mo) noexcept {
-        return apply_init_list_of<operation_boolean>(
+        return apply_to_init_list_of<operation_boolean>(
           filter(
             get_enumerators(mirror(object_trait)), mirror::try_apply(_1, mo)),
           get_constant(_1),
@@ -38,7 +38,7 @@ private:
     }
 
     static auto _get_op_boolean_applicable(auto mo) noexcept {
-        return apply_init_list_of<operation_boolean>(
+        return apply_to_init_list_of<operation_boolean>(
           filter(
             get_enumerators(mirror(object_trait)),
             mirror::is_applicable(_1, mo)),
@@ -47,7 +47,7 @@ private:
     }
 
     static auto _get_op_metaobject_applicable(auto mo) noexcept {
-        return apply_init_list_of<operation_metaobject>(
+        return apply_to_init_list_of<operation_metaobject>(
           filter(
             get_enumerators(mirror(operation_metaobject)),
             mirror::is_applicable(_1, mo)),
@@ -56,7 +56,7 @@ private:
     }
 
     static auto _get_op_integer_applicable(auto mo) noexcept {
-        return apply_init_list_of<operation_integer>(
+        return apply_to_init_list_of<operation_integer>(
           filter(
             get_enumerators(mirror(operation_integer)),
             mirror::is_applicable(_1, mo)),
@@ -65,7 +65,7 @@ private:
     }
 
     static auto _get_op_string_applicable(auto mo) noexcept {
-        return apply_init_list_of<operation_string>(
+        return apply_to_init_list_of<operation_string>(
           filter(
             get_enumerators(mirror(operation_string)),
             mirror::is_applicable(_1, mo)),
