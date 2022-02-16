@@ -149,22 +149,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5d192993132f5af37dc3f5abb725f591"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#ga5d192993132f5af37dc3f5abb725f591">get_front</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept requires(<a class="el" href="group__classification.html#gab665f4ed545e1d5ce5f5d10761d5c76a">reflects_object_sequence</a>(mo) &amp;&amp;!<a class="el" href="group__sequence__operations.html#ga8c07903a3dea2be2fbd623f02d4192f6">is_empty</a>(mo))</td></tr>
 <tr class="memdesc:ga5d192993132f5af37dc3f5abb725f591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the I-th metaobject in a metaobject sequence.  <a href="group__operations.html#ga5d192993132f5af37dc3f5abb725f591">More...</a><br /></td></tr>
 <tr class="separator:ga5d192993132f5af37dc3f5abb725f591"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga716ef323e318d0dcd964bbcca5f06725"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O, __metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga716ef323e318d0dcd964bbcca5f06725"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">is_applicable</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt; mo) noexcept -&gt; bool</td></tr>
-<tr class="memdesc:ga716ef323e318d0dcd964bbcca5f06725"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the specified operation is applicable to metaobject.  <a href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">More...</a><br /></td></tr>
-<tr class="separator:ga716ef323e318d0dcd964bbcca5f06725"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32260338e82c2020aa9270497db2b815"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O, __metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga32260338e82c2020aa9270497db2b815"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815">apply</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt; mo) noexcept requires(<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">is_applicable</a>(mo))</td></tr>
-<tr class="memdesc:ga32260338e82c2020aa9270497db2b815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject.  <a href="group__operations.html#ga32260338e82c2020aa9270497db2b815">More...</a><br /></td></tr>
-<tr class="separator:ga32260338e82c2020aa9270497db2b815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e49631a802f86f2ff84d0ac6533978a"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O, __metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga3e49631a802f86f2ff84d0ac6533978a"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">try_apply</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt; mo) noexcept</td></tr>
-<tr class="memdesc:ga3e49631a802f86f2ff84d0ac6533978a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject if it's applicable.  <a href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">More...</a><br /></td></tr>
-<tr class="separator:ga3e49631a802f86f2ff84d0ac6533978a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4568eae30ebba6764a90f8265bc02949"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:ga4568eae30ebba6764a90f8265bc02949"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">for_each_metaobject_operation</a> (F function)</td></tr>
-<tr class="memdesc:ga4568eae30ebba6764a90f8265bc02949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified function on each operation meta-enumerator.  <a href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">More...</a><br /></td></tr>
-<tr class="separator:ga4568eae30ebba6764a90f8265bc02949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O&gt; </td></tr>
+<tr class="memitem:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a">is_applicable</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the specified operation is applicable to metaobject.  <a href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a">More...</a><br /></td></tr>
+<tr class="separator:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c611cf42a6608f7a83021d1d44bae19"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O&gt; </td></tr>
+<tr class="memitem:ga7c611cf42a6608f7a83021d1d44bae19"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19">apply</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept requires(<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a">is_applicable</a>(mo))</td></tr>
+<tr class="memdesc:ga7c611cf42a6608f7a83021d1d44bae19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject.  <a href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19">More...</a><br /></td></tr>
+<tr class="separator:ga7c611cf42a6608f7a83021d1d44bae19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22408ca18add850478b73aea5b4b3c54"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O&gt; </td></tr>
+<tr class="memitem:ga22408ca18add850478b73aea5b4b3c54"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54">try_apply</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept</td></tr>
+<tr class="memdesc:ga22408ca18add850478b73aea5b4b3c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject if it's applicable.  <a href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54">More...</a><br /></td></tr>
+<tr class="separator:ga22408ca18add850478b73aea5b4b3c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff366fc659abbd16fae94c7ed75c0d03"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#gaff366fc659abbd16fae94c7ed75c0d03">for_each_metaobject_operation</a> (auto function)</td></tr>
+<tr class="memdesc:gaff366fc659abbd16fae94c7ed75c0d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified function on each operation meta-enumerator.  <a href="group__operations.html#gaff366fc659abbd16fae94c7ed75c0d03">More...</a><br /></td></tr>
+<tr class="separator:gaff366fc659abbd16fae94c7ed75c0d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa95c9fa614c2ebe68ebbbe16f82f44b9"><td class="memItemLeft" align="right" valign="top">consteval auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#gaa95c9fa614c2ebe68ebbbe16f82f44b9">is_constexpr</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept -&gt; bool requires(<a class="el" href="group__classification.html#gadbe61e23ce4be3fac23cad4525ce563c">reflects_variable</a>(mo)||<a class="el" href="group__classification.html#ga547f05353ff3787dc393d3e154adaab5">reflects_callable</a>(mo))</td></tr>
 <tr class="memdesc:gaa95c9fa614c2ebe68ebbbe16f82f44b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the reflected base-level entity is <code>constexpr</code>.  <a href="group__operations.html#gaa95c9fa614c2ebe68ebbbe16f82f44b9">More...</a><br /></td></tr>
 <tr class="separator:gaa95c9fa614c2ebe68ebbbe16f82f44b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -267,9 +266,8 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaccea9fb18d282c25ab448f62d6fe858"><td class="memItemLeft" align="right" valign="top">consteval auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#gaaccea9fb18d282c25ab448f62d6fe858">is_move_assignment_operator</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept -&gt; bool requires(<a class="el" href="group__classification.html#ga137ae09f026e7cb38f9cd122e1535def">reflects_operator</a>(mo) &amp;&amp;<a class="el" href="group__classification.html#ga0ceac468fc463ad0dd4f486c5530d8f9">reflects_special_member_function</a>(mo))</td></tr>
 <tr class="memdesc:gaaccea9fb18d282c25ab448f62d6fe858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the reflected operator is move assignment operator.  <a href="group__operations.html#gaaccea9fb18d282c25ab448f62d6fe858">More...</a><br /></td></tr>
 <tr class="separator:gaaccea9fb18d282c25ab448f62d6fe858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1371812c3203b417ac7df817c1ea8342"><td class="memItemLeft" align="right" valign="top"><a id="ga1371812c3203b417ac7df817c1ea8342"></a>
-consteval auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">reflect_same</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto ml, <a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mr) noexcept -&gt; bool</td></tr>
-<tr class="memdesc:ga1371812c3203b417ac7df817c1ea8342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the two metaobjects reflect the same base-level entity. <br /></td></tr>
+<tr class="memitem:ga1371812c3203b417ac7df817c1ea8342"><td class="memItemLeft" align="right" valign="top">consteval auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">reflect_same</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto ml, <a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mr) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ga1371812c3203b417ac7df817c1ea8342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the two metaobjects reflect the same base-level entity.  <a href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342">More...</a><br /></td></tr>
 <tr class="separator:ga1371812c3203b417ac7df817c1ea8342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga66355779ad5e9cf91fa811a7c1b4154f"><td class="memItemLeft" align="right" valign="top">consteval auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#ga66355779ad5e9cf91fa811a7c1b4154f">has_name</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo, string_view str) noexcept -&gt; bool requires(<a class="el" href="group__classification.html#ga674a6cc253f015b3bfd413a23d16a8ca">reflects_named</a>(mo))</td></tr>
 <tr class="memdesc:ga66355779ad5e9cf91fa811a7c1b4154f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the base name of the reflected entity is equal to <code>str</code>.  <a href="group__operations.html#ga66355779ad5e9cf91fa811a7c1b4154f">More...</a><br /></td></tr>
@@ -408,14 +406,15 @@ consteval auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memitem:ga2472ffe0de3c1fc567efd1beeb23d122"><td class="memTemplItemLeft" align="right" valign="top">consteval auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga2472ffe0de3c1fc567efd1beeb23d122">has_type_with_trait</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) noexcept -&gt; bool</td></tr>
 <tr class="memdesc:ga2472ffe0de3c1fc567efd1beeb23d122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if typed metaobject has type with specified trait.  <a href="group__operations.html#ga2472ffe0de3c1fc567efd1beeb23d122">More...</a><br /></td></tr>
 <tr class="separator:ga2472ffe0de3c1fc567efd1beeb23d122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8d2fc18dc2dc104571e1de6df92dc4c1"><td class="memTemplParams" colspan="2">template&lt;__metaobject_id M, typename C , typename A &gt; </td></tr>
-<tr class="memitem:ga8d2fc18dc2dc104571e1de6df92dc4c1"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">apply_on</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt; mo, C &amp;obj, A &amp;&amp;args) requires(__metaobject_is_meta_member_function(M))</td></tr>
-<tr class="memdesc:ga8d2fc18dc2dc104571e1de6df92dc4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the reflected member function on <code>obj</code> with specified <code>args</code>.  <a href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1">More...</a><br /></td></tr>
-<tr class="separator:ga8d2fc18dc2dc104571e1de6df92dc4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga871335218beea8eda83ca6eed77a12ce"><td class="memTemplParams" colspan="2">template&lt;__metaobject_id M, typename A &gt; </td></tr>
-<tr class="memitem:ga871335218beea8eda83ca6eed77a12ce"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga871335218beea8eda83ca6eed77a12ce">apply</a> (<a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt; mo, A &amp;&amp;args) requires(__metaobject_is_meta_function(M))</td></tr>
-<tr class="memdesc:ga871335218beea8eda83ca6eed77a12ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the reflected function on the specified <code>args</code> tuple.  <a href="group__operations.html#ga871335218beea8eda83ca6eed77a12ce">More...</a><br /></td></tr>
-<tr class="separator:ga871335218beea8eda83ca6eed77a12ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0c0f014273ccb39b77734488dcb1efa"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#gac0c0f014273ccb39b77734488dcb1efa">apply_on</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo, auto &amp;obj, auto &amp;&amp;args) requires(<a class="el" href="group__classification.html#ga339c54e493607ff020fd5b42d9111f5e">reflects_member_function</a>(mo))</td></tr>
+<tr class="memdesc:gac0c0f014273ccb39b77734488dcb1efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the reflected member function on <code>obj</code> with specified <code>args</code>.  <a href="group__operations.html#gac0c0f014273ccb39b77734488dcb1efa">More...</a><br /></td></tr>
+<tr class="separator:gac0c0f014273ccb39b77734488dcb1efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac53ddcd4f9f60f0da3818728d0a6543b"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#gac53ddcd4f9f60f0da3818728d0a6543b">apply</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo, auto &amp;&amp;args) requires(<a class="el" href="group__classification.html#ga4a74c9a8a3cd3e509164ea40b304d637">reflects_function</a>(mo))</td></tr>
+<tr class="memdesc:gac53ddcd4f9f60f0da3818728d0a6543b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the reflected function on the specified <code>args</code> tuple.  <a href="group__operations.html#gac53ddcd4f9f60f0da3818728d0a6543b">More...</a><br /></td></tr>
+<tr class="separator:gac53ddcd4f9f60f0da3818728d0a6543b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74766dbbc65124b7cef7c7858939a973"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#ga74766dbbc65124b7cef7c7858939a973">get_hash</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto) -&gt; <a class="el" href="namespacemirror.html#ab87ce44e612844838e9843a75c938344">hash_t</a></td></tr>
+<tr class="memdesc:ga74766dbbc65124b7cef7c7858939a973"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a hash uniquely identifying a reflected base-level entity.  <a href="group__operations.html#ga74766dbbc65124b7cef7c7858939a973">More...</a><br /></td></tr>
+<tr class="separator:ga74766dbbc65124b7cef7c7858939a973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga639c63182bf93efa505e9c0919f00cd0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#ga639c63182bf93efa505e9c0919f00cd0">get_full_name</a> (<a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto mo) -&gt; std::string</td></tr>
 <tr class="memdesc:ga639c63182bf93efa505e9c0919f00cd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns fully qualified name of the reflected base-level entity.  <a href="group__operations.html#ga639c63182bf93efa505e9c0919f00cd0">More...</a><br /></td></tr>
 <tr class="separator:ga639c63182bf93efa505e9c0919f00cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -507,11 +506,11 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
+<a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
 <dd>
 <a class="el" href="group__classification.html#gaa10ccd1a12e932c9a3e61097377f26b0" title="Metaobject trait bitfield.">meta_traits</a> </dd></dl>
 <table class="fieldtable">
@@ -560,11 +559,11 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
+<a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
 <dd>
 <a class="el" href="group__classification.html#gaa10ccd1a12e932c9a3e61097377f26b0" title="Metaobject trait bitfield.">meta_traits</a> </dd></dl>
 <table class="fieldtable">
@@ -643,11 +642,11 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
+<a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
 <dd>
 <a class="el" href="group__classification.html#gaa10ccd1a12e932c9a3e61097377f26b0" title="Metaobject trait bitfield.">meta_traits</a> </dd></dl>
 <table class="fieldtable">
@@ -690,11 +689,11 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
+<a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd>
 <dd>
 <a class="el" href="group__classification.html#gaa10ccd1a12e932c9a3e61097377f26b0" title="Metaobject trait bitfield.">meta_traits</a> </dd></dl>
 <table class="fieldtable">
@@ -711,8 +710,8 @@ traits </dd></dl>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga32260338e82c2020aa9270497db2b815"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga32260338e82c2020aa9270497db2b815">&#9670;&nbsp;</a></span>apply() <span class="overload">[1/2]</span></h2>
+<a id="ga7c611cf42a6608f7a83021d1d44bae19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c611cf42a6608f7a83021d1d44bae19">&#9670;&nbsp;</a></span>apply() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -723,7 +722,7 @@ traits </dd></dl>
         <tr>
           <td class="memname">constexpr auto mirror::apply </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
           <td class="paramname"><em>mo</em></td><td>)</td>
           <td></td>
         </tr>
@@ -748,14 +747,14 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd></dl>
 
 </div>
 </div>
-<a id="ga871335218beea8eda83ca6eed77a12ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga871335218beea8eda83ca6eed77a12ce">&#9670;&nbsp;</a></span>apply() <span class="overload">[2/2]</span></h2>
+<a id="gac53ddcd4f9f60f0da3818728d0a6543b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac53ddcd4f9f60f0da3818728d0a6543b">&#9670;&nbsp;</a></span>apply() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -766,13 +765,13 @@ traits </dd></dl>
         <tr>
           <td class="memname">constexpr auto apply </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
           <td class="paramname"><em>mo</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">A &amp;&amp;&#160;</td>
+          <td class="paramtype">auto &amp;&amp;&#160;</td>
           <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
@@ -800,12 +799,12 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd" title="Invokes the reflected function with the specified args.">invoke</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1" title="Applies the reflected member function on obj with specified args.">apply_on</a> </dd></dl>
+<a class="el" href="group__operations.html#gac0c0f014273ccb39b77734488dcb1efa" title="Applies the reflected member function on obj with specified args.">apply_on</a> </dd></dl>
 
 </div>
 </div>
-<a id="ga8d2fc18dc2dc104571e1de6df92dc4c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8d2fc18dc2dc104571e1de6df92dc4c1">&#9670;&nbsp;</a></span>apply_on()</h2>
+<a id="gac0c0f014273ccb39b77734488dcb1efa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac0c0f014273ccb39b77734488dcb1efa">&#9670;&nbsp;</a></span>apply_on()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -816,19 +815,19 @@ traits </dd></dl>
         <tr>
           <td class="memname">constexpr auto mirror::apply_on </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
           <td class="paramname"><em>mo</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">C &amp;&#160;</td>
+          <td class="paramtype">auto &amp;&#160;</td>
           <td class="paramname"><em>obj</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">A &amp;&amp;&#160;</td>
+          <td class="paramtype">auto &amp;&amp;&#160;</td>
           <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
@@ -851,14 +850,14 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#ga30da3240559456deead23706feb73d71" title="Invokes the reflected member function on obj with specified args.">invoke_on</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2fake_rpc_8cpp-example.html#a11">mirror/fake_rpc.cpp</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="ga4568eae30ebba6764a90f8265bc02949"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4568eae30ebba6764a90f8265bc02949">&#9670;&nbsp;</a></span>for_each_metaobject_operation()</h2>
+<a id="gaff366fc659abbd16fae94c7ed75c0d03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff366fc659abbd16fae94c7ed75c0d03">&#9670;&nbsp;</a></span>for_each_metaobject_operation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -869,7 +868,7 @@ traits </dd></dl>
         <tr>
           <td class="memname">constexpr void mirror::for_each_metaobject_operation </td>
           <td>(</td>
-          <td class="paramtype">F&#160;</td>
+          <td class="paramtype">auto&#160;</td>
           <td class="paramname"><em>function</em></td><td>)</td>
           <td></td>
         </tr>
@@ -884,9 +883,9 @@ traits </dd></dl>
 <p>Calls the specified function on each operation meta-enumerator. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2applicable_ops_8cpp-example.html#a2">mirror/applicable_ops.cpp</a>.</dd>
 </dl>
 
@@ -1397,6 +1396,37 @@ traits </dd></dl>
 
 </div>
 </div>
+<a id="ga74766dbbc65124b7cef7c7858939a973"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga74766dbbc65124b7cef7c7858939a973">&#9670;&nbsp;</a></span>get_hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mirror::get_hash </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a>&#160;</td>
+          <td class="paramname"><em>auto</em></td><td>)</td>
+          <td> -&gt;  <a class="el" href="namespacemirror.html#ab87ce44e612844838e9843a75c938344">hash_t</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a hash uniquely identifying a reflected base-level entity. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__operations.html#ga1371812c3203b417ac7df817c1ea8342" title="Indicates if the two metaobjects reflect the same base-level entity.">reflect_same</a> </dd>
+<dd>
+<a class="el" href="group__operations.html#gaa65e2df597af7d329021d4deae5ba81b" title="Returns a unique metaobject identifier value.">get_id</a> </dd></dl>
+
+</div>
+</div>
 <a id="gaa65e2df597af7d329021d4deae5ba81b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa65e2df597af7d329021d4deae5ba81b">&#9670;&nbsp;</a></span>get_id()</h2>
 
@@ -1469,9 +1499,9 @@ traits </dd></dl>
 <dd>
 <a class="el" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd" title="Invokes the reflected function with the specified args.">invoke</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1" title="Applies the reflected member function on obj with specified args.">apply_on</a> </dd>
+<a class="el" href="group__operations.html#gac0c0f014273ccb39b77734488dcb1efa" title="Applies the reflected member function on obj with specified args.">apply_on</a> </dd>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2amount_of_foo_8cpp-example.html#a6">mirror/amount_of_foo.cpp</a>, <a class="el" href="mirror_2are_sorted_by_name_8cpp-example.html#a1">mirror/are_sorted_by_name.cpp</a>, <a class="el" href="mirror_2fake_rpc_8cpp-example.html#a7">mirror/fake_rpc.cpp</a>, <a class="el" href="mirror_2filter_8cpp-example.html#a4">mirror/filter.cpp</a>, <a class="el" href="mirror_2gen_puml_diagram_8cpp-example.html#a5">mirror/gen_puml_diagram.cpp</a>, <a class="el" href="mirror_2good_example_8cpp-example.html#a1">mirror/good_example.cpp</a>, <a class="el" href="mirror_2group_by_8cpp-example.html#a2">mirror/group_by.cpp</a>, <a class="el" href="mirror_2has_overloaded_functions_8cpp-example.html#a0">mirror/has_overloaded_functions.cpp</a>, <a class="el" href="mirror_2has_overloaded_functions_2_8cpp-example.html#a2">mirror/has_overloaded_functions_2.cpp</a>, <a class="el" href="mirror_2interface_revision_8cpp-example.html#a2">mirror/interface_revision.cpp</a>, <a class="el" href="mirror_2invoke_8cpp-example.html#a2">mirror/invoke.cpp</a>, <a class="el" href="mirror_2overload_arity_8cpp-example.html#a2">mirror/overload_arity.cpp</a>, <a class="el" href="mirror_2remove_if_8cpp-example.html#a4">mirror/remove_if.cpp</a>, and <a class="el" href="mirror_2sort_by_8cpp-example.html#a2">mirror/sort_by.cpp</a>.</dd>
@@ -2603,7 +2633,7 @@ get_full_name </dd>
 <dd>
 <a class="el" href="group__operations.html#ga30da3240559456deead23706feb73d71" title="Invokes the reflected member function on obj with specified args.">invoke_on</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
 
 </div>
 </div>
@@ -2652,7 +2682,7 @@ get_full_name </dd>
 <dd>
 <a class="el" href="group__operations.html#ga30da3240559456deead23706feb73d71" title="Invokes the reflected member function on obj with specified args.">invoke_on</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga8d2fc18dc2dc104571e1de6df92dc4c1" title="Applies the reflected member function on obj with specified args.">apply_on</a> </dd></dl>
+<a class="el" href="group__operations.html#gac0c0f014273ccb39b77734488dcb1efa" title="Applies the reflected member function on obj with specified args.">apply_on</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2expression_8cpp-example.html#a6">mirror/expression.cpp</a>, and <a class="el" href="mirror_2invoke_8cpp-example.html#a3">mirror/invoke.cpp</a>.</dd>
 </dl>
 
@@ -2709,7 +2739,7 @@ get_full_name </dd>
 <dd>
 <a class="el" href="group__operations.html#ga30da3240559456deead23706feb73d71" title="Invokes the reflected member function on obj with specified args.">invoke_on</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
 
 </div>
 </div>
@@ -2754,14 +2784,14 @@ get_full_name </dd>
 <dd>
 <a class="el" href="group__operations.html#ga90674b973395384ad8f29a3b31c1c7bd" title="Invokes the reflected function with the specified args.">invoke</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2invoke_8cpp-example.html#a1">mirror/invoke.cpp</a>.</dd>
 </dl>
 
 </div>
 </div>
-<a id="ga716ef323e318d0dcd964bbcca5f06725"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga716ef323e318d0dcd964bbcca5f06725">&#9670;&nbsp;</a></span>is_applicable()</h2>
+<a id="ga68939ebb0ff13c0cf1b86bf1d6c6420a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga68939ebb0ff13c0cf1b86bf1d6c6420a">&#9670;&nbsp;</a></span>is_applicable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2772,9 +2802,9 @@ get_full_name </dd>
         <tr>
           <td class="memname">constexpr auto mirror::is_applicable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
           <td class="paramname"><em>mo</em></td><td>)</td>
-          <td> -&gt; bool </td>
+          <td> -&gt;  bool</td>
         </tr>
       </table>
   </td>
@@ -2797,9 +2827,9 @@ get_full_name </dd>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54" title="Calls the specified unary operation on a metaobject if it&#39;s applicable.">try_apply</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2applicable_ops_8cpp-example.html#a3">mirror/applicable_ops.cpp</a>.</dd>
 </dl>
 
@@ -3807,6 +3837,47 @@ get_full_name </dd>
 
 </div>
 </div>
+<a id="ga1371812c3203b417ac7df817c1ea8342"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1371812c3203b417ac7df817c1ea8342">&#9670;&nbsp;</a></span>reflect_same()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">consteval auto mirror::reflect_same </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
+          <td class="paramname"><em>ml</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
+          <td class="paramname"><em>mr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates if the two metaobjects reflect the same base-level entity. </p>
+<dl class="section see"><dt>See also</dt><dd>get_hash </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2expression_8cpp-example.html#a5">mirror/expression.cpp</a>, <a class="el" href="mirror_2gen_puml_diagram_8cpp-example.html#a14">mirror/gen_puml_diagram.cpp</a>, <a class="el" href="mirror_2group_by_8cpp-example.html#a10">mirror/group_by.cpp</a>, and <a class="el" href="mirror_2has_overloaded_functions_8cpp-example.html#a3">mirror/has_overloaded_functions.cpp</a>.</dd>
+</dl>
+
+</div>
+</div>
 <a id="gadf5019ccf067d449888efeb660e5ab27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadf5019ccf067d449888efeb660e5ab27">&#9670;&nbsp;</a></span>remove_all_aliases()</h2>
 
@@ -3842,8 +3913,8 @@ get_full_name </dd>
 
 </div>
 </div>
-<a id="ga3e49631a802f86f2ff84d0ac6533978a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3e49631a802f86f2ff84d0ac6533978a">&#9670;&nbsp;</a></span>try_apply()</h2>
+<a id="ga22408ca18add850478b73aea5b4b3c54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22408ca18add850478b73aea5b4b3c54">&#9670;&nbsp;</a></span>try_apply()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3854,7 +3925,7 @@ get_full_name </dd>
         <tr>
           <td class="memname">constexpr auto mirror::try_apply </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt; M &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">metaobject</a> auto&#160;</td>
           <td class="paramname"><em>mo</em></td><td>)</td>
           <td></td>
         </tr>
@@ -3879,9 +3950,9 @@ get_full_name </dd>
 <dd>
 <a class="el" href="group__operations.html#gae781235b66c251c133a5e5929b5985a6" title="Unary metaobject operation enumeration type.">metaobject_operation</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
+<a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a" title="Indicates if the specified operation is applicable to metaobject.">is_applicable</a> </dd>
 <dd>
-<a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
+<a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19" title="Calls the specified unary operation on a metaobject.">apply</a> </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="mirror_2print_op_results_8cpp-example.html#a10">mirror/print_op_results.cpp</a>.</dd>
 </dl>
 
@@ -4058,7 +4129,7 @@ get_full_name </dd>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Wed Feb 16 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

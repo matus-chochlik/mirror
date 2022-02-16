@@ -171,22 +171,21 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga716ef323e318d0dcd964bbcca5f06725"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O, __metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga716ef323e318d0dcd964bbcca5f06725"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">is_applicable</a> (wrapped_metaobject&lt; M &gt; mo) noexcept -&gt; bool</td></tr>
-<tr class="memdesc:ga716ef323e318d0dcd964bbcca5f06725"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the specified operation is applicable to metaobject.  <a href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">More...</a><br /></td></tr>
-<tr class="separator:ga716ef323e318d0dcd964bbcca5f06725"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32260338e82c2020aa9270497db2b815"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O, __metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga32260338e82c2020aa9270497db2b815"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga32260338e82c2020aa9270497db2b815">apply</a> (wrapped_metaobject&lt; M &gt; mo) noexcept requires(is_applicable(mo))</td></tr>
-<tr class="memdesc:ga32260338e82c2020aa9270497db2b815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject.  <a href="group__operations.html#ga32260338e82c2020aa9270497db2b815">More...</a><br /></td></tr>
-<tr class="separator:ga32260338e82c2020aa9270497db2b815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e49631a802f86f2ff84d0ac6533978a"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O, __metaobject_id M&gt; </td></tr>
-<tr class="memitem:ga3e49631a802f86f2ff84d0ac6533978a"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">try_apply</a> (wrapped_metaobject&lt; M &gt; mo) noexcept</td></tr>
-<tr class="memdesc:ga3e49631a802f86f2ff84d0ac6533978a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject if it's applicable.  <a href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">More...</a><br /></td></tr>
-<tr class="separator:ga3e49631a802f86f2ff84d0ac6533978a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4568eae30ebba6764a90f8265bc02949"><td class="memTemplParams" colspan="2">template&lt;typename F &gt; </td></tr>
-<tr class="memitem:ga4568eae30ebba6764a90f8265bc02949"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">for_each_metaobject_operation</a> (F function)</td></tr>
-<tr class="memdesc:ga4568eae30ebba6764a90f8265bc02949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified function on each operation meta-enumerator.  <a href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">More...</a><br /></td></tr>
-<tr class="separator:ga4568eae30ebba6764a90f8265bc02949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O&gt; </td></tr>
+<tr class="memitem:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a">is_applicable</a> (metaobject auto mo) noexcept -&gt; bool</td></tr>
+<tr class="memdesc:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the specified operation is applicable to metaobject.  <a href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a">More...</a><br /></td></tr>
+<tr class="separator:ga68939ebb0ff13c0cf1b86bf1d6c6420a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c611cf42a6608f7a83021d1d44bae19"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O&gt; </td></tr>
+<tr class="memitem:ga7c611cf42a6608f7a83021d1d44bae19"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19">apply</a> (metaobject auto mo) noexcept requires(is_applicable(mo))</td></tr>
+<tr class="memdesc:ga7c611cf42a6608f7a83021d1d44bae19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject.  <a href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19">More...</a><br /></td></tr>
+<tr class="separator:ga7c611cf42a6608f7a83021d1d44bae19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22408ca18add850478b73aea5b4b3c54"><td class="memTemplParams" colspan="2">template&lt;metaobject_operation auto O&gt; </td></tr>
+<tr class="memitem:ga22408ca18add850478b73aea5b4b3c54"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54">try_apply</a> (metaobject auto mo) noexcept</td></tr>
+<tr class="memdesc:ga22408ca18add850478b73aea5b4b3c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified unary operation on a metaobject if it's applicable.  <a href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54">More...</a><br /></td></tr>
+<tr class="separator:ga22408ca18add850478b73aea5b4b3c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff366fc659abbd16fae94c7ed75c0d03"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__operations.html#gaff366fc659abbd16fae94c7ed75c0d03">for_each_metaobject_operation</a> (auto function)</td></tr>
+<tr class="memdesc:gaff366fc659abbd16fae94c7ed75c0d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the specified function on each operation meta-enumerator.  <a href="group__operations.html#gaff366fc659abbd16fae94c7ed75c0d03">More...</a><br /></td></tr>
+<tr class="separator:gaff366fc659abbd16fae94c7ed75c0d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -202,7 +201,7 @@ Variables</h2></td></tr>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Wed Feb 16 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

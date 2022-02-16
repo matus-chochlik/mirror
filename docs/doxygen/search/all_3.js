@@ -9,7 +9,7 @@ var searchData=
   ['const_5fpointer_33',['const_pointer',['../classmirror_1_1program__arg__iterator.html#a1bb411e8b39eda5272565b9df2b435df',1,'mirror::program_arg_iterator']]],
   ['const_5freference_34',['const_reference',['../classmirror_1_1program__arg__iterator.html#a48c6a039c83b3a86b5decec36fae3bdb',1,'mirror::program_arg_iterator']]],
   ['convert_5fif_5ffits_35',['convert_if_fits',['../group__utilities.html#ga323dc0730024bb2d547afca26a115e51',1,'mirror']]],
-  ['count_36',['count',['../classmirror_1_1for__each__iteration__info.html#a1974ad1453667c4f4af2ccd512e3e155',1,'mirror::for_each_iteration_info']]],
+  ['count_36',['count',['../classmirror_1_1for__each__iteration__info.html#a1974ad1453667c4f4af2ccd512e3e155',1,'mirror::for_each_iteration_info::count()'],['../classmirror_1_1metadata__sequence.html#a887c74ab2d66c39ab0b291f15d44de40',1,'mirror::metadata_sequence::count()']]],
   ['count_5fif_37',['count_if',['../group__sequence__operations.html#ga5b94f3093e1a0a11eaa6ae1d4f3db9f4',1,'mirror']]],
   ['ctre_5fmatch_2ehpp_38',['ctre_match.hpp',['../ctre__match_8hpp.html',1,'']]]
 ];

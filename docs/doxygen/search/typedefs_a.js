@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['read_5ferrors_740',['read_errors',['../result_8hpp.html#a81f1a002cd0add4ed0fd8232c34e781a',1,'mirror::serialize']]],
-  ['reference_741',['reference',['../classmirror_1_1program__arg__iterator.html#ae889f9f173a4ae3345122cb06f3cde38',1,'mirror::program_arg_iterator']]]
+  ['pointer_760',['pointer',['../classmirror_1_1program__arg__iterator.html#a1faec9856d82eff92b4745e53d4c2b50',1,'mirror::program_arg_iterator::pointer()'],['../classmirror_1_1metadata__iterator.html#a1e0935b5d431376c8ce471e3a1f770ff',1,'mirror::metadata_iterator::pointer()']]]
 ];

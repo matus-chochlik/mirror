@@ -92,7 +92,7 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">class</span> puml_class_diagram {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> _add_access_marker(std::ostream&amp; out, <span class="keyword">const</span> metadata&amp; md) <span class="keyword">const</span> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> _add_access_marker(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata.html">metadata</a>&amp; md) <span class="keyword">const</span> {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">if</span>(md.has(trait::is_private)) {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            out &lt;&lt; <span class="stringliteral">&quot;-&quot;</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(md.has(trait::is_protected)) {</div>
@@ -102,7 +102,7 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> _add_parameter_list(std::ostream&amp; out, <span class="keyword">const</span> metadata&amp; md) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> _add_parameter_list(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata.html">metadata</a>&amp; md) {</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;(&quot;</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; mp : md.parameters()) {</div>
@@ -116,7 +116,7 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> _gen_enum_decl(std::ostream&amp; out, <span class="keyword">const</span> metadata&amp; md) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> _gen_enum_decl(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata.html">metadata</a>&amp; md) {</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;enum &quot;</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        out &lt;&lt; md.name_() &lt;&lt; <span class="stringliteral">&quot; {\n&quot;</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; me : md.enumerators()) {</div>
@@ -125,7 +125,7 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> _gen_record_decl(std::ostream&amp; out, <span class="keyword">const</span> metadata&amp; md) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> _gen_record_decl(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata.html">metadata</a>&amp; md) {</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">if</span>(md.has(trait::uses_class_key)) {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            out &lt;&lt; <span class="stringliteral">&quot;class &quot;</span>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(md.has(trait::uses_struct_key)) {</div>
@@ -187,7 +187,7 @@ $(function() {
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span>;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">void</span> _gen_decl(std::ostream&amp; out, <span class="keyword">const</span> metadata&amp; md) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">void</span> _gen_decl(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata.html">metadata</a>&amp; md) {</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">if</span>(md.has(trait::reflects_enum)) {</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            _gen_enum_decl(out, md);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(md.has(trait::reflects_record)) {</div>
@@ -197,8 +197,8 @@ $(function() {
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordtype">void</span> _gen_rel(</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      std::ostream&amp; out,</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keyword">const</span> metadata&amp; md,</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <span class="keyword">const</span> metadata_sequence&amp; ms) {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata.html">metadata</a>&amp; md,</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <span class="keyword">const</span> <a class="code" href="classmirror_1_1metadata__sequence.html">metadata_sequence</a>&amp; ms) {</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">if</span>(md.has(trait::reflects_class)) {</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; mb : md.base_classes()) {</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <span class="keywordflow">if</span>(ms.contains(mb.class_())) {</div>
@@ -295,7 +295,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Wed Feb 16 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

@@ -509,105 +509,124 @@ $(function() {
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    <span class="keyword">using</span> <a class="code" href="structmirror_1_1operation.html">operation_metaobject</a>::<a class="code" href="structmirror_1_1operation.html">hide_protected</a>;</div>
 <div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;};</div>
 <div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="comment">/// @brief Indicates if the specified operation is applicable to metaobject.</span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="comment">/// @ingroup operations</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">/// @see operation_boolean</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">/// @see operation_integer</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">/// @see operation_pointer</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="comment">/// @see operation_string</span></div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="comment">/// @see operation_metaobject</span></div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="comment">/// @see apply</span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="comment">/// @see try_apply</span></div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="keyword">template</span> &lt;metaobject_operation <span class="keyword">auto</span> O, __metaobject_id M&gt;</div>
-<div class="line"><a name="l00448"></a><span class="lineno"><a class="line" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">  448</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="group__operations.html#ga716ef323e318d0dcd964bbcca5f06725">is_applicable</a>(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo) <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="keywordflow">return</span> map_operation&lt;O&gt;::is_applicable(mo);</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;}</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id Me, __metaobject_id Mo&gt;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;is_applicable(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Me&gt; me, <a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Mo&gt; mo) <span class="keyword">noexcept</span></div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;  -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordflow">return</span> is_applicable&lt;get_constant(me)&gt;(mo);</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;}</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="comment">/// @brief Calls the specified unary operation on a metaobject.</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="comment">/// @ingroup operations</span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="comment">/// @see operation_boolean</span></div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="comment">/// @see operation_integer</span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="comment">/// @see operation_pointer</span></div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="comment">/// @see operation_string</span></div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="comment">/// @see operation_metaobject</span></div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">/// @see is_applicable</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="comment">/// @see try_apply</span></div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="keyword">template</span> &lt;metaobject_operation <span class="keyword">auto</span> O, __metaobject_id M&gt;</div>
-<div class="line"><a name="l00470"></a><span class="lineno"><a class="line" href="group__operations.html#ga32260338e82c2020aa9270497db2b815">  470</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="group__operations.html#ga32260338e82c2020aa9270497db2b815">apply</a>(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo) <span class="keyword">noexcept</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;  <span class="keyword">requires</span>(<a class="code" href="group__operations.html#ga32260338e82c2020aa9270497db2b815">is_applicable</a>(<a class="code" href="group__operations.html#ga32260338e82c2020aa9270497db2b815">mo</a>)) {</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    <span class="keywordflow">return</span> map_operation&lt;O&gt;::apply(mo);</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;}</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="comment">/// @brief Calls the specified unary operation on a metaobject if it&#39;s applicable.</span></div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="comment">/// @ingroup operations</span></div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="comment">/// @see operation_boolean</span></div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="comment">/// @see operation_integer</span></div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="comment">/// @see operation_pointer</span></div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment">/// @see operation_string</span></div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="comment">/// @see operation_metaobject</span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="comment">/// @see is_applicable</span></div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="comment">/// @see apply</span></div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="keyword">template</span> &lt;metaobject_operation <span class="keyword">auto</span> O, __metaobject_id M&gt;</div>
-<div class="line"><a name="l00486"></a><span class="lineno"><a class="line" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">  486</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="group__operations.html#ga3e49631a802f86f2ff84d0ac6533978a">try_apply</a>(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <span class="keyword">using</span> op = map_operation&lt;O&gt;;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(op::is_applicable(mo)) {</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        <span class="keywordflow">return</span> op::make_optional(op::apply(mo));</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keywordflow">return</span> op::fallback();</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    }</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;}</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id Me, __metaobject_id Mo&gt;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;try_apply(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Me&gt; me, <a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Mo&gt; mo) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;    <span class="keywordflow">return</span> try_apply&lt;get_constant(me)&gt;(mo);</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;}</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160; </div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> all_metaobject_operation_kinds() <span class="keyword">noexcept</span> {</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    <span class="keywordflow">return</span> make_sequence(</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_boolean)),</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_integer)),</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_pointer)),</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_string)),</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_metaobject)));</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;}</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="comment">/// @brief Indicates if the specified operation is applicable to metaobject.</span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">/// @ingroup operations</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">/// @see operation_boolean</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">/// @see operation_integer</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="comment">/// @see operation_pointer</span></div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="comment">/// @see operation_string</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="comment">/// @see operation_metaobject</span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="comment">/// @see apply</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="comment">/// @see try_apply</span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="namespacemirror.html">metaobject_operation</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">O</a>&gt;</div>
+<div class="line"><a name="l00449"></a><span class="lineno"><a class="line" href="group__operations.html#ga68939ebb0ff13c0cf1b86bf1d6c6420a">  449</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">is_applicable</a>(<a class="code" href="namespacemirror.html">metaobject</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>) <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span>;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="keyword">template</span> &lt;metaobject_operation <span class="keyword">auto</span> O, __metaobject_id M&gt;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> is_applicable(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo) <span class="keyword">noexcept</span> -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="keywordflow">return</span> map_operation&lt;O&gt;::is_applicable(mo);</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;}</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160; </div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id Me, __metaobject_id Mo&gt;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;is_applicable(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Me&gt; me, <a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Mo&gt; mo) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;  -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    <span class="keywordflow">return</span> is_applicable&lt;get_constant(me)&gt;(mo);</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;}</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160; </div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="comment">/// @brief Calls the specified unary operation on a metaobject.</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment">/// @ingroup operations</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">/// @see operation_boolean</span></div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="comment">/// @see operation_integer</span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="comment">/// @see operation_pointer</span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="comment">/// @see operation_string</span></div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">/// @see operation_metaobject</span></div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="comment">/// @see is_applicable</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="comment">/// @see try_apply</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="namespacemirror.html">metaobject_operation</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">O</a>&gt;</div>
+<div class="line"><a name="l00476"></a><span class="lineno"><a class="line" href="group__operations.html#ga7c611cf42a6608f7a83021d1d44bae19">  476</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">apply</a>(<a class="code" href="namespacemirror.html">metaobject</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>) <span class="keyword">noexcept</span> <span class="keyword">requires</span>(<a class="code" href="namespacemirror.html">is_applicable</a>(<a class="code" href="namespacemirror.html">mo</a>));</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="keyword">template</span> &lt;metaobject_operation <span class="keyword">auto</span> O, __metaobject_id M&gt;</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> apply(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo) <span class="keyword">noexcept</span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;  <span class="keyword">requires</span>(is_applicable(mo)) {</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    <span class="keywordflow">return</span> map_operation&lt;O&gt;::apply(mo);</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;}</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160; </div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="comment">/// @brief Calls the specified unary operation on a metaobject if it&#39;s applicable.</span></div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="comment">/// @ingroup operations</span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="comment">/// @see operation_boolean</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="comment">/// @see operation_integer</span></div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="comment">/// @see operation_pointer</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment">/// @see operation_string</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">/// @see operation_metaobject</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment">/// @see is_applicable</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<span class="comment">/// @see apply</span></div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="keyword">template</span> &lt;<a class="code" href="namespacemirror.html">metaobject_operation</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">O</a>&gt;</div>
+<div class="line"><a name="l00497"></a><span class="lineno"><a class="line" href="group__operations.html#ga22408ca18add850478b73aea5b4b3c54">  497</a></span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">try_apply</a>(<a class="code" href="namespacemirror.html">metaobject</a> <span class="keyword">auto</span> <a class="code" href="namespacemirror.html">mo</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="keyword">template</span> &lt;metaobject_operation <span class="keyword">auto</span> O, __metaobject_id M&gt;</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> try_apply(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;M&gt; mo) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <span class="keyword">using</span> op = map_operation&lt;O&gt;;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(op::is_applicable(mo)) {</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        <span class="keywordflow">return</span> op::make_optional(op::apply(mo));</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="keywordflow">return</span> op::fallback();</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    }</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;}</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 <div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> all_metaobject_operations() <span class="keyword">noexcept</span> {</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    <span class="keywordflow">return</span> flatten(</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;      transform(all_metaobject_operation_kinds(), get_enumerators(_1)));</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;}</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;<span class="comment">/// @brief Calls the specified function on each operation meta-enumerator</span></div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="comment">/// @ingroup operations</span></div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">/// @see is_applicable</span></div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="comment">/// @see apply</span></div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F&gt;</div>
-<div class="line"><a name="l00521"></a><span class="lineno"><a class="line" href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">  521</a></span>&#160;<span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code" href="group__operations.html#ga4568eae30ebba6764a90f8265bc02949">for_each_metaobject_operation</a>(F function) {</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    for_each(all_metaobject_operation_kinds(), [&amp;](<span class="keyword">auto</span> muo) {</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;        for_each(get_enumerators(muo), function);</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    });</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;}</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;} <span class="comment">// namespace mirror</span></div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160; </div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;<span class="keyword">template</span> &lt;__metaobject_id Me, __metaobject_id Mo&gt;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;try_apply(<a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Me&gt; me, <a class="code" href="structmirror_1_1wrapped__metaobject.html">wrapped_metaobject</a>&lt;Mo&gt; mo) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    <span class="keywordflow">return</span> try_apply&lt;get_constant(me)&gt;(mo);</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;}</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160; </div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> all_metaobject_operation_kinds() <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    <span class="keywordflow">return</span> make_sequence(</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_boolean)),</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_integer)),</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_pointer)),</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_string)),</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;      remove_all_aliases(<a class="code" href="primitives_8hpp.html#a05a72c4272089a1e1e95e7d59301f557">mirror</a>(mirror::operation_metaobject)));</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;}</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160; </div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;<span class="keyword">constexpr</span> <span class="keyword">auto</span> all_metaobject_operations() <span class="keyword">noexcept</span> {</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    <span class="keywordflow">return</span> flatten(</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;      transform(all_metaobject_operation_kinds(), get_enumerators(_1)));</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;}</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">if</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">MIRROR_DOXYGEN</span><span class="preprocessor">)</span></div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;<span class="comment">/// @brief Calls the specified function on each operation meta-enumerator</span></div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="comment">/// @ingroup operations</span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="comment">/// @see metaobject_operation</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="comment">/// @see is_applicable</span></div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;<span class="comment">/// @see apply</span></div>
+<div class="line"><a name="l00536"></a><span class="lineno"><a class="line" href="group__operations.html#gaff366fc659abbd16fae94c7ed75c0d03">  536</a></span>&#160;<span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code" href="namespacemirror.html">for_each_metaobject_operation</a>(<span class="keyword">auto</span> <a class="code" href="namespacemirror.html">function</a>);</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">else</span></div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;<span class="keyword">constexpr</span> <span class="keywordtype">void</span> for_each_metaobject_operation(F function) {</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    for_each(all_metaobject_operation_kinds(), [&amp;](<span class="keyword">auto</span> muo) {</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        for_each(get_enumerators(muo), function);</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    });</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;}</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160; </div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;} <span class="comment">// namespace mirror</span></div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <br/>
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Tue Feb 15 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Wed Feb 16 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->
