@@ -471,21 +471,29 @@ struct trait {
     using object_trait::uses_struct_key;
 };
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if a metaobject has the specified trait.
 /// @ingroup classification
 /// @see meta_trait
 /// @see metaobject_operation
 /// @see get_traits
 template <meta_trait T>
+consteval auto has_trait(metaobject auto mo) noexcept -> bool;
+#else
+template <meta_trait T>
 consteval auto has_trait(__metaobject_id mo) noexcept -> bool {
     return map_meta_trait<T>::apply(mo);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Gets all metaobject traits.
 /// @ingroup classification
 /// @see meta_traits
 /// @see metaobject_operation
 /// @see has_trait
+constexpr auto get_traits(metaobject auto mo) noexcept -> meta_traits;
+#else
 template <__metaobject_id M>
 constexpr auto get_traits(wrapped_metaobject<M> mo) noexcept -> meta_traits {
     meta_traits result{};
@@ -496,6 +504,7 @@ constexpr auto get_traits(wrapped_metaobject<M> mo) noexcept -> meta_traits {
     });
     return result;
 }
+#endif
 
 /// @brief Indicates if a type has the specified trait.
 /// @ingroup classification
@@ -522,10 +531,13 @@ constexpr auto get_traits(std::type_identity<T> tid) noexcept -> type_traits {
     return result;
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Gets all type traits if metaobject reflects a type.
 /// @ingroup classification
 /// @see type_traits
 /// @see get_traits
+constexpr auto get_type_traits(metaobject auto mo) noexcept -> type_traits;
+#else
 template <__metaobject_id M>
 constexpr auto get_type_traits(wrapped_metaobject<M> mo) noexcept
   -> type_traits {
@@ -535,6 +547,7 @@ constexpr auto get_type_traits(wrapped_metaobject<M> mo) noexcept
         return {};
     }
 }
+#endif
 
 } // namespace mirror
 

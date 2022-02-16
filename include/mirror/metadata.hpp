@@ -20,22 +20,35 @@
 
 namespace mirror {
 //------------------------------------------------------------------------------
+/// @brief Exception thrown when unregisterd metadata is searched.
+/// @ingroup metadata
+/// @see metadata
 class metadata_not_found : public std::runtime_error {
 public:
     metadata_not_found() noexcept
       : std::runtime_error{"metadata not found"} {}
 };
 //------------------------------------------------------------------------------
+/// @brief Random access iterator type for metadata_sequence
+/// @ingroup metadata
+/// @see metadata_sequence
 class metadata_iterator {
 private:
     using base_iter_t = std::vector<const metadata*>::const_iterator;
     base_iter_t _iter{};
 
 public:
+    /// @brief Value type.
     using value_type = const metadata;
+
+    /// @brief Pointer type.
     using pointer = const metadata*;
+
+    /// @brief Reference type.
     using reference = const metadata&;
+
     using difference_type = base_iter_t::difference_type;
+
     using iterator_category = base_iter_t::iterator_category;
 
     metadata_iterator(base_iter_t iter) noexcept
@@ -114,6 +127,9 @@ public:
     }
 };
 //------------------------------------------------------------------------------
+/// @brief Container of metadata objects,
+/// @ingroup metadata
+/// @see metadata
 class metadata_sequence {
 private:
     std::vector<const metadata*> _elements;
@@ -133,6 +149,7 @@ protected:
     }
 
 public:
+    /// @brief Concatenation operator.
     friend auto operator+(const metadata_sequence& l, const metadata_sequence& r)
       -> metadata_sequence {
         std::vector<const metadata*> elements;
@@ -142,18 +159,26 @@ public:
         return {elements};
     }
 
+    /// @brief Returns element at the specified @p index.
+    /// @see count
     auto element(size_t index) const noexcept -> const metadata& {
         return *_elements[index];
     }
 
+    /// @brief Returns the count of stored metadata objects.
+    /// @see element
     auto count() const noexcept -> size_t {
         return _elements.size();
     }
 
+    /// @brief Returns the iterator to the first element.
+    /// @see end
     auto begin() const noexcept -> metadata_iterator {
         return {_elements.begin()};
     }
 
+    /// @brief Returns the iterator past the last element.
+    /// @see begin
     auto end() const noexcept -> metadata_iterator {
         return {_elements.end()};
     }
@@ -192,6 +217,8 @@ public:
     }
 };
 //------------------------------------------------------------------------------
+/// @brief Class providing run-time metadata for a declaration or expression.
+/// @ingroup metadata
 class metadata : public metadata_sequence {
 private:
     hash_t _id{0U};
@@ -276,99 +303,150 @@ public:
     auto operator=(const metadata&) = delete;
     ~metadata() noexcept = default;
 
+    /// @brief Indicates that this instance is a special empty instance.
     auto is_none() const noexcept {
         return !_meta_traits.has(trait::reflects_object);
     }
 
+    /// @brief Indicates that this instance provides metadata.
+    /// @see is_none
     explicit operator bool() const noexcept {
         return _meta_traits.has(trait::reflects_object);
     }
 
+    /// @brief Equality comparison (do the metaobjects reflect the same entity).
     friend bool operator==(const metadata& l, const metadata& r) noexcept {
         return l._id == r._id;
     }
 
+    /// @brief Non-equality comparison (do the metaobjects reflect the same entity).
     friend bool operator!=(const metadata& l, const metadata& r) noexcept {
         return l._id != r._id;
     }
 
+    /// @brief Less-than comparison.
     friend bool operator<(const metadata& l, const metadata& r) noexcept {
         return l._id < r._id;
     }
 
+    /// @brief Returns the unique id of the reflected declaration.
     auto id() const noexcept -> hash_t {
         return _id;
     }
 
+    /// @brief Indicates if the specified operation is applicable.
+    /// @see supports
     auto is_applicable(operation_boolean op) const noexcept -> bool {
         return _op_boolean_applicable.has(op);
     }
 
+    /// @brief Indicates if all the specified operations are applicable.
+    /// @see is_applicable
     auto supports(operations_boolean op) const noexcept -> bool {
         return _op_boolean_applicable.has_all(op);
     }
 
+    /// @brief Indicates if the specified operation is applicable.
+    /// @see supports
     auto is_applicable(operation_integer op) const noexcept -> bool {
         return _op_integer_applicable.has(op);
     }
 
+    /// @brief Indicates if all the specified operations are applicable.
+    /// @see is_applicable
     auto supports(operations_integer op) const noexcept -> bool {
         return _op_integer_applicable.has_all(op);
     }
 
+    /// @brief Indicates if the specified operation is applicable.
+    /// @see supports
     auto is_applicable(operation_string op) const noexcept -> bool {
         return _op_string_applicable.has(op);
     }
 
+    /// @brief Indicates if all the specified operations are applicable.
+    /// @see is_applicable
     auto supports(operations_string op) const noexcept -> bool {
         return _op_string_applicable.has_all(op);
     }
 
+    /// @brief Indicates if the specified operation is applicable.
+    /// @see supports
     auto is_applicable(operation_metaobject op) const noexcept -> bool {
         return _op_metaobject_applicable.has(op);
     }
 
+    /// @brief Indicates if all the specified operations are applicable.
+    /// @see is_applicable
     auto supports(operations_metaobject op) const noexcept -> bool {
         return _op_metaobject_applicable.has_all(op);
     }
 
+    /// @brief Indicates if the reflected entity has all the specified traits.
+    /// @see has
+    /// @see has_none
     auto has_all(meta_traits t) const noexcept -> bool {
         return _meta_traits.has_all(t);
     }
 
+    /// @brief Indicates if the reflected entity has some of the specified traits.
+    /// @see has_all
+    /// @see has_none
     auto has(meta_traits t) const noexcept -> bool {
         return _meta_traits.has_some(t);
     }
 
+    /// @brief Indicates if the reflected entity has none of the specified traits.
+    /// @see has
+    /// @see has_all
     auto has_none(meta_traits t) const noexcept -> bool {
         return _meta_traits.has_none(t);
     }
 
+    /// @brief Indicates if the reflected entity has all the specified traits.
+    /// @see has
+    /// @see has_none
     auto has_all(type_traits t) const noexcept -> bool {
         return _type_traits.has_all(t);
     }
 
+    /// @brief Indicates if the reflected entity has some of the specified traits.
+    /// @see has_all
+    /// @see has_none
     auto has(type_traits t) const noexcept -> bool {
         return _type_traits.has_some(t);
     }
 
+    /// @brief Indicates if the reflected entity has none of the specified traits.
+    /// @see has
+    /// @see has_all
     auto has_none(type_traits t) const noexcept -> bool {
         return _type_traits.has_none(t);
     }
 
+    /// @brief Indicates if the reflected entity has all the specified traits.
+    /// @see has
+    /// @see has_none
     auto has_all(object_traits t) const noexcept -> bool {
         return _op_boolean_results.has_all(t) &&
                _op_boolean_applicable.has_all(t);
     }
 
+    /// @brief Indicates if the reflected entity has some of the specified traits.
+    /// @see has_all
+    /// @see has_none
     auto has(object_traits t) const noexcept -> bool {
         return _op_boolean_results.has_some(t & _op_boolean_applicable);
     }
 
+    /// @brief Indicates if the reflected entity has none of the specified traits.
+    /// @see has
+    /// @see has_all
     auto has_none(object_traits t) const noexcept -> bool {
         return !has(t);
     }
 
+    /// @brief Returns the result of the specified boolean operation.
     auto apply(operation_boolean op) const noexcept -> tribool {
         return {_op_boolean_results.has(op), !_op_boolean_applicable.has(op)};
     }

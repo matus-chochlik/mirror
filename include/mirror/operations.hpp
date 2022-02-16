@@ -434,6 +434,7 @@ struct operation {
     using operation_metaobject::hide_protected;
 };
 //------------------------------------------------------------------------------
+#if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the specified operation is applicable to metaobject.
 /// @ingroup operations
 /// @see operation_boolean
@@ -444,10 +445,14 @@ struct operation {
 /// @see metaobject_operation
 /// @see apply
 /// @see try_apply
+template <metaobject_operation auto O>
+constexpr auto is_applicable(metaobject auto mo) noexcept -> bool;
+#else
 template <metaobject_operation auto O, __metaobject_id M>
 constexpr auto is_applicable(wrapped_metaobject<M> mo) noexcept -> bool {
     return map_operation<O>::is_applicable(mo);
 }
+#endif
 
 template <__metaobject_id Me, __metaobject_id Mo>
 constexpr auto
@@ -456,6 +461,7 @@ is_applicable(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept
     return is_applicable<get_constant(me)>(mo);
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Calls the specified unary operation on a metaobject.
 /// @ingroup operations
 /// @see operation_boolean
@@ -466,12 +472,17 @@ is_applicable(wrapped_metaobject<Me> me, wrapped_metaobject<Mo> mo) noexcept
 /// @see metaobject_operation
 /// @see is_applicable
 /// @see try_apply
+template <metaobject_operation auto O>
+constexpr auto apply(metaobject auto mo) noexcept requires(is_applicable(mo));
+#else
 template <metaobject_operation auto O, __metaobject_id M>
 constexpr auto apply(wrapped_metaobject<M> mo) noexcept
   requires(is_applicable(mo)) {
     return map_operation<O>::apply(mo);
 }
+#endif
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Calls the specified unary operation on a metaobject if it's applicable.
 /// @ingroup operations
 /// @see operation_boolean
@@ -482,6 +493,9 @@ constexpr auto apply(wrapped_metaobject<M> mo) noexcept
 /// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
+template <metaobject_operation auto O>
+constexpr auto try_apply(metaobject auto mo) noexcept;
+#else
 template <metaobject_operation auto O, __metaobject_id M>
 constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
     using op = map_operation<O>;
@@ -491,6 +505,7 @@ constexpr auto try_apply(wrapped_metaobject<M> mo) noexcept {
         return op::fallback();
     }
 }
+#endif
 
 template <__metaobject_id Me, __metaobject_id Mo>
 constexpr auto
@@ -512,17 +527,21 @@ constexpr auto all_metaobject_operations() noexcept {
       transform(all_metaobject_operation_kinds(), get_enumerators(_1)));
 }
 
+#if defined(MIRROR_DOXYGEN)
 /// @brief Calls the specified function on each operation meta-enumerator
 /// @ingroup operations
 /// @see metaobject_operation
 /// @see is_applicable
 /// @see apply
+constexpr void for_each_metaobject_operation(auto function);
+#else
 template <typename F>
 constexpr void for_each_metaobject_operation(F function) {
     for_each(all_metaobject_operation_kinds(), [&](auto muo) {
         for_each(get_enumerators(muo), function);
     });
 }
+#endif
 
 } // namespace mirror
 
