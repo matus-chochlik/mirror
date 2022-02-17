@@ -23,6 +23,7 @@ namespace mirror {
 /// @brief Exception thrown when unregisterd metadata is searched.
 /// @ingroup metadata
 /// @see metadata
+/// @see metadata_registry
 class metadata_not_found : public std::runtime_error {
 public:
     metadata_not_found() noexcept
@@ -243,6 +244,7 @@ public:
 //------------------------------------------------------------------------------
 /// @brief Class providing run-time metadata for a declaration or expression.
 /// @ingroup metadata
+/// @see metadata_registry
 class metadata : public metadata_sequence {
 private:
     hash_t _id{0U};

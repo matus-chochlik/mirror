@@ -239,6 +239,10 @@ public:
     }
 };
 
+/// @brief Iterator type for metadata stored in a registry.
+/// @ingroup metadata
+/// @see metadata_registry
+/// @see metadata
 class metadata_registry_iterator {
 private:
     using base_iter_t =
@@ -246,10 +250,17 @@ private:
     base_iter_t _iter{};
 
 public:
+    /// @brief Value type.
     using value_type = const metadata;
+
+    /// @brief Pointer type.
     using pointer = const metadata*;
+
+    /// @brief Reference type.
     using reference = const metadata&;
     using difference_type = base_iter_t::difference_type;
+
+    /// @brief Iterator category.
     using iterator_category = std::forward_iterator_tag;
 
     metadata_registry_iterator(base_iter_t iter) noexcept
@@ -283,6 +294,8 @@ public:
     }
 };
 
+/// @brief Class storing run-time metadata objects.
+/// @ingroup metadata
 class metadata_registry {
 private:
     std::map<hash_t, std::unique_ptr<stored_metadata>> _metadata;
@@ -331,35 +344,58 @@ private:
     }
 
 public:
+    /// @brief Default constructor.
     metadata_registry() noexcept {
         _metadata.emplace(
           get_hash(no_metaobject), std::make_unique<stored_metadata>());
     }
 
+    /// @brief Returns the count of the contained metadata objects.
+    /// @see all
     auto size() const noexcept {
         return _metadata.size();
     }
 
+    /// @brief Returns an iterator to the first metaobject.
+    /// @see end
+    /// @see all
+    /// @see size
     auto begin() const noexcept -> metadata_registry_iterator {
         return {_metadata.begin()};
     }
 
+    /// @brief Returns an iterator past the last metaobject.
+    /// @see begin
+    /// @see all
+    /// @see size
     auto end() const noexcept -> metadata_registry_iterator {
         return {_metadata.end()};
     }
 
+    /// @brief Returns the special no-metadata object.
     auto get_none() noexcept -> const metadata& {
         return *_metadata[get_hash(no_metaobject)];
     }
 
+    /// @brief Registers and stores the metadata from a metaobject.
+    /// @see find
+    /// @see all
     auto add(metaobject auto mo) noexcept -> const metadata& {
         return _add(mo);
     }
 
+    /// @brief Tries to find the metadata matching to the specified metaobject.
+    /// @see add
+    /// @throws metadata_not_found
     auto find(metaobject auto mo) -> const metadata& {
         return _find(mo);
     }
 
+    /// @brief Returns a sequence of all stored metadata instances.
+    /// @see filtered
+    /// @see begin
+    /// @see end
+    /// @see size
     auto all() const -> metadata_sequence {
         std::vector<const metadata*> elements;
         elements.reserve(_metadata.size());
@@ -369,6 +405,11 @@ public:
         return {elements};
     }
 
+    /// @brief Returns a sequence of stored metadata instances satisfying a predicate.
+    /// @see all
+    /// @see begin
+    /// @see end
+    /// @see size
     template <typename F>
     auto filtered(F predicate) const -> metadata_sequence {
         std::vector<const metadata*> elements;
