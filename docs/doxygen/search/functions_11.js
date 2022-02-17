@@ -1,8 +1,16 @@
 var searchData=
 [
-  ['theme_725',['Theme',['../classTheme.html#add5ec459a822b70353feced3b42dd69d',1,'Theme']]],
-  ['transform_726',['transform',['../group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43',1,'mirror']]],
-  ['transform_5ftypes_727',['transform_types',['../group__sequence__operations.html#gaefad3545e818b20d9709af23ed8f9eb1',1,'mirror']]],
-  ['tribool_728',['tribool',['../classmirror_1_1tribool.html#a377ea114ae986318214ca39b6a8db217',1,'mirror::tribool::tribool() noexcept=default'],['../classmirror_1_1tribool.html#aa12d8ca28295be44628548fff33e6bf4',1,'mirror::tribool::tribool(const bool value) noexcept'],['../classmirror_1_1tribool.html#ac5127815f4c7bec9d866b91069331954',1,'mirror::tribool::tribool(const indeterminate_t) noexcept'],['../classmirror_1_1tribool.html#a09047f229d1eb89f8d1def2f186a84a3',1,'mirror::tribool::tribool(const std::optional&lt; bool &gt; value) noexcept'],['../classmirror_1_1tribool.html#a741ff928e839080c99b3e0dfad60a06c',1,'mirror::tribool::tribool(const bool value, const bool is_unknown) noexcept']]],
-  ['try_5fapply_729',['try_apply',['../group__operations.html#ga22408ca18add850478b73aea5b4b3c54',1,'mirror']]]
+  ['scheme_783',['scheme',['../classmirror_1_1url.html#a3227293229e07ca6e6f5fda7b50f9cad',1,'mirror::url']]],
+  ['scope_784',['scope',['../classmirror_1_1metadata.html#a97399c4cd0976d055bc538eb3250ed7d',1,'mirror::metadata']]],
+  ['signedness_5fcast_785',['signedness_cast',['../group__utilities.html#ga95fcb751b6212b6cc9fa25922c86bded',1,'mirror']]],
+  ['size_786',['size',['../classmirror_1_1metadata__registry.html#a3f3028e765d0c5eba96a7f0598802f05',1,'mirror::metadata_registry::size()'],['../classmirror_1_1program__args.html#a0d42313bd19a0bcdafb8efd7696bb853',1,'mirror::program_args::size()'],['../classmirror_1_1metadata.html#a4b8d0eb9c920f134ef5e17a6a878757f',1,'mirror::metadata::size()']]],
+  ['sort_5fby_787',['sort_by',['../group__sequence__operations.html#gad8d3a4deeaab02607dce4cf05dc17c77',1,'mirror']]],
+  ['source_5fcolumn_788',['source_column',['../classmirror_1_1metadata.html#af21123ad87b3db53ff1c6be0abd64681',1,'mirror::metadata']]],
+  ['source_5fline_789',['source_line',['../classmirror_1_1metadata.html#aaef48af8626bc8022bc495bb5fddf015',1,'mirror::metadata']]],
+  ['starts_5fwith_790',['starts_with',['../classmirror_1_1program__arg.html#a30bd9da8f2ddb0af13c018aebeee8a28',1,'mirror::program_arg']]],
+  ['store_5ftransformed_5ftypes_791',['store_transformed_types',['../group__sequence__operations.html#ga6a024aca93580be44dd396a8e6d1cc9c',1,'mirror']]],
+  ['str_792',['str',['../classmirror_1_1url.html#ac5e60c4b48d74ddd6470387ad4a65d1a',1,'mirror::url']]],
+  ['string_5fto_5fenum_793',['string_to_enum',['../group__utilities.html#gaa5c79576ba78e5259d528fe1f9daf79d',1,'mirror']]],
+  ['supporting_794',['supporting',['../classmirror_1_1metadata__sequence.html#a32e308a50a4971c81fb490290cc2620a',1,'mirror::metadata_sequence::supporting(operations_metaobject op) const -&gt; metadata_sequence'],['../classmirror_1_1metadata__sequence.html#a201f0d7b92c84db0db4ffb8e3cfa2c38',1,'mirror::metadata_sequence::supporting(operations_string op) const -&gt; metadata_sequence'],['../classmirror_1_1metadata__sequence.html#af375effe6771ea0695ea35a622b2a786',1,'mirror::metadata_sequence::supporting(operations_integer op) const -&gt; metadata_sequence'],['../classmirror_1_1metadata__sequence.html#a412586a53e77cd71d52dbf2045272e4c',1,'mirror::metadata_sequence::supporting(operations_boolean op) const -&gt; metadata_sequence']]],
+  ['supports_795',['supports',['../classmirror_1_1metadata.html#a5368a9a2fcd7bf558f0eace264da31fb',1,'mirror::metadata::supports(operations_boolean op) const noexcept -&gt; bool'],['../classmirror_1_1metadata.html#a7c71758cb453c29fee620f6c64f2772d',1,'mirror::metadata::supports(operations_integer op) const noexcept -&gt; bool'],['../classmirror_1_1metadata.html#a9f9cbf5ef6807fcdbc0872989c1378f0',1,'mirror::metadata::supports(operations_string op) const noexcept -&gt; bool'],['../classmirror_1_1metadata.html#a787f220693f7396e8edc4402395dafa5',1,'mirror::metadata::supports(operations_metaobject op) const noexcept -&gt; bool']]]
 ];

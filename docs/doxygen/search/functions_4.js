@@ -1,16 +1,12 @@
 var searchData=
 [
-  ['filter_512',['filter',['../group__sequence__operations.html#ga6feaae2b4cbd8c482875e62c33007f9c',1,'mirror']]],
-  ['find_513',['find',['../classmirror_1_1program__args.html#a50e811f6beaf6bec54aa280d11174476',1,'mirror::program_args']]],
-  ['find_5fif_514',['find_if',['../group__sequence__operations.html#gabb7958a7ab2c0a7dd9870d53bbd09617',1,'mirror']]],
-  ['find_5fif_5fnot_515',['find_if_not',['../group__sequence__operations.html#ga2a877cc958eacedc3c9606159977921d',1,'mirror']]],
-  ['find_5franking_516',['find_ranking',['../group__sequence__operations.html#ga96941ef41030eb456d7c20189dfee588',1,'mirror::find_ranking(metaobject_sequence auto mo, auto transform, auto compare)'],['../group__sequence__operations.html#ga4b059ede5ae9cbbf28eaf2d75500b99d',1,'mirror::find_ranking(metaobject_sequence auto mo, auto transform)']]],
-  ['first_517',['first',['../classmirror_1_1program__args.html#aeb17e51c89fe109913cd865334777676',1,'mirror::program_args']]],
-  ['flatten_518',['flatten',['../group__sequence__operations.html#ga2f3148f8fdef4860cd06dc10cbcb7612',1,'mirror']]],
-  ['fold_519',['fold',['../group__sequence__operations.html#ga3bffe08ee07cf9fcb1b2861f2335733f',1,'mirror']]],
-  ['for_5feach_520',['for_each',['../group__sequence__operations.html#ga67f4371722cd048fd660f4429279c2dc',1,'mirror']]],
-  ['for_5feach_5finfo_521',['for_each_info',['../group__sequence__operations.html#ga6a8155f77b7fb4e62d8c02463aaad911',1,'mirror']]],
-  ['for_5feach_5fmetaobject_5foperation_522',['for_each_metaobject_operation',['../group__operations.html#gaff366fc659abbd16fae94c7ed75c0d03',1,'mirror']]],
-  ['fragment_523',['fragment',['../classmirror_1_1url.html#afbf7aeeffb4e6ab2c601e7910f749944',1,'mirror::url']]],
-  ['from_5fstring_524',['from_string',['../group__utilities.html#gab364426d404c1ab5036f9c692ef20f93',1,'mirror']]]
+  ['element_556',['element',['../classmirror_1_1metadata__sequence.html#ac3d9f882dc65ef80e46e68516539497d',1,'mirror::metadata_sequence']]],
+  ['element_5ftype_557',['element_type',['../classmirror_1_1metadata.html#a7dcb8385298d73c608e26b2d61d61801',1,'mirror::metadata']]],
+  ['empty_558',['empty',['../classmirror_1_1program__args.html#a003a5b5c4c05baab9df96992a34c7a58',1,'mirror::program_args']]],
+  ['end_559',['end',['../classmirror_1_1metadata__registry.html#adb5473d75cfc5a7689a3269d8bcb9487',1,'mirror::metadata_registry::end()'],['../classmirror_1_1program__args.html#aa79dd3d05684c59a5ce502128ad113ec',1,'mirror::program_args::end()'],['../classmirror_1_1metadata__sequence.html#aa927fc5cbb3031074c76400fd5dd2e83',1,'mirror::metadata_sequence::end()']]],
+  ['ends_5fwith_560',['ends_with',['../classmirror_1_1program__arg.html#ad3d25a3894ee1469f1aaa2c2c0a4fb61',1,'mirror::program_arg']]],
+  ['enum_5fto_5fstring_561',['enum_to_string',['../group__utilities.html#ga413c4a172d289c80ae4785cf8518d199',1,'mirror']]],
+  ['enumerators_562',['enumerators',['../classmirror_1_1metadata.html#ae81a12d632938143a5184dd948c3a221',1,'mirror::metadata']]],
+  ['excluding_563',['excluding',['../classmirror_1_1metadata__sequence.html#ad92d10f5587a603ae2cc39e4c6eaa41d',1,'mirror::metadata_sequence']]],
+  ['extract_5ftypes_564',['extract_types',['../group__sequence__operations.html#gae7c9b595ebad653ac53e3dcd2a4c7126',1,'mirror']]]
 ];

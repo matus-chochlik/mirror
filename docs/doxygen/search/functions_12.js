@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['unpack_730',['unpack',['../group__sequence__operations.html#gae340caaff2cf7508bf16375f12f54355',1,'mirror']]],
-  ['url_731',['url',['../classmirror_1_1url.html#abf886987d8422a9a3409665526485be5',1,'mirror::url::url() noexcept=default'],['../classmirror_1_1url.html#aeb4bf8d0860d2bfedd22cb96c9f34e44',1,'mirror::url::url(std::string url_str) noexcept']]],
-  ['uses_5fclass_5fkey_732',['uses_class_key',['../group__operations.html#gabee27f0dd8467095678f2a73b97d23a0',1,'mirror']]],
-  ['uses_5fdefault_5fcopy_5fcapture_733',['uses_default_copy_capture',['../group__operations.html#ga58895a99c4aca09adf8be5b216bc9916',1,'mirror']]],
-  ['uses_5fdefault_5freference_5fcapture_734',['uses_default_reference_capture',['../group__operations.html#ga33f4c5a329f47e4da4ff9fbb92b84f98',1,'mirror']]],
-  ['uses_5fstruct_5fkey_735',['uses_struct_key',['../group__operations.html#ga28f762cab2cf006d7639d9e6075d0b7b',1,'mirror']]]
+  ['theme_796',['Theme',['../classTheme.html#add5ec459a822b70353feced3b42dd69d',1,'Theme']]],
+  ['transform_797',['transform',['../group__sequence__operations.html#ga0696f940d3d01e608be7aa9f336b3c43',1,'mirror']]],
+  ['transform_5ftypes_798',['transform_types',['../group__sequence__operations.html#gaefad3545e818b20d9709af23ed8f9eb1',1,'mirror']]],
+  ['tribool_799',['tribool',['../classmirror_1_1tribool.html#a377ea114ae986318214ca39b6a8db217',1,'mirror::tribool::tribool() noexcept=default'],['../classmirror_1_1tribool.html#aa12d8ca28295be44628548fff33e6bf4',1,'mirror::tribool::tribool(const bool value) noexcept'],['../classmirror_1_1tribool.html#ac5127815f4c7bec9d866b91069331954',1,'mirror::tribool::tribool(const indeterminate_t) noexcept'],['../classmirror_1_1tribool.html#a09047f229d1eb89f8d1def2f186a84a3',1,'mirror::tribool::tribool(const std::optional&lt; bool &gt; value) noexcept'],['../classmirror_1_1tribool.html#a741ff928e839080c99b3e0dfad60a06c',1,'mirror::tribool::tribool(const bool value, const bool is_unknown) noexcept']]],
+  ['try_5fapply_800',['try_apply',['../group__operations.html#ga22408ca18add850478b73aea5b4b3c54',1,'mirror']]],
+  ['type_801',['type',['../classmirror_1_1metadata.html#a4403f80b60b13489a6f6a4d63ed9d0ef',1,'mirror::metadata']]]
 ];
