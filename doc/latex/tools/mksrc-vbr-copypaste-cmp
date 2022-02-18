@@ -6,22 +6,21 @@
 #
 N=${1}
 cat << EOD
-template <int I>
-struct wrapper { consteval operator int() const { return I;} };
-
-template <int I>
-consteval int foo(wrapper<I> w) {
-    return w;
+consteval auto foo(unsigned long i) {
+    return i;
 }
-
-int main() {
+consteval int bar() {
+	return static_cast<int>(
 EOD
 #
 for I in $(seq 1 $((N-1)))
-do echo "	foo(wrapper<$((I))>{});"
+do echo "	foo($((I))UL)+"
 done
 #
 cat << EOD
-	return foo(wrapper<$((N))>{});
+	foo($((N))UL));
+}
+int main() {
+	return bar();
 }
 EOD

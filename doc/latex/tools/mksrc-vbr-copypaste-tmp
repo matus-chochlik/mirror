@@ -6,22 +6,22 @@
 #
 N=${1}
 cat << EOD
-template <int I>
-consteval int foo() {
-	if constexpr(I <= 0) {
-	    return 0;
-	} else {
-		return foo<I-1>();
-	}	
+template <unsigned long I>
+consteval auto foo() {
+    return I;
 }
-int main() {
+consteval int bar() {
+	return static_cast<int>(
 EOD
 #
 for I in $(seq 1 $((N-1)))
-do echo "	foo<$((I))>();"
+do echo "	foo<$((I))UL>()+"
 done
 #
 cat << EOD
-	return foo<$((N))>();
+	foo<$((N))UL>());
+}
+int main() {
+	return bar();
 }
 EOD
