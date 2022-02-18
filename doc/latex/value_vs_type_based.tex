@@ -181,12 +181,12 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{column}
     \begin{column}{.85\textwidth}
     \normalsize
-    Vectors, etc. must be fixed to work in \inlinecode{consteval}.
+    Vectors, etc. must be fixed to work in \inlinecode{consteval}
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-    span<(*@\listinghls{info}@*)> x = members_of(...);
-    vector<(*@\listinghls{info}@*)> y = bases_of(...);
+  vector<(*@\listinghls{info}@*)> x = members_of(...);
+  vector<(*@\listinghls{info}@*)> y = bases_of(...);
     \end{lstlisting}
-    Can be used with some STL algorithms, unless splicing is involved.
+    Can be used with some STL algorithms, unless splicing is involved
     \end{column}
   \end{columns}
   \vfill
@@ -198,13 +198,13 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{column}
     \begin{column}{.85\textwidth}
     \normalsize
-      Containers (sequences) are metaobjects themselves.
+      Containers (sequences) are metaobjects themselves
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-    (*@\listinghls{auto}@*) x = get_data_members(...);
-    (*@\listinghls{auto}@*) y = get_base_classes(...);
+  (*@\listinghls{auto}@*) x = get_data_members(...);
+  (*@\listinghls{auto}@*) y = get_base_classes(...);
     \end{lstlisting}
     Have their own implementation of reflection-related algorithms, splicing
-      is no problem.
+      is no problem
     \end{column}
   \end{columns}
 \end{frame}
@@ -326,7 +326,7 @@ consteval void my_reusable_algo(
 }
   \end{lstlisting}
   \inlinecode{predicate}, \inlinecode{something_else} and \inlinecode{function}
-  cannot do splicing\ldots
+  {\em \larger cannot} do~splicing\ldots
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -345,8 +345,8 @@ consteval void my_reusable_algo(
   }
 }
   \end{lstlisting}
-  making everything a template. But then this becomes slower to compile, defeating
-  one of the main points of this API.
+  making everything a template. But then this becomes slower to compile,
+  partially defeating one of the main points of this API.
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -382,11 +382,9 @@ consteval void my_reusable_algo(
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 template <(*@\listinghls{info}@*) X>
 struct (*@\listinghlt{__metaobject}@*) {
-  consteval operator (*@\listinghls{info}@*)() const {
-    return X;
-  }
+  consteval operator (*@\listinghls{info}@*)() const { return X; }
 };
-concept (*@\listinghlt{metaobject}@*) = (*@\listinghlt{unspecified}@*);
+concept (*@\listinghlt{metaobject}@*) = (*@\listinghls{unspecified}@*);
 
 consteval auto foo(info mo);
 consteval auto bar((*@\listinghlt{metaobject}@*) auto mo);
@@ -398,6 +396,22 @@ consteval auto foo((*@\listinghls{info}@*) mo);
 template <(*@\listinghls{info}@*) MO>
 consteval auto bar();
   \end{lstlisting}
+  in a real-life scenario.
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{The cost of reflection in a \say{large-ish} project?}
+  \LARGE
+  \begin{itemize}
+    \item Let's try \inlinecode{clang}
+    \begin{itemize}
+      \Large
+      \item Estimate the number of \say{things} to reflect
+      \item Measure the overall compilation time
+      \item Measure the contribution of reflection
+      \item Compare purely value-based and typed metaobjects
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -582,7 +596,7 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
     \item AMD Ryzen7 4800HS (16 cores)
     \item 16GB RAM
     \end{itemize}
-  \item RPi 4B
+  \item RPi 4B\footnote{timeless}
     \begin{itemize}
     \smaller
     \item ARM v7l
@@ -669,21 +683,6 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
 % ------------------------------------------------------------------------------
 \section{clang}
 % ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{The cost of reflection in a \say{large-ish} project?}
-  \LARGE
-  \begin{itemize}
-    \item Let's try \inlinecode{clang}
-    \begin{itemize}
-      \Large
-      \item Estimate the number of \say{things} to reflect
-      \item Measure the overall compilation time
-      \item Measure the contribution of reflection
-      \item Compare purely value-based and typed metaobjects
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Estimating number of declarations in \inlinecode{clang}}
   Let's try {\em \larger documented} declarations
@@ -719,7 +718,7 @@ xsltproc combine.xslt index.xml > (*@\listinghl{clang.xml}@*)
   <xsl:template match="/">
     <xsl:value-of select="(*@\listinghlt{count}@*)(
       descendant::(*@\listinghl{compounddef}@*)(*@\footnote{
-        \inlinecode{struct}, \inlinecode{class}, \inlinecode{enum}, \ldots}@*)|
+        \inlinecode{struct}s, \inlinecode{class}es, \inlinecode{enum}s, \ldots}@*)|
       descendant::(*@\listinghl{member}@*)(*@\footnote{
         data members, member functions, enumerators, \ldots}@*)|
       descendant::(*@\listinghl{value}@*)(*@\footnote{
@@ -780,7 +779,7 @@ cmake \
   \end{lstlisting}
   Build and measure elapsed time:
   \begin{lstlisting}[language=bash,basicstyle=\footnotesize\ttfamily]
-time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
+time ninja install install-cxx install-cxxabi
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -875,8 +874,6 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
       to~total build time is a~fraction of~a~percent even in~the~worst case
     \item For projects similar in complexity to \inlinecode{clang},
       this results in 1-2 minutes added to several hours of compilation-time
-      in the worst case
-
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
