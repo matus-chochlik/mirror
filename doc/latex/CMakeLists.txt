@@ -218,24 +218,60 @@ mirror_generate_figure(
         time-vbr-copypaste-cmp-100x100-Ryzen7-4800HS
 )
 
+mirror_generate_figure(
+    ct-per-1-ARMv7l-cp
+    GENERATOR ct-per-1-mo
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-tmp-80x100-ARMv7l
+        time-tbr-copypaste-cmp-80x100-ARMv7l
+        time-vbr-copypaste-tmp-80x100-ARMv7l
+        time-vbr-copypaste-cmp-80x100-ARMv7l
+)
+
+mirror_generate_figure(
+    ct-per-n-ARMv7l-cp
+    GENERATOR ct-per-n-mo
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-tmp-80x100-ARMv7l
+        time-tbr-copypaste-cmp-80x100-ARMv7l
+        time-vbr-copypaste-tmp-80x100-ARMv7l
+        time-vbr-copypaste-cmp-80x100-ARMv7l
+)
+
+mirror_generate_figure(
+    ct-ratios-ARMv7l-cp
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-tmp-80x100-ARMv7l
+        time-vbr-copypaste-tmp-80x100-ARMv7l
+        time-tbr-copypaste-cmp-80x100-ARMv7l
+        time-vbr-copypaste-cmp-80x100-ARMv7l
+)
+
 mirror_add_latex_presentation(
     value_vs_type_based
     FIGURES
         ct-per-1-i5-2400
         ct-per-n-i5-2400
+        ct-ratios-i5-2400
         ct-per-1-i7-1185
         ct-per-n-i7-1185
+        ct-ratios-i7-1185
         ct-per-1-R7-4800
         ct-per-n-R7-4800
+        ct-ratios-R7-4800
 		ct-per-1-ARMv7l
 		ct-per-n-ARMv7l
-        ct-ratios-i5-2400
-        ct-ratios-i7-1185
-        ct-ratios-R7-4800
 		ct-ratios-ARMv7l
         ct-per-1-R7-4800-cp
         ct-per-n-R7-4800-cp
         ct-ratios-R7-4800-cp
+		ct-per-1-ARMv7l-cp
+		ct-per-n-ARMv7l-cp
+		ct-ratios-ARMv7l-cp
 )
 add_dependencies(doc-latex doc-value_vs_type_based-pdf)
 
