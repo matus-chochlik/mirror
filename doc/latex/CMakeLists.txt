@@ -34,12 +34,12 @@ mirror_generate_figure(
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
     BASELINE
-        time-baseline-sequence-500x1000-i5-2400@3.1GHz
+        time-baseline-sequence-500x1000-i5-2400
     SOURCE_DATA
-        time-tbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        time-tbr-sequence-cmp-500x1000-i5-2400@3.1GHz
-        time-vbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        time-vbr-sequence-cmp-500x1000-i5-2400@3.1GHz
+        time-tbr-sequence-tmp-500x1000-i5-2400
+        time-tbr-sequence-cmp-500x1000-i5-2400
+        time-vbr-sequence-tmp-500x1000-i5-2400
+        time-vbr-sequence-cmp-500x1000-i5-2400
 )
 
 mirror_generate_figure(
@@ -47,12 +47,12 @@ mirror_generate_figure(
     GENERATOR ct-per-n-mo
 	LABEL reflection_kind
     BASELINE
-        time-baseline-sequence-500x1000-i5-2400@3.1GHz
+        time-baseline-sequence-500x1000-i5-2400
     SOURCE_DATA
-        time-tbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        time-tbr-sequence-cmp-500x1000-i5-2400@3.1GHz
-        time-vbr-sequence-tmp-500x1000-i5-2400@3.1GHz
-        time-vbr-sequence-cmp-500x1000-i5-2400@3.1GHz
+        time-tbr-sequence-tmp-500x1000-i5-2400
+        time-tbr-sequence-cmp-500x1000-i5-2400
+        time-vbr-sequence-tmp-500x1000-i5-2400
+        time-vbr-sequence-cmp-500x1000-i5-2400
 )
 
 mirror_generate_figure(
@@ -60,12 +60,12 @@ mirror_generate_figure(
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
     BASELINE
-        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+        time-baseline-sequence-1000x1000-i7-1185G7
     SOURCE_DATA
-        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7
 )
 
 mirror_generate_figure(
@@ -73,12 +73,12 @@ mirror_generate_figure(
     GENERATOR ct-per-n-mo
 	LABEL reflection_kind
     BASELINE
-        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+        time-baseline-sequence-1000x1000-i7-1185G7
     SOURCE_DATA
-        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7
 )
 
 mirror_generate_figure(
@@ -138,12 +138,12 @@ mirror_generate_figure(
     GENERATOR ct-ratios
 	LABEL reflection_kind
     BASELINE
-        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+        time-baseline-sequence-1000x1000-i7-1185G7
     SOURCE_DATA
-        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7
 )
 
 mirror_generate_figure(
@@ -151,12 +151,12 @@ mirror_generate_figure(
     GENERATOR ct-ratios
 	LABEL reflection_kind
     BASELINE
-        time-baseline-sequence-1000x1000-i7-1185G7@3.0GHz
+        time-baseline-sequence-1000x1000-i7-1185G7
     SOURCE_DATA
-        time-tbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-tmp-1000x1000-i7-1185G7@3.0GHz
-        time-tbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
-        time-vbr-sequence-cmp-1000x1000-i7-1185G7@3.0GHz
+        time-tbr-sequence-tmp-1000x1000-i7-1185G7
+        time-vbr-sequence-tmp-1000x1000-i7-1185G7
+        time-tbr-sequence-cmp-1000x1000-i7-1185G7
+        time-vbr-sequence-cmp-1000x1000-i7-1185G7
 )
 
 mirror_generate_figure(
