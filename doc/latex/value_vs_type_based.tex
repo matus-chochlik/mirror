@@ -564,8 +564,8 @@ return ( ... + (*@\listinghlt{foo}@*)<(*@\listinghls{MOID}@*)>());
 \begin{frame}[fragile]
   \frametitle{Value-based metaobject \& consteval function}
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-consteval size_t (*@\listinghlt{foo}@*)(size_t i) {
-	return i;
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
 }
   \end{lstlisting}
   \vfill
@@ -667,7 +667,118 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
   \fitfig{ct-ratios-ARMv7l}
 \end{frame}
 % ------------------------------------------------------------------------------
-% TODO describe the "copy/paste" setup
+\begin{frame}
+  \frametitle{What about executable sizes?}
+  \Large
+  \begin{itemize}
+    \item This is boring\ldots
+    \item When the reflection-related functions are \inlinecode{consteval},
+      the executable size stays the same regardless of the representation
+      of metaobjects or their count
+    \item The test source code shown above always compiles into an~executable
+      roughly 16kB  in size
+
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{But, what if}
+  \framesubtitle{we tried something different\ldots}
+  \Large
+  \begin{itemize}
+    \item Instead of that template gizmo instantiating metaobjects
+      in one place in the source
+    \item Just generate a lot of source code with many separate metaobject
+      operations
+    \item As in\ldots
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Type-based metaobject \& template function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <size_t M>
+struct (*@\listinghl{wrapper}@*) {
+	consteval operator size_t() { return M; }
+};
+template <size_t M>
+consteval size_t (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<M> w) {
+	return w;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<1Z>{})+
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<2Z>{})+
+    // ...
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<(*@\listinghls{N}@*)Z>{}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Type-based metaobject \& consteval function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <size_t M>
+struct (*@\listinghl{wrapper}@*) {
+	consteval operator size_t() { return M; }
+};
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<1Z>{})+
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<2Z>{})+
+    // ...
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<(*@\listinghls{N}@*)Z>{}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Value-based metaobject \& template function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t M>
+consteval size_t (*@\listinghlt{foo}@*)() {
+	return M;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)<1Z>()+
+    (*@\listinghlt{foo}@*)<2Z>()+
+    // ...
+    (*@\listinghlt{foo}@*)<(*@\listinghls{N}@*)Z>());
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Value-based metaobject \& consteval function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)(1Z)+
+    (*@\listinghlt{foo}@*)(2Z)+
+    // ...
+    (*@\listinghlt{foo}@*)((*@\listinghls{N}@*)Z));
+}
+  \end{lstlisting}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{i5-2400 -- compile time increase per N metaobjects}
@@ -715,16 +826,19 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{What about executable sizes?}
+  \frametitle{Why the {\em \larger huge} difference?}
   \Large
   \begin{itemize}
-    \item This is boring\ldots
-    \item When the reflection-related functions are \inlinecode{consteval},
-      the executable size stays the same regardless of the representation
-      of metaobjects or their count
-    \item The test source code shown above always compiles into an~executable
-      roughly 16kB  in size
-
+    \item Just some guesses\ldots
+    \begin{itemize}
+      \smaller
+      \item In the second setup, each metaobject is an individually-parsed expression
+      \item Different than just multiple instantiations
+      \item Different source locations, etc.
+    \end{itemize}
+    \item Even in the value-based cases the compile-times grow exponentially
+    \item This is {\em \larger not} how you typically use reflection
+      in real-life scenarios
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
