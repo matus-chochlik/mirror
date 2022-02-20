@@ -186,6 +186,39 @@ mirror_generate_figure(
 )
 
 mirror_generate_figure(
+    ct-per-1-i5-2400-cp
+    GENERATOR ct-per-1-mo
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-tmp-125x100-i5-2400
+        time-tbr-copypaste-cmp-125x100-i5-2400
+        time-vbr-copypaste-tmp-125x100-i5-2400
+        time-vbr-copypaste-cmp-125x100-i5-2400
+)
+
+mirror_generate_figure(
+    ct-per-n-i5-2400-cp
+    GENERATOR ct-per-n-mo
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-tmp-125x100-i5-2400
+        time-tbr-copypaste-cmp-125x100-i5-2400
+        time-vbr-copypaste-tmp-125x100-i5-2400
+        time-vbr-copypaste-cmp-125x100-i5-2400
+)
+
+mirror_generate_figure(
+    ct-ratios-i5-2400-cp
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-tmp-125x100-i5-2400
+        time-vbr-copypaste-tmp-125x100-i5-2400
+        time-tbr-copypaste-cmp-125x100-i5-2400
+        time-vbr-copypaste-cmp-125x100-i5-2400
+)
+
+mirror_generate_figure(
     ct-per-1-R7-4800-cp
     GENERATOR ct-per-1-mo
 	LABEL reflection_kind
@@ -266,6 +299,9 @@ mirror_add_latex_presentation(
 		ct-per-1-ARMv7l
 		ct-per-n-ARMv7l
 		ct-ratios-ARMv7l
+        ct-per-1-i5-2400-cp
+        ct-per-n-i5-2400-cp
+        ct-ratios-i5-2400-cp
         ct-per-1-R7-4800-cp
         ct-per-n-R7-4800-cp
         ct-ratios-R7-4800-cp
