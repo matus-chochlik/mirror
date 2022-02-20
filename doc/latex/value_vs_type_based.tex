@@ -681,6 +681,8 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
+\section{take 2}
+% ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{But, what if}
   \framesubtitle{we tried something different\ldots}
@@ -725,6 +727,7 @@ template <size_t M>
 struct (*@\listinghl{wrapper}@*) {
 	consteval operator size_t() { return M; }
 };
+
 consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
 	return m;
 }
@@ -764,6 +767,7 @@ consteval int bar() {
 \begin{frame}[fragile]
   \frametitle{Value-based metaobject \& consteval function}
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+
 consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
 	return m;
 }
@@ -779,6 +783,8 @@ consteval int bar() {
 }
   \end{lstlisting}
 \end{frame}
+% ------------------------------------------------------------------------------
+\section{measurements}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{i5-2400 -- compile time increase per N metaobjects}
@@ -1019,7 +1025,8 @@ time ninja install install-cxx install-cxxabi
   \begin{itemize}
     \item The typical compile-time overhead of materializing a metaobject
       is on the order of tens or hundreds of microseconds
-    \item The type-based metaobject representation is between 2x and 4x
+    \item The type-based metaobject representation is between 2x and 6x\footnote{
+        in the worst \say{copy-paste} use-case}
       slower to compile compared to the purely value-based representation
   \end{itemize}
 \end{frame}
@@ -1048,14 +1055,16 @@ time ninja install install-cxx install-cxxabi
     \item In the value-based API splicing requires passing metaobject
       as non-type template arguments
     \item Splicing is quite common in various use-cases
+    \item Combining reflection with template metaprogramming is common as well
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{The {\larger big} question}
-  \Large
+  \LARGE
   \centering
-  Is the improvement in compile-time worth the decrease in usability
+  Is the improvement in compile-time\\
+  worth the decrease in usability\\
   of the value-based reflection API?
 \end{frame}
 % ------------------------------------------------------------------------------
