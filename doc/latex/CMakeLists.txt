@@ -284,6 +284,39 @@ mirror_generate_figure(
         time-vbr-copypaste-cmp-80x100-ARMv7l
 )
 
+mirror_generate_figure(
+    ct-per-1-R7-4800-cp-op
+    GENERATOR ct-per-1-mo
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-op-tmp-100x100-Ryzen7-4800HS
+        time-tbr-copypaste-op-cmp-100x100-Ryzen7-4800HS
+        time-vbr-copypaste-op-tmp-100x100-Ryzen7-4800HS
+        time-vbr-copypaste-op-cmp-100x100-Ryzen7-4800HS
+)
+
+mirror_generate_figure(
+    ct-per-n-R7-4800-cp-op
+    GENERATOR ct-per-n-mo
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-op-tmp-100x100-Ryzen7-4800HS
+        time-tbr-copypaste-op-cmp-100x100-Ryzen7-4800HS
+        time-vbr-copypaste-op-tmp-100x100-Ryzen7-4800HS
+        time-vbr-copypaste-op-cmp-100x100-Ryzen7-4800HS
+)
+
+mirror_generate_figure(
+    ct-ratios-R7-4800-cp-op
+    GENERATOR ct-ratios
+	LABEL reflection_kind
+    SOURCE_DATA
+        time-tbr-copypaste-op-tmp-100x100-Ryzen7-4800HS
+        time-vbr-copypaste-op-tmp-100x100-Ryzen7-4800HS
+        time-tbr-copypaste-op-cmp-100x100-Ryzen7-4800HS
+        time-vbr-copypaste-op-cmp-100x100-Ryzen7-4800HS
+)
+
 mirror_add_latex_presentation(
     value_vs_type_based
     FIGURES
@@ -308,6 +341,9 @@ mirror_add_latex_presentation(
 		ct-per-1-ARMv7l-cp
 		ct-per-n-ARMv7l-cp
 		ct-ratios-ARMv7l-cp
+        ct-per-1-R7-4800-cp-op
+        ct-per-n-R7-4800-cp-op
+        ct-ratios-R7-4800-cp-op
 )
 add_dependencies(doc-latex doc-value_vs_type_based-pdf)
 
