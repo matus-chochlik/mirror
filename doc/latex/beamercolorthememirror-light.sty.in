@@ -1,0 +1,47 @@
+\mode<presentation>
+
+\definecolor{mirrormajor}{RGB}{96,128,215}
+\definecolor{mirrorminor}{RGB}{2,16,38}
+\definecolor{mirrorpage}{RGB}{255,253,251}
+\definecolor{mirrortext}{RGB}{4,6,8}
+\definecolor{mirrorlisting}{RGB}{225, 230, 235}
+\definecolor{mirrorstring}{RGB}{129, 215, 255}
+\definecolor{mirrorkeyword}{RGB}{32, 48, 96}
+\definecolor{mirrorcomment}{RGB}{64, 64, 128}
+\definecolor{mirrorhilite0}{RGB}{128, 96, 48}
+\definecolor{mirrorhilite1}{RGB}{128, 128, 64}
+\definecolor{mirrorhilite2}{RGB}{128, 64, 64}
+
+\setbeamercolor{structure}{fg=mirrorminor}
+\setbeamercolor{background canvas}{bg=mirrorpage}
+\setbeamercolor{normal text}{fg=mirrortext}
+
+\setbeamercolor{palette primary}{fg=mirrorminor,bg=mirrormajor!70}
+\setbeamercolor{palette secondary}{fg=mirrorminor,bg=mirrormajor!75}
+\setbeamercolor{palette tertiary}{fg=mirrorminor,bg=mirrormajor!80}
+\setbeamercolor{palette quaternary}{fg=mirrorminor,bg=mirrormajor!90}
+
+\setbeamercolor{titlelike}{parent=palette quaternary}
+\setbeamercolor{frametitle}{fg=mirrortext,bg=mirrorpage}
+
+\setbeamercolor{block title}{fg=mirrorminor,bg=mirrormajor}
+\setbeamercolor{block title alerted}{use=alerted text,fg=mirrorminor,bg=alerted text.fg!75!bg}
+\setbeamercolor{block title example}{use=example text,fg=mirrorminor,bg=example text.fg!75!bg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
+\setbeamercolor{sidebar}{bg=mirrormajor!70}
+  
+\setbeamercolor{palette sidebar primary}{fg=mirrorminor}
+\setbeamercolor{palette sidebar secondary}{fg=mirrorminor!75}
+\setbeamercolor{palette sidebar tertiary}{fg=mirrorminor!75}
+\setbeamercolor{palette sidebar quaternary}{fg=mirrorminor}
+\setbeamercolor{page number in head/foot}{fg=mirrortext}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\mode
+<all>

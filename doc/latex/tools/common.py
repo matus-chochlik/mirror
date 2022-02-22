@@ -62,6 +62,13 @@ class PlotArgParser(argparse.ArgumentParser):
         )
 
         self.add_argument(
+            '-T', '--light-theme',
+            dest='light_theme',
+            default=False,
+            action="store_true"
+        )
+
+        self.add_argument(
             '-L', '--label-format',
             dest='label_format',
             default=None,
@@ -87,8 +94,12 @@ class PlotArgParser(argparse.ArgumentParser):
 
             # ------------------------------------------------------------------
             def color_from_to(self, i, mini, maxi):
-                lc = (1.0, 0.8, 0.1)
-                rc = (0.6, 0.8, 1.0)
+                if self.light_theme:
+                    lc = (0.7, 0.4, 0.0)
+                    rc = (0.1, 0.4, 0.7)
+                else:
+                    lc = (1.0, 0.8, 0.1)
+                    rc = (0.6, 0.8, 1.0)
                 mul = [0.85, 1.15]
                 m = mul[i % len(mul)]
                 f = (i - mini) / (maxi - mini)
@@ -108,10 +119,10 @@ class PlotArgParser(argparse.ArgumentParser):
                     found = self._fmt_re_rk.search(name)
                     if found:
                         return {
-                            "tbr-tmp":"TB template",
-                            "tbr-cmp":"TB consteval",
-                            "vbr-tmp":"VB template",
-                            "vbr-cmp":"VB consteval"
+                            "tbr-tmp":"type-based template",
+                            "tbr-cmp":"type-based consteval",
+                            "vbr-tmp":"value-based template",
+                            "vbr-cmp":"value-based consteval"
                         }["%s-%s" % (found.group(1), found.group(2))]
                         print()
                     

@@ -3,11 +3,19 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 #  http://www.boost.org/LICENSE_1_0.txt
 #
+option(MIRROR_LATEX_LIGHT_THEME "Use light theme to LaTex/Beamer" OFF)
 
-file(GENERATE
-    OUTPUT "beamercolorthememirror.sty"
-    INPUT "beamercolorthememirror.sty.in"
-)
+if(${MIRROR_LATEX_LIGHT_THEME})
+	file(GENERATE
+		OUTPUT "beamercolorthememirror.sty"
+		INPUT "beamercolorthememirror-light.sty.in"
+	)
+else()
+	file(GENERATE
+		OUTPUT "beamercolorthememirror.sty"
+		INPUT "beamercolorthememirror-dark.sty.in"
+	)
+endif()
 
 file(GENERATE
     OUTPUT "beamerouterthememirror.sty"
@@ -32,6 +40,9 @@ macro(mirror_generate_figure NAME)
     if(PYTHON3_COMMAND)
         set(FIG_DEPS)
         set(GEN_ARGS)
+		if(${MIRROR_LATEX_LIGHT_THEME})
+			list(APPEND GEN_ARGS "-T")
+		endif()
 		foreach(LABEL ${MIRROR_FIGURE_LABEL})
 			list(APPEND GEN_ARGS "-L")
 			list(APPEND GEN_ARGS "${LABEL}")
@@ -57,6 +68,7 @@ macro(mirror_generate_figure NAME)
 
         list(APPEND GEN_ARGS "-o")
         list(APPEND GEN_ARGS "${NAME}.pdf")
+        list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/tools/common.py")
         list(APPEND FIG_DEPS "${CMAKE_CURRENT_SOURCE_DIR}/tools/${MIRROR_FIGURE_GENERATOR}")
 
         add_custom_command(
@@ -89,6 +101,7 @@ macro(mirror_add_latex_presentation NAME)
     )
 
     set(PRESENTATION_DEPENDS
+		"${CMAKE_CURRENT_SOURCE_DIR}/LaTeX.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/beamerouterthememirror.sty"
         "${CMAKE_CURRENT_BINARY_DIR}/beamercolorthememirror.sty"
         "${CMAKE_CURRENT_BINARY_DIR}/beamer_mirror.tex"
