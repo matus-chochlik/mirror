@@ -848,7 +848,60 @@ consteval int bar() {
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
-% TODO
+\begin{frame}
+  \frametitle{Representing the reflection \say{operator}}
+  \Large
+  \begin{itemize}
+    \item Above we have just used integer literals to represent metaobject \say{ids}
+    \item What if we used a template function\footnote{with NTTP} to simulate
+      the reflection expression
+    \item What would be the effects on the compile-times?
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Representing the reflection \say{operator}}
+  \framesubtitle{(cont.)}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t I>
+consteval auto (*@\listinghlt{reflect}@*)() {
+    return I;
+}
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+foo((*@\listinghlt{reflect}@*)<(*@\listinghls{N}@*)Z>());
+// and
+foo<(*@\listinghlt{reflect}@*)<(*@\listinghls{N}@*)Z>()>();
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t I>
+consteval (*@\listinghl{wrapper}@*)<I> (*@\listinghlt{reflect}@*)() {
+  return {};
+}
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+foo((*@\listinghlt{reflect}@*)<(*@\listinghls{N}@*)Z>()));
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Ryzen7-4800HS-- compile time increase per N metaobjects}
