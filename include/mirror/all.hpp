@@ -13,6 +13,7 @@
 #include "full_name.hpp"
 #include "init_list.hpp"
 #include "make_array.hpp"
+#include "make_tuple.hpp"
 #include "operations.hpp"
 #include "placeholder.hpp"
 #include "sequence.hpp"
