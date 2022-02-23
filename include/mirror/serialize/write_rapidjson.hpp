@@ -10,9 +10,9 @@
 #define MIRROR_SERIALIZE_WRITE_RAPIDJSON_HPP
 
 #include "../diagnostic.hpp"
+#include "../rapidjson.hpp"
 #include "../sequence.hpp"
 #include "../tribool.hpp"
-#include "../utils/rapidjson.hpp"
 #include "write.hpp"
 #include <sstream>
 #include <variant>
