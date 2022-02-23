@@ -42,8 +42,10 @@ using __unspecified = unsigned;
 /// @ingroup metaobjects
 /// @see wrapped_metaobject
 using __metaobject_id = __unspecified;
-#elif defined(MIRROR_YCM)
+#else
+#if defined(MIRROR_YCM)
 using __metaobject_id = unsigned;
+#endif
 #endif
 
 namespace mirror {
