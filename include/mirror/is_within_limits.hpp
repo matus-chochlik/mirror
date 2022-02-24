@@ -152,6 +152,7 @@ static constexpr auto signedness_cast(Src value) noexcept {
 /// @ingroup utilities
 /// @see is_within_limits
 /// @see limit_cast
+/// @see from_string
 template <typename Dst, typename Src>
 static constexpr auto convert_if_fits(Src value) noexcept
   -> std::enable_if_t<std::is_convertible_v<Src, Dst>, std::optional<Dst>> {

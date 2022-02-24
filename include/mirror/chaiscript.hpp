@@ -119,12 +119,18 @@ static inline void add_to(chaiscript::ChaiScript& chai, metaobject auto mo) {
     _do_add_to(chai, mo, no_metaobject);
 }
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Registers the entities reflected by metaobjects with a ChaiScript engine.
+/// @ingroup utilities
+void add_to(chaiscript::ChaiScript& chai, metaobject_sequence auto mos);
+#else
 template <__metaobject_id... M>
 void add_to(
   chaiscript::ChaiScript& chai,
   unpacked_metaobject_sequence<M...> mos) {
     for_each(mos, [&](auto me) { _do_add_to(chai, me, no_metaobject); });
 }
+#endif
 
 } // namespace mirror
 

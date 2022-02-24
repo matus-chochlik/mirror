@@ -33,6 +33,8 @@ public:
 /// @brief Random access iterator type for metadata_sequence
 /// @ingroup metadata
 /// @see metadata_sequence
+/// @see metadata_registry
+/// @see metadata
 class metadata_iterator {
 private:
     using base_iter_t = std::vector<const metadata*>::const_iterator;
@@ -50,7 +52,8 @@ public:
 
     using difference_type = base_iter_t::difference_type;
 
-    using iterator_category = base_iter_t::iterator_category;
+    /// @brief Iterator category.
+    using iterator_category = std::random_access_iterator_tag;
 
     metadata_iterator(base_iter_t iter) noexcept
       : _iter{iter} {}
@@ -132,6 +135,7 @@ public:
 /// @ingroup metadata
 /// @see metadata
 /// @see metadata_iterator
+/// @see metadata_registry
 class metadata_sequence {
 private:
     std::vector<const metadata*> _elements;
