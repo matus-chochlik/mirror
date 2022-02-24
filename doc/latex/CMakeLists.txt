@@ -347,3 +347,33 @@ mirror_add_latex_presentation(
 )
 add_dependencies(doc-latex doc-value_vs_type_based-pdf)
 
+mirror_add_latex_presentation(
+	P2560Rx
+    FIGURES
+        ct-per-1-i5-2400
+        ct-per-n-i5-2400
+        ct-ratios-i5-2400
+        ct-per-1-i7-1185
+        ct-per-n-i7-1185
+        ct-ratios-i7-1185
+        ct-per-1-R7-4800
+        ct-per-n-R7-4800
+        ct-ratios-R7-4800
+		ct-per-1-ARMv7l
+		ct-per-n-ARMv7l
+		ct-ratios-ARMv7l
+        ct-per-1-i5-2400-cp
+        ct-per-n-i5-2400-cp
+        ct-ratios-i5-2400-cp
+        ct-per-1-R7-4800-cp
+        ct-per-n-R7-4800-cp
+        ct-ratios-R7-4800-cp
+		ct-per-1-ARMv7l-cp
+		ct-per-n-ARMv7l-cp
+		ct-ratios-ARMv7l-cp
+        ct-per-1-R7-4800-cp-op
+        ct-per-n-R7-4800-cp-op
+        ct-ratios-R7-4800-cp-op
+)
+add_dependencies(doc-latex doc-P2560Rx-pdf)
+
