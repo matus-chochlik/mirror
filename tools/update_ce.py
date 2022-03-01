@@ -73,6 +73,10 @@ def process_input(strip_re, inc_re, inc_dir, ofd, ifd, input_path, already_done)
                 if_doxy = False
                 not_doxy = True
                 continue
+            elif line.startswith("#endif"):
+                if_doxy = False
+                not_doxy = False
+                continue
         elif not_doxy:
             if line.startswith("#endif"):
                 not_doxy = False
