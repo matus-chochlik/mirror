@@ -2344,8 +2344,8 @@ auto get_full_name(wrapped_metaobject<Mp> mo) -> std::string {
 #endif // MIRROR_FULL_NAME_HPP
 
 
-#ifndef MIRROR_INIT_LIST_HPP
-#define MIRROR_INIT_LIST_HPP
+#ifndef MIRROR_HASH_HPP
+#define MIRROR_HASH_HPP
 
 
 #ifndef MIRROR_SEQUENCE_HPP
@@ -3208,6 +3208,80 @@ struct tuple_element<I, mirror::type_list<E, Et...>>
 } // namespace std
 
 #endif // MIRROR_SEQUENCE_HPP
+#include <functional>
+
+namespace mirror {
+
+// TODO: make the hashes platform-independent
+
+using hash_t = std::uint64_t;
+
+template <__metaobject_id M>
+constexpr auto get_hash(wrapped_metaobject<M>) -> hash_t
+  requires(__metaobject_is_meta_global_scope(M)) {
+    return 95ULL;
+}
+
+template <__metaobject_id M>
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t requires(
+  !__metaobject_is_meta_object_sequence(M) &&
+  !__metaobject_is_meta_global_scope(M) && !__metaobject_is_meta_callable(M) &&
+  !__metaobject_is_meta_function_call_expression(M) &&
+  !__metaobject_is_meta_parenthesized_expression(M)) {
+    return std::hash<std::string>{}(get_full_name(mo));
+}
+
+constexpr auto _do_get_hash(unpacked_metaobject_sequence<>, hash_t s)
+  -> hash_t {
+    return s;
+}
+
+template <__metaobject_id M, __metaobject_id... Ms>
+constexpr auto _do_get_hash(unpacked_metaobject_sequence<M, Ms...>, hash_t s)
+  -> hash_t {
+    return s ^
+           std::hash<std::string>{}(get_full_name(wrapped_metaobject<M>{})) ^
+           _do_get_hash(unpacked_metaobject_sequence<Ms...>{}, s + 1);
+}
+
+template <__metaobject_id... M>
+constexpr auto get_hash(unpacked_metaobject_sequence<M...> ms) {
+    return _do_get_hash(ms, 0Z);
+}
+
+template <__metaobject_id M>
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_object_sequence(M)) {
+    return get_hash(unpack(mo));
+}
+
+template <__metaobject_id M>
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_callable(M)) {
+    return std::hash<std::string>{}(get_full_name(mo)) ^
+           get_hash(transform(get_parameters(mo), get_type(_1)));
+}
+
+template <__metaobject_id M>
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_function_call_expression(M)) {
+    return get_hash(get_callable(mo));
+}
+
+template <__metaobject_id M>
+constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
+  requires(__metaobject_is_meta_parenthesized_expression(M)) {
+    return get_hash(get_subexpression(mo));
+}
+
+} // namespace mirror
+
+#endif
+
+
+#ifndef MIRROR_INIT_LIST_HPP
+#define MIRROR_INIT_LIST_HPP
+
 #include <initializer_list>
 
 namespace mirror {
@@ -4317,6 +4391,811 @@ constexpr void for_each_metaobject_operation(F function) {
 } // namespace mirror
 
 #endif
+#ifndef MIRROR_PROGRAM_ARGS_HPP
+#define MIRROR_PROGRAM_ARGS_HPP
+
+
+#ifndef MIRROR_FROM_STRING_HPP
+#define MIRROR_FROM_STRING_HPP
+
+
+#ifndef MIRROR_EXTRACT_HPP
+#define MIRROR_EXTRACT_HPP
+
+#include <concepts>
+#include <memory>
+#include <optional>
+#include <string_view>
+#include <system_error>
+#include <type_traits>
+#include <variant>
+
+namespace mirror {
+
+
+template <typename T>
+struct extracted_traits;
+
+template <typename T>
+using extracted_type_t = std::remove_cv_t<typename extracted_traits<
+  std::remove_cv_t<std::remove_reference_t<T>>>::value_type>;
+
+template <typename E, typename V>
+static constexpr const auto has_value_type_v =
+  std::is_convertible_v<extracted_type_t<E>, V>;
+
+// nullptr
+template <>
+struct extracted_traits<nullptr_t> {
+    using value_type = void;
+};
+
+constexpr auto has_value(const nullptr_t) noexcept -> bool {
+    return false;
+}
+
+constexpr auto extract(const nullptr_t) noexcept -> int {
+    return 0;
+}
+
+// c-str
+template <>
+struct extracted_traits<char*> {
+    using value_type = std::string_view;
+};
+
+static constexpr auto has_value(const char* p) noexcept -> bool {
+    return p != nullptr;
+}
+
+static constexpr auto extract(const char* s) noexcept -> std::string_view {
+    return {s};
+}
+
+// pointer
+template <typename T>
+struct extracted_traits<T*> {
+    using value_type = T;
+};
+
+template <typename T>
+constexpr auto has_value(const T* p) noexcept -> bool {
+    return p != nullptr;
+}
+
+template <typename T>
+constexpr auto extract(const T* p) noexcept -> const T& {
+    return *p;
+}
+
+// unique_ptr
+template <typename T, typename D>
+struct extracted_traits<std::unique_ptr<T, D>> {
+    using value_type = T;
+};
+
+template <typename T, typename D>
+constexpr auto has_value(const std::unique_ptr<T, D>& p) noexcept -> bool {
+    return p != nullptr;
+}
+
+template <typename T, typename D>
+constexpr auto extract(const std::unique_ptr<T, D>& p) noexcept -> const T& {
+    return *p;
+}
+
+// shared_ptr
+template <typename T>
+struct extracted_traits<std::shared_ptr<T>> {
+    using value_type = T;
+};
+
+template <typename T>
+constexpr auto has_value(const std::shared_ptr<T>& p) noexcept -> bool {
+    return p != nullptr;
+}
+
+template <typename T, typename D>
+constexpr auto extract(const std::shared_ptr<T>& p) noexcept -> const T& {
+    return *p;
+}
+
+// optional
+template <typename T>
+struct extracted_traits<std::optional<T>> {
+    using value_type = T;
+};
+
+template <typename T>
+constexpr auto has_value(const std::optional<T>& o) noexcept -> bool {
+    return o.has_value();
+}
+
+template <typename T>
+constexpr auto extract(const std::optional<T>& o) noexcept -> const T& {
+    return *o;
+}
+
+// variant (expected)
+template <typename T, typename E>
+struct extracted_traits<std::variant<T, E>> {
+    using value_type = T;
+};
+
+template <typename T, typename E>
+constexpr auto has_value(const std::variant<T, E>& v) noexcept -> bool {
+    return std::holds_alternative<T>(v);
+}
+
+template <typename T, typename E>
+constexpr auto extract(const std::variant<T, E>& v) noexcept -> const T& {
+    return std::get<T>(v);
+}
+
+template <typename T, typename E>
+constexpr auto extract(std::variant<T, E>& v) noexcept -> T& {
+    return std::get<T>(v);
+}
+
+template <typename T, typename E>
+constexpr auto get_error(const std::variant<T, E>& v) noexcept -> const E& {
+    return std::get<E>(v);
+}
+
+// clang-format off
+template <typename T>
+concept extractable = requires(T v) {
+    { has_value(v) } -> std::convertible_to<bool>;
+	{ std::declval<mirror::extracted_type_t<T>>() };
+	extract(v);
+};
+// clang-format on
+
+template <typename V>
+consteval auto has_value_type(const extractable auto& v) noexcept -> bool {
+    return has_value_type_v<decltype(v), V>;
+}
+
+} // namespace mirror
+
+#endif
+#ifndef MIRROR_IS_WITHIN_LIMITS_HPP
+#define MIRROR_IS_WITHIN_LIMITS_HPP
+
+
+#ifndef MIRROR_DIAGNOSTIC_HPP
+#define MIRROR_DIAGNOSTIC_HPP
+
+
+#if defined(__clang__)
+#define MIRROR_DIAG_PRAGMA(EXPR) MIRROR_PRAGMA(clang diagnostic EXPR)
+#elif defined(__GNUC__)
+#define MIRROR_DIAG_PRAGMA(EXPR) MIRROR_PRAGMA(GCC diagnostic EXPR)
+#endif
+
+#if defined(__clang__) || defined(__GNUC__)
+
+#define MIRROR_DIAG_OFF(EXPR) \
+    MIRROR_DIAG_PRAGMA(ignored MIRROR_STRINGIFY(MIRROR_JOIN(-W, EXPR)))
+
+#define MIRROR_DIAG_PUSH() MIRROR_DIAG_PRAGMA(push)
+#define MIRROR_DIAG_POP() MIRROR_DIAG_PRAGMA(pop)
+
+#endif
+
+#endif // MIRROR_DIAGNOSTIC_HPP
+#include <cstdint>
+#include <limits>
+#include <optional>
+#include <type_traits>
+#include <utility>
+
+MIRROR_DIAG_PUSH()
+#if defined(__clang__)
+MIRROR_DIAG_OFF(shorten-64-to-32)
+#elif defined(__GNUC__)
+MIRROR_DIAG_OFF(sign-compare)
+#endif
+
+namespace mirror {
+template <typename Dst, typename Src>
+struct implicitly_within_limits
+  : std::integral_constant<
+      bool,
+      (((std::is_integral_v<Dst> && std::is_integral_v<Src>) ||
+        (std::is_floating_point_v<Dst> && std::is_floating_point_v<Src>)) &&
+       (std::is_signed_v<Dst> ==
+        std::is_signed_v<Src>)&&(sizeof(Dst) >= sizeof(Src)))> {};
+
+template <typename Dst>
+struct implicitly_within_limits<Dst, bool> : std::is_integral<Dst> {};
+
+template <>
+struct implicitly_within_limits<float, std::int16_t> : std::true_type {};
+
+template <>
+struct implicitly_within_limits<float, std::int32_t> : std::true_type {};
+
+template <>
+struct implicitly_within_limits<double, std::int16_t> : std::true_type {};
+
+template <>
+struct implicitly_within_limits<double, std::int32_t> : std::true_type {};
+
+template <>
+struct implicitly_within_limits<double, std::int64_t> : std::true_type {};
+template <
+  typename Dst,
+  typename Src,
+  bool DIsInt,
+  bool SIsInt,
+  bool DIsSig,
+  bool SIsSig>
+struct within_limits_num {
+    static constexpr auto check(const Src) noexcept {
+        return implicitly_within_limits<Dst, Src>::value;
+    }
+};
+template <typename Dst, typename Src, bool IsInt, bool IsSig>
+struct within_limits_num<Dst, Src, IsInt, IsInt, IsSig, IsSig> {
+    static constexpr auto check(const Src value) noexcept {
+        using dnl = std::numeric_limits<Dst>;
+
+        return (dnl::min() <= value) && (value <= dnl::max());
+    }
+};
+template <typename Dst, typename Src, bool IsInt>
+struct within_limits_num<Dst, Src, IsInt, IsInt, false, true> {
+    static constexpr auto check(const Src value) noexcept {
+        using Dnl = std::numeric_limits<Dst>;
+        using Tmp = std::make_unsigned_t<Src>;
+
+        return (value < Src(0)) ? false : (Tmp(value) < Dnl::max());
+    }
+};
+template <typename Dst, typename Src, bool IsInt>
+struct within_limits_num<Dst, Src, IsInt, IsInt, true, false> {
+    static constexpr auto check(const Src value) noexcept {
+        using dnl = std::numeric_limits<Dst>;
+
+        return (value < dnl::max());
+    }
+};
+template <typename Dst, typename Src>
+struct within_limits
+  : within_limits_num<
+      Dst,
+      Src,
+      std::is_integral_v<Dst>,
+      std::is_integral_v<Src>,
+      std::is_signed_v<Dst>,
+      std::is_signed_v<Src>> {};
+template <typename T>
+struct within_limits<T, T> {
+    static constexpr auto check(const T&) noexcept {
+        return true;
+    }
+};
+template <typename Dst, typename Src>
+static constexpr auto is_within_limits(const Src value) noexcept {
+    return implicitly_within_limits<Dst, Src>::value ||
+           within_limits<Dst, Src>::check(value);
+}
+template <typename Dst, typename Src>
+static constexpr auto limit_cast(Src value) noexcept
+  -> std::enable_if_t<std::is_convertible_v<Src, Dst>, Dst> {
+    is_within_limits<Dst>(value), Dst(std::move(value));
+}
+template <typename Src>
+static constexpr auto signedness_cast(Src value) noexcept {
+    return limit_cast<std::conditional_t<
+      std::is_signed_v<Src>,
+      std::make_unsigned_t<Src>,
+      std::make_signed_t<Src>>>(value);
+}
+template <typename Dst, typename Src>
+static constexpr auto convert_if_fits(Src value) noexcept
+  -> std::enable_if_t<std::is_convertible_v<Src, Dst>, std::optional<Dst>> {
+
+    if(is_within_limits<Dst>(value)) {
+        return {Dst(std::move(value))};
+    }
+    return {};
+}
+} // namespace mirror
+
+MIRROR_DIAG_POP()
+
+#endif // MIRROR_IS_WITHIN_LIMITS_HPP
+#include <algorithm>
+#include <array>
+#include <charconv>
+#include <chrono>
+#include <cstdlib>
+#include <string>
+#include <string_view>
+
+namespace mirror {
+static inline auto
+from_string(const std::string_view src, const std::type_identity<bool>) noexcept
+  -> std::variant<bool, std::errc> {
+
+    const std::array<const std::string_view, 5> true_strs{
+      {{"true"}, {"True"}, {"1"}, {"t"}, {"T"}}};
+    if(std::find(true_strs.begin(), true_strs.end(), src) != true_strs.end()) {
+        return {true};
+    }
+
+    const std::array<const std::string_view, 5> false_strs{
+      {{"false"}, {"False"}, {"0"}, {"f"}, {"F"}}};
+    if(std::find(false_strs.begin(), false_strs.end(), src) != false_strs.end()) {
+        return {false};
+    }
+
+    return {std::errc::invalid_argument};
+}
+
+static inline auto from_string(
+  const std::string_view src,
+  const std::type_identity<tribool>) noexcept
+  -> std::variant<tribool, std::errc> {
+    if(const auto val{from_string(src, std::type_identity<bool>{})};
+       has_value(val)) {
+        return {tribool{extract(val)}};
+    }
+
+    const std::array<const std::string_view, 4> unknown_strs{
+      {{"indeterminate"}, {"Indeterminate"}, {"unknown"}, {"-"}}};
+    if(
+      std::find(unknown_strs.begin(), unknown_strs.end(), src) !=
+      unknown_strs.end()) {
+        return {indeterminate};
+    }
+
+    return {std::errc::invalid_argument};
+}
+
+static inline auto
+from_string(const std::string_view src, const std::type_identity<char>) noexcept
+  -> std::variant<char, std::errc> {
+    if(src.size() == 1) {
+        return {src.front()};
+    }
+    return {std::errc::invalid_argument};
+}
+
+template <typename T>
+static inline auto
+from_string(const std::string_view src, const std::type_identity<T>) noexcept
+  -> std::variant<T, std::errc> requires(std::is_integral_v<T>) {
+    T value{};
+    const auto res{
+      std::from_chars<T>(src.data(), src.data() + src.size(), value, 10)};
+    if(res.ec == std::errc{}) {
+        if(std::string_view{res.ptr}.empty()) {
+            return {value};
+        }
+        return {std::errc::invalid_argument};
+    }
+    return {res.ec};
+}
+
+template <typename T>
+static inline auto
+from_string(const std::string_view src, const std::type_identity<T>) noexcept
+  -> std::variant<T, std::errc> requires(std::is_enum_v<T>) {
+    if(const auto converted{string_to_enum<T>(src)}) {
+        return {extract(converted)};
+    }
+    return {std::errc::invalid_argument};
+}
+
+static inline auto from_string(
+  const std::string_view src,
+  const std::type_identity<std::string_view>) noexcept
+  -> std::variant<std::string_view, std::errc> {
+    return {src};
+}
+
+static inline auto from_string(
+  const std::string_view src,
+  const std::type_identity<std::string>) noexcept
+  -> std::variant<std::string, std::errc> {
+    return {std::string{src}};
+}
+
+template <typename Rep, typename Period>
+static inline auto convert_from_string(
+  const std::string_view src,
+  const std::string_view suffix,
+  const std::type_identity<std::chrono::duration<Rep, Period>>) noexcept
+  -> std::optional<std::chrono::duration<Rep, Period>> {
+    using D = std::chrono::duration<Rep, Period>;
+
+    Rep value{};
+    const auto res{
+      std::from_chars<Rep>(src.data(), src.data() + src.size(), value, 10)};
+    if(std::string_view{res.ptr} == suffix) {
+        if(res.ec == std::errc{}) {
+            return {D{value}};
+        }
+    }
+    return {};
+}
+
+template <typename Rep, typename Period>
+static inline auto from_string(
+  const std::string_view src,
+  const std::type_identity<std::chrono::duration<Rep, Period>>) noexcept
+  -> std::variant<std::chrono::duration<Rep, Period>, std::errc> {
+
+    using D = std::chrono::duration<Rep, Period>;
+
+    if(const auto d{convert_from_string(
+         src,
+         "s",
+         std::type_identity<std::chrono::duration<Rep, std::ratio<1>>>())}) {
+        return {std::chrono::duration_cast<D>(*d)};
+    }
+
+    if(const auto d{convert_from_string(
+         src,
+         "min",
+         std::type_identity<std::chrono::duration<Rep, std::ratio<60>>>())}) {
+        return {std::chrono::duration_cast<D>(*d)};
+    }
+
+    if(const auto d{convert_from_string(
+         src,
+         "hr",
+         std::type_identity<std::chrono::duration<Rep, std::ratio<3600>>>())}) {
+        return {std::chrono::duration_cast<D>(*d)};
+    }
+
+    if(const auto d{convert_from_string(
+         src,
+         "day",
+         std::type_identity<
+           std::chrono::duration<Rep, std::ratio<86400LL>>>())}) {
+        return {std::chrono::duration_cast<D>(*d)};
+    }
+
+    if(const auto d{convert_from_string(
+         src,
+         "ms",
+         std::type_identity<std::chrono::duration<Rep, std::milli>>())}) {
+        return {std::chrono::duration_cast<D>(*d)};
+    }
+
+    if(const auto d{convert_from_string(
+         src,
+         "μs",
+         std::type_identity<std::chrono::duration<Rep, std::micro>>())}) {
+        return {std::chrono::duration_cast<D>(*d)};
+    }
+
+    return {std::errc::invalid_argument};
+}
+
+template <typename T>
+auto from_string(const std::string_view src) noexcept {
+    return from_string(src, std::type_identity<T>{});
+}
+
+template <typename T>
+auto from_extractable_string(
+  const extractable auto src,
+  std::type_identity<T> tid = {}) noexcept -> std::optional<T> {
+    if(has_value_type<std::string_view>(src) && has_value(src)) {
+        if(auto converted{from_string(extract(src), tid)};
+           has_value(converted)) {
+            return {std::move(extract(converted))};
+        }
+    }
+    return {};
+}
+} // namespace mirror
+
+#endif // MIRROR_FROM_STRING_HPP
+#include <memory>
+#include <type_traits>
+#include <utility>
+#include <vector>
+
+namespace mirror {
+class program_args;
+class program_arg_iterator;
+
+class program_arg {
+public:
+    constexpr program_arg() noexcept = default;
+
+    program_arg(const int argi, const int argc, const char** argv) noexcept
+      : _argi{argi}
+      , _argc{argc}
+      , _argv{argv} {}
+
+    using value_type = std::string_view;
+
+    auto has_value() const noexcept -> bool {
+        return (0 < _argi) && (_argi < _argc) && (_argv != nullptr) &&
+               (_argv[_argi] != nullptr);
+    }
+
+    operator bool() const noexcept {
+        return has_value();
+    }
+
+    auto position() const noexcept {
+        return _argi;
+    }
+
+    auto is_first() const noexcept -> bool {
+        return _argi == 1;
+    }
+
+    auto is_last() const noexcept -> bool {
+        return _argi == _argc - 1;
+    }
+
+    auto get() const noexcept -> value_type {
+        if(has_value()) {
+            return value_type(_argv[_argi]);
+        }
+        return {};
+    }
+
+    operator value_type() const noexcept {
+        return get();
+    }
+
+    auto next() const noexcept -> program_arg {
+        return {_argi + 1, _argc, _argv};
+    }
+
+    auto prev() const noexcept -> program_arg {
+        return {_argi - 1, _argc, _argv};
+    }
+
+    auto starts_with(value_type str) const noexcept -> bool {
+        return get().starts_with(str);
+    }
+
+    auto ends_with(value_type str) const noexcept -> bool {
+        return get().ends_with(str);
+    }
+
+    auto is_long_tag(value_type str) const noexcept -> bool {
+        return get().starts_with("--") && get().ends_with(str) &&
+               (get().size() == str.size() + 2);
+    }
+
+    auto operator==(const value_type& v) const noexcept {
+        return get() == v;
+    }
+
+    auto operator!=(const value_type& v) const noexcept {
+        return get() != v;
+    }
+
+private:
+    int _argi{0};
+    int _argc{0};
+    const char** _argv{nullptr};
+
+    friend class program_arg_iterator;
+    friend class program_args;
+};
+static inline auto to_string(const program_arg& arg) {
+    return std::string{arg.get()};
+}
+static inline auto operator<<(std::ostream& out, const program_arg& arg)
+  -> std::ostream& {
+    return out << arg.get();
+}
+class program_arg_iterator {
+    using this_class = program_arg_iterator;
+
+public:
+    constexpr program_arg_iterator(const program_arg arg) noexcept
+      : _a{arg} {}
+
+    using value_type = program_arg;
+
+    using difference_type = int;
+
+    using reference = program_arg&;
+
+    using const_reference = const program_arg&;
+
+    using pointer = program_arg*;
+
+    using const_pointer = const program_arg*;
+
+    using iterator_category = std::random_access_iterator_tag;
+
+    friend constexpr auto
+    operator==(const this_class& l, const this_class& r) noexcept {
+        return _cmp(l._a, r._a) == 0;
+    }
+
+    friend constexpr auto
+    operator!=(const this_class& l, const this_class& r) noexcept {
+        return _cmp(l._a, r._a) != 0;
+    }
+
+    friend constexpr auto
+    operator<(const this_class& l, const this_class& r) noexcept {
+        return _cmp(l._a, r._a) < 0;
+    }
+
+    friend constexpr auto
+    operator<=(const this_class& l, const this_class& r) noexcept {
+        return _cmp(l._a, r._a) <= 0;
+    }
+
+    friend constexpr auto
+    operator>(const this_class& l, const this_class& r) noexcept {
+        return _cmp(l._a, r._a) > 0;
+    }
+
+    friend constexpr auto
+    operator>=(const this_class& l, const this_class& r) noexcept {
+        return _cmp(l._a, r._a) >= 0;
+    }
+
+    friend constexpr auto
+    operator-(const this_class& l, const this_class& r) noexcept
+      -> difference_type {
+        return _cmp(l._a, r._a);
+    }
+
+    constexpr auto operator++() noexcept -> this_class& {
+        ++_a._argi;
+        return *this;
+    }
+
+    constexpr auto operator--() noexcept -> this_class& {
+        --_a._argi;
+        return *this;
+    }
+
+    constexpr auto operator++(int) noexcept -> this_class {
+        this_class result{*this};
+        ++_a._argi;
+        return result;
+    }
+
+    constexpr auto operator--(int) noexcept -> this_class {
+        this_class result{*this};
+        --_a._argi;
+        return result;
+    }
+
+    constexpr auto operator+=(const difference_type dist) noexcept
+      -> this_class& {
+        _a._argi += dist;
+        return *this;
+    }
+
+    constexpr auto operator-=(const difference_type dist) noexcept
+      -> this_class& {
+        _a._argi -= dist;
+        return *this;
+    }
+
+    constexpr auto operator+(const difference_type dist) noexcept
+      -> this_class {
+        this_class result{*this};
+        result._a._argi += dist;
+        return result;
+    }
+
+    constexpr auto operator-(const difference_type dist) noexcept
+      -> this_class {
+        this_class result{*this};
+        result._a._argi -= dist;
+        return result;
+    }
+
+    constexpr auto operator*() noexcept -> reference {
+        return _a;
+    }
+
+    constexpr auto operator*() const noexcept -> const_reference {
+        return _a;
+    }
+
+private:
+    static constexpr auto
+    _cmp(const program_arg& l, const program_arg& r) noexcept -> int {
+        return l._argi - r._argi;
+    }
+
+    program_arg _a{};
+};
+class program_args {
+public:
+    program_args() noexcept = default;
+
+    program_args(const int argn, char** args) noexcept
+      : _argc{argn}
+      , _argv{const_cast<const char**>(args)} {}
+
+    program_args(const int argn, const char** args) noexcept
+      : _argc{argn}
+      , _argv{args} {}
+
+    using value_type = std::string_view;
+
+    using size_type = int;
+
+    using iterator = program_arg_iterator;
+
+    auto argc() const noexcept -> int {
+        return _argc;
+    }
+
+    auto argv() const noexcept -> const char** {
+        return _argv;
+    }
+
+    auto empty() const noexcept -> bool {
+        return _argc <= 0;
+    }
+
+    auto none() const noexcept -> bool {
+        return _argc <= 1;
+    }
+
+    auto size() const noexcept -> int {
+        return _argc;
+    }
+
+    auto get(const int pos) const noexcept -> program_arg {
+        return {pos, _argc, _argv};
+    }
+
+    auto operator[](const int pos) const noexcept -> program_arg {
+        return get(pos);
+    }
+
+    auto command() const noexcept -> program_arg {
+        return get(0);
+    }
+
+    auto first() const noexcept -> program_arg {
+        return {1, _argc, _argv};
+    }
+
+    auto begin() const noexcept -> iterator {
+        return {program_arg(1, _argc, _argv)};
+    }
+
+    auto end() const noexcept -> iterator {
+        return {program_arg(_argc, _argc, _argv)};
+    }
+
+    auto find(const std::string_view what) const noexcept -> program_arg {
+        int i = 1;
+        while(i < _argc) {
+            if((_argv != nullptr) && (_argv[i] != nullptr)) {
+                if(std::string_view(_argv[i]) == what) {
+                    break;
+                }
+            }
+            ++i;
+        }
+        return {i, _argc, _argv};
+    }
+
+private:
+    const int _argc{0};
+    const char** _argv{nullptr};
+};
+} // namespace mirror
+
+#endif // MIRROR_PROGRAM_ARGS_HPP
 
 #endif // MIRROR_ALL_HPP
 

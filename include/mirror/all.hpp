@@ -11,11 +11,13 @@
 
 #include "enum_utils.hpp"
 #include "full_name.hpp"
+#include "hash.hpp"
 #include "init_list.hpp"
 #include "make_array.hpp"
 #include "make_tuple.hpp"
 #include "operations.hpp"
 #include "placeholder.hpp"
+#include "program_args.hpp"
 #include "sequence.hpp"
 #include "traits.hpp"
 
