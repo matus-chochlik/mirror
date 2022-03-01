@@ -19,7 +19,7 @@
 
 namespace mirror {
 
-#if defined(MIKRROR_DOXYGEN)
+#if defined(MIRROR_DOXYGEN)
 /// @brief Concept constraining extractable types.
 /// @ingroup utilities
 /// @see has_value
