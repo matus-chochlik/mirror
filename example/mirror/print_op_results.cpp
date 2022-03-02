@@ -49,7 +49,7 @@ void print_info(mirror::metaobject auto mo) {
     const auto mes = flatten(transform(
       mirror::all_metaobject_operation_kinds(), get_enumerators(mirror::_1)));
 
-    const auto maxl = apply_init_list(
+    const auto maxl = apply_to_init_list(
       mes, get_size(get_name(mirror::_1)), [](auto l) { return std::max(l); });
 
     std::cout << "meta-info for " << get_display_name(mo) << std::endl;

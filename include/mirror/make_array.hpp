@@ -18,13 +18,16 @@ namespace mirror {
 /// @brief Makes an array of values of metaobject properties extracted by transform.
 /// @ingroup sequence_operations
 /// @see make_array
+/// @see make_value_tuple
+/// @see apply_to_init_list_of
 ///
 /// This function applies the specified transform on each metaobject in a sequence
 /// and returns the results as an array with explicitly specified element type
 /// @c E.
 template <typename E>
-constexpr auto make_array_of(metaobject auto mo, auto transform) noexcept
-  -> std::array<E, __unspecified> requires(is_object_sequence(mo));
+constexpr auto
+make_array_of(metaobject_sequence auto mo, auto transform) noexcept
+  -> std::array<E, __unspecified>;
 #else
 template <typename E, __metaobject_id... M, typename F>
 constexpr auto
@@ -44,14 +47,16 @@ auto make_array_of(wrapped_metaobject<M> mo, F transform) noexcept
 /// @brief Makes an array of values of metaobject properties extracted by transform.
 /// @ingroup sequence_operations
 /// @see make_array_of
+/// @see make_value_tuple
+/// @see apply_to_init_list
 ///
 /// This function applies the specified transform on each metaobject in a sequence
 /// and returns the results as an array with element type auto-detected from
 /// the return type of transform.
 /// @c E.
 template <typename E>
-constexpr auto make_array(metaobject auto mo, auto transform) noexcept
-  -> std::array<E, __unspecified> requires(is_object_sequence(mo));
+constexpr auto make_array(metaobject_sequence auto mo, auto transform) noexcept
+  -> std::array<E, __unspecified>;
 #else
 template <__metaobject_id... M, typename F>
 constexpr auto

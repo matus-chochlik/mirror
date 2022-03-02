@@ -42,8 +42,10 @@ using __unspecified = unsigned;
 /// @ingroup metaobjects
 /// @see wrapped_metaobject
 using __metaobject_id = __unspecified;
-#elif defined(MIRROR_YCM)
+#else
+#if defined(MIRROR_YCM)
 using __metaobject_id = unsigned;
+#endif
 #endif
 
 namespace mirror {
@@ -1250,6 +1252,7 @@ consteval auto has_multiple_elements(__metaobject_id mo) noexcept -> bool {
 #if defined(MIRROR_DOXYGEN)
 /// @brief Indicates if the two metaobjects reflect the same base-level entity.
 /// @ingroup operations
+/// @see get_hash
 consteval auto reflect_same(metaobject auto ml, metaobject auto mr) noexcept
   -> bool;
 #else

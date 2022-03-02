@@ -11,8 +11,8 @@
 
 #include "../diagnostic.hpp"
 #include "../from_string.hpp"
+#include "../rapidjson.hpp"
 #include "../tribool.hpp"
-#include "../utils/rapidjson.hpp"
 #include "read.hpp"
 #include <istream>
 

@@ -4,6 +4,19 @@
 % ------------------------------------------------------------------------------
 \title{Value- vs. type-based reflection}
 % ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Value- vs. type-based reflection}
+  \makebox[\linewidth][c]{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=1.0\textwidth,
+        keepaspectratio
+    ]{cost_of_reflection.png}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
 \section{reflection}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -181,12 +194,12 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{column}
     \begin{column}{.85\textwidth}
     \normalsize
-    Vectors, etc. must be fixed to work in \inlinecode{consteval}.
+    Vectors, etc. must be fixed to work in \inlinecode{consteval}
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-    span<(*@\listinghls{info}@*)> x = members_of(...);
-    vector<(*@\listinghls{info}@*)> y = bases_of(...);
+  vector<(*@\listinghls{info}@*)> x = members_of(...);
+  vector<(*@\listinghls{info}@*)> y = bases_of(...);
     \end{lstlisting}
-    Can be used with some STL algorithms, unless splicing is involved.
+    Can be used with some STL algorithms, unless splicing is involved
     \end{column}
   \end{columns}
   \vfill
@@ -198,13 +211,13 @@ use(bar((*@\listinghl{reflect}@*)((*@\listinghlt{argument}@*))));
     \end{column}
     \begin{column}{.85\textwidth}
     \normalsize
-      Containers (sequences) are metaobjects themselves.
+      Containers (sequences) are metaobjects themselves
     \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-    (*@\listinghls{auto}@*) x = get_data_members(...);
-    (*@\listinghls{auto}@*) y = get_base_classes(...);
+  (*@\listinghls{auto}@*) x = get_data_members(...);
+  (*@\listinghls{auto}@*) y = get_base_classes(...);
     \end{lstlisting}
     Have their own implementation of reflection-related algorithms, splicing
-      is no problem.
+      is no problem
     \end{column}
   \end{columns}
 \end{frame}
@@ -326,7 +339,7 @@ consteval void my_reusable_algo(
 }
   \end{lstlisting}
   \inlinecode{predicate}, \inlinecode{something_else} and \inlinecode{function}
-  cannot do splicing\ldots
+  {\em \larger cannot} do~splicing\ldots
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -345,8 +358,8 @@ consteval void my_reusable_algo(
   }
 }
   \end{lstlisting}
-  making everything a template. But then this becomes slower to compile, defeating
-  one of the main points of this API.
+  making everything a template. But then this becomes slower to compile,
+  partially defeating one of the main points of this API.
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -382,11 +395,9 @@ consteval void my_reusable_algo(
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 template <(*@\listinghls{info}@*) X>
 struct (*@\listinghlt{__metaobject}@*) {
-  consteval operator (*@\listinghls{info}@*)() const {
-    return X;
-  }
+  consteval operator (*@\listinghls{info}@*)() const { return X; }
 };
-concept (*@\listinghlt{metaobject}@*) = (*@\listinghlt{unspecified}@*);
+concept (*@\listinghlt{metaobject}@*) = (*@\listinghls{unspecified}@*);
 
 consteval auto foo(info mo);
 consteval auto bar((*@\listinghlt{metaobject}@*) auto mo);
@@ -398,6 +409,22 @@ consteval auto foo((*@\listinghls{info}@*) mo);
 template <(*@\listinghls{info}@*) MO>
 consteval auto bar();
   \end{lstlisting}
+  in a real-life scenario.
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{The cost of reflection in a \say{large-ish} project?}
+  \LARGE
+  \begin{itemize}
+    \item Let's try \inlinecode{clang}
+    \begin{itemize}
+      \Large
+      \item Estimate the number of \say{things} to reflect
+      \item Measure the overall compilation time
+      \item Measure the contribution of reflection
+      \item Compare purely value-based and typed metaobjects
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -550,8 +577,8 @@ return ( ... + (*@\listinghlt{foo}@*)<(*@\listinghls{MOID}@*)>());
 \begin{frame}[fragile]
   \frametitle{Value-based metaobject \& consteval function}
   \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
-consteval size_t (*@\listinghlt{foo}@*)(size_t i) {
-	return i;
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
 }
   \end{lstlisting}
   \vfill
@@ -582,7 +609,7 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
     \item AMD Ryzen7 4800HS (16 cores)
     \item 16GB RAM
     \end{itemize}
-  \item RPi 4B
+  \item RPi 4B\footnote{timeless}
     \begin{itemize}
     \smaller
     \item ARM v7l
@@ -594,62 +621,74 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
 \section{measurements}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{i5-2400 -- compile time increase per N metaobjects}
+  \frametitle{i5-2400}
+  \framesubtitle{compile time increase per N metaobjects}
   \fitfig{ct-per-n-i5-2400}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{i5-2400 -- compile time increase per 1 metaobject}
+  \frametitle{i5-2400}
+  \framesubtitle{compile time increase per 1 metaobject}
   \fitfig{ct-per-1-i5-2400}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{i5-2400 -- How much faster is VB vs. TB}
+  \frametitle{i5-2400}
+  \framesubtitle{How much faster is value-based vs. type-based}
   \fitfig{ct-ratios-i5-2400}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{i7-1185 -- compile time increase per N metaobjects}
+  \frametitle{i7-1185}
+  \framesubtitle{compile time increase per N metaobjects}
   \fitfig{ct-per-n-i7-1185}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{i7-1185 -- compile time increase per 1 metaobject}
+  \frametitle{i7-1185}
+  \framesubtitle{compile time increase per 1 metaobject}
   \fitfig{ct-per-1-i7-1185}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{i7-1185 -- How much faster is VB vs. TB}
+  \frametitle{i7-1185}
+  \framesubtitle{How much faster is value-based vs. type-based}
   \fitfig{ct-ratios-i7-1185}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Ryzen7-4800HS-- compile time increase per N metaobjects}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{compile time increase per N metaobjects}
   \fitfig{ct-per-n-R7-4800}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Ryzen7-4800HS -- compile time increase per 1 metaobject}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{compile time increase per 1 metaobject}
   \fitfig{ct-per-1-R7-4800}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Ryzen7-4800HS -- How much faster is VB vs. TB}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{How much faster is value-based vs. type-based}
   \fitfig{ct-ratios-R7-4800}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{ARMv7-- compile time increase per N metaobjects}
+  \frametitle{ARMv7}
+  \framesubtitle{compile time increase per N metaobjects}
   \fitfig{ct-per-n-ARMv7l}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{ARMv7-- compile time increase per 1 metaobject}
+  \frametitle{ARMv7}
+  \framesubtitle{compile time increase per 1 metaobject}
   \fitfig{ct-per-1-ARMv7l}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{ARMv7 -- How much faster is VB vs. TB}
+  \frametitle{ARMv7}
+  \framesubtitle{How much faster is value-based vs. type-based}
   \fitfig{ct-ratios-ARMv7l}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -667,22 +706,256 @@ return ( ... + (*@\listinghlt{foo}@*)((*@\listinghls{MOID}@*)));
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
-\section{clang}
+\section{take 2}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{The cost of reflection in a \say{large-ish} project?}
-  \LARGE
+  \frametitle{But, what if}
+  \framesubtitle{we tried something different\ldots}
+  \Large
   \begin{itemize}
-    \item Let's try \inlinecode{clang}
-    \begin{itemize}
-      \Large
-      \item Estimate the number of \say{things} to reflect
-      \item Measure the overall compilation time
-      \item Measure the contribution of reflection
-      \item Compare purely value-based and typed metaobjects
-    \end{itemize}
+    \item Instead of that template gizmo instantiating metaobjects
+      in one place in the source
+    \item Just generate a lot of source code with many separate metaobject
+      operations
+    \item As in\ldots
   \end{itemize}
 \end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Type-based metaobject \& template function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <size_t M>
+struct (*@\listinghl{wrapper}@*) {
+	consteval operator size_t() { return M; }
+};
+template <size_t M>
+consteval size_t (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<M> w) {
+	return w;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<1Z>{})+
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<2Z>{})+
+    // ...
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<(*@\listinghls{N}@*)Z>{}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Type-based metaobject \& consteval function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+template <size_t M>
+struct (*@\listinghl{wrapper}@*) {
+	consteval operator size_t() { return M; }
+};
+
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<1Z>{})+
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<2Z>{})+
+    // ...
+    (*@\listinghlt{foo}@*)((*@\listinghl{wrapper}@*)<(*@\listinghls{N}@*)Z>{}));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Value-based metaobject \& template function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t M>
+consteval size_t (*@\listinghlt{foo}@*)() {
+	return M;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)<1Z>()+
+    (*@\listinghlt{foo}@*)<2Z>()+
+    // ...
+    (*@\listinghlt{foo}@*)<(*@\listinghls{N}@*)Z>());
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Value-based metaobject \& consteval function}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+
+consteval size_t (*@\listinghlt{foo}@*)(size_t m) {
+	return m;
+}
+  \end{lstlisting}
+  \vfill
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+consteval int bar() {
+	return static_cast<int>(
+    (*@\listinghlt{foo}@*)(1Z)+
+    (*@\listinghlt{foo}@*)(2Z)+
+    // ...
+    (*@\listinghlt{foo}@*)((*@\listinghls{N}@*)Z));
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\section{measurements}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i5-2400}
+  \framesubtitle{compile time increase per N metaobjects}
+  \fitfig{ct-per-n-i5-2400-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i5-2400}
+  \framesubtitle{compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-i5-2400-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{i5-2400}
+  \framesubtitle{How much faster is value-based vs. type-based}
+  \fitfig{ct-ratios-i5-2400-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{compile time increase per N metaobjects}
+  \fitfig{ct-per-n-R7-4800-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-R7-4800-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{How much faster is value-based vs. type-based}
+  \fitfig{ct-ratios-R7-4800-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{ARMv7}
+  \framesubtitle{compile time increase per N metaobjects}
+  \fitfig{ct-per-n-ARMv7l-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{ARMv7}
+  \framesubtitle{compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-ARMv7l-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{ARMv7}
+  \framesubtitle{How much faster is value-based vs. type-based}
+  \fitfig{ct-ratios-ARMv7l-cp}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Why the {\em \larger huge} difference?}
+  \Large
+  \begin{itemize}
+    \item Just some guesses\ldots
+    \begin{itemize}
+      \smaller
+      \item In the second setup, each metaobject is an individually-parsed expression
+      \item Different than just multiple instantiations
+      \item Different source locations, etc.
+    \end{itemize}
+    \item Even in the value-based cases the compile-times grow non-linearly
+    \item This is {\em \larger not} how you typically use reflection
+      in real-life scenarios
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Representing the reflection \say{operator}}
+  \Large
+  \begin{itemize}
+    \item Above we have just used integer literals to represent metaobject \say{ids}
+    \item What if we used a template function\footnote{with NTTP} to simulate
+      the reflection expression
+    \item What would be the effects on the compile-times?
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Representing the reflection \say{operator}}
+  \framesubtitle{(cont.)}
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large value-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t I>
+consteval auto (*@\listinghlt{reflect}@*)() {
+    return I;
+}
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+foo((*@\listinghlt{reflect}@*)<(*@\listinghls{N}@*)Z>());
+// and
+foo<(*@\listinghlt{reflect}@*)<(*@\listinghls{N}@*)Z>()>();
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \vfill
+  \hrule
+  \vfill
+  \begin{columns}
+    \begin{column}{.05\textwidth}
+    \rotatebox{90}{\Large type-based}
+    \end{column}
+    \begin{column}{.85\textwidth}
+    \normalsize
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+template <size_t I>
+consteval (*@\listinghl{wrapper}@*)<I> (*@\listinghlt{reflect}@*)() {
+  return {};
+}
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+foo((*@\listinghlt{reflect}@*)<(*@\listinghls{N}@*)Z>()));
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{compile time increase per N metaobjects}
+  \fitfig{ct-per-n-R7-4800-cp-op}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{compile time increase per 1 metaobject}
+  \fitfig{ct-per-1-R7-4800-cp-op}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Ryzen7-4800HS}
+  \framesubtitle{How much faster is value-based vs. type-based}
+  \fitfig{ct-ratios-R7-4800-cp-op}
+\end{frame}
+% ------------------------------------------------------------------------------
+\section{clang}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Estimating number of declarations in \inlinecode{clang}}
@@ -719,7 +992,7 @@ xsltproc combine.xslt index.xml > (*@\listinghl{clang.xml}@*)
   <xsl:template match="/">
     <xsl:value-of select="(*@\listinghlt{count}@*)(
       descendant::(*@\listinghl{compounddef}@*)(*@\footnote{
-        \inlinecode{struct}, \inlinecode{class}, \inlinecode{enum}, \ldots}@*)|
+        \inlinecode{struct}s, \inlinecode{class}es, \inlinecode{enum}s, \ldots}@*)|
       descendant::(*@\listinghl{member}@*)(*@\footnote{
         data members, member functions, enumerators, \ldots}@*)|
       descendant::(*@\listinghl{value}@*)(*@\footnote{
@@ -780,7 +1053,7 @@ cmake \
   \end{lstlisting}
   Build and measure elapsed time:
   \begin{lstlisting}[language=bash,basicstyle=\footnotesize\ttfamily]
-time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
+time ninja install install-cxx install-cxxabi
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -834,16 +1107,16 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
     \hline
       clang:                   & 27313s  & 31427s  & 32543s  \\
     \hline
-      400k MO (TB-template):   & 115.9s  &  48.8s  &  62.4s  \\
+      type-based template      & 115.9s  &  48.8s  &  62.4s  \\
                                & 0.42\%  & 0.16\%  &  0.19\% \\
     \hline
-      400k MO (TB-consteval):  & 111.3s  &  53.4s  &  62.7   \\
+      type-based consteval     & 111.3s  &  53.4s  &  62.7   \\
                                & 0.41\%  & 0.16\%  &  0.19\% \\
     \hline
-      400k MO (VB-template):   &  36.3s  &  16.5s  &  19.0s  \\
+      value-based template     &  36.3s  &  16.5s  &  19.0s  \\
                                & 0.13\%  & 0.05\%  &  0.06\% \\
     \hline
-      400k MO (VB-consteval):  &  50.3s  &  27.4s  &  29.6s  \\
+      value-based consteval    &  50.3s  &  27.4s  &  29.6s  \\
                                & 0.18\%  & 0.09\%  &  0.09\% \\
     \hline
     \end{tabular}
@@ -859,7 +1132,8 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
   \begin{itemize}
     \item The typical compile-time overhead of materializing a metaobject
       is on the order of tens or hundreds of microseconds
-    \item The type-based metaobject representation is between 2x and 4x
+    \item The type-based metaobject representation is between 2x and 6x\footnote{
+        in the worst \say{copy-paste} use-case}
       slower to compile compared to the purely value-based representation
   \end{itemize}
 \end{frame}
@@ -875,8 +1149,6 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
       to~total build time is a~fraction of~a~percent even in~the~worst case
     \item For projects similar in complexity to \inlinecode{clang},
       this results in 1-2 minutes added to several hours of compilation-time
-      in the worst case
-
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -890,14 +1162,16 @@ time ninja (*@\listinghl{-j 16}@*) install install-cxx install-cxxabi
     \item In the value-based API splicing requires passing metaobject
       as non-type template arguments
     \item Splicing is quite common in various use-cases
+    \item Combining reflection with template metaprogramming is common as well
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{The {\larger big} question}
-  \Large
+  \LARGE
   \centering
-  Is the improvement in compile-time worth the decrease in usability
+  Is the improvement in compile-time\\
+  worth the decrease in usability\\
   of the value-based reflection API?
 \end{frame}
 % ------------------------------------------------------------------------------

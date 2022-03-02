@@ -31,6 +31,11 @@
 namespace mirror {
 
 class sqlite3_db;
+
+/// @brief Exception type thrown on SQLite3 errors.
+/// @ingroup utilities
+/// @see sqlite3_row
+/// @see sqlite3_db
 class sqlite3_error : std::runtime_error {
 private:
     friend class sqlite3_db;
@@ -42,6 +47,10 @@ private:
       : sqlite3_error{::sqlite3_errmsg(handle)} {}
 };
 
+/// @brief Class representing a SQLite3 query result row.
+/// @ingroup utilities
+/// @see sqlite3_error
+/// @see sqlite3_db
 class sqlite3_row {
 private:
     std::vector<std::optional<std::string_view>> _values;
@@ -70,14 +79,26 @@ public:
     auto operator=(sqlite3_row&&) = delete;
     auto operator=(const sqlite3_row&) = delete;
 
+    /// @brief Returns the number of values (columns) in this row.
+    /// @see index_of
+    /// @see names
+    /// @see values
     auto size() const noexcept -> size_t {
         return _values.size();
     }
 
+    /// @brief Returns a span of column names.
+    /// @see size
+    /// @see index_of
+    /// @see values
     auto names() const noexcept -> std::span<const std::string_view> {
         return {_names};
     }
 
+    /// @brief Returns the index of the column with the specified name if any.
+    /// @see size
+    /// @see names
+    /// @see value
     auto index_of(std::string_view name) const noexcept
       -> std::optional<size_t> {
         const auto pos = std::find(_names.begin(), _names.end(), name);
@@ -87,20 +108,48 @@ public:
         return {};
     }
 
+    /// @brief Returns a span of column values.
+    /// @see size
+    /// @see index_of
+    /// @see names
+    /// @see value
+    /// @see fetch
     auto values() const noexcept
       -> std::span<const std::optional<std::string_view>> {
         return {_values};
     }
 
+    /// @brief Returns the value in the column at the specified index.
+    /// @see size
+    /// @see index_of
+    /// @see values
+    /// @see has_value
+    /// @see value_of
+    /// @pre idx < size()
+    /// @see fetch
     auto value(size_t idx) const noexcept -> std::optional<std::string_view> {
         assert(idx < size());
         return {_values[idx]};
     }
 
+    /// @brief Returns true if the column at the specified index has the given value.
+    /// @see size
+    /// @see index_of
+    /// @see values
+    /// @see value
+    /// @see value_of
+    /// @pre idx < size()
     auto has_value(size_t idx, std::string_view val) const noexcept -> bool {
         return value(idx) == val;
     }
 
+    /// @brief Returns the value in the column at the specified index if any.
+    /// @see size
+    /// @see index_of
+    /// @see values
+    /// @see has_value
+    /// @see value_of
+    /// @see fetch
     auto value(std::optional<size_t> idx) const noexcept
       -> std::optional<std::string_view> {
         if(idx) {
@@ -109,11 +158,22 @@ public:
         return {};
     }
 
+    /// @brief Returns the value in the column with the specified name.
+    /// @see size
+    /// @see index_of
+    /// @see values
+    /// @see has_value
+    /// @see value
+    /// @see fetch
     auto value_of(std::string_view name) const noexcept
       -> std::optional<std::string_view> {
         return value(index_of(name));
     }
 
+    /// @brief Loads the data members of instance by their names.
+    /// @see names
+    /// @see values
+    /// @see value_of
     template <typename T>
     auto fetch(T& instance) const -> bool requires(std::is_class_v<T>) {
         bool result = true;
@@ -132,6 +192,10 @@ public:
     }
 };
 
+/// @brief Class representing a SQLite3 database.
+/// @ingroup utilities
+/// @see sqlite3_error
+/// @see sqlite3_row
 class sqlite3_db {
 private:
     using handle_ptr = std::unique_ptr<::sqlite3, int (*)(::sqlite3*)>;
@@ -164,10 +228,17 @@ private:
     }
 
 public:
+    /// @brief Default constructor
     sqlite3_db() noexcept = default;
+
+    /// @brief Opens a database file at the specified path.
     sqlite3_db(std::string_view path)
       : _handle{_open(path)} {}
 
+    /// @brief Executes the specified SQL command, invokes callback on the result.
+    ///
+    /// The callback is a function taking constant reference to sqlite3_row
+    /// as its single argument.
     template <typename Callback>
     void execute(std::string_view sql, Callback callback) {
         sqlite3_row row_store;
@@ -190,6 +261,7 @@ public:
         }
     }
 
+    /// @brief Executes the specified SQL command without handling with the results.
     void execute(std::string_view sql) {
         char* err_msg = nullptr;
         auto wrapper = [](void*, int, char**, char**) -> int {
@@ -205,6 +277,11 @@ public:
         }
     }
 
+    /// @brief Function ensuring that a table matches the specified record type.
+    ///
+    /// This function scans the database schema and tries to ensure that a table
+    /// exists that matches the given template argument @c T and that it has
+    /// columns matching the data members of @c T, by issuing QML/DML commands.
     template <typename T>
     void ensure_table(std::type_identity<T> = {}) {
         const auto table_name{get_name(remove_all_aliases(mirror(T)))};
@@ -264,6 +341,8 @@ public:
         }
     }
 
+    /// @brief Executes a SQL query, deserializes the result into the given vector.
+    /// @see sqlite3_row::fetch
     template <typename T>
     auto fetch(std::string_view sql, std::vector<T>& dest)
       -> auto& requires(std::is_class_v<T>) {

@@ -18,8 +18,17 @@ namespace mirror {
 
 // TODO: make the hashes platform-independent
 
+/// @brief Type of value returned by get_hash.
+/// @see get_hash
 using hash_t = std::uint64_t;
 
+#if defined(MIRROR_DOXYGEN)
+/// @brief Returns a hash uniquely identifying a reflected base-level entity.
+/// @ingroup operations
+/// @see reflect_same
+/// @see get_id
+constexpr auto get_hash(metaobject auto) -> hash_t;
+#else
 template <__metaobject_id M>
 constexpr auto get_hash(wrapped_metaobject<M>) -> hash_t
   requires(__metaobject_is_meta_global_scope(M)) {
@@ -77,6 +86,7 @@ constexpr auto get_hash(wrapped_metaobject<M> mo) -> hash_t
   requires(__metaobject_is_meta_parenthesized_expression(M)) {
     return get_hash(get_subexpression(mo));
 }
+#endif
 
 } // namespace mirror
 

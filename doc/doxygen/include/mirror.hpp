@@ -25,4 +25,6 @@ namespace mirror {
 
 /// @defgroup utilities Utilities
 
+/// @defgroup metadata  Run-time metadata
+
 } // namespace mirror

@@ -7,7 +7,7 @@
 \section{Introduction}
 \begin{frame}
   \frametitle{Intro}
-  \framesubtitle{What is this? Why am I here? Who are these people?}
+  \framesubtitle{What is this? Why am I here?}
   \makebox[\linewidth][c]{
     \begin{minipage}{\dimexpr\textwidth\relax}
     \centering
@@ -90,7 +90,7 @@
     {\larger value} of a type satisfying the~following concept:
   \begin{lstlisting}[language=c++2x]
 template <typename X>
-concept metaobject = (*@{\em not-really-important-here}@*);
+concept (*@\listinghl{metaobject}@*) = (*@{\em not-really-important-here}@*);
   \end{lstlisting}
   \vfill
   Can be used to constrain function arguments:
@@ -194,11 +194,11 @@ static_assert(
 struct hello {};
 
 int main() {
-  hello world;
+  (*@\listinghls{hello}@*) (*@\listinghlt{world}@*);
 
-  std::cout << get_name((*@\listinghl{mirror}@*)(hello))
+  std::cout << get_name((*@\listinghl{mirror}@*)((*@\listinghls{hello}@*)))
             << ", "
-            << (*@\listinghl{get_name}@*)(mirror(world))
+            << (*@\listinghl{get_name}@*)(mirror((*@\listinghlt{world}@*)))
             << "!" << std::endl;
 
     return 0;
@@ -211,7 +211,7 @@ int main() {
   \framesubtitle{metaobject classification functions}
   \begin{itemize}
     \item Indicate {\em \larger what} does a metaobject reflect
-    \item Return \inlinecode{true} or \inlinecode{false}
+    \item Return \inlinecode{bool} value
     \item \inlinecode{auto reflects_object(metaobject auto m) -> bool;}
     \item \footnotesize\inlinecodebreak{auto reflects_\{object_sequence, named, alias, typed,
     scope, scope_member, enumerator, record_member, base, namespace, global_scope,
@@ -227,6 +227,7 @@ int main() {
 \begin{frame}
   \frametitle{Reflection API}
   \framesubtitle{metadata retrieval functions}
+  \larger
   \begin{itemize}
     \item Return individual \say{atomic} pieces of metadata
     \item Some are applicable to all metaobjects
@@ -235,7 +236,7 @@ int main() {
       \item \inlinecode{get_source_line}, \inlinecode{get_source_column},
         \inlinecode{reflect_same}, \ldots
     \end{itemize}
-  \item Some only on metaobjects reflecting specific {\em base-level} entities
+  \item Some only work on metaobjects reflecting specific {\em base-level} entities
     \begin{itemize}
       \smaller
       \item where they make sense,
@@ -270,7 +271,7 @@ int main() {
   \frametitle{Reflection API}
   \framesubtitle{somewhere in logging\ldots}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-auto get_display_name(metaobject auto mo) -> string_view
+auto (*@\listinghlt{get_display_name}@*)(metaobject auto mo) -> string_view
   requires((*@\listinghl{reflects_named}@*)(mo));
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
@@ -375,7 +376,7 @@ auto is_virtual(metaobject auto mo) -> bool
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
   \framesubtitle{miscelaneous}
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 auto is_scoped_enum(metaobject auto mo) -> bool
   requires(reflects_type(mo));
   \end{lstlisting}
@@ -696,13 +697,13 @@ auto concat(auto... mo)
   \frametitle{Metaobject sequences}
   \framesubtitle{basic iteration}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-void for_each(auto mo, F function)
+void (*@\listinghl{for_each}@*)(auto mo, auto (*@\listinghlt{function}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x]
 (*@\listinghl{for_each}@*)(
   get_enumerators(mirror(weekday)),
-  [](metaobject auto mo) {
+  (*@\listinghlt{[]}@*)(metaobject auto mo) {
     cout << get_name(mo)
          << ": "
          << int(get_constant(mo))
@@ -737,17 +738,16 @@ void for_each(auto mo, F function)
   \framesubtitle{\say{huh?}}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename F>
-struct placeholder_expr {
+struct (*@\listinghlt{placeholder_expr}@*) {
   auto operator()(auto... mo) const;
   // ...
 };
-// + CTAD guide
-// + some specializations
+// CTAD guide + some specializations
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-constinit const placeholder_expr<...> _1{};
-constinit const placeholder_expr<...> _2{};
+constinit const (*@\listinghlt{placeholder_expr}@*)<...> (*@\listinghls{_1}@*){};
+constinit const (*@\listinghlt{placeholder_expr}@*)<...> (*@\listinghls{_2}@*){};
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
@@ -764,18 +764,18 @@ auto (*@\listinghl{some_operation}@*)((*@\listinghlt{placeholder_expr}@*)<X> e) 
   \frametitle{Placeholder expressions}
   \framesubtitle{predicates}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-reflects_named(_1);
-reflects_destructor(_1);
-is_static(_1);
-is_pure_virtual(_1);
-is_public(_1);
-is_noexcept(_1);
-is_constexpr(_1);
-is_copy_constructor(_1);
-has_rvalueref_qualifier(_1);
-uses_class_key(_1);
-is_type<int>(get_type(_1));
-has_type_trait<std::is_floating_point>(_1);
+reflects_named((*@\listinghls{_1}@*));
+reflects_destructor((*@\listinghls{_1}@*));
+is_static((*@\listinghls{_1}@*));
+is_pure_virtual((*@\listinghls{_1}@*));
+is_public((*@\listinghls{_1}@*));
+is_noexcept((*@\listinghls{_1}@*));
+is_constexpr((*@\listinghls{_1}@*));
+is_copy_constructor((*@\listinghls{_1}@*));
+has_rvalueref_qualifier((*@\listinghls{_1}@*));
+uses_class_key((*@\listinghls{_1}@*));
+is_type<int>(get_type((*@\listinghls{_1}@*)));
+has_type_trait<std::is_floating_point>((*@\listinghls{_1}@*));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -783,10 +783,10 @@ has_type_trait<std::is_floating_point>(_1);
   \frametitle{Placeholder expressions}
   \framesubtitle{comparators}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-reflect_same(_1, _2);
-get_name(_1) < get_name(_2);
-get_sizeof(_1) == get_sizeof(_2);
-get_size(get_name(_1)) > get_size(get_name(_2));
+reflect_same((*@\listinghls{_1}@*), (*@\listinghls{_2}@*));
+get_name((*@\listinghls{_1}@*)) < get_name((*@\listinghls{_2}@*));
+get_sizeof((*@\listinghls{_1}@*)) == get_sizeof((*@\listinghls{_2}@*));
+get_size(get_name((*@\listinghls{_1}@*))) > get_size(get_name((*@\listinghls{_2}@*)));
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -794,16 +794,16 @@ get_size(get_name(_1)) > get_size(get_name(_2));
   \frametitle{Placeholder expressions}
   \framesubtitle{transforms}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-get_type(_1);
-get_scope(_1);
-get_display_name(_1);
-get_name(get_aliased(_1));
-get_name(get_aliased(get_type(_1)));
-get_size(get_enumerators(_1));
-is_empty(get_data_members(_1));
-get_size(get_name(get_scope(get_type(_1))));
-get_type(get_element<0>(get_operators(_1)));
-get_name(get_element<1>(get_parameters(_1)));
+get_type((*@\listinghls{_1}@*));
+get_scope((*@\listinghls{_1}@*));
+get_display_name((*@\listinghls{_1}@*));
+get_name(get_aliased((*@\listinghls{_1}@*)));
+get_name(get_aliased(get_type((*@\listinghls{_1}@*))));
+get_size(get_enumerators((*@\listinghls{_1}@*)));
+is_empty(get_data_members((*@\listinghls{_1}@*)));
+get_size(get_name(get_scope(get_type((*@\listinghls{_1}@*)))));
+get_type(get_element<0>(get_operators((*@\listinghls{_1}@*))));
+get_name(get_element<1>(get_parameters((*@\listinghls{_1}@*))));
   \end{lstlisting}
 \end{frame}
 % - Algorithms -----------------------------------------------------------------
@@ -987,7 +987,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto (*@\listinghlt{query}@*))
     \item Typically require less typing than writing for-loops
     \item They may hide some compiler magic
     \begin{itemize}
-      \item \inlinecode{filter}
+      \item \inlinecode{filter}, \inlinecode{transform},
       \item \ldots
     \end{itemize}
   \end{itemize}
@@ -1301,7 +1301,7 @@ template <typename E>
 auto enum_to_string(E e) noexcept
   -> (*@\listinghlt{string_view}@*) {
 
-  return select(
+  return choose(
     (*@\listinghlt{string_view}@*){},
     (*@\listinghl{get_enumerators}@*)(mirror(E)),
     (*@\listinghl{has_value}@*)(_1, e),
@@ -1318,7 +1318,7 @@ template <typename E>
 auto string_to_enum(string_view s) noexcept
   -> (*@\listinghlt{optional}@*)<E> {
 
-  return select(
+  return choose(
     (*@\listinghlt{optional}@*)<E>{},
     (*@\listinghl{get_enumerators}@*)(mirror(E)),
     (*@\listinghl{has_name}@*)(_1, s),
@@ -1543,8 +1543,8 @@ class rpc_stub_impl {
   template <typename T>
   auto _deserialize(packet&, (*@\listinghlt{type_identity}@*)<T>) -> T;
 public:
-  auto make_call(metaobject auto mo, auto&... args) {
-
+  auto make_call(metaobject auto mo, auto&... args)
+    requires((*@\listinghl{reflects_expression}@*)(mo)) {
     packet request;
     _serialize(request, mo, args...);
     packed response{_send_and_receive(request)};
@@ -1802,6 +1802,8 @@ void print_traits(metaobject auto mo) {
   \frametitle{Links, shameless plugs, etc.}
   \smaller
   \begin{itemize}
+    \item {\em This presentation} --
+      \url{https://matus-chochlik.github.io/mirror/latex/meeting_cpp.pdf}
     \item {\em The Mirror library repository} --
       \url{https://github.com/matus-chochlik/mirror}
     \item {\em The Mirror library reference (W.I.P.)} --

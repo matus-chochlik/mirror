@@ -60,6 +60,7 @@ src-%-size.csv: src-%.size
 
 src-%.time: src-%.cpp
 	(TIMEFORMAT=%3R /bin/bash -c "time \$(CXX) \$(CXXFLAGS) -o /dev/null \$<") 2> \$@
+	rm \$<
 
 src-%.size: exe-%
 	wc --bytes < \$< > \$@

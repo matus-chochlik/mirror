@@ -187,7 +187,9 @@ static inline auto from_string(
 #if defined(MIRROR_DOXYGEN)
 /// @brief Converts the string representation in @p src to a value of type @p T.
 /// @ingroup utilities
+/// @see from_extractable_string
 /// @see is_within_limits
+/// @see convert_if_fits
 template <typename T>
 auto from_string(const std::string_view src) noexcept -> extractable;
 #endif
@@ -197,6 +199,11 @@ auto from_string(const std::string_view src) noexcept {
     return from_string(src, std::type_identity<T>{});
 }
 
+/// @brief Converts the extractable string in @p src to a value of type @p T.
+/// @ingroup utilities
+/// @see from_string
+/// @see is_within_limits
+/// @see convert_if_fits
 template <typename T>
 auto from_extractable_string(
   const extractable auto src,

@@ -20,7 +20,7 @@ namespace mirror {
 /// @see string_to_enum
 template <typename E>
 auto enum_to_string(E e) noexcept -> string_view {
-    return select(
+    return choose(
       std::string_view{},
       get_enumerators(mirror(E)),
       has_value(_1, e),
@@ -32,7 +32,7 @@ auto enum_to_string(E e) noexcept -> string_view {
 /// @see enum_to_string
 template <typename E>
 auto string_to_enum(string_view s) noexcept -> std::optional<E> {
-    return select(
+    return choose(
       std::optional<E>{},
       get_enumerators(mirror(E)),
       has_name(_1, s),

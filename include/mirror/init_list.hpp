@@ -14,18 +14,50 @@
 
 namespace mirror {
 
-template <typename T, __metaobject_id... M, typename F, typename A>
-constexpr auto apply_init_list_of(
+#if defined(MIRROR_DOXYGEN)
+/// @brief Applies finction to init-list of values of properties from transform.
+/// @ingroup sequence_operations
+/// @see make_array_of
+/// @see make_value_tuple
+/// @see apply_to_init_list
+///
+/// This function invokes the specified transform on each metaobject in a
+/// sequence creates an initializer list from the obtained values and calls the
+/// specified aggregate function on the init-list.
+/// In this version of the function allows to explicitly specify the list
+/// element type @c E.
+template <typename E>
+constexpr auto
+apply_to_init_list_of(metaobject auto mo, auto transform, auto aggregate);
+#else
+template <typename E, __metaobject_id... M, typename F, typename A>
+constexpr auto apply_to_init_list_of(
   unpacked_metaobject_sequence<M...>,
   F transform,
   A aggregate) {
     return aggregate(
-      std::initializer_list<T>{transform(wrapped_metaobject<M>{})...});
+      std::initializer_list<E>{transform(wrapped_metaobject<M>{})...});
 }
+#endif
 
-template <__metaobject_id... M, typename F, typename A>
+#if defined(MIRROR_DOXYGEN)
+/// @brief Applies finction to init-list of values of properties from transform.
+/// @ingroup sequence_operations
+/// @see make_array
+/// @see make_value_tuple
+/// @see apply_to_init_list_of
+///
+/// This function invokes the specified transform on each metaobject in a
+/// sequence creates an initializer list from the obtained values and calls the
+/// specified aggregate function on the init-list.
 constexpr auto
-apply_init_list(unpacked_metaobject_sequence<M...>, F transform, A aggregate) {
+apply_to_init_list_of(metaobject auto mo, auto transform, auto aggregate);
+#else
+template <__metaobject_id... M, typename F, typename A>
+constexpr auto apply_to_init_list(
+  unpacked_metaobject_sequence<M...>,
+  F transform,
+  A aggregate) {
     return aggregate(
       std::initializer_list<
         std::common_type_t<decltype(transform(wrapped_metaobject<M>{}))...>>{
@@ -33,12 +65,13 @@ apply_init_list(unpacked_metaobject_sequence<M...>, F transform, A aggregate) {
 }
 
 template <__metaobject_id M, typename F, typename A>
-constexpr auto apply_init_list(
+constexpr auto apply_to_init_list(
   wrapped_metaobject<M> mo,
   F transform,
   A aggregate) requires(__metaobject_is_meta_object_sequence(M)) {
-    return apply_init_list(unpack(mo), transform, aggregate);
+    return apply_to_init_list(unpack(mo), transform, aggregate);
 }
+#endif
 
 } // namespace mirror
 

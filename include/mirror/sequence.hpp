@@ -718,7 +718,7 @@ get_top_value(S seq, F transform) requires(is_object_sequence(seq)) {
 /// @ingroup sequence_operations
 /// @see remove_if
 /// @see for_each
-/// @see select
+/// @see choose
 constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept;
 #else
 template <__metaobject_id... M, typename F>
@@ -770,7 +770,7 @@ constexpr auto filter(wrapped_metaobject<M> mo, F predicate) noexcept
 /// @ingroup sequence_operations
 /// @see filter
 /// @see for_each
-/// @see select
+/// @see choose
 constexpr auto filter(metaobject_sequence auto mo, auto predicate) noexcept;
 #else
 template <__metaobject_id... M, typename F>
@@ -915,7 +915,7 @@ constexpr auto none_of(type_list<E...> tl, F predicate) noexcept
 }
 #endif
 
-// select
+// choose
 #if defined(MIRROR_DOXYGEN)
 /// @brief Get result of transform where condition is true or resturn fallback.
 /// @ingroup sequence_operations
@@ -928,10 +928,10 @@ constexpr auto none_of(type_list<E...> tl, F predicate) noexcept
 /// metaobject in a sequence where a condition is true or return fallback
 /// if condition is false for every metaobject in the sequence.
 constexpr auto
-select(auto fallback, metaobject_sequence auto, auto condition, auto transform);
+choose(auto fallback, metaobject_sequence auto, auto condition, auto transform);
 #else
 template <typename T, __metaobject_id... M, typename C, typename F>
-constexpr auto select(
+constexpr auto choose(
   T fallback,
   unpacked_metaobject_sequence<M...>,
   C condition,
@@ -947,7 +947,7 @@ constexpr auto select(
 
 template <typename T, typename... E, typename C, typename F>
 constexpr auto
-select(T fallback, type_list<E...> tl, C condition, F transform) noexcept -> T
+choose(T fallback, type_list<E...> tl, C condition, F transform) noexcept -> T
   requires(is_object_sequence(tl)) {
     const auto function = [&fallback, condition, transform](auto mo) {
         if(condition(mo)) {
@@ -960,9 +960,9 @@ select(T fallback, type_list<E...> tl, C condition, F transform) noexcept -> T
 
 template <typename T, __metaobject_id M, typename C, typename F>
 constexpr auto
-select(T fallback, wrapped_metaobject<M> mo, C condition, F transform) noexcept
+choose(T fallback, wrapped_metaobject<M> mo, C condition, F transform) noexcept
   -> T requires(__metaobject_is_meta_object_sequence(M)) {
-    return select(std::move(fallback), unpack(mo), condition, transform);
+    return choose(std::move(fallback), unpack(mo), condition, transform);
 }
 #endif
 

@@ -43,7 +43,8 @@ def do_plot(options):
             name = os.path.splitext(os.path.basename(input_path))[0]
             dataset.merge_csv(csv, set_name=name)
 
-    plt.style.use('dark_background')
+    if not options.light_theme:
+        plt.style.use('dark_background')
     fig, spl = plt.subplots()
     options.initialize(plt, fig)
 

@@ -15,6 +15,8 @@
 
 namespace mirror {
 
+/// @brief Class that can generate PlantUML code for entities reflected by metaobjects
+/// @ingroup utilities
 class puml_class_diagram {
 private:
     void _add_access_marker(std::ostream& out, const metadata& md) const {
@@ -194,6 +196,7 @@ private:
     }
 
 public:
+    /// @brief Generate PUML for metadata instances in the specified sequence
     std::ostream& generate(std::ostream& out, const metadata_sequence& ms) {
         const auto named = ms.with_name().not_having(
           type_trait::is_const | type_trait::is_volatile | trait::is_pointer |

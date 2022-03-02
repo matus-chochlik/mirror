@@ -372,7 +372,7 @@ template <typename E>
 auto enum_to_string(E e) noexcept
   -> (*@\listinghlt{string_view}@*) {
 
-  return select(
+  return choose(
     (*@\listinghlt{string_view}@*){},
     (*@\listinghl{get_enumerators}@*)(mirror(E)),
     (*@\listinghl{has_value}@*)(_1, e),
@@ -389,7 +389,7 @@ template <typename E>
 auto string_to_enum(string_view s) noexcept
   -> (*@\listinghlt{optional}@*)<E> {
 
-  return select(
+  return choose(
     (*@\listinghlt{optional}@*)<E>{},
     (*@\listinghl{get_enumerators}@*)(mirror(E)),
     (*@\listinghl{has_name}@*)(_1, s),
