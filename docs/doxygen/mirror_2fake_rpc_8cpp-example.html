@@ -152,7 +152,7 @@ $(function() {
 <div class="line">      std::istream&amp; request_data,</div>
 <div class="line">      std::ostream&amp; response_header,</div>
 <div class="line">      std::ostream&amp; response_data) <span class="keyword">final</span> {</div>
-<div class="line">        <a class="code" href="namespacemirror.html#ab87ce44e612844838e9843a75c938344">mirror::hash_t</a> rpc_id{};</div>
+<div class="line">        <a class="code" href="namespacemirror.html#a966d3207c641ea120a876e431cd7fa41">mirror::hash_t</a> rpc_id{};</div>
 <div class="line">        std::uint64_t invocation_id{};</div>
 <div class="line">        <span class="keyword">auto</span> header = std::tie(rpc_id, invocation_id);</div>
 <div class="line">        mirror::serialize::read_rapidjson_stream(header, request_header);</div>
@@ -258,7 +258,7 @@ $(function() {
 <div class="line">}</div>
 <div class="ttc" id="aapply_8hpp_html"><div class="ttname"><a href="apply_8hpp.html">apply.hpp</a></div></div>
 <div class="ttc" id="aclassmirror_1_1interface_html"><div class="ttname"><a href="classmirror_1_1interface.html">mirror::interface</a></div><div class="ttdoc">Base template for abstract interfaces, implements common functionality.</div><div class="ttdef"><b>Definition:</b> interface.hpp:18</div></div>
-<div class="ttc" id="agroup__classification_html_ga8cde85217b8f3e26e3aa5d41fdfcbbbe"><div class="ttname"><a href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:89</div></div>
+<div class="ttc" id="agroup__classification_html_ga8cde85217b8f3e26e3aa5d41fdfcbbbe"><div class="ttname"><a href="group__classification.html#ga8cde85217b8f3e26e3aa5d41fdfcbbbe">mirror::metaobject</a></div><div class="ttdeci">concept metaobject</div><div class="ttdoc">Concept for metaobject types.</div><div class="ttdef"><b>Definition:</b> primitives.hpp:91</div></div>
 <div class="ttc" id="agroup__operations_html_ga08a3ee75d264012ec6da85cb8d2efa36"><div class="ttname"><a href="group__operations.html#ga08a3ee75d264012ec6da85cb8d2efa36">mirror::get_member_functions</a></div><div class="ttdeci">constexpr auto get_member_functions(metaobject auto mo) noexcept requires(reflects_record(mo))</div><div class="ttdoc">Returns a sequence of member function reflections of a reflected class.</div></div>
 <div class="ttc" id="agroup__operations_html_ga3b86bbc5fd4d3bf3288082dd72c741d2"><div class="ttname"><a href="group__operations.html#ga3b86bbc5fd4d3bf3288082dd72c741d2">mirror::get_parameters</a></div><div class="ttdeci">constexpr auto get_parameters(metaobject auto mo) noexcept requires(reflects_callable(mo))</div><div class="ttdoc">Returns a sequence of parameter reflections of a reflected callable.</div></div>
 <div class="ttc" id="agroup__operations_html_ga658f1934110d936b9cf38e4b50d7c314"><div class="ttname"><a href="group__operations.html#ga658f1934110d936b9cf38e4b50d7c314">mirror::get_type</a></div><div class="ttdeci">constexpr auto get_type(metaobject auto mo) noexcept requires(reflects_typed(mo))</div><div class="ttdoc">Returns a reflection of the type of a reflected typed entity.</div></div>
@@ -273,7 +273,7 @@ $(function() {
 <div class="ttc" id="ainterface_8hpp_html"><div class="ttname"><a href="interface_8hpp.html">interface.hpp</a></div></div>
 <div class="ttc" id="amake__tuple_8hpp_html"><div class="ttname"><a href="make__tuple_8hpp.html">make_tuple.hpp</a></div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
-<div class="ttc" id="anamespacemirror_html_ab87ce44e612844838e9843a75c938344"><div class="ttname"><a href="namespacemirror.html#ab87ce44e612844838e9843a75c938344">mirror::hash_t</a></div><div class="ttdeci">std::uint64_t hash_t</div><div class="ttdoc">Type of value returned by get_hash.</div><div class="ttdef"><b>Definition:</b> hash.hpp:23</div></div>
+<div class="ttc" id="anamespacemirror_html_a966d3207c641ea120a876e431cd7fa41"><div class="ttname"><a href="namespacemirror.html#a966d3207c641ea120a876e431cd7fa41">mirror::hash_t</a></div><div class="ttdeci">std::uint64_t hash_t</div><div class="ttdoc">Type of value returned by get_hash.</div><div class="ttdef"><b>Definition:</b> hash.hpp:23</div></div>
 <div class="ttc" id="aplaceholder_8hpp_html"><div class="ttname"><a href="placeholder_8hpp.html">placeholder.hpp</a></div></div>
 <div class="ttc" id="aread__rapidjson_8hpp_html"><div class="ttname"><a href="read__rapidjson_8hpp.html">read_rapidjson.hpp</a></div></div>
 <div class="ttc" id="awrite__rapidjson_8hpp_html"><div class="ttname"><a href="write__rapidjson_8hpp.html">write_rapidjson.hpp</a></div></div>
@@ -282,7 +282,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Thu Feb 17 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Wed Mar 2 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

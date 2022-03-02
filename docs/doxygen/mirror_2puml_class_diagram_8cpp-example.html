@@ -81,8 +81,8 @@ $(function() {
 <div class="line">    example::register_cards(r);</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; md_cards = r.<a name="a1"></a><a class="code" href="classmirror_1_1metadata__registry.html#a385c24a0e314a26732b61d33a620663a">find</a>(<a class="code" href="namespacemirror.html">mirror</a>(example::cards));</div>
 <div class="line"> </div>
-<div class="line">    mirror::puml_class_diagram puml;</div>
-<div class="line">    puml.generate(std::cout, r.<a name="a2"></a><a class="code" href="classmirror_1_1metadata__registry.html#a4988d6ba51632527c1aff4d074211a5f">filtered</a>([&amp;](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; md) {</div>
+<div class="line">    <a name="_a2"></a><a class="code" href="classmirror_1_1puml__class__diagram.html">mirror::puml_class_diagram</a> puml;</div>
+<div class="line">    puml.<a name="a3"></a><a class="code" href="classmirror_1_1puml__class__diagram.html#a3f142abcf37769816d9290af33989f91">generate</a>(std::cout, r.<a name="a4"></a><a class="code" href="classmirror_1_1metadata__registry.html#a4988d6ba51632527c1aff4d074211a5f">filtered</a>([&amp;](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; md) {</div>
 <div class="line">        return md.scope() == md_cards;</div>
 <div class="line">    }));</div>
 <div class="line"> </div>
@@ -92,6 +92,8 @@ $(function() {
 <div class="ttc" id="aclassmirror_1_1metadata__registry_html"><div class="ttname"><a href="classmirror_1_1metadata__registry.html">mirror::metadata_registry</a></div><div class="ttdoc">Class storing run-time metadata objects.</div><div class="ttdef"><b>Definition:</b> registry.hpp:299</div></div>
 <div class="ttc" id="aclassmirror_1_1metadata__registry_html_a385c24a0e314a26732b61d33a620663a"><div class="ttname"><a href="classmirror_1_1metadata__registry.html#a385c24a0e314a26732b61d33a620663a">mirror::metadata_registry::find</a></div><div class="ttdeci">auto find(metaobject auto mo) -&gt; const metadata &amp;</div><div class="ttdoc">Tries to find the metadata matching to the specified metaobject.</div><div class="ttdef"><b>Definition:</b> registry.hpp:390</div></div>
 <div class="ttc" id="aclassmirror_1_1metadata__registry_html_a4988d6ba51632527c1aff4d074211a5f"><div class="ttname"><a href="classmirror_1_1metadata__registry.html#a4988d6ba51632527c1aff4d074211a5f">mirror::metadata_registry::filtered</a></div><div class="ttdeci">auto filtered(F predicate) const -&gt; metadata_sequence</div><div class="ttdoc">Returns a sequence of stored metadata instances satisfying a predicate.</div><div class="ttdef"><b>Definition:</b> registry.hpp:414</div></div>
+<div class="ttc" id="aclassmirror_1_1puml__class__diagram_html"><div class="ttname"><a href="classmirror_1_1puml__class__diagram.html">mirror::puml_class_diagram</a></div><div class="ttdoc">Class that can generate PlantUML code for entities reflected by metaobjects.</div><div class="ttdef"><b>Definition:</b> puml.hpp:20</div></div>
+<div class="ttc" id="aclassmirror_1_1puml__class__diagram_html_a3f142abcf37769816d9290af33989f91"><div class="ttname"><a href="classmirror_1_1puml__class__diagram.html#a3f142abcf37769816d9290af33989f91">mirror::puml_class_diagram::generate</a></div><div class="ttdeci">std::ostream &amp; generate(std::ostream &amp;out, const metadata_sequence &amp;ms)</div><div class="ttdoc">Generate PUML for metadata instances in the specified sequence.</div><div class="ttdef"><b>Definition:</b> puml.hpp:200</div></div>
 <div class="ttc" id="anamespacemirror_html"><div class="ttname"><a href="namespacemirror.html">mirror</a></div><div class="ttdoc">Mirror's code is placed in this namespace.</div><div class="ttdef"><b>Definition:</b> ctre_match.hpp:25</div></div>
 <div class="ttc" id="apuml_8hpp_html"><div class="ttname"><a href="puml_8hpp.html">puml.hpp</a></div></div>
 <div class="ttc" id="aregistry_8hpp_html"><div class="ttname"><a href="registry_8hpp.html">registry.hpp</a></div></div>
@@ -100,7 +102,7 @@ $(function() {
 <div id="mirror-bottom">
 <em>Copyright &copy; 2015-2022</em> <strong>Matúš Chochlík</strong>.<br/>
 &lt;<a href="mailto:chochlik@gmail.com">chochlik -at -gmail.com</a>&gt;<br/>
-Documentation generated on Thu Feb 17 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
+Documentation generated on Wed Mar 2 2022 by <a href="http://www.doxygen.org/index.html">Doxygen</a> (version 1.9.1).
 </div> <!-- mirror-bottom -->
 </div> <!-- mirror-content -->
 </div> <!-- mirror-frame -->

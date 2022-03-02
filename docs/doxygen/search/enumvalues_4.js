@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['has_5fdefault_5fargument_880',['has_default_argument',['../group__classification.html#gga68991e944fac097451925385a0ce0479a3849adb5f2f9d445b0197dac125f5df6',1,'mirror']]],
-  ['has_5flvalueref_5fqualifier_881',['has_lvalueref_qualifier',['../group__classification.html#gga68991e944fac097451925385a0ce0479ae3c9a1228c5d6776fd805f44dfbdc41c',1,'mirror']]],
-  ['has_5frvalueref_5fqualifier_882',['has_rvalueref_qualifier',['../group__classification.html#gga68991e944fac097451925385a0ce0479a15399a5e162abe735ebf643908bee975',1,'mirror']]],
-  ['hide_5fprivate_883',['hide_private',['../group__operations.html#gga87adac6d7abedaee5849a348d9dc084ea9334804d565e56da656af2267e9fbf9e',1,'mirror']]],
-  ['hide_5fprotected_884',['hide_protected',['../group__operations.html#gga87adac6d7abedaee5849a348d9dc084ea4ff9eeb7bdfc51d8aee095caf3cb4774',1,'mirror']]]
+  ['has_5fdefault_5fargument_892',['has_default_argument',['../group__classification.html#gga68991e944fac097451925385a0ce0479a3849adb5f2f9d445b0197dac125f5df6',1,'mirror::has_default_argument()'],['../namespacemirror.html#a68991e944fac097451925385a0ce0479a3849adb5f2f9d445b0197dac125f5df6',1,'mirror::has_default_argument()']]],
+  ['has_5flvalueref_5fqualifier_893',['has_lvalueref_qualifier',['../group__classification.html#gga68991e944fac097451925385a0ce0479ae3c9a1228c5d6776fd805f44dfbdc41c',1,'mirror::has_lvalueref_qualifier()'],['../namespacemirror.html#a68991e944fac097451925385a0ce0479ae3c9a1228c5d6776fd805f44dfbdc41c',1,'mirror::has_lvalueref_qualifier()']]],
+  ['has_5frvalueref_5fqualifier_894',['has_rvalueref_qualifier',['../group__classification.html#gga68991e944fac097451925385a0ce0479a15399a5e162abe735ebf643908bee975',1,'mirror::has_rvalueref_qualifier()'],['../namespacemirror.html#a68991e944fac097451925385a0ce0479a15399a5e162abe735ebf643908bee975',1,'mirror::has_rvalueref_qualifier()']]],
+  ['hide_5fprivate_895',['hide_private',['../group__operations.html#gga87adac6d7abedaee5849a348d9dc084ea9334804d565e56da656af2267e9fbf9e',1,'mirror::hide_private()'],['../namespacemirror.html#a87adac6d7abedaee5849a348d9dc084ea9334804d565e56da656af2267e9fbf9e',1,'mirror::hide_private()']]],
+  ['hide_5fprotected_896',['hide_protected',['../group__operations.html#gga87adac6d7abedaee5849a348d9dc084ea4ff9eeb7bdfc51d8aee095caf3cb4774',1,'mirror::hide_protected()'],['../namespacemirror.html#a87adac6d7abedaee5849a348d9dc084ea4ff9eeb7bdfc51d8aee095caf3cb4774',1,'mirror::hide_protected()']]]
 ];
