@@ -851,12 +851,12 @@ bool parse_options(T& opts, const program_args& args) {
         if(const auto opt{from_string(
           arg.next(), (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
         ) {
-           (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
+          (*@\listinghl{get_reference}@*)(mdm, opts) = extract(opt);
         } else {
-            cerr << "invalid value '" << arg.next()
-                 << "' for option " << arg
-                 << "!" << endl;
-            parsed = false;
+          cerr << "invalid value '" << arg.next()
+               << "' for option " << arg
+               << "!" << endl;
+          parsed = false;
         }
       }
     });
@@ -2004,8 +2004,8 @@ cout << (*@\listinghls{gen}@*).(*@\listinghlt{get_by_email}@*)("joe@example.com"
   \end{lstlisting}
   Output:
   \begin{verbatim}
-SELECT * FROM person WHERE email = 'joe@example.com';
 SELECT * FROM person WHERE first_name = 'Joe';
+SELECT * FROM person WHERE email = 'joe@example.com';
   \end{verbatim}
 \end{frame}
 % - Outro ----------------------------------------------------------------------
