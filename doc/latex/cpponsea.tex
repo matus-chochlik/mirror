@@ -134,7 +134,7 @@ static_assert(metaobject<decltype((*@\listinghlt{meta_int}@*))>);
     \item As in\ldots
     \begin{itemize}
       \smaller
-      \item getting a type,
+      \item getting a type or a template,
       \item getting the value of a constant,
       \item getting the pointer or reference to a variable,
       \item getting the pointer to a function or a member function,
@@ -183,7 +183,7 @@ static_assert(metaobject<decltype((*@\listinghlt{meta_int}@*))>);
     \item Proper ADL\footnote{argument-dependent lookup}; should not require
       excessive name qualification
     \item Be similar to the STL and other commonly-used libraries\footnote{
-        boost, \ldots}, where it makes sense.
+        Boost, \ldots}, where it makes sense.
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ static_assert(metaobject<decltype((*@\listinghlt{meta_int}@*))>);
   \frametitle{Hello, reflection!}
   \framesubtitle{the obligatory first example}
   \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
-struct hello {};
+struct (*@\listinghls{hello}@*) {};
 
 int main() {
   (*@\listinghls{hello}@*) (*@\listinghlt{world}@*);
@@ -204,6 +204,9 @@ int main() {
     return 0;
 }
   \end{lstlisting}
+  \begin{verbatim}
+"hello, world!"
+  \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
@@ -1342,91 +1345,6 @@ auto string_to_enum(string_view s) noexcept
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
-  \frametitle{Parsing command-line arguments}
-  \framesubtitle{into a structure}
-  \begin{columns}
-    \begin{column}{.57\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-class program_arg {
-public:
-  auto next() -> program_arg;
-  auto is_long_tag(...) -> bool;
-  operator string_view();
-};
-      \end{lstlisting}
-      \vfill
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-class (*@\listinghlt{program_args}@*) {
-public:
-  program_args(int, const char**);
-  auto begin();
-  auto end();
-};
-      \end{lstlisting}
-      \vfill
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-template <typename T>
-bool (*@\listinghl{parse}@*)(
-  T& opts,
-  const (*@\listinghlt{program_args}@*)& args);
-      \end{lstlisting}
-    \end{column}
-    \begin{column}{.44\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-struct (*@\listinghls{options}@*) {
-  string message{"Hi world!"};
-  milliseconds interval{500};
-  int count{3};
-};
-      \end{lstlisting}
-      \vfill
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-int main(
-  int argc,
-  const char** argv) {
-  const (*@\listinghlt{program_args}@*)
-      args{argc, argv};
-  (*@\listinghls{options}@*) opts;
-  if((*@\listinghl{parse}@*)(opts, args)) {
-    // do something
-    return 0;
-  }
-  return 1;
-}
-      \end{lstlisting}
-    \end{column}
-  \end{columns}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
-  \frametitle{Auto-parsing command-line arguments}
-  \framesubtitle{with reflection and splicing}
-  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-template <typename T>
-bool parse(T& opts, const program_args& args) {
-  bool parsed = true;
-  for(const auto& arg : args) {
-    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
-      if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
-        if(const auto opt{from_string(
-          arg.next(), (*@\listinghlt{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
-        ) {
-          (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
-        } else {
-          std::cerr << "invalid value '" << arg.next()
-                    << "' for option " << arg
-                    << "!" << std::endl;
-          parsed = false;
-        }
-      }
-    });
-  }
-  return parsed;
-}
-  \end{lstlisting}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}[fragile]
   \frametitle{Calculation of interface revision id}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename Intf>
@@ -1551,10 +1469,10 @@ class rpc_stub_impl {
   auto _deserialize(packet&, (*@\listinghlt{type_identity}@*)<T>) -> T;
 public:
   auto make_call(metaobject auto mo, auto&... args)
-    requires((*@\listinghl{reflects_expression}@*)(mo)) {
+    requires((*@\listinghl{reflects_function_call_expression}@*)(mo)) {
     packet request;
     _serialize(request, mo, args...);
-    packed response{_send_and_receive(request)};
+    packet response{_send_and_receive(request)};
 
     return _deserialize(
       response,
@@ -1611,6 +1529,314 @@ public:
 }
   \end{lstlisting}
 \end{frame}
+% - Scripting ------------------------------------------------------------------
+\section{Scripting}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{is fun, hand-coding bindings, not so much}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+void (*@\listinghlt{add_to}@*)(chaiscript::ChaiScript& (*@\listinghls{chai}@*), auto mos)
+  requires((*@\listinghl{is_object_sequence}@*)(mos));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{do_add_to}@*)(
+chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+metaobject auto mo(*@\footnote{what is being registered}@*),
+metaobject auto ms(*@\footnote{the scope}@*)) {
+  if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+    /* ... */
+  } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+    /* ... */
+  } else {
+    const string name{(*@\listinghl{get_name}@*)(mo)};
+    if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_constructor}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
+    }
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{handling sequences\footnote{\say{That’s easy!} -- sir Robin of Camelot}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+void do_add_to(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  metaobject auto mo,
+  metaobject auto ms) {
+    if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+      (*@\listinghl{for_each}@*)(mo, [&](auto me) {
+        (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), me, ms);
+      });
+    } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+      /* ... */
+    } else {
+      /* ... */
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{base classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename Base, typename Derived>
+void (*@\listinghlt{add_base_class}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<Base>,
+  (*@\listinghl{type_identity}@*)<Derived>) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::base_class<Base, Derived>());
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+void (*@\listinghlt{do_add_to}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  metaobject auto mo,
+  metaobject auto ms) {
+    if constexpr((*@\listinghl{reflects_object_sequence}@*)(mo)) {
+    } else if constexpr((*@\listinghl{reflects_base}@*)(mo)) {
+      (*@\listinghlt{add_base_class}@*)(
+        (*@\listinghls{chai}@*),
+        (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_class}@*)(mo)),
+        (*@\listinghl{get_reflected_type}@*)(ms));
+    } else {
+      /* ... */
+    }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{variables and data members}
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_variable}@*)(mo)) {
+  if constexpr((*@\listinghl{reflects_record_member}@*)(mo)) {
+    if constexpr((*@\listinghl{is_public}@*)(mo)) {
+        (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun(
+          (*@\listinghl{get_pointer}@*)(mo)), name);
+    }
+  } else {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::var(
+        (*@\listinghl{get_reference}@*)(mo)), name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{constructors}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T, typename... P>
+void (*@\listinghlt{add_constructor}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<T>,
+  (*@\listinghl{type_list}@*)<P...>,
+  const string& name) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::constructor<T(P...)>(), name);
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_constructor}@*)(mo)) {
+  if constexpr((*@\listinghl{is_public}@*)(mo)) {
+      (*@\listinghlt{add_constructor}@*)(
+        (*@\listinghls{chai}@*),
+        (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_scope}@*)(mo)),
+        (*@\listinghl{extract_types}@*)((*@\listinghl{transform}@*)(
+          (*@\listinghl{get_parameters}@*)(mo),
+          (*@\listinghl{get_type}@*)(_1))),
+        name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{functions and operators}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename From, typename To>
+void (*@\listinghlt{add_conversion}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  type_identity<From>,
+  type_identity<To>) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::type_conversion<From, To>());
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+if constexpr((*@\listinghl{reflects_function}@*)(mo)) {
+  if constexpr((*@\listinghl{reflects_record_member}@*)(mo) && (*@\listinghl{is_public}@*)(mo)) {
+      if constexpr((*@\listinghl{reflects_conversion_operator}@*)(mo)) {
+        if constexpr(!(*@\listinghl{is_deleted}@*)(mo)) {
+            (*@\listinghlt{add_conversion}@*)(
+              (*@\listinghls{chai}@*),
+              (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_scope}@*)(mo)),
+              (*@\listinghl{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mo)));
+        }
+      } else {
+        if constexpr(!(*@\listinghl{is_deleted}@*)(mo)) {
+          (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun((*@\listinghl{get_pointer}@*)(mo)), name);
+        }
+      }
+  } else {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::fun((*@\listinghl{get_pointer}@*)(mo)), name);
+  }
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{types and classes}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+template <typename T>
+void (*@\listinghlt{add_type}@*)(
+  chaiscript::ChaiScript& (*@\listinghls{chai}@*),
+  (*@\listinghl{type_identity}@*)<T>,
+  const string& name) {
+    (*@\listinghls{chai}@*).(*@\listinghlt{add}@*)(chaiscript::user_type<T>(), name);
+}
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+const string name{(*@\listinghl{get_name}@*)(mo)};
+
+if constexpr((*@\listinghl{reflects_record}@*)(mo)) {
+  (*@\listinghlt{add_type}@*)((*@\listinghls{chai}@*),  (*@\listinghl{get_reflected_type}@*)(mo), name);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_base_classes}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_member_types}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_data_members}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_constructors}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_member_functions}@*)(mo), mo);
+  (*@\listinghlt{do_add_to}@*)((*@\listinghls{chai}@*), (*@\listinghl{get_operators}@*)(mo), mo);
+}
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{Monty C++'s Flying Circus}
+  \begin{columns}
+    \begin{column}{.50\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class scene {
+public:
+  void (*@\listinghlt{person_says}@*)(
+    const person&, string_view line);
+  void (*@\listinghlt{person_relocates}@*)(
+    person& p, string_view how);
+  void (*@\listinghlt{event_happens}@*)(
+    string_view what);
+  void (*@\listinghlt{pause}@*)();
+};
+
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class location {
+public:
+  (*@\listinghlt{location}@*)(string name, scene&);
+  auto (*@\listinghlt{name}@*)() const -> string_view;
+};
+    \end{lstlisting}
+    \end{column}
+    \begin{column}{.50\textwidth}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class person {
+public:
+  (*@\listinghlt{person}@*)(string name);
+
+  auto (*@\listinghlt{name}@*)() const -> string_view;
+  auto (*@\listinghlt{current_location}@*)() -> auto&;
+  auto (*@\listinghlt{enter}@*)(location&);
+  auto (*@\listinghlt{is_thrown_to}@*)(location&);
+  void (*@\listinghlt{say}@*)(const string&);
+};
+    \end{lstlisting}
+    \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+class king : public person {
+public:
+  (*@\listinghlt{king}@*)(string name);
+};
+    \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class mysterious_force {
+public:
+  (*@\listinghlt{mysterious_force}@*)(location&);
+  void (*@\listinghlt{throw_into_chasm}@*)(person&);
+};
+    \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{set the scene\ldots}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+scene at_the_bridge;
+chaiscript::ChaiScript (*@\listinghls{chai}@*);
+
+(*@\listinghlt{add_to}@*)(
+  (*@\listinghls{chai}@*), (*@\listinghl{make_sequence}@*)(
+  mirror(mysterious_force),
+  mirror(scene), mirror(location),
+  mirror(person), mirror(king), mirror(at_the_bridge)));
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
+chai(*@{\footnote{should have done this in Python!}@*)(R"(
+  var road = (*@\listinghlt{location}@*)("road leading to the bridge", at_the_bridge);
+  var bridge = location("bridge of death", at_the_bridge);
+  var chasm = location("chasm", at_the_bridge);
+
+  var the_force = (*@\listinghlt{mysterious_force}@*)(chasm);
+
+  var bridgekeeper = (*@\listinghlt{person}@*)("the Bridgekeeper");
+  var king_arthur = (*@\listinghlt{king}@*)("king Arthur");
+  var sir_lancelot = person("sir Lancelot");
+  var sir_robin = person("sir Robin");
+  var sir_galahad = person("sir Galahad");
+  var sir_bedevere = person("sir Bedevere");
+)");
+  \end{lstlisting}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Scripting}
+  \framesubtitle{\ldots and {\em \larger action!}}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+chai(R"(
+  bridgekeeper.(*@\listinghlt{enter}@*)(bridge);
+  king_arthur.enter(road);
+  sir_lancelot.enter(road);
+  sir_robin.enter(road);
+  sir_galahad.enter(road);
+  sir_bedevere.enter(road);
+
+  bridgekeeper.(*@\listinghlt{say}@*)(
+    "Stop."
+    "Who would cross the Bridge of Death "
+    "must answer me these questions three, "
+    "ere the other side he see.");
+  sir_lancelot.say(
+    "Ask me the questions, bridgekeeper. "
+    "I am not afraid.");
+  // ...
+  the_force.(*@\listinghlt{throw_into_chasm}@*)(sir_robin);
+  sir_robin.say("Auuuuuuuugh.");
+
+  // ...
+)");
+  \end{lstlisting}
+\end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{\say{Smart} concept definition}
@@ -1637,7 +1863,115 @@ cout << add(400ULL, 20ULL) << endl;
 cout << add(true, false) << endl; // NOPE!
   \end{lstlisting}
 \end{frame}
-% - Alt-API --------------------------------------------------------------------
+% - Conclusion -----------------------------------------------------------------
+\section{Conclusion}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusions}
+  \larger
+  \begin{itemize}
+    \item Reflection is {\em \larger fun}
+    \item Reflection is {\em \larger useful}
+    \item Reflection code can be readable
+    \item Reflection code can be straightforward to write
+    \item Reflection APIs can provide many non-trivial, reusable tools
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{There are so many use-cases}
+  \framesubtitle{details in other talks}
+  \begin{itemize}
+    \item Implementing the {\em factory} pattern
+    \item Auto-registering with script language bindings
+    \item Generating GUIs for visualization and data input
+    \item Serialization and deserialization
+    \item Implementing RPC/RMI stubs and skeletons
+    \item Generating UML diagrams from code
+    \item Generating DB system queries
+    \item Fetching data from databases into C++ structures
+    \item Generating \inlinecode{boost::spirit} parsers and formatters
+    \item Parsing of configuration files
+    \item Parsing of command-line arguments
+    \item Mapping of URL arguments to function arguments
+    \item \ldots
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Where does all this come from?}
+  \larger
+  \begin{itemize}
+    \item The {\em Mirror} library
+    \begin{itemize}
+      \item primitive and sequence operations,
+      \item algorithms,
+      \item placeholder expressions,
+      \item examples and use-cases\footnote{including bigger ones},
+      \item integration with other projects\footnote{CTRE, rapidjson, chaiscript,
+        sqlite3, etc.},
+      \item \ldots
+    \end{itemize}
+    \item On top of the reflection TS implementation in \inlinecode{clang}
+    \item There is much more than what fits into this talk
+    \item See the reference (links below)
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Links, shameless plugs, etc.}
+  \smaller
+  \begin{itemize}
+    \item {\em This presentation} --
+      \url{https://matus-chochlik.github.io/mirror/latex/meeting_cpp.pdf}
+    \item {\em The Mirror library repository} --
+      \url{https://github.com/matus-chochlik/mirror}
+    \item {\em The Mirror library reference (W.I.P.)} --
+      \url{https://matus-chochlik.github.io/mirror/doxygen/}
+    \item {\em Reflection TS in \inlinecode{clang}} --
+      \url{https://github.com/matus-chochlik/llvm-project}
+    \item {\em Reflection TS draft} --
+      \url{https://cplusplus.github.io/reflection-ts/draft.pdf}
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{What's next for reflection?}
+  \Large
+  \begin{itemize}
+    \item More splicing
+    \item Code fragment splicing
+    \item Splicing {\em \larger identifiers} depending on metaobjects\footnote{
+        maybe even with custom formatting}
+    \item Support for more use-cases
+  \end{itemize}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{That's all folks\dots}
+  \centering
+  \Huge
+  Thanks for your attention.\\
+  \Large
+  Happy to answer any additional questions.
+\end{frame}
+% - Extras ---------------------------------------------------------------------
+\section{Extras}
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{I lied}
+  \framesubtitle{There is more}
+  \makebox[\linewidth][c]{
+    \begin{minipage}{\dimexpr\textwidth\relax}
+    \centering
+    \includegraphics[
+        width=0.9\textwidth,
+        keepaspectratio
+    ]{extras.png}
+    \end{minipage}
+  }
+\end{frame}
+% ------------------------------------------------------------------------------
 \section{Alt}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -1743,116 +2077,93 @@ void print_traits(metaobject auto mo) {
   reflects_type:                     true
   reflects_enum:                     false
   reflects_record:                   true
-  reflects_class:                    true
   ...
   \end{verbatim}
 \end{frame}
-% - Conclusion -----------------------------------------------------------------
-\section{Conclusion}
 % ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{Conclusions}
-  \larger
-  \begin{itemize}
-    \item Reflection is {\em \larger fun}
-    \item Reflection is {\em \larger useful}
-    \item Reflection code can be readable
-    \item Reflection code can be straightforward to write
-    \item Reflection APIs can provide many non-trivial, reusable tools
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{There are so many use-cases}
-  \framesubtitle{details in other talks}
-  \begin{itemize}
-    \item Implementing the {\em factory} pattern
-    \item Auto-registering with script language bindings
-    \item Generating GUIs for visualization and data input
-    \item Serialization and deserialization
-    \item Implementing RPC/RMI stubs and skeletons
-    \item Generating UML diagrams from code
-    \item Generating DB system queries
-    \item Fetching data from databases into C++ structures
-    \item Generating \inlinecode{boost::spirit} parsers and formatters
-    \item Parsing of configuration files
-    \item Parsing of command-line arguments
-    \item Mapping of URL arguments to function arguments
-    \item \ldots
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{Where does all this come from?}
-  \larger
-  \begin{itemize}
-    \item The {\em Mirror} library
-    \begin{itemize}
-      \item primitive and sequence operations,
-      \item algorithms,
-      \item placeholder expressions,
-      \item examples and use-cases\footnote{including bigger ones},
-      \item integration with other projects\footnote{CTRE, rapidjson, chaiscript,
-        sqlite3, etc.},
-      \item \ldots
-    \end{itemize}
-    \item On top of the reflection TS implementation in \inlinecode{clang}
-    \item There is much more than what fits into this talk
-    \item See the reference (links below)
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{Links, shameless plugs, etc.}
-  \smaller
-  \begin{itemize}
-    \item {\em This presentation} --
-      \url{https://matus-chochlik.github.io/mirror/latex/meeting_cpp.pdf}
-    \item {\em The Mirror library repository} --
-      \url{https://github.com/matus-chochlik/mirror}
-    \item {\em The Mirror library reference (W.I.P.)} --
-      \url{https://matus-chochlik.github.io/mirror/doxygen/}
-    \item {\em Reflection TS in \inlinecode{clang}} --
-      \url{https://github.com/matus-chochlik/llvm-project}
-    \item {\em Reflection TS draft} --
-      \url{https://cplusplus.github.io/reflection-ts/draft.pdf}
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{What's next for reflection?}
-  \Large
-  \begin{itemize}
-    \item More splicing
-    \item Code fragment splicing
-    \item Splicing {\em \larger identifiers} depending on metaobjects\footnote{
-        maybe even with custom formatting}
-    \item Support for more use-cases
-  \end{itemize}
-\end{frame}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{That's all folks\dots}
-  \centering
-  \Huge
-  Thanks for your attention.\\
-  \Large
-  Happy to answer any additional questions.
-\end{frame}
-% - Extras ---------------------------------------------------------------------
-\section{Extras}
-% ------------------------------------------------------------------------------
-\begin{frame}
-  \frametitle{There is more}
-  \makebox[\linewidth][c]{
-    \begin{minipage}{\dimexpr\textwidth\relax}
-    \centering
-    \includegraphics[
-        width=0.9\textwidth,
-        keepaspectratio
-    ]{extras.png}
-    \end{minipage}
+\begin{frame}[fragile]
+  \frametitle{Parsing command-line arguments}
+  \framesubtitle{into a structure}
+  \begin{columns}
+    \begin{column}{.57\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class program_arg {
+public:
+  auto next() -> program_arg;
+  auto is_long_tag(...) -> bool;
+  operator string_view();
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+class (*@\listinghlt{program_args}@*) {
+public:
+  program_args(int, const char**);
+  auto begin();
+  auto end();
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+bool (*@\listinghl{parse}@*)(
+  T& opts,
+  const (*@\listinghlt{program_args}@*)& args);
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.44\textwidth}
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+struct (*@\listinghls{options}@*) {
+  string message{"Hi world!"};
+  milliseconds interval{500};
+  int count{3};
+};
+      \end{lstlisting}
+      \vfill
+      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+int main(
+  int argc,
+  const char** argv) {
+  const (*@\listinghlt{program_args}@*)
+      args{argc, argv};
+  (*@\listinghls{options}@*) opts;
+  if((*@\listinghl{parse}@*)(opts, args)) {
+    // do something
+    return 0;
   }
+  return 1;
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Auto-parsing command-line arguments}
+  \framesubtitle{with reflection and splicing}
+  \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+template <typename T>
+bool parse(T& opts, const program_args& args) {
+  bool parsed = true;
+  for(const auto& arg : args) {
+    (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
+      if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
+        if(const auto opt{from_string(
+          arg.next(), (*@\listinghlt{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
+        ) {
+          (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
+        } else {
+          std::cerr << "invalid value '" << arg.next()
+                    << "' for option " << arg
+                    << "!" << std::endl;
+          parsed = false;
+        }
+      }
+    });
+  }
+  return parsed;
+}
+  \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
