@@ -1,4 +1,4 @@
-\documentclass[compress,table,xcolor=table]{beamer}
+\documentclass[aspectratio=169,compress,table,xcolor=table]{beamer}
 \input{beamer_mirror.tex}
 \begin{document}
 % ------------------------------------------------------------------------------
@@ -12,7 +12,7 @@
     \begin{minipage}{\dimexpr\textwidth\relax}
     \centering
     \includegraphics[
-        width=0.9\textwidth,
+        width=0.7\textwidth,
         keepaspectratio
     ]{look\_into\_mirror.png}
     \end{minipage}
@@ -23,11 +23,12 @@
   \frametitle{Contents}
   \LARGE
   \begin{itemize}
-    \item Reflection \smaller and \say{un-reflection}
+    \item Reflection \smaller and splicing
     \item Metaobjects and metadata
     \item Reflection APIs
     \item Examples
     \item Some use-cases
+    \item \url{https://github.com/matus-chochlik/mirror}
   \end{itemize}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -116,17 +117,16 @@ void bar(auto m)
     \item Done through a~dedicated operator or~language expression
     \item For example
   \end{itemize}
-  \begin{lstlisting}[language=c++2x]
+  \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
 const auto (*@\listinghlt{meta_int}@*) = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~placeholder
       for the~actual reflection expression}@*)(int);
-static_assert(
-  metaobject<decltype((*@\listinghlt{meta_int}@*))>);
+
+static_assert(metaobject<decltype((*@\listinghlt{meta_int}@*))>);
   \end{lstlisting}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}
-  \frametitle{\say{Un-reflection}}
-  \framesubtitle{a.k.a \say{splicing}}
+  \frametitle{Splicing}
   \larger
   \begin{itemize}
     \item The reverse of reflection
@@ -172,7 +172,7 @@ static_assert(
 % ------------------------------------------------------------------------------
 \begin{frame}
   \frametitle{Reflection API}
-  \framesubtitle{design considerations}
+  \framesubtitle{design goals}
   \larger
   \begin{itemize}
     \item The general API design stuff
@@ -190,7 +190,7 @@ static_assert(
 \begin{frame}[fragile]
   \frametitle{Hello, reflection!}
   \framesubtitle{the obligatory first example}
-  \begin{lstlisting}[language=c++2x]
+  \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
 struct hello {};
 
 int main() {
@@ -209,16 +209,17 @@ int main() {
 \begin{frame}
   \frametitle{Reflection API}
   \framesubtitle{metaobject classification functions}
+  \larger
   \begin{itemize}
     \item Indicate {\em \larger what} does a metaobject reflect
     \item Return \inlinecode{bool} value
     \item \inlinecode{auto reflects_object(metaobject auto m) -> bool;}
-    \item \footnotesize\inlinecodebreak{auto reflects_\{object_sequence, named, alias, typed,
+    \item \inlinecodebreak{auto reflects_{\scriptsize \{object_sequence, named, alias, typed,
     scope, scope_member, enumerator, record_member, base, namespace, global_scope,
     type, enum, record, class, lambda, constant, variable, lambda_capture,
     function_parameter, callable, function, member_function,
     special_member_function, constructor, destructor, operator, conversion_operator,
-    expression, parenthesized_expression, function_call_expression\}(metaobject auto m) -> bool;}
+    expression, parenthesized_expression, function_call_expression\}}(metaobject auto m) -> bool;}
     \item \normalsize Typically used in \inlinecode{requires} clauses or
       in \inlinecode{if constexpr}
   \end{itemize}
@@ -299,17 +300,17 @@ void log_who_did_this(
 \begin{frame}[fragile]
   \frametitle{Metadata getters}
   \framesubtitle{source location}
-  \begin{lstlisting}[language=c++2x]
+  \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
 auto get_source_file_name(metaobject auto)
   -> string_view;
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x]
+  \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
 auto get_source_line(metaobject auto)
   -> unsigned long;
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x]
+  \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
 auto get_source_column(metaobject auto)
   -> unsigned long;
   \end{lstlisting}
@@ -319,24 +320,27 @@ auto get_source_column(metaobject auto)
   \frametitle{Metadata getters}
   \framesubtitle{names}
   \begin{lstlisting}[language=c++2x]
-auto get_name(metaobject auto mo)
-  -> string_view
+auto get_name(metaobject auto mo) -> string_view
   requires(reflects_named(mo));
-// "basic_string"
   \end{lstlisting}
+  \begin{verbatim}
+"basic_string"
+  \end{verbatim}
   \vfill
   \begin{lstlisting}[language=c++2x]
-auto get_display_name(metaobject auto mo)
-  -> string_view
+auto get_display_name(metaobject auto mo) -> string_view
   requires(reflects_named(mo));
-// "string"
   \end{lstlisting}
+  \begin{verbatim}
+"string"
+  \end{verbatim}
   \vfill
   \begin{lstlisting}[language=c++2x]
-auto get_full_name(metaobject auto mo)
-  -> string;
-// "std::basic_string<char, ...>"
+auto get_full_name(metaobject auto mo) -> string;
   \end{lstlisting}
+  \begin{verbatim}
+"std::basic_string<char, ...>"
+  \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
@@ -387,14 +391,12 @@ auto uses_class_key(metaobject auto mo) -> bool
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto uses_default_copy_capture(metaobject auto mo)
-  -> bool
+auto uses_default_copy_capture(metaobject auto mo) -> bool
   requires(reflects_lambda(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto is_explicitly_captured(metaobject auto mo)
-  -> bool
+auto is_explicitly_captured(metaobject auto mo) -> bool
   requires(reflects_lambda_capture(mo));
   \end{lstlisting}
   \vfill
@@ -413,8 +415,7 @@ auto has_lvalueref_qualifier(metaobject auto mo) -> bool
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto is_implicitly_declared(metaobject auto mo)
-  -> bool
+auto is_implicitly_declared(metaobject auto mo) -> bool
   requires(reflects_special_member_function(mo));
   \end{lstlisting}
   \vfill
@@ -438,20 +439,17 @@ auto is_move_constructor(metaobject auto mo) -> bool
   \frametitle{Metadata getters}
   \framesubtitle{constants and values}
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-auto get_constant(metaobject auto mo)
-  -> const auto
+auto get_constant(metaobject auto mo) -> const auto
   requires(reflects_constant(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-auto get_value(metaobject auto mo)
-  -> const auto&
+auto get_value(metaobject auto mo) -> const auto&
   requires(reflects_variable(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-auto get_value(metaobject auto mo, auto& obj)
-  -> const auto&
+auto get_value(metaobject auto mo, auto& obj) -> const auto&
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
   \end{lstlisting}
@@ -461,28 +459,24 @@ auto get_value(metaobject auto mo, auto& obj)
   \frametitle{Metadata getters}
   \framesubtitle{references and pointers}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_reference(metaobject auto mo)
-  -> auto&
+auto get_reference(metaobject auto mo) -> auto&
   requires(reflects_variable(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_reference(metaobject auto mo, auto& obj)
-  -> auto&
+auto get_reference(metaobject auto mo, auto& obj) -> auto&
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_pointer(metaobject auto mo)
-  -> auto*
+auto get_pointer(metaobject auto mo) -> auto*
   requires(reflects_variable(mo) ||
            reflects_function(mo));
   \end{lstlisting}
   \vfill
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_pointer(metaobject auto mo, auto& obj)
-  -> auto*
+auto get_pointer(metaobject auto mo, auto& obj) -> auto*
   requires(reflects_record_member(mo) &&
            reflects_variable(mo));
   \end{lstlisting}
@@ -664,31 +658,31 @@ auto get_parameters(metaobject auto mo)
   \smaller
   Is something a sequence?
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-auto is_object_sequence(auto mo) -> bool;
+auto is_object_sequence(metaobject auto mo) -> bool;
   \end{lstlisting}
   \vfill
   Is there anything in the sequence?
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto is_empty(auto mo) -> bool
+auto is_empty(metaobject auto mo) -> bool
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   How many elements are there?
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto get_size(auto mo) -> size_t
+auto get_size(metaobject auto mo) -> size_t
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
   Get the I-th element
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 template <size_t I>
-auto get_element(auto mo)
+auto get_element(metaobject auto mo)
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  Concatenate\footnote{merge several sequences into one}
+  Concatenate
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-auto concat(auto... mo)
+auto concat(metaobject auto... mo)
   requires((... && is_object_sequence(mo)));
   \end{lstlisting}
 \end{frame}
@@ -696,8 +690,8 @@ auto concat(auto... mo)
 \begin{frame}[fragile]
   \frametitle{Metaobject sequences}
   \framesubtitle{basic iteration}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
-void (*@\listinghl{for_each}@*)(auto mo, auto (*@\listinghlt{function}@*))
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+void (*@\listinghl{for_each}@*)(metaobject auto mo, auto (*@\listinghlt{function}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \begin{lstlisting}[language=c++2x]
@@ -739,7 +733,7 @@ void (*@\listinghl{for_each}@*)(auto mo, auto (*@\listinghlt{function}@*))
   \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 template <typename F>
 struct (*@\listinghlt{placeholder_expr}@*) {
-  auto operator()(auto... mo) const;
+  auto operator()(auto... a) const;
   // ...
 };
 // CTAD guide + some specializations
@@ -763,7 +757,7 @@ auto (*@\listinghl{some_operation}@*)((*@\listinghlt{placeholder_expr}@*)<X> e) 
 \begin{frame}[fragile]
   \frametitle{Placeholder expressions}
   \framesubtitle{predicates}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 reflects_named((*@\listinghls{_1}@*));
 reflects_destructor((*@\listinghls{_1}@*));
 is_static((*@\listinghls{_1}@*));
@@ -782,7 +776,7 @@ has_type_trait<std::is_floating_point>((*@\listinghls{_1}@*));
 \begin{frame}[fragile]
   \frametitle{Placeholder expressions}
   \framesubtitle{comparators}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 reflect_same((*@\listinghls{_1}@*), (*@\listinghls{_2}@*));
 get_name((*@\listinghls{_1}@*)) < get_name((*@\listinghls{_2}@*));
 get_sizeof((*@\listinghls{_1}@*)) == get_sizeof((*@\listinghls{_2}@*));
@@ -793,7 +787,7 @@ get_size(get_name((*@\listinghls{_1}@*))) > get_size(get_name((*@\listinghls{_2}
 \begin{frame}[fragile]
   \frametitle{Placeholder expressions}
   \framesubtitle{transforms}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 get_type((*@\listinghls{_1}@*));
 get_scope((*@\listinghls{_1}@*));
 get_display_name((*@\listinghls{_1}@*));
@@ -813,13 +807,13 @@ get_name(get_element<1>(get_parameters((*@\listinghls{_1}@*))));
   \frametitle{Algorithms}
   \larger
   \begin{itemize}
-    \item Implement small specific, but non-trivial functionality
+    \item Implement small, specific, but non-trivial functionality
     \item On top of the primitive metaobject operations
     \item Can be easily combined in many ways into bigger, custom algorithms
     \item Can form and inter-operate with placeholder expressions
     \item Promote code re-usability
     \item Mostly operate on metaobject sequences
-    \item \say{Un-reflection} can be done in the function objects passed
+    \item Splicing can be done in the function objects passed
       to the algorithms
   \end{itemize}
 \end{frame}
@@ -834,7 +828,7 @@ auto (*@\listinghl{transform}@*)(auto mo, auto (*@\listinghlt{function}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_parameter_types = (*@\listinghl{transform}@*)(
     get_parameters(_1),
     (*@\listinghlt{get_type}@*)(_1));
@@ -862,7 +856,7 @@ auto (*@\listinghl{remove_if}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto get_virtual_functions =
   (*@\listinghl{filter}@*)(get_member_functions(_1), (*@\listinghlt{is_virtual}@*)(_1));
 
@@ -911,7 +905,7 @@ auto (*@\listinghl{find_if_not}@*)(auto mo, auto (*@\listinghlt{predicate}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
 auto find_function_foo = (*@\listinghl{find_if}@*)(
     get_member_functions(_1),
     (*@\listinghlt{[]}@*)(auto mo) { return has_name(mo, "foo"); });
@@ -925,8 +919,7 @@ auto find_nonstatic_member = (*@\listinghl{find_if_not}@*)(
 \begin{frame}[fragile]
   \frametitle{Algorithms}
   \framesubtitle{find-ranking}
-  Takes a sequence, applies a \inlinecode{query} function returning some metadata
-  value on each metaobject.
+  Takes a sequence, applies a \inlinecode{query} function returning a value on each metaobject.\\
   Returns the metaobject for which the value is {\em largest} according
   to a \inlinecode{compare} function\footnote{if unspecified then less-than is used}.
   \begin{lstlisting}[language=c++2x]
@@ -938,7 +931,7 @@ auto (*@\listinghl{find_ranking}@*)(auto mo, auto (*@\listinghlt{query}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
     auto find_largest_data_member =
       (*@\listinghl{find_ranking}@*)(
         get_data_members(_1),
@@ -949,8 +942,7 @@ auto (*@\listinghl{find_ranking}@*)(auto mo, auto (*@\listinghlt{query}@*))
 \begin{frame}[fragile]
   \frametitle{Algorithms}
   \framesubtitle{get-top-value}
-  Takes a sequence, applies a \inlinecode{query} function returning some metadata
-  value on each metaobject.
+  Takes a sequence, applies a \inlinecode{query} function returning a value on each metaobject.\\
   Returns the {\em value} which is {\em largest} according
   to a \inlinecode{compare} function\footnote{if unspecified then less-than is used}.
   \begin{lstlisting}[language=c++2x]
@@ -962,7 +954,7 @@ auto (*@\listinghl{get_top_value}@*)(auto mo, auto (*@\listinghlt{query}@*))
   requires(is_object_sequence(mo));
   \end{lstlisting}
   \vfill
-  \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
     auto get_max_arity =
       (*@\listinghl{get_top_value}@*)(
         get_member_functions(_1),
@@ -1086,7 +1078,7 @@ void print_enum(metaobject auto mo) {
   \frametitle{Find enumerator with longest name}
   \begin{columns}
     \begin{column}{.45\textwidth}
-      \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
+      \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 enum class weekday : int {
     monday = 1,
     tuesday,
@@ -1148,9 +1140,8 @@ const auto has_overloaded_functions =
     \begin{column}{.50\textwidth}
       \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
 struct foo {
-  int plus(int x) {
-    return x;
-  }
+  int plus(int x) { return x; }
+
   int plus(int x, int y) {
     return x + y;
   }
@@ -1183,13 +1174,14 @@ struct bar {
     \end{column}
   \end{columns}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
-cout << has_overloaded_functions(mirror(foo))<< endl;
-cout << has_overloaded_functions(mirror(bar))<< endl;
+cout << boolalpha << has_overloaded_functions(mirror(foo))<< endl;
+cout << boolalpha << has_overloaded_functions(mirror(bar))<< endl;
   \end{lstlisting}
   Output:
+  \smaller
   \begin{verbatim}
-  1
-  0
+  true
+  false
   \end{verbatim}
 \end{frame}
 % ------------------------------------------------------------------------------
@@ -1205,7 +1197,7 @@ template <typename T>
 auto has_padding(*@\footnote{is bigger than the sum of its parts?}@*)() -> bool {
     return sizeof(T) >
            sum_sizeofs((*@\listinghlt{extract_types}@*)(*@\footnote{note that this operation
-           ~involves \say{un-reflection} -- getting base-level types from
+           ~involves splicing -- getting base-level types from
            ~meta-types}@*)((*@\listinghl{transform}@*)(
              (*@\listinghl{filter}@*)((*@\listinghl{get_data_members}@*)(mirror(T)),
                     not_((*@\listinghl{is_static}@*)(_1))),
@@ -1247,6 +1239,7 @@ print_has_padding<S1>();
 print_has_padding<S2>();
   \end{lstlisting}
   Output:
+  \smaller
   \begin{verbatim}
 S1: has no padding
 S2: has some padding
@@ -1282,13 +1275,34 @@ const auto are_sorted_by_size = (*@\listinghl{is_sorted}@*)(
   (*@\listinghl{get_data_members}@*)(_1),
   (*@\listinghl{get_sizeof}@*)(_1) < get_sizeof(_2));
 
-cout << are_sorted_by_size(mirror(foo))<< endl;
-cout << are_sorted_by_size(mirror(bar))<< endl;
+cout << boolalpha << are_sorted_by_size(mirror(foo))<< endl;
+cout << boolalpha << are_sorted_by_size(mirror(bar))<< endl;
   \end{lstlisting}
   \begin{verbatim}
-  1
-  0
+  true
+  false
   \end{verbatim}
+\end{frame}
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Hello again!}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+enum class (*@\listinghlt{greeting}@*) {
+  hello, world, of, reflection
+};
+  \end{lstlisting}
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
+cout << (*@\listinghl{join\footnote{algorithm}}@*)(
+      (*@\listinghl{get_enumerators\footnote{
+        metaobject sequence getter}}@*)(mirror(*@\footnote{
+        reflection operator}@*)((*@\listinghlt{greeting}@*))(*@\footnote{
+        reflection in action -- returns a metaobject}@*)),
+      to_string((*@\listinghl{get_name\footnote{
+        metadata (name) getter}}@*)((*@\listinghls{_1}@*)(*@\footnote{
+        placeholder}@*)))(*@\footnote{
+        placeholder expression}@*),
+      string(" ")) << "!\n";
+  \end{lstlisting}
 \end{frame}
 % - Examples -------------------------------------------------------------------
 \section{Examples}
@@ -1338,7 +1352,6 @@ public:
   auto next() -> program_arg;
   auto is_long_tag(...) -> bool;
   operator string_view();
-  // ...
 };
       \end{lstlisting}
       \vfill
@@ -1348,7 +1361,6 @@ public:
   program_args(int, const char**);
   auto begin();
   auto end();
-  // ...
 };
       \end{lstlisting}
       \vfill
@@ -1361,11 +1373,9 @@ bool (*@\listinghl{parse}@*)(
     \end{column}
     \begin{column}{.44\textwidth}
       \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
-struct options {
-  string
-    message{"Hi world!"};
-  chrono::milliseconds
-    interval{500};
+struct (*@\listinghls{options}@*) {
+  string message{"Hi world!"};
+  milliseconds interval{500};
   int count{3};
 };
       \end{lstlisting}
@@ -1374,10 +1384,9 @@ struct options {
 int main(
   int argc,
   const char** argv) {
-
   const (*@\listinghlt{program_args}@*)
       args{argc, argv};
-  options opts;
+  (*@\listinghls{options}@*) opts;
   if((*@\listinghl{parse}@*)(opts, args)) {
     // do something
     return 0;
@@ -1391,7 +1400,7 @@ int main(
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{Auto-parsing command-line arguments}
-  \framesubtitle{with reflection}
+  \framesubtitle{with reflection and splicing}
   \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 template <typename T>
 bool parse(T& opts, const program_args& args) {
@@ -1400,7 +1409,7 @@ bool parse(T& opts, const program_args& args) {
     (*@\listinghl{for_each}@*)((*@\listinghl{get_data_members}@*)((*@\listinghl{mirror}@*)(T)), [&](auto mdm) {
       if(arg.is_long_tag((*@\listinghl{get_name}@*)(mdm))) {
         if(const auto opt{from_string(
-          arg.next(), (*@\listinghlt{get_reflected_type}\footnote{\ldots and \say{un-reflection}}@*)((*@\listinghl{get_type}@*)(mdm)))}
+          arg.next(), (*@\listinghlt{get_reflected_type}@*)((*@\listinghl{get_type}@*)(mdm)))}
         ) {
           (*@\listinghl{get_reference}@*)(mdm, opts) = opt.value();
         } else {
@@ -1439,8 +1448,7 @@ public:
     \smaller
     \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 // initially
-struct operations
- : versioned_interface<operations> {
+struct operations : versioned_interface<operations> {
   virtual void foo() = 0;
   virtual void bar((*@\listinghl{int}@*)) = 0;
   virtual auto baz(bool, bool) -> (*@\listinghlt{bool}@*) = 0;
@@ -1453,8 +1461,7 @@ d423c43e4eabdc
     \vfill
     \begin{lstlisting}[language=c++2x,basicstyle=\scriptsize\ttfamily]
 // later
-struct operations
- : versioned_interface<operations> {
+struct operations : versioned_interface<operations> {
   virtual void foo() = 0;
   virtual void bar((*@\listinghl{long}@*)) = 0;
   virtual auto baz(bool, bool) -> (*@\listinghlt{int}@*) = 0;
@@ -1473,7 +1480,7 @@ ef4203c133db7600
     \begin{minipage}{\dimexpr\textwidth\relax}
     \centering
     \includegraphics[
-        width=0.65\textwidth,
+        width=0.45\textwidth,
         keepaspectratio
     ]{rpc\_class.pdf}
     \end{minipage}
@@ -1487,7 +1494,7 @@ ef4203c133db7600
     \begin{minipage}{\dimexpr\textwidth\relax}
     \centering
     \includegraphics[
-        width=0.9\textwidth,
+        width=0.8\textwidth,
         keepaspectratio
     ]{rpc\_sequence.pdf}
     \end{minipage}
@@ -1497,7 +1504,7 @@ ef4203c133db7600
 \begin{frame}[fragile]
   \frametitle{RPC stubs/skeletons}
   \framesubtitle{the interface}
-  \begin{lstlisting}[language=c++2x,basicstyle=\small\ttfamily]
+  \begin{lstlisting}[language=c++2x,basicstyle=\normalsize\ttfamily]
 struct calculator {
     virtual float add(float, float) = 0;
     virtual float subtract(float, float) = 0;
@@ -1537,7 +1544,7 @@ public:
 % ------------------------------------------------------------------------------
 \begin{frame}[fragile]
   \frametitle{RPC stubs/skeletons}
-  \framesubtitle{the generic stub implementation\footnote{pseudocode}}
+  \framesubtitle{the generic stub implementation}
   \begin{lstlisting}[language=c++2x,basicstyle=\footnotesize\ttfamily]
 class rpc_stub_impl {
   template <typename T>
@@ -1572,7 +1579,7 @@ struct rpc_skeleton {
   \end{lstlisting}
   \begin{itemize}
     \item Could be plugged-into a network connection
-    \item Handle incoming data
+    \item Handles incoming data
     \item After call is finished the connection can send the response
   \end{itemize}
 \end{frame}
@@ -1615,9 +1622,7 @@ concept very_smart_integer(*@\footnote{don't try this at home}@*) = (*@\listingh
   "((long long|long|short)( int)?|int)"
 >((*@\listinghl{get_name}@*)(remove_all_aliases(mirror(T))));
 
-auto add(
-  very_smart_integer auto l,
-  very_smart_integer auto r) {
+auto add(very_smart_integer auto l, very_smart_integer auto r) {
     return l + r;
 }
   \end{lstlisting}
@@ -1684,8 +1689,7 @@ template <operation O>
 auto apply(metaobject auto);
 
 template <operation O>
-auto try_apply(
-  metaobject auto)
+auto try_apply(metaobject auto)
     -> (*@\listinghl{optional}@*)<...>;
       \end{lstlisting}
     \end{column}
@@ -1819,7 +1823,7 @@ void print_traits(metaobject auto mo) {
   \frametitle{What's next for reflection?}
   \Large
   \begin{itemize}
-    \item More \say{un-reflection}
+    \item More splicing
     \item Code fragment splicing
     \item Splicing {\em \larger identifiers} depending on metaobjects\footnote{
         maybe even with custom formatting}
