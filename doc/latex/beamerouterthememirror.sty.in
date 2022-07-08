@@ -32,7 +32,7 @@
                                 % Head
 \defbeamertemplate*{headline}{mirror theme}
 {%
-  \vskip-7ex%
+  %\vskip-7ex%
   \begin{tcolorbox}[
     enhanced,
     left=0pt,right=0pt,top=0pt,bottom=0pt,
