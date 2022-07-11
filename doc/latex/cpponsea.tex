@@ -121,8 +121,8 @@ void bar(auto m)
     \item For example
   \end{itemize}
   \begin{lstlisting}[language=c++2x,basicstyle=\large\ttfamily]
-const auto (*@\listinghlt{meta_int}@*) = (*@\listinghl{mirror}\footnote{\inlinecode{mirror} is a~placeholder
-      for the~actual reflection expression}@*)(int);
+const auto (*@\listinghlt{meta_int}@*) = (*@\listinghl{mirror}\footnote{
+      the reflection expression}@*)(int);
 
 static_assert(metaobject<decltype((*@\listinghlt{meta_int}@*))>);
   \end{lstlisting}
@@ -198,11 +198,11 @@ static_assert(metaobject<decltype((*@\listinghlt{meta_int}@*))>);
 struct (*@\listinghls{hello}@*) {};
 
 int main() {
-  (*@\listinghls{hello}@*) (*@\listinghlt{world}@*);
+  (*@\listinghls{hello}@*) world;
 
-  std::cout << get_name((*@\listinghl{mirror}@*)((*@\listinghls{hello}@*)))
+  std::cout << (*@\listinghlt{get_name}@*)(mirror((*@\listinghls{hello}@*)))
             << ", "
-            << (*@\listinghl{get_name}@*)(mirror((*@\listinghlt{world}@*)))
+            << (*@\listinghlt{get_name}@*)(mirror(world))
             << "!" << std::endl;
 
     return 0;
@@ -265,7 +265,7 @@ int main() {
       \item boolean values (\inlinecode{is_static}),
       \item integer values (\inlinecode{get_source_line}),
       \item other constant values\footnote{like enumerators} (\inlinecode{get_constant}),
-      \item pointers or references\footnote{to values, data member, functions},
+      \item pointers or references\footnote{to values, data member, functions} (\inlinecode{get_pointer}),
       \item strings\footnote{string views actually} (\inlinecode{get_source_file_name},
         \inlinecode{get_name}),
       \item types\footnote{more precisely \inlinecode{type_identity}}
@@ -1172,18 +1172,18 @@ const auto has_overloaded_functions =
     \begin{column}{.50\textwidth}
       \begin{lstlisting}[language=c++2x,basicstyle=\tiny\ttfamily]
 struct foo {
-  int plus(int x) { return x; }
+  int (*@\listinghlt{plus}@*)(int x) { return x; }
 
-  int plus(int x, int y) {
+  int (*@\listinghlt{plus}@*)(int x, int y) {
     return x + y;
   }
-  int plus(int x, int y, int z) {
+  int (*@\listinghlt{plus}@*)(int x, int y, int z) {
     return x + y + z;
   }
-  int minus(int x) {
+  int (*@\listinghls{minus}@*)(int x) {
     return -x;
   }
-  int minus(int x, int y) {
+  int (*@\listinghls{minus}@*)(int x, int y) {
     return x - y;
   }
 };
@@ -1384,7 +1384,8 @@ struct versioned_interface {
 public:
   static auto revision_id() noexcept -> (*@\listinghls{hash_t}@*) {
     return (*@\listinghl{fold}@*)(
-      (*@\listinghlt{filter}@*)((*@\listinghlt{get_member_functions}@*)(mirror(Intf)),
+      (*@\listinghl{filter}@*)(
+        (*@\listinghlt{get_member_functions}@*)(mirror(Intf)),
         (*@\listinghlt{is_virtual}@*)(_1)),
       (*@\listinghlt{get_hash}@*)(_1) ^ get_hash((*@\listinghlt{get_type}@*)(_1)),
       (*@\listinghls{[]}@*)(auto... h) { return (... ^ h); });
